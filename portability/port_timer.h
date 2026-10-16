@@ -2,14 +2,18 @@
 // Replacement for the DOS timer interrupt (INT 8 / PIT channel 0).
 //
 // The game reprograms the PIT (divisor 9903 -> ~120.5 Hz) and installs an ISR that increments
-// tick counters. Here the ISR body is called either
-//   * real-time:     from a background thread paced by std::chrono::steady_clock, or
-//   * deterministic: synchronously, a fixed number of ticks per presented frame and one tick per
-//                    PortTimer_Yield() (used by replay tests).
-//
+// tick counters. The ISR is never run asynchronously: ticks are applied on the game thread at
+// *sync points* - every presented frame (PortTimer_OnFrame) and every busy-wait iteration
+// (PortTimer_Yield). How many ticks are applied at a sync point depends on the mode:
+//   * real-time:     ticks that came due on a steady_clock since the last sync point
+//   * deterministic: a fixed number per frame, one per yield (tests, --deterministic)
+//   * replay:        exactly what a recording logged for that sync point (--input-script with
+//                    "T" lines, written by --record-input) - replays are bit-exact
 // Game code that busy-waits on a tick counter must call PortTimer_Yield() inside the loop.
 
 #include <cstdint>
+#include <cstdio>
+#include <map>
 
 using PortTimerCallback = void (*)();
 
@@ -18,9 +22,13 @@ void PortTimer_Start(uint32_t divisor, PortTimerCallback isr);
 void PortTimer_Stop();
 bool PortTimer_Running();
 
-// Deterministic mode must be selected before PortTimer_Start.
+// Mode selection (before PortTimer_Start).
 void PortTimer_SetDeterministic(bool enabled, int ticksPerFrame);
 bool PortTimer_IsDeterministic();
+// sync point index -> ticks to apply there (from a recording)
+void PortTimer_SetReplayLog(std::map<uint64_t, uint32_t> log);
+// Writes "T <syncIndex> <ticks>" lines for every sync point that applied ticks.
+void PortTimer_SetRecordFile(FILE* f);
 
 // Called once per presented frame by the video layer.
 void PortTimer_OnFrame();

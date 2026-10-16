@@ -1,6 +1,7 @@
 #include "InputScript.h"
 
 #include "port_sdl_vga_mouse.h"
+#include "port_timer.h"
 #include "../engine/sub_main_mouse.h"
 
 #include <algorithm>
@@ -9,6 +10,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <map>
 #include <vector>
 
 namespace {
@@ -26,6 +28,7 @@ size_t nextEvent = 0;
 int mouseX = 320, mouseY = 240;
 
 FILE* recordFile = nullptr;
+std::map<uint64_t, uint32_t> tickLog;
 
 const uint32_t kAutoRelease = 3;
 
@@ -51,6 +54,14 @@ bool InputScript_Load(const std::string& path)
 		if (hash != std::string::npos)
 			line.resize(hash);
 		std::istringstream ss(line);
+		if (!line.empty() && line[0] == 'T') { // timer log: "T <syncIndex> <ticks>"
+			char t;
+			unsigned long long idx;
+			uint32_t n;
+			if (ss >> t >> idx >> n)
+				tickLog[idx] = n;
+			continue;
+		}
 		uint32_t frame;
 		std::string cmd;
 		if (!(ss >> frame >> cmd))
@@ -85,6 +96,10 @@ bool InputScript_Load(const std::string& path)
 	std::stable_sort(events.begin(), events.end(),
 		[](const ScriptEvent& l, const ScriptEvent& r) { return l.frame < r.frame; });
 	nextEvent = 0;
+	if (!tickLog.empty()) {
+		// a recording with timer log: replay ticks exactly (bit-exact replay of a live session)
+		PortTimer_SetReplayLog(std::move(tickLog));
+	}
 	return true;
 }
 
@@ -93,13 +108,13 @@ void InputScript_OnFrame(uint32_t frame)
 	while (nextEvent < events.size() && events[nextEvent].frame <= frame) {
 		const ScriptEvent& e = events[nextEvent++];
 		switch (e.type) {
-		case Ev::KeyDown: VGA_InjectKey(true, e.a); break;
-		case Ev::KeyUp: VGA_InjectKey(false, e.a); break;
-		case Ev::Mouse: mouseX = e.a; mouseY = e.b; MouseEvents(1, mouseX, mouseY); break;
-		case Ev::LDown: MouseEvents(2, mouseX, mouseY); break;
-		case Ev::LUp: MouseEvents(4, mouseX, mouseY); break;
-		case Ev::RDown: MouseEvents(8, mouseX, mouseY); break;
-		case Ev::RUp: MouseEvents(0x10, mouseX, mouseY); break;
+		case Ev::KeyDown: InputScript_RecordKey(frame, true, e.a); VGA_InjectKey(true, e.a); break;
+		case Ev::KeyUp: InputScript_RecordKey(frame, false, e.a); VGA_InjectKey(false, e.a); break;
+		case Ev::Mouse: mouseX = e.a; mouseY = e.b; InputScript_RecordMouseMove(frame, mouseX, mouseY); MouseEvents(1, mouseX, mouseY); break;
+		case Ev::LDown: InputScript_RecordMouseButtons(frame, 2, mouseX, mouseY); MouseEvents(2, mouseX, mouseY); break;
+		case Ev::LUp: InputScript_RecordMouseButtons(frame, 4, mouseX, mouseY); MouseEvents(4, mouseX, mouseY); break;
+		case Ev::RDown: InputScript_RecordMouseButtons(frame, 8, mouseX, mouseY); MouseEvents(8, mouseX, mouseY); break;
+		case Ev::RUp: InputScript_RecordMouseButtons(frame, 0x10, mouseX, mouseY); MouseEvents(0x10, mouseX, mouseY); break;
 		case Ev::Quit:
 			printf("input script: quit at frame %u\n", frame);
 			fflush(stdout);
@@ -117,13 +132,31 @@ bool InputScript_StartRecording(const std::string& path)
 		return false;
 	}
 	fprintf(recordFile, "# remc1 input recording (frame-based, see portability/InputScript.h)\n");
+	fprintf(recordFile, "# T lines: timer ticks applied at each sync point (see portability/port_timer.h)\n");
+	PortTimer_SetRecordFile(recordFile);
 	return true;
 }
+
+// A pending mouse position is kept in memory and written only when something else is recorded or
+// the frame changes, so motion is collapsed to one line per frame without rewriting the file.
+namespace {
+bool pendingMouse = false;
+uint32_t pendingFrame = 0;
+int pendingX = 0, pendingY = 0;
+
+void FlushPendingMouse()
+{
+	if (pendingMouse && recordFile)
+		fprintf(recordFile, "%u mouse %d %d\n", pendingFrame, pendingX, pendingY);
+	pendingMouse = false;
+}
+} // namespace
 
 void InputScript_RecordKey(uint32_t frame, bool down, int sdlScancode)
 {
 	if (!recordFile)
 		return;
+	FlushPendingMouse();
 	fprintf(recordFile, "%u %s %s\n", frame, down ? "keydown" : "keyup",
 		SDL_GetScancodeName((SDL_Scancode)sdlScancode));
 	fflush(recordFile);
@@ -131,18 +164,14 @@ void InputScript_RecordKey(uint32_t frame, bool down, int sdlScancode)
 
 void InputScript_RecordMouseMove(uint32_t frame, int x, int y)
 {
-	static uint32_t lastFrame = UINT32_MAX;
-	static long lastPos = -1;
 	if (!recordFile)
 		return;
-	// collapse motion to at most one entry per frame
-	if (frame == lastFrame && lastPos >= 0) {
-		fseek(recordFile, lastPos, SEEK_SET);
-	}
-	lastFrame = frame;
-	lastPos = ftell(recordFile);
-	fprintf(recordFile, "%u mouse %d %d          \n", frame, x, y);
-	fflush(recordFile);
+	if (pendingMouse && pendingFrame != frame)
+		FlushPendingMouse();
+	pendingMouse = true;
+	pendingFrame = frame;
+	pendingX = x;
+	pendingY = y;
 }
 
 void InputScript_RecordMouseButtons(uint32_t frame, uint32_t buttonBits, int x, int y)
@@ -150,9 +179,17 @@ void InputScript_RecordMouseButtons(uint32_t frame, uint32_t buttonBits, int x, 
 	if (!recordFile)
 		return;
 	InputScript_RecordMouseMove(frame, x, y);
+	FlushPendingMouse();
 	if (buttonBits & 2) fprintf(recordFile, "%u ldown\n", frame);
 	if (buttonBits & 4) fprintf(recordFile, "%u lup\n", frame);
 	if (buttonBits & 8) fprintf(recordFile, "%u rdown\n", frame);
 	if (buttonBits & 0x10) fprintf(recordFile, "%u rup\n", frame);
 	fflush(recordFile);
+}
+
+void InputScript_FlushRecording()
+{
+	FlushPendingMouse();
+	if (recordFile)
+		fflush(recordFile);
 }

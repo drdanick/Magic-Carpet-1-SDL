@@ -25,3 +25,5 @@ void InputScript_OnFrame(uint32_t frame);
 void InputScript_RecordKey(uint32_t frame, bool down, int sdlScancode);
 void InputScript_RecordMouseMove(uint32_t frame, int x, int y);
 void InputScript_RecordMouseButtons(uint32_t frame, uint32_t buttonBits, int x, int y);
+// Writes any buffered mouse position (called once per presented frame).
+void InputScript_FlushRecording();

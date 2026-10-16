@@ -973,6 +973,7 @@ static void DebugFrameHooks()
 {
 	presentedFrames++;
 	Watchdog_Kick();
+	InputScript_FlushRecording();
 	PortTimer_OnFrame();
 	if (!g_settings.frameHashFile.empty())
 	{

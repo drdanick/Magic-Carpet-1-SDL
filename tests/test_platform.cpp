@@ -104,6 +104,8 @@ TEST(PortTimer, RealTimeRateIsAboutPitRate)
 	g_ticks = 0;
 	PortTimer_Start(9903, CountTick); // ~120.5 Hz
 	SDL_Delay(500);
+	EXPECT_EQ(g_ticks, 0) << "ticks must only be applied at sync points (game thread)";
+	PortTimer_OnFrame();
 	PortTimer_Stop();
 	EXPECT_GT(g_ticks, 45);
 	EXPECT_LT(g_ticks, 75);
