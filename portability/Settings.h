@@ -11,6 +11,7 @@ struct Remc1Settings {
 	// Root of the extracted data (see tools/extract_data.py): contains CD/ and CARPET.CD/
 	std::string dataPath;
 	std::string configPath; // config.json actually loaded ("" if none)
+	std::string cDrivePath; // overrides the folder standing in for DOS C: (default: dataPath); used by replay tests
 
 	// Window / presentation
 	bool fullscreen = false;
@@ -24,6 +25,9 @@ struct Remc1Settings {
 	std::string dumpFramesDir; // if set, every dumpEvery-th presented frame is saved as BMP here
 	int dumpEvery = 30;
 	int exitAfterFrames = 0;   // >0: quit after this many presented frames (automation)
+	std::string frameHashFile; // if set, "<frame> <hash>" of framebuffer+palette is logged per frame
+	bool headless = false;     // SDL dummy video driver; live keyboard/mouse input is ignored
+	int watchdogSeconds = -1;  // freeze watchdog; -1 = default (20 s for automated runs, off otherwise), 0 = off
 };
 
 extern Remc1Settings g_settings;

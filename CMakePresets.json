@@ -1,6 +1,10 @@
 {
   "version": 3,
-  "cmakeMinimumRequired": { "major": 3, "minor": 21, "patch": 0 },
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
   "configurePresets": [
     {
       "name": "base",
@@ -16,8 +20,22 @@
       "inherits": "base",
       "generator": "Visual Studio 17 2022",
       "architecture": "Win32",
-      "cacheVariables": { "VCPKG_TARGET_TRIPLET": "x86-windows" },
-      "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows" }
+      "cacheVariables": {
+        "VCPKG_TARGET_TRIPLET": "x86-windows"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "win-x86-asan",
+      "displayName": "Windows 32-bit with AddressSanitizer",
+      "inherits": "win-x86",
+      "cacheVariables": {
+        "REMC1_ASAN": "ON"
+      }
     },
     {
       "name": "win-x64-experimental",
@@ -25,36 +43,100 @@
       "inherits": "base",
       "generator": "Visual Studio 17 2022",
       "architecture": "x64",
-      "cacheVariables": { "VCPKG_TARGET_TRIPLET": "x64-windows", "REMC1_EXPERIMENTAL_64BIT": "ON" },
-      "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows" }
+      "cacheVariables": {
+        "VCPKG_TARGET_TRIPLET": "x64-windows",
+        "REMC1_EXPERIMENTAL_64BIT": "ON"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
     },
     {
       "name": "linux-debug",
       "displayName": "Linux (system packages, Phase 5)",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/${presetName}",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug", "REMC1_EXPERIMENTAL_64BIT": "ON" },
-      "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux" }
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "REMC1_EXPERIMENTAL_64BIT": "ON"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
     },
     {
       "name": "macos-debug",
       "displayName": "macOS (vcpkg, Phase 5)",
       "inherits": "base",
       "generator": "Ninja",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug", "REMC1_EXPERIMENTAL_64BIT": "ON" },
-      "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Darwin" }
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "REMC1_EXPERIMENTAL_64BIT": "ON"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
     }
   ],
   "buildPresets": [
-    { "name": "win-x86-debug", "configurePreset": "win-x86", "configuration": "Debug" },
-    { "name": "win-x86-release", "configurePreset": "win-x86", "configuration": "RelWithDebInfo" },
-    { "name": "win-x64-experimental", "configurePreset": "win-x64-experimental", "configuration": "Debug" },
-    { "name": "linux-debug", "configurePreset": "linux-debug" },
-    { "name": "macos-debug", "configurePreset": "macos-debug" }
+    {
+      "name": "win-x86-debug",
+      "configurePreset": "win-x86",
+      "configuration": "Debug"
+    },
+    {
+      "name": "win-x86-release",
+      "configurePreset": "win-x86",
+      "configuration": "RelWithDebInfo"
+    },
+    {
+      "name": "win-x86-asan",
+      "configurePreset": "win-x86-asan",
+      "configuration": "Debug"
+    },
+    {
+      "name": "win-x64-experimental",
+      "configurePreset": "win-x64-experimental",
+      "configuration": "Debug"
+    },
+    {
+      "name": "linux-debug",
+      "configurePreset": "linux-debug"
+    },
+    {
+      "name": "macos-debug",
+      "configurePreset": "macos-debug"
+    }
   ],
   "testPresets": [
-    { "name": "win-x86-debug", "configurePreset": "win-x86", "configuration": "Debug", "output": { "outputOnFailure": true } },
-    { "name": "win-x86-release", "configurePreset": "win-x86", "configuration": "RelWithDebInfo", "output": { "outputOnFailure": true } },
-    { "name": "linux-debug", "configurePreset": "linux-debug", "output": { "outputOnFailure": true } }
+    {
+      "name": "win-x86-debug",
+      "configurePreset": "win-x86",
+      "configuration": "Debug",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "win-x86-release",
+      "configurePreset": "win-x86",
+      "configuration": "RelWithDebInfo",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "linux-debug",
+      "configurePreset": "linux-debug",
+      "output": {
+        "outputOnFailure": true
+      }
+    }
   ]
 }

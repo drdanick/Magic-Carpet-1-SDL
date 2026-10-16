@@ -318,7 +318,7 @@ typedef struct {// len 20
 	uint8_t stub[20];
 }
 Type_AE400_20;
-typedef struct {// len 48
+typedef struct {// 8 bytes; str_9177[8] spans 64 (offset 9177..9241)
 	axis_3d v_9177;
 	uint16 v_9181;
 }
@@ -621,7 +621,8 @@ typedef struct {//size 36478
 	uint8 stubf[36164];
 	uint32 var_u32_36378;
 	Type_AE400_29795* str_36382x[20];// len 80
-	Type_AE400_29795* var_u32_36462[4];
+	Type_AE400_29795* var_u32_36462[4];// DOS: struct ends here (size 36478)
+	Type_AE400_29795* var_u32_36478_port[16];// PORT: sub_41780 indexes var_u32_36462 by entity subtype (0..19, cf. its local v25[20]); in DOS this overran into the next pool block
 	//uint32 var_u32_36466;
 	//uint32 var_u32_36470;
 	//uint32 var_u32_36474;
@@ -641,7 +642,7 @@ typedef union {
 	uint32_t align;
 } p64align;
 
-typedef struct {//lenght 66(changed to 70)
+typedef struct {// NetBIOS NCB, port-specific layout (DOS original was 66 bytes)
 	uint8_t ncb_command_0;
 	uint8_t ncb_retcode_1;
 	uint8_t ncb_lsn_2;

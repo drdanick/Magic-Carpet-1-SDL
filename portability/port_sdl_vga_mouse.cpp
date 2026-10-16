@@ -4,6 +4,7 @@
 #include "Settings.h"
 #include "InputScript.h"
 #include "port_timer.h"
+#include "port_watchdog.h"
 
 #include <cstdlib>
 
@@ -775,6 +776,8 @@ int events()
 	uint32_t buttonresult;
 	while (SDL_PollEvent(&event))
 	{
+		if (g_settings.headless && event.type != SDL_QUIT)
+			continue; // replay/headless runs are driven by input scripts only
 		switch (event.type)
 		{
 		case SDL_KEYDOWN:
@@ -969,7 +972,31 @@ void VGA_Blit(Uint8* srcBuffer) {
 static void DebugFrameHooks()
 {
 	presentedFrames++;
+	Watchdog_Kick();
 	PortTimer_OnFrame();
+	if (!g_settings.frameHashFile.empty())
+	{
+		static FILE* hashFile = fopen(g_settings.frameHashFile.c_str(), "w");
+		if (hashFile)
+		{
+			// FNV-1a 64 over the visible indexed image and the palette: identical across platforms
+			// and pointer sizes, so replay goldens from the 32-bit build verify the 64-bit one.
+			uint64_t h = 0xcbf29ce484222325ull;
+			auto mix = [&h](const uint8_t* p, size_t n) {
+				for (size_t i = 0; i < n; i++) { h ^= p[i]; h *= 0x100000001b3ull; }
+			};
+			const uint8_t* px = (const uint8_t*)m_gamePalletisedSurface->pixels;
+			for (int y = 0; y < m_gamePalletisedSurface->h; y++)
+				mix(px + y * m_gamePalletisedSurface->pitch, (size_t)m_gamePalletisedSurface->w * act_ColorsByte);
+			for (int i = 0; i < 256; i++) {
+				uint8_t rgb[3] = { m_currentPalletColours[i].r, m_currentPalletColours[i].g, m_currentPalletColours[i].b };
+				mix(rgb, 3);
+			}
+			fprintf(hashFile, "%u %dx%d %016llx\n", presentedFrames, m_gamePalletisedSurface->w,
+				m_gamePalletisedSurface->h, (unsigned long long)h);
+			fflush(hashFile);
+		}
+	}
 	if (!g_settings.dumpFramesDir.empty() && (presentedFrames % g_settings.dumpEvery) == 0)
 	{
 		char name[64];

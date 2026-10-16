@@ -43,7 +43,7 @@ std::string GetCdDataPath()
 
 std::string GetInstallRootPath()
 {
-	return g_settings.dataPath;
+	return g_settings.cDrivePath.empty() ? g_settings.dataPath : g_settings.cDrivePath;
 }
 
 static std::vector<fs::path> UserDirs()
@@ -133,7 +133,12 @@ static void PrintUsage()
 		"  --debug-log        write debug.txt next to the executable\n"
 		"  --dump-frames <dir> [--dump-every N]  save every Nth presented frame (default 30) as BMP\n"
 		"  --exit-after-frames N                  quit after N presented frames\n"
-		"  --deterministic [N]                    game timer advances N ticks (default 5) per frame instead of real time\n"
+		"  --c-drive <dir>                        folder standing in for DOS C: (must contain CARPET.CD)\n"
+		"  --watchdog N                           abort with a stack trace if no frame is shown for N s\n"
+		"                                         (default 20 for scripted/headless runs, 0 = off)\n"
+		"  --headless                           no visible window (SDL dummy driver), live input ignored\n"
+		"  --frame-hashes <file>                  log a hash of every presented frame (replay tests)\n"
+		"  --deterministic [N]                   game timer advances N ticks (default 5) per frame instead of real time\n"
 		"  --input-script <file>                 play scripted input (format: portability/InputScript.h)\n"
 		"  --record-input <file>                  record live input in the same format\n"
 		"Original game options (-level N, -cheat N, -detail N, -network, ...) are passed through.\n";
@@ -167,6 +172,10 @@ std::vector<std::string> InitSettings(int argc, char* argv[])
 		else if (a == "--dump-frames") g_settings.dumpFramesDir = next("a directory");
 		else if (a == "--dump-every") g_settings.dumpEvery = (std::max)(1, atoi(next("a number").c_str()));
 		else if (a == "--exit-after-frames") g_settings.exitAfterFrames = atoi(next("a number").c_str());
+		else if (a == "--frame-hashes") g_settings.frameHashFile = next("a file");
+		else if (a == "--headless") g_settings.headless = true;
+		else if (a == "--watchdog") g_settings.watchdogSeconds = atoi(next("seconds").c_str());
+		else if (a == "--c-drive") g_settings.cDrivePath = fs::path(next("a directory")).generic_string();
 		else if (a == "--deterministic") {
 			int perFrame = 5;
 			if (i + 1 < argc && argv[i + 1][0] != '-')
@@ -203,6 +212,22 @@ std::vector<std::string> InitSettings(int argc, char* argv[])
 	if (cliNoGrab) g_settings.grabMouse = false;
 	if (cliDebugLog) g_settings.debugLog = true;
 	if (cliW > 0 && cliH > 0) { g_settings.windowWidth = cliW; g_settings.windowHeight = cliH; }
+	if (g_settings.watchdogSeconds < 0) {
+		bool automated = g_settings.headless || g_settings.exitAfterFrames > 0 || !g_settings.frameHashFile.empty();
+		for (int i = 1; i < argc; i++)
+			if (std::string(argv[i]) == "--input-script")
+				automated = true;
+		g_settings.watchdogSeconds = automated ? 20 : 0;
+	}
+	if (g_settings.headless) {
+#if defined(_WIN32)
+		_putenv_s("SDL_VIDEODRIVER", "dummy");
+#else
+		setenv("SDL_VIDEODRIVER", "dummy", 1);
+#endif
+		g_settings.grabMouse = false;
+		g_settings.fullscreen = false;
+	}
 
 	if (g_settings.dataPath.empty()) {
 		std::vector<fs::path> search;

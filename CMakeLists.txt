@@ -32,7 +32,19 @@ if(MSVC)
     # /bigobj: sub_main.cpp is ~110k lines. /wd4996: POSIX/CRT names. /permissive-: off, decompiled code relies on MSVC leniency.
     target_compile_options(remc1_options INTERFACE /utf-8 /bigobj /Zc:__cplusplus /wd4996 /MP)
     if(REMC1_ASAN)
-        target_compile_options(remc1_options INTERFACE /fsanitize=address)
+        # MSVC ASan is incompatible with /RTC1 and incremental linking; the runtime DLL is copied
+        # next to the executables below.
+        foreach(flags CMAKE_C_FLAGS_DEBUG CMAKE_CXX_FLAGS_DEBUG)
+            string(REPLACE "/RTC1" "" ${flags} "${${flags}}")
+        endforeach()
+        target_compile_options(remc1_options INTERFACE /fsanitize=address /Zi)
+        target_link_options(remc1_options INTERFACE /INCREMENTAL:NO /DEBUG)
+        get_filename_component(REMC1_MSVC_BIN "${CMAKE_CXX_COMPILER}" DIRECTORY)
+        if(CMAKE_SIZEOF_VOID_P EQUAL 4)
+            set(REMC1_ASAN_DLL "${REMC1_MSVC_BIN}/clang_rt.asan_dynamic-i386.dll")
+        else()
+            set(REMC1_ASAN_DLL "${REMC1_MSVC_BIN}/clang_rt.asan_dynamic-x86_64.dll")
+        endif()
     endif()
 else()
     target_compile_options(remc1_options INTERFACE
@@ -61,6 +73,7 @@ set(REMC1_ENGINE_SOURCES
     portability/Settings.cpp
     portability/InputScript.cpp
     portability/port_timer.cpp
+    portability/port_watchdog.cpp
     utilities/Compare.cpp
     utilities/DataFileIO.cpp
 )
@@ -87,6 +100,11 @@ endif()
 add_custom_command(TARGET remc1 POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:remc1>
     VERBATIM)
+if(REMC1_ASAN_DLL)
+    add_custom_command(TARGET remc1 POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different "${REMC1_ASAN_DLL}" $<TARGET_FILE_DIR:remc1>
+        VERBATIM)
+endif()
 
 # ---------------------------------------------------------------------------
 # Tests
