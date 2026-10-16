@@ -74,6 +74,7 @@ set(REMC1_ENGINE_SOURCES
     portability/InputScript.cpp
     portability/port_timer.cpp
     portability/port_watchdog.cpp
+    portability/SdlPresenter.cpp
     utilities/Compare.cpp
     utilities/DataFileIO.cpp
 )

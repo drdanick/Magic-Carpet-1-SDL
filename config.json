@@ -6,7 +6,8 @@
     "fullscreen": false,
     "windowWidth": 1280,
     "windowHeight": 960,
-    "maintainAspectRatio": true
+    "maintainAspectRatio": true,
+    "vsync": true
   },
   "input": {
     "grabMouse": true

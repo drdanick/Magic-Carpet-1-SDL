@@ -111,6 +111,7 @@ static void LoadConfigFile(const fs::path& path)
 		s.windowWidth = g.value("windowWidth", s.windowWidth);
 		s.windowHeight = g.value("windowHeight", s.windowHeight);
 		s.maintainAspectRatio = g.value("maintainAspectRatio", s.maintainAspectRatio);
+		s.vsync = g.value("vsync", s.vsync);
 	}
 	if (j.contains("input")) {
 		s.grabMouse = j["input"].value("grabMouse", s.grabMouse);
@@ -130,6 +131,7 @@ static void PrintUsage()
 		"  --fullscreen       start fullscreen\n"
 		"  --window WxH       window size (default 1280x960)\n"
 		"  --no-grab          do not confine the mouse to the window\n"
+		"  --no-vsync         present without waiting for vertical sync\n"
 		"  --debug-log        write debug.txt next to the executable\n"
 		"  --dump-frames <dir> [--dump-every N]  save every Nth presented frame (default 30) as BMP\n"
 		"  --exit-after-frames N                  quit after N presented frames\n"
@@ -168,6 +170,7 @@ std::vector<std::string> InitSettings(int argc, char* argv[])
 		else if (a == "--config") cliConfig = next("a file");
 		else if (a == "--fullscreen") cliFullscreen = true;
 		else if (a == "--no-grab") cliNoGrab = true;
+		else if (a == "--no-vsync") g_settings.vsync = false;
 		else if (a == "--debug-log") cliDebugLog = true;
 		else if (a == "--dump-frames") g_settings.dumpFramesDir = next("a directory");
 		else if (a == "--dump-every") g_settings.dumpEvery = (std::max)(1, atoi(next("a number").c_str()));

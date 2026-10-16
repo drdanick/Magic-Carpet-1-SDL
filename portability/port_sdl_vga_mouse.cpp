@@ -5,6 +5,8 @@
 #include "InputScript.h"
 #include "port_timer.h"
 #include "port_watchdog.h"
+#include "Presenter.h"
+#include <memory>
 
 #include <cstdlib>
 
@@ -17,11 +19,10 @@
 extern DOS_Device* DOS_CON;
 #endif //USE_DOSBOX
 
-SDL_Window* m_window = NULL;
-SDL_Renderer* m_renderer = NULL;
-SDL_Texture* m_texture = NULL;
+// The game draws into m_gamePalletisedSurface (8-bit indexed, current VGA mode size); the presenter
+// (portability/Presenter.h) turns that plus the palette into pixels on screen.
+static std::unique_ptr<IPresenter> g_presenter;
 SDL_Surface* m_gamePalletisedSurface = NULL;
-SDL_Surface* m_gameRGBASurface = NULL;
 SDL_Color m_currentPalletColours[256];
 
 uint8_t lastPressedKey_12EF70_12EF60; //3516e4
@@ -66,86 +67,32 @@ void VGA_Init(Uint32  /*flags*/, int width, int height, bool maintainAspectRatio
 
 	if (!inited)
 	{
-		//Initialize SDL
+		// SDL video is always initialised (the event queue needs it; headless runs use the dummy driver).
 		if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		{
 			printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-			exit(0);
-			//success = false;
+			exit(1);
 		}
-		else
+		settingWindowGrabbed = g_settings.grabMouse;
+		PresenterConfig pc;
+		pc.windowWidth = g_settings.windowWidth;
+		pc.windowHeight = g_settings.windowHeight;
+		pc.fullscreen = g_settings.fullscreen;
+		pc.grabMouse = g_settings.grabMouse;
+		pc.vsync = g_settings.vsync;
+		pc.logicalWidth = width;
+		pc.logicalHeight = height;
+		pc.title = default_caption;
+		pc.dumpDir = g_settings.dumpFramesDir.c_str();
+		pc.dumpEvery = g_settings.dumpEvery;
+		g_presenter = g_settings.headless ? CreateNullPresenter() : CreateSdlPresenter();
+		if (!g_presenter->Init(pc))
 		{
-			//fix it !!!! init_sound();
-
-			/*if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest")) {//pixel perfect
-				printf("Warning: linear render scale not set");
-			}*/
-			//SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
-			//GPU_SetImageFilter();
-
-			SDL_ShowCursor(0);
-			// Set hint before you create the Renderer!
-			SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
-			SDL_SetHint(SDL_HINT_FRAMEBUFFER_ACCELERATION, "1");
-			//SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
-			SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
-
-			SDL_DisplayMode dm;
-			if (SDL_GetDesktopDisplayMode(0, &dm) != 0) {
-				SDL_Log("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
-				return;
-			}
-			// The window can be any size; the renderer's logical size is the game's 640x480 mouse/VGA
-			// space, so SDL letterboxes to 4:3 and reports mouse coordinates in game units.
-			settingWindowGrabbed = g_settings.grabMouse;
-			Uint32 windowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
-			if (g_settings.fullscreen)
-				windowFlags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
-			m_window = SDL_CreateWindow(default_caption, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-				g_settings.windowWidth, g_settings.windowHeight, windowFlags);
-			SDL_SetWindowGrab(m_window, settingWindowGrabbed ? SDL_TRUE : SDL_FALSE);
-
-			m_renderer =
-				SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED |
-					SDL_RENDERER_TARGETTEXTURE);
-
-			SDL_SetRenderDrawColor(m_renderer, 0x00, 0x00, 0x00, 0xFF);
-			SDL_RenderSetLogicalSize(m_renderer, width, height);
-
-			// Now create your surface and convert the pixel format right away!
-			// Converting the pixel format to match the texture makes for quicker updates, otherwise
-			// It has to do the conversion each time you update the texture manually. This slows everything down.
-			// Do it once, and don't have to worry about it again.
-
-			m_gamePalletisedSurface =
-				SDL_CreateRGBSurface(
-					SDL_SWSURFACE, width, height, 24,
-					redMask, greenMask, blueMask, alphaMask);
-
-			m_gamePalletisedSurface =
-				SDL_ConvertSurfaceFormat(
-					m_gamePalletisedSurface, SDL_PIXELFORMAT_INDEX8, 0);
-
-			m_gameRGBASurface =
-				SDL_CreateRGBSurface(
-					SDL_SWSURFACE, width, height, 24,
-					redMask, greenMask, blueMask, alphaMask);
-
-			m_gameRGBASurface =
-				SDL_ConvertSurfaceFormat(
-					m_gameRGBASurface, SDL_PIXELFORMAT_RGB888, 0);
-
-			m_texture = SDL_CreateTexture(m_renderer,
-				SDL_PIXELFORMAT_RGB888,
-				SDL_TEXTUREACCESS_STREAMING,
-				m_gameRGBASurface->w, m_gameRGBASurface->h);
-
-			SDL_SetTextureBlendMode(m_texture, SDL_BLENDMODE_BLEND);
-
-			// Sure clear the screen first.. always nice.
-			SDL_RenderClear(m_renderer);
-			SDL_RenderPresent(m_renderer);
+			printf("Video initialisation failed\n");
+			exit(1);
 		}
+
+		m_gamePalletisedSurface = SDL_CreateRGBSurfaceWithFormat(0, width, height, 8, SDL_PIXELFORMAT_INDEX8);
 		if (!VGA_LoadFont())
 		{
 			printf("Failed to load font!\n");
@@ -171,7 +118,16 @@ void SetPalette(SDL_Color* colours) {
 	if (m_gamePalletisedSurface)
 	{
 		SDL_SetPaletteColors(m_gamePalletisedSurface->format->palette, m_currentPalletColours, 0, 256);
-		//SubBlit(m_iOrigw, m_iOrigh);
+	}
+	if (g_presenter)
+	{
+		uint8_t rgb[768];
+		for (int i = 0; i < 256; i++) {
+			rgb[i * 3] = colours[i].r;
+			rgb[i * 3 + 1] = colours[i].g;
+			rgb[i * 3 + 2] = colours[i].b;
+		}
+		g_presenter->SetPalette(rgb);
 	}
 }
 
@@ -700,36 +656,8 @@ Right Ctrl (101-key)      *       *       *       *       *       *       *     
 */
 
 void ToggleFullscreen() {
-	Uint32 FullscreenFlag = SDL_WINDOW_FULLSCREEN;
-	bool IsFullscreen = SDL_GetWindowFlags(m_window) & FullscreenFlag;
-
-	SDL_DisplayMode dm;
-	if (SDL_GetDesktopDisplayMode(0, &dm) != 0) {
-		SDL_Log("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
-		return;
-	}
-	//SDL_WindowFlags test_fullscr;
-	if (!(IsFullscreen ? 0 : FullscreenFlag))
-	{
-		dm.w = 640;
-		dm.h = 480;
-		//test_fullscr = SDL_WINDOW_SHOWN;
-	}
-	//else
-	//{
-		//test_fullscr = SDL_WINDOW_FULLSCREEN;
-	//}
-
-	if (!(IsFullscreen ? 0 : FullscreenFlag))
-	{
-		SDL_SetWindowFullscreen(m_window, IsFullscreen ? 0 : FullscreenFlag);
-		SDL_SetWindowSize(m_window, dm.w, dm.h);
-	}
-	else
-	{
-		SDL_SetWindowFullscreen(m_window, IsFullscreen ? 0 : FullscreenFlag);
-		SDL_SetWindowDisplayMode(m_window, &dm);
-	}
+	if (g_presenter)
+		g_presenter->ToggleFullscreen();
 }
 
 bool handleSpecialKeys(const SDL_Event &event) {
@@ -740,7 +668,8 @@ bool handleSpecialKeys(const SDL_Event &event) {
 	}
 	else if ((event.key.keysym.sym == SDLK_F10) && (event.key.keysym.mod & KMOD_CTRL)) {
 		settingWindowGrabbed = !settingWindowGrabbed;
-		SDL_SetWindowGrab(m_window, settingWindowGrabbed ? SDL_TRUE : SDL_FALSE);
+		if (g_presenter)
+			g_presenter->SetMouseGrab(settingWindowGrabbed);
 		std::cout << "Set window grab to " << (settingWindowGrabbed ? "true" : "false") << std::endl;
 		specialKey = true;
 	}
@@ -867,10 +796,12 @@ int events()
 
 // x/y are in game mouse space (see LogicalToGameMouse)
 void VGA_Set_mouse(int16_t x, int16_t y) {
+	if (!g_presenter || !g_presenter->Window())
+		return;
 	int gameMouseH = (m_iOrigw <= 320) ? m_iOrigh * 2 : m_iOrigh;
 	int wx, wy;
-	SDL_RenderLogicalToWindow(m_renderer, (float)x, (float)y * 480.0f / gameMouseH, &wx, &wy);
-	SDL_WarpMouseInWindow(m_window, wx, wy);
+	g_presenter->LogicalToWindow((float)x, (float)y * 480.0f / gameMouseH, wx, wy);
+	SDL_WarpMouseInWindow(g_presenter->Window(), wx, wy);
 };
 
 /*
@@ -883,7 +814,6 @@ void VGA_Blit_old(Uint8* srcBuffer) {
 
 	if (m_iOrigh != m_gamePalletisedSurface->h)
 	{
-		SDL_RenderClear(m_renderer);
 		SDL_FreeSurface(m_gamePalletisedSurface);
 
 		m_gamePalletisedSurface =
@@ -929,7 +859,6 @@ void VGA_Blit(Uint8* srcBuffer) {
 	if ((m_iOrigh != m_gamePalletisedSurface->h)||(m_iColorsByte != act_ColorsByte))
 	{
 		act_ColorsByte = m_iColorsByte;
-		SDL_RenderClear(m_renderer);
 		SDL_FreeSurface(m_gamePalletisedSurface);
 
 		m_gamePalletisedSurface =
@@ -1015,85 +944,19 @@ static void DebugFrameHooks()
 }
 
 void SubBlit(uint16_t originalResWidth, uint16_t originalResHeight) {
-	while (subBlitLock);//fix problem with quick blitting
-	subBlitLock = true;
-
-	SDL_Rect rectSrc;
-	rectSrc.x = 0;
-	rectSrc.y = 0;
-	rectSrc.w = originalResWidth;
-	rectSrc.h = originalResHeight;
-
-	// Every VGA mode the game uses (320x200, 640x400, 640x480) filled a 4:3 CRT, so stretch the
-	// game image over the whole 4:3 logical area (letterboxing to the window is done by SDL).
-	SDL_Rect dscrect;
-	dscrect.w = m_gameRGBASurface->w;
-	dscrect.h = m_gameRGBASurface->h;
-	dscrect.x = 0;
-	dscrect.y = 0;
-
-	SDL_BlitSurface(m_gamePalletisedSurface, NULL, m_gameRGBASurface, NULL);
-
 	DebugFrameHooks();
-
-	//if (SDL_SaveBMP(m_gameRGBASurface, "m_gameRGBASurface.bmp") != 0)
-	//{
-	//	// Error saving bitmap
-	//	printf("SDL_SaveBMP failed: %s\n", SDL_GetError());
-	//}
-
-	SDL_UpdateTexture(m_texture, NULL, m_gameRGBASurface->pixels, m_gameRGBASurface->pitch);
-	SDL_RenderCopy(m_renderer, m_texture, &rectSrc, &dscrect);
-
-	SDL_RenderPresent(m_renderer);
-	SDL_RenderClear(m_renderer);
-	subBlitLock = false;
+	if (!g_presenter)
+		return;
+	FrameView f;
+	f.pixels = (const uint8_t*)m_gamePalletisedSurface->pixels;
+	f.width = originalResWidth;
+	f.height = originalResHeight;
+	f.pitch = m_gamePalletisedSurface->pitch;
+	f.bytesPerPixel = act_ColorsByte;
+	g_presenter->Present(f);
 }
 
-void VGA_Init_test() {//only for debug
-	/* Create a display surface with a grayscale palette */
-	SDL_Color colors[256];
-	//neco
-			/* Fill colors with color information */
-	for (int i = 0; i < 256; i++) {
-		colors[i].r = i;
-		colors[i].g = i;
-		colors[i].b = i;
-	}
-
-	/* Create display */
-
-	if (!m_gamePalletisedSurface) {
-		printf("Couldn't set video mode: %s\n", SDL_GetError());
-		exit(-1);
-	}
-
-	/* Set palette */
-
-	SDL_SetPaletteColors(m_gamePalletisedSurface->format->palette, colors, 0, 256);
-
-	//int x = m_gamePalletisedSurface->w / 2;
-	//int y = m_gamePalletisedSurface->h / 2;
-
-	/* Lock the screen for direct access to the pixels */
-	if (SDL_MUSTLOCK(m_gamePalletisedSurface)) {
-		if (SDL_LockSurface(m_gamePalletisedSurface) < 0) {
-			fprintf(stderr, "Can't lock screen: %s\n", SDL_GetError());
-			return;
-		}
-	}
-
-	for (int i = 0; i < 600; i++)
-		for (int j = 0; j < 400; j++)
-			putpixel(m_gamePalletisedSurface, i, j, 127);
-
-	if (SDL_MUSTLOCK(m_gamePalletisedSurface)) {
-		SDL_UnlockSurface(m_gamePalletisedSurface);
-	}
-	/* Update just the part of the display that we've changed */
-
-	SDL_UpdateWindowSurface(m_window);
-}
+void VGA_Init_test() {}
 
 void VGA_Debug_Blit(int width, int height, Uint8* buffer) {
 	VGA_Blit(buffer);
@@ -1101,21 +964,14 @@ void VGA_Debug_Blit(int width, int height, Uint8* buffer) {
 
 void VGA_close()
 {
-	//fix it !!!! clean_up_sound();
 	SDL_FreeSurface(surface_font);
 	surface_font = NULL;
 	SDL_FreeSurface(m_gamePalletisedSurface);
 	m_gamePalletisedSurface = NULL;
-	SDL_FreeSurface(m_gamePalletisedSurface);
-	m_gamePalletisedSurface = NULL;
-	SDL_DestroyTexture(m_texture);
-	m_texture = NULL;
-	SDL_DestroyRenderer(m_renderer);
-	m_renderer = NULL;
-	SDL_DestroyWindow(m_window);
-	m_window = NULL;
+	if (g_presenter)
+		g_presenter->Shutdown();
+	g_presenter.reset();
 	SDL_Quit();
-	//free(m_currentPalletColours);
 }
 
 int16_t VGA_get_shift_status() {

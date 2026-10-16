@@ -18,6 +18,7 @@ struct Remc1Settings {
 	int windowWidth = 1280;
 	int windowHeight = 960;
 	bool maintainAspectRatio = true;
+	bool vsync = true;
 	bool grabMouse = true;
 
 	// Diagnostics
