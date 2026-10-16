@@ -14010,8 +14010,9 @@ int16_t mapEntityIndex_10C1E0_10C1D0[0x10000]; // weak
 //_UNKNOWN unk_1234DC; // weak
 
 uint16 pseudoRand_12C1E0_12C1D0; // weak
-__int16 word_12C1F0[256]; // weak
-__int16 word_12C1F2[959]; // weak
+// PORT: word_12C1F0/word_12C1F2 are one interleaved array of per-row (max, min) pairs up to 0x12C970
+__int16 word_12C1F0[(0x12C970 - 0x12C1F0) / 2]; // weak
+#define word_12C1F2 (word_12C1F0 + 1)
 int array_12C970[6]; // weak
 //int dword_12C974; // weak
 //int dword_12C978; // weak

@@ -166,8 +166,8 @@ typedef union {
 
 typedef struct {//size 946
 	Type_dword_0x0_0 dw_0;//setting retybe to dword 6 (move)
-	uint16 word_0x4_4;
-	uint16 word_0x6_6;
+	int16 word_0x4_4;// roll rate (signed)
+	int16 word_0x6_6;// pitch rate (signed)
 	uint8 stub_a0[4];
 	int16 v_12;//speed Y
 	int16 v_14;
@@ -190,8 +190,8 @@ typedef struct {//size 946
 	uint32 u32_318;
 	uint32 u32_322;
 	uint8 u8_326;
-	uint16 u16_327;
-	uint16 u16_329;
+	int16 u16_327;// roll (signed) PORT: was uint16
+	int16 u16_329;// pitch (signed) PORT: was uint16 - negative pitch (looking up) made 2*input-pitch run away and the camera spin
 	uint16 u16_331;
 	uint8 u8_333[8];
 	uint16 u16_341;
@@ -256,8 +256,8 @@ typedef struct {//size 946
 typedef struct {//14
 	axis_3d axis;
 	uint16 yaw_6;
-	uint16 pitch_8;
-	uint16 roll_10;
+	int16 pitch_8;// PORT: was uint16; DrawWorld takes it as a signed int (negative = looking up)
+	uint16 roll_10;// unsigned on purpose: the renderer takes roll as a 0..65535 angle (quadrant = roll>>8&7); pitch_8 must be signed
 	uint16 fov_12;
 } Type_13895;
 
