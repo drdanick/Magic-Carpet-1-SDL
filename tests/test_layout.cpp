@@ -40,6 +40,19 @@ TEST(Layout, GameStateStructOffsets)
 	EXPECT_EQ(sizeof(T), 232713u);
 }
 
+TEST(Layout, Type160KnownOffsets)
+{
+	// Offsets used as raw *(T*)(p + off) in the decompiled code, cross-checked with named access.
+	EXPECT_EQ(sizeof(Type_160), 946u);
+	EXPECT_EQ(offsetof(Type_160, v_46), 46u);
+	EXPECT_EQ(offsetof(Type_160, var_48), 48u);
+	EXPECT_EQ(offsetof(Type_160, var_50), 50u);
+	EXPECT_EQ(offsetof(Type_160, var_52), 52u);
+	EXPECT_EQ(offsetof(Type_160, u32_308), 308u);
+	EXPECT_EQ(offsetof(Type_160, u16_327), 327u);
+	EXPECT_EQ(offsetof(Type_160, u16_329), 329u);
+}
+
 TEST(Layout, EntityArrayIs1000x164)
 {
 	EXPECT_EQ(sizeof(((Type_str_AE400_AE3F0*)nullptr)->str_29795), 164000u);

@@ -21,6 +21,8 @@ using PortTimerCallback = void (*)();
 void PortTimer_Start(uint32_t divisor, PortTimerCallback isr);
 void PortTimer_Stop();
 bool PortTimer_Running();
+// Stops the clock thread (registered with atexit automatically).
+void PortTimer_Shutdown();
 
 // Mode selection (before PortTimer_Start).
 void PortTimer_SetDeterministic(bool enabled, int ticksPerFrame);
@@ -29,6 +31,10 @@ bool PortTimer_IsDeterministic();
 void PortTimer_SetReplayLog(std::map<uint64_t, uint32_t> log);
 // Writes "T <syncIndex> <ticks>" lines for every sync point that applied ticks.
 void PortTimer_SetRecordFile(FILE* f);
+
+// Total ticks applied so far, and the tick rate (for deterministic durations, e.g. sound channels).
+uint64_t PortTimer_TickCount();
+double PortTimer_TickHz();
 
 // Called once per presented frame by the video layer.
 void PortTimer_OnFrame();

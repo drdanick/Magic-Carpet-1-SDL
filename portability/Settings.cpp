@@ -113,6 +113,10 @@ static void LoadConfigFile(const fs::path& path)
 		s.maintainAspectRatio = g.value("maintainAspectRatio", s.maintainAspectRatio);
 		s.vsync = g.value("vsync", s.vsync);
 	}
+	if (j.contains("audio")) {
+		s.sound = j["audio"].value("sound", s.sound);
+		s.music = j["audio"].value("music", s.music);
+	}
 	if (j.contains("input")) {
 		s.grabMouse = j["input"].value("grabMouse", s.grabMouse);
 	}
@@ -132,6 +136,7 @@ static void PrintUsage()
 		"  --window WxH       window size (default 1280x960)\n"
 		"  --no-grab          do not confine the mouse to the window\n"
 		"  --no-vsync         present without waiting for vertical sync\n"
+		"  --no-sound / --no-music   disable sound effects / music\n"
 		"  --debug-log        write debug.txt next to the executable\n"
 		"  --dump-frames <dir> [--dump-every N]  save every Nth presented frame (default 30) as BMP\n"
 		"  --exit-after-frames N                  quit after N presented frames\n"
@@ -171,6 +176,8 @@ std::vector<std::string> InitSettings(int argc, char* argv[])
 		else if (a == "--fullscreen") cliFullscreen = true;
 		else if (a == "--no-grab") cliNoGrab = true;
 		else if (a == "--no-vsync") g_settings.vsync = false;
+		else if (a == "--no-sound") g_settings.sound = false;
+		else if (a == "--no-music") g_settings.music = false;
 		else if (a == "--debug-log") cliDebugLog = true;
 		else if (a == "--dump-frames") g_settings.dumpFramesDir = next("a directory");
 		else if (a == "--dump-every") g_settings.dumpEvery = (std::max)(1, atoi(next("a number").c_str()));
@@ -225,8 +232,10 @@ std::vector<std::string> InitSettings(int argc, char* argv[])
 	if (g_settings.headless) {
 #if defined(_WIN32)
 		_putenv_s("SDL_VIDEODRIVER", "dummy");
+		_putenv_s("SDL_AUDIODRIVER", "dummy");
 #else
 		setenv("SDL_VIDEODRIVER", "dummy", 1);
+		setenv("SDL_AUDIODRIVER", "dummy", 1);
 #endif
 		g_settings.grabMouse = false;
 		g_settings.fullscreen = false;

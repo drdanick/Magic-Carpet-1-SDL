@@ -18,6 +18,7 @@ endif()
 
 find_package(SDL2 CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
+find_package(SDL2_mixer CONFIG REQUIRED)
 
 # ---------------------------------------------------------------------------
 # Compiler settings shared by every target
@@ -75,6 +76,7 @@ set(REMC1_ENGINE_SOURCES
     portability/port_timer.cpp
     portability/port_watchdog.cpp
     portability/SdlPresenter.cpp
+    portability/port_sound.cpp
     utilities/Compare.cpp
     utilities/DataFileIO.cpp
 )
@@ -85,6 +87,7 @@ endif()
 add_library(remc1_engine STATIC ${REMC1_ENGINE_SOURCES})
 target_link_libraries(remc1_engine PUBLIC remc1_options
     $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
+    $<IF:$<TARGET_EXISTS:SDL2_mixer::SDL2_mixer>,SDL2_mixer::SDL2_mixer,SDL2_mixer::SDL2_mixer-static>
     nlohmann_json::nlohmann_json)
 target_compile_definitions(remc1_engine PUBLIC SDL_MAIN_HANDLED)
 

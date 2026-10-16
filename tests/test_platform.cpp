@@ -103,6 +103,8 @@ TEST(PortTimer, RealTimeRateIsAboutPitRate)
 	PortTimer_SetDeterministic(false, 5);
 	g_ticks = 0;
 	PortTimer_Start(9903, CountTick); // ~120.5 Hz
+	PortTimer_OnFrame(); // first sync point starts the clock
+	g_ticks = 0;
 	SDL_Delay(500);
 	EXPECT_EQ(g_ticks, 0) << "ticks must only be applied at sync points (game thread)";
 	PortTimer_OnFrame();

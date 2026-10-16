@@ -21,6 +21,10 @@ struct Remc1Settings {
 	bool vsync = true;
 	bool grabMouse = true;
 
+	// Audio
+	bool sound = true; // sound effects (SDL_mixer)
+	bool music = true;
+
 	// Diagnostics
 	bool debugLog = false; // write debug.txt next to the executable
 	std::string dumpFramesDir; // if set, every dumpEvery-th presented frame is saved as BMP here

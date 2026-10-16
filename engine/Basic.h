@@ -179,10 +179,10 @@ typedef struct {//size 946
 	uint16 v_28;
 	uint8 stub_a2[16];
 	uint16 v_46;
-	uint32 var_48;
+	int16 var_48;// PORT: was uint32, which shifted var_50/var_52 by 2 bytes; code reads *(int16*)(+48) and *(uint16*)(+50)
 	uint16 var_50;
 	uint16 var_52[4];//fix size 4?
-	uint8 stub_aa[246];
+	uint8 stub_aa[248];
 	uint32 u32_308;
 	uint8 stub_b[2];
 	uint16 u16_314;

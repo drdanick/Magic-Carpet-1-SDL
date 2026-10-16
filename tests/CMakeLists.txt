@@ -3,6 +3,7 @@ find_package(GTest CONFIG REQUIRED)
 add_executable(remc1-tests
     test_main.cpp
     test_layout.cpp
+    test_layout_names.cpp
     test_platform.cpp
     test_data.cpp
     support/test_support.cpp

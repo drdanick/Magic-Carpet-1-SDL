@@ -9,6 +9,10 @@
     "maintainAspectRatio": true,
     "vsync": true
   },
+  "audio": {
+    "sound": true,
+    "music": true
+  },
   "input": {
     "grabMouse": true
   },

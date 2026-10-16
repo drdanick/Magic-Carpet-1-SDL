@@ -1,6 +1,7 @@
 #include "sub_main.h"
 #include "portability/Settings.h"
 #include "portability/port_timer.h"
+#include "portability/port_sound.h"
 
 // Debug switches inherited from the DOSBox-comparison workflow.
 // PORT: MODIFY_SETTINGS (injects Up/Down key presses at level start) and FIX_MOUSE (pins the mouse to
@@ -3240,14 +3241,18 @@ char byte_939E5 = '\x01'; // weak
 char byte_939E6 = '\x01'; // weak
 char byte_939EC = '\0'; // weak
 char byte_939ED = '\0'; // weak
-int dword_939F0 = 0; // weak
-__int16 word_939F4 = 0; // weak
-int dword_939F8 = 0; // weak
-__int16 word_939FC = 0; // weak
-__int16 word_93A00 = 32767; // weak
-__int16 word_93A02 = 4096; // weak
-__int16 word_93A0C = 0; // weak
-__int16 word_93A22 = 0; // weak
+// PORT: HMI sample descriptor at DS:939F0 (64 bytes) passed by address to sub_6535C; IDA split it
+// into separate globals, so the driver read garbage past dword_939F0. Fields alias into one block.
+uint8_t sampleDesc_939F0[64];
+#define dword_939F0 (*(int*)(sampleDesc_939F0 + 0))   // sample data pointer
+#define word_939F4 (*(int16*)(sampleDesc_939F0 + 4))  // (segment)
+#define dword_939F8 (*(int*)(sampleDesc_939F0 + 8))   // length
+#define word_939FC (*(int16*)(sampleDesc_939F0 + 12))
+#define word_93A00 (*(int16*)(sampleDesc_939F0 + 16)) // volume 0..0x7FFF
+#define word_93A02 (*(int16*)(sampleDesc_939F0 + 18)) // id (= game channel)
+#define word_93A0C (*(int16*)(sampleDesc_939F0 + 28)) // flags
+#define word_93A22 (*(int16*)(sampleDesc_939F0 + 50)) // pan
+static bool sampleDescInit_939F0 = (word_93A00 = 32767, word_93A02 = 4096, true);
 _UNKNOWN unk_93A44; // weak
 int dword_93A54 = 0; // weak
 int dword_93A60 = 0; // weak
@@ -13962,9 +13967,9 @@ _UNKNOWN unk_CBF34_CBF24; // weak
 _UNKNOWN unk_CBF40; // weak
 int dword_CBF44; // weak
 __int16 word_CBF48; // weak
-int dword_CBF60; // weak
-int dword_CBF64; // weak
-int dword_CBF68; // weak
+#define dword_CBF60 ((int)music00Tab_289F60.bTab) // PORT: same DOS memory as the path-table target
+#define dword_CBF64 ((int)music00Tab_289F60.eTab) // PORT: same DOS memory as the path-table target
+#define dword_CBF68 ((int)music00Tab_289F60.Dat) // PORT: same DOS memory as the path-table target
 int dword_CBF6C; // weak
 int dword_CBF70; // weak
 char unk_CBF74[64]; // PORT: was 1-byte _UNKNOWN but used as a buffer
@@ -13976,14 +13981,16 @@ int dword_CBFE8; // weak
 __int16 word_CBFEC; // weak
 char byte_CBFEE; // weak
 char byte_CBFEF; // weak
-__int16 word_CBFF0[9999]; // weak
-__int16 word_CBFF2[63]; // weak
+// PORT: per-channel (owner, sample) pairs for the 32 sound channels; IDA split the interleaved
+// table, so the "already playing" dword compare never matched and loops piled up on every channel.
+__int16 word_CBFF0[64]; // weak
+#define word_CBFF2 (word_CBFF0 + 1)
 __int16 word_CC070[9999]; // weak
 char byte_CC0C2[29]; // weak
 //char byte_CC0DF[9999]; // weak //
 //char byte_CC0E0[70]; // weak
 int dword_CC126; // weak
-int dword_CC130; // weak
+#define dword_CC130 ((int)snds00Tab_2854A1.Dat) // PORT: same DOS memory as the path-table target
 int dword_CC134; // weak
 int dword_CC138; // weak
 int dword_CC13C; // weak
@@ -13992,10 +13999,10 @@ int dword_CC144; // weak
 int dword_CC148; // weak
 int dword_CC14C; // weak
 int dword_CC150; // weak
-int dword_CC154; // weak
+#define dword_CC154 ((int)snds00Tab_2854A1.bTab) // PORT: same DOS memory as the path-table target
 char unk_CC158x[88]; // weak
 int dword_CC1BC; // weak
-int dword_CC1C0; // weak
+#define dword_CC1C0 ((int)snds00Tab_2854A1.eTab) // PORT: same DOS memory as the path-table target
 __int16 word_CC1C4; // weak
 __int16 word_CC1C6; // weak
 //char byte_CC1DF[9999]; // weak
@@ -34244,8 +34251,8 @@ void sub_2C410_2C450(unsigned int a1)//1FD410_
                     return;
                 dword_B5CC0_B5CB0 += (hwViewPort_B5D2C_B5D1C - yRotMinusSinXrot) * yDivYdivSC;
                 //v157 = tempRot - sinY * (hwViewPort_B5D2C_B5D1C - yRotMinusSinXrot);
+                tempRot -= sinY * (hwViewPort_B5D2C_B5D1C - yRotMinusSinXrot); // PORT: must use the delta before yRotMinusSinXrot is clamped (was after: always 0)
                 yRotMinusSinXrot = hwViewPort_B5D2C_B5D1C;
-                tempRot -= sinY * (hwViewPort_B5D2C_B5D1C - yRotMinusSinXrot);
             }
             beginFrameAdress = &beginFrame_93ACC[whViewPortA_B5D30_B5D20 - 1 - yRotMinusSinXrot];
             goto LABEL_147;
@@ -34314,8 +34321,8 @@ void sub_2C410_2C450(unsigned int a1)//1FD410_
                 if (yDivSC <= 0)
                     return;
                 dword_B5CC0_B5CB0 += (hwViewPort_B5D2C_B5D1C - yRotMinusSinXrot) * yDivYdivSC;
+                tempRot -= sinY * (hwViewPort_B5D2C_B5D1C - yRotMinusSinXrot); // PORT: must use the delta before yRotMinusSinXrot is clamped (was after: always 0)
                 yRotMinusSinXrot = hwViewPort_B5D2C_B5D1C;
-                tempRot -= sinY * (hwViewPort_B5D2C_B5D1C - yRotMinusSinXrot);
             }
             beginFrameAdress = &beginFrame_93ACC[whViewPortB_B5D34_B5D24 + pitchViewPort_93AD4 * (whViewPortA_B5D30_B5D20 - yRotMinusSinXrot - 1) - 1];
             goto LABEL_147;
@@ -34389,8 +34396,8 @@ void sub_2C410_2C450(unsigned int a1)//1FD410_
                 if (yDivSC <= 0)
                     return;
                 dword_B5CC0_B5CB0 += (hwViewPort_B5D2C_B5D1C - yRotMinusSinXrot) * yDivYdivSC;
+                tempRot -= sinY * (hwViewPort_B5D2C_B5D1C - yRotMinusSinXrot); // PORT: must use the delta before yRotMinusSinXrot is clamped (was after: always 0)
                 yRotMinusSinXrot = hwViewPort_B5D2C_B5D1C;
-                tempRot -= sinY * (hwViewPort_B5D2C_B5D1C - yRotMinusSinXrot);
             }
             beginFrameAdress = &beginFrame_93ACC[yRotMinusSinXrot + pitchViewPort_93AD4 * (whViewPortB_B5D34_B5D24 - 1)];
 LABEL_147:
@@ -47407,8 +47414,10 @@ void sub_3C800_sub_3CB40()
   v6 = getenv("BF_SOUND");
   if ( v6 )
     sscanf((const char*)v6, "%s %x %d %d", unk_CC158x, &dword_CC14C, &dword_CC150, &dword_CC1BC);
-  // PORT: see sub_3C570 - HMI digital driver is never initialised
-  strcpy(unk_CC158x, "none");
+  // PORT: the HMI digital driver is replaced by portability/port_sound (SDL_mixer). sndsetup.inf
+  // is still read (and "none" still disables sound); the card type no longer matters.
+  if (!g_settings.sound)
+    strcpy(unk_CC158x, "none");
   //result = stricmp(&unk_CC158, "none");
   if ( !stricmp(unk_CC158x, "none"))
   {
@@ -47416,7 +47425,20 @@ void sub_3C800_sub_3CB40()
     byte_939E5 = 0;
   }
   if ( byte_939E4 )
-    sub_43EC0_44200();
+  {
+    // PORT: was sub_43EC0_44200() (HMI driver init). Bank variant 1 = 22050 Hz samples.
+    if (PortSound_Init())
+    {
+      byte_939EC = 1;
+      dword_93A54 = 22050;
+      PortSound_SetSampleRate(22050);
+    }
+    else
+    {
+      byte_939E4 = 0;
+      byte_939E5 = 0;
+    }
+  }
 }
 // 60CAC: using guessed type _DWORD sprintf(_DWORD, _DWORD, ...);
 // 61EF5: using guessed type _DWORD stricmp(_DWORD, _DWORD);
@@ -51191,7 +51213,7 @@ unsigned __int16 sub_415C0_41900()
           {
             if ( 100
                * (*(_DWORD *)(v4 + 308) + *(_DWORD *)(dword_AE400_AE3F0() + 164 * *(unsigned __int16 *)(v4 + 50) + 29935))
-               / str_AE408_AE3F8->str_184.var_u32_188 <= *(unsigned __int16 *)&byte_38C93[dword_AE400_AE3F0()] )
+               / str_AE408_AE3F8->str_184.var_u32_188 <= *(unsigned __int16 *)((uint8_t*)str_AE400_AE3F0 + 0x38C93) /* PORT: was &byte_38C93[dword_AE400_AE3F0()] - a field of the game state, not a global */ )
             {
               *(_WORD *)(v3 + 13323) = 0;
             }
@@ -54035,7 +54057,7 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
       if (v2x->var_u32_29955_160->var_676.var_u16[16])
       {
           //232599
-        if ( byte_38C97[dword_AE400_AE3F0() + v2x->var_u32_29955_160->var_48] )
+        if ( ((uint8_t*)str_AE400_AE3F0)[0x38C97 + v2x->var_u32_29955_160->var_48] /* PORT: was byte_38C97[dword_AE400_AE3F0() + ...] */ )
         {
           v17x = sub_373F0_377B0(&v2x->var_u32_29867_72, 3, 2);
           //v18 = v17;
@@ -68745,6 +68767,7 @@ int sub_5D070_5D580(unsigned __int8 a1)
 //----- (0005D138) --------------------------------------------------------
 unsigned int sub_5D138()
 {
+  PortSound_ClearCache(); // PORT: bank memory replaced
   unsigned int result; // eax
   unsigned int v1; // [esp+0h] [ebp-4h]
 
@@ -74399,18 +74422,10 @@ void sub_651E7()
 }
 
 //----- (000651F8) --------------------------------------------------------
+// PORT: HMI SOS digital driver entry point, forwarded to portability/port_sound (SDL_mixer).
 bool sub_651F8(int a1, int a2)
 {
-  unsigned int i; // [esp+8h] [ebp-4h]
-
-  for ( i = 0; ; ++i )
-  {
-    if ( i >= 0x20 )
-      return 1;
-    if ( (__int16)__readgsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 52) == a2 )
-      break;
-  }
-  return ((__readgsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 48) >> 8) & 0x80u) == 0;
+  return PortSound_IsDone(a2);
 }
 
 //----- (0006533A) --------------------------------------------------------
@@ -74426,100 +74441,24 @@ void sub_6534B()
 }
 
 //----- (0006535C) --------------------------------------------------------
+// PORT: HMI SOS digital driver entry point, forwarded to portability/port_sound (SDL_mixer).
+// a2 = sample descriptor: +0 data, +8 length, +16 volume, +18 id (= game channel), +28 flags, +50 pan
 int sub_6535C(int a1, unsigned int a2)
 {
-  unsigned int v2; // edx
-  unsigned int v3; // ebx
-  int v4; // edx
-  unsigned int v5; // ebx
-  unsigned int v6; // ebx
-  int v7; // edx
-  unsigned __int16 v8; // bx
-  int v9; // eax
-  unsigned int v10; // ebx
-  unsigned int i; // [esp+20h] [ebp-4h]
-
-  if ( (unsigned int)dword_A02C6[a1] >= 0xE106 )
-    return 0;
-  for ( i = 0; ; ++i )
-  {
-    if ( i >= 0x20 )
-      return -1;
-    if ( ((__readgsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 48) >> 8) & 0x80u) == 0 )
-      break;
-  }
-  v2 = *(_DWORD *)&byte_131724[192 * a1 + 6 * i];
-  v3 = __readgsdword(a2);
-  __writegsword(v2 + 4, __readgsword(a2 + 4));
-  __writegsdword(v2, v3);
-  v4 = *(_DWORD *)&byte_131724[192 * a1 + 6 * i];
-  v5 = __readgsdword(a2);
-  __writegsword(v4 + 12, __readgsword(a2 + 4));
-  __writegsdword(v4 + 8, v5);
-  v6 = __readgsdword(a2 + 36) + __readgsdword(a2);
-  v7 = *(_DWORD *)&byte_131724[192 * a1 + 6 * i];
-  __writegsword(v7 + 20, __readgsword(a2 + 4));
-  __writegsdword(v7 + 16, v6);
-  if ( (__readgsbyte(a2 + 28) & 0x40) != 0 )
-  {
-    __writegsdword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 24, __readgsdword(a2 + 36));
-    __writegsdword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 28, __readgsdword(a2 + 36));
-    __writegsdword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 32, __readgsdword(a2 + 40));
-    __writegsdword(
-      *(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 44,
-      __readgsdword(a2 + 32) - (__readgsdword(a2 + 40) + __readgsdword(a2 + 36)));
-  }
-  else
-  {
-    __writegsdword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 24, __readgsdword(a2 + 8));
-    __writegsdword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 28, __readgsdword(a2 + 8));
-  }
-  __writegsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 50, __readgsword(a2 + 16));
-  __writegsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 52, __readgsword(a2 + 18));
-  v8 = __readgsword(a2 + 28);
-  HIBYTE(v8) |= 0xA0u;
-  __writegsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 48, v8);
-  __writegsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 54, __readgsword(a2 + 14));
-  v9 = *(_DWORD *)&byte_131724[192 * a1 + 6 * i];
-  v10 = __readgsdword(a2 + 20);
-  __writegsword(v9 + 64, __readgsword(a2 + 24));
-  __writegsdword(v9 + 60, v10);
-  __writegsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 56, __readgsword(a2 + 12));
-  __writegsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 74, __readgsword(a2 + 26));
-  __writegsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 58, 0);
-  __writegsdword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 68, __readgsdword(a2 + 44));
-  __writegsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 72, 0);
-  __writegsdword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 76, 0);
-  __writegsdword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 80, __readgsdword(a2 + 8));
-  __writegsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 84, __readgsword(a2 + 50));
-  __writegsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 86, __readgsword(a2 + 52));
-  __writegsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 88, __readgsword(a2 + 54));
-  __writegsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 90, __readgsword(a2 + 56));
-  __writegsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 92, __readgsword(a2 + 58));
-  __writegsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 94, __readgsword(a2 + 60));
-  __writegsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 96, __readgsword(a2 + 62));
-  __writegsdword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 100, 0);
-  __writegsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 104, 0);
-  return i;
+  uint8_t* desc = (uint8_t*)a2;
+  int id = *(int16_t*)(desc + 18);
+  // flags bit 0x4000: loop, count in +12 (-1 = forever)
+  int loops = (*(uint16_t*)(desc + 28) & 0x4000) ? *(int16_t*)(desc + 12) : 0;
+  PortSound_Start(id, *(uint8_t**)desc, *(uint32_t*)(desc + 8), *(uint16_t*)(desc + 16), *(uint16_t*)(desc + 50), loops);
+  return id;
 }
 // A02C6: using guessed type int dword_A02C6[5];
 
 //----- (00065965) --------------------------------------------------------
+// PORT: HMI SOS digital driver entry point, forwarded to portability/port_sound (SDL_mixer).
 int sub_65965(int a1, int a2)
 {
-  unsigned int i; // [esp+4h] [ebp-4h]
-
-  for ( i = 0; ; ++i )
-  {
-    if ( i >= 0x20 )
-      return 10;
-    if ( (__int16)__readgsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 52) == a2 )
-      break;
-  }
-  __writegsbyte(
-    *(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 49,
-    __readgsbyte(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 49) & 0x7F);
-  __writegsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 52, 0);
+  PortSound_Stop(a2);
   return 0;
 }
 
@@ -74655,35 +74594,19 @@ void sub_66107()
 }
 
 //----- (00066118) --------------------------------------------------------
+// PORT: HMI SOS digital driver entry point, forwarded to portability/port_sound (SDL_mixer).
 int sub_66118(int a1, int a2, unsigned __int16 a3)
 {
-  unsigned int i; // [esp+4h] [ebp-4h]
-
-  if ( !dword_A0258[a1] )
-    return -1;
-  for ( i = 0; ; ++i )
-  {
-    if ( i >= 0x20 )
-      return 10;
-    if ( (__int16)__readgsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 52) == a2 )
-      break;
-  }
-  __writegsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 50, a3);
+  PortSound_SetVolume(a2, a3);
   return 0;
 }
 // A0258: using guessed type int dword_A0258[5];
 
 //----- (000661A4) --------------------------------------------------------
+// PORT: HMI SOS digital driver entry point, forwarded to portability/port_sound (SDL_mixer).
 int sub_661A4(int a1, int a2)
 {
-  unsigned int i; // [esp+8h] [ebp-4h]
-
-  if ( !dword_A0258[a1] )
-    return -1;
-  for ( i = 0; i < 0x20; ++i )
-    __writegsword(
-      *(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 50,
-      (__int16)__readgsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 50) * a2 / 0x7FFFu);
+  PortSound_ScaleAllVolumes(a2);
   return 0;
 }
 // A0258: using guessed type int dword_A0258[5];
@@ -74727,18 +74650,10 @@ void sub_66313()
 }
 
 //----- (00066324) --------------------------------------------------------
+// PORT: HMI SOS digital driver entry point, forwarded to portability/port_sound (SDL_mixer).
 int sub_66324(int a1)
 {
-  int v2; // [esp+4h] [ebp-8h]
-  unsigned int i; // [esp+8h] [ebp-4h]
-
-  v2 = 0;
-  for ( i = 0; i < 0x20; ++i )
-  {
-    if ( ((__readgsword(*(_DWORD *)&byte_131724[192 * a1 + 6 * i] + 48) >> 8) & 0x80u) != 0 )
-      ++v2;
-  }
-  return v2;
+  return PortSound_ActiveCount();
 }
 
 //----- (0006637C) --------------------------------------------------------
