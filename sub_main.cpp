@@ -30979,8 +30979,9 @@ void PrepRot_29C30_29C70(__int16 roll)//1FAC30_
 		{
 			dword_B3EA0_B3E90x[indexX][1] = par1;
 			dword_B3EA0_B3E90x[indexX][2] = par2;
+			uint16 carryOld = (uint16)par3; // PORT: 16-bit add/jnc - was "par3 += par5; if (par5 > (par5 + par3) % 0x10000)" (double add, signed %)
 			par3 += par5;
-			if (par5 > (par5 + par3) % 0x10000)
+			if ((uint16)par3 < carryOld)
 			{
 				par1 += pitchViewPort_93AD4;
 				par2++;
@@ -31035,8 +31036,9 @@ void PrepRot_29C30_29C70(__int16 roll)//1FAC30_
 			{
 				dword_B3EA0_B3E90x[indexX][1] = par1;
 				dword_B3EA0_B3E90x[indexX][2] = par2;
+				uint16 carryOld = (uint16)par3; // PORT: 16-bit add/jnc - was "par3 += par5; if (par5 > (par5 + par3) % 0x10000)" (double add, signed %)
 				par3 += par5;
-				if (par5 > (par5 + par3) % 0x10000)
+				if ((uint16)par3 < carryOld)
 				{
 					par1++;
 					par2++;
@@ -31070,8 +31072,9 @@ void PrepRot_29C30_29C70(__int16 roll)//1FAC30_
 		{
 			dword_B3EA0_B3E90x[indexX][1] = par1;
 			dword_B3EA0_B3E90x[indexX][2] = par2;
+			uint16 carryOld = (uint16)par3; // PORT: 16-bit add/jnc - was "par3 += par5; if (par5 > (par5 + par3) % 0x10000)" (double add, signed %)
 			par3 += par5;
-			if (par5 > (par5 + par3) % 0x10000)
+			if ((uint16)par3 < carryOld)
 			{
 				par1--;
 				par2++;
@@ -31126,8 +31129,9 @@ void PrepRot_29C30_29C70(__int16 roll)//1FAC30_
 			{
 				dword_B3EA0_B3E90x[indexX][1] = par1;
 				dword_B3EA0_B3E90x[indexX][2] = par2;
+				uint16 carryOld = (uint16)par3; // PORT: 16-bit add/jnc - was "par3 += par5; if (par5 > (par5 + par3) % 0x10000)" (double add, signed %)
 				par3 += par5;
-				if (par5 > (par5 + par3) % 0x10000)
+				if ((uint16)par3 < carryOld)
 				{
 					par1 += pitchViewPort_93AD4;
 					par2++;
@@ -31161,8 +31165,9 @@ void PrepRot_29C30_29C70(__int16 roll)//1FAC30_
 		{
 			dword_B3EA0_B3E90x[indexX][1] = par1;
 			dword_B3EA0_B3E90x[indexX][2] = par2;
+			uint16 carryOld = (uint16)par3; // PORT: 16-bit add/jnc - was "par3 += par5; if (par5 > (par5 + par3) % 0x10000)" (double add, signed %)
 			par3 += par5;
-			if (par5 > (par5 + par3) % 0x10000)
+			if ((uint16)par3 < carryOld)
 			{
 				par1 += -pitchViewPort_93AD4;
 				par2++;
@@ -31217,8 +31222,9 @@ void PrepRot_29C30_29C70(__int16 roll)//1FAC30_
 			{
 				dword_B3EA0_B3E90x[indexX][1] = par1;
 				dword_B3EA0_B3E90x[indexX][2] = par2;
+				uint16 carryOld = (uint16)par3; // PORT: 16-bit add/jnc - was "par3 += par5; if (par5 > (par5 + par3) % 0x10000)" (double add, signed %)
 				par3 += par5;
-				if (par5 > (par5 + par3) % 0x10000)
+				if ((uint16)par3 < carryOld)
 				{
 					par1--;
 					par2++;
@@ -31252,8 +31258,9 @@ void PrepRot_29C30_29C70(__int16 roll)//1FAC30_
 		{
 			dword_B3EA0_B3E90x[indexX][1] = par1;
 			dword_B3EA0_B3E90x[indexX][2] = par2;
+			uint16 carryOld = (uint16)par3; // PORT: 16-bit add/jnc - was "par3 += par5; if (par5 > (par5 + par3) % 0x10000)" (double add, signed %)
 			par3 += par5;
-			if (par5 > (par5 + par3) % 0x10000)
+			if ((uint16)par3 < carryOld)
 			{
 				par1++;
 				par2++;
@@ -31308,8 +31315,9 @@ void PrepRot_29C30_29C70(__int16 roll)//1FAC30_
 			{
 				dword_B3EA0_B3E90x[indexX][1] = par1;
 				dword_B3EA0_B3E90x[indexX][2] = par2;
+				uint16 carryOld = (uint16)par3; // PORT: 16-bit add/jnc - was "par3 += par5; if (par5 > (par5 + par3) % 0x10000)" (double add, signed %)
 				par3 += par5;
-				if (par5 > (par5 + par3) % 0x10000)
+				if ((uint16)par3 < carryOld)
 				{
 					par1 += -pitchViewPort_93AD4;
 					par2++;
