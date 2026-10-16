@@ -83,7 +83,7 @@ off_987DE
 &a2x->var_u32_29867_72
 
 &word_AE454_AE444 0x26C454
-sub_196E0
+MoveCreature_196E0
 sub_41EC0_42200
 
 addprocedurestop(0x205367, 0x0, true, true, 0x26C454, 0x12345678);
@@ -303,7 +303,7 @@ int sub_11410(int a1, int a2);
 void sub_11490(int a1);
 int sub_114B0(int a1, _DWORD *a2, _DWORD *a3);
 void sub_11540();
-int sub_11640(Type_AE400_29795* a1, axis_3d* a2, char a3);
+int IsMoveBlocked_11640(Type_AE400_29795* a1, axis_3d* a2, char a3);
 int sub_11760(axis_3d* a1);
 int sub_11810(axis_3d* a1);
 bool BoxesOverlap_118C0(axis_3d* a1, axis_4d* a2, axis_3d* a3, axis_4d* a4);
@@ -384,12 +384,12 @@ void sub_193EE(__int16 a1);
 // int sub_19470(__int16 a1);
 int sub_194F0_194F0();
 __int16 sub_19550(int a1);
-signed int sub_19650(axis_3d* a1);
-void sub_196E0(Type_AE400_29795* a1);
+signed int TerrainSlope_19650(axis_3d* a1);
+void MoveCreature_196E0(Type_AE400_29795* a1);
 void sub_19B10(Type_AE400_29795* a1, char a2);
 void sub_19D70(Type_AE400_29795* a1, char a2);
 int sub_1A120(Type_AE400_29795* a1, char a2, unsigned __int16 (*a3)(Type_AE400_29795*, int));
-void sub_1A390(Type_AE400_29795* a1, unsigned __int16 a2);
+void UpdateFollower_1A390(Type_AE400_29795* a1, unsigned __int16 a2);
 void sub_1A6C0(Type_AE400_29795* a1, char a2);
 void sub_1A800(Type_AE400_29795* a1);
 int sub_1A8E0(Type_AE400_29795* a1, Type_AE400_29795* a2);
@@ -945,7 +945,7 @@ void sub_41E80_421C0(Type_AE400_29795* event);
 void sub_41E90_421D0(Type_AE400_29795* event);
 void sub_41EC0_42200(axis_3d* a1, unsigned __int16 a2, __int16 a3, __int16 a4);
 void sub_41F50_42290(axis_3d* pos1, axis_3d* pos2);
-int sub_42000_42340(axis_3d* a1, int a2, int a3, int a4, int a5);
+int KeepHeightAboveGround_42000_42340(axis_3d* a1, int a2, int a3, int a4, int a5);
 int sub_42090_423D0(axis_3d* a1, int a2, int a3, int a4, int a5);
 __int16 sub_42150_42490(axis_3d* a1, axis_3d* a2);
 __int16 sub_42180_424C0(axis_3d* a1, axis_3d* a2);
@@ -1089,7 +1089,7 @@ void sub_4F3F0_4F730();
 int sub_4F8D0_4FC10(int a1, void (*a2)());
 void sub_4FD20_50060();
 void sub_4FE00_50140();
-void sub_4FF30_50270();
+void MenuNewGame_4FF30_50270();
 void sub_4FFE0_50320();
 void sub_50030_50370();
 void sub_50350_50690();
@@ -1830,7 +1830,7 @@ typedef struct {
 } TypeVoidF;
 TypeVoidF dword_4A12C_4A46C[] = {
 {nullptr,0},
-{sub_4FF30_50270,0},
+{MenuNewGame_4FF30_50270,0},
 {sub_50030_50370,0},
 {sub_4FEB0,0},
 {sub_4FD20_50060,0},
@@ -4805,7 +4805,62 @@ Type_99974 off_99974[] = //&begPointersTab_AE450_AE440_26C450_26C440; // weak
 
 
 
-char* dword_999B8[] = { 0 }; // weak
+// PORT: level names shown on the score screen, indexed by level number (was a truncated one-entry
+// initializer: the score screen after a completed level read past it and crashed). Generated with
+// tools/exe_data.py strptrs 0x999B8 51.
+char* dword_999B8[51] = { // CARPET.EXE 0x999b8, 51 string pointers
+    nullptr,
+    (char*)"1. Al Jahan",
+    (char*)"2. Khallabad",
+    (char*)"3. Sulghir",
+    (char*)"4. Akrir",
+    (char*)"5. Cessecca",
+    (char*)"6. Qazziel",
+    (char*)"7. Ar Ulnan",
+    (char*)"8. Gillah",
+    (char*)"9. Kutoor",
+    (char*)"10. Rannaxior",
+    (char*)"11. Zanzandria",
+    (char*)"12. Mehkhel",
+    (char*)"13. Dullighir",
+    (char*)"14. Nazzajahn",
+    (char*)"15. Al Saumam",
+    (char*)"16. Aflahkstahn",
+    (char*)"17. Jan Tabar",
+    (char*)"18. Kireemir",
+    (char*)"19. Ar Vilim",
+    (char*)"20. Jondd Warr",
+    (char*)"21. Khaghabal",
+    (char*)"22. Ul Ramin",
+    (char*)"23. Naqual",
+    (char*)"24. Quaddimar",
+    (char*)"25. Ottommia",
+    (char*)"26. Xikhypt",
+    (char*)"27. Shebbahn",
+    (char*)"28. Hazzanjahn",
+    (char*)"29. Zakhazaran",
+    (char*)"30. Banahstur",
+    (char*)"31. Idirya",
+    (char*)"32. Thammon",
+    (char*)"33. Jahrrid",
+    (char*)"34. Khatoud",
+    (char*)"35. Shai Yulim",
+    (char*)"36. Moorrok",
+    (char*)"37. Quahahn",
+    (char*)"38. Yoggohr",
+    (char*)"39. Ar Zaljan",
+    (char*)"40. Arrimir",
+    (char*)"41. Ooramesa",
+    (char*)"42. Ghabbaladan",
+    (char*)"43. Tekumir",
+    (char*)"44. Zantor",
+    (char*)"45. Dubbahn",
+    (char*)"46. Ephieria",
+    (char*)"47. Inixxia",
+    (char*)"48. Meebir",
+    (char*)"49. Shal Kazan",
+    (char*)"50. Volcania",
+};
 char *off_99A84[20] =
 {
   (char*)"Bussorah",
@@ -15919,7 +15974,9 @@ void sub_11540()//1E2540_
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_11640(Type_AE400_29795* a1x, axis_3d* a2x, char a3)
+/// Non-zero if creature a1x may not move to a2x: flag 2 = outside its height band, flag 1 =
+/// terrain type not in its allowed mask (Type_156::v_20), flag 4 = slope steeper than v_16/v_18.
+int IsMoveBlocked_11640(Type_AE400_29795* a1x, axis_3d* a2x, char a3)
 {
   int v3; // edi
   int result; // eax
@@ -17914,7 +17971,7 @@ int sub_14EB0(int a1)//1E5EB0_
   v22 = v1[5];
   v21 = v1[6];
   v2 = GetTerrainHeight_11F50(&word_AE454_AE444);
-  sub_42000_42340(&word_AE454_AE444, v2, v21, v22, v23);
+  KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v2, v21, v22, v23);
   sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)(a1 + 30), 0, *(_WORD *)(a1 + 126));
   v3 = *(_WORD *)(a1 + 30);
   HIBYTE(v3) += 2;
@@ -20250,7 +20307,8 @@ __int16 sub_19550(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-signed int sub_19650(axis_3d* a1x)
+/// Steepness of the heightmap cell under a1x (max absolute diagonal height difference).
+signed int TerrainSlope_19650(axis_3d* a1x)
 {
   int v1; // eax
   unsigned __int16 v2; // dx
@@ -20283,7 +20341,10 @@ signed int sub_19650(axis_3d* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_196E0(Type_AE400_29795* a1x)
+/// Moves a creature one step along its heading (+30) at its speed (+126), keeping it between the
+/// type's min/max height above ground (KeepHeightAboveGround_42000_42340). If the step is blocked
+/// (IsMoveBlocked_11640 or too steep), tries turning +-120 and 180 degrees; if all fail it dies.
+void MoveCreature_196E0(Type_AE400_29795* a1x)
 {
   //__int16 *v1; // eax
   __int16 v2; // ax
@@ -20324,7 +20385,7 @@ void sub_196E0(Type_AE400_29795* a1x)
   v23 = a1x->var_u32_29951_156->v_10;
   v19 = a1x->var_u32_29951_156->v_12;
   v2 = GetTerrainHeight_11F50(&word_AE454_AE444);
-  sub_42000_42340(&word_AE454_AE444, v2, v19, v23, v27);
+  KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v2, v19, v23, v27);
   sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if (a1x->var_u32_29867_72.x >> 8 == word_AE454_AE444.x >> 8 )
   {
@@ -20332,10 +20393,10 @@ void sub_196E0(Type_AE400_29795* a1x)
     if (a1x->var_u32_29867_72.y >> 8 == v3 )
       goto LABEL_3;
   }
-  if ( !sub_11640(a1x, &word_AE454_AE444, 1) )
+  if ( !IsMoveBlocked_11640(a1x, &word_AE454_AE444, 1) )
   {
     v6 = a1x->var_u32_29951_156->v_16;
-    v3 = sub_19650(&word_AE454_AE444);
+    v3 = TerrainSlope_19650(&word_AE454_AE444);
     if ( v3 < v6 )
       goto LABEL_3;
   }
@@ -20350,12 +20411,12 @@ void sub_196E0(Type_AE400_29795* a1x)
   v24 = a1x->var_u32_29951_156->v_10;
   v20 = a1x->var_u32_29951_156->v_12;
   v9 = GetTerrainHeight_11F50(&word_AE454_AE444);
-  sub_42000_42340(&word_AE454_AE444, v9, v20, v24, v28);
+  KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v9, v20, v24, v28);
   sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
-  if ( !sub_11640(a1x, &word_AE454_AE444, 1) )
+  if ( !IsMoveBlocked_11640(a1x, &word_AE454_AE444, 1) )
   {
     v10 = a1x->var_u32_29951_156->v_16;
-    v3 = sub_19650(&word_AE454_AE444);
+    v3 = TerrainSlope_19650(&word_AE454_AE444);
     if ( v3 < v10 )
       goto LABEL_3;
   }
@@ -20369,12 +20430,12 @@ void sub_196E0(Type_AE400_29795* a1x)
   v25 = a1x->var_u32_29951_156->v_10;
   v21 = a1x->var_u32_29951_156->v_12;
   v13 = GetTerrainHeight_11F50(&word_AE454_AE444);
-  sub_42000_42340(&word_AE454_AE444, v13, v21, v25, v29);
+  KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v13, v21, v25, v29);
   sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
-  if ( !sub_11640(a1x, &word_AE454_AE444, 1) )
+  if ( !IsMoveBlocked_11640(a1x, &word_AE454_AE444, 1) )
   {
     v14 = a1x->var_u32_29951_156->v_16;
-    v3 = sub_19650(&word_AE454_AE444);
+    v3 = TerrainSlope_19650(&word_AE454_AE444);
     if ( v3 < v14 )
       goto LABEL_3;
   }
@@ -20388,10 +20449,10 @@ void sub_196E0(Type_AE400_29795* a1x)
   v26 = a1x->var_u32_29951_156->v_10;
   v22 = a1x->var_u32_29951_156->v_12;
   v17 = GetTerrainHeight_11F50(&word_AE454_AE444);
-  sub_42000_42340(&word_AE454_AE444, v17, v22, v26, v30);
+  KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v17, v22, v26, v30);
   sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
-  if ( sub_11640(a1x, &word_AE454_AE444, 1)
-    || (v18 = a1x->var_u32_29951_156->v_16, v3 = sub_19650(&word_AE454_AE444), v3 >= v18) )
+  if ( IsMoveBlocked_11640(a1x, &word_AE454_AE444, 1)
+    || (v18 = a1x->var_u32_29951_156->v_16, v3 = TerrainSlope_19650(&word_AE454_AE444), v3 >= v18) )
   {
     result = 1;
     a1x->actLife_29807_12 = -1;
@@ -20604,7 +20665,7 @@ void sub_19D70(Type_AE400_29795* a1x, char a2)
     }
     goto LABEL_42;
   }
-  sub_196E0(a1x);
+  MoveCreature_196E0(a1x);
   if ( !(a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26) )
   {
     v8 = 9377 * a1x->rand_29799_4 + 9439;
@@ -20755,7 +20816,7 @@ int sub_1A120(Type_AE400_29795* a1x, char a2, unsigned __int16 (*a3)(Type_AE400_
     return v15;
   }
   dword_AE400_AE3F0(v3);
-  sub_196E0(a1x);
+  MoveCreature_196E0(a1x);
   v12 = dword_AE400_AE3F0() + 29795 + 164 * a1x->var_u16_29941_146;
   if ( (a1x->var_u8_29858_63 & 3) == 0 )
       a1x->var_u16_29829_34 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v12 + 72));
@@ -20778,7 +20839,10 @@ LABEL_26:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1A390(Type_AE400_29795* a1x, unsigned __int16 a2)
+/// Herd/segment follower AI (creature states a2..a2+4): follows the leader entity (+52) - copies
+/// its target and state changes, steers toward it, keeps its speed at leader speed + leader +130.
+/// Worms use it for their body segments and heads (state 21 -> a2 = 0x12).
+void UpdateFollower_1A390(Type_AE400_29795* a1x, unsigned __int16 a2)
 {
   char v2; // al
   Type_AE400_29795* v3x; // esi
@@ -20870,7 +20934,7 @@ LABEL_35:
   }
   else
   {
-    sub_196E0(a1x);
+    MoveCreature_196E0(a1x);
     //v10 = a1x->var_u8_29858_63 / a1x->var_u32_29951_156->v_26;
     if ( !(a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26) )
     {
@@ -20914,8 +20978,9 @@ LABEL_24:
         }
         v13 = *(_DWORD *)v13;
       }
-      //v10 = v3x->acceleration_29925_130 + v3x->actSpeed_29921_126;
-      a1x->actSpeed_29921_126 += v3x->acceleration_29925_130;
+      // PORT: was "a1x->actSpeed += v3x->acceleration" - the follower accelerated forever (worms
+      // racing across the map, airborne over every slope). Asm at 0x1A64F: [ebx+7E] = [esi+7E] + [esi+82].
+      a1x->actSpeed_29921_126 = v3x->actSpeed_29921_126 + v3x->acceleration_29925_130;
     }
   }
 }
@@ -21290,7 +21355,7 @@ void sub_1B090(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1B0E0(Type_AE400_29795* a1x)
 {
-  sub_1A390(a1x, 0);
+  UpdateFollower_1A390(a1x, 0);
   sub_1B120(a1x);
 }
 
@@ -21329,7 +21394,7 @@ void sub_1B160(Type_AE400_29795* a1x)
   int v2; // eax
 
   sub_19B10(a1x, 6);
-  sub_196E0(a1x);
+  MoveCreature_196E0(a1x);
   //HIBYTE(result) = a1x->var_u8_29865_70;
   if ( a1x->var_u8_29865_70 == 6 )
   {
@@ -21401,7 +21466,7 @@ void sub_1B2D0(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1B320(Type_AE400_29795* a1x)
 {
-  sub_1A390(a1x, 6u);
+  UpdateFollower_1A390(a1x, 6u);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21474,7 +21539,7 @@ void sub_1B3C0(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1B4C0(Type_AE400_29795* a1x)
 {
-  sub_1A390(a1x, 0xCu);
+  UpdateFollower_1A390(a1x, 0xCu);
   if (a1x->var_u8_29865_70 == 14 )
       a1x->var_u16_29821_26 = 1;
 }
@@ -21513,7 +21578,7 @@ void sub_1B520(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1B570(Type_AE400_29795* a1x)
 {
-  sub_1A390(a1x, 0x12u);
+  UpdateFollower_1A390(a1x, 0x12u);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21642,7 +21707,7 @@ void sub_1B5D0(Type_AE400_29795* a1x)
   }
   else
   {
-    sub_196E0(a1x);
+    MoveCreature_196E0(a1x);
     //LOWORD(v7) = a1x->var_u8_29858_63 / a1x->var_u32_29951_156->v_26;
     v8 = a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26;
     if ( !v8 )
@@ -21824,7 +21889,7 @@ void sub_1BB20(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1BBE0(Type_AE400_29795* a1x)
 {
-  sub_1A390(a1x, 0x18u);
+  UpdateFollower_1A390(a1x, 0x18u);
   if (a1x->var_u8_29865_70 == 26 )
     sub_1BC50(a1x);
 }
@@ -21970,7 +22035,7 @@ void sub_1BD20(Type_AE400_29795* a1x)
   }
   else
   {
-    sub_196E0(a1x);
+    MoveCreature_196E0(a1x);
     //v6 = *(_DWORD *)(a1 + 156);
     if ( !(a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26) )
     {
@@ -22158,7 +22223,7 @@ void sub_1C170(Type_AE400_29795* a1x)
   }
   else
   {
-    sub_196E0(a1x);
+    MoveCreature_196E0(a1x);
     result = a1x->var_u8_29858_63 / a1x->var_u16_29821_26;
     if ( !(a1x->var_u8_29858_63 % a1x->var_u16_29821_26) )
     {
@@ -22306,7 +22371,7 @@ void sub_1C4F0(Type_AE400_29795* a1x)
     return;
   }
   dword_AE400_AE3F0(v1);
-  sub_196E0(a1x);
+  MoveCreature_196E0(a1x);
   v10 = 164 * a1x->var_u16_29941_146 + dword_AE400_AE3F0() + 29795;
   if ( (a1x->var_u8_29858_63 & 3) == 0 )
     a1x->var_u16_29829_34 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v10 + 72));
@@ -22375,7 +22440,7 @@ void sub_1C880(Type_AE400_29795* a1x)
 {
   char v1; // ah
 
-  sub_1A390(a1x, 0x24u);
+  UpdateFollower_1A390(a1x, 0x24u);
   v1 = a1x->var_u8_29865_70;
   a1x->actSpeed_29921_126 = 30;
   if ( v1 == 38 )
@@ -22462,7 +22527,7 @@ void sub_1C960(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1CA00(Type_AE400_29795* a1x)
 {
-  sub_1A390(a1x, 0x2Au);
+  UpdateFollower_1A390(a1x, 0x2Au);
   if (a1x->var_u8_29865_70 == 44 )
       a1x->var_u16_29821_26 = 1;
 }
@@ -22569,7 +22634,7 @@ void sub_1CA50(Type_AE400_29795* a1x)
   }
   else
   {
-    sub_196E0(a1x);
+    MoveCreature_196E0(a1x);
     if ( !(a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26) )
     {
       v6 = 9377 * a1x->rand_29799_4 + 9439;
@@ -22671,7 +22736,7 @@ void sub_1CE30(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1CF50(Type_AE400_29795* a1x)
 {
-  sub_1A390(a1x, 0x30u);
+  UpdateFollower_1A390(a1x, 0x30u);
 }
 
 //SYNCHRONIZED REMC1
@@ -22848,7 +22913,7 @@ void sub_1D060(Type_AE400_29795* a1x)
     goto LABEL_84;
   }
   dword_AE400_AE3F0(v3);
-  sub_196E0(a1x);
+  MoveCreature_196E0(a1x);
   if ( !(a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26) )
   {
     v9 = -1;
@@ -23289,7 +23354,7 @@ void sub_1DA60(Type_AE400_29795* a1x)
     goto LABEL_31;
   }
   dword_AE400_AE3F0(v1);
-  sub_196E0(a1x);
+  MoveCreature_196E0(a1x);
   v9 = 164 * a1x->var_u16_29941_146 + dword_AE400_AE3F0() + 29795;
   if ( *(int *)(v9 + 12) < 0 || (*(_BYTE *)(v9 + 17) & 4) != 0 )
   {
@@ -23319,7 +23384,7 @@ LABEL_31:
 //SYNCHRONIZED WITH REMC1
 void sub_1DC80(Type_AE400_29795* a1x)
 {
-  sub_1A390(a1x, 0x36u);
+  UpdateFollower_1A390(a1x, 0x36u);
   if ( a1x->var_u8_29865_70 == 56 )
     sub_1DCD0(a1x);
 }
@@ -23402,7 +23467,7 @@ int sub_1DDF0(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1DE10(Type_AE400_29795* a1x)
 {
-  sub_1A390(a1x, 0x3Cu);
+  UpdateFollower_1A390(a1x, 0x3Cu);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -23570,7 +23635,7 @@ LABEL_53:
   }
   else
   {
-    sub_196E0(a1x);
+    MoveCreature_196E0(a1x);
     if ( !(a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26) )
     {
       v7 = (a1x->maxLife_29803_8 >> 6) + a1x->actLife_29807_12;
@@ -23733,7 +23798,7 @@ void sub_1E380(Type_AE400_29795* a1x)
     return;
   }
   dword_AE400_AE3F0(v1);
-  sub_196E0(a1x);
+  MoveCreature_196E0(a1x);
   v9 = dword_AE400_AE3F0() + 29795 + 164 * a1x->var_u16_29941_146;
   if (a1x->maxLife_29803_8 >> 1 <= a1x->actLife_29807_12 )
   {
@@ -23809,7 +23874,7 @@ LABEL_38:
 //SYNCHRONIZED WITH REMC1
 void sub_1E6F0(Type_AE400_29795* a1x)
 {
-  sub_1A390(a1x, 0x42u);
+  UpdateFollower_1A390(a1x, 0x42u);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -24169,7 +24234,7 @@ LABEL_23:
   else
   {
     dword_AE400_AE3F0(v1);
-    sub_196E0(a1x);
+    MoveCreature_196E0(a1x);
     if ( !(a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26) )
     {
       v10 = 9377 * a1x->rand_29799_4 + 9439;
@@ -24265,7 +24330,7 @@ void sub_1F120(Type_AE400_29795* a1x)
   else
   {
     dword_AE400_AE3F0(v1);
-    sub_196E0(a1x);
+    MoveCreature_196E0(a1x);
     if ( !(a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26 / 2) )
     {
       v9 = dword_AE400_AE3F0() + 29795 + 164 * a1x->var_u16_29941_146;
@@ -24481,7 +24546,7 @@ void sub_1F640(Type_AE400_29795* a1x)
   else
   {
     dword_AE400_AE3F0(v1);
-    sub_196E0(a1x);
+    MoveCreature_196E0(a1x);
     LOWORD(j) = a1x->var_u8_29858_63 / a1x->var_u32_29951_156->v_26;
     if ( !(a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26) )
     {
@@ -24657,7 +24722,7 @@ void sub_1FAC0(Type_AE400_29795* a1x)
   else
   {
     dword_AE400_AE3F0(v1);
-    sub_196E0(a1x);
+    MoveCreature_196E0(a1x);
     LOWORD(j) = a1x->var_u8_29858_63 / a1x->var_u32_29951_156->v_26;
     if ( !(a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26) )
     {
@@ -24970,7 +25035,7 @@ LABEL_25:
 //SYNCHRONIZED WITH REMC1
 void sub_203E0(Type_AE400_29795* a1x)
 {
-  sub_1A390(a1x, 0x5Au);
+  UpdateFollower_1A390(a1x, 0x5Au);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -25054,7 +25119,7 @@ void sub_20480(Type_AE400_29795* a1x)
       sub_41EC0_42200(&word_AE454_AE444, v14, 0, 256);
       a1x->rand_29799_4 = 9377 * a1x->rand_29799_4 + 9439;
       v3 = a1x->rand_29799_4 % (unsigned int)*((unsigned __int16 *)v18 + (unsigned __int16)v20);
-      v4 = (v3 + 2) * (sub_11640(a1x, &word_AE454_AE444, 1) == 0);
+      v4 = (v3 + 2) * (IsMoveBlocked_11640(a1x, &word_AE454_AE444, 1) == 0);
       if ( (unsigned __int16)v4 > (unsigned __int16)v19 )
       {
         v19 = v4;
@@ -25110,7 +25175,7 @@ void sub_20480(Type_AE400_29795* a1x)
     v16 = a1x->var_u32_29951_156->v_10;
     v15 = a1x->var_u32_29951_156->v_12;
     v12 = GetTerrainHeight_11F50(&word_AE454_AE444);
-    v13 = sub_42000_42340(&word_AE454_AE444, v12, v15, v16, v17);
+    v13 = KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v12, v15, v16, v17);
     sub_41C70_41FB0(a1x, &word_AE454_AE444);
   }
 }
@@ -25246,7 +25311,7 @@ void sub_207E0(Type_AE400_29795* a1x)
     return;
   }
   dword_AE400_AE3F0(v1);
-  sub_196E0(a1x);
+  MoveCreature_196E0(a1x);
   v11 = dword_AE400_AE3F0() + 29795 + 164 * a1x->var_u16_29941_146;
   if ( (a1x->var_u8_29858_63 & 7) == 0
     && (*(_BYTE *)(v11 + 64) == 3 || sub_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v11 + 72)) >= 0x200) )
@@ -25298,7 +25363,7 @@ void sub_207E0(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_20B60(Type_AE400_29795* a1x)
 {
-  sub_1A390(a1x, 0x60u);
+  UpdateFollower_1A390(a1x, 0x60u);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -27217,7 +27282,7 @@ void sub_24F60(Type_AE400_29795* a1x)
         a1x->var_u16_29841_46 = v8 - 32;
         sub_55370_558A0(a1x - v9x, -1, 3);
       }
-      sub_42000_42340(&a1x->var_u32_29867_72, v3, 0, 0, a1x->var_u16_29841_46);
+      KeepHeightAboveGround_42000_42340(&a1x->var_u32_29867_72, v3, 0, 0, a1x->var_u16_29841_46);
       sub_42510_42850(a1x);
     }
     else
@@ -51740,7 +51805,9 @@ void sub_41F50_42290(axis_3d* pos1, axis_3d* pos2)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_42000_42340(axis_3d* a1x, int a2, int a3, int a4, int a5)
+/// Height control: a3/a4 = min/max height above ground a2, a5 = vertical speed (negative = sink).
+/// Above max: z += a5; between: z += a5/4; below min: snapped to min. Returns 1 if z was changed.
+int KeepHeightAboveGround_42000_42340(axis_3d* a1x, int a2, int a3, int a4, int a5)
 {
   int v5; // ecx
   int result; // eax
@@ -55919,7 +55986,7 @@ LABEL_17:
         v15 = v10[5];
         v14 = v10[6];
         v11 = GetTerrainHeight_11F50(&word_AE454_AE444);
-        v12 = sub_42000_42340(&word_AE454_AE444, v11, v14, v15, v16);
+        v12 = KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v11, v14, v15, v16);
         sub_41C70_41FB0((Type_AE400_29795*)a1, &word_AE454_AE444);
         return sub_481D0_48510(a1);
       }
@@ -57741,7 +57808,7 @@ void sub_4BD60_4C0A0()//21CD60_
       {
         dword_4A12C_4A46C[byte_12CBC6_12CBB6].fnc();
         //run setting
-        // plag game sub_4FF30_50270
+        // plag game MenuNewGame_4FF30_50270
         if ( (byte_12CBD5_12CBC5 & 8) != 0 )
         {
           v0 = 1;
@@ -59852,7 +59919,8 @@ void sub_4FEB0()
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4FF30_50270()
+/// Main-menu "new game": asks "New Game? Yes/No" (unless forced) and resets level and player state.
+void MenuNewGame_4FF30_50270()
 {
     //fix
     int a1 = 0;
@@ -59868,7 +59936,7 @@ void sub_4FF30_50270()
   {
     str_AE408_AE3F8->var_u16_17 = 0;
     mainMenuSelector_12CBCE_12CBBE = 5;
-    memset((void*)(2049 * str_AE400_AE3F0->var_u16_8 + str_AE400_AE3F0 + 13323 + 1995), 0, 24);
+    memset((uint8_t*)str_AE400_AE3F0 + 13323 + 2049 * str_AE400_AE3F0->var_u16_8 + 1995, 0, 24); // PORT: was "... + str_AE400_AE3F0 + 13323 + 1995" - byte offsets added to the typed pointer (x232713), crashed when starting a new game after abandoning one
     bool_96880 = true;
     byte_12CBD5_12CBC5 |= 8u;
   }
@@ -73831,9 +73899,13 @@ int sub_634E0_639F0(Pathstruct* pathstruct)//2344e0_
 		pathstruct->var36_size_buffer = GetRNCFilesize_63910_63E20(pathstruct);
 		if (pathstruct->var36_size_buffer <= 0)
 			return 0;
-		*pathstruct->colorPalette_var28 = (uint8_t*)mallocVar(pathstruct->var36_size_buffer+0x10);
+		// PORT: + 64 KB of zeros (was +0x10). The texture rasteriser (DrawTriangle_729A3_72EB3) addresses
+		// texels as base + (v << 8 | u) and reads up to 64 KB past a texture; in DOS that hit the next
+		// pool block, here it read past the heap block - garbage that differed between Debug and Release.
+		*pathstruct->colorPalette_var28 = (uint8_t*)mallocVar(pathstruct->var36_size_buffer + 0x10000);
 		if (!(*pathstruct->colorPalette_var28))
 			return -1;
+		memset(*pathstruct->colorPalette_var28 + pathstruct->var36_size_buffer, 0, 0x10000);
         
 		if (sub_3EEA0_3F1E0(pathstruct->path, *pathstruct->colorPalette_var28) != pathstruct->var36_size_buffer)
 		{

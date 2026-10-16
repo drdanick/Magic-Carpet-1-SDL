@@ -56,12 +56,40 @@ class LeImage:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--exe", required=True)
-    ap.add_argument("cmd", choices=["dump", "carray"])
+    ap.add_argument("cmd", choices=["dump", "carray", "strptrs", "disasm"])
     ap.add_argument("addr", type=lambda x: int(x, 0))
-    ap.add_argument("length", type=lambda x: int(x, 0))
+    ap.add_argument("length", type=lambda x: int(x, 0), help="bytes (dump/carray) or entries (strptrs)")
     ap.add_argument("name", nargs="?", default="data")
+    ap.add_argument("--base", type=lambda x: int(x, 0), default=0x90000,
+                    help="strptrs: object base the stored pointers are relative to (LE fixups are not "
+                         "applied in the file; data-object pointers are offsets from 0x90000)")
     a = ap.parse_args()
-    b = LeImage(a.exe).read(a.addr, a.length)
+    img = LeImage(a.exe)
+    if a.cmd == "strptrs":
+        # A table of char* in the data object -> C initializer with the strings themselves.
+        print(f"char* {a.name}[{a.length}] = {{ // CARPET.EXE {a.addr:#x}, {a.length} string pointers")
+        for i in range(a.length):
+            p = struct.unpack_from("<I", img.read(a.addr + 4 * i, 4))[0]
+            if p == 0:
+                print("    nullptr,")
+                continue
+            s, q = bytearray(), a.base + p
+            while (c := img.read(q, 1)) != b"\0":
+                s += c
+                q += 1
+            esc = "".join(ch if 32 <= ord(ch) < 127 and ch not in '"\\' else f"\\x{ord(ch):02x}" if ord(ch) < 32 or ord(ch) >= 127 else "\\" + ch
+                          for ch in s.decode("latin-1"))
+            print(f'    (char*)"{esc}",')
+        print("};")
+        return
+    b = img.read(a.addr, a.length)
+    if a.cmd == "disasm":
+        # The ground truth when a decompiled line looks wrong (pip install capstone).
+        import capstone
+        md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+        for ins in md.disasm(b, a.addr):
+            print(f"{ins.address:06X}: {ins.bytes.hex():<20} {ins.mnemonic} {ins.op_str}")
+        return
     if a.cmd == "dump":
         for i in range(0, len(b), 16):
             print(f"{a.addr + i:06X}: " + " ".join(f"{x:02x}" for x in b[i:i + 16]))
