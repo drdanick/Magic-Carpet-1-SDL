@@ -7,6 +7,8 @@
 #include "port_watchdog.h"
 #include "Presenter.h"
 #include <memory>
+#include <vector>
+#include <algorithm>
 
 #include <cstdlib>
 
@@ -14,6 +16,8 @@
 
 #include "../engine/sub_main_mouse.h"
 #include "../engine/CommandLineParser.h"
+
+
 
 #ifdef USE_DOSBOX
 extern DOS_Device* DOS_CON;
@@ -91,6 +95,9 @@ void VGA_Init(Uint32  /*flags*/, int width, int height, bool maintainAspectRatio
 			printf("Video initialisation failed\n");
 			exit(1);
 		}
+		PortTimer_SetVsyncRefresh(g_presenter->VsyncRefreshHz());
+		if (g_settings.frameStats)
+			fprintf(stderr, "frame-stats: vsync refresh %d Hz\n", g_presenter->VsyncRefreshHz());
 
 		m_gamePalletisedSurface = SDL_CreateRGBSurfaceWithFormat(0, width, height, 8, SDL_PIXELFORMAT_INDEX8);
 		if (!VGA_LoadFont())
@@ -401,8 +408,7 @@ void VGA_Draw_string(char* wrstring) {
 	if (SDL_MUSTLOCK(m_gamePalletisedSurface)) {
 		SDL_UnlockSurface(m_gamePalletisedSurface);
 	}
-	SubBlit(m_iOrigw, m_iOrigh);
-	mydelay(10);
+	SubBlit(m_iOrigw, m_iOrigh); // PORT: a fixed mydelay(10) followed here; pacing is PortTimer_LimitFrame/WaitRetrace
 }
 
 int drawCounter = 0;
@@ -707,6 +713,7 @@ int events()
 		case SDL_KEYDOWN:
 			if (event.key.repeat)
 				break;
+			event.key.keysym.scancode = Port_RemapKey(event.key.keysym.scancode);
 			if (!handleSpecialKeys(event)) {
 				InputScript_RecordKey(presentedFrames, true, event.key.keysym.scancode);
 				VGA_InjectKey(true, event.key.keysym.scancode);
@@ -714,6 +721,7 @@ int events()
 			break;
 
 		case SDL_KEYUP:
+			event.key.keysym.scancode = Port_RemapKey(event.key.keysym.scancode);
 			InputScript_RecordKey(presentedFrames, false, event.key.keysym.scancode);
 			VGA_InjectKey(false, event.key.keysym.scancode);
 			break;
@@ -893,10 +901,51 @@ void VGA_Blit(Uint8* srcBuffer) {
 }
 
 // Automation/diagnostics: --dump-frames / --exit-after-frames (see Settings.h)
+// --frame-stats: frame-interval percentiles every 5 s, to measure smoothness (pacing changes).
+static void FrameStats()
+{
+	static std::vector<double> intervals;
+	static uint64_t last = 0, windowStart = 0;
+	const uint64_t now = SDL_GetPerformanceCounter();
+	const double freq = (double)SDL_GetPerformanceFrequency();
+	if (last)
+		intervals.push_back((now - last) * 1000.0 / freq);
+	else
+		windowStart = now;
+	last = now;
+	if ((now - windowStart) / freq < 5.0 || intervals.empty())
+		return;
+	std::vector<double> v = intervals;
+	std::sort(v.begin(), v.end());
+	auto pct = [&](double p) { return v[(size_t)(p * (v.size() - 1))]; };
+	fprintf(stderr, "frame-stats: %.1f fps  ms p50 %.1f p90 %.1f p99 %.1f max %.1f  (game ticks %.1f/s)\n",
+		v.size() / ((now - windowStart) / freq), pct(0.5), pct(0.9), pct(0.99), v.back(),
+		PortTimer_TickCount() / ((double)SDL_GetTicks64() / 1000.0));
+	intervals.clear();
+	windowStart = now;
+}
+
+// Optional key remapping applied before recording/injection (recordings store the result).
+SDL_Scancode Port_RemapKey(SDL_Scancode sc)
+{
+	if (g_settings.wasdAsArrows) {
+		switch (sc) {
+		case SDL_SCANCODE_W: return SDL_SCANCODE_UP;
+		case SDL_SCANCODE_S: return SDL_SCANCODE_DOWN;
+		case SDL_SCANCODE_A: return SDL_SCANCODE_LEFT;
+		case SDL_SCANCODE_D: return SDL_SCANCODE_RIGHT;
+		default: break;
+		}
+	}
+	return sc;
+}
+
 static void DebugFrameHooks()
 {
 	presentedFrames++;
 	Watchdog_Kick();
+	if (g_settings.frameStats)
+		FrameStats();
 	InputScript_FlushRecording();
 	PortTimer_OnFrame();
 	if (!g_settings.frameHashFile.empty())

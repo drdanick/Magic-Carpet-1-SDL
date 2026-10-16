@@ -40849,6 +40849,7 @@ void DrawAndEventsInGame_34530_348F0()//205530_
 //----- (00034610) --------------------------------------------------------
 void GameLoop_34610_349D0()//205610_
 {
+    PortTimer_SetFrameCap(g_settings.maxGameFps); // PORT: gameplay logic advances once per frame
   //int v3; // ebx
   //int result; // eax
 #ifdef MODIFY_SETTINGS
@@ -40891,6 +40892,7 @@ void GameLoop_34610_349D0()//205610_
       break;
     DrawAndEventsInGame_34530_348F0();
   }
+  PortTimer_SetFrameCap(g_settings.menuFps);
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
 // AE408: using guessed type int dword_AE408_AE3F8();
@@ -66383,7 +66385,7 @@ void Blit_599B0_59EC0(__int16 a1)//22A9B0_
         if (!byte_9AD96)
             sub_5BE50_5C360();
     }
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));//fix it
+    PortTimer_LimitFrame(); // PORT: was a fixed 100 ms sleep ("fix it") - ~8 fps; now a frame cap (menus 70, game --fps)
 
     //tempScreenBuffer_A0000 = begWscreen_2ECFF4_2ECFE4;
     /*
@@ -68653,7 +68655,7 @@ void sub_5CB73(int a1, __int16 a2)
 
 void fixWaitForBeam_5CC54_5D164() {
     FixPerifery((char*)"VSYNC");
-    std::this_thread::sleep_for(std::chrono::milliseconds(20));
+    PortTimer_WaitRetrace(g_settings.menuFps); // PORT: emulated 70 Hz vertical retrace (was a fixed 20 ms sleep)
     VGA_Blit(nullptr);
 }
 
@@ -68661,7 +68663,7 @@ void fixWaitForBeam_5CC54_5D164() {
 void WaitForBeam_5CC54_5D164()
 {
     FixPerifery((char*)"VSYNC");
-    std::this_thread::sleep_for(std::chrono::milliseconds(20));
+    PortTimer_WaitRetrace(g_settings.menuFps); // PORT: emulated 70 Hz vertical retrace (was a fixed 20 ms sleep)
     VGA_Blit(nullptr);
     //VGA_Blit(begWscreen_2ECFF4_2ECFE4);
   //fix !!! (VSYNC)
@@ -68769,7 +68771,7 @@ void Blit_5CDA0_5D2B0()
     if (!byte_9AD96)
         sub_5BE50_5C360();
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));//fix it
+    PortTimer_LimitFrame(); // PORT: was a fixed 100 ms sleep ("fix it") - ~8 fps; now a frame cap (menus 70, game --fps)
 
     //tempScreenBuffer_A0000 = begWscreen_2ECFF4_2ECFE4;
     /*

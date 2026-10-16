@@ -2,6 +2,7 @@
 #include "sub_main.h"
 #include "portability/Settings.h"
 #include "portability/port_watchdog.h"
+#include "portability/port_timer.h"
 
 #include <string>
 #include <vector>
@@ -66,6 +67,7 @@ int main(int argc, char* argv[])
     if (gameArgs.empty())
         return 1;
     Watchdog_Start(g_settings.watchdogSeconds);
+    PortTimer_SetFrameCap(g_settings.menuFps);
 
     std::vector<char*> gameArgv;
     for (auto& a : gameArgs)

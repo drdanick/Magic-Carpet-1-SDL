@@ -49,6 +49,8 @@ public:
 	// Logical (640x480) <-> window pixel coordinates, for mouse warping.
 	virtual void LogicalToWindow(float lx, float ly, int& wx, int& wy) = 0;
 	virtual SDL_Window* Window() = 0;
+	// Display refresh rate when Present() blocks on vertical sync, else 0 (frame pacing uses it).
+	virtual int VsyncRefreshHz() = 0;
 };
 
 std::unique_ptr<IPresenter> CreateSdlPresenter();

@@ -7,14 +7,17 @@
     "windowWidth": 1280,
     "windowHeight": 960,
     "maintainAspectRatio": true,
-    "vsync": true
+    "vsync": true,
+    "maxGameFps": 30,
+    "menuFps": 70
   },
   "audio": {
     "sound": true,
     "music": true
   },
   "input": {
-    "grabMouse": true
+    "grabMouse": true,
+    "wasdAsArrows": true
   },
   "debug": {
     "log": false

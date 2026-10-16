@@ -19,7 +19,12 @@ struct Remc1Settings {
 	int windowHeight = 960;
 	bool maintainAspectRatio = true;
 	bool vsync = true;
+	// Frame pacing. The game logic advances once per frame (the DOS original ran as fast as the CPU
+	// allowed), so gameplay needs a cap; menus are paced like the VGA retrace (70 Hz in 320x200).
+	int maxGameFps = 30;        // 0 = uncapped
+	int menuFps = 70;           // menu/movie frame cap and emulated vertical retrace rate
 	bool grabMouse = true;
+	bool wasdAsArrows = true;   // testing convenience: W/A/S/D send the arrow keys (can't type them then)
 
 	// Audio
 	bool sound = true; // sound effects (SDL_mixer)
@@ -31,6 +36,7 @@ struct Remc1Settings {
 	int dumpEvery = 30;
 	int exitAfterFrames = 0;   // >0: quit after this many presented frames (automation)
 	std::string frameHashFile; // if set, "<frame> <hash>" of framebuffer+palette is logged per frame
+	bool frameStats = false;   // --frame-stats: print frame-interval percentiles every 5 s (pacing work)
 	bool headless = false;     // SDL dummy video driver; live keyboard/mouse input is ignored
 	int watchdogSeconds = -1;  // freeze watchdog; -1 = default (20 s for automated runs, off otherwise), 0 = off
 };

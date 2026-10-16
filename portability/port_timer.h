@@ -40,3 +40,17 @@ double PortTimer_TickHz();
 void PortTimer_OnFrame();
 // Called from busy-wait loops in game code.
 void PortTimer_Yield();
+
+// --- Frame pacing (real-time mode only; no-ops for deterministic runs and replays) -------------
+// The DOS game ran as fast as the CPU allowed and the game logic advances once per frame, so the
+// port caps the frame rate. The cap is switched by context: gameplay (GameLoop) vs menus/movies.
+void PortTimer_SetFrameCap(int fps);
+// Refresh rate when presents block on vsync (0 = no vsync). With vsync the limiter paces in whole
+// refreshes when the cap is close to refresh/N, instead of fighting the blocking present.
+void PortTimer_SetVsyncRefresh(int hz);
+int PortTimer_FrameCap();
+// Waits so that consecutive calls are at least 1/cap apart (steady cadence, resyncs after stalls).
+void PortTimer_LimitFrame();
+// Emulates waiting for the VGA vertical retrace: sleeps until the next tick of a free-running
+// clock at hz (70 Hz for the 320x200 mode the menus use).
+void PortTimer_WaitRetrace(int hz);

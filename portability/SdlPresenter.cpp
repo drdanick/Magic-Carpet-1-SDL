@@ -143,6 +143,16 @@ public:
 	}
 
 	SDL_Window* Window() override { return window_; }
+	int VsyncRefreshHz() override
+	{
+		SDL_RendererInfo info;
+		if (!renderer_ || SDL_GetRendererInfo(renderer_, &info) != 0 || !(info.flags & SDL_RENDERER_PRESENTVSYNC))
+			return 0;
+		SDL_DisplayMode mode;
+		if (SDL_GetWindowDisplayMode(window_, &mode) != 0 || mode.refresh_rate <= 0)
+			return 0;
+		return mode.refresh_rate;
+	}
 
 private:
 	PresenterConfig config_;
@@ -164,6 +174,7 @@ public:
 	void SetMouseGrab(bool) override {}
 	void LogicalToWindow(float lx, float ly, int& wx, int& wy) override { wx = (int)lx; wy = (int)ly; }
 	SDL_Window* Window() override { return nullptr; }
+	int VsyncRefreshHz() override { return 0; }
 };
 
 } // namespace

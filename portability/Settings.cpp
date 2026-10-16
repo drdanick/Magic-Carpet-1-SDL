@@ -112,6 +112,8 @@ static void LoadConfigFile(const fs::path& path)
 		s.windowHeight = g.value("windowHeight", s.windowHeight);
 		s.maintainAspectRatio = g.value("maintainAspectRatio", s.maintainAspectRatio);
 		s.vsync = g.value("vsync", s.vsync);
+		s.maxGameFps = g.value("maxGameFps", s.maxGameFps);
+		s.menuFps = g.value("menuFps", s.menuFps);
 	}
 	if (j.contains("audio")) {
 		s.sound = j["audio"].value("sound", s.sound);
@@ -119,6 +121,7 @@ static void LoadConfigFile(const fs::path& path)
 	}
 	if (j.contains("input")) {
 		s.grabMouse = j["input"].value("grabMouse", s.grabMouse);
+		s.wasdAsArrows = j["input"].value("wasdAsArrows", s.wasdAsArrows);
 	}
 	if (j.contains("debug")) {
 		s.debugLog = j["debug"].value("log", s.debugLog);
@@ -136,6 +139,8 @@ static void PrintUsage()
 		"  --window WxH       window size (default 1280x960)\n"
 		"  --no-grab          do not confine the mouse to the window\n"
 		"  --no-vsync         present without waiting for vertical sync\n"
+		"  --no-wasd          don't map W/A/S/D to the arrow keys\n"
+		"  --fps N            in-game frame cap (default 30, 0 = uncapped; game speed follows it)\n"
 		"  --no-sound / --no-music   disable sound effects / music\n"
 		"  --debug-log        write debug.txt next to the executable\n"
 		"  --dump-frames <dir> [--dump-every N]  save every Nth presented frame (default 30) as BMP\n"
@@ -145,6 +150,7 @@ static void PrintUsage()
 		"                                         (default 20 for scripted/headless runs, 0 = off)\n"
 		"  --headless                           no visible window (SDL dummy driver), live input ignored\n"
 		"  --frame-hashes <file>                  log a hash of every presented frame (replay tests)\n"
+		"  --frame-stats                          print frame-time percentiles every 5 s (smoothness)\n"
 		"  --deterministic [N]                   game timer advances N ticks (default 5) per frame instead of real time\n"
 		"  --input-script <file>                 play scripted input (format: portability/InputScript.h)\n"
 		"  --record-input <file>                  record live input in the same format\n"
@@ -176,6 +182,8 @@ std::vector<std::string> InitSettings(int argc, char* argv[])
 		else if (a == "--fullscreen") cliFullscreen = true;
 		else if (a == "--no-grab") cliNoGrab = true;
 		else if (a == "--no-vsync") g_settings.vsync = false;
+		else if (a == "--no-wasd") g_settings.wasdAsArrows = false;
+		else if (a == "--fps") g_settings.maxGameFps = atoi(next("frames per second").c_str());
 		else if (a == "--no-sound") g_settings.sound = false;
 		else if (a == "--no-music") g_settings.music = false;
 		else if (a == "--debug-log") cliDebugLog = true;
@@ -183,6 +191,7 @@ std::vector<std::string> InitSettings(int argc, char* argv[])
 		else if (a == "--dump-every") g_settings.dumpEvery = (std::max)(1, atoi(next("a number").c_str()));
 		else if (a == "--exit-after-frames") g_settings.exitAfterFrames = atoi(next("a number").c_str());
 		else if (a == "--frame-hashes") g_settings.frameHashFile = next("a file");
+		else if (a == "--frame-stats") g_settings.frameStats = true;
 		else if (a == "--headless") g_settings.headless = true;
 		else if (a == "--watchdog") g_settings.watchdogSeconds = atoi(next("seconds").c_str());
 		else if (a == "--c-drive") g_settings.cDrivePath = fs::path(next("a directory")).generic_string();

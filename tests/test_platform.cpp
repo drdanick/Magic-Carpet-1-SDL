@@ -4,6 +4,7 @@
 #include "sub_main.h"
 #include "portability/InputScript.h"
 #include "portability/port_timer.h"
+#include "portability/Settings.h"
 
 #include <cstdio>
 #include <filesystem>
@@ -63,6 +64,20 @@ TEST(Keyboard, ScancodeTranslation)
 	EXPECT_EQ(tr(SDL_SCANCODE_RIGHT), 0x4d00);
 	EXPECT_EQ(tr(SDL_SCANCODE_F1), 0x3b00);
 	EXPECT_EQ(tr(SDL_SCANCODE_LALT), 0x3800);
+}
+
+TEST(Keyboard, WasdMapsToArrowsWhenEnabled)
+{
+	const bool saved = g_settings.wasdAsArrows;
+	g_settings.wasdAsArrows = true;
+	EXPECT_EQ(Port_RemapKey(SDL_SCANCODE_W), SDL_SCANCODE_UP);
+	EXPECT_EQ(Port_RemapKey(SDL_SCANCODE_S), SDL_SCANCODE_DOWN);
+	EXPECT_EQ(Port_RemapKey(SDL_SCANCODE_A), SDL_SCANCODE_LEFT);
+	EXPECT_EQ(Port_RemapKey(SDL_SCANCODE_D), SDL_SCANCODE_RIGHT);
+	EXPECT_EQ(Port_RemapKey(SDL_SCANCODE_Q), SDL_SCANCODE_Q);
+	g_settings.wasdAsArrows = false;
+	EXPECT_EQ(Port_RemapKey(SDL_SCANCODE_W), SDL_SCANCODE_W);
+	g_settings.wasdAsArrows = saved;
 }
 
 TEST(Keyboard, InjectKeyFillsPressedTable)
