@@ -53,6 +53,7 @@ bool VGA_check_standart_input_status();
 uint16_t VGA_read_char_from_buffer();
 void VGA_Set_mouse(int16_t a1, int16_t a2);
 void setPress(bool locpressed, uint16_t loclastchar);
+void VGA_InjectKey(bool down, int sdlScancode);
 
 void VGA_mouse_clear_keys();
 void VGA_cleanKeyBuffer();

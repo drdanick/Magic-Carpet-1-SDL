@@ -1,6 +1,11 @@
 //#include "../engine/engine_support.h"
 #include "port_sdl_vga_mouse.h"
 #include "port_time.h"
+#include "Settings.h"
+#include "InputScript.h"
+#include "port_timer.h"
+
+#include <cstdlib>
 
 #include <cstdint>
 
@@ -39,6 +44,7 @@ Uint8 tempPalettebuffer[768];
 int oldWidth;
 
 bool subBlitLock = false;
+static uint32_t presentedFrames = 0; // frames presented so far (input scripts and frame dumps are keyed on it)
 
 // Initalize Color Masks.
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -88,8 +94,14 @@ void VGA_Init(Uint32  /*flags*/, int width, int height, bool maintainAspectRatio
 				SDL_Log("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
 				return;
 			}
-			SDL_WindowFlags test_fullscr = SDL_WINDOW_SHOWN;
-			m_window = SDL_CreateWindow(default_caption, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width/*dm.w*/, height/*dm.h*/, test_fullscr);
+			// The window can be any size; the renderer's logical size is the game's 640x480 mouse/VGA
+			// space, so SDL letterboxes to 4:3 and reports mouse coordinates in game units.
+			settingWindowGrabbed = g_settings.grabMouse;
+			Uint32 windowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
+			if (g_settings.fullscreen)
+				windowFlags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+			m_window = SDL_CreateWindow(default_caption, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+				g_settings.windowWidth, g_settings.windowHeight, windowFlags);
 			SDL_SetWindowGrab(m_window, settingWindowGrabbed ? SDL_TRUE : SDL_FALSE);
 
 			m_renderer =
@@ -97,6 +109,7 @@ void VGA_Init(Uint32  /*flags*/, int width, int height, bool maintainAspectRatio
 					SDL_RENDERER_TARGETTEXTURE);
 
 			SDL_SetRenderDrawColor(m_renderer, 0x00, 0x00, 0x00, 0xFF);
+			SDL_RenderSetLogicalSize(m_renderer, width, height);
 
 			// Now create your surface and convert the pixel format right away!
 			// Converting the pixel format to match the texture makes for quicker updates, otherwise
@@ -740,6 +753,18 @@ bool handleSpecialKeys(const SDL_Event &event) {
 }
 
 int mousex, mousey;
+
+// SDL reports mouse positions in renderer logical units (640x480, see VGA_Init). The game's mouse
+// space is 640 wide and 2x the line count in 200/400-line modes (DOS INT 33h in mode 13h), i.e.
+// 640x400 for 320x200 and 640x400 modes, 640x480 for 640x480.
+static void LogicalToGameMouse(int lx, int ly, int& gx, int& gy) {
+	int gameMouseH = (m_iOrigw <= 320) ? m_iOrigh * 2 : m_iOrigh;
+	gx = lx < 0 ? 0 : (lx > 639 ? 639 : lx);
+	gy = ly * gameMouseH / 480;
+	if (gy < 0) gy = 0;
+	if (gy > gameMouseH - 1) gy = gameMouseH - 1;
+}
+
 bool pressed = false;
 uint16_t lastchar = 0;
 int events()
@@ -753,30 +778,26 @@ int events()
 		switch (event.type)
 		{
 		case SDL_KEYDOWN:
-			pressed = true;
-			lastchar = (event.key.keysym.scancode << 8) + event.key.keysym.sym;
-
+			if (event.key.repeat)
+				break;
 			if (!handleSpecialKeys(event)) {
-				setPress(true, lastchar);
+				InputScript_RecordKey(presentedFrames, true, event.key.keysym.scancode);
+				VGA_InjectKey(true, event.key.keysym.scancode);
 			}
-			printf("Key press detected\n");//test
 			break;
 
 		case SDL_KEYUP:
-			lastchar = (event.key.keysym.scancode << 8) + event.key.keysym.sym;
-			setPress(false, lastchar);
-			printf("Key release detected\n");//test
+			InputScript_RecordKey(presentedFrames, false, event.key.keysym.scancode);
+			VGA_InjectKey(false, event.key.keysym.scancode);
 			break;
 
 		case SDL_MOUSEMOTION:
-			mousex = event.motion.x;
-			mousey = event.motion.y;
-			MouseEvents(1, event.motion.x, event.motion.y);
+			LogicalToGameMouse(event.motion.x, event.motion.y, mousex, mousey);
+			InputScript_RecordMouseMove(presentedFrames, mousex, mousey);
+			MouseEvents(1, mousex, mousey);
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 		case SDL_MOUSEBUTTONUP:
-			mousex = event.motion.x;
-			mousey = event.motion.y;
 
 			buttonresult = 0;
 
@@ -830,7 +851,9 @@ int events()
 			}
 			}
 
-			MouseEvents(buttonresult, event.motion.x, event.motion.y);
+			LogicalToGameMouse(event.button.x, event.button.y, mousex, mousey);
+			InputScript_RecordMouseButtons(presentedFrames, buttonresult, mousex, mousey);
+			MouseEvents(buttonresult, mousex, mousey);
 			break;
 
 		case SDL_QUIT: return 0;
@@ -839,8 +862,12 @@ int events()
 	return 1;
 }
 
+// x/y are in game mouse space (see LogicalToGameMouse)
 void VGA_Set_mouse(int16_t x, int16_t y) {
-	SDL_WarpMouseInWindow(m_window, x, y);
+	int gameMouseH = (m_iOrigw <= 320) ? m_iOrigh * 2 : m_iOrigh;
+	int wx, wy;
+	SDL_RenderLogicalToWindow(m_renderer, (float)x, (float)y * 480.0f / gameMouseH, &wx, &wy);
+	SDL_WarpMouseInWindow(m_window, wx, wy);
 };
 
 /*
@@ -893,6 +920,7 @@ void VGA_Blit(Uint8* srcBuffer) {
 
 	oldWidth = m_gamePalletisedSurface->w;
 	if (CommandLineParams.DoHideGraphics()) return;
+	InputScript_OnFrame(presentedFrames);
 	events();
 
 	if ((m_iOrigh != m_gamePalletisedSurface->h)||(m_iColorsByte != act_ColorsByte))
@@ -937,6 +965,27 @@ void VGA_Blit(Uint8* srcBuffer) {
 	//fix it !!!! SOUND_UPDATE();
 }
 
+// Automation/diagnostics: --dump-frames / --exit-after-frames (see Settings.h)
+static void DebugFrameHooks()
+{
+	presentedFrames++;
+	PortTimer_OnFrame();
+	if (!g_settings.dumpFramesDir.empty() && (presentedFrames % g_settings.dumpEvery) == 0)
+	{
+		char name[64];
+		snprintf(name, sizeof(name), "/frame%06u.bmp", presentedFrames);
+		std::string path = g_settings.dumpFramesDir + name;
+		if (SDL_SaveBMP(m_gamePalletisedSurface, path.c_str()) != 0)
+			printf("SDL_SaveBMP(%s) failed: %s\n", path.c_str(), SDL_GetError());
+	}
+	if (g_settings.exitAfterFrames > 0 && presentedFrames >= (uint32_t)g_settings.exitAfterFrames)
+	{
+		printf("exit after %u frames\n", presentedFrames);
+		fflush(stdout);
+		std::_Exit(0);
+	}
+}
+
 void SubBlit(uint16_t originalResWidth, uint16_t originalResHeight) {
 	while (subBlitLock);//fix problem with quick blitting
 	subBlitLock = true;
@@ -947,36 +996,17 @@ void SubBlit(uint16_t originalResWidth, uint16_t originalResHeight) {
 	rectSrc.w = originalResWidth;
 	rectSrc.h = originalResHeight;
 
+	// Every VGA mode the game uses (320x200, 640x400, 640x480) filled a 4:3 CRT, so stretch the
+	// game image over the whole 4:3 logical area (letterboxing to the window is done by SDL).
 	SDL_Rect dscrect;
-	if (m_bMaintainAspectRatio)
-	{
-		float widthRatio = (float)m_gameRGBASurface->w / (float)originalResWidth;
-		float heightRatio = (float)m_gameRGBASurface->h / (float)originalResHeight;
-
-		if (widthRatio >= heightRatio)
-		{
-			dscrect.w = (int)((float)originalResWidth * heightRatio);
-			dscrect.h = (int)((float)originalResHeight * heightRatio);
-			dscrect.x = (m_gameRGBASurface->w - dscrect.w) / 2;
-			dscrect.y = 0;
-		}
-		else
-		{
-			dscrect.w = (int)((float)originalResWidth * widthRatio);
-			dscrect.h = (int)((float)originalResHeight * widthRatio);
-			dscrect.x = 0;
-			dscrect.y = (m_gameRGBASurface->h - dscrect.h) / 2;
-		}
-	}
-	else
-	{
-		dscrect.w = m_gameRGBASurface->w;
-		dscrect.h = m_gameRGBASurface->h;
-		dscrect.x = 0;
-		dscrect.y = 0;
-	}
+	dscrect.w = m_gameRGBASurface->w;
+	dscrect.h = m_gameRGBASurface->h;
+	dscrect.x = 0;
+	dscrect.y = 0;
 
 	SDL_BlitSurface(m_gamePalletisedSurface, NULL, m_gameRGBASurface, NULL);
+
+	DebugFrameHooks();
 
 	//if (SDL_SaveBMP(m_gameRGBASurface, "m_gameRGBASurface.bmp") != 0)
 	//{
@@ -1380,6 +1410,17 @@ void setPress(bool locpressed, uint16_t loclastchar) {
 	{
 		pressedKeys_12EEF0_12EEE0[((loclastchar & 0xff00) >> 8) & 0x7F] = 0;
 	}
+}
+
+// Single entry point for key input (live SDL events and input scripts).
+// Feeds both the INT 16h-style "last char" buffer and the INT 9-style pressed-key table.
+void VGA_InjectKey(bool down, int sdlScancode) {
+	uint16_t code = (uint16_t)(((sdlScancode & 0xff) << 8) | (SDL_GetKeyFromScancode((SDL_Scancode)sdlScancode) & 0xff));
+	if (down) {
+		pressed = true;
+		lastchar = code;
+	}
+	setPress(down, code);
 }
 
 void VGA_mouse_clear_keys() {

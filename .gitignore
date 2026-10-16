@@ -348,3 +348,11 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# remc1 port
+debug.txt
+*.bak
+/build/
+/out/
+/vcpkg_installed/
+CMakeUserPresets.json

@@ -1,0 +1,17 @@
+{
+  "paths": {
+    "data": ""
+  },
+  "graphics": {
+    "fullscreen": false,
+    "windowWidth": 1280,
+    "windowHeight": 960,
+    "maintainAspectRatio": true
+  },
+  "input": {
+    "grabMouse": true
+  },
+  "debug": {
+    "log": false
+  }
+}
