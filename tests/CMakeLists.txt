@@ -5,6 +5,7 @@ add_executable(remc1-tests
     test_layout.cpp
     test_layout_names.cpp
     test_platform.cpp
+    test_render.cpp
     test_data.cpp
     support/test_support.cpp
 )

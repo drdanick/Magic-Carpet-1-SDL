@@ -103802,7 +103802,7 @@ void DrawTriangle_729A3_72EB3(Type_RenderPoint* pnt1, Type_RenderPoint* pnt2, Ty
           case 24:
           case 25:
           case 26:
-              pnt21YxPnt13XdPnt31Y = (sortPnt2->y_1 - sortPnt1->y_1) * (sortPnt1->x_0 - sortPnt3->x_0) / diffSPnt3SPnt1Y;
+              pnt21YxPnt13XdPnt31Y = (sortPnt2->y_1 - sortPnt1->y_1) * (__int64)(sortPnt1->x_0 - sortPnt3->x_0) / diffSPnt3SPnt1Y;
               diffSortPnt2Pnt1X = sortPnt2->x_0 - sortPnt1->x_0;
               //v15 = pnt21_1xPnt13_0dPnt31_1 + diffPnt2Pnt1CVar0 == 0;
               bool16 = (pnt21YxPnt13XdPnt31Y + diffSortPnt2Pnt1X < 0) ^ __OFADD__(pnt21YxPnt13XdPnt31Y, diffSortPnt2Pnt1X);
@@ -103812,9 +103812,9 @@ void DrawTriangle_729A3_72EB3(Type_RenderPoint* pnt1, Type_RenderPoint* pnt2, Ty
               if (pnt21YxPnt13XdPnt31Y + diffSortPnt2Pnt1X)
               {
                   v18 = pnt21YxPnt13XdPnt31Y + diffSortPnt2Pnt1X + 1;
-                  scaledU.dword = (int)(sortPnt2->u_2 + diffSPnt2SPnt1Y * (sortPnt1->u_2 - sortPnt3->u_2) / diffSPnt3SPnt1Y - sortPnt1->u_2) / v18;
-                  scaledV.dword = (int)(sortPnt2->v_3 + diffSPnt2SPnt1Y * (sortPnt1->v_3 - sortPnt3->v_3) / diffSPnt3SPnt1Y - sortPnt1->v_3) / v18;
-                  scaledZ.dword = (int)(sortPnt2->z_4 + diffSPnt2SPnt1Y * (sortPnt1->z_4 - sortPnt3->z_4) / diffSPnt3SPnt1Y - sortPnt1->z_4) / v18;
+                  scaledU.dword = (int)(sortPnt2->u_2 + diffSPnt2SPnt1Y * (__int64)(sortPnt1->u_2 - sortPnt3->u_2) / diffSPnt3SPnt1Y - sortPnt1->u_2) / v18;
+                  scaledV.dword = (int)(sortPnt2->v_3 + diffSPnt2SPnt1Y * (__int64)(sortPnt1->v_3 - sortPnt3->v_3) / diffSPnt3SPnt1Y - sortPnt1->v_3) / v18;
+                  scaledZ.dword = (int)(sortPnt2->z_4 + diffSPnt2SPnt1Y * (__int64)(sortPnt1->z_4 - sortPnt3->z_4) / diffSPnt3SPnt1Y - sortPnt1->z_4) / v18; // PORT: products need 64 bits (imul/idiv in the original); in 32 bits tall triangles got garbage shading gradients - the checkerboard on the sea
               }
               divPnt3Pnt1UY = (sortPnt3->u_2 - sortPnt1->u_2) / diffSPnt3SPnt1Y;
               divPnt3Pnt1VY = (sortPnt3->v_3 - sortPnt1->v_3) / diffSPnt3SPnt1Y;
