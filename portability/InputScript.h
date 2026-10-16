@@ -20,6 +20,8 @@ bool InputScript_Load(const std::string& path);
 bool InputScript_StartRecording(const std::string& path);
 // Called once per presented frame, before SDL events are pumped.
 void InputScript_OnFrame(uint32_t frame);
+// true once a loaded script has no events left and graceFrames have passed since its last one
+bool InputScript_Exhausted(uint32_t frame, uint32_t graceFrames);
 
 // Recording hooks (called from the SDL event pump)
 void InputScript_RecordKey(uint32_t frame, bool down, int sdlScancode);

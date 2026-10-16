@@ -124,6 +124,11 @@ void InputScript_OnFrame(uint32_t frame)
 	}
 }
 
+bool InputScript_Exhausted(uint32_t frame, uint32_t graceFrames)
+{
+	return !events.empty() && nextEvent >= events.size() && frame >= events.back().frame + graceFrames;
+}
+
 bool InputScript_StartRecording(const std::string& path)
 {
 	recordFile = fopen(path.c_str(), "w");

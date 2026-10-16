@@ -474,18 +474,13 @@ void VGA_Set_file_Palette(char* filename) {
 }
 
 void VGA_Set_Palette_oneColor(uint8_t index, uint8_t red, uint8_t green, uint8_t blue) {
+	// PORT: was pushing 255 uninitialised SDL_Colors along with the one changed entry.
 	tempPalettebuffer[index * 3] = red;
 	tempPalettebuffer[index * 3 + 1] = green;
 	tempPalettebuffer[index * 3 + 2] = blue;
-	SDL_Color colors[256];
-	/* Fill colors with color information */
-	//for (int i = 0; i < 256; i++)
-	{
-		colors[index].r = 4 * tempPalettebuffer[index * 3];
-		colors[index].g = 4 * tempPalettebuffer[index * 3 + 1];
-		colors[index].b = 4 * tempPalettebuffer[index * 3 + 2];
-	}
-	SetPalette(colors);
+	uint8_t pal[768];
+	memcpy(pal, tempPalettebuffer, sizeof(pal));
+	VGA_Set_Palette(pal);
 }
 
 void VGA_Set_Palette(Uint8* Palettebuffer) {
@@ -938,6 +933,13 @@ static void DebugFrameHooks()
 	if (g_settings.exitAfterFrames > 0 && presentedFrames >= (uint32_t)g_settings.exitAfterFrames)
 	{
 		printf("exit after %u frames\n", presentedFrames);
+		fflush(stdout);
+		std::_Exit(0);
+	}
+	// Headless replays end 10 s (game time) after the script's last event instead of idling forever.
+	if (g_settings.headless && g_settings.exitAfterFrames <= 0 && InputScript_Exhausted(presentedFrames, 300))
+	{
+		printf("input script exhausted, exit at frame %u\n", presentedFrames);
 		fflush(stdout);
 		std::_Exit(0);
 	}

@@ -61,6 +61,12 @@ void EnsureClock()
 
 void SyncPoint(bool isFrame)
 {
+	if (replaying && syncIndex > replayLog.rbegin()->first) {
+		// Recording ended (e.g. the game was closed mid-FMV): continue deterministically instead of
+		// starving tick-waiting loops forever.
+		replaying = false;
+		deterministic = true;
+	}
 	EnsureClock();
 	uint32_t n;
 	if (replaying) {

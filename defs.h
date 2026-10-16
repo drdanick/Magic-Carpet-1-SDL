@@ -98,7 +98,21 @@ typedef int bool;       // we want to use bool in our C programs
 #endif
 
 // Some convenience macros to make partial accesses nicer
+#ifdef __cplusplus
+// PORT: HIBYTE/HIWORD/SHIWORD/... index from the END of the object. Hex-Rays applied them to scalars;
+// when the port later retyped a variable as a struct (e.g. word_AE454_AE444 -> axis_3d) they silently
+// started reading the last field (HIBYTE(pos) gave HIBYTE(pos.z), not HIBYTE(pos.x)). Reject that.
+template <unsigned long long ObjSize, unsigned long long PartSize>
+constexpr unsigned long long Remc1LastIndex()
+{
+	static_assert(ObjSize == 1 || ObjSize == 2 || ObjSize == 4 || ObjSize == 8,
+		"LO*/HI* macro applied to a struct or array: access the intended field instead");
+	return ObjSize / PartSize - 1;
+}
+#define LAST_IND(x,part_type)    Remc1LastIndex<sizeof(x), sizeof(part_type)>()
+#else
 #define LAST_IND(x,part_type)    (sizeof(x)/sizeof(part_type) - 1)
+#endif
 #if defined(__BYTE_ORDER) && __BYTE_ORDER == __BIG_ENDIAN
 #  define LOW_IND(x,part_type)   LAST_IND(x,part_type)
 #  define HIGH_IND(x,part_type)  0

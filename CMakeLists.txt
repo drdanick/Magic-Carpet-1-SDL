@@ -32,6 +32,13 @@ endif()
 if(MSVC)
     # /bigobj: sub_main.cpp is ~110k lines. /wd4996: POSIX/CRT names. /permissive-: off, decompiled code relies on MSVC leniency.
     target_compile_options(remc1_options INTERFACE /utf-8 /bigobj /Zc:__cplusplus /wd4996 /MP)
+    # Debug: keep stack-frame checks but not /RTCu - Hex-Rays code routinely "returns" uninitialised
+    # locals (the original just returned whatever was in eax) and /RTCu aborts on that.
+    if(NOT REMC1_ASAN)
+        foreach(flags CMAKE_C_FLAGS_DEBUG CMAKE_CXX_FLAGS_DEBUG)
+            string(REPLACE "/RTC1" "/RTCs" ${flags} "${${flags}}")
+        endforeach()
+    endif()
     if(REMC1_ASAN)
         # MSVC ASan is incompatible with /RTC1 and incremental linking; the runtime DLL is copied
         # next to the executables below.

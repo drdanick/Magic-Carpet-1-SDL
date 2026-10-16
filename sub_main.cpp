@@ -216,6 +216,44 @@ void FixPerifery(char* text = nullptr,int a = 0, int b = 0, int c = 0) {
         printf("unknown external pefifery!!!! - Fix It\n");
 };//for devices comutications
 
+// PORT: __inbyte/__outbyte are MSVC intrinsics that emit real IN/OUT instructions (a privileged
+// instruction fault in user mode). Route every DOS port access in the game code through a small
+// emulation instead: the VGA DAC (0x3C8/0x3C9) goes to the presenter palette, the game port
+// (0x201) reports "no joystick" (all axis bits stay set until the poll loop times out, as on real
+// hardware without a stick), anything else is ignored and reported once.
+static uint8_t g_portDacIndex = 0, g_portDacComponent = 0, g_portDacRgb[3];
+static unsigned char Port_InByte(unsigned int port)
+{
+    if (port == 0x201)
+        return 0xFF;
+    FixPerifery((char*)"inbyte", (int)port);
+    return 0;
+}
+static void Port_OutByte(unsigned int port, unsigned char value)
+{
+    switch (port)
+    {
+    case 0x3C8:
+        g_portDacIndex = value;
+        g_portDacComponent = 0;
+        return;
+    case 0x3C9:
+        g_portDacRgb[g_portDacComponent++] = value;
+        if (g_portDacComponent == 3)
+        {
+            VGA_Set_Palette_oneColor(g_portDacIndex++, g_portDacRgb[0], g_portDacRgb[1], g_portDacRgb[2]);
+            g_portDacComponent = 0;
+        }
+        return;
+    case 0x3C6: // DAC pixel mask
+    case 0x201: // joystick one-shot trigger
+        return;
+    }
+    FixPerifery((char*)"outbyte", (int)port);
+}
+#define __inbyte(port) Port_InByte(port)
+#define __outbyte(port, value) Port_OutByte((port), (value))
+
 char dataPath[MAX_PATH];
 char* FixPath(char* inPath)
 {
@@ -275,7 +313,7 @@ int sub_11AC0(_WORD *a1);
 int sub_11C00(__int16 *a1);
 Type_AE400_29795* sub_11D10(Type_AE400_29795* event);
 int sub_11E50(__int16 *a1, char a2, char a3);
-int sub_11F50(axis_3d* position);
+int GetTerrainHeight_11F50(axis_3d* position);
 void sub_120B0(Type_AE400_29795* a1x, unsigned __int8 a2, unsigned __int16 a3);
 int sub_124F0(int a1, char a2, unsigned __int16 a3);
 int sub_127E0(Type_AE400_29795* a1, char a2, unsigned __int16 a3);
@@ -606,7 +644,7 @@ void sub_34C80_35040();
 int ProcessCommandLine_34DD0_35190(int argc, char** argv);
 int FlvInitSet_356E0_35AA0();
 int sub_35710_35AD0();
-int sub_357A0(); // weak
+void HmiTimerTick_357A0();
 // void sub_357C0_35B80(__int16 a1, int a2, unsigned __int16 a3, unsigned __int16 a4);
 void sub_358A0_35C60();
 int sub_358D0_35C90(__int16 a1, __int16 a2, __int16 a3);
@@ -646,7 +684,7 @@ void sub_37150_37510(Type_AE400_29795* event, __int16 a2);
 void sub_371C0_37580();
 void sub_37220_375E0();
 Type_AE400_29795* NewEvent_372C0_37680();
-Type_AE400_29795* sub_373F0_377B0(axis_3d* a1, int a2, int a3);
+Type_AE400_29795* CreateEntity_373F0_377B0(axis_3d* a1, int a2, int a3);
 void sub_37440_37800(int a1, char a2);
 void sub_37560_37920(Type_1090* type1090);
 int sub_37710_37AD0();
@@ -660,7 +698,7 @@ int sub_377E0_37BA0(int a1);
 int sub_37800_37BC0(int a1);
 Type_AE400_29795* sub_37820_37BE0(axis_3d* position);
 int sub_378A0_37C60(int a1);
-int sub_37920_37CE0(int a1);
+int CreateCastle_37920_37CE0(int a1);
 int sub_37A00_37DC0(int a1);
 int sub_37A80(int a1);
 int sub_37AA0(int a1);
@@ -983,7 +1021,7 @@ int sub_47020_47360(int a1);
 int sub_47080_473C0(int a1);
 int sub_470E0(int a1);
 int sub_47130_47470(int a1);
-int sub_47400_47740(int a1);
+int UpdateCastleBalloons_47400_47740(int a1);
 char sub_47960_47CA0(int a1);
 void sub_47A70_47DB0(int a1);
 int sub_47BD0_47F10(_DWORD *a1, int a2, int a3, int a4);
@@ -1099,7 +1137,7 @@ char sub_530C0_53400(int a1);
 char sub_534C0_53800(int a1);
 __int16 sub_535E0_53920(unsigned int a1);
 void sub_53980_53CC0(int a1);
-char sub_53B50_53E90(int a1);
+char UpdateSpawningMissile_53B50_53E90(int a1);
 char sub_53DC0_54100(int a1);
 void sub_54180_544D0(int a1);
 void sub_54290_545E0(int a1);
@@ -3421,7 +3459,7 @@ Type_254A34 str_254D48[] = {
 Type_254A34 str_254B84[] = {
 { 0x002548F4, 0x0000, sub_37820_37BE0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0001, (Type_AE400_29795* (*)(axis_3d*))sub_378A0_37C60, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, (Type_AE400_29795* (*)(axis_3d*))sub_37920_37CE0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, (Type_AE400_29795* (*)(axis_3d*))CreateCastle_37920_37CE0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0003, (Type_AE400_29795* (*)(axis_3d*))sub_37A00_37DC0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0004, (Type_AE400_29795* (*)(axis_3d*))sub_37720_37AE0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0005, (Type_AE400_29795* (*)(axis_3d*))sub_37740_37B00, 0x0001, 0x0000 },
@@ -15892,10 +15930,10 @@ int sub_11640(Type_AE400_29795* a1x, axis_3d* a2x, char a3)
   if ( (a3 & 2) != 0 )
   {
     v3 = a1x->var_u32_29951_156->v_12;
-    if ( a2x->z < v3 + (__int16)sub_11F50(a2x) )
+    if ( a2x->z < v3 + (__int16)GetTerrainHeight_11F50(a2x) )
       return 1;
     v5 = a1x->var_u32_29951_156->v_10;
-    if (a2x->z > v5 + (__int16)sub_11F50(a2x) )
+    if (a2x->z > v5 + (__int16)GetTerrainHeight_11F50(a2x) )
       return 1;
   }
   if ( (a3 & 1) == 0 || (v6 = a1x->var_u32_29951_156->v_20, (result = ~v6 & sub_11810(a2x)) == 0) )
@@ -16286,7 +16324,8 @@ LABEL_13:
 // 10C1E0: using guessed type __int16 mapEntityIndex_10C1E0_10C1D0[7953];
 
 //----- (00011F50) --------------------------------------------------------
-int sub_11F50(axis_3d* position)
+/// Terrain (ground) height at position->x/y (fixed point, 256 units per map tile).
+int GetTerrainHeight_11F50(axis_3d* position)
 {
   return sub_724C0_729D0(position->x, position->y);
 }
@@ -17092,7 +17131,7 @@ int sub_132B0(int a1)
     if ( *(_DWORD *)(a1 + 12) < *(_DWORD *)(a1 + 8) )
       sub_155F0(a1, 1u);
   }
-  v25 = (__int16)sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+  v25 = (__int16)GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
   v26 = *(_DWORD *)(a1 + 156);
   if ( *(__int16 *)(a1 + 76) > v25 + *(__int16 *)(v26 + 10) )
     *(_WORD *)(a1 + 76) = *(_WORD *)(v26 + 10) + v25;
@@ -17869,7 +17908,7 @@ int sub_14EB0(int a1)//1E5EB0_
   v23 = v1[7];
   v22 = v1[5];
   v21 = v1[6];
-  v2 = sub_11F50(&word_AE454_AE444);
+  v2 = GetTerrainHeight_11F50(&word_AE454_AE444);
   sub_42000_42340(&word_AE454_AE444, v2, v21, v22, v23);
   sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)(a1 + 30), 0, *(_WORD *)(a1 + 126));
   v3 = *(_WORD *)(a1 + 30);
@@ -18259,7 +18298,7 @@ int sub_155F0(int a1, unsigned __int8 a2)
       }
       else
       {
-        v7 = (int)sub_373F0_377B0((axis_3d*)(a1 + 150), 3, 2);
+        v7 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 150), 3, 2);
         if ( v7 )
         {
           *(_WORD *)(v7 + 24) = *(_WORD *)(a1 + 24);
@@ -20279,7 +20318,7 @@ void sub_196E0(Type_AE400_29795* a1x)
   v27 = a1x->var_u32_29951_156->v_14;
   v23 = a1x->var_u32_29951_156->v_10;
   v19 = a1x->var_u32_29951_156->v_12;
-  v2 = sub_11F50(&word_AE454_AE444);
+  v2 = GetTerrainHeight_11F50(&word_AE454_AE444);
   sub_42000_42340(&word_AE454_AE444, v2, v19, v23, v27);
   sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if (a1x->var_u32_29867_72.x >> 8 == word_AE454_AE444.x >> 8 )
@@ -20305,7 +20344,7 @@ void sub_196E0(Type_AE400_29795* a1x)
   v28 = a1x->var_u32_29951_156->v_14;
   v24 = a1x->var_u32_29951_156->v_10;
   v20 = a1x->var_u32_29951_156->v_12;
-  v9 = sub_11F50(&word_AE454_AE444);
+  v9 = GetTerrainHeight_11F50(&word_AE454_AE444);
   sub_42000_42340(&word_AE454_AE444, v9, v20, v24, v28);
   sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if ( !sub_11640(a1x, &word_AE454_AE444, 1) )
@@ -20324,7 +20363,7 @@ void sub_196E0(Type_AE400_29795* a1x)
   v29 = a1x->var_u32_29951_156->v_14;
   v25 = a1x->var_u32_29951_156->v_10;
   v21 = a1x->var_u32_29951_156->v_12;
-  v13 = sub_11F50(&word_AE454_AE444);
+  v13 = GetTerrainHeight_11F50(&word_AE454_AE444);
   sub_42000_42340(&word_AE454_AE444, v13, v21, v25, v29);
   sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if ( !sub_11640(a1x, &word_AE454_AE444, 1) )
@@ -20343,7 +20382,7 @@ void sub_196E0(Type_AE400_29795* a1x)
   v30 = a1x->var_u32_29951_156->v_14;
   v26 = a1x->var_u32_29951_156->v_10;
   v22 = a1x->var_u32_29951_156->v_12;
-  v17 = sub_11F50(&word_AE454_AE444);
+  v17 = GetTerrainHeight_11F50(&word_AE454_AE444);
   sub_42000_42340(&word_AE454_AE444, v17, v22, v26, v30);
   sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if ( sub_11640(a1x, &word_AE454_AE444, 1)
@@ -20923,7 +20962,7 @@ void sub_1A800(Type_AE400_29795* a1x)
     if ( (str_AE408_AE3F8->var_u8_1 & 2) != 0 )
         a1x->var_u32_29935_140 = 5000;
     sub_27690(v1, a1x);
-    v2 = (int)sub_373F0_377B0(&a1x->var_u32_29867_72, 10, 1);
+    v2 = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 10, 1);
     if ( v2 )
       *(_WORD *)(v2 + 24) = a1x->id_29819_24;
     sub_41E80_421C0(a1x);
@@ -20941,7 +20980,7 @@ int sub_1A8E0(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 
   v2x = &a1x->var_u32_29867_72;
   v7 = 0;
-  v3 = (int)sub_373F0_377B0(&a1x->var_u32_29867_72, 9, 0);
+  v3 = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 9, 0);
   v4 = v3;
   if ( v3 )
   {
@@ -20973,7 +21012,7 @@ int sub_1A990(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 
   v2x = &a1x->var_u32_29867_72;
   v6 = 0;
-  v3 = (int)sub_373F0_377B0(&a1x->var_u32_29867_72, 9, 13);
+  v3 = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 9, 13);
   if ( v3 )
   {
     *(_WORD *)(v3 + 24) = a1x->id_29819_24;
@@ -21000,7 +21039,7 @@ void sub_1AA40(Type_AE400_29795* a1x, int a2)
 
   v2x = &a1x->var_u32_29867_72;
   v5 = 0;
-  v3 = (int)sub_373F0_377B0(&a1x->var_u32_29867_72, 9, 13);
+  v3 = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 9, 13);
   if ( v3 )
   {
     *(_WORD *)(v3 + 24) = a1x->id_29819_24;
@@ -21083,7 +21122,7 @@ int sub_1AB70(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
       v6 = 0;
       do
       {
-        v7 = (int)sub_373F0_377B0(&a1x->var_u32_29867_72, 9, 0);
+        v7 = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 9, 0);
         v3 = v7;
         if ( v7 )
         {
@@ -21108,7 +21147,7 @@ int sub_1AB70(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
     case 2:
       for ( i = 1; i < v5; ++i )
       {
-        v10 = (int)sub_373F0_377B0(&a1x->var_u32_29867_72, 9, 9);
+        v10 = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 9, 9);
         v3 = v10;
         if ( v10 )
         {
@@ -21131,7 +21170,7 @@ int sub_1AB70(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
     case 4:
     case 5:
     case 6:
-      v12 = (int)sub_373F0_377B0(&a1x->var_u32_29867_72, 9, 3);
+      v12 = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 9, 3);
       v3 = v12;
       if ( v12 )
       {
@@ -21168,7 +21207,7 @@ int sub_1AE30(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 
   v2x = &a1x->var_u32_29867_72;
   v7 = 0;
-  v3 = (int)sub_373F0_377B0(&a1x->var_u32_29867_72, 9, 14);
+  v3 = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 9, 14);
   v4 = v3;
   if ( v3 )
   {
@@ -21201,7 +21240,7 @@ int sub_1AEE0(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 
   v2x = &a1x->var_u32_29867_72;
   v3 = 0;
-  v4 = (int)sub_373F0_377B0(&a1x->var_u32_29867_72, 9, 9);
+  v4 = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 9, 9);
   v5 = v4;
   if ( v4 )
   {
@@ -21270,7 +21309,7 @@ void sub_1B120(Type_AE400_29795* a1x)
   int result; // eax
 
   a1x->var_u32_29867_72.z += a1x->var_u16_29821_26;
-  v1 = sub_11F50(&a1x->var_u32_29867_72);
+  v1 = GetTerrainHeight_11F50(&a1x->var_u32_29867_72);
   v2 = a1x->var_u32_29867_72.z;
   result = v1 + 256;
   a1x->var_u16_29821_26 -= 5;
@@ -22004,7 +22043,7 @@ void sub_1BD20(Type_AE400_29795* a1x)
             a1x->var_u16_29941_146 = (int)(v14 - (dword_AE400_AE3F0() + 29795)) / 164;
         if (a1x->var_u32_29931_136 + 500 < a1x->var_u32_29935_140)
         {
-          v23 = (int)sub_373F0_377B0(&a1x->var_u32_29867_72, 10, 52);
+          v23 = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 10, 52);
           if ( v23 )
           {
             v24 = 9377 * a1x->rand_29799_4 + 9439;
@@ -22305,7 +22344,7 @@ LABEL_30:
   {
     v22x = &a1x->var_u32_29867_72;
     a1x->var_u8_29866_71 = v18 - 1;
-    v19 = (int)sub_373F0_377B0(&a1x->var_u32_29867_72, 9, 9);
+    v19 = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 9, 9);
     v20 = v19;
     if ( v19 )
     {
@@ -22966,7 +23005,7 @@ LABEL_78:
             *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)(v46 + 72);
             word_AE454_AE444.z = *(_WORD *)(v46 + 76);
             sub_41E80_421C0((Type_AE400_29795*)v46);
-            v39 = (int)sub_373F0_377B0(&word_AE454_AE444, 5, 9);
+            v39 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 5, 9);
             if ( v39 )
             {
               if ( *(_BYTE *)(164 * a1x->id_29819_24 + dword_AE400_AE3F0() + 29859) == 3 )
@@ -23168,7 +23207,7 @@ LABEL_50:
         *(_DWORD *)&word_AE454_AE444 = *((_DWORD *)v28 + 18);
         word_AE454_AE444.z = v28[38];
         sub_41E80_421C0((Type_AE400_29795*)(int)v28);
-        v26 = (int)sub_373F0_377B0(&word_AE454_AE444, 5, 9);
+        v26 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 5, 9);
         if ( v26 )
           *(_WORD *)(v26 + 24) = a1x->id_29819_24;
       }
@@ -23431,7 +23470,7 @@ void sub_1DE40(Type_AE400_29795* a1x)
       v3 = a1x->var_u16_29821_26;
       word_AE454_AE444.x += 40 * (a1x->var_u16_29821_26 % 3);
       word_AE454_AE444.y += 40 * (v3 / 3);
-      v4 = (int)sub_373F0_377B0(&word_AE454_AE444, 10, 1);
+      v4 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 10, 1);
       if ( v4 )
       {
         *(_WORD *)(v4 + 24) = a1x->id_29819_24;
@@ -23728,14 +23767,14 @@ void sub_1E380(Type_AE400_29795* a1x)
     dword_AE400_AE3F0(v12);
     if ( v13 || (a1x->var_u16_29821_26 & 1) == 0 )
     {
-      v14 = (int)sub_373F0_377B0(&a1x->var_u32_29867_72, 9, 8);
+      v14 = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 9, 8);
       v15 = v14;
       if ( !v14 )
         goto LABEL_38;
     }
     else
     {
-      v14 = (int)sub_373F0_377B0(&a1x->var_u32_29867_72, 9, 8);
+      v14 = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 9, 8);
       v15 = v14;
       if ( !v14 )
         goto LABEL_38;
@@ -23847,7 +23886,7 @@ void sub_1E810(Type_AE400_29795* a1x)
       *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)(v3 + 72);
       word_AE454_AE444.z = *(_WORD *)(v3 + 76);
       sub_41E80_421C0((Type_AE400_29795*)v3);
-      v8 = (int)sub_373F0_377B0(&word_AE454_AE444, 10, 0);
+      v8 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 10, 0);
       if ( v8 )
       {
         *(_WORD *)(v8 + 24) = a1x->id_29819_24;
@@ -24037,7 +24076,7 @@ LABEL_10:
     }
     if ( !v18 )
     {
-      v21 = (int)sub_373F0_377B0(&word_AE454_AE444, 10, 45);
+      v21 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 10, 45);
       if ( v21 )
       {
         sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 10);
@@ -24905,7 +24944,7 @@ LABEL_22:
   }
   else
   {
-    v10 = (int)sub_373F0_377B0(&a1x->var_u32_29867_72, 9, 13);
+    v10 = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 9, 13);
     v11 = v10;
     if ( v10 )
     {
@@ -25065,7 +25104,7 @@ void sub_20480(Type_AE400_29795* a1x)
     v17 = a1x->var_u32_29951_156->v_14;
     v16 = a1x->var_u32_29951_156->v_10;
     v15 = a1x->var_u32_29951_156->v_12;
-    v12 = sub_11F50(&word_AE454_AE444);
+    v12 = GetTerrainHeight_11F50(&word_AE454_AE444);
     v13 = sub_42000_42340(&word_AE454_AE444, v12, v15, v16, v17);
     sub_41C70_41FB0(a1x, &word_AE454_AE444);
   }
@@ -25216,7 +25255,7 @@ void sub_207E0(Type_AE400_29795* a1x)
   {
     a1x->var_u16_29821_26 = v12 - 1;
     //v19 = (_WORD *)(a1 + 72);
-    v13 = (int)sub_373F0_377B0(&a1x->var_u32_29867_72, 9, 0);
+    v13 = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 9, 0);
     v14 = v13;
     if ( v13 )
     {
@@ -27129,7 +27168,7 @@ void sub_24F60(Type_AE400_29795* a1x)
     {
       v2 = a1x->var_29811_16.byte[0] & 0xFE;
       a1x->var_29811_16.byte[0] = v2;
-      v3 = (__int16)sub_11F50(&a1x->var_u32_29867_72);
+      v3 = (__int16)GetTerrainHeight_11F50(&a1x->var_u32_29867_72);
       if ( (a1x->var_29811_16.byte[0] & 2) == 0 )
       {
         LOBYTE(v10) = (unsigned __int16)(a1x->var_u32_29867_72.x + 128) >> 8;
@@ -27229,7 +27268,7 @@ void sub_25130(int a1)
         *(_DWORD *)(a1 + 4) = v7;
         v10[1] = *(_WORD *)(a1 + 74) - 96 + 192 * v11 + v7 % 0x81 - 64;
         v10[2] = *(_WORD *)(a1 + 76);
-        v8 = (int)sub_373F0_377B0((axis_3d*)v10, 10, 0);
+        v8 = (int)CreateEntity_373F0_377B0((axis_3d*)v10, 10, 0);
         if ( v8 )
         {
           *(_WORD *)(v8 + 24) = *(_WORD *)(a1 + 24);
@@ -27287,7 +27326,7 @@ int sub_252D0(int a1)
         *(_DWORD *)(a1 + 4) = v5;
         if ( !(v5 % 7) )
         {
-          v6 = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), 10, 13);
+          v6 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), 10, 13);
           if ( v6 )
           {
             v7 = *(_WORD *)(a1 + 24);
@@ -27307,7 +27346,7 @@ int sub_252D0(int a1)
     ++*(_WORD *)(a1 + 86);
     *(_WORD *)(a1 + 26) = v2;
   }
-  *(_WORD *)(a1 + 76) = *(_WORD *)(a1 + 46) + sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+  *(_WORD *)(a1 + 76) = *(_WORD *)(a1 + 46) + GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
   result = sub_11810((axis_3d*)(__int16 *)(a1 + 72));
   if ( result == 1 )
 LABEL_11:
@@ -27376,8 +27415,8 @@ void sub_25470(Type_AE400_29795* a1x)
     sub_40D30_41070(a1x, 0, 0, -40, 0);
     word_AE454_AE444 = a1x->var_u32_29867_72;
     //word_AE454_AE444.z = *(_WORD *)(a1 + 76);
-    word_AE454_AE444.z = sub_11F50(&word_AE454_AE444);
-    v3 = (int)sub_373F0_377B0(&word_AE454_AE444, 10, 18);
+    word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
+    v3 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 10, 18);
     if ( v3 )
       *(_WORD *)(v3 + 24) = a1x->id_29819_24;
     sub_41E80_421C0(a1x);
@@ -27524,7 +27563,7 @@ void sub_257B0(int a1)
       if (*(__int16*)(a1 + 126) > 128 )
         *(_WORD*)(a1 + 126) = 128;
       word_AE454_AE444.z += *(_WORD*)(a1 + 126);
-      v4 = sub_11F50((axis_3d*)(__int16*)(a1 + 72));
+      v4 = GetTerrainHeight_11F50((axis_3d*)(__int16*)(a1 + 72));
       if ( word_AE454_AE444.z < v4 )
         word_AE454_AE444.z = v4;
       v5 = *(_WORD*)(a1 + 26) + 1;
@@ -27571,7 +27610,7 @@ void sub_258A0(int a1)
 		if (*(__int16*)(a1 + 126) > 128)
 			*(_WORD*)(a1 + 126) = 128;
 		word_AE454_AE444.z += *(_WORD*)(a1 + 126);
-		v4 = sub_11F50((axis_3d*)(__int16*)(a1 + 72));
+		v4 = GetTerrainHeight_11F50((axis_3d*)(__int16*)(a1 + 72));
 		if (word_AE454_AE444.z < v4)
 			word_AE454_AE444.z = v4;
 		v5 = *(_WORD*)(a1 + 26) + 1;
@@ -27619,7 +27658,7 @@ void sub_25990(Type_AE400_29795* a1x)
   a1x->rand_29799_4 = v4;
   a1x->var_u16_29825_30 = (v4 % 0x5B + a1x->var_u16_29825_30 - 45) & 0x7FF;
   sub_41EC0_42200(&a1x->var_u32_29867_72, a1x->var_u16_29825_30, 0, 256);
-  result = (int)sub_373F0_377B0(&a1x->var_u32_29867_72, 10, 11);
+  result = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 10, 11);
   if ( result )
   {
     *(_DWORD *)(result + 80) = a1x->var_u16_29873_78.var_u16_29875_80;
@@ -27676,7 +27715,7 @@ void sub_25A60(int a1)
           *(_WORD*)(a1 + 46) = -384;
       if (*(__int16*)(a1 + 46) > 256)
           *(_WORD*)(a1 + 46) = 256;
-      v6 = sub_11F50(&word_AE454_AE444);
+      v6 = GetTerrainHeight_11F50(&word_AE454_AE444);
       v7 = v6;
       if (v6 > word_AE454_AE444.z)
       {
@@ -27685,7 +27724,7 @@ void sub_25A60(int a1)
           *(_WORD*)(a1 + 46) = -(__int16)((v8 - (__CFSHL__(v8 >> 31, 2) + 4 * (v8 >> 31))) >> 2);
           if (sub_11810((axis_3d*)(__int16*)(a1 + 72)) == 1)
           {
-              v9 = (int)sub_373F0_377B0(&word_AE454_AE444, 10, 5);
+              v9 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 10, 5);
               if (v9)
               {
                   *(_WORD*)(v9 + 24) = *(_WORD*)(a1 + 24);
@@ -27696,7 +27735,7 @@ void sub_25A60(int a1)
           {
               if (!sub_11E50((short*)&word_AE454_AE444, 10, 6))
               {
-                  v10 = (int)sub_373F0_377B0(&word_AE454_AE444, 10, 6);
+                  v10 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 10, 6);
                   if (v10)
                   {
                       v11 = *(_WORD*)(v10 + 44);
@@ -27769,7 +27808,7 @@ void sub_25CE0(Type_AE400_29795* a1x)
               a1x->rand_29799_4 = v6;
               v9[1] = v6 % 0x81 + 160 * v10 + a1x->var_u32_29867_72.y - 96 - 64;
               v9[2] = a1x->var_u32_29867_72.z;
-              v7x = sub_373F0_377B0((axis_3d*)v9, 10, 0);
+              v7x = CreateEntity_373F0_377B0((axis_3d*)v9, 10, 0);
               //v8 = v7x;
               if (v7x)
               {
@@ -27814,7 +27853,7 @@ void sub_25EC0(int a1)
     if ( !(v1 % 0x64) && !*(_WORD *)(dword_AE400_AE3F0() + 36) )
     {
       v2 = *(_WORD *)(a1 + 76);
-      v3 = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+      v3 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
       *(_WORD *)(a1 + 76) = v3;
       if ( v2 != v3 )
       {
@@ -27831,7 +27870,7 @@ LABEL_5:
     || !*(_WORD *)(a1 + 26) )
   {
     v5 = *(_WORD *)(a1 + 76);
-    v6 = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+    v6 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
     *(_WORD *)(a1 + 76) = v6;
     if ( v5 != v6 )
       goto LABEL_5;
@@ -27841,7 +27880,7 @@ LABEL_5:
       if ( v7 > dword_AE400_AE3F0() + 29795 )
         *(_WORD *)(v7 + 26) = 250;
       *(_WORD *)(dword_AE400_AE3F0() + 36) = (a1 - (dword_AE400_AE3F0() + 29795)) / 164;
-      v8 = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), 10, 19);
+      v8 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), 10, 19);
       v9 = v8;
       if ( v8 )
       {
@@ -27852,7 +27891,7 @@ LABEL_5:
         *(_WORD *)(dword_AE400_AE3F0() + 38) = (v9 - (dword_AE400_AE3F0() + 29795)) / 164;
       }
     }
-    v11 = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), 10, 16);
+    v11 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), 10, 16);
     if ( v11 )
     {
       *(_WORD *)(v11 + 24) = *(_WORD *)(a1 + 24);
@@ -27864,7 +27903,7 @@ LABEL_5:
     *(_BYTE *)(a1 + 31) += 5;
     if ( !v13 )
     {
-      v14 = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), 9, 0);
+      v14 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), 9, 0);
       v15 = v14;
       if ( v14 )
       {
@@ -27879,7 +27918,7 @@ LABEL_5:
         *(_DWORD *)(v15 + 150) = *(_DWORD *)(a1 + 72);
         *(_WORD *)(v15 + 154) = *(_WORD *)(a1 + 76);
         sub_41EC0_42200((axis_3d*)(_WORD *)(v15 + 150), *(_WORD *)(v15 + 30), 0, 1536);
-        *(_WORD *)(v15 + 154) = sub_11F50((axis_3d*)(__int16 *)(v15 + 150));
+        *(_WORD *)(v15 + 154) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(v15 + 150));
       }
     }
     if ( *(__int16 *)(a1 + 26) >= 127 )
@@ -27932,7 +27971,7 @@ void sub_26140(Type_AE400_29795* a1x)
             v6 = ((a1x->actLife_29807_12 / 2) & 1) << 8;
             for ( i = (unsigned __int16)v6 < 0x800u; i; i = (unsigned __int16)v6 < 0x800u )
             {
-              v8 = (int)sub_373F0_377B0((axis_3d*)v10, 10, 13);
+              v8 = (int)CreateEntity_373F0_377B0((axis_3d*)v10, 10, 13);
               if ( v8 )
               {
                 *(_WORD *)(v8 + 24) = a1x->id_29819_24;
@@ -27945,7 +27984,7 @@ void sub_26140(Type_AE400_29795* a1x)
       }
       sub_11490(v2);
     }
-    a1x->var_u32_29867_72.z = sub_11F50(&a1x->var_u32_29867_72);
+    a1x->var_u32_29867_72.z = GetTerrainHeight_11F50(&a1x->var_u32_29867_72);
   }
   else
   {
@@ -28192,7 +28231,7 @@ void sub_26920(Type_AE400_29795* a1x)
       sub_41E80_421C0(a1x);
       return;
   }
-  v3 = (int)sub_373F0_377B0(&a1x->var_u32_29867_72, 10, 11);
+  v3 = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 10, 11);
   if ( v3 )
   {
     v4 = a1x->var_u16_29873_78.var_u16_29879_84;
@@ -28269,7 +28308,7 @@ void sub_26A60(int a1)
         if ( (unsigned __int16)sub_42210_42550(*(_WORD *)(v4 + 30), v5) < 0xAAu )
         {
           v7 = *(_DWORD *)(a1 + 156);
-          *(_WORD *)(a1 + 154) = *(_WORD *)(v7 + 12) + sub_11F50((axis_3d*)(__int16 *)(a1 + 150));
+          *(_WORD *)(a1 + 154) = *(_WORD *)(v7 + 12) + GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 150));
           sub_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 22);
           sub_41C70_41FB0((Type_AE400_29795*)v4, (axis_3d*)(a1 + 150));
           sub_44BE0_44F20((Type_AE400_29795*)v4, 6);
@@ -28278,7 +28317,7 @@ void sub_26A60(int a1)
       v3 += 2049;
       ++v9;
     }
-    *(_WORD *)(a1 + 76) = sub_11F50((axis_3d*)v8);
+    *(_WORD *)(a1 + 76) = GetTerrainHeight_11F50((axis_3d*)v8);
   }
 }
 
@@ -28306,7 +28345,7 @@ void sub_26C00(int a1)
       v4 = *(_WORD *)(a1 + 30) + 45;
       HIBYTE(v4) &= 7u;
       *(_WORD *)(a1 + 30) = v4;
-      v5 = sub_11F50(&word_AE454_AE444);
+      v5 = GetTerrainHeight_11F50(&word_AE454_AE444);
       ++HIBYTE(v5);
       word_AE454_AE444.z = v5;
       sub_41C70_41FB0((Type_AE400_29795*)a1, &word_AE454_AE444);
@@ -28352,7 +28391,7 @@ void sub_26D20(int a1)
   int i; // [esp+4h] [ebp-14h]
 
   v1 = 0;
-  v2 = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+  v2 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
   if ( *(__int16 *)(a1 + 76) < v2 + 1024 )
   {
     v1 = 1;
@@ -28385,7 +28424,7 @@ void sub_26D20(int a1)
         v11 = *(char *)(a1 + 69);
         v10 = *(char *)(a1 + 68);
         word_AE454_AE444.z += *(_WORD *)(a1 + 78);
-        v6 = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), v10, v11);
+        v6 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), v10, v11);
         v7 = v6;
         v8 = v6;
         if ( v6 )
@@ -28451,7 +28490,7 @@ void sub_26E90(int a1)
         *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)(a1 + 72);
         word_AE454_AE444.z = *(_WORD *)(a1 + 76);
         sub_41EC0_42200(&word_AE454_AE444, v10, 0, 512);
-        v3 = (int)sub_373F0_377B0(&word_AE454_AE444, 5, 9);
+        v3 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 5, 9);
         v4 = v3;
         if ( v3 )
         {
@@ -28560,7 +28599,7 @@ void sub_27030(Type_AE400_29795* event)//1F8030_
             word_AE454_AE444.z += 32;
           }
         }
-        int16_t tempV10 = sub_11F50(&word_AE454_AE444);
+        int16_t tempV10 = GetTerrainHeight_11F50(&word_AE454_AE444);
         if (tempV10 > word_AE454_AE444.z )
           word_AE454_AE444.z = tempV10;
         sub_41C70_41FB0(event, &word_AE454_AE444);
@@ -28595,7 +28634,7 @@ void sub_27030(Type_AE400_29795* event)//1F8030_
     event->var_u16_29841_46 -= 16;
     if (event->var_u16_29841_46 < -128 )
         event->var_u16_29841_46 = -128;
-    int16 tempV13 = sub_11F50(&word_AE454_AE444);
+    int16 tempV13 = GetTerrainHeight_11F50(&word_AE454_AE444);
     //v14 = tempV13;
     if (tempV13 > word_AE454_AE444.z )
     {
@@ -28700,7 +28739,7 @@ void sub_275C0(__int16 *a1)
   int v3; // edi
   unsigned int i; // ebx
 
-  result = sub_11F50((axis_3d*)(a1 + 36));
+  result = GetTerrainHeight_11F50((axis_3d*)(a1 + 36));
   v2 = a1[50];
   a1[38] = result;
   if ( v2 )
@@ -28732,7 +28771,7 @@ void sub_27690(_WORD *result, Type_AE400_29795* a2x)
   if (a2x->var_u32_29935_140 > 0 )
   {
     a2x->rand_29799_4 = 9377 * a2x->rand_29799_4 + 9439;
-    result = (_WORD *)sub_373F0_377B0(&a2x->var_u32_29867_72, 10, 39);
+    result = (_WORD *)CreateEntity_373F0_377B0(&a2x->var_u32_29867_72, 10, 39);
     v2 = result;
     if ( result )
     {
@@ -28748,7 +28787,7 @@ void sub_27690(_WORD *result, Type_AE400_29795* a2x)
       v2[76] = 0;
       v2[63] = (9377 * v5 + 9439) % 0x30u + 16;
       v6 = a2x->var_u32_29867_72.z;
-      v7 = sub_11F50(&a2x->var_u32_29867_72);
+      v7 = GetTerrainHeight_11F50(&a2x->var_u32_29867_72);
       v2[23] = (1024 - (v6 - v7) - (__CFSHL__((1024 - (v6 - v7)) >> 31, 3) + 8 * ((1024 - (v6 - v7)) >> 31))) >> 3;
       sub_41EC0_42200((axis_3d*)(v2 + 75), v2[15], 0, v2[63]);
     }
@@ -29331,7 +29370,7 @@ void sub_27D30(Type_AE400_29795* event)//1F8D30_
 				event->actLife_29807_12 = event->var_u16_29839_44;
 				event->var_29811_16.byte[0] |= 1u;
 				event->var_u8_29865_70 = 52;
-				event->var_u32_29867_72.z = sub_11F50(&event->var_u32_29867_72);
+				event->var_u32_29867_72.z = GetTerrainHeight_11F50(&event->var_u32_29867_72);
 				v26 = (unsigned __int16)(v29 >> 1);
 				sub_35F30_362F0(v38, v35, v38, v26, (unsigned __int16)v32, 2u);
 				LOBYTE(v16) = sub_35F30_362F0(v38, v35, v38, v26, (unsigned __int16)v32, 5u);
@@ -29783,7 +29822,7 @@ void sub_28D10(Type_AE400_29795* event)
   {
     case 0u:
     case 1u:
-      result = sub_373F0_377B0(&word_AE454_AE444, 5, 4);
+      result = CreateEntity_373F0_377B0(&word_AE454_AE444, 5, 4);
       a1 = result;
       if ( !result )
         goto LABEL_10;
@@ -29791,7 +29830,7 @@ void sub_28D10(Type_AE400_29795* event)
       break;
     case 2u:
     case 3u:
-      result = sub_373F0_377B0(&word_AE454_AE444, 5, 14);
+      result = CreateEntity_373F0_377B0(&word_AE454_AE444, 5, 14);
       a1 = result;
       if ( !result )
         goto LABEL_10;
@@ -29802,7 +29841,7 @@ void sub_28D10(Type_AE400_29795* event)
     case 6u:
     case 7u:
     case 8u:
-      result = sub_373F0_377B0(&word_AE454_AE444, 5, 13);
+      result = CreateEntity_373F0_377B0(&word_AE454_AE444, 5, 13);
       a1 = result;
       if ( !result )
         goto LABEL_10;
@@ -29811,7 +29850,7 @@ void sub_28D10(Type_AE400_29795* event)
     case 9u:
     case 0xAu:
     case 0xBu:
-      v4 = sub_373F0_377B0(&word_AE454_AE444, 5, 12);
+      v4 = CreateEntity_373F0_377B0(&word_AE454_AE444, 5, 12);
       a1 = v4;
       if ( v4 )
         result->var_u8_29865_70 = 73;
@@ -29850,7 +29889,7 @@ void sub_28DC0(Type_AE400_29795* event)
       event->var_u16_29821_26 = v2 - 1;
       word_AE454_AE444 = event->var_u32_29867_72;
       word_AE454_AE444.x += event->var_u16_29873_78.var_u16_29875_80;
-      v3 = sub_373F0_377B0(&word_AE454_AE444, 5, 4);
+      v3 = CreateEntity_373F0_377B0(&word_AE454_AE444, 5, 4);
       if ( v3 )
         v3->var_u8_29865_70 = 25;
       //v4 = 164 * event->var_u16_29835_40;
@@ -29981,7 +30020,7 @@ LABEL_44:
           *(_WORD *)(a1 + 26) = v8 - 1;
           if ( v8 == 1 )
           {
-            v9 = (int)sub_373F0_377B0(&word_AE454_AE444, 5, 12);
+            v9 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 5, 12);
             if ( v9 )
               *(_BYTE *)(v9 + 70) = 73;
           }
@@ -29991,7 +30030,7 @@ LABEL_44:
           }
           else
           {
-            v10 = (int)sub_373F0_377B0(&word_AE454_AE444, 5, 4);
+            v10 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 5, 4);
             if ( v10 )
               *(_BYTE *)(v10 + 70) = 25;
           }
@@ -30081,7 +30120,7 @@ void sub_293D0(Type_AE400_29795* a1x)
     if ( (a1x->var_29811_16.byte[0] & 2) == 0 )
     {
       a1x->var_29811_16.byte[0] |= 2u;
-      sub_11F50(&a1x->var_u32_29867_72);
+      GetTerrainHeight_11F50(&a1x->var_u32_29867_72);
       if ( sub_11950(
           a1x,
           (Type_AE400_29795*)(dword_AE400_AE3F0()
@@ -30121,7 +30160,7 @@ void sub_29540(Type_AE400_29795* a1x)
   v2 = a1x->var_u32_150.y;
   word_AE454_AE444.x += a1x->var_u32_150.x;
   word_AE454_AE444.y += v2;
-  word_AE454_AE444.z = sub_11F50(&word_AE454_AE444);
+  word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
   sub_41C70_41FB0(a1x, &word_AE454_AE444);
   sub_120B0(a1x, 0, a1x->var_u16_29839_44);
 }
@@ -30159,7 +30198,7 @@ void sub_296A0(Type_AE400_29795* a1x)
   int v1; // eax
   __int16 result; // ax
 
-  a1x->var_u32_29867_72.z = sub_11F50(&a1x->var_u32_29867_72);
+  a1x->var_u32_29867_72.z = GetTerrainHeight_11F50(&a1x->var_u32_29867_72);
   v1 = a1x->actLife_29807_12;
   a1x->actLife_29807_12 = v1 - 1;
   if (v1 < 0)
@@ -30182,14 +30221,14 @@ void sub_29700(int a1)
   int v1; // ebx
   int v2; // eax
 
-  *(_WORD *)(a1 + 76) = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+  *(_WORD *)(a1 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
   *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)(a1 + 76);
-  v1 = (int)sub_373F0_377B0(&word_AE454_AE444, 5, 5);
+  v1 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 5, 5);
   if ( v1 )
   {
     ++*(int *)((char *)&dword_38C9F + dword_AE400_AE3F0());
-    v2 = (int)sub_373F0_377B0(&word_AE454_AE444, 10, 1);
+    v2 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 10, 1);
     if ( v2 )
       *(_WORD *)(v2 + 24) = *(_WORD *)(v1 + 24);
   }
@@ -30225,7 +30264,7 @@ void sub_29780(Type_AE400_29795* a1x)
                   a1x->rand_29799_4 = 9377 * a1x->rand_29799_4 + 9439;
                   v11_v9.y = a1x->var_u32_29867_72.y - 96 + 112 * v12_v10 + a1x->rand_29799_4 % 0x81 - 64;
                   v11_v9.z = a1x->var_u32_29867_72.z;
-                  v6_v7 = sub_373F0_377B0(&v11_v9, 10, 6);
+                  v6_v7 = CreateEntity_373F0_377B0(&v11_v9, 10, 6);
                   if (v6_v7)
                   {
                       v6_v7->id_29819_24 = a1x->id_29819_24;
@@ -30273,7 +30312,7 @@ void sub_29780(Type_AE400_29795* a1x)
                   a1x->rand_29799_4 = 9377 * a1x->rand_29799_4 + 9439;
                   v11_v9.y = a1x->var_u32_29867_72.y - 96 + 160 * v12_v10 + a1x->rand_29799_4 % 0x81 - 64;
                   v11_v9.z = a1x->var_u32_29867_72.z;
-                  v6_v7 = sub_373F0_377B0(&v11_v9, 10, 0);
+                  v6_v7 = CreateEntity_373F0_377B0(&v11_v9, 10, 0);
                   if (v6_v7)
                   {
                       v6_v7->id_29819_24 = a1x->id_29819_24;
@@ -41494,6 +41533,10 @@ void sub_357C0_35B80()
     if ( byte_939E4 || byte_939CC )
     {
         //fix sub_5D97B(0x78u, (int)sub_357A0, __CS__, (unsigned int)&dword_80010);
+      // PORT: with a sound driver present the game registers its 120 Hz tick with the HMI timer
+      // service instead of reprogramming the PIT. That registration was missing, so the game clock
+      // (dword_AC5D4_AC5C4) never advanced with sound on and tick waits (info FMVs) hung forever.
+      PortTimer_Start(1193182 / 120, HmiTimerTick_357A0);
       byte_90AD5 = 1;
     }
     else
@@ -41527,6 +41570,14 @@ void sub_357C0_35B80()
 // 939E5: using guessed type char byte_939E5;
 // AE408: using guessed type int dword_AE408_AE3F8();
 
+//----- (000357A0) --------------------------------------------------------
+/// Game clock tick used when a sound driver is active: registered with the HMI timer service at
+/// 120 Hz (sub_357C0_35B80) in place of the PIT ISR sub_5A3E3. Original: `inc dword_AC5D4; retf`.
+void HmiTimerTick_357A0()
+{
+  dword_AC5D4_AC5C4++;
+}
+
 //----- (000358A0) --------------------------------------------------------
 void sub_358A0_35C60()
 {
@@ -41534,6 +41585,7 @@ void sub_358A0_35C60()
         sub_5A4EA_5A9FA();
     else
     {
+        PortTimer_Stop(); // PORT: counterpart of the HMI timer registration in sub_357C0_35B80
         sub_5DC91(dword_80010);
         sub_61F90();
         sub_62020();
@@ -41637,7 +41689,7 @@ int sub_35960_35D20(__int16 a1, unsigned __int16 a2, __int16 a3, __int16 a4)
       do
       {
         sub_35900_35CC0(v4, a2, a3, a4);
-        v18 = (int)sub_373F0_377B0(&word_AE454_AE444, 10, 27);
+        v18 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 10, 27);
         if ( v16 >= 0 )
         {
           *(_BYTE *)(v18 + 70) = 28;
@@ -41651,7 +41703,7 @@ int sub_35960_35D20(__int16 a1, unsigned __int16 a2, __int16 a3, __int16 a4)
         *(_WORD *)(v18 + 26) = v19;
         a2 += v16 + v17;
         sub_35900_35CC0(v4, a2, a3, a4);
-        result = (int)sub_373F0_377B0(&word_AE454_AE444, 10, 27);
+        result = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 10, 27);
         v17 = 0;
         *(_BYTE *)(result + 70) = 29;
         v20 = v23 + v25;
@@ -41673,12 +41725,12 @@ int sub_35960_35D20(__int16 a1, unsigned __int16 a2, __int16 a3, __int16 a4)
       for ( i = v8 == 0; !i; i = v8 == 0 )
       {
         sub_35900_35CC0(v4, a2, a3, a4);
-        v12 = (int)sub_373F0_377B0(&word_AE454_AE444, 10, 27);
+        v12 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 10, 27);
         v4 += v22 + v24;
         *(_WORD *)(v12 + 26) = v22 + v24;
         *(_BYTE *)(v12 + 70) = 29;
         sub_35900_35CC0(v4, a2, a3, a4);
-        v13 = (int)sub_373F0_377B0(&word_AE454_AE444, 10, 27);
+        v13 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 10, 27);
         if ( v9 >= 0 )
         {
           *(_BYTE *)(v13 + 70) = 28;
@@ -41750,7 +41802,7 @@ _WORD *sub_35BF0_35FB0(__int16 a1, __int16 a2, __int16 a3, __int16 a4)
   }
   word_AE454_AE444.x = a1 << 8;
   word_AE454_AE444.y = a2 << 8;
-  v11 = (_WORD *)sub_373F0_377B0(&word_AE454_AE444, 10, 30);
+  v11 = (_WORD *)CreateEntity_373F0_377B0(&word_AE454_AE444, 10, 30);
   if ( v11 )
   {
     v11[15] = v6;
@@ -41759,7 +41811,7 @@ _WORD *sub_35BF0_35FB0(__int16 a1, __int16 a2, __int16 a3, __int16 a4)
   }
   word_AE454_AE444.x = ((_WORD)v13 * v6 + a1) << 8;
   word_AE454_AE444.y = ((_WORD)v13 * v8 + a2) << 8;
-  result = (_WORD *)sub_373F0_377B0(&word_AE454_AE444, 10, 30);
+  result = (_WORD *)CreateEntity_373F0_377B0(&word_AE454_AE444, 10, 30);
   if ( result )
   {
     result[15] = v10;
@@ -41785,7 +41837,7 @@ int sub_35D30_360F0(unsigned __int16 a1, unsigned __int16 a2, __int16 a3, __int1
   v8[1] = a4 << 8;
   v4 = sub_42150_42490((axis_3d*)(uint16*)v7, (axis_3d*)(uint16*)v8);
   v5 = sub_423D0_42710((axis_3d*)(uint16*)v7, (axis_3d*)(uint16*)v8);
-  result = (int)sub_373F0_377B0((axis_3d*)v7, 10, 32);
+  result = (int)CreateEntity_373F0_377B0((axis_3d*)v7, 10, 32);
   if ( result )
   {
     *(_WORD *)(result + 30) = v4;
@@ -41812,7 +41864,7 @@ int sub_35DE0_361A0(unsigned __int16 a1, unsigned __int16 a2, __int16 a3, __int1
   v10[1] = a4 << 8;
   v4 = sub_42150_42490((axis_3d*)(uint16*)v9, (axis_3d*)(uint16*)v10);
   v5 = sub_423D0_42710((axis_3d*)(uint16*)v9, (axis_3d*)(uint16*)v10);
-  result = (int)sub_373F0_377B0((axis_3d*)v9, 10, 51);
+  result = (int)CreateEntity_373F0_377B0((axis_3d*)v9, 10, 51);
   v7 = result;
   if ( result )
   {
@@ -42146,7 +42198,7 @@ void sub_36480_36840(Type_AE400_193795* a1, Type_1090* a2)//207480_
 		{
 			word_AE454_AE444.x = a2->data_4 << 8;
 			word_AE454_AE444.y = a2->data_6 << 8;
-			word_AE454_AE444.z = sub_11F50(&word_AE454_AE444);
+			word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
 			if (off_97D12[a2->data_2].adress)
 				off_97D12[a2->data_2].adress(&word_AE454_AE444);
 			return;
@@ -42158,7 +42210,7 @@ void sub_36480_36840(Type_AE400_193795* a1, Type_1090* a2)//207480_
 		}
 		word_AE454_AE444.x = a2->data_4 << 8;
 		word_AE454_AE444.y = a2->data_6 << 8;
-		word_AE454_AE444.z = sub_11F50(&word_AE454_AE444);
+		word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
 		if (off_97D12[a2->data_2].adress)
 			off_97D12[a2->data_2].adress(&word_AE454_AE444);
 		return;
@@ -42172,7 +42224,7 @@ void sub_36480_36840(Type_AE400_193795* a1, Type_1090* a2)//207480_
 		}
 		word_AE454_AE444.x = a2->data_4 << 8;
 		word_AE454_AE444.y = a2->data_6 << 8;
-		word_AE454_AE444.z = sub_11F50(&word_AE454_AE444);
+		word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
 		if (off_97D12[a2->data_2].adress)
 			off_97D12[a2->data_2].adress(&word_AE454_AE444);
 		return;
@@ -42181,7 +42233,7 @@ void sub_36480_36840(Type_AE400_193795* a1, Type_1090* a2)//207480_
 	{
 		word_AE454_AE444.x = a2->data_4 << 8;
 		word_AE454_AE444.y = a2->data_6 << 8;
-		word_AE454_AE444.z = sub_11F50(&word_AE454_AE444);
+		word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
 		if (off_97D12[a2->data_2].adress)
 			off_97D12[a2->data_2].adress(&word_AE454_AE444);
 		return;
@@ -42192,7 +42244,7 @@ void sub_36480_36840(Type_AE400_193795* a1, Type_1090* a2)//207480_
 		{
 			word_AE454_AE444.x = a2->data_4 << 8;
 			word_AE454_AE444.y = a2->data_6 << 8;
-			word_AE454_AE444.z = sub_11F50(&word_AE454_AE444);
+			word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
 			if (off_97D12[a2->data_2].adress)
 				off_97D12[a2->data_2].adress(&word_AE454_AE444);
 			return;
@@ -42204,14 +42256,14 @@ void sub_36480_36840(Type_AE400_193795* a1, Type_1090* a2)//207480_
 		}
 		word_AE454_AE444.x = a2->data_4 << 8;
 		word_AE454_AE444.y = a2->data_6 << 8;
-		word_AE454_AE444.z = sub_11F50(&word_AE454_AE444);
+		word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
 		if (off_97D12[a2->data_2].adress)
 			off_97D12[a2->data_2].adress(&word_AE454_AE444);
 		return;
 	}
 	word_AE454_AE444.x = a2->data_4 << 8;
 	word_AE454_AE444.y = a2->data_6 << 8;
-	word_AE454_AE444.z = sub_11F50(&word_AE454_AE444);
+	word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
 	if (off_97D12[a2->data_2].adress)
 	{
 		Type_AE400_29795* event = off_97D12[a2->data_2].adress(&word_AE454_AE444);
@@ -42987,7 +43039,9 @@ Type_AE400_29795* NewEvent_372C0_37680()//2082C0_
 }
 
 //SYNCHRONIZED WITH REMC1
-Type_AE400_29795* sub_373F0_377B0(axis_3d* a1, int a2, int a3)//2083F0_
+/// Creates an entity of class a2 / subtype a3 at position a1 by dispatching to the per-type
+/// constructor in dword_96902[a2].str_4[a3]. Returns nullptr for unknown types or a full pool.
+Type_AE400_29795* CreateEntity_373F0_377B0(axis_3d* a1, int a2, int a3)//2083F0_
 {
 	if (dword_96902[a2].str_4[a3].data10 && dword_96902[a2].str_4[a3].data4 == a3)
 		return dword_96902[a2].str_4[a3].data6(a1);
@@ -43078,8 +43132,8 @@ void sub_37560_37920(Type_1090* type1090)
   {
     v5[0] = (type1090->data_4 << 8) + 128;
     v5[1] = (type1090->data_6 << 8) + 128;
-    v5[2] = sub_11F50((axis_3d*)v5);
-    v2 = sub_373F0_377B0((axis_3d*)v5, type1090->data_0, type1090->data_2);
+    v5[2] = GetTerrainHeight_11F50((axis_3d*)v5);
+    v2 = CreateEntity_373F0_377B0((axis_3d*)v5, type1090->data_0, type1090->data_2);
     if (v2)
     {
       v2z = *(_BYTE *)(((uint8_t*)v2) + 64);
@@ -43302,7 +43356,11 @@ int sub_378A0_37C60(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_37920_37CE0(int a1)
+/// Creates a castle entity (class 3, subtype 2) for the castle spell.
+/// @param a1 axis_3d* impact point. The castle is snapped to the tile grid: tile (x>>8, y>>8), x
+///           moved one tile when x+y is odd so castles sit on even tiles, z = terrain height there.
+/// @return the new entity, or 0 if the entity pool is full.
+int CreateCastle_37920_37CE0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -43322,9 +43380,9 @@ int sub_37920_37CE0(int a1)
     *(_DWORD *)(result + 8) = 40000;
     *(_WORD *)(result + 26) = 0;
     *(_WORD *)(result + 28) = 33;
-    LOWORD(v3) = HIBYTE(word_AE454_AE444);
+    LOWORD(v3) = HIBYTE(word_AE454_AE444.x); // PORT: was HIBYTE(word_AE454_AE444) = high byte of .z once retyped as axis_3d (castle built at the wrong x)
     HIWORD(v3) = HIBYTE(word_AE454_AE444.y);
-    v4 = sub_11F50(&word_AE454_AE444);
+    v4 = GetTerrainHeight_11F50(&word_AE454_AE444);
     if ( ((__int16)v3 + SHIWORD(v3)) % 2 )
       LOWORD(v3) = v3 + 1;
     LOWORD(v3) = (_WORD)v3 << 8;
@@ -44364,7 +44422,7 @@ int sub_38E70(int a1)
   *(_BYTE *)(v2 + 66) = 3;
   *(_WORD *)(v2 + 26) = (v2 - (v5 + 29795)) / 164 % 10 + 29;
   sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
-  *(_WORD *)(v2 + 76) = sub_11F50((axis_3d*)(v2 + 72));
+  *(_WORD *)(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)(v2 + 72));
   RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
   sub_36FA0_37360((Type_AE400_29795*)v2, 220);
   sub_37130_374F0((Type_AE400_29795*)v2, 128, 128);
@@ -45658,7 +45716,7 @@ int sub_3A640(uint16_t* a1)
     *(_WORD *)(v1 + 26) = 0;
     *(_DWORD *)(v1 + 72) = *(_DWORD *)a1;
     *(_WORD *)(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
-    *(_WORD *)(v1 + 76) = sub_11F50((axis_3d*)(__int16 *)(v1 + 72));
+    *(_WORD *)(v1 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(v1 + 72));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
   }
   return v2;
@@ -45687,7 +45745,7 @@ int sub_3A6B0(uint16_t* a1)
     *(_WORD *)(v2 + 26) = 0;
     *(_BYTE *)(v2 + 18) = v4;
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
-    *(_WORD *)(v2 + 76) = sub_11F50((axis_3d*)(__int16 *)(v2 + 72));
+    *(_WORD *)(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(v2 + 72));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     sub_36FA0_37360((Type_AE400_29795*)v2, 244);
   }
@@ -45715,7 +45773,7 @@ int sub_3A730(uint16_t* a1)
     *(_DWORD *)(v1 + 16) = v3 & 0xFFFDFFF7;
     *(_BYTE *)(v1 + 18) |= 2u;
     sub_41CF0_42030((Type_AE400_29795*)v1, (axis_3d*)a1);
-    v2[38] = sub_11F50((axis_3d*)(short*)a1);
+    v2[38] = GetTerrainHeight_11F50((axis_3d*)(short*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     sub_36FA0_37360((Type_AE400_29795*)v2, 228);
     sub_37130_374F0((Type_AE400_29795*)v2, 272, 1536);
@@ -45751,7 +45809,7 @@ int sub_3A7D0(uint16_t* a1)
     *(_BYTE *)(v2 + 67) = 7;
     *(_WORD *)(v2 + 126) = v5 % 0x14 + 20;
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
-    *(_WORD *)(v2 + 76) = sub_11F50((axis_3d*)(short*)a1);
+    *(_WORD *)(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)(short*)a1);
     sub_37030_373F0((Type_AE400_29795*)(_WORD *)v2, 78);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     result = v2;
@@ -46073,7 +46131,7 @@ int sub_3ACC0(uint16_t* a1)
     *(_WORD *)(v2 + 126) = v8 + 52;
     *(_BYTE *)(v2 + 18) = BYTE1(v9) | 2;
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
-    *(_WORD *)(v2 + 76) = sub_11F50((axis_3d*)a1) + 64;
+    *(_WORD *)(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)a1) + 64;
     sub_41EC0_42200((axis_3d*)(_WORD *)(v2 + 150), *(_WORD *)(v2 + 30), 0, *(_WORD *)(v2 + 126));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     sub_36FA0_37360((Type_AE400_29795*)v2, 210);
@@ -46427,7 +46485,7 @@ int sub_3B300(uint16_t* a1)
     sub_37130_374F0((Type_AE400_29795*)v2, 256, 256);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
-    *(_WORD *)(v2 + 76) = sub_11F50((axis_3d*)(__int16 *)(v2 + 72)) + 640;
+    *(_WORD *)(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(v2 + 72)) + 640;
     *(_DWORD *)(v2 + 150) = *(_DWORD *)(v2 + 72);
     *(_WORD *)(v2 + 154) = *(_WORD *)(v2 + 76);
     v3 = 9377 * *(_DWORD *)(v2 + 4) + 9439;
@@ -48002,7 +48060,7 @@ void sub_3C9D0_3CD10()//20D9D0_
 			}
 			break;
 		case 2:
-			ifsEvent = sub_373F0_377B0(&actEvent->var_u32_29867_72, 10, 39);
+			ifsEvent = CreateEntity_373F0_377B0(&actEvent->var_u32_29867_72, 10, 39);
 			if (ifsEvent)
 			{
 				ifsEvent->var_u32_29935_140 = 100000;
@@ -51521,7 +51579,7 @@ void sub_41B20_41E60(TypeStrAE400_13323* a1x, Type_AE400_29795* a2x)//212B20_
 {
   if ( (str_AE408_AE3F8->var_u8_2 & 1) == 0 )
   {
-    sub_11F50(&a2x->var_u32_29867_72);
+    GetTerrainHeight_11F50(&a2x->var_u32_29867_72);
     a1x->str_13895_572[a1x->var_u16_13339_16].axis = a2x->var_u32_29867_72;
     a1x->str_13895_572[a1x->var_u16_13339_16].yaw_6 = a2x->var_u16_29825_30;
     a1x->str_13895_572[a1x->var_u16_13339_16].fov_12 = a1x->str_13895_572[0].fov_12;
@@ -52956,7 +53014,7 @@ int sub_43430_43770(char *a1, __int16 a2)
 int sub_43760_43AA0(__int16 a1)
 {
   __int16 i; // bx
-  int result; // eax
+  int result = 0; // eax  PORT: returned uninitialised on some paths
   __int16 v3; // bx
   char v4[32]; // [esp+0h] [ebp-20h] BYREF
 
@@ -53940,12 +53998,12 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
   v3 = a1x - str_AE400_AE3F0->str_13323;
   v32x = str_AE400_AE3F0->str_9177[v3].v_9177;
   uaxis_2d tempZ;
-  tempZ.word= sub_11F50(&v32x);
+  tempZ.word= GetTerrainHeight_11F50(&v32x);
   tempZ._axis_2d.y++;
   v32x.z = tempZ.word;
   if (event == str_AE400_AE3F0->str_29795)
   {
-    v2x = sub_373F0_377B0(&v32x, 3, a1x->var_u8_13332_9 == 1);
+    v2x = CreateEntity_373F0_377B0(&v32x, 3, a1x->var_u8_13332_9 == 1);
     v34 = 1;
   }
   else
@@ -53992,7 +54050,7 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
     }
     else
     {
-      v11x = sub_373F0_377B0(&v2x->var_u32_29867_72, 12, v2x->var_u32_29955_160->var_14958_1635_532[v9x]);
+      v11x = CreateEntity_373F0_377B0(&v2x->var_u32_29867_72, 12, v2x->var_u32_29955_160->var_14958_1635_532[v9x]);
       //v12 = v11;
       if ( v11x )
       {
@@ -54067,7 +54125,7 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
           //232599
         if ( ((uint8_t*)str_AE400_AE3F0)[0x38C97 + v2x->var_u32_29955_160->var_48] /* PORT: was byte_38C97[dword_AE400_AE3F0() + ...] */ )
         {
-          v17x = sub_373F0_377B0(&v2x->var_u32_29867_72, 3, 2);
+          v17x = CreateEntity_373F0_377B0(&v2x->var_u32_29867_72, 3, 2);
           //v18 = v17;
           if ( v17x )
           {
@@ -54078,7 +54136,7 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
             for ( i = 0; ; i++ )
             {
                 //232599
-              if (byte_38C97[v2x->var_u32_29955_160->var_48] <= i )
+              if (((uint8_t*)str_AE400_AE3F0)[0x38C97 + v2x->var_u32_29955_160->var_48] /* PORT: game-state field, see above */ <= i )
                 break;
               str_AE400_AE3F0->str_29795->var_u32_29867_72 = *(axis_3d*)&v17x->var_u32_150;
               str_AE400_AE3F0->str_29795->var_u8_29860_65 = 0;
@@ -54087,8 +54145,8 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
               str_AE400_AE3F0->str_29795->var_u8_29866_71 = i;
               sub_279D0((int)&str_AE400_AE3F0->str_29795);
             }
-            v17x->var_u16_29821_26 = byte_38C97[v2x->var_u32_29955_160->var_48] - 1;
-            sub_37150_37510(v17x, byte_38C97[v2x->var_u32_29955_160->var_48] - 1);
+            v17x->var_u16_29821_26 = ((uint8_t*)str_AE400_AE3F0)[0x38C97 + v2x->var_u32_29955_160->var_48] /* PORT: game-state field, see above */ - 1;
+            sub_37150_37510(v17x, ((uint8_t*)str_AE400_AE3F0)[0x38C97 + v2x->var_u32_29955_160->var_48] /* PORT: game-state field, see above */ - 1);
             sub_47C60_47FA0((int)v17x);
             v24 = v17x->var_u32_29931_136;
             v17x->var_u32_29935_140 = v24;
@@ -54196,7 +54254,7 @@ int sub_45410_45750(Type_AE400_29795* a1x)//216410_
     }
   }
   //v4 = a1x->var_u32_29951_156->v_12;
-  v5 = sub_11F50(&word_AE454_AE444);
+  v5 = GetTerrainHeight_11F50(&word_AE454_AE444);
   if ( word_AE454_AE444.z < v5 + a1x->var_u32_29951_156->v_12)
     word_AE454_AE444.z = a1x->var_u32_29951_156->v_12 + v5;
   return v10;
@@ -54244,7 +54302,7 @@ void sub_455D0_45910(Type_AE400_29795* a1x)//2165D0_
   if ( v2 )
     v2 /= (int)abs32(v2);
   a1x->actSpeed_29921_126 += v2 * dword_93A88;
-  v3 = sub_11F50(&word_AE454_AE444);
+  v3 = GetTerrainHeight_11F50(&word_AE454_AE444);
   v4 = a1x->var_u32_29951_156->v_10;
   v5 = ((word_AE454_AE444.z - v3 - v4) << 10) / v4;
   if ( v5 < -256 )
@@ -54567,11 +54625,11 @@ int sub_45FC0_46300(int a1)
   if ( *(__int16 *)(a1 + 46) > 0 )
     *(_WORD *)(a1 + 46) = 0;
   v2 = *(__int16 *)(*(_DWORD *)(a1 + 156) + 12);
-  v3 = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+  v3 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
   v4 = v3;
   if ( *(__int16 *)(a1 + 76) < v3 + v2 )
     *(_WORD *)(a1 + 76) = *(_WORD *)(*(_DWORD *)(a1 + 156) + 12) + v3;
-  v5 = (int)sub_373F0_377B0(&word_AE454_AE444, 10, 1);
+  v5 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 10, 1);
   if ( v5 )
   {
     *(_BYTE *)(v5 + 16) |= 0x80u;
@@ -54643,7 +54701,7 @@ int sub_45FC0_46300(int a1)
         *(_DWORD *)(v16 + 12) = v19 % 0x5A + 200;
       }
     }
-    v20 = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), 10, 40);
+    v20 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), 10, 40);
     if ( v20 )
     {
       v21 = *(_DWORD *)(a1 + 160);
@@ -55090,7 +55148,7 @@ __int16 sub_46DB0_470F0(int a1)
     {
       --*(_WORD *)(a1 + 50);
       sub_46D20_47060((Type_AE400_29795*)a1, 1);
-      LOWORD(v1) = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+      LOWORD(v1) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
       *(_WORD *)(a1 + 76) = v1;
     }
   }
@@ -55105,7 +55163,7 @@ __int16 sub_46DB0_470F0(int a1)
       *(_WORD *)(a1 + 48) = 0;
       *(_BYTE *)(a1 + 70) = 5;
     }
-    *(_WORD *)(a1 + 76) = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+    *(_WORD *)(a1 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
     LOWORD(v1) = *(_WORD *)(a1 + 24);
     v2 = *(_BYTE *)(a1 + 63);
     *(_WORD *)(a1 + 144) = v1;
@@ -55113,7 +55171,7 @@ __int16 sub_46DB0_470F0(int a1)
     {
       sub_47130_47470(a1);
       sub_37150_37510((Type_AE400_29795*)a1, *(_WORD *)(a1 + 26));
-      sub_47400_47740(a1);
+      UpdateCastleBalloons_47400_47740(a1);
       v1 = *(_DWORD *)(a1 + 140);
       if ( v1 < *(_DWORD *)(a1 + 136) )
       {
@@ -55169,7 +55227,7 @@ char sub_46F10_47250(int a1)
     case 1:
     case 4:
     case 6:
-      v1 = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+      v1 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
       *(_WORD *)(a1 + 76) = v1;
       break;
     case 2:
@@ -55183,7 +55241,7 @@ char sub_46F10_47250(int a1)
       break;
     case 5:
       sub_46D20_47060((Type_AE400_29795*)a1, 1);
-      *(_WORD *)(a1 + 76) = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+      *(_WORD *)(a1 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
       LOBYTE(v1) = sub_47080_473C0(a1);
       break;
     default:
@@ -55198,7 +55256,7 @@ int sub_47020_47360(int a1)
   int result; // eax
   int v2; // ebx
 
-  result = (int)sub_373F0_377B0((axis_3d*)(a1 + 150), 10, 42);
+  result = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 150), 10, 42);
   v2 = result;
   if ( result )
   {
@@ -55217,7 +55275,7 @@ int sub_47080_473C0(int a1)
   int result; // eax
   int v2; // ebx
 
-  result = (int)sub_373F0_377B0((axis_3d*)(a1 + 150), 10, 41);
+  result = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 150), 10, 41);
   v2 = result;
   if ( result )
   {
@@ -55241,7 +55299,7 @@ int sub_470E0(int a1)
     sub_47A70_47DB0(a1);
     *(_BYTE *)(a1 + 70) = 4;
     sub_47130_47470(a1);
-    result = sub_47400_47740(a1);
+    result = UpdateCastleBalloons_47400_47740(a1);
     *(_WORD *)(a1 + 48) = 0;
     *(_WORD *)(a1 + 50) = 5;
   }
@@ -55304,7 +55362,7 @@ int sub_47130_47470(int a1)
       {
         *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)(a1 + 72);
         word_AE454_AE444.z = *(_WORD *)(a1 + 76);
-        v5 = (int)sub_373F0_377B0(&word_AE454_AE444, 10, 39);
+        v5 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 10, 39);
         v6 = v5;
         if ( v5 )
         {
@@ -55316,7 +55374,7 @@ int sub_47130_47470(int a1)
           *(_WORD *)(v5 + 152) = 0;
           *(_WORD *)(v5 + 126) = (9377 * v7 + 9439) % 0x30u + 16;
           v8 = *(__int16 *)(a1 + 76);
-          v9 = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+          v9 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
           *(_WORD *)(v6 + 46) = (1024
                                - (v8
                                 - v9)
@@ -55340,7 +55398,7 @@ int sub_47130_47470(int a1)
       {
         *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)(a1 + 72);
         word_AE454_AE444.z = *(_WORD *)(a1 + 76);
-        result = (int)sub_373F0_377B0(&word_AE454_AE444, 10, 54);
+        result = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 10, 54);
         v15 = result;
         if ( result )
         {
@@ -55357,7 +55415,10 @@ int sub_47130_47470(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_47400_47740(int a1)
+/// Keeps a castle's balloons (class 3/3) alive: the castle level (+26, 1..7) gives the number of
+/// balloons; missing ones are re-created at the castle, dead ones are released. Inferred from the
+/// spawn counts and the 3/3 constructor (CreateEntity_373F0_377B0(pos, 3, 3)); not fully verified.
+int UpdateCastleBalloons_47400_47740(int a1)
 {
   int v1; // ebp
   __int16 v2; // dx
@@ -55436,7 +55497,7 @@ LABEL_10:
       v9 = dword_AE400_AE3F0() + 29795 + v6;
       if ( v9 <= dword_AE400_AE3F0() + 29795 )
       {
-        v12 = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), 3, 3);
+        v12 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), 3, 3);
         if ( v12 )
         {
           *(_WORD *)(v12 + 24) = *(_WORD *)(a1 + 24);
@@ -55521,7 +55582,7 @@ LABEL_32:
       {
         if ( !*(_WORD *)(a1 + 46) )
         {
-          v19 = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), 5, 15);
+          v19 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), 5, 15);
           if ( v19 )
           {
             *(_WORD *)(a1 + 46) = 16;
@@ -55535,7 +55596,7 @@ LABEL_32:
             word_AE454_AE444.z = *(_WORD *)(v19 + 76);
             word_AE454_AE444.x += 128;
             word_AE454_AE444.y += 640;
-            word_AE454_AE444.z = sub_11F50(&word_AE454_AE444);
+            word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
             sub_41C70_41FB0((Type_AE400_29795*)v19, &word_AE454_AE444);
           }
         }
@@ -55844,7 +55905,7 @@ LABEL_17:
         v16 = v10[7];
         v15 = v10[5];
         v14 = v10[6];
-        v11 = sub_11F50(&word_AE454_AE444);
+        v11 = GetTerrainHeight_11F50(&word_AE454_AE444);
         v12 = sub_42000_42340(&word_AE454_AE444, v11, v14, v15, v16);
         sub_41C70_41FB0((Type_AE400_29795*)a1, &word_AE454_AE444);
         return sub_481D0_48510(a1);
@@ -55885,7 +55946,7 @@ LABEL_17:
         if ( sub_423D0_42710((axis_3d*)(uint16*)&word_AE454_AE444, (axis_3d*)(_WORD *)(v1 + 72)) <= v7 )
         {
           v8 = *(__int16 *)(*(_DWORD *)(a1 + 156) + 12);
-          if ( word_AE454_AE444.z <= v8 + (__int16)sub_11F50(&word_AE454_AE444) && *(__int16 *)(v1 + 26) > 0 )
+          if ( word_AE454_AE444.z <= v8 + (__int16)GetTerrainHeight_11F50(&word_AE454_AE444) && *(__int16 *)(v1 + 26) > 0 )
           {
             word_AE454_AE444.x = *(_WORD *)(v1 + 72);
             v9 = *(_DWORD *)(v1 + 140);
@@ -56774,7 +56835,7 @@ void sub_49890_49BD0(int a1)
     *(_DWORD *)(a1 + 12) = v2;
     if ( v2 < 0 )
     {
-      v3 = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), 10, 6);
+      v3 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), 10, 6);
       v4 = v3;
       if ( v3 )
       {
@@ -56796,11 +56857,11 @@ void sub_49890_49BD0(int a1)
     }
     *(_WORD *)(a1 + 94) = 0;
   }
-  *(_WORD *)(a1 + 76) = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+  *(_WORD *)(a1 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
   result = sub_11810((axis_3d*)(__int16 *)(a1 + 72));
   if ( result == 1 )
   {
-    v8 = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), 10, 5);
+    v8 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), 10, 5);
     if ( v8 )
       *(_WORD *)(v8 + 24) = *(_WORD *)(a1 + 24);
     sub_41E80_421C0((Type_AE400_29795*)a1);
@@ -56833,11 +56894,11 @@ int sub_499C0_49D00(int a1)
       }
     }
   }
-  *(_WORD *)(a1 + 76) = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+  *(_WORD *)(a1 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
   result = sub_11810((axis_3d*)(__int16 *)(a1 + 72));
   if ( result == 1 )
   {
-    v4 = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), 10, 5);
+    v4 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), 10, 5);
     if ( v4 )
       *(_WORD *)(v4 + 24) = *(_WORD *)(a1 + 24);
     sub_41E80_421C0((Type_AE400_29795*)a1);
@@ -56851,11 +56912,11 @@ void sub_49A50_49D90(_WORD* a1)
   int result; // eax
   int v2; // eax
 
-  a1[38] = sub_11F50((axis_3d*)(short*)(a1 + 36));
+  a1[38] = GetTerrainHeight_11F50((axis_3d*)(short*)(a1 + 36));
   result = sub_11810((axis_3d*)(short*)(a1 + 36));
   if ( result == 1 )
   {
-    v2 = (int)sub_373F0_377B0((axis_3d*)(a1 + 36), 10, 5);
+    v2 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 36), 10, 5);
     if ( v2 )
       *(_WORD *)(v2 + 24) = a1[12];
     sub_41E80_421C0((Type_AE400_29795*)(int)a1);
@@ -56868,7 +56929,7 @@ int sub_49AA0_49DE0(int a1)
   int result; // eax
 
   *(_BYTE *)(a1 + 18) |= 2u;
-  result = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+  result = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
   *(_WORD *)(a1 + 76) = result;
   return result;
 }
@@ -56891,7 +56952,7 @@ int sub_49AD0_49E10(int a1)
     v2 += 2049;
     ++v1;
   }
-  result = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+  result = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
   *(_WORD *)(a1 + 76) = result;
   return result;
 }
@@ -56903,7 +56964,7 @@ int sub_49B50_49E90(int a1)
   int result; // eax
 
   *(_BYTE *)(a1 + 18) |= 2u;
-  result = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+  result = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
   *(_WORD *)(a1 + 76) = result;
   return result;
 }
@@ -61774,7 +61835,7 @@ char sub_52770_52AB0(int a1)
   v6 = v5;
   if ( !v5 )
   {
-    LOWORD(result) = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+    LOWORD(result) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
     v16 = *(_WORD *)(a1 + 76);
     word_AE454_AE444.z = result;
     if ( (__int16)result <= v16 )
@@ -61789,7 +61850,7 @@ char sub_52770_52AB0(int a1)
       result = sub_11810((axis_3d*)(__int16 *)(a1 + 72));
       if (result == 1 )
       {
-        v17 = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), 10, 5);
+        v17 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), 10, 5);
         if ( v17 )
           *(_WORD *)(v17 + 24) = *(_WORD *)(a1 + 24);
         sub_41E80_421C0((Type_AE400_29795*)a1);
@@ -61853,7 +61914,7 @@ char sub_52770_52AB0(int a1)
 LABEL_25_26:
   if (v23_22)
   {
-    result = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), *(char *)(a1 + 68), *(char *)(a1 + 69));
+    result = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), *(char *)(a1 + 68), *(char *)(a1 + 69));
     v19 = result;
     v20 = (_WORD *)result;
     if ( result )
@@ -61987,7 +62048,7 @@ void sub_52B30_52E70(int a1)
   }
   else
   {
-    result = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+    result = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
     v17 = *(_WORD *)(a1 + 76);
     word_AE454_AE444.z = result;
     if ( (__int16)result <= v17 )
@@ -62005,7 +62066,7 @@ void sub_52B30_52E70(int a1)
         result = sub_11810((axis_3d*)(__int16 *)(a1 + 72));
         if ( result == 1 )
         {
-          v18 = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), 10, 5);
+          v18 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), 10, 5);
           if ( v18 )
             *(_WORD *)(v18 + 24) = *(_WORD *)(a1 + 24);
           sub_41E80_421C0((Type_AE400_29795*)a1);
@@ -62018,7 +62079,7 @@ void sub_52B30_52E70(int a1)
 LABEL_24:
   if ( v24 )
   {
-    result = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), *(char *)(a1 + 68), *(char *)(a1 + 69));
+    result = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), *(char *)(a1 + 68), *(char *)(a1 + 69));
     v20 = (_WORD *)result;
     if ( result )
     {
@@ -62072,7 +62133,7 @@ char sub_52ED0_53210(int a1)
   *(_DWORD *)&word_AE454_AE444.x = *(_DWORD *)(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)(a1 + 76);
   sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)(a1 + 30), *(_WORD *)(a1 + 32), *(_WORD *)(a1 + 126));
-  v4 = sub_11F50(&word_AE454_AE444);
+  v4 = GetTerrainHeight_11F50(&word_AE454_AE444);
   if ( v4 > word_AE454_AE444.z )
     word_AE454_AE444.z = v4;
   sub_41C70_41FB0((Type_AE400_29795*)a1, &word_AE454_AE444);
@@ -62089,7 +62150,7 @@ char sub_52ED0_53210(int a1)
   }
   else
   {
-    LOWORD(v8) = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+    LOWORD(v8) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
     v9 = *(_WORD *)(a1 + 76);
     word_AE454_AE444.z = v8;
     if ( (__int16)v8 > v9 || (v10 = *(_DWORD *)(a1 + 12) - 1, *(_DWORD *)(a1 + 12) = v10, v10 < 0) )
@@ -62097,7 +62158,7 @@ char sub_52ED0_53210(int a1)
   }
   if ( v13 )
   {
-    v8 = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), *(char *)(a1 + 68), *(char *)(a1 + 69));
+    v8 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), *(char *)(a1 + 68), *(char *)(a1 + 69));
     v11 = (_WORD *)v8;
     if ( v8 )
     {
@@ -62126,7 +62187,7 @@ char sub_53070_533B0(int a1)
   sub_52770_52AB0(a1);
   if ( *(_BYTE *)(a1 + 64) )
   {
-    result = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), 10, 1);
+    result = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), 10, 1);
     if ( result )
     {
       *(_BYTE *)(result + 16) |= 0x80u;
@@ -62258,7 +62319,7 @@ char sub_530C0_53400(int a1)
   }
   else
   {
-    result = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+    result = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
     v15 = *(_WORD *)(a1 + 76);
     word_AE454_AE444.z = result;
     if ( (__int16)result <= v15 )
@@ -62273,7 +62334,7 @@ char sub_530C0_53400(int a1)
       result = sub_11810((axis_3d*)(__int16 *)(a1 + 72));
       if ( result == 1 )
       {
-        v16 = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), 10, 5);
+        v16 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), 10, 5);
         if ( v16 )
           *(_WORD *)(v16 + 24) = *(_WORD *)(a1 + 24);
         sub_41E80_421C0((Type_AE400_29795*)a1);
@@ -62287,7 +62348,7 @@ LABEL_25_26:
   {
     if ( v6 && *(_BYTE *)(v6 + 64) == 3 && *(_BYTE *)(v6 + 65) <= 1u )
     {
-      result = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), *(char *)(a1 + 68), *(char *)(a1 + 69));
+      result = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), *(char *)(a1 + 68), *(char *)(a1 + 69));
       v18 = result;
       v19 = (_WORD *)result;
       if ( result )
@@ -62357,7 +62418,7 @@ char sub_534C0_53800(int a1)
   }
   else
   {
-    LOWORD(v2) = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+    LOWORD(v2) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
     v4 = *(_WORD *)(a1 + 76);
     word_AE454_AE444.z = v2;
     if ( (__int16)v2 > v4 || (v5 = *(_DWORD *)(a1 + 12) - 1, *(_DWORD *)(a1 + 12) = v5, v5 < 0) )
@@ -62522,7 +62583,7 @@ LABEL_20:
 LABEL_22:
   v17 = sub_11980(a1);
   v29 = 164 * *(unsigned __int16 *)(a1 + 146) + dword_AE400_AE3F0() + 29795;
-  v18 = (int)sub_373F0_377B0((axis_3d*)&v25, *(char *)(a1 + 68), *(char *)(a1 + 69));
+  v18 = (int)CreateEntity_373F0_377B0((axis_3d*)&v25, *(char *)(a1 + 68), *(char *)(a1 + 69));
   v19 = (_WORD *)v18;
   v20 = v18;
   if ( v18 )
@@ -62591,7 +62652,7 @@ void sub_53980_53CC0(int a1)
     }
     else
     {
-      v3 = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+      v3 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
       v8 = *(_WORD *)(a1 + 76);
       word_AE454_AE444.z = v3;
       if ( v3 > v8 || (v9 = *(_DWORD *)(a1 + 12) - 1, *(_DWORD *)(a1 + 12) = v9, v9 < 0) )
@@ -62605,7 +62666,7 @@ void sub_53980_53CC0(int a1)
       }
       else
       {
-        v10 = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), *(char *)(a1 + 68), *(char *)(a1 + 69));
+        v10 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), *(char *)(a1 + 68), *(char *)(a1 + 69));
         if ( v10 )
         {
           *(_WORD *)(v10 + 24) = *(_WORD *)(a1 + 24);
@@ -62620,12 +62681,16 @@ void sub_53980_53CC0(int a1)
   }
   else
   {
-    LOBYTE(v3) = sub_53B50_53E90(a1);
+    LOBYTE(v3) = UpdateSpawningMissile_53B50_53E90(a1);
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-char sub_53B50_53E90(int a1)
+/// Per-tick update of a missile that turns into another entity on impact (the castle spell).
+/// Steers heading (+30) and pitch (+32) toward the target (+150), adjusts speed (+126 -> +128), moves.
+/// When it hits the terrain, its owner/target entity (+146) or its lifetime (+12) runs out, it spawns
+/// the entity class/subtype stored at +68/+69 at its position (via CreateEntity_373F0_377B0) and dies.
+char UpdateSpawningMissile_53B50_53E90(int a1)
 {
   char v1; // dh
   int v2; // eax
@@ -62685,7 +62750,7 @@ char sub_53B50_53E90(int a1)
     }
     else
     {
-      LOWORD(v2) = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+      LOWORD(v2) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
       v10 = *(_WORD *)(a1 + 76);
       word_AE454_AE444.z = v2;
       if ( (__int16)v2 > v10
@@ -62706,7 +62771,7 @@ char sub_53B50_53E90(int a1)
         sub_41EC0_42200(&word_AE454_AE444, v12, *(_WORD *)(a1 + 32), *(_WORD *)(a1 + 126));
         sub_41C70_41FB0((Type_AE400_29795*)a1, &word_AE454_AE444);
       }
-      v2 = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), *(char *)(a1 + 68), *(char *)(a1 + 69));
+      v2 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), *(char *)(a1 + 68), *(char *)(a1 + 69));
       if ( v2 )
       {
         *(_WORD *)(v2 + 24) = *(_WORD *)(a1 + 24);
@@ -62789,7 +62854,7 @@ char sub_53DC0_54100(int a1)
   v6 = v5;
   if ( !v5 )
   {
-    LOWORD(result) = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+    LOWORD(result) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
     v15 = *(_WORD *)(a1 + 76);
     word_AE454_AE444.z = result;
     if ( (__int16)result <= v15 )
@@ -62804,7 +62869,7 @@ char sub_53DC0_54100(int a1)
       result = sub_11810((axis_3d*)(__int16 *)(a1 + 72));
       if ( result == 1 )
       {
-        v16 = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), 10, 5);
+        v16 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), 10, 5);
         if ( v16 )
           *(_WORD *)(v16 + 24) = *(_WORD *)(a1 + 24);
         sub_41E80_421C0((Type_AE400_29795*)a1);
@@ -62867,7 +62932,7 @@ char sub_53DC0_54100(int a1)
 LABEL_25_26:
   if (v22_21)
   {
-    result = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), 10, 38);
+    result = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), 10, 38);
     v18 = result;
     v19 = result;
     if (result)
@@ -62906,7 +62971,7 @@ void sub_54180_544D0(int a1)
   word_AE454_AE444.z = *(_WORD *)(a1 + 76);
   sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)(a1 + 30), *(_WORD *)(a1 + 32), *(_WORD *)(a1 + 126));
   v2 = sub_11980(a1);
-  if ( (__int16)sub_11F50(&word_AE454_AE444) <= word_AE454_AE444.z )
+  if ( (__int16)GetTerrainHeight_11F50(&word_AE454_AE444) <= word_AE454_AE444.z )
   {
     v3 = *(_DWORD *)(a1 + 12);
     *(_DWORD *)(a1 + 12) = v3 - 1;
@@ -62980,7 +63045,7 @@ char sub_542B0_54640(int a1)
   *(_DWORD *)&word_AE454_AE444.x = *(_DWORD *)(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)(a1 + 76);
   sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)(a1 + 30), *(_WORD *)(a1 + 32), *(_WORD *)(a1 + 126));
-  v4 = sub_11F50(&word_AE454_AE444);
+  v4 = GetTerrainHeight_11F50(&word_AE454_AE444);
   if ( v4 > word_AE454_AE444.z )
     word_AE454_AE444.z = v4;
   sub_41C70_41FB0((Type_AE400_29795*)a1, &word_AE454_AE444);
@@ -62997,7 +63062,7 @@ char sub_542B0_54640(int a1)
   }
   else
   {
-    LOWORD(v8) = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+    LOWORD(v8) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
     v9 = *(_WORD *)(a1 + 76);
     word_AE454_AE444.z = v8;
     if ( (__int16)v8 > v9 || (v10 = *(_DWORD *)(a1 + 12) - 1, *(_DWORD *)(a1 + 12) = v10, v10 < 0) )
@@ -63005,7 +63070,7 @@ char sub_542B0_54640(int a1)
   }
   if ( v14 )
   {
-    v11 = (_WORD *)sub_373F0_377B0((axis_3d*)(a1 + 72), 10, 12);
+    v11 = (_WORD *)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), 10, 12);
     if ( v11 )
     {
       sub_526C0_52A00(a1, v7, v2);
@@ -63013,7 +63078,7 @@ char sub_542B0_54640(int a1)
       v11[15] = *(_WORD *)(a1 + 30);
       v11[16] = *(_WORD *)(a1 + 32);
     }
-    v8 = (int)sub_373F0_377B0((axis_3d*)(a1 + 72), *(char *)(a1 + 68), *(char *)(a1 + 69));
+    v8 = (int)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), *(char *)(a1 + 68), *(char *)(a1 + 69));
     v12 = (_WORD *)v8;
     if ( v8 )
     {
@@ -63032,7 +63097,7 @@ void sub_54480_54810(int a1)
 {
   _WORD *result; // eax
 
-  result = (_WORD *)sub_373F0_377B0((axis_3d*)(a1 + 72), *(char *)(a1 + 68), *(char *)(a1 + 69));
+  result = (_WORD *)CreateEntity_373F0_377B0((axis_3d*)(a1 + 72), *(char *)(a1 + 68), *(char *)(a1 + 69));
   if ( result )
   {
     result[12] = *(_WORD *)(a1 + 24);
@@ -63865,7 +63930,7 @@ int sub_55A40_55F70(Type_AE400_29795* a1x, char a2, char a3)
       return 0;
     }
   }
-  v4 = sub_11F50(&a1x->var_u32_29867_72);
+  v4 = GetTerrainHeight_11F50(&a1x->var_u32_29867_72);
   if ( sub_42090_423D0(&a1x->var_u32_29867_72, v4, 0, 0, -128) == -1 )
   {
     sub_41E80_421C0(a1x);
@@ -64085,7 +64150,7 @@ int sub_55EF0_56420(__int16 a1, int a2, int a3)
     v3 = *(_WORD *)(a2 + 30) - 512;
     HIBYTE(v3) &= 7u;
     sub_41EC0_42200((axis_3d*)(uint16*)&v12, v3, 0, 256);
-    a1 = sub_11F50((axis_3d*)(__int16 *)&v12);
+    a1 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)&v12);
     if ( a1 > v13 )
     {
       v12 = *(_DWORD *)(a3 + 72);
@@ -64108,7 +64173,7 @@ int sub_55EF0_56420(__int16 a1, int a2, int a3)
     v7 = *(_WORD *)(a2 + 30);
     HIBYTE(v7) = (HIBYTE(v7) + 2) & 7;
     sub_41EC0_42200((axis_3d*)(uint16*)&v12, v7, 0, 256);
-    a1 = sub_11F50((axis_3d*)(__int16 *)&v12);
+    a1 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)&v12);
     if ( a1 > v13 )
     {
       v12 = *(_DWORD *)(a3 + 72);
@@ -64161,7 +64226,7 @@ LABEL_5:
     {
       if ( *(_WORD *)(a1 + 48) == *(_WORD *)(a1 + 50) )
       {
-        v4 = (int)sub_373F0_377B0((axis_3d*)(v3 + 72), 9, 0);
+        v4 = (int)CreateEntity_373F0_377B0((axis_3d*)(v3 + 72), 9, 0);
         if ( v4 )
         {
           v5 = *(_WORD *)(v3 + 126);
@@ -64284,7 +64349,7 @@ void sub_56380_568B0(int a1)
         *(_WORD *)(v1 + 126) = *(_WORD *)(*(_DWORD *)(v1 + 160) + 12);
         if ( (*(_BYTE *)(a1 + 63) & 3) == 0 )
         {
-          v6 = (int)sub_373F0_377B0((axis_3d*)(v1 + 72), 10, 2);
+          v6 = (int)CreateEntity_373F0_377B0((axis_3d*)(v1 + 72), 10, 2);
           if ( v6 )
           {
             *(_WORD *)(v6 + 24) = *(_WORD *)(v1 + 24);
@@ -64336,7 +64401,7 @@ LABEL_5:
     {
       if ( *(_WORD *)(a1 + 48) == *(_WORD *)(a1 + 50) )
       {
-        v4 = (int)sub_373F0_377B0((axis_3d*)(v3 + 72), 9, 1);
+        v4 = (int)CreateEntity_373F0_377B0((axis_3d*)(v3 + 72), 9, 1);
         if ( v4 )
         {
           v5 = *(_WORD *)(v3 + 126);
@@ -64446,7 +64511,7 @@ LABEL_9:
     --*(_WORD *)(a1 + 48);
     return result;
   }
-  v4 = (int)sub_373F0_377B0((axis_3d*)(v3 + 72), 9, 2);
+  v4 = (int)CreateEntity_373F0_377B0((axis_3d*)(v3 + 72), 9, 2);
   if ( v4 )
   {
     v5 = *(_WORD *)(v3 + 126);
@@ -64465,7 +64530,7 @@ LABEL_9:
     *(_DWORD *)(v4 + 150) = *(_DWORD *)(v3 + 72);
     *(_WORD *)(v4 + 154) = *(_WORD *)(v3 + 76);
     sub_41EC0_42200((axis_3d*)(_WORD *)(v4 + 150), *(_WORD *)(v3 + 30), 0, 4096);
-    v6 = sub_11F50((axis_3d*)(__int16 *)(v4 + 150));
+    v6 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(v4 + 150));
     v7 = dword_AE400_AE3F0() + 29795;
     *(_WORD *)(v4 + 154) = v6;
     sub_55370_558A0((v4 - v7) / 164, -1, 9);
@@ -64505,7 +64570,7 @@ LABEL_9:
   }
   if ( *(_WORD *)(a1 + 48) == *(_WORD *)(a1 + 50) )
   {
-    v4 = (int)sub_373F0_377B0((axis_3d*)(v3 + 72), 9, 3);
+    v4 = (int)CreateEntity_373F0_377B0((axis_3d*)(v3 + 72), 9, 3);
     if ( v4 )
     {
       v5 = *(_WORD *)(v3 + 126);
@@ -64563,7 +64628,7 @@ LABEL_9:
   }
   if ( *(_WORD *)(a1 + 48) == *(_WORD *)(a1 + 50) )
   {
-    v4 = (int)sub_373F0_377B0((axis_3d*)(v3 + 72), 9, 4);
+    v4 = (int)CreateEntity_373F0_377B0((axis_3d*)(v3 + 72), 9, 4);
     if ( v4 )
     {
       v5 = *(_WORD *)(v3 + 126);
@@ -64580,7 +64645,7 @@ LABEL_9:
       *(_DWORD *)(v4 + 150) = *(_DWORD *)(v3 + 72);
       *(_WORD *)(v4 + 154) = *(_WORD *)(v3 + 76);
       sub_41EC0_42200((axis_3d*)(_WORD *)(v4 + 150), *(_WORD *)(v3 + 30), 0, 4096);
-      *(_WORD *)(v4 + 154) = sub_11F50((axis_3d*)(__int16 *)(v4 + 150));
+      *(_WORD *)(v4 + 154) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(v4 + 150));
       *(_WORD *)(v4 + 30) = *(_WORD *)(v3 + 30);
       v6 = dword_AE400_AE3F0() + 29795;
       *(_WORD *)(v4 + 32) = *(_WORD *)(v3 + 32);
@@ -64624,7 +64689,7 @@ LABEL_9:
   }
   if ( *(_WORD *)(a1 + 48) == *(_WORD *)(a1 + 50) )
   {
-    v4 = (int)sub_373F0_377B0((axis_3d*)(v3 + 72), 9, 5);
+    v4 = (int)CreateEntity_373F0_377B0((axis_3d*)(v3 + 72), 9, 5);
     if ( v4 )
     {
       v5 = *(_WORD *)(v3 + 126);
@@ -64644,7 +64709,7 @@ LABEL_9:
       *(_DWORD *)(v4 + 150) = *(_DWORD *)(v3 + 72);
       *(_WORD *)(v4 + 154) = *(_WORD *)(v3 + 76);
       sub_41EC0_42200((axis_3d*)(_WORD *)(v4 + 150), *(_WORD *)(v3 + 30), 0, 4096);
-      v7 = sub_11F50((axis_3d*)(__int16 *)(v4 + 150));
+      v7 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(v4 + 150));
       v8 = dword_AE400_AE3F0() + 29795;
       *(_WORD *)(v4 + 154) = v7;
       sub_55370_558A0((v4 - v8) / 164, -1, 15);
@@ -64751,7 +64816,7 @@ LABEL_9:
   }
   if ( *(_WORD *)(a1 + 48) == *(_WORD *)(a1 + 50) )
   {
-    v4 = (int)sub_373F0_377B0((axis_3d*)(v3 + 72), 9, 7);
+    v4 = (int)CreateEntity_373F0_377B0((axis_3d*)(v3 + 72), 9, 7);
     v5 = v4;
     if ( v4 )
     {
@@ -64844,7 +64909,7 @@ LABEL_9:
   }
   if ( *(_WORD *)(a1 + 48) == *(_WORD *)(a1 + 50) )
   {
-    v4 = (int)sub_373F0_377B0((axis_3d*)(v3 + 72), 9, 8);
+    v4 = (int)CreateEntity_373F0_377B0((axis_3d*)(v3 + 72), 9, 8);
     if ( v4 )
     {
       v5 = *(_WORD *)(v3 + 126);
@@ -64936,7 +65001,7 @@ LABEL_9:
   }
   if ( *(_WORD *)(a1 + 48) == *(_WORD *)(a1 + 50) )
   {
-    v4 = (int)sub_373F0_377B0((axis_3d*)(v3 + 72), 9, 9);
+    v4 = (int)CreateEntity_373F0_377B0((axis_3d*)(v3 + 72), 9, 9);
     if ( v4 )
     {
       v5 = *(_WORD *)(v3 + 126);
@@ -64985,7 +65050,7 @@ void sub_57610_57B40(int a1)
         if ( *(_WORD *)(a1 + 48) == *(_WORD *)(a1 + 50) )
         {
           sub_55E80_563B0(a1, v2);
-          v3 = (int)sub_373F0_377B0((axis_3d*)(v2 + 72), 9, 10);
+          v3 = (int)CreateEntity_373F0_377B0((axis_3d*)(v2 + 72), 9, 10);
           if ( v3 )
           {
             *(_WORD *)(a1 + 48) = *(_WORD *)(a1 + 50) - 1;
@@ -65002,7 +65067,7 @@ void sub_57610_57B40(int a1)
               *(_DWORD *)(v3 + 150) = *(_DWORD *)(v2 + 72);
               *(_WORD *)(v3 + 154) = *(_WORD *)(v2 + 76);
               sub_41EC0_42200((axis_3d*)(_WORD *)(v3 + 150), *(_WORD *)(v2 + 30), 0, 4096);
-              v6 = sub_11F50((axis_3d*)(__int16 *)(v3 + 150));
+              v6 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(v3 + 150));
               *(_BYTE *)(v3 + 68) = 3;
               *(_BYTE *)(v3 + 69) = 2;
               *(_WORD *)(v3 + 154) = v6;
@@ -65055,7 +65120,7 @@ LABEL_12:
   }
   if ( *(_WORD *)(a1 + 48) == *(_WORD *)(a1 + 50) )
   {
-    v2 = (int)sub_373F0_377B0((axis_3d*)(v1 + 72), 9, 11);
+    v2 = (int)CreateEntity_373F0_377B0((axis_3d*)(v1 + 72), 9, 11);
     if ( v2 )
     {
       v3 = *(_WORD *)(v1 + 126);
@@ -65120,7 +65185,7 @@ LABEL_9:
   }
   if ( *(_WORD *)(a1 + 48) == *(_WORD *)(a1 + 50) )
   {
-    v4 = (int)sub_373F0_377B0((axis_3d*)(v3 + 72), 9, 12);
+    v4 = (int)CreateEntity_373F0_377B0((axis_3d*)(v3 + 72), 9, 12);
     if ( v4 )
     {
       v5 = *(_WORD *)(v3 + 126);
@@ -65181,7 +65246,7 @@ LABEL_5:
     {
       if ( *(_WORD *)(a1 + 48) == *(_WORD *)(a1 + 50) )
       {
-        v4 = (int)sub_373F0_377B0((axis_3d*)(v3 + 72), 9, 17);
+        v4 = (int)CreateEntity_373F0_377B0((axis_3d*)(v3 + 72), 9, 17);
         if ( v4 )
         {
           v5 = *(_WORD *)(v3 + 126);
@@ -65242,7 +65307,7 @@ int sub_57D40_58270(int a1)
 		{
 			if (*(_WORD*)(a1 + 48) == *(_WORD*)(a1 + 50))
 			{
-				v4 = (int)sub_373F0_377B0((axis_3d*)(v3 + 72), 9, 16);
+				v4 = (int)CreateEntity_373F0_377B0((axis_3d*)(v3 + 72), 9, 16);
 				if (v4)
 				{
 					v5 = *(_WORD*)(v3 + 126);
@@ -65316,7 +65381,7 @@ void sub_57F00_58410(int a1)
         *(_WORD *)(v1 + 126) = *(_WORD *)(*(_DWORD *)(v1 + 160) + 12);
         if ( (*(_BYTE *)(a1 + 63) & 3) == 0 )
         {
-          v4 = (int)sub_373F0_377B0((axis_3d*)(v1 + 72), 10, 2);
+          v4 = (int)CreateEntity_373F0_377B0((axis_3d*)(v1 + 72), 10, 2);
           if ( v4 )
           {
             *(_WORD *)(v4 + 24) = *(_WORD *)(v1 + 24);
@@ -65367,7 +65432,7 @@ LABEL_5:
     {
       if ( *(_WORD *)(a1 + 48) == *(_WORD *)(a1 + 50) )
       {
-        v4 = (int)sub_373F0_377B0((axis_3d*)(v3 + 72), 9, 18);
+        v4 = (int)CreateEntity_373F0_377B0((axis_3d*)(v3 + 72), 9, 18);
         if ( v4 )
         {
           v5 = *(_WORD *)(v3 + 126);
@@ -65428,7 +65493,7 @@ LABEL_5:
     {
       if ( *(_WORD *)(a1 + 48) == *(_WORD *)(a1 + 50) )
       {
-        v4 = (int)sub_373F0_377B0((axis_3d*)(v3 + 72), 9, 0);
+        v4 = (int)CreateEntity_373F0_377B0((axis_3d*)(v3 + 72), 9, 0);
         if ( v4 )
         {
           v5 = *(_WORD *)(v3 + 126);
@@ -66749,7 +66814,7 @@ int sub_5A090_5A5A0(int a1, int a2)
         return 1;
       }
     }
-    *(_WORD *)(a1 + 76) = sub_11F50((axis_3d*)(__int16 *)(a1 + 72));
+    *(_WORD *)(a1 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
   }
   return 0;
 }
