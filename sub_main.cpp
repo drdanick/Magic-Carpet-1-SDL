@@ -306,8 +306,8 @@ void sub_11540();
 int sub_11640(Type_AE400_29795* a1, axis_3d* a2, char a3);
 int sub_11760(axis_3d* a1);
 int sub_11810(axis_3d* a1);
-bool sub_118C0(axis_3d* a1, axis_4d* a2, axis_3d* a3, axis_4d* a4);
-bool sub_11950(Type_AE400_29795* a1, Type_AE400_29795* a2);
+bool BoxesOverlap_118C0(axis_3d* a1, axis_4d* a2, axis_3d* a3, axis_4d* a4);
+bool EntitiesCollide_11950(Type_AE400_29795* a1, Type_AE400_29795* a2);
 int sub_11980(int a1);
 int sub_11AC0(_WORD *a1);
 int sub_11C00(__int16 *a1);
@@ -636,7 +636,7 @@ int sub_34460_34820();
 void sub_344F0();
 // void DrawAndEventsInGame_34530_348F0(__int16 a1, __int16 a2, __int16 a3);
 void GameLoop_34610_349D0();
-void sub_34690_34A50();
+void UpdatePaletteEffects_34690_34A50();
 void sub_34B00_34EC0();
 void sub_34B40_34F00();
 void sub_34C60_35020();
@@ -935,7 +935,7 @@ void sub_41490_417D0();
 void sub_41540_41880();
 unsigned __int16 sub_415C0_41900();
 void sub_416B0();
-void sub_41780_41AC0();
+void UpdateEntities_41780_41AC0();
 void sub_41B20_41E60(TypeStrAE400_13323* a1, Type_AE400_29795* a2);
 int sub_41C70_41FB0(Type_AE400_29795* event, axis_3d* position);
 // int sub_41CC0_42000(__int16 a1, int a2, int a3);
@@ -1123,12 +1123,12 @@ void sub_522E0();
 void sub_52400(__int16 a1, __int16 a2, __int16 a3);
 int sub_524C0_52800(int a1);
 int sub_524E0_52820(int a1);
-int sub_52500_52840(_WORD *a1, int a2);
+int AimAtEntity_52500_52840(_WORD *a1, int a2);
 int sub_52550_52890(int a1, int a2);
 __int16 sub_52610_52950(int a1, int a2);
 char sub_526C0_52A00(int a1, unsigned int a2, unsigned int a3);
 char sub_52770_52AB0(int a1);
-void sub_52B30_52E70(int a1);
+void UpdateFireball_52B30_52E70(int a1);
 char sub_52ED0_53210(int a1);
 char sub_53060(int a1);
 char sub_53070_533B0(int a1);
@@ -1136,15 +1136,15 @@ char sub_530B0(int a1);
 char sub_530C0_53400(int a1);
 char sub_534C0_53800(int a1);
 __int16 sub_535E0_53920(unsigned int a1);
-void sub_53980_53CC0(int a1);
+void UpdateHomingSpawnMissile_53980_53CC0(int a1);
 char UpdateSpawningMissile_53B50_53E90(int a1);
 char sub_53DC0_54100(int a1);
 void sub_54180_544D0(int a1);
 void sub_54290_545E0(int a1);
 char sub_542B0_54640(int a1);
 void sub_54480_54810(int a1);
-int sub_54520_548B0(int a1);
-int sub_54A90_54FC0(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a4);
+int FindMissileTarget_54520_548B0(int a1);
+int ScoreAimTarget_54A90_54FC0(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a4);
 int sub_54BD0_55100(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a4);
 void sub_54F00_55430();
 int sub_54F80(int a1);
@@ -1161,7 +1161,7 @@ int sub_55DB0_562E0(Type_AE400_29795* a1x);
 int sub_55DD0_56300(int a1, int *a2);
 int sub_55E80_563B0(int a1, int a2);
 // int sub_55EF0_56420(__int16 a1, int a2, int a3);
-int sub_56090_565C0(int a1);
+int CastFireball_56090_565C0(int a1);
 void sub_56270_567A0(int a1);
 void sub_56380_568B0(int a1);
 int sub_56510_56A40(int a1);
@@ -1177,7 +1177,7 @@ void sub_571B0_576E0(int a1);
 int sub_57250_57780(int a1);
 int sub_573F0_57920(int a1);
 int sub_57470_579A0(int a1);
-void sub_57610_57B40(int a1);
+void CastCastle_57610_57B40(int a1);
 void sub_57800_57D30(int a1);
 int sub_579D0_57F00(int a1);
 int sub_57B80_580B0(int a1);
@@ -3928,7 +3928,7 @@ Type_254A34x str_255674[] = {
 };
 
 Type_254A34x str_25573C[] = {
-{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))sub_52B30_52E70, 0x0001, 0x0000 },
+{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))UpdateFireball_52B30_52E70, 0x0001, 0x0000 },
 { 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))sub_52ED0_53210,0x0001,0x0000 },
 { 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))sub_53060,0x0001,0x0000 },
 { 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))sub_53070_533B0,0x0001,0x0000 },
@@ -3938,7 +3938,7 @@ Type_254A34x str_25573C[] = {
 { 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))sub_530B0,0x0001,0x0000 },
 { 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))sub_530C0_53400,0x0001,0x0000 },
 { 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))sub_535E0_53920,0x0001,0x0000 },
-{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))sub_53980_53CC0,0x0001,0x0000 },
+{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))UpdateHomingSpawnMissile_53980_53CC0,0x0001,0x0000 },
 { 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))sub_53060,0x0001,0x0000 },
 { 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))sub_53DC0_54100,0x0001,0x0000 },
 { 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))sub_54180_544D0,0x0001,0x0000 },
@@ -4047,7 +4047,7 @@ Type_254A34x str_256038[] = {
 };
 
 Type_254A34x str_2563D8[] = {//2563D8
-{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))sub_56090_565C0,0x0001,0x0000 },
+{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))CastFireball_56090_565C0,0x0001,0x0000 },
 { 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))sub_56250,0x0001,0x0000 },
 { 0x002548F4,0x0002,sub_56260,0x0001,0x0000 },
 { 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))sub_56270_567A0,0x0001,0x0000 },
@@ -4095,7 +4095,7 @@ Type_254A34x str_2563D8[] = {//2563D8
 { 0x002548F4, 0x002D, (void (*)(Type_AE400_29795*))sub_57470_579A0, 0x0001, 0x0000 },
 { 0x002548F4, 0x002E, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x002F, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0030, (void (*)(Type_AE400_29795*))sub_57610_57B40, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0030, (void (*)(Type_AE400_29795*))CastCastle_57610_57B40, 0x0001, 0x0000 },
 { 0x002548F4, 0x0031, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0032, sub_56260, 0x0001, 0x0000 },
 { 0x002548F4, 0x0033, (void (*)(Type_AE400_29795*))sub_57800_57D30, 0x0001, 0x0000 },
@@ -13956,10 +13956,13 @@ char byte_B5D3E_B5D2E; // weak
 char byte_B5D3F_B5D2F; // weak
 char byte_B5D40_B5D30[7*7*7*7][2]; // weak//273d40
 char byte_B5D41[4812]; // weak
-char byte_B700D[9999]; // weak
-char byte_B700E[9999]; // weak
-char byte_B700F[9999]; // weak
-uint8_t byte_B7010[256 * 3]; // weak
+uint8_t byte_B7010[256 * 3]; // weak  in-game effect palette (hit flash, spell tints)
+// PORT: byte_B700D/E/F are not separate objects: IDA named byte_B7010 - 3/-2/-1, which the effect
+// loops write through after advancing the index by 3 (pattern 6.2.7). As separate 9999-byte arrays
+// the effect palette stayed all zero and the red hit flash was black.
+#define byte_B700D ((char*)byte_B7010 - 3)
+#define byte_B700E ((char*)byte_B7010 - 2)
+#define byte_B700F ((char*)byte_B7010 - 1)
 //char byte_B7011[767]; // weak
 int dword_B7310; // weak
 __int16 word_B7314; // weak
@@ -16058,17 +16061,18 @@ int sub_11810(axis_3d* a1x)//1E2810_
 }
 
 //SYNCHRONIZED WITH REMC1
-bool sub_118C0(axis_3d* a1, axis_4d* a2, axis_3d* a3, axis_4d* a4)
+/// True when collision box a2 placed at a1 overlaps box a4 placed at a3 (see axis_4d).
+bool BoxesOverlap_118C0(axis_3d* a1, axis_4d* a2, axis_3d* a3, axis_4d* a4)
 {
   __int64 v4; // rax
   bool result; // eax
 
   result = 0;
-  if ( abs16(a3->x - a1->x) < a2->var_u16_29875_80 + a4->var_u16_29875_80)
+  if ( abs16(a3->x - a1->x) < a2->radiusX_29875_80 + a4->radiusX_29875_80)
   {
     v4 = (__int16)(a3->y - a1->y);
-    if ( (int)((HIDWORD(v4) ^ v4) - HIDWORD(v4)) < a2->var_u16_29877_82 + a4->var_u16_29877_82
-      && (int)abs32((__int16)a1->z + a2->var_u16_29873_78 - ((__int16)a3->z + a4->var_u16_29873_78)) < a2->var_u16_29879_84 + a4->var_u16_29879_84)
+    if ( (int)((HIDWORD(v4) ^ v4) - HIDWORD(v4)) < a2->radiusY_29877_82 + a4->radiusY_29877_82
+      && (int)abs32((__int16)a1->z + a2->zOffset_29873_78 - ((__int16)a3->z + a4->zOffset_29873_78)) < a2->radiusZ_29879_84 + a4->radiusZ_29879_84)
     {
       return 1;
     }
@@ -16077,9 +16081,10 @@ bool sub_118C0(axis_3d* a1, axis_4d* a2, axis_3d* a3, axis_4d* a4)
 }
 
 //SYNCHRONIZED WITH REMC1
-bool sub_11950(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
+/// True when the collision boxes (+78) of two entities overlap at their positions (+72).
+bool EntitiesCollide_11950(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 {
-  return sub_118C0(&a1x->var_u32_29867_72, &a1x->var_u16_29873_78, &a2x->var_u32_29867_72, &a2x->var_u16_29873_78);
+  return BoxesOverlap_118C0(&a1x->var_u32_29867_72, &a1x->collisionBox_29873_78, &a2x->var_u32_29867_72, &a2x->collisionBox_29873_78);
 }
 
 //----- (00011980) --------------------------------------------------------
@@ -16114,7 +16119,7 @@ int sub_11980(int a1)
          || *(_BYTE *)(a1 + 66) == *(_BYTE *)(v6 + 64) && *(char *)(a1 + 67) == -1
          || *(_BYTE *)(a1 + 66) == *(_BYTE *)(v6 + 64) && *(_BYTE *)(a1 + 67) == *(_BYTE *)(v6 + 65))
         && *(_WORD *)(a1 + 24) != *(_WORD *)(v6 + 24)
-        && sub_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)v6) )
+        && EntitiesCollide_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)v6) )
       {
         sub_11490(v3);
         return v6;
@@ -16162,7 +16167,7 @@ int sub_11AC0(_WORD *a1)
         if ( v6 == 39 || v6 == 40 || v6 == 45 )
         {
           v7 = a1[12];
-          if ( v7 != *(_WORD *)(v8 + 24) && v7 != *(unsigned __int16 *)(v8 + 144) && sub_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)v8) )
+          if ( v7 != *(_WORD *)(v8 + 24) && v7 != *(unsigned __int16 *)(v8 + 144) && EntitiesCollide_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)v8) )
           {
             sub_11490(v3);
             return v8;
@@ -16207,7 +16212,7 @@ int sub_11C00(__int16 *a1)
       if ( (*(_BYTE *)(v6 + 16) & 8) != 0
         && *(_BYTE *)(v6 + 64) == 10
         && *(_BYTE *)(v6 + 65) == 39
-        && sub_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)v6) )
+        && EntitiesCollide_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)v6) )
       {
         sub_11490(v3);
         return v6;
@@ -16233,7 +16238,7 @@ Type_AE400_29795* sub_11D10(Type_AE400_29795* event)//1E2D10
   int v8; // [esp+4h] [ebp-18h] BYREF
   int v9; // [esp+8h] [ebp-14h]
 
-  v1 = event->var_u16_29873_78.var_u16_29875_80 + 255;
+  v1 = event->collisionBox_29873_78.radiusX_29875_80 + 255;
   v9 = (event->var_u32_29867_72.x + 128) >> 8;
   v2 = (event->var_u32_29867_72.y + 128) >> 8;
   v3 = sub_11410(0, (v1 - (__CFSHL__(v1 >> 31, 8) + (v1 >> 31 << 8))) >> 8);
@@ -16262,7 +16267,7 @@ Type_AE400_29795* sub_11D10(Type_AE400_29795* event)//1E2D10
          || event->sClass_29861_66 == v6->var_u8_29859_64 && event->sModel_29862_67 == -1
          || event->sClass_29861_66 == v6->var_u8_29859_64 && event->sModel_29862_67 == v6->var_u8_29860_65)
         && event->id_29819_24 != v6->id_29819_24
-        && sub_11950(event, v6) )
+        && EntitiesCollide_11950(event, v6) )
       {
         sub_11490(v3);
         return v6;
@@ -16360,10 +16365,10 @@ void sub_120B0(Type_AE400_29795* a1x, unsigned __int8 a2, unsigned __int16 a3)
   if ( a2 )
   {
     v14 = (a1x->var_u32_29867_72.x + 128) >> 8;
-    v22 = (a1x->var_u16_29873_78.var_u16_29875_80
+    v22 = (a1x->collisionBox_29873_78.radiusX_29875_80
          + 255
-         - (__CFSHL__((a1x->var_u16_29873_78.var_u16_29875_80 + 255) >> 31, 8)
-          + ((a1x->var_u16_29873_78.var_u16_29875_80 + 255) >> 31 << 8))) >> 8;
+         - (__CFSHL__((a1x->collisionBox_29873_78.radiusX_29875_80 + 255) >> 31, 8)
+          + ((a1x->collisionBox_29873_78.radiusX_29875_80 + 255) >> 31 << 8))) >> 8;
     result = -v22;
     v20 = -v22;
     if ( -v22 <= v22 )
@@ -16394,7 +16399,7 @@ void sub_120B0(Type_AE400_29795* a1x, unsigned __int8 a2, unsigned __int16 a3)
                     && (a1x->sClass_29861_66 == -1
                      || v11 == a1x->sClass_29861_66 && a1x->sModel_29862_67 == -1
                      || a1x->sClass_29861_66 == *(_BYTE *)(v13 + 64) && a1x->sModel_29862_67 == *(_BYTE *)(v13 + 65))
-                    && sub_11950(a1x, (Type_AE400_29795*)v13) )
+                    && EntitiesCollide_11950(a1x, (Type_AE400_29795*)v13) )
                   {
                     v12 = v13 + 6 * a2;
                     if ( *(_WORD *)(v12 + 94) )
@@ -16423,7 +16428,7 @@ void sub_120B0(Type_AE400_29795* a1x, unsigned __int8 a2, unsigned __int16 a3)
   {
     for ( i = *(_DWORD *)(dword_AE408_AE3F8() + 36462); i > dword_AE400_AE3F0() + 29795; i = *(_DWORD *)i )
     {
-      if ( *(_BYTE *)(i + 65) == 2 && *(_WORD *)(i + 24) != a1x->id_29819_24 && sub_11950(a1x, (Type_AE400_29795*)i) )
+      if ( *(_BYTE *)(i + 65) == 2 && *(_WORD *)(i + 24) != a1x->id_29819_24 && EntitiesCollide_11950(a1x, (Type_AE400_29795*)i) )
       {
         if ( *(_WORD *)(i + 94) )
           *(_DWORD *)(i + 90) += a3;
@@ -16436,10 +16441,10 @@ void sub_120B0(Type_AE400_29795* a1x, unsigned __int8 a2, unsigned __int16 a3)
          - 128
          - (__CFSHL__((a1x->var_u32_29867_72.x - 128) >> 31, 8)
           + ((a1x->var_u32_29867_72.x - 128) >> 31 << 8))) >> 8;
-    v16 = (a1x->var_u16_29873_78.var_u16_29875_80
+    v16 = (a1x->collisionBox_29873_78.radiusX_29875_80
          + 255
-         - (__CFSHL__((a1x->var_u16_29873_78.var_u16_29875_80 + 255) >> 31, 8)
-          + ((a1x->var_u16_29873_78.var_u16_29875_80 + 255) >> 31 << 8))) >> 8;
+         - (__CFSHL__((a1x->collisionBox_29873_78.radiusX_29875_80 + 255) >> 31, 8)
+          + ((a1x->collisionBox_29873_78.radiusX_29875_80 + 255) >> 31 << 8))) >> 8;
     result = -v16;
     v15 = -v16;
     if ( -v16 <= v16 )
@@ -16465,7 +16470,7 @@ void sub_120B0(Type_AE400_29795* a1x, unsigned __int8 a2, unsigned __int16 a3)
               if ( v7 == dword_AE400_AE3F0() + 29795 )
                 break;
               if (a1x->id_29819_24 != *(_WORD *)(v7 + 24)
-                && sub_11950(a1x, (Type_AE400_29795*)v7)
+                && EntitiesCollide_11950(a1x, (Type_AE400_29795*)v7)
                 && ((unsigned __int16)v24 & *(_WORD *)(v7 + 28)) != 0
                 && (*(_BYTE *)(v7 + 16) & 8) != 0
                 && (*(_BYTE *)(v7 + 64) != 3 || *(_BYTE *)(v7 + 65) != 2)
@@ -16513,7 +16518,7 @@ int sub_124F0(int a1, char a2, unsigned __int16 a3)
   {
     for ( i = *(_DWORD *)(dword_AE408_AE3F8() + 36462); i > dword_AE400_AE3F0() + 29795; i = *(_DWORD *)i )
     {
-      if ( *(_BYTE *)(i + 65) == 2 && *(_WORD *)(i + 24) != *(_WORD *)(a1 + 24) && sub_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)i) )
+      if ( *(_BYTE *)(i + 65) == 2 && *(_WORD *)(i + 24) != *(_WORD *)(a1 + 24) && EntitiesCollide_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)i) )
       {
         if ( *(_WORD *)(i + 94) )
           *(_DWORD *)(i + 90) += a3;
@@ -16553,7 +16558,7 @@ int sub_124F0(int a1, char a2, unsigned __int16 a3)
               if ( v7 == dword_AE400_AE3F0() + 29795 )
                 break;
               if ( *(_WORD *)(a1 + 24) != *(_WORD *)(v7 + 24)
-                && sub_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)v7)
+                && EntitiesCollide_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)v7)
                 && ((unsigned __int16)(1 << a2) & *(_WORD *)(v7 + 28)) != 0
                 && (*(_BYTE *)(v7 + 16) & 8) != 0
                 && (*(_BYTE *)(v7 + 64) != 3 || *(_BYTE *)(v7 + 65) != 2)
@@ -16617,7 +16622,7 @@ int sub_127E0(Type_AE400_29795* a1x, char a2, unsigned __int16 a3)
   {
     for ( i = *(_DWORD *)(dword_AE408_AE3F8() + 36462); i > dword_AE400_AE3F0() + 29795; i = *(_DWORD *)i )
     {
-      if ( *(_BYTE *)(i + 65) == 2 && sub_11950(a1x, (Type_AE400_29795*)i) )
+      if ( *(_BYTE *)(i + 65) == 2 && EntitiesCollide_11950(a1x, (Type_AE400_29795*)i) )
       {
         *(_WORD *)(i + 50) = 30;
         if ( *(_WORD *)(i + 24) != a1x->id_29819_24)
@@ -16634,10 +16639,10 @@ int sub_127E0(Type_AE400_29795* a1x, char a2, unsigned __int16 a3)
          - 128
          - (__CFSHL__((a1x->var_u32_29867_72.x - 128) >> 31, 8)
           + ((a1x->var_u32_29867_72.x - 128) >> 31 << 8))) >> 8;
-    v13 = (a1x->var_u16_29873_78.var_u16_29875_80
+    v13 = (a1x->collisionBox_29873_78.radiusX_29875_80
          + 255
-         - (__CFSHL__((a1x->var_u16_29873_78.var_u16_29875_80 + 255) >> 31, 8)
-          + ((a1x->var_u16_29873_78.var_u16_29875_80 + 255) >> 31 << 8))) >> 8;
+         - (__CFSHL__((a1x->collisionBox_29873_78.radiusX_29875_80 + 255) >> 31, 8)
+          + ((a1x->collisionBox_29873_78.radiusX_29875_80 + 255) >> 31 << 8))) >> 8;
     result = -v13;
     v10 = -v13;
     if ( -v13 <= v13 )
@@ -16663,7 +16668,7 @@ int sub_127E0(Type_AE400_29795* a1x, char a2, unsigned __int16 a3)
               if ( v8 == dword_AE400_AE3F0() + 29795 )
                 break;
               if (a1x->id_29819_24 != *(_WORD *)(v8 + 24)
-                && sub_11950(a1x, (Type_AE400_29795*)v8)
+                && EntitiesCollide_11950(a1x, (Type_AE400_29795*)v8)
                 && ((unsigned __int16)(1 << a2) & *(_WORD *)(v8 + 28)) != 0
                 && (*(_BYTE *)(v8 + 16) & 8) != 0
                 && (*(_BYTE *)(v8 + 64) != 3 || *(_BYTE *)(v8 + 65) != 2)
@@ -16767,7 +16772,7 @@ char sub_12D10(_WORD *a1)
   sub_37150_37510((Type_AE400_29795*)a1, a1[13] + 1);
   for ( i = *(_DWORD *)(dword_AE408_AE3F8() + 36462); i > dword_AE400_AE3F0() + 29795; i = *(_DWORD *)i )
   {
-    if ( *(_BYTE *)(i + 65) == 2 && (_WORD *)i != a1 && sub_11950((Type_AE400_29795*)i, (Type_AE400_29795*)a1) )
+    if ( *(_BYTE *)(i + 65) == 2 && (_WORD *)i != a1 && EntitiesCollide_11950((Type_AE400_29795*)i, (Type_AE400_29795*)a1) )
       goto LABEL_5;
   }
   v15 = (__int16)a1[40] >> 8;
@@ -17067,7 +17072,7 @@ int sub_132B0(int a1)
   }
   sub_45C10_45F50((Type_AE400_29795*)a1);
   v14 = *(_WORD *)(*(_DWORD *)(a1 + 160) + 50);
-  if ( v14 && sub_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)(164 * v14 + dword_AE400_AE3F0() + 29795)) )
+  if ( v14 && EntitiesCollide_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)(164 * v14 + dword_AE400_AE3F0() + 29795)) )
     v29 = 1;
   if ( v29 )
     *(_WORD *)(*(_DWORD *)(a1 + 160) + 331) = 2;
@@ -17612,7 +17617,7 @@ int sub_143A0(int a1)
       if ( (v2 = 164 * *(__int16 *)(i + 24),
             50000 - *(_DWORD *)(dword_AE400_AE3F0() + v2 + 29931) / 10 * *(__int16 *)(*(_DWORD *)(a1 + 160) + 522) / 255 < *(unsigned __int16 *)(*(_DWORD *)(a1 + 160) + 8 * *(__int16 *)(*(_DWORD *)(dword_AE400_AE3F0() + v2 + 29955) + 48) + 460))
         && sub_42410_42750((_WORD *)(dword_AE400_AE3F0() + 29795 + v2 + 72), (_WORD *)(i + 72)) > 58982400
-        && !sub_11950((Type_AE400_29795*)(dword_AE400_AE3F0() + 29795 + 164 * *(__int16 *)(i + 24)), (Type_AE400_29795*)i)
+        && !EntitiesCollide_11950((Type_AE400_29795*)(dword_AE400_AE3F0() + 29795 + 164 * *(__int16 *)(i + 24)), (Type_AE400_29795*)i)
         || *(_DWORD *)(i + 140) + 640 * (255 - *(__int16 *)(*(_DWORD *)(a1 + 160) + 522)) < *(_DWORD *)(164 * *(unsigned __int16 *)(*(_DWORD *)(a1 + 160) + 50) + dword_AE400_AE3F0() + 29935) )
       {
         v3 = sub_42410_42750((_WORD *)(a1 + 72), (_WORD *)(i + 72));
@@ -17722,7 +17727,7 @@ int sub_147E0(int a1)
       v5 = *(__int16 *)(v4 + 522);
       if ( 50000 - v5 * (*(_DWORD *)(v2 + 29931) / 10) / 255 < v11
         && 10 * (275 - v5) < *(_DWORD *)(i + 140)
-        && !sub_11950((Type_AE400_29795*)i, (Type_AE400_29795*)(dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)(v3 + 50))) )
+        && !EntitiesCollide_11950((Type_AE400_29795*)i, (Type_AE400_29795*)(dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)(v3 + 50))) )
       {
         v6 = sub_42410_42750(v9, (_WORD *)(i + 72));
         if ( v6 < v10 )
@@ -18007,7 +18012,7 @@ LABEL_18:
       v6 = dword_AE400_AE3F0() + 29795 >= v9 ? sub_15260(v2, 2u) : sub_153B0(v2, v9);
       v7 = v6;
       if ( (*(_WORD *)(a1 + 24) == *(_WORD *)(v11 + 24) || sub_42410_42750((_WORD *)(v2 + 72), (_WORD *)(v11 + 72)) > 26214400)
-        && (!v7 || !sub_11950((Type_AE400_29795*)v2, (Type_AE400_29795*)v7)) )
+        && (!v7 || !EntitiesCollide_11950((Type_AE400_29795*)v2, (Type_AE400_29795*)v7)) )
       {
         v5 = sub_42410_42750(v10, (_WORD *)(v2 + 72));
         if ( v5 < v1 )
@@ -20989,7 +20994,7 @@ int sub_1A8E0(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
     *(_WORD *)(v3 + 24) = a1x->id_29819_24;
     *(_WORD *)(v3 + 30) = sub_42150_42490(v2x, &a2x->var_u32_29867_72);
     *(_WORD *)(v4 + 32) = sub_42180_424C0(v2x, &a2x->var_u32_29867_72);
-    *(_WORD *)(v4 + 76) += a1x->var_u16_29873_78.var_u16_29879_84;
+    *(_WORD *)(v4 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
     v5 = a1x->var_u16_29941_146;
     *(_DWORD *)(v4 + 156) = (uint32)&unk_98F38[6];
     *(_WORD *)(v4 + 146) = v5;
@@ -21018,7 +21023,7 @@ int sub_1A990(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
     *(_WORD *)(v3 + 24) = a1x->id_29819_24;
     *(_WORD *)(v3 + 30) = sub_42150_42490(v2x, &a2x->var_u32_29867_72);
     *(_WORD *)(v3 + 32) = sub_42180_424C0(v2x, &a2x->var_u32_29867_72);
-    *(_WORD *)(v3 + 76) += a1x->var_u16_29873_78.var_u16_29879_84;
+    *(_WORD *)(v3 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
     *(_WORD *)(v3 + 146) = a1x->var_u16_29941_146;
     *(_BYTE *)(v3 + 67) = a1x->sModel_29862_67;
     v4 = a1x->sClass_29861_66;
@@ -21045,7 +21050,7 @@ void sub_1AA40(Type_AE400_29795* a1x, int a2)
     *(_WORD *)(v3 + 24) = a1x->id_29819_24;
     *(_WORD *)(v3 + 30) = sub_42150_42490(v2x, &a1x->var_u32_29867_72);
     *(_WORD *)(v3 + 32) = sub_42180_424C0(v2x, &a1x->var_u32_29867_72);
-    *(_WORD *)(v3 + 76) += a1x->var_u16_29873_78.var_u16_29879_84;
+    *(_WORD *)(v3 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
     *(_WORD *)(v3 + 146) = a1x->var_u16_29941_146;
     *(_BYTE *)(v3 + 67) = a1x->sModel_29862_67;
     *(_BYTE *)(v3 + 66) = a1x->sClass_29861_66;
@@ -21099,7 +21104,7 @@ int sub_1AB70(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
   v17 = 0;
   v19 = sub_42150_42490(&a1x->var_u32_29867_72, &a2x->var_u32_29867_72);
   v21 = sub_42180_424C0(&a1x->var_u32_29867_72, &a2x->var_u32_29867_72);
-  v16 = a1x->var_u16_29873_78.var_u16_29879_84;
+  v16 = a1x->collisionBox_29873_78.radiusZ_29879_84;
   v15 = a1x->var_u16_29941_146;
   v18 = a1x->sModel_29862_67;
   v22 = a1x->sClass_29861_66;
@@ -21216,7 +21221,7 @@ int sub_1AE30(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
     *(_WORD *)(v3 + 24) = a1x->id_29819_24;
     *(_WORD *)(v3 + 30) = sub_42150_42490(v2x, &a2x->var_u32_29867_72);
     *(_WORD *)(v4 + 32) = sub_42180_424C0(v2x, &a2x->var_u32_29867_72);
-    *(_WORD *)(v4 + 76) += a1x->var_u16_29873_78.var_u16_29879_84;
+    *(_WORD *)(v4 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
     v5 = a1x->var_u16_29941_146;
     *(_DWORD *)(v4 + 156) = (uint32)&unk_98F38[6];
     *(_WORD *)(v4 + 146) = v5;
@@ -21249,7 +21254,7 @@ int sub_1AEE0(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
     *(_WORD *)(v4 + 24) = a1x->id_29819_24;
     *(_WORD *)(v4 + 30) = sub_42150_42490(v2x, &a2x->var_u32_29867_72);
     *(_WORD *)(v5 + 32) = sub_42180_424C0(v2x, &a2x->var_u32_29867_72);
-    *(_WORD *)(v5 + 76) += a1x->var_u16_29873_78.var_u16_29879_84;
+    *(_WORD *)(v5 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
     *(_WORD *)(v5 + 146) = a1x->var_u16_29941_146;
     *(_DWORD *)(v5 + 156) = (uint32)&unk_98F38[6];
     *(_BYTE *)(v5 + 67) = a2x->sModel_29862_67;
@@ -21749,7 +21754,7 @@ void sub_1B5D0(Type_AE400_29795* a1x)
           {
             v29 = a1x->var_u32_29951_156->v_28;
             v42 = v29 * v29;
-            v30x = str_AE408_AE3F8->str_36382x[a1x->var_u8_29860_65 + 36382];
+            v30x = str_AE408_AE3F8->str_36382x[a1x->var_u8_29860_65]; // PORT: was [model + 36382] (byte offset added to a typed index)
             v41x = 0;
             v31 = -1;
             while ( 1 )
@@ -22353,7 +22358,7 @@ LABEL_30:
       *(_WORD *)(v19 + 24) = a1x->id_29819_24;
       *(_WORD *)(v19 + 30) = sub_42150_42490(v22x, (axis_3d*)(_WORD *)(v10 + 72));
       *(_WORD *)(v20 + 32) = sub_42180_424C0(v22x, (axis_3d*)(_WORD *)(v10 + 72));
-      *(_WORD *)(v20 + 76) += a1x->var_u16_29873_78.var_u16_29879_84;
+      *(_WORD *)(v20 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
       v21 = a1x->var_u16_29941_146;
       *(_DWORD *)(v20 + 156) = (uint32)&unk_98F38[6];
       *(_WORD *)(v20 + 146) = v21;
@@ -23785,7 +23790,7 @@ LABEL_38:
     {
       *(_BYTE *)(v15 + 68) = 10;
       *(_WORD *)(v15 + 24) = a1x->id_29819_24;
-      v16 = a1x->var_u16_29873_78.var_u16_29879_84;
+      v16 = a1x->collisionBox_29873_78.radiusZ_29879_84;
       *(_WORD *)(v15 + 44) = 3000;
       v17 = *(_WORD *)(v15 + 76);
       *(_WORD *)(v15 + 26) = 20;
@@ -24951,7 +24956,7 @@ LABEL_22:
       *(_WORD *)(v10 + 24) = a1x->id_29819_24;
       *(_WORD *)(v10 + 30) = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v13);
       *(_WORD *)(v11 + 32) = sub_42180_424C0(&a1x->var_u32_29867_72, (axis_3d*)v13);
-      *(_WORD *)(v11 + 76) += a1x->var_u16_29873_78.var_u16_29879_84;
+      *(_WORD *)(v11 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
       *(_WORD *)(v11 + 146) = a1x->var_u16_29941_146;
       *(_BYTE *)(v11 + 67) = a1x->sModel_29862_67;
       *(_BYTE *)(v11 + 66) = a1x->sClass_29861_66;
@@ -25267,7 +25272,7 @@ void sub_207E0(Type_AE400_29795* a1x)
       *(_WORD *)(v13 + 24) = a1x->id_29819_24;
       *(_WORD *)(v13 + 30) = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v11 + 72));
       *(_WORD *)(v14 + 32) = sub_42180_424C0(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v11 + 72));
-      *(_WORD *)(v14 + 76) += 4 * a1x->var_u16_29873_78.var_u16_29879_84;
+      *(_WORD *)(v14 + 76) += 4 * a1x->collisionBox_29873_78.radiusZ_29879_84;
       v15 = a1x->var_u16_29941_146;
       *(_WORD *)(v14 + 44) = 3000;
       *(_DWORD *)(v14 + 140) = 60000;
@@ -27439,9 +27444,9 @@ void sub_25570(Type_AE400_29795* a1x)
     a1x->rand_29799_4 = v1;
     sub_40D30_41070(a1x,
       0,
-      (int)(a1x->var_u16_29873_78.var_u16_29875_80
-          - (__CFSHL__((unsigned __int64)a1x->var_u16_29873_78.var_u16_29875_80 >> 32, 8)
-           + ((unsigned __int64)a1x->var_u16_29873_78.var_u16_29875_80 >> 32 << 8))) >> 8,
+      (int)(a1x->collisionBox_29873_78.radiusX_29875_80
+          - (__CFSHL__((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32, 8)
+           + ((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32 << 8))) >> 8,
       0-(v1 % 7),
       1);
   }
@@ -27462,8 +27467,8 @@ void sub_255D0(Type_AE400_29795* a1x, __int16 a2, __int16 a3)
   LOWORD(v3) = a3;
   v4 = (a1x->var_u32_29867_72.x + 128) >> 8;
   v5 = (a1x->var_u32_29867_72.y + 128) >> 8;
-  if ( a3 > (int)(a1x->var_u16_29873_78.var_u16_29875_80 - (__CFSHL__((unsigned __int64)a1x->var_u16_29873_78.var_u16_29875_80 >> 32, 8) + ((unsigned __int64)a1x->var_u16_29873_78.var_u16_29875_80 >> 32 << 8))) >> 8 )
-    v3 = (int)(a1x->var_u16_29873_78.var_u16_29875_80 - (__CFSHL__((unsigned __int64)a1x->var_u16_29873_78.var_u16_29875_80 >> 32, 8) + ((unsigned __int64)a1x->var_u16_29873_78.var_u16_29875_80 >> 32 << 8))) >> 8;
+  if ( a3 > (int)(a1x->collisionBox_29873_78.radiusX_29875_80 - (__CFSHL__((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32, 8) + ((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32 << 8))) >> 8 )
+    v3 = (int)(a1x->collisionBox_29873_78.radiusX_29875_80 - (__CFSHL__((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32, 8) + ((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32 << 8))) >> 8;
   result = sub_11410(a2, (__int16)v3);
   v7 = result;
   if ( result )
@@ -27498,20 +27503,20 @@ void sub_25670(Type_AE400_29795* a1x)
       LOWORD(v2) = a1x->var_u16_29839_44;
     sub_127E0(a1x, 0, v2);
     LOWORD(v3) = a1x->var_u16_29821_26;
-    if ( (__int16)v3 > ((int)(a1x->var_u16_29873_78.var_u16_29875_80
-                            - (__CFSHL__((unsigned __int64)a1x->var_u16_29873_78.var_u16_29875_80 >> 32, 8)
-                             + ((unsigned __int64)a1x->var_u16_29873_78.var_u16_29875_80 >> 32 << 8))) >> 8)
+    if ( (__int16)v3 > ((int)(a1x->collisionBox_29873_78.radiusX_29875_80
+                            - (__CFSHL__((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32, 8)
+                             + ((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32 << 8))) >> 8)
                      - 1 )
     {
-      v3 = ((int)(a1x->var_u16_29873_78.var_u16_29875_80
-                - (__CFSHL__((unsigned __int64)a1x->var_u16_29873_78.var_u16_29875_80 >> 32, 8)
-                 + ((unsigned __int64)a1x->var_u16_29873_78.var_u16_29875_80 >> 32 << 8))) >> 8)
+      v3 = ((int)(a1x->collisionBox_29873_78.radiusX_29875_80
+                - (__CFSHL__((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32, 8)
+                 + ((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32 << 8))) >> 8)
          - 1;
       if ( (a1x->var_29811_16.byte[0] & 2) == 0 )
       {
-        v4 = (int)(a1x->var_u16_29873_78.var_u16_29875_80
-                 - (__CFSHL__((unsigned __int64)a1x->var_u16_29873_78.var_u16_29875_80 >> 32, 8)
-                  + ((unsigned __int64)a1x->var_u16_29873_78.var_u16_29875_80 >> 32 << 8))) >> 8;
+        v4 = (int)(a1x->collisionBox_29873_78.radiusX_29875_80
+                 - (__CFSHL__((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32, 8)
+                  + ((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32 << 8))) >> 8;
         sub_255D0(a1x, v4, v4);
       }
     }
@@ -27661,8 +27666,8 @@ void sub_25990(Type_AE400_29795* a1x)
   result = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 10, 11);
   if ( result )
   {
-    *(_DWORD *)(result + 80) = a1x->var_u16_29873_78.var_u16_29875_80;
-    *(_WORD *)(result + 84) = a1x->var_u16_29873_78.var_u16_29879_84;
+    *(_DWORD *)(result + 80) = a1x->collisionBox_29873_78.radiusX_29875_80;
+    *(_WORD *)(result + 84) = a1x->collisionBox_29873_78.radiusZ_29879_84;
     *(_DWORD *)(result + 12) = 10;
     *(_WORD *)(result + 24) = a1x->id_29819_24;
   }
@@ -28234,7 +28239,7 @@ void sub_26920(Type_AE400_29795* a1x)
   v3 = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 10, 11);
   if ( v3 )
   {
-    v4 = a1x->var_u16_29873_78.var_u16_29879_84;
+    v4 = a1x->collisionBox_29873_78.radiusZ_29879_84;
     *(_DWORD *)(v3 + 12) = 2;
     *(_WORD *)(v3 + 84) = v4;
     *(_WORD *)(v3 + 24) = a1x->id_29819_24;
@@ -28302,7 +28307,7 @@ void sub_26A60(int a1)
     while ( v9 < str_AE400_AE3F0->var_u16_10 )
     {
       v4 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)(v3 + 10);
-      if ( sub_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)v4) )
+      if ( EntitiesCollide_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)v4) )
       {
         v5 = sub_42150_42490((axis_3d*)(_WORD *)(v4 + 72), (axis_3d*)(uint16*)v8);
         if ( (unsigned __int16)sub_42210_42550(*(_WORD *)(v4 + 30), v5) < 0xAAu )
@@ -29888,7 +29893,7 @@ void sub_28DC0(Type_AE400_29795* event)
     {
       event->var_u16_29821_26 = v2 - 1;
       word_AE454_AE444 = event->var_u32_29867_72;
-      word_AE454_AE444.x += event->var_u16_29873_78.var_u16_29875_80;
+      word_AE454_AE444.x += event->collisionBox_29873_78.radiusX_29875_80;
       v3 = CreateEntity_373F0_377B0(&word_AE454_AE444, 5, 4);
       if ( v3 )
         v3->var_u8_29865_70 = 25;
@@ -29922,7 +29927,7 @@ void sub_28DC0(Type_AE400_29795* event)
       if ( (event->rand_29799_4 % v7) > event->actSpeed_29923_128 - (event->actSpeed_29923_128 >> 4) - 2 )
       {
         word_AE454_AE444 = event->var_u32_29867_72;
-        word_AE454_AE444.x += event->var_u16_29873_78.var_u16_29875_80;
+        word_AE454_AE444.x += event->collisionBox_29873_78.radiusX_29875_80;
         sub_28D10(event);
       }
     }
@@ -30121,7 +30126,7 @@ void sub_293D0(Type_AE400_29795* a1x)
     {
       a1x->var_29811_16.byte[0] |= 2u;
       GetTerrainHeight_11F50(&a1x->var_u32_29867_72);
-      if ( sub_11950(
+      if ( EntitiesCollide_11950(
           a1x,
           (Type_AE400_29795*)(dword_AE400_AE3F0()
            + 29795
@@ -40776,7 +40781,7 @@ void DrawAndEventsInGame_34530_348F0()//205530_
 #endif debug1
 		//debug
 	if (!str_AE400_AE3F0->set.mod3D_8603)
-		sub_34690_34A50();
+		UpdatePaletteEffects_34690_34A50();
 	if ((str_AE408_AE3F8->var_u8_2 & 1) == 0)
 		sub_590D0_595E0();
 	if ((str_AE408_AE3F8->var_u8_0 & 4) == 0)
@@ -40789,18 +40794,18 @@ void DrawAndEventsInGame_34530_348F0()//205530_
 	case 1:
 	{
 		for (int i = 0; i < 4; i++)
-			sub_41780_41AC0();
+			UpdateEntities_41780_41AC0();
 		break;
 	}
 	case 2:
 	{
 		for (int j = 0; j < 16; j++)
-			sub_41780_41AC0();
+			UpdateEntities_41780_41AC0();
 		break;
 	}
 	default:
 	{
-		sub_41780_41AC0();
+		UpdateEntities_41780_41AC0();
 	}
 	}
 	//2055C1
@@ -40891,7 +40896,10 @@ void GameLoop_34610_349D0()//205610_
 // AE408: using guessed type int dword_AE408_AE3F8();
 
 //----- (00034690) --------------------------------------------------------
-void sub_34690_34A50()
+/// Per-frame full-screen palette effects. str_AE408_AE3F8->var_u8_23 drives the level fade-in;
+/// var_u8_152 selects the effect: 1 = fade back to the level palette (4 steps), 2 = red hit flash,
+/// 3-6 = coloured spell tints, 7 = greyscale. Effects build byte_B7010 from begPalDat and set it.
+void UpdatePaletteEffects_34690_34A50()
 {
   //int v0; // ebx
   //__int16 v1; // ax
@@ -42881,45 +42889,45 @@ void sub_36FA0_37360(Type_AE400_29795* event, __int16 a2)//207FA0_
   event->var_u8_29883_88 = 0;
   event->var_u16_29881_86 = a2;
   event->var_u8_29884_89 = byte_90AD8[*(uint8_t*)&word_99BA6[3 + 7 * a2]];
-  event->var_u16_29873_78.var_u16_29873_78 = word_99BA6[1 + 7 * a2] / 2;
-  event->var_u16_29873_78.var_u16_29875_80 = word_99BA6[7 * a2] / 2;
-  event->var_u16_29873_78.var_u16_29877_82 = word_99BA6[7 * a2] / 2;
-  event->var_u16_29873_78.var_u16_29879_84 = word_99BA6[1 + 7 * a2] / 2;
+  event->collisionBox_29873_78.zOffset_29873_78 = word_99BA6[1 + 7 * a2] / 2;
+  event->collisionBox_29873_78.radiusX_29875_80 = word_99BA6[7 * a2] / 2;
+  event->collisionBox_29873_78.radiusY_29877_82 = word_99BA6[7 * a2] / 2;
+  event->collisionBox_29873_78.radiusZ_29879_84 = word_99BA6[1 + 7 * a2] / 2;
 }
 
 //SYNCHRONIZED WITH REMC1
 void sub_37030_373F0(Type_AE400_29795* a1x, __int16 a2)
 {
   sub_36FA0_37360(a1x, a2);
-  a1x->var_u16_29873_78.var_u16_29875_80 = word_99BA6[7 * a2] / 2;
-  a1x->var_u16_29873_78.var_u16_29877_82 = word_99BA6[7 * a2] / 2;
-  a1x->var_u16_29873_78.var_u16_29879_84 = word_99BA6[1 + 7 * a2] / 2;
+  a1x->collisionBox_29873_78.radiusX_29875_80 = word_99BA6[7 * a2] / 2;
+  a1x->collisionBox_29873_78.radiusY_29877_82 = word_99BA6[7 * a2] / 2;
+  a1x->collisionBox_29873_78.radiusZ_29879_84 = word_99BA6[1 + 7 * a2] / 2;
 }
 
 //SYNCHRONIZED WITH REMC1
 void sub_370A0_37460(Type_AE400_29795* a1x, __int16 a2)
 {
   sub_36FA0_37360(a1x, a2);
-  a1x->var_u16_29873_78.var_u16_29875_80 *= 2;
-  a1x->var_u16_29873_78.var_u16_29877_82 *= 2;
-  a1x->var_u16_29873_78.var_u16_29879_84 *= 2;
+  a1x->collisionBox_29873_78.radiusX_29875_80 *= 2;
+  a1x->collisionBox_29873_78.radiusY_29877_82 *= 2;
+  a1x->collisionBox_29873_78.radiusZ_29879_84 *= 2;
 }
 
 //SYNCHRONIZED WITH REMC1
 void sub_370E0_374A0(Type_AE400_29795* a1x, __int16 a2)
 {
   sub_36FA0_37360(a1x, a2);
-  a1x->var_u16_29873_78.var_u16_29875_80 /= 2;
-  a1x->var_u16_29873_78.var_u16_29877_82 /= 2;
-  a1x->var_u16_29873_78.var_u16_29879_84 /= 2;
+  a1x->collisionBox_29873_78.radiusX_29875_80 /= 2;
+  a1x->collisionBox_29873_78.radiusY_29877_82 /= 2;
+  a1x->collisionBox_29873_78.radiusZ_29879_84 /= 2;
 }
 
 //SYNCHRONIZED WITH REMC1
 void sub_37130_374F0(Type_AE400_29795* a1x, __int16 a2, __int16 a3)
 {
-    a1x->var_u16_29873_78.var_u16_29875_80 = a2;
-    a1x->var_u16_29873_78.var_u16_29877_82 = a2;
-    a1x->var_u16_29873_78.var_u16_29879_84 = a3;
+    a1x->collisionBox_29873_78.radiusX_29875_80 = a2;
+    a1x->collisionBox_29873_78.radiusY_29877_82 = a2;
+    a1x->collisionBox_29873_78.radiusZ_29879_84 = a3;
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -42932,10 +42940,10 @@ void sub_37150_37510(Type_AE400_29795* event, __int16 a2)//208150_
       pomX >>= 1;
       pomY >>= 1;
   }
-  event->var_u16_29873_78.var_u16_29873_78 = 0xE000;
-  event->var_u16_29873_78.var_u16_29875_80 = ((pomX << 8) + 1280) >> 1;
-  event->var_u16_29873_78.var_u16_29877_82 = ((pomY << 8) + 1280) >> 1;
-  event->var_u16_29873_78.var_u16_29879_84 = 0x4000;
+  event->collisionBox_29873_78.zOffset_29873_78 = 0xE000;
+  event->collisionBox_29873_78.radiusX_29875_80 = ((pomX << 8) + 1280) >> 1;
+  event->collisionBox_29873_78.radiusY_29877_82 = ((pomY << 8) + 1280) >> 1;
+  event->collisionBox_29873_78.radiusZ_29879_84 = 0x4000;
 }
 
 void sub_371C0_37580()//2081C0_
@@ -50858,8 +50866,8 @@ int sub_40D30_41070(Type_AE400_29795* a1x, __int16 a2, __int16 a3, __int16 a4, c
   LOWORD(v5) = a3;
   v6 = (a1x->var_u32_29867_72.x + 128) >> 8;
   v7 = (a1x->var_u32_29867_72.y + 128) >> 8;
-  if ( a3 > (int)(a1x->var_u16_29873_78.var_u16_29875_80 - (__CFSHL__((unsigned __int64)a1x->var_u16_29873_78.var_u16_29875_80 >> 32, 8) + ((unsigned __int64)a1x->var_u16_29873_78.var_u16_29875_80 >> 32 << 8))) >> 8 )
-    v5 = (int)(a1x->var_u16_29873_78.var_u16_29875_80 - (__CFSHL__((unsigned __int64)a1x->var_u16_29873_78.var_u16_29875_80 >> 32, 8) + ((unsigned __int64)a1x->var_u16_29873_78.var_u16_29875_80 >> 32 << 8))) >> 8;
+  if ( a3 > (int)(a1x->collisionBox_29873_78.radiusX_29875_80 - (__CFSHL__((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32, 8) + ((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32 << 8))) >> 8 )
+    v5 = (int)(a1x->collisionBox_29873_78.radiusX_29875_80 - (__CFSHL__((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32, 8) + ((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32 << 8))) >> 8;
   v8 = sub_11410(a2, (__int16)v5);
   v9 = v8;
   if ( v8 )
@@ -51348,7 +51356,10 @@ void sub_416B0()//2126B0_
 int compareindex_41780 = 0;
 int compareindex_41780_2 = 0;
 //SYNCHRONIZED WITH REMC1
-void sub_41780_41AC0()//212780_
+/// Per-tick entity pass: rebuilds the entity lists in str_AE408_AE3F8 (wizards/castles, effects,
+/// missiles in var_u32_36462[0..3], creatures per model in str_36382x[20]) and then runs every
+/// entity's class/state update function from dword_96902.
+void UpdateEntities_41780_41AC0()//212780_
 {
   char v3; // dh
   Type_AE400_29795* v4; // edi
@@ -51423,7 +51434,7 @@ void sub_41780_41AC0()//212780_
           if ( v11 )
             v11->next = &str_AE400_AE3F0->str_29795[v9x];
           else
-            str_AE408_AE3F8->var_u32_36462[str_AE400_AE3F0->str_29795[v9x].var_u8_29860_65] = &str_AE400_AE3F0->str_29795[v9x];
+            str_AE408_AE3F8->str_36382x[str_AE400_AE3F0->str_29795[v9x].var_u8_29860_65] = &str_AE400_AE3F0->str_29795[v9x]; // PORT: was var_u32_36462[model] - creatures go in the 20 per-model lists at 36382 (spell auto-aim, AI targeting walk them); writing 36462[] clobbered the wizard/missile/effect list heads
           //*v9 = v6 + 29795;
           str_AE400_AE3F0->str_29795[v9x].next = str_AE400_AE3F0->str_29795;
           v25[str_AE400_AE3F0->str_29795[v9x].var_u8_29860_65] = &str_AE400_AE3F0->str_29795[v9x];
@@ -54499,7 +54510,7 @@ void sub_45C90_45FD0(Type_AE400_29795* a1x)
   {
     if (a1x->var_u32_29955_160->var_50)
     {
-      if ( sub_11950(a1x, &str_AE400_AE3F0->str_29795[a1x->var_u32_29955_160->var_50]))
+      if ( EntitiesCollide_11950(a1x, &str_AE400_AE3F0->str_29795[a1x->var_u32_29955_160->var_50]))
           bool1 = true;
     }
   }
@@ -55180,7 +55191,7 @@ __int16 sub_46DB0_470F0(int a1)
           LOWORD(v1) = dword_AE400_AE3F0() + 29795;
           if ( i <= dword_AE400_AE3F0() + 29795 )
             break;
-          if ( *(_BYTE *)(i + 65) == 39 && *(unsigned __int16 *)(i + 144) == *(__int16 *)(a1 + 24) && sub_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)i) )
+          if ( *(_BYTE *)(i + 65) == 39 && *(unsigned __int16 *)(i + 144) == *(__int16 *)(a1 + 24) && EntitiesCollide_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)i) )
           {
             *(_DWORD *)(a1 + 140) += *(_DWORD *)(i + 140);
             sub_41E80_421C0((Type_AE400_29795*)i);
@@ -55920,7 +55931,7 @@ LABEL_17:
         v4 = (a1 - (dword_AE400_AE3F0() + 29795)) / 164;
         *(_BYTE *)(v1 + 16) |= 0x40u;
         *(_WORD *)(v1 + 146) = v4;
-        if ( sub_11950((Type_AE400_29795*)v1, (Type_AE400_29795*)a1) )
+        if ( EntitiesCollide_11950((Type_AE400_29795*)v1, (Type_AE400_29795*)a1) )
         {
           *(_DWORD *)(a1 + 140) += *(_DWORD *)(v1 + 140);
           v5 = *(_WORD *)(v1 + 144);
@@ -56947,7 +56958,7 @@ int sub_49AD0_49E10(int a1)
   while ( v1 < str_AE400_AE3F0->var_u16_10 )
   {
     v3 = 164 * *(unsigned __int16 *)(v2 + 10) + dword_AE400_AE3F0() + 29795;
-    if ( *(int *)(v3 + 12) >= 0 && sub_11950((Type_AE400_29795*)v3, (Type_AE400_29795*)a1) )
+    if ( *(int *)(v3 + 12) >= 0 && EntitiesCollide_11950((Type_AE400_29795*)v3, (Type_AE400_29795*)a1) )
       *(_BYTE *)(v3 + 17) |= 0x10u;
     v2 += 2049;
     ++v1;
@@ -61680,7 +61691,8 @@ int sub_524E0_52820(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_52500_52840(_WORD *a1, int a2)
+/// Sets missile a1's wanted heading (+34) and pitch (+36) toward entity a2.
+int AimAtEntity_52500_52840(_WORD *a1, int a2)
 {
   sub_524C0_52800(a2);
   a1[17] = sub_42150_42490((axis_3d*)(a1 + 36), (axis_3d*)(_WORD *)(a2 + 72));
@@ -61807,7 +61819,7 @@ char sub_52770_52AB0(int a1)
     if ( (v2 & 2) == 0 )
     {
       *(_BYTE *)(a1 + 16) = v2 | 2;
-      if ( sub_54520_548B0(a1) )
+      if ( FindMissileTarget_54520_548B0(a1) )
       {
         *(_WORD *)(a1 + 30) = *(_WORD *)(a1 + 34);
         *(_WORD *)(a1 + 32) = *(_WORD *)(a1 + 36);
@@ -61934,7 +61946,10 @@ LABEL_25_26:
 }
 
 //SYNCHRONIZE WITH REMC1
-void sub_52B30_52E70(int a1)
+/// Per-tick update of the fireball missile (9/0). On its first tick it auto-aims
+/// (FindMissileTarget_54520_548B0, heading bent by at most 34 units); then it moves, collides with
+/// entities/terrain and on impact spawns the class/subtype at +68/+69 (explosion).
+void UpdateFireball_52B30_52E70(int a1)
 {
   int v1; // ebp
   char v2; // dl
@@ -61971,7 +61986,7 @@ void sub_52B30_52E70(int a1)
     if ( (v2 & 2) == 0 )
     {
       *(_BYTE *)(a1 + 16) = v2 | 2;
-      if ( sub_54520_548B0(a1) )
+      if ( FindMissileTarget_54520_548B0(a1) )
       {
         v3 = sub_42210_42550(*(_WORD *)(a1 + 30), *(_WORD *)(a1 + 34));
         if ( v3 < 0 )
@@ -62119,7 +62134,7 @@ char sub_52ED0_53210(int a1)
     if ( (v3 & 2) == 0 )
     {
       *(_BYTE *)(a1 + 16) = v3 | 2;
-      if ( sub_54520_548B0(a1) )
+      if ( FindMissileTarget_54520_548B0(a1) )
       {
         *(_WORD *)(a1 + 30) = *(_WORD *)(a1 + 34);
         *(_WORD *)(a1 + 32) = *(_WORD *)(a1 + 36);
@@ -62239,7 +62254,7 @@ char sub_530C0_53400(int a1)
     if ( (v2 & 2) == 0 )
     {
       *(_BYTE *)(a1 + 16) = v2 | 2;
-      if ( sub_54520_548B0(a1) )
+      if ( FindMissileTarget_54520_548B0(a1) )
       {
         *(_WORD *)(a1 + 30) = *(_WORD *)(a1 + 34);
         *(_WORD *)(a1 + 32) = *(_WORD *)(a1 + 36);
@@ -62390,7 +62405,7 @@ char sub_534C0_53800(int a1)
     if ( (v1 & 2) == 0 )
     {
       *(_BYTE *)(a1 + 16) = v1 | 2;
-      if ( sub_54520_548B0(a1) )
+      if ( FindMissileTarget_54520_548B0(a1) )
       {
         *(_WORD *)(a1 + 30) = *(_WORD *)(a1 + 34);
         *(_WORD *)(a1 + 32) = *(_WORD *)(a1 + 36);
@@ -62614,7 +62629,10 @@ LABEL_22:
 #undef v26
 
 //SYNCHRONIZED WITH REMC1
-void sub_53980_53CC0(int a1)
+/// Per-tick update of a spawning missile. If it has a target entity (+146) it homes on it and,
+/// on contact or when its lifetime (+12) ends, spawns the class/subtype at +68/+69 there (e.g. the
+/// castle upgrade effect 10/43). Without a target it defers to UpdateSpawningMissile_53B50_53E90.
+void UpdateHomingSpawnMissile_53980_53CC0(int a1)
 {
   unsigned __int16 v1; // cx
   unsigned int v2; // ebp
@@ -62644,7 +62662,7 @@ void sub_53980_53CC0(int a1)
     word_AE454_AE444.z = *(_WORD *)(a1 + 76);
     sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)(a1 + 30), *(_WORD *)(a1 + 32), *(_WORD *)(a1 + 126));
     sub_41C70_41FB0((Type_AE400_29795*)a1, &word_AE454_AE444);
-    v7 = sub_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)v2);
+    v7 = EntitiesCollide_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)v2);
     if ( v7 )
     {
       LOBYTE(v3) = sub_41C70_41FB0((Type_AE400_29795*)a1, (axis_3d*)(v2 + 72));
@@ -62742,7 +62760,7 @@ char UpdateSpawningMissile_53B50_53E90(int a1)
     sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)(a1 + 30), *(_WORD *)(a1 + 32), *(_WORD *)(a1 + 126));
     sub_41C70_41FB0((Type_AE400_29795*)a1, &word_AE454_AE444);
     v8 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)(a1 + 146);
-    if ( sub_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)v8) )
+    if ( EntitiesCollide_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)v8) )
     {
       v9 = sub_524C0_52800(v8);
       LOBYTE(v2) = sub_41C70_41FB0((Type_AE400_29795*)a1, (axis_3d*)(v8 + 72));
@@ -62826,7 +62844,7 @@ char sub_53DC0_54100(int a1)
     if ( (v2 & 2) == 0 )
     {
       *(_BYTE *)(a1 + 16) = v2 | 2;
-      if ( sub_54520_548B0(a1) )
+      if ( FindMissileTarget_54520_548B0(a1) )
       {
         *(_WORD *)(a1 + 30) = *(_WORD *)(a1 + 34);
         *(_WORD *)(a1 + 32) = *(_WORD *)(a1 + 36);
@@ -63031,7 +63049,7 @@ char sub_542B0_54640(int a1)
     if ( (v3 & 2) == 0 )
     {
       *(_BYTE *)(a1 + 16) = v3 | 2;
-      if ( sub_54520_548B0(a1) )
+      if ( FindMissileTarget_54520_548B0(a1) )
       {
         *(_WORD *)(a1 + 30) = *(_WORD *)(a1 + 34);
         *(_WORD *)(a1 + 32) = *(_WORD *)(a1 + 36);
@@ -63108,7 +63126,11 @@ void sub_54480_54810(int a1)
   }
 }
 
-int sub_54520_548B0(int a1)
+/// Spell auto-aim: picks the best target for a freshly cast missile (by missile subtype +65) from the
+/// wizard list (var_u32_36462[0], within the caster's range) and the per-model creature lists
+/// (str_36382x[], entities with +58 set), scored by ScoreAimTarget_54A90_54FC0. On success stores the
+/// target in +146, the wanted heading/pitch in +34/+36 and returns 1.
+int FindMissileTarget_54520_548B0(int a1)
 {
   unsigned int v1; // edi
   int v2_25; // ebp
@@ -63163,7 +63185,7 @@ int sub_54520_548B0(int a1)
               {
                 if ( *(_BYTE *)(j + 58) )
                 {
-                  v13 = sub_54A90_54FC0((__int16 *)a1, j, 0x71u, 0x71u);
+                  v13 = ScoreAimTarget_54A90_54FC0((__int16 *)a1, j, 0x71u, 0x71u);
                   if ( v13 < v8 )
                   {
                     v9 = j;
@@ -63176,7 +63198,7 @@ int sub_54520_548B0(int a1)
           if ( !v9 )
             return 0;
           *(_WORD *)(a1 + 146) = (v9 - (dword_AE400_AE3F0() + 29795)) / 164;
-          sub_52500_52840((_WORD *)a1, v9);
+          AimAtEntity_52500_52840((_WORD *)a1, v9);
           if ( *(_BYTE *)(v9 + 64) == 3 && !*(_BYTE *)(v9 + 65) )
             sub_46520_46860((Type_AE400_29795*)v9);
           return 1;
@@ -63194,7 +63216,7 @@ int sub_54520_548B0(int a1)
             }
             else
             {
-              v11 = sub_54A90_54FC0((__int16 *)a1, v10, 0x71u, 0x71u);
+              v11 = ScoreAimTarget_54A90_54FC0((__int16 *)a1, v10, 0x71u, 0x71u);
               if ( v11 >= v8 )
                 goto LABEL_35;
             }
@@ -63214,7 +63236,7 @@ LABEL_35:
         {
           if ( *(_BYTE *)(k + 58) )
           {
-            v16 = sub_54A90_54FC0((__int16 *)a1, k, 0x71u, 0x71u);
+            v16 = ScoreAimTarget_54A90_54FC0((__int16 *)a1, k, 0x71u, 0x71u);
             if ( v16 < v14 )
             {
               v29 = k;
@@ -63229,7 +63251,7 @@ LABEL_35:
         {
           if ( *(_BYTE *)(m + 58) )
           {
-            v18 = sub_54A90_54FC0((__int16 *)a1, m, 0x71u, 0x71u);
+            v18 = ScoreAimTarget_54A90_54FC0((__int16 *)a1, m, 0x71u, 0x71u);
             if ( v18 < v14 )
             {
               v29 = m;
@@ -63241,7 +63263,7 @@ LABEL_35:
       if ( !v29 )
         return 0;
       *(_WORD *)(a1 + 146) = (v29 - (dword_AE400_AE3F0() + 29795)) / 164;
-      sub_52500_52840((_WORD *)a1, v29);
+      AimAtEntity_52500_52840((_WORD *)a1, v29);
       return 1;
     case 7:
     case 8:
@@ -63258,7 +63280,7 @@ LABEL_35:
           if ( !v20 )
             return 0;
           *(_WORD *)(a1 + 146) = (v20 - (dword_AE400_AE3F0() + 29795)) / 164;
-          sub_52500_52840((_WORD *)a1, v20);
+          AimAtEntity_52500_52840((_WORD *)a1, v20);
           if ( *(_BYTE *)(v20 + 64) == 3 && !*(_BYTE *)(v20 + 65) )
             sub_46520_46860((Type_AE400_29795*)v20);
           return 1;
@@ -63272,13 +63294,13 @@ LABEL_35:
           goto LABEL_76;
         if ( *(_BYTE *)(v21 + 65) == 2 )
         {
-          v22 = sub_54A90_54FC0((__int16 *)a1, v21, 0x71u, 0x71u);
+          v22 = ScoreAimTarget_54A90_54FC0((__int16 *)a1, v21, 0x71u, 0x71u);
           if ( v22 < v19 )
             goto LABEL_75;
         }
         else
         {
-          v22 = sub_54A90_54FC0((__int16 *)a1, v21, 0x71u, 0x71u);
+          v22 = ScoreAimTarget_54A90_54FC0((__int16 *)a1, v21, 0x71u, 0x71u);
           if ( v22 < v19 )
           {
 LABEL_75:
@@ -63313,7 +63335,7 @@ LABEL_76:
           }
           else
           {
-            v4 = sub_54A90_54FC0((__int16 *)a1, v3, 0x71u, 0x71u);
+            v4 = ScoreAimTarget_54A90_54FC0((__int16 *)a1, v3, 0x71u, 0x71u);
             if ( v4 < v1 )
             {
 LABEL_12:
@@ -63335,7 +63357,7 @@ LABEL_13:
           {
             if ( *(_BYTE *)(ii + 58) )
             {
-              v6 = sub_54A90_54FC0((__int16 *)a1, ii, 0x71u, 0x200u);
+              v6 = ScoreAimTarget_54A90_54FC0((__int16 *)a1, ii, 0x71u, 0x200u);
               if ( v6 < v1 )
               {
                   v2_25 = ii;
@@ -63348,7 +63370,7 @@ LABEL_13:
       if ( !v2_25)
         return 0;
       *(_WORD *)(a1 + 146) = (v2_25 - (dword_AE400_AE3F0() + 29795)) / 164;
-      sub_52500_52840((_WORD *)a1, v2_25);
+      AimAtEntity_52500_52840((_WORD *)a1, v2_25);
       return 1;
     default:
       return 0;
@@ -63356,7 +63378,10 @@ LABEL_13:
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_54A90_54FC0(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a4)
+/// Aim score of entity a2 for missile a1: -1 (unsigned max) if it lies outside the heading window a3
+/// or pitch window a4 or further than 5120; otherwise the squared perpendicular-ish miss distance
+/// (smaller is better).
+int ScoreAimTarget_54A90_54FC0(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a4)
 {
   __int16 v4; // ax
   __int16 v5; // ax
@@ -63963,7 +63988,7 @@ LABEL_42:
             a1x->var_29811_16.byte[0] = v10 | 1;
         }
       }
-      if ( sub_11950(v7x, a1x) )
+      if ( EntitiesCollide_11950(v7x, a1x) )
         break;
     }
 LABEL_40:
@@ -64197,7 +64222,9 @@ int sub_55EF0_56420(__int16 a1, int a2, int a3)
 #undef v13
 
 //SYNCHRONIZED WITH REMC1
-int sub_56090_565C0(int a1)
+/// Fireball spell for spell slot a1 (+42 caster): fires missile 9/0 from the caster's hand along its
+/// heading/pitch; on impact it spawns explosion 10/0.
+int CastFireball_56090_565C0(int a1)
 {
   int result; // eax
   unsigned __int16 v2; // dx
@@ -65030,7 +65057,10 @@ LABEL_9:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_57610_57B40(int a1)
+/// Castle spell, cast by a spell slot a1 (+42 = caster entity). Fires a missile (9/10) that either
+/// builds a new castle (3/2) 4096 units ahead of the caster, or - if the caster already owns a
+/// castle (Type_160 +50) - homes on that castle and upgrades it (10/43).
+void CastCastle_57610_57B40(int a1)
 {
   unsigned __int16 v1; // dx
   unsigned int v2; // ebp
@@ -66808,7 +66838,7 @@ int sub_5A090_5A5A0(int a1, int a2)
   {
     for ( i = *(_DWORD *)(dword_AE408_AE3F8() + 36462); i > dword_AE400_AE3F0() + 29795; i = *(_DWORD *)i )
     {
-      if ( !*(_BYTE *)(i + 65) && sub_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)i) == a2 )
+      if ( !*(_BYTE *)(i + 65) && EntitiesCollide_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)i) == a2 )
       {
         sub_55370_558A0((int)(i - (dword_AE400_AE3F0() + 29795)) / 164, -1, 41);
         return 1;
@@ -66831,7 +66861,7 @@ int sub_5A120_5A630(int a1, int a2)
   v3 = dword_AE400_AE3F0() + 13323;
   while ( v2 < str_AE400_AE3F0->var_u16_10 )
   {
-    if ( sub_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)(164 * *(unsigned __int16 *)(v3 + 10) + dword_AE400_AE3F0() + 29795)) == a2 )
+    if ( EntitiesCollide_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)(164 * *(unsigned __int16 *)(v3 + 10) + dword_AE400_AE3F0() + 29795)) == a2 )
       return 1;
     v3 += 2049;
     ++v2;

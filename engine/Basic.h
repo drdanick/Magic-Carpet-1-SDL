@@ -50,11 +50,13 @@ typedef struct {
 	int16_t z;
 }axis_3du;
 
+/// Entity collision box (entity +78): centre is (x, y, z + zOffset), half-extents radiusX/Y/Z.
+/// Two boxes collide when every axis distance is below the sum of the radii (sub_118C0).
 typedef struct {
-	uint16_t var_u16_29873_78;//78
-	uint16_t var_u16_29875_80;//80 //speed
-	uint16_t var_u16_29877_82;//82
-	uint16_t var_u16_29879_84;//84
+	int16_t zOffset_29873_78;//78  PORT: signed (castles use -8192); was uint16_t, so nothing ever hit a castle
+	uint16_t radiusX_29875_80;//80
+	uint16_t radiusY_29877_82;//82
+	uint16_t radiusZ_29879_84;//84
 }axis_4d;
 
 typedef struct {//size 10
@@ -407,7 +409,7 @@ typedef struct _Type_AE400_29795 {// len 164
 	axis_3d var_u32_29867_72;//72
 	//uint16_t var_u16_29871_76;//76
 
-	axis_4d var_u16_29873_78;
+	axis_4d collisionBox_29873_78;
 
 	uint16_t var_u16_29881_86;//86
 	uint8_t var_u8_29883_88;//88
@@ -620,9 +622,8 @@ typedef struct {//size 36478
 	uint32 var_u32_210;
 	uint8 stubf[36164];
 	uint32 var_u32_36378;
-	Type_AE400_29795* str_36382x[20];// len 80
-	Type_AE400_29795* var_u32_36462[4];// DOS: struct ends here (size 36478)
-	Type_AE400_29795* var_u32_36478_port[16];// PORT: sub_41780 indexes var_u32_36462 by entity subtype (0..19, cf. its local v25[20]); in DOS this overran into the next pool block
+	Type_AE400_29795* str_36382x[20];// len 80  creature (class 5) lists, one per model, rebuilt each tick by sub_41780_41AC0
+	Type_AE400_29795* var_u32_36462[4];// 0 wizards/castles (class 3), 1 effects 10/39-40, 2 effects 10/45, 3 missiles (class 9). DOS: struct ends here (size 36478)
 	//uint32 var_u32_36466;
 	//uint32 var_u32_36470;
 	//uint32 var_u32_36474;
