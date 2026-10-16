@@ -56,6 +56,8 @@ void setPress(bool locpressed, uint16_t loclastchar);
 void VGA_InjectKey(bool down, int sdlScancode);
 // Applies optional key remapping (W/A/S/D -> arrows when Settings::wasdAsArrows) to live input.
 SDL_Scancode Port_RemapKey(SDL_Scancode sc);
+// Frames presented so far - the frame numbers used by input scripts and --dump-frames (debug traces).
+uint32_t VGA_PresentedFrames();
 
 void VGA_mouse_clear_keys();
 void VGA_cleanKeyBuffer();

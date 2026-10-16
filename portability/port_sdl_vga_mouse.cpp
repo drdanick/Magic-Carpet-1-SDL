@@ -1362,3 +1362,7 @@ void VGA_mouse_clear_keys() {
 	for (int i = 0; i < 128; i++)
 		pressedKeys_12EEF0_12EEE0[i] = 0;
 }
+uint32_t VGA_PresentedFrames()
+{
+	return presentedFrames;
+}

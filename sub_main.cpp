@@ -33423,7 +33423,7 @@ void DrawSkyTerrainParticles_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw
 				v198x.x_0 = tempBegBscreen[indexv91 - textRows].pnt1_16;
 				v198x.y_1 = tempBegBscreen[indexv91 - textRows].pnt2_20;
 				v198x.z_4 = tempBegBscreen[indexv91 - textRows].pnt5_32;
-				if (tempBegBscreen[indexv91].triangleFeatures_38 & 0xffff >= 0)
+				if ((tempBegBscreen[indexv91].triangleFeatures_38 & 0x80) == 0) // PORT: was "features & 0xffff >= 0" = "features & 1" (precedence): every other cell lost the water mode - checkerboard sea. Asm: test ch, 0x80 (0x2B476)
 				{
 					if ((tempBegBscreen[indexv91].triangleFeatures_38 & 0x100000) != 0)
 					{
@@ -33527,7 +33527,7 @@ void DrawSkyTerrainParticles_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw
 				v198x.x_0 = tempBegBscreen[index109 - textRows].pnt1_16;
 				v198x.y_1 = tempBegBscreen[index109 - textRows].pnt2_20;
 				v198x.z_4 = tempBegBscreen[index109 - textRows].pnt5_32;
-				if (tempBegBscreen[index109].triangleFeatures_38 & 0xffff >= 0)
+				if ((tempBegBscreen[index109].triangleFeatures_38 & 0x80) == 0) // PORT: was "features & 0xffff >= 0" = "features & 1" (precedence): every other cell lost the water mode - checkerboard sea. Asm: test ch, 0x80 (0x2B476)
 				{
 					if ((tempBegBscreen[index109].triangleFeatures_38 & 0x100000) != 0)
 					{

@@ -1,4 +1,6 @@
-// Tier 1: the software rasteriser (DrawTriangle_729A3_72EB3) must not depend on vertex order.
+// Tier 1: the software rasteriser (DrawTriangle_729A3_72EB3): vertex-order independence, top-edge
+// clipping, shading/texture interpolation. Note: it draws clockwise triangles only (back faces are
+// culled - also in the original), and the first row of a top-clipped triangle is not drawn.
 // The terrain renderer splits each map cell along one of two diagonals (by cell parity) and passes
 // the same corners in different orders; any order-dependent bias shows up as a checkerboard.
 #include <gtest/gtest.h>
@@ -88,6 +90,167 @@ void ExpectOrderIndependent(uint8_t mode, const Type_RenderPoint (&tri)[3])
 }
 
 } // namespace
+
+namespace {
+
+// Draws `tri` into a viewport of height `h` starting `rowOffset` rows into a W x 400 buffer.
+std::vector<uint8_t> DrawAt(uint8_t mode, Type_RenderPoint (&tri)[3], int rowOffset, int h, int order)
+{
+	static std::vector<uint8_t> texture(0x20000, 0x20);
+	std::vector<uint8_t> screen(W * 400, 0xFF);
+	for (int i = 0; i < 0x10000; i++)
+		strPal.byte_BB934_BB924[i] = (char)(i >> 8);
+	for (int i = 0; i < 0x4000; i++)
+		strPal.fog_B7934_B7924[i] = (char)(i >> 8);
+	beginPrevLineFrame_93AC8 = screen.data() + rowOffset * W;
+	pitchViewPort_93AD4 = W;
+	widthViewPort_93AD8 = W;
+	heightViewPort_93ADC = (uint16)h;
+	actTexture_93AD0 = texture.data();
+	byte_967E1 = mode;
+	Type_RenderPoint p[3] = { tri[order], tri[(order + 1) % 3], tri[(order + 2) % 3] };
+	DrawTriangle_729A3_72EB3(&p[0], &p[1], &p[2]);
+	return screen;
+}
+
+} // namespace
+
+TEST(Rasteriser, TopClippingMatchesUnclipped)
+{
+	// Triangle partly above the top edge (negative y). Reference: the same triangle 100 rows lower
+	// in a 400-row viewport, i.e. never clipped. Rows 100..299 of the reference must equal rows
+	// 0..199 of the clipped drawing - shade and coverage.
+	const int shapes[2][6] = { { 40, -60, 220, 30, 90, 150 }, { 160, -90, 260, 120, 20, 60 } };
+	for (uint8_t mode : { (uint8_t)5, (uint8_t)26 }) {
+		for (const auto& s : shapes) {
+			for (int order = 0; order < 3; order++) {
+				Type_RenderPoint clipped[3] = { Vertex(s[0], s[1]), Vertex(s[2], s[3]), Vertex(s[4], s[5]) };
+				Type_RenderPoint shifted[3] = { Vertex(s[0], s[1] + 100), Vertex(s[2], s[3] + 100), Vertex(s[4], s[5] + 100) };
+				// same shading as the clipped triangle (Vertex() derives shade from y)
+				for (int i = 0; i < 3; i++)
+					shifted[i].z_4 = clipped[i].z_4;
+				const auto img = DrawAt(mode, clipped, 0, H, order);
+				const auto ref = DrawAt(mode, shifted, 0, 400, order);
+				int bad = 0, firstX = -1, firstY = -1, worst = 0;
+				for (int y = 1; y < H; y++) // row 0 is skipped when a triangle is clipped at the top
+					for (int x = 0; x < W; x++) {
+						const int a = img[y * W + x], b = ref[(y + 100) * W + x];
+						const bool edge = (a == 0xFF) != (b == 0xFF);
+						const int d = (a == 0xFF || b == 0xFF) ? (edge ? 99 : 0) : std::abs(a - b);
+						if (d > 1) {
+							if (!bad++) { firstX = x; firstY = y; }
+							worst = (std::max)(worst, d);
+						}
+					}
+				// one-pixel edge differences are rounding; count only real disagreements
+				EXPECT_LT(bad, 40) << "mode " << (int)mode << " shape " << (&s - shapes) << " order " << order
+					<< ": " << bad << " pixels differ (worst " << worst << ", first at " << firstX << "," << firstY << ")";
+			}
+		}
+	}
+}
+
+TEST(Rasteriser, TopClippingKeepsTextureCoordinates)
+{
+	// Texel value encodes u (texel = 0x40 + (u & 0x3F)); the shade tables pass the texel through, so
+	// every pixel shows which u the rasteriser sampled. A triangle crossing the top edge must sample
+	// the same texels as the unclipped reference.
+	static std::vector<uint8_t> texture(0x20000);
+	for (size_t i = 0; i < texture.size(); i++)
+		texture[i] = (uint8_t)(0x40 + (i & 0x3F));
+	const int s[6] = { 40, -60, 220, 30, 90, 150 };
+	for (uint8_t mode : { (uint8_t)5, (uint8_t)26 }) {
+		std::vector<uint8_t> out[2];
+		for (int pass = 0; pass < 2; pass++) {
+			const int dy = pass ? 100 : 0;
+			std::vector<uint8_t> screen(W * 400, 0xFF);
+			for (int i = 0; i < 0x10000; i++)
+				strPal.byte_BB934_BB924[i] = (char)(i & 0xFF);
+			for (int i = 0; i < 0x4000; i++)
+				strPal.fog_B7934_B7924[i] = (char)(i & 0xFF);
+			beginPrevLineFrame_93AC8 = screen.data();
+			pitchViewPort_93AD4 = W;
+			widthViewPort_93AD8 = W;
+			heightViewPort_93ADC = (uint16)(pass ? 400 : H);
+			actTexture_93AD0 = texture.data();
+			byte_967E1 = mode;
+			Type_RenderPoint p[3];
+			for (int i = 0; i < 3; i++) {
+				p[i] = {};
+				p[i].x_0 = s[2 * i];
+				p[i].y_1 = s[2 * i + 1] + dy;
+				p[i].u_2 = s[2 * i] << 14;              // u = x / 4
+				p[i].v_3 = (s[2 * i + 1] + 60) << 13;   // v = (y + 60) / 8, same for both passes
+				p[i].z_4 = 30 << 16;
+			}
+			DrawTriangle_729A3_72EB3(&p[0], &p[1], &p[2]);
+			out[pass] = screen;
+		}
+		int bad = 0, fx = -1, fy = -1;
+		for (int y = 1; y < H; y++) // row 0: see TopClippingMatchesUnclipped
+			for (int x = 0; x < W; x++) {
+				const int a = out[0][y * W + x], b = out[1][(y + 100) * W + x];
+				if (a != 0xFF && b != 0xFF && std::abs(a - b) > 1) {
+					if (!bad++) { fx = x; fy = y; }
+				}
+			}
+		EXPECT_EQ(bad, 0) << "mode " << (int)mode << ": " << bad << " pixels sample different texels after top clipping, first at "
+			<< fx << "," << fy << ": clipped " << (int)out[0][fy * W + fx] << " vs " << (int)out[1][(fy + 100) * W + fx];
+	}
+}
+
+TEST(Rasteriser, ShadeStaysBetweenVertexShades)
+{
+	// Small triangles of every shape class (flat top, flat bottom, general with the middle vertex
+	// left or right) with in-game shade magnitudes (33..38 << 16): every pixel's shade must stay
+	// within the vertex shades.
+	struct Tri { const char* name; int p[6]; int z[3]; };
+	const Tri tris[] = {
+		{ "flat top", { 67, 18, 74, 18, 45, 34 }, { 36, 33, 35 } },
+		{ "flat bottom", { 60, 10, 80, 40, 40, 40 }, { 33, 38, 35 } },
+		{ "general mid-right", { 45, 10, 90, 30, 50, 60 }, { 36, 33, 35 } },
+		{ "two above top, wide", { 20, 40, 200, -30, 260, -10 }, { 35, 34, 33 } },
+	};
+	static std::vector<uint8_t> texture(0x20000, 0x20);
+	for (const Tri& t : tris) {
+		for (int order = 0; order < 3; order++) {
+			std::vector<uint8_t> screen(W * H, 0xFF);
+			for (int i = 0; i < 0x10000; i++)
+				strPal.byte_BB934_BB924[i] = (char)(i >> 8);
+			for (int i = 0; i < 0x4000; i++)
+				strPal.fog_B7934_B7924[i] = (char)(i >> 8);
+			beginPrevLineFrame_93AC8 = screen.data();
+			pitchViewPort_93AD4 = W;
+			widthViewPort_93AD8 = W;
+			heightViewPort_93ADC = H;
+			actTexture_93AD0 = texture.data();
+			byte_967E1 = 5;
+			Type_RenderPoint p[3];
+			for (int i = 0; i < 3; i++) {
+				const int k = (i + order) % 3;
+				p[i] = {};
+				p[i].x_0 = t.p[2 * k];
+				p[i].y_1 = t.p[2 * k + 1];
+				p[i].z_4 = (t.z[k] << 16) + 0x8000;
+			}
+			DrawTriangle_729A3_72EB3(&p[0], &p[1], &p[2]);
+			const int lo = (std::min)({ t.z[0], t.z[1], t.z[2] }), hi = (std::max)({ t.z[0], t.z[1], t.z[2] });
+			int drawn = 0, bad = 0, badVal = 0;
+			for (uint8_t px : screen) {
+				if (px == 0xFF)
+					continue;
+				drawn++;
+				if (px < lo - 1 || px > hi + 1) {
+					if (!bad++)
+						badVal = px;
+				}
+			}
+			EXPECT_GT(drawn, 0) << t.name << " order " << order << ": nothing drawn";
+			EXPECT_EQ(bad, 0) << t.name << " order " << order << ": " << bad << "/" << drawn << " pixels shaded "
+				<< badVal << ", vertex shades " << lo << ".." << hi;
+		}
+	}
+}
 
 TEST(Rasteriser, ShadingIndependentOfVertexOrder)
 {
