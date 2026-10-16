@@ -210,6 +210,7 @@ TEST(Rasteriser, ShadeStaysBetweenVertexShades)
 		{ "flat bottom", { 60, 10, 80, 40, 40, 40 }, { 33, 38, 35 } },
 		{ "general mid-right", { 45, 10, 90, 30, 50, 60 }, { 36, 33, 35 } },
 		{ "two above top, wide", { 20, 40, 200, -30, 260, -10 }, { 35, 34, 33 } },
+		{ "two above top, lowest second (label124)", { 181, 40, 173, -5, 221, -12 }, { 28, 33, 30 } },
 	};
 	static std::vector<uint8_t> texture(0x20000, 0x20);
 	for (const Tri& t : tris) {
@@ -249,6 +250,53 @@ TEST(Rasteriser, ShadeStaysBetweenVertexShades)
 			EXPECT_EQ(bad, 0) << t.name << " order " << order << ": " << bad << "/" << drawn << " pixels shaded "
 				<< badVal << ", vertex shades " << lo << ".." << hi;
 		}
+	}
+}
+
+TEST(Rasteriser, CapturedTopEdgeCells)
+{
+	// Terrain cells covering the top of the screen in top_render_glitch.txt frame 510 (loop 2 of
+	// DrawSkyTerrainParticles): A=v213 B=v208 C=v203 D=v198 as {x, y, u, v, z}. Shades are 28..34.
+	struct Cell { int parity; Type_RenderPoint a, b, c, d; };
+	const Cell cells[] = {
+		{ 0, { 105, 44, 0, 0, 1933312 }, { 142, 5, 2097151, 0, 2260992 }, { 173, -5, 2097151, 2097151, 2195456 }, { 133, 43, 0, 2097151, 1867776 } },
+		{ 1, { 133, 43, 0, 2097151, 1867776 }, { 173, -5, 2097151, 2097151, 2195456 }, { 221, -12, 2097151, 0, 1998848 }, { 181, 40, 0, 0, 1867776 } },
+	};
+	static std::vector<uint8_t> texture(0x20000, 0x20);
+	int idx = 0;
+	for (const Cell& c : cells) {
+		std::vector<uint8_t> screen(W * H, 0xFF);
+		for (int i = 0; i < 0x10000; i++)
+			strPal.byte_BB934_BB924[i] = (char)(i >> 8);
+		for (int i = 0; i < 0x4000; i++)
+			strPal.fog_B7934_B7924[i] = (char)(i >> 8);
+		beginPrevLineFrame_93AC8 = screen.data();
+		pitchViewPort_93AD4 = W;
+		widthViewPort_93AD8 = W;
+		heightViewPort_93ADC = H;
+		actTexture_93AD0 = texture.data();
+		byte_967E1 = 5;
+		Type_RenderPoint a = c.a, b = c.b, cc = c.c, d = c.d;
+		// loop 2 triangle orders (DrawSkyTerrainParticles near pass)
+		if (c.parity) {
+			DrawTriangle_729A3_72EB3(&a, &b, &d);
+			DrawTriangle_729A3_72EB3(&d, &b, &cc);
+		} else {
+			DrawTriangle_729A3_72EB3(&a, &b, &cc);
+			DrawTriangle_729A3_72EB3(&a, &cc, &d);
+		}
+		int drawn = 0, bad = 0, badVal = 0, bx = 0, by = 0;
+		for (int i = 0; i < W * H; i++) {
+			if (screen[i] == 0xFF)
+				continue;
+			drawn++;
+			if (screen[i] < 27 || screen[i] > 35) {
+				if (!bad++) { badVal = screen[i]; bx = i % W; by = i / W; }
+			}
+		}
+		EXPECT_GT(drawn, 500) << "cell " << idx;
+		EXPECT_EQ(bad, 0) << "cell " << idx << ": " << bad << " of " << drawn << " pixels shaded out of range, first " << badVal << " at " << bx << "," << by;
+		idx++;
 	}
 }
 

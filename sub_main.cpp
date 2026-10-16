@@ -111017,15 +111017,16 @@ if (((sortPnt2->x_0 - sortPnt1->x_0) << 16) / (sortPnt2->y_1 - sortPnt1->y_1) > 
         if (sPnt1NotInView)
         {
             //bool16 = ySum <= -sortPnt1->y_1;
+            bool16 = ySum_C <= -sortPnt1->y_1; // PORT: test before the add, as in the other three mode groups
             ySum_C += sortPnt1->y_1;
-            if (ySum_C <= -sortPnt1->y_1)
+            if (bool16)
                 return;
             //v1146 = -sortPnt1->y_1;
             if (-sortPnt1->y_1 - diffSPnt3SPnt1Y >= 0)
             {
                 v1147 = -sortPnt1->y_1 - diffSPnt3SPnt1Y;
                 diffPnt2Pnt3Y -= v1147;
-                v104 = divPnt2Pnt3XY * v1147 + sortPnt3->x_0 << 16;
+                v104 = divPnt2Pnt3XY * v1147 + (sortPnt3->x_0 << 16); // PORT: was "... + x << 16" = "(... + x) << 16" - spans smeared across the top of the screen
                 v103 += v1147 * divSPnt2SPnt1XY + diffSPnt3SPnt1Y * divSPnt2SPnt1XY;
                 if (sPnt2YAfterScr)
                 {
@@ -111237,7 +111238,7 @@ if (((sortPnt2->x_0 - sortPnt1->x_0) << 16) / (sortPnt2->y_1 - sortPnt1->y_1) > 
             {
                 v1145 = v1144 - diffSPnt3SPnt1Y;
                 diffPnt2Pnt3Y -= v1145;
-                v98 = divPnt2Pnt3XY * v1145 + sortPnt3->x_0 << 16;
+                v98 = divPnt2Pnt3XY * v1145 + (sortPnt3->x_0 << 16); // PORT: was "... + x << 16" = "(... + x) << 16" - spans smeared across the top of the screen
                 v96 += v1145 * divSPnt2SPnt1XY + diffSPnt3SPnt1Y * divSPnt2SPnt1XY;
                 v97 += v1145 * v1131 + diffSPnt3SPnt1Y * v1125;
                 if (sPnt2YAfterScr)
@@ -111471,7 +111472,7 @@ if (((sortPnt2->x_0 - sortPnt1->x_0) << 16) / (sortPnt2->y_1 - sortPnt1->y_1) > 
             {
                 v1143 = v1142 - diffSPnt3SPnt1Y;
                 diffPnt2Pnt3Y -= v1143;
-                v87 = divPnt2Pnt3XY * v1143 + sortPnt3->x_0 << 16;
+                v87 = divPnt2Pnt3XY * v1143 + (sortPnt3->x_0 << 16); // PORT: was "... + x << 16" = "(... + x) << 16" - spans smeared across the top of the screen
                 v84 += v1143 * divSPnt2SPnt1XY + diffSPnt3SPnt1Y * divSPnt2SPnt1XY;
                 v85 += v1143 * v1109 + diffSPnt3SPnt1Y * v1103;
                 v86 += v1143 * v1120 + diffSPnt3SPnt1Y * v1114;
@@ -111710,7 +111711,7 @@ if (((sortPnt2->x_0 - sortPnt1->x_0) << 16) / (sortPnt2->y_1 - sortPnt1->y_1) > 
             {
                 v1141 = v1140 - diffSPnt3SPnt1Y;
                 diffPnt2Pnt3Y -= v1141;
-                v74 = divPnt2Pnt3XY * v1141 + sortPnt3->x_0 << 16;
+                v74 = divPnt2Pnt3XY * v1141 + (sortPnt3->x_0 << 16); // PORT: was "... + x << 16" = "(... + x) << 16" - spans smeared across the top of the screen
                 v70 += v1141 * divSPnt2SPnt1XY + diffSPnt3SPnt1Y * divSPnt2SPnt1XY;
                 v71 += v1141 * divSPnt2SPnt3UY + diffSPnt3SPnt1Y * divSPnt3SPnt1UY;
                 v72 += v1141 * divSPnt2SPnt3VY + diffSPnt3SPnt1Y * divSPnt3SPnt1VY;
