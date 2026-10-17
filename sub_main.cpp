@@ -20048,14 +20048,20 @@ void MakeControlCommand_188A0(char setting1, char setting2)
         }
       return;
     case 23:
-        if (str_AE400_AE3F0->var_29715[str_AE400_AE3F0->var_u16_8][0])
+        // PORT: was "if ([0])" - inverted; like the other commands it is queued when the slot is
+        // empty or holds the same command (asm 0x18F08/0x18F3D). Spell hotkeys did nothing.
+        if (!str_AE400_AE3F0->var_29715[str_AE400_AE3F0->var_u16_8][0]
+            || str_AE400_AE3F0->var_29715[str_AE400_AE3F0->var_u16_8][0] == setting1)
         {
             str_AE400_AE3F0->var_29715[str_AE400_AE3F0->var_u16_8][0] = setting1;
             str_AE400_AE3F0->var_29715[str_AE400_AE3F0->var_u16_8][1] = setting2;
         }
       return;
     case 24:
-        if (str_AE400_AE3F0->var_29715[str_AE400_AE3F0->var_u16_8][0])
+        // PORT: was "if ([0])" - inverted; like the other commands it is queued when the slot is
+        // empty or holds the same command (asm 0x18F08/0x18F3D). Spell hotkeys did nothing.
+        if (!str_AE400_AE3F0->var_29715[str_AE400_AE3F0->var_u16_8][0]
+            || str_AE400_AE3F0->var_29715[str_AE400_AE3F0->var_u16_8][0] == setting1)
         {
             str_AE400_AE3F0->var_29715[str_AE400_AE3F0->var_u16_8][0] = setting1;
             str_AE400_AE3F0->var_29715[str_AE400_AE3F0->var_u16_8][1] = setting2;
@@ -51143,7 +51149,7 @@ int sub_411D7_41517(void *a2, unsigned __int16 a3, char a4)
   v4 = a1 << 16;
   LOBYTE(v4) = a4;
   BYTE1(v4) = a4;
-  memset((char*)a2, v4, 80 * a3);
+  memset((char*)a2, a4, 320 * a3); // PORT: was 80 * a3 bytes - the original is "rep stosd" of 80 * a3 DWORDS (whole 320-wide rows); only a quarter of the screen was cleared (spell-map cursor trail)
   return v6;
 }
 
@@ -51163,7 +51169,7 @@ int sub_411FD_4153D(void *a2, unsigned __int16 a3, char a4)
   v4 = a1 << 16;
   LOBYTE(v4) = a4;
   BYTE1(v4) = a4;
-  memset((char*)a2, v4, 160 * a3);
+  memset((char*)a2, a4, 640 * a3); // PORT: was 160 * a3 bytes - "rep stosd" of 160 * a3 DWORDS (whole 640-wide rows)
   return v6;
 }
 
@@ -68045,13 +68051,13 @@ int sub_5BD40()//22CD40_
     result = *(int*)&dword_12EF94_12EF84 >> 16;
     if ( (unsigned __int16)word_12EFD4_12EFC4 >= *(int*)&dword_12EF94_12EF84 >> 16 )
       break;
-    for ( word_12EFD2_12EFC2 = 0; (unsigned __int16)word_12EFD2_12EFC2 < *(int *)((char *)&mouseXY2_12EF90_12EF80 + 2) >> 16; ++word_12EFD2_12EFC2 )
+    for ( word_12EFD2_12EFC2 = 0; (unsigned __int16)word_12EFD2_12EFC2 < dword_12EF94_12EF84.x /* PORT: was *(int*)((char*)&mouseXY2 + 2) >> 16 - relied on dword_12EF94 following mouseXY2 in memory */; ++word_12EFD2_12EFC2 )
     {
       v1 = (_BYTE *)dword_12EFA8_12EF98++;
       v2 = (_BYTE *)dword_12EFA4_12EF94++;
       *v2 = *v1;
     }
-    dword_12EFA4_12EF94 += scrWidth_12EFF0_12EFE0 - (*(int *)((char *)&mouseXY2_12EF90_12EF80 + 2) >> 16);
+    dword_12EFA4_12EF94 += scrWidth_12EFF0_12EFE0 - (dword_12EF94_12EF84.x /* PORT: was *(int*)((char*)&mouseXY2 + 2) >> 16 - relied on dword_12EF94 following mouseXY2 in memory */);
   }
   return result;
 }
@@ -68079,6 +68085,7 @@ void sub_5BE50_5C360()
 {
   dword_9AD88 = 0;
 }
+
 
 //----- (0005C05C) --------------------------------------------------------
 void sub_5C05C_5C56C(TypeTab* a1x)//22D05C_
