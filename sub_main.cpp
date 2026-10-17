@@ -32828,7 +32828,7 @@ void DrawSkyTerrainParticles_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw
 					if (byte_9020C[tempBegBscreen[index].textIndex_41])
 						tempBegBscreen[index].triangleFeatures_38 |= 0x80u;
 					if (byte_90168[tempBegBscreen[index].textIndex_41])
-						tempBegBscreen[index].triangleFeatures_38 |= 0x100000u;
+						tempBegBscreen[index].triangleFeatures_38 |= 0x1000u; // PORT: was 0x100000 (no-op on the uint16 field); asm 0x2ADA6: or byte [+27h], 10h
 					tempBegBscreen[index].textAtyp_43 = byte_900C4[tempBegBscreen[index].textIndex_41];
 					tempBegBscreen[index].textUV_42 = modYaw + ((mapAngle_FC1E0_FC1D0[yawXY2.word] >> 2) & 0x1C);
 					yawXY2._axis_2d.x += yawQuartal[4];
@@ -32881,20 +32881,20 @@ void DrawSkyTerrainParticles_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw
 			if (tempBegBscreen[indexCR].pnt3_24 >= 0)
 			{
 				if (widthViewPort_93AD8 <= tempBegBscreen[indexCR].pnt3_24)
-					tempBegBscreen[indexCR].triangleFeatures_38 |= 0x20000u;
+					tempBegBscreen[indexCR].triangleFeatures_38 |= 0x200u;
 			}
 			else
 			{
-				tempBegBscreen[indexCR].triangleFeatures_38 |= 0x10000u;
+				tempBegBscreen[indexCR].triangleFeatures_38 |= 0x100u; // PORT: 0x10000 etc. were no-ops on the uint16 field (asm: or byte [+27h], 1/2/4/8)
 			}
 			if (tempBegBscreen[indexCR].pnt4_28 >= 0)
 			{
 				if (heightViewPort_93ADC <= tempBegBscreen[indexCR].pnt4_28)
-					tempBegBscreen[indexCR].triangleFeatures_38 |= 0x80000u;
+					tempBegBscreen[indexCR].triangleFeatures_38 |= 0x800u;
 			}
 			else
 			{
-				tempBegBscreen[indexCR].triangleFeatures_38 |= 0x40000u;
+				tempBegBscreen[indexCR].triangleFeatures_38 |= 0x400u;
 			}
 		}
 		if (posZ < 4096)
@@ -32949,7 +32949,7 @@ void DrawSkyTerrainParticles_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw
 
 					if (tempBegBscreen[index62].textIndex_41)
 					{
-						if ((tempBegBscreen[index62].triangleFeatures_38 & 0x100000) != 0)
+						if ((tempBegBscreen[index62].triangleFeatures_38 & 0x1000) != 0) // PORT: was 0x100000, never true; asm test byte [+27h], 10h
 						{
 							byte_967E1 = 7;
 							byte_967E0 = (v198x.z_4 + v203x.z_4 + v208x.z_4 + v213x.z_4) >> 18;
@@ -33005,7 +33005,7 @@ void DrawSkyTerrainParticles_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw
 
 					if (tempBegBscreen[indexv76].textIndex_41)
 					{
-						if ((tempBegBscreen[indexv76].triangleFeatures_38 & 0x100000) != 0)
+						if ((tempBegBscreen[indexv76].triangleFeatures_38 & 0x1000) != 0) // PORT: was 0x100000, never true; asm test byte [+27h], 10h
 						{
 							byte_967E1 = 7;
 							byte_967E0 = (v198x.z_4 + v203x.z_4 + v208x.z_4 + v213x.z_4) >> 18;
@@ -33093,7 +33093,7 @@ void DrawSkyTerrainParticles_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw
 				v198x.z_4 = tempBegBscreen[indexv91 - textRows].pnt5_32;
 				if ((tempBegBscreen[indexv91].triangleFeatures_38 & 0x80) == 0) // PORT: was "features & 0xffff >= 0" = "features & 1" (precedence): every other cell lost the water mode - checkerboard sea. Asm: test ch, 0x80 (0x2B476)
 				{
-					if ((tempBegBscreen[indexv91].triangleFeatures_38 & 0x100000) != 0)
+					if ((tempBegBscreen[indexv91].triangleFeatures_38 & 0x1000) != 0) // PORT: was 0x100000, never true; asm test byte [+27h], 10h
 					{
 						byte_967E1 = 7;
 						byte_967E0 = (v198x.z_4 + v203x.z_4 + v208x.z_4 + v213x.z_4) >> 18;
@@ -33197,7 +33197,7 @@ void DrawSkyTerrainParticles_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw
 				v198x.z_4 = tempBegBscreen[index109 - textRows].pnt5_32;
 				if ((tempBegBscreen[index109].triangleFeatures_38 & 0x80) == 0) // PORT: was "features & 0xffff >= 0" = "features & 1" (precedence): every other cell lost the water mode - checkerboard sea. Asm: test ch, 0x80 (0x2B476)
 				{
-					if ((tempBegBscreen[index109].triangleFeatures_38 & 0x100000) != 0)
+					if ((tempBegBscreen[index109].triangleFeatures_38 & 0x1000) != 0) // PORT: was 0x100000, never true; asm test byte [+27h], 10h
 					{
 						byte_967E1 = 7;
 						byte_967E0 = (v198x.z_4 + v203x.z_4 + v208x.z_4 + v213x.z_4) >> 18;
@@ -33432,7 +33432,7 @@ void DrawSkyTerrainParticles_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw
 				v198x.x_0 = tempBegBscreen[index169 - textRows].pnt1_16;
 				v198x.y_1 = tempBegBscreen[index169 - textRows].pnt2_20;
 				v198x.z_4 = tempBegBscreen[index169 - textRows].pnt5_32;
-				if ((tempBegBscreen[index169].triangleFeatures_38 & 0x100000) != 0)
+				if ((tempBegBscreen[index169].triangleFeatures_38 & 0x1000) != 0) // PORT: was 0x100000, never true; asm test byte [+27h], 10h
 				{
 					byte_967E1 = 7;
 					byte_967E0 = (v198x.z_4 + v203x.z_4 + v208x.z_4 + v213x.z_4) >> 18;
@@ -33497,7 +33497,7 @@ void DrawSkyTerrainParticles_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw
 					v198x.x_0 = tempBegBscreen[index184 - textRows].pnt1_16;
 					v198x.y_1 = tempBegBscreen[index184 - textRows].pnt2_20;
 					v198x.z_4 = tempBegBscreen[index184 - textRows].pnt5_32;
-					if ((tempBegBscreen[index184].triangleFeatures_38 & 0x100000) != 0)
+					if ((tempBegBscreen[index184].triangleFeatures_38 & 0x1000) != 0) // PORT: was 0x100000, never true; asm test byte [+27h], 10h
 					{
 						byte_967E1 = 7;
 						byte_967E0 = (v198x.z_4 + v203x.z_4 + v208x.z_4 + v213x.z_4) >> 18;

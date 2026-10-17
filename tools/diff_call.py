@@ -43,9 +43,13 @@ def main():
         return struct.unpack(fmt, bytes(m.mu.mem_read(m.port_addr(name), struct.calcsize(fmt))))[0]
 
     res = {}
-    for label, addr in (('original', ida), ('port', m.port_addr(pname))):
+    # extra leading arguments of the original that the port reads from globals instead
+    orig_args = list(args)
+    if ida == 0x30D90:  # DrawWorld: the original's first argument is the screen buffer (push [12EFF4h])
+        orig_args = [struct.unpack('<I', bytes(m.mu.mem_read(0x12EFF4, 4)))[0]] + orig_args
+    for label, addr, ar in (('original', ida, orig_args), ('port', m.port_addr(pname), args)):
         m.begin()
-        r = m.call(addr, args, max_insns=2_000_000_000)
+        r = m.call(addr, ar, max_insns=2_000_000_000)
         err = m.stop_reason
         w = m.end()
         if a.png and not err:

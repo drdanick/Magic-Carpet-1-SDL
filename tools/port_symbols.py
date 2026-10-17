@@ -187,6 +187,36 @@ class PortSymbols:
         self._ptr_cache[ti] = out
         return out
 
+    def members(self, ti):
+        """Data members of a struct type: [(name, offset, type index, size)] (empty for other types)."""
+        TI_GET_SYMTAG, TI_GET_SYMNAME, TI_GET_TYPEID, TI_FINDCHILDREN, TI_GET_OFFSET, TI_GET_CHILDRENCOUNT = 0, 1, 4, 7, 10, 13
+        while self._ti(ti, TI_GET_SYMTAG) == 17:  # typedef
+            ti = self._ti(ti, TI_GET_TYPEID)
+        if self._ti(ti, TI_GET_SYMTAG) != 11:
+            return []
+        n = self._ti(ti, TI_GET_CHILDRENCOUNT) or 0
+        if not n:
+            return []
+
+        class FC(ctypes.Structure):
+            _fields_ = [('Count', ctypes.c_uint32), ('Start', ctypes.c_uint32), ('ChildId', ctypes.c_uint32 * n)]
+        fc = FC(n, 0)
+        if not self.dbg.SymGetTypeInfo(self.h, self.BASE, ti, TI_FINDCHILDREN, ctypes.byref(fc)):
+            return []
+        out = []
+        for c in fc.ChildId:
+            if self._ti(c, TI_GET_SYMTAG) != 7:
+                continue
+            p = ctypes.c_wchar_p()
+            if not self.dbg.SymGetTypeInfo(self.h, self.BASE, c, TI_GET_SYMNAME, ctypes.byref(p)) or not p.value:
+                continue
+            name = p.value
+            off, mt = self._ti(c, TI_GET_OFFSET), self._ti(c, TI_GET_TYPEID)
+            ln = ctypes.c_uint64(0)
+            self.dbg.SymGetTypeInfo(self.h, self.BASE, mt, TI_GET_LENGTH, ctypes.byref(ln))
+            out.append((name, off, mt, ln.value))
+        return out
+
     def data_symbols(self):
         return [s for s in self.syms if s.tag == SymTagData]
 

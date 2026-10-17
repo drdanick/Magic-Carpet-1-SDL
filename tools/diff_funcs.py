@@ -57,7 +57,12 @@ def compare(m, w_orig, ret_orig, w_port, ret_port, show=8):
     diffs = []
     # map original writes to the address the port uses for the same byte
     norm_o = {}
+    skip_i = getattr(m, 'skip_ida', [])
+    skip_p = getattr(m, 'skip_port', [])
+    w_port = {a: v for a, v in w_port.items() if not any(lo <= a < hi for lo, hi in skip_p)}
     for a, v in w_orig.items():
+        if any(lo <= a < hi for lo, hi in skip_i):
+            continue
         if 0x10000 <= a < 0x150000:
             pa, name = m.ida_to_port(a)
             if pa is None:

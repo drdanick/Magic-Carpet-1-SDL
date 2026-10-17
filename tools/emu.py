@@ -213,6 +213,19 @@ class Machine:
                 j += 1
             p += 20
 
+    def _global_syms(self):
+        """Data symbols, plus the address-named members of struct globals that have no address in their
+        own name (e.g. strPal.fog_B7934_B7924: the renderer's fog/blend tables)."""
+        from port_symbols import Sym, SymTagData
+        out = list(self.ps.data_symbols())
+        for s in self.ps.data_symbols():
+            if s.size < 64 or name_addresses(s.name, self.img) or s.name in SKIP_GLOBALS:
+                continue
+            for mname, off, mt, msize in self.ps.members(s.type_index):
+                if msize and name_addresses(mname, self.img):
+                    out.append(Sym(mname, s.rva + off, msize, SymTagData, mt))
+        return out
+
     def _copy_globals(self):
         """Port globals named after original addresses -> original addresses (pointers translated)."""
         mu = self.mu
@@ -225,22 +238,29 @@ class Machine:
         # were often enlarged - word_CC070 ran into mapTerrainType_CC1E0 - and IDA "tables" such as
         # trig_9074C cover separately named variables). Static data cut off this way keeps the
         # original's own (identical) bytes.
+        gsyms = self._global_syms()
         spans = []
-        for s in self.ps.data_symbols():
+        for s in gsyms:
             c = name_addresses(s.name, self.img)
             if c and s.size:
                 spans.append((c[0], s.size, s.name))
         # an unk_ placeholder lying entirely inside another global (e.g. unk_110003 inside the 128 KB
         # mapEntityIndex) is IDA junk, not a variable: neither a boundary nor copied
         self.junk = set()
+        # The same holds for a name that only carries a DOSBox-style 6-digit address (snds00Tab_2854A1 ->
+        # 0xC74A1 lies inside the 64 KB blend table strPal.byte_BB934): it names other memory.
+        import re
         for a0, n0, nm in spans:
-            if nm.startswith('unk_') and any(a1 < a0 and a0 + n0 <= a1 + n1 for a1, n1, _ in spans):
+            toks = [int(t, 16) for t in re.findall(r'_([0-9A-F]{5,6})(?=_|$)', nm)]
+            dosbox_only = bool(toks) and all(t >= 0x200000 for t in toks)  # DOSBox = IDA + 0x1BE000
+            if (nm.startswith('unk_') or dosbox_only) and any(a1 < a0 and a0 + n0 <= a1 + n1 for a1, n1, _ in spans):
                 self.junk.add(nm)
-        starts = sorted({a0 for a0, n0, nm in spans if nm not in self.junk})
+        # skipped globals are no boundary either (pathStrArray_F1EF0 would cut the 64 KB mapShading_EC1E0)
+        starts = sorted({a0 for a0, n0, nm in spans if nm not in self.junk and nm not in SKIP_GLOBALS})
         self.clip_end = {}
         for i, a0 in enumerate(starts[:-1]):
             self.clip_end[a0] = starts[i + 1]
-        for s in sorted(self.ps.data_symbols(), key=lambda s: -s.size):
+        for s in sorted(gsyms, key=lambda s: -s.size):
             if s.name in SKIP_GLOBALS or s.size == 0 or s.name in self.junk:
                 continue
             cands = name_addresses(s.name, self.img)
@@ -268,6 +288,15 @@ class Machine:
             mu.mem_write(ida, self.translate_block(data, s.rva, s))
             self.global_map.append((ida, size, self.image_base + s.rva, s.name))
         self.global_map.sort()
+        # skipped globals (scratch buffers, platform state): writes to them are no differences
+        self.skip_ida, self.skip_port = [], []
+        for s in self.ps.data_symbols():
+            if s.name in SKIP_GLOBALS and s.size:
+                self.skip_port.append((self.image_base + s.rva, self.image_base + s.rva + s.size))
+                c = name_addresses(s.name, self.img)
+                if c:  # clipped like the copies (tempScreenBuffer_A0000 is far bigger in the port)
+                    nxt = min([a0 for a0 in self.clip_end.values() if a0 > c[0]] or [c[0] + s.size])
+                    self.skip_ida.append((c[0], min(c[0] + s.size, nxt)))
         self.gm_pages = {}
         for g in self.global_map:
             for pg in range(g[0] >> 12, ((g[0] + g[1] - 1) >> 12) + 1):
@@ -332,6 +361,8 @@ class Machine:
             esp = uc.reg_read(UC_X86_REG_ESP)
             stack = struct.unpack('<64I', bytes(uc.mem_read(esp, 256)))
             rets = [hex(v) for v in stack if 0x10000 <= v < 0x90000][:8]
+            if hasattr(self, 'watch_log'):
+                self.watch_log.append((address, eip, value))
             print(f'  write {address:#x} size {size} value {value & ((1 << 8 * size) - 1):#x} at eip {eip:#x}; '
                   f'stack code addresses {" ".join(rets)}')
 
