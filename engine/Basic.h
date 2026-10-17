@@ -332,16 +332,16 @@ typedef union {
 } Type_29811;
 
 
-typedef struct {// len 32
+typedef struct {// len 32 - creature movement profile (creatureTypes_98F38[])
 	uint16 v_0;//?
 	uint16 v_2;//?
 	uint16 v_4;//?
 	uint16 v_6;//?
 	uint16 v_8;//?
-	int16 v_10;
-	int16 v_12;
-	int16 v_14;
-	uint16 v_16;
+	int16 maxHeight_10; // max height above ground (KeepHeightAboveGround_42000_42340)
+	int16 minHeight_12; // min height above ground
+	int16 vertSpeed_14; // vertical speed towards the allowed band (negative = sinks)
+	uint16 maxSlope_16; // steepest terrain slope it can move onto (MoveCreature_196E0)
 	uint16 v_18;
 	uint32 v_20;
 	uint16 v_22;

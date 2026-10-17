@@ -4332,7 +4332,8 @@ Type_989C6 word_989C6x[] = {
 { 0xFFFF, 0xFFFF, 0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,  }
 };
 
-Type_156 unk_98F38[] = {
+/// Creature movement profiles (Type_156), 32 bytes each; entities point at one via var_u32_29951_156.
+Type_156 creatureTypes_98F38[] = {
 {0x0000,0x0038,0x0005,0x0016,0x0005,0x0700,0x0000,0xFFFC,0x0100,0x0200,0xFFFFFFFF,0x0C00,0x0032,0x1000,0x0200},
 {0x0001,0x0016,0x0005,0x0016,0x0005,0x0700,0x0000,0xFFFC,0x0100,0x0200,0xFFFFFFFF,0x0900,0x0028,0x1000,0x0200},
 {0x0002,0x0071,0x0005,0x0071,0x0005,0x0700,0x0000,0xFFFC,0x0100,0x0200,0xFFFFFFFF,0x0900,0x0028,0x1000,0x0200},
@@ -4372,7 +4373,7 @@ void *off_98FB8 = &unk_B0004; // weak
 void *off_98FD8 = &loc_50005; // weak
 */
 
-/*uint8 unk_98F38[] = {
+/*uint8 creatureTypes_98F38[] = {
 0x0000, 0x0038, 0x0005, 0x0016, 0x0005, 0x0700, 0x0000, 0xFFFC,
 0x0100, 0x0200, 0xFFFF, 0xFFFF, 0x0C00, 0x0032, 0x1000, 0x0200 };
 uint8 unk_98F58[] = {
@@ -5595,7 +5596,7 @@ __int16 mouseX_9AD8C = 320; // weak
 __int16 mouseY_9AD8E = 200; // weak
 //int dmouse_9AD90.x = 13107520; // weak
 char byte_9AD96 = '\0'; // weak
-int dword_9AD98 = 0; // weak
+int mouseInstalled_9AD98 = 0; // 1 once the mouse driver is set up (sub_5C214_5C724); gates all mouse input
 __int16 word_9AD9C = 0; // weak
 int dword_9AD9E = 0; // weak
 __int16 word_9ADA2 = 0; // weak
@@ -14583,7 +14584,7 @@ int SubtrackUntilZero(int x, int y)
 //void UpdateMouseEventData_8CB3A(uint32_t mouse_states, int32_t mouse_posx, int32_t mouse_posy)//26db3a
 void UpdateMouseEventData_5BE72_5C382(uint32_t mouse_states, int32_t mouse_posx, int32_t mouse_posy)
 {
-    if (dword_9AD98)
+    if (mouseInstalled_9AD98)
     {
         byte_9AD97 = 1;
         mouseButtonsStates_12EFB0_12EFA0 = mouse_states;
@@ -14759,6 +14760,15 @@ void UpdateMouseEventData_8CB3A(uint32_t mouse_states, int32_t mouse_posx, int32
 */
 void MouseEvents(uint32_t buttons, int x, int y)
 {
+    // PORT: in 640x480 mode (typeResolution & 8) the original set the DOS mouse range to 0..5120 x
+    // 0..3840 (ResizeScr_5C468_5C978) and works in those units: UpdateMouseEventData divides by 8.
+    // x/y arrive in pixels; passing them unscaled pinned the cursor to the top-left 80x60 pixels
+    // (mouse steering dead after pressing R).
+    if ((typeResolution_12F02E_12F01E & 8) != 0)
+    {
+        x *= 8;
+        y *= 8;
+    }
     UpdateMouseEventData_5BE72_5C382(buttons, x, y);
 };
 
@@ -15978,7 +15988,7 @@ void sub_11540()//1E2540_
 
 //SYNCHRONIZED WITH REMC1
 /// Non-zero if creature a1x may not move to a2x: flag 2 = outside its height band, flag 1 =
-/// terrain type not in its allowed mask (Type_156::v_20), flag 4 = slope steeper than v_16/v_18.
+/// terrain type not in its allowed mask (Type_156::v_20), flag 4 = slope steeper than maxSlope_16/v_18.
 int IsMoveBlocked_11640(Type_AE400_29795* a1x, axis_3d* a2x, char a3)
 {
   int v3; // edi
@@ -15992,10 +16002,10 @@ int IsMoveBlocked_11640(Type_AE400_29795* a1x, axis_3d* a2x, char a3)
 
   if ( (a3 & 2) != 0 )
   {
-    v3 = a1x->var_u32_29951_156->v_12;
+    v3 = a1x->var_u32_29951_156->minHeight_12;
     if ( a2x->z < v3 + (__int16)GetTerrainHeight_11F50(a2x) )
       return 1;
-    v5 = a1x->var_u32_29951_156->v_10;
+    v5 = a1x->var_u32_29951_156->maxHeight_10;
     if (a2x->z > v5 + (__int16)GetTerrainHeight_11F50(a2x) )
       return 1;
   }
@@ -16009,7 +16019,7 @@ int IsMoveBlocked_11640(Type_AE400_29795* a1x, axis_3d* a2x, char a3)
       {
         if ( v8 == -1 )
         {
-          v10 = a1x->var_u32_29951_156->v_16;
+          v10 = a1x->var_u32_29951_156->maxSlope_16;
           if ( (unsigned __int16)sub_42210_42550(0, v7) > v10 )
             return 1;
         }
@@ -20390,9 +20400,9 @@ void MoveCreature_196E0(Type_AE400_29795* a1x)
   word_AE454_AE444 = a1x->var_u32_29867_72;
   //word_AE454_AE444.z = *(_WORD *)(a1 + 76);
   //v1 = *(__int16 **)(a1 + 156);
-  v27 = a1x->var_u32_29951_156->v_14;
-  v23 = a1x->var_u32_29951_156->v_10;
-  v19 = a1x->var_u32_29951_156->v_12;
+  v27 = a1x->var_u32_29951_156->vertSpeed_14;
+  v23 = a1x->var_u32_29951_156->maxHeight_10;
+  v19 = a1x->var_u32_29951_156->minHeight_12;
   v2 = GetTerrainHeight_11F50(&word_AE454_AE444);
   KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v2, v19, v23, v27);
   sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
@@ -20404,7 +20414,7 @@ void MoveCreature_196E0(Type_AE400_29795* a1x)
   }
   if ( !IsMoveBlocked_11640(a1x, &word_AE454_AE444, 1) )
   {
-    v6 = a1x->var_u32_29951_156->v_16;
+    v6 = a1x->var_u32_29951_156->maxSlope_16;
     v3 = TerrainSlope_19650(&word_AE454_AE444);
     if ( v3 < v6 )
       goto LABEL_3;
@@ -20416,15 +20426,15 @@ void MoveCreature_196E0(Type_AE400_29795* a1x)
   word_AE454_AE444 = a1x->var_u32_29867_72;
   //word_AE454_AE444.z = *(_WORD *)(a1 + 76);
   //v8 = *(__int16 **)(a1 + 156);
-  v28 = a1x->var_u32_29951_156->v_14;
-  v24 = a1x->var_u32_29951_156->v_10;
-  v20 = a1x->var_u32_29951_156->v_12;
+  v28 = a1x->var_u32_29951_156->vertSpeed_14;
+  v24 = a1x->var_u32_29951_156->maxHeight_10;
+  v20 = a1x->var_u32_29951_156->minHeight_12;
   v9 = GetTerrainHeight_11F50(&word_AE454_AE444);
   KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v9, v20, v24, v28);
   sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if ( !IsMoveBlocked_11640(a1x, &word_AE454_AE444, 1) )
   {
-    v10 = a1x->var_u32_29951_156->v_16;
+    v10 = a1x->var_u32_29951_156->maxSlope_16;
     v3 = TerrainSlope_19650(&word_AE454_AE444);
     if ( v3 < v10 )
       goto LABEL_3;
@@ -20435,15 +20445,15 @@ void MoveCreature_196E0(Type_AE400_29795* a1x)
   word_AE454_AE444 = a1x->var_u32_29867_72;
   //word_AE454_AE444.z = *(_WORD *)(a1 + 76);
   //v12 = *(__int16 **)(a1 + 156);
-  v29 = a1x->var_u32_29951_156->v_14;
-  v25 = a1x->var_u32_29951_156->v_10;
-  v21 = a1x->var_u32_29951_156->v_12;
+  v29 = a1x->var_u32_29951_156->vertSpeed_14;
+  v25 = a1x->var_u32_29951_156->maxHeight_10;
+  v21 = a1x->var_u32_29951_156->minHeight_12;
   v13 = GetTerrainHeight_11F50(&word_AE454_AE444);
   KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v13, v21, v25, v29);
   sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if ( !IsMoveBlocked_11640(a1x, &word_AE454_AE444, 1) )
   {
-    v14 = a1x->var_u32_29951_156->v_16;
+    v14 = a1x->var_u32_29951_156->maxSlope_16;
     v3 = TerrainSlope_19650(&word_AE454_AE444);
     if ( v3 < v14 )
       goto LABEL_3;
@@ -20454,14 +20464,14 @@ void MoveCreature_196E0(Type_AE400_29795* a1x)
   word_AE454_AE444 = a1x->var_u32_29867_72;
   //word_AE454_AE444.z = *(_WORD *)(a1 + 76);
   //v16 = *(__int16 **)(a1 + 156);
-  v30 = a1x->var_u32_29951_156->v_14;
-  v26 = a1x->var_u32_29951_156->v_10;
-  v22 = a1x->var_u32_29951_156->v_12;
+  v30 = a1x->var_u32_29951_156->vertSpeed_14;
+  v26 = a1x->var_u32_29951_156->maxHeight_10;
+  v22 = a1x->var_u32_29951_156->minHeight_12;
   v17 = GetTerrainHeight_11F50(&word_AE454_AE444);
   KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v17, v22, v26, v30);
   sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if ( IsMoveBlocked_11640(a1x, &word_AE454_AE444, 1)
-    || (v18 = a1x->var_u32_29951_156->v_16, v3 = TerrainSlope_19650(&word_AE454_AE444), v3 >= v18) )
+    || (v18 = a1x->var_u32_29951_156->maxSlope_16, v3 = TerrainSlope_19650(&word_AE454_AE444), v3 >= v18) )
   {
     result = 1;
     a1x->actLife_29807_12 = -1;
@@ -21070,7 +21080,7 @@ int sub_1A8E0(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
     *(_WORD *)(v4 + 32) = sub_42180_424C0(v2x, &a2x->var_u32_29867_72);
     *(_WORD *)(v4 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
     v5 = a1x->var_u16_29941_146;
-    *(_DWORD *)(v4 + 156) = (uint32)&unk_98F38[6];
+    *(_DWORD *)(v4 + 156) = (uint32)&creatureTypes_98F38[6];
     *(_WORD *)(v4 + 146) = v5;
     *(_BYTE *)(v4 + 67) = a1x->sModel_29862_67;
     LOBYTE(v5) = a1x->sClass_29861_66;
@@ -21206,7 +21216,7 @@ int sub_1AB70(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
         if ( v7 )
         {
           *(_BYTE *)(v7 + 69) = 0;
-          *(_DWORD *)(v7 + 156) = (uint32)((char *)&unk_98F38[6 - v6]);
+          *(_DWORD *)(v7 + 156) = (uint32)((char *)&creatureTypes_98F38[6 - v6]);
           *(_BYTE *)(v7 + 67) = v18;
           *(_BYTE *)(v7 + 66) = v22;
           *(_BYTE *)(v7 + 68) = 10;
@@ -21231,7 +21241,7 @@ int sub_1AB70(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
         if ( v10 )
         {
           *(_BYTE *)(v10 + 69) = 23;
-          *(_DWORD *)(v10 + 156) = (uint32)((char *)&unk_98F38[6 - i]);
+          *(_DWORD *)(v10 + 156) = (uint32)((char *)&creatureTypes_98F38[6 - i]);
           *(_BYTE *)(v10 + 67) = v18;
           *(_BYTE *)(v10 + 66) = v22;
           *(_BYTE *)(v10 + 68) = 10;
@@ -21254,7 +21264,7 @@ int sub_1AB70(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
       if ( v12 )
       {
         *(_BYTE *)(v12 + 69) = 17;
-        *(_DWORD *)(v12 + 156) = (uint32)&unk_98F38[3];
+        *(_DWORD *)(v12 + 156) = (uint32)&creatureTypes_98F38[3];
         *(_BYTE *)(v12 + 67) = v18;
         *(_BYTE *)(v12 + 66) = v22;
         *(_BYTE *)(v12 + 68) = 10;
@@ -21297,7 +21307,7 @@ int sub_1AE30(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
     *(_WORD *)(v4 + 32) = sub_42180_424C0(v2x, &a2x->var_u32_29867_72);
     *(_WORD *)(v4 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
     v5 = a1x->var_u16_29941_146;
-    *(_DWORD *)(v4 + 156) = (uint32)&unk_98F38[6];
+    *(_DWORD *)(v4 + 156) = (uint32)&creatureTypes_98F38[6];
     *(_WORD *)(v4 + 146) = v5;
     *(_BYTE *)(v4 + 67) = a1x->sModel_29862_67;
     LOBYTE(v5) = a1x->sClass_29861_66;
@@ -21330,7 +21340,7 @@ int sub_1AEE0(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
     *(_WORD *)(v5 + 32) = sub_42180_424C0(v2x, &a2x->var_u32_29867_72);
     *(_WORD *)(v5 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
     *(_WORD *)(v5 + 146) = a1x->var_u16_29941_146;
-    *(_DWORD *)(v5 + 156) = (uint32)&unk_98F38[6];
+    *(_DWORD *)(v5 + 156) = (uint32)&creatureTypes_98F38[6];
     *(_BYTE *)(v5 + 67) = a2x->sModel_29862_67;
     v6 = a2x->sClass_29861_66;
     *(_WORD *)(v5 + 44) = 4000;
@@ -21529,7 +21539,7 @@ void sub_1B3C0(Type_AE400_29795* a1x)
     v3 = v2 / (int)abs32(v2);
   else
     LOWORD(v3) = 0;
-  a1x->var_u32_29867_72.z += v3 * a1x->var_u32_29951_156->v_14;
+  a1x->var_u32_29867_72.z += v3 * a1x->var_u32_29951_156->vertSpeed_14;
   result = sub_1A120(a1x, 12, (unsigned __int16 (*)(Type_AE400_29795*, int))sub_1AB10);
   if ( result )
   {
@@ -22434,7 +22444,7 @@ LABEL_30:
       *(_WORD *)(v20 + 32) = sub_42180_424C0(v22x, (axis_3d*)(_WORD *)(v10 + 72));
       *(_WORD *)(v20 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
       v21 = a1x->var_u16_29941_146;
-      *(_DWORD *)(v20 + 156) = (uint32)&unk_98F38[6];
+      *(_DWORD *)(v20 + 156) = (uint32)&creatureTypes_98F38[6];
       *(_WORD *)(v20 + 146) = v21;
       *(_BYTE *)(v20 + 67) = *(_BYTE *)(v10 + 67);
       LOBYTE(v21) = *(_BYTE *)(v10 + 66);
@@ -25180,9 +25190,9 @@ void sub_20480(Type_AE400_29795* a1x)
   {
     sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
     //v11 = *(__int16 **)(a1 + 156);
-    v17 = a1x->var_u32_29951_156->v_14;
-    v16 = a1x->var_u32_29951_156->v_10;
-    v15 = a1x->var_u32_29951_156->v_12;
+    v17 = a1x->var_u32_29951_156->vertSpeed_14;
+    v16 = a1x->var_u32_29951_156->maxHeight_10;
+    v15 = a1x->var_u32_29951_156->minHeight_12;
     v12 = GetTerrainHeight_11F50(&word_AE454_AE444);
     v13 = KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v12, v15, v16, v17);
     sub_41C70_41FB0(a1x, &word_AE454_AE444);
@@ -25340,7 +25350,7 @@ void sub_207E0(Type_AE400_29795* a1x)
     {
       *(_BYTE *)(v13 + 68) = 10;
       *(_BYTE *)(v13 + 69) = 0;
-      *(_DWORD *)(v13 + 156) = (uint32)&unk_98F38[2];
+      *(_DWORD *)(v13 + 156) = (uint32)&creatureTypes_98F38[2];
       *(_BYTE *)(v13 + 67) = a1x->sModel_29862_67;
       *(_BYTE *)(v13 + 66) = a1x->sClass_29861_66;
       *(_WORD *)(v13 + 24) = a1x->id_29819_24;
@@ -34236,7 +34246,10 @@ void sub_2C410_2C450(unsigned int a1)//1FD410_
 
   Type_dword_0x0_0 tempDW;
 
-  if ( !byte_B5D3E_B5D2E )
+  // PORT: the rolled-sprite path is for passes 0/1 only - the original jumps past it when a1 == 2
+  // (decompiled "if ( a1 != 2 )", commented out below; remc2 DrawSprite_41BD3 has the same check).
+  // Running it for pass 2 wrote outside the screen buffer (crash in 640x480 mode).
+  if ( !byte_B5D3E_B5D2E && a1 != 2 )
   {
     //if ( a1 )//1 2 3 4
     //{
@@ -43093,7 +43106,7 @@ Type_AE400_29795* NewEvent_372C0_37680()//2082C0_
 		str_AE400_AE3F0->var_u32_593[str_AE400_AE3F0->var_u32_40]->id_29819_24 = str_AE400_AE3F0->var_u32_593[str_AE400_AE3F0->var_u32_40] - str_AE400_AE3F0->str_29795;
 		str_AE400_AE3F0->var_u32_593[str_AE400_AE3F0->var_u32_40]->sClass_29861_66 = -1;
 		str_AE400_AE3F0->var_u32_593[str_AE400_AE3F0->var_u32_40]->sModel_29862_67 = -1;
-		str_AE400_AE3F0->var_u32_593[str_AE400_AE3F0->var_u32_40]->var_u32_29951_156 = unk_98F38;
+		str_AE400_AE3F0->var_u32_593[str_AE400_AE3F0->var_u32_40]->var_u32_29951_156 = creatureTypes_98F38;
 		str_AE400_AE3F0->var_u32_593[str_AE400_AE3F0->var_u32_40]->var_u32_29955_160 = unk_B7330_B7320;
 		str_AE400_AE3F0->var_u32_593[str_AE400_AE3F0->var_u32_40]->var_u8_29863_68 = 10;
 		str_AE400_AE3F0->var_u32_593[str_AE400_AE3F0->var_u32_40]->var_u8_29853_58 = -6;
@@ -43118,7 +43131,7 @@ Type_AE400_29795* NewEvent_372C0_37680()//2082C0_
 		str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593]->id_29819_24 = str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593] - str_AE400_AE3F0->str_29795;
 		str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593]->sClass_29861_66 = -1;
 		str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593]->sModel_29862_67 = -1;
-		str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593]->var_u32_29951_156 = unk_98F38;
+		str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593]->var_u32_29951_156 = creatureTypes_98F38;
 		str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593]->var_u32_29955_160 = unk_B7330_B7320;
 		str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593]->var_u8_29863_68 = 10;
 		str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593]->var_u8_29853_58 = -6;
@@ -43408,7 +43421,7 @@ Type_AE400_29795* sub_37820_37BE0(axis_3d* position)//208820_
 		event->var_u8_29860_65 = 0;
 		event->maxLife_29803_8 = 10000;
 		event->actSpeed_29923_128 = 80;
-		event->var_u32_29951_156 = &unk_98F38[7];
+		event->var_u32_29951_156 = &creatureTypes_98F38[7];
 		event->var_u16_29823_28 = 29;
 		event->id_29819_24 = event - str_AE400_AE3F0->str_29795;
 		sub_41CF0_42030(event, position);
@@ -43435,7 +43448,7 @@ int sub_378A0_37C60(int a1)
     *(_BYTE *)(result + 65) = 1;
     *(_DWORD *)(result + 8) = 10000;
     *(_WORD *)(result + 128) = 80;
-    *(_DWORD *)(result + 156) = (uint32)&unk_98F38[8];
+    *(_DWORD *)(result + 156) = (uint32)&creatureTypes_98F38[8];
     *(_WORD *)(result + 28) = 29;
     *(_WORD *)(result + 24) = (result - (v3 + 29795)) / 164;
     sub_41CF0_42030((Type_AE400_29795*)result, (axis_3d*)a1);
@@ -43508,7 +43521,7 @@ int sub_37A00_37DC0(int a1)
     *(_DWORD *)(v1 + 136) = 10000;
     *(_DWORD *)(v1 + 140) = 0;
     *(_WORD *)(v1 + 28) = 1;
-    *(_DWORD *)(v1 + 156) = (uint32)&unk_98F38[9];
+    *(_DWORD *)(v1 + 156) = (uint32)&creatureTypes_98F38[9];
     sub_41CF0_42030((Type_AE400_29795*)v1, (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     sub_36FA0_37360((Type_AE400_29795*)v2, 169);
@@ -43846,7 +43859,7 @@ int sub_38030(int a1)
   *(_WORD *)(v2 + 26) = (v2 - HIDWORD(v4)) / 164 % 100;
   LOBYTE(v4) = *(_BYTE *)(v6 + 12);
   *(_BYTE *)(v6 + 12) = v4 + 1;
-  *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[12];
+  *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[12];
   *(_BYTE *)(v2 + 63) = v4;
   *(_BYTE *)(v2 + 58) = *(_WORD *)(*(_DWORD *)(v2 + 156) + 26)
                       - *(unsigned __int8 *)(v2 + 63) % *(_WORD *)(*(_DWORD *)(v2 + 156) + 26)
@@ -43921,7 +43934,7 @@ int sub_38270(int a1)
   *(_WORD *)(v2 + 26) = (v2 - v5) / 164 % 100;
   LOBYTE(v5) = *(_BYTE *)(v4 + v6 + 12);
   *(_BYTE *)(v4 + v6 + 12) = v5 + 1;
-  *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[13];
+  *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[13];
   *(_BYTE *)(v2 + 63) = v5;
   *(_BYTE *)(v2 + 58) = *(_BYTE *)(*(_DWORD *)(v2 + 156) + 26) + 1;
   *(_BYTE *)(v2 + 66) = 3;
@@ -43975,7 +43988,7 @@ int sub_38370(int a1)
   *(_WORD *)(v2 + 26) = (v2 - v6) / 164 % 100;
   LOBYTE(v6) = *(_BYTE *)(v8 + 12);
   *(_BYTE *)(v8 + 12) = v6 + 1;
-  *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[14];
+  *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[14];
   *(_BYTE *)(v2 + 63) = v6;
   *(_BYTE *)(v2 + 58) = *(_WORD *)(*(_DWORD *)(v2 + 156) + 26)
                       - *(unsigned __int8 *)(v2 + 63) % *(_WORD *)(*(_DWORD *)(v2 + 156) + 26)
@@ -44072,7 +44085,7 @@ int sub_384B0(uint16_t* a1)//2094B0_
         *(_WORD*)(v2 + 28) = 1;
         LOBYTE(v4) = *(_BYTE*)(v5 + HIDWORD(v4) + 12);
         *(_BYTE*)(v5 + HIDWORD(v4) + 12) = v4 + 1;
-        *(_DWORD*)(v2 + 156) = (uint32)&unk_98F38[15];
+        *(_DWORD*)(v2 + 156) = (uint32)&creatureTypes_98F38[15];
         *(_BYTE*)(v2 + 63) = v4;
         *(_BYTE*)(v2 + 58) = *(_WORD*)(*(_DWORD*)(v2 + 156) + 26)
             - *(unsigned __int8*)(v2 + 63) % *(_WORD*)(*(_DWORD*)(v2 + 156) + 26)
@@ -44153,7 +44166,7 @@ int CreateGuard_386E0(uint16_t* a1)
     *(_WORD*)(v2 + 28) = 1;
     LOBYTE(v5) = *(_BYTE*)(v6 + 12);
     *(_BYTE*)(v6 + 12) = v5 + 1;
-    *(_DWORD*)(v2 + 156) = (uint32)&unk_98F38[16]; // PORT: was [0] (a hovering type: max 0x700 above ground, sinks 4/tick) - the original stores 0x99138 = unk_98F38 + 0x200, so guards floated off the ground
+    *(_DWORD*)(v2 + 156) = (uint32)&creatureTypes_98F38[16]; // PORT: was [0] (a hovering type: max 0x700 above ground, sinks 4/tick) - the original stores 0x99138 = creatureTypes_98F38 + 0x200, so guards floated off the ground
     *(_BYTE*)(v2 + 63) = v5;
     v7 = *(__int16*)(*(_DWORD*)(v2 + 156) + 26)
         - *(unsigned __int8*)(v2 + 63) % *(__int16*)(*(_DWORD*)(v2 + 156) + 26);
@@ -44223,7 +44236,7 @@ int sub_38890(int a1)
   *(_WORD *)(v1 + 28) = 1;
   LOBYTE(v6) = *(_BYTE *)(v7 + 12);
   *(_BYTE *)(v7 + 12) = v6 + 1;
-  *(_DWORD *)(v1 + 156) = (uint32)&unk_98F38[17];
+  *(_DWORD *)(v1 + 156) = (uint32)&creatureTypes_98F38[17];
   *(_BYTE *)(v1 + 63) = v6;
   v8 = *(__int16 *)(*(_DWORD *)(v1 + 156) + 26)
      - *(unsigned __int8 *)(v1 + 63) % *(__int16 *)(*(_DWORD *)(v1 + 156) + 26);
@@ -44287,7 +44300,7 @@ int sub_389E0(int a1)
   *(_WORD *)(v2 + 26) = (v2 - HIDWORD(v3)) / 164 % 100;
   BYTE4(v3) = *(_BYTE *)(v4 + v3 + 12);
   *(_BYTE *)(v4 + v3 + 12) = BYTE4(v3) + 1;
-  *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[18];
+  *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[18];
   *(_BYTE *)(v2 + 58) = 64;
   v9 = v2;
   *(_BYTE *)(v2 + 66) = 3;
@@ -44383,7 +44396,7 @@ int sub_38C60(uint16_t* a1)
         *(_WORD*)(v2 + 26) = (v2 - v6) / 164 % 100;
         LOBYTE(v6) = *(_BYTE*)(v5 + v7 + 12);
         *(_BYTE*)(v5 + v7 + 12) = v6 + 1;
-        *(_DWORD*)(v2 + 156) = (uint32)&unk_98F38[19];
+        *(_DWORD*)(v2 + 156) = (uint32)&creatureTypes_98F38[19];
         *(_BYTE*)(v2 + 58) = 64;
         *(_BYTE*)(v2 + 66) = 3;
         *(_BYTE*)(v2 + 63) = v6;
@@ -44407,7 +44420,7 @@ int sub_38D09(/*int a1@<eax>, __int16 a2@<dx>, int a3@<ecx>, int a4@<ebx>, int a
     //fix
 
     *(_BYTE*)(a3 + a1 + 12) = HIBYTE(a2) + 1;
-    *(_DWORD*)(a4 + 156) = (uint32)&unk_98F38[19];
+    *(_DWORD*)(a4 + 156) = (uint32)&creatureTypes_98F38[19];
     *(_BYTE*)(a4 + 58) = 64;
     *(_BYTE*)(a4 + 66) = 3;
     *(_BYTE*)(a4 + 63) = a2;
@@ -44456,7 +44469,7 @@ int sub_38D60(int a1)
     *(_WORD *)(v2 + 26) = (v2 - v6) / 164 % 100;
     LOBYTE(v6) = *(_BYTE *)(v5 + v7 + 12);
     *(_BYTE *)(v5 + v7 + 12) = v6 + 1;
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[20];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[20];
     *(_BYTE *)(v2 + 58) = 64;
     *(_BYTE *)(v2 + 66) = 3;
     *(_BYTE *)(v2 + 63) = v6;
@@ -44505,7 +44518,7 @@ int sub_38E70(int a1)
   *(_WORD *)(v2 + 32) = *(_WORD *)(v2 + 34);
   LOBYTE(v4) = *(_BYTE *)(v6 + v5 + 12);
   *(_BYTE *)(v6 + v5 + 12) = v4 + 1;
-  *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[21];
+  *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[21];
   *(_BYTE *)(v2 + 63) = v4;
   *(_BYTE *)(v2 + 58) = *(_WORD *)(*(_DWORD *)(v2 + 156) + 26)
                       - *(unsigned __int8 *)(v2 + 63) % *(_WORD *)(*(_DWORD *)(v2 + 156) + 26)
@@ -44560,7 +44573,7 @@ int sub_38FC0(int a1)
     *(_WORD *)(v2 + 26) = (v2 - v6) / 164 % 100;
     LOBYTE(v6) = *(_BYTE *)(v5 + v7 + 12);
     *(_BYTE *)(v5 + v7 + 12) = v6 + 1;
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[22];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[22];
     *(_BYTE *)(v2 + 58) = 64;
     *(_BYTE *)(v2 + 66) = 3;
     *(_BYTE *)(v2 + 63) = v6;
@@ -44616,7 +44629,7 @@ int sub_390D0(int a1)
     *(_WORD *)(v2 + 28) = 1;
     LOBYTE(v5) = *(_BYTE *)(v6 + v8 + 12);
     *(_BYTE *)(v6 + v8 + 12) = v5 + 1;
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[23];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[23];
     *(_BYTE *)(v2 + 58) = 64;
     *(_BYTE *)(v2 + 66) = 3;
     *(_WORD *)(v2 + 26) = 0;
@@ -44670,7 +44683,7 @@ int sub_39200(int a1)
     *(_WORD *)(v2 + 26) = (v2 - v6) / 164 % 100;
     LOBYTE(v6) = *(_BYTE *)(v5 + v7 + 12);
     *(_BYTE *)(v5 + v7 + 12) = v6 + 1;
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[10];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[10];
     *(_BYTE *)(v2 + 58) = 64;
     *(_BYTE *)(v2 + 66) = 3;
     *(_WORD *)(v2 + 26) = 2;
@@ -44728,7 +44741,7 @@ int sub_39340(uint16_t* a1)
         *(_WORD*)(v2 + 26) = (v2 - v7) / 164 % 100;
         LOBYTE(v8) = *(_BYTE*)(v9 + 12);
         *(_BYTE*)(v9 + 12) = v8 + 1;
-        *(_DWORD*)(v2 + 156) = (uint32)&unk_98F38[10];
+        *(_DWORD*)(v2 + 156) = (uint32)&creatureTypes_98F38[10];
         *(_BYTE*)(v2 + 58) = 64;
         *(_BYTE*)(v2 + 66) = 3;
         *(_WORD*)(v2 + 26) = 2;
@@ -44798,7 +44811,7 @@ int sub_39490(int a1)
     *(_WORD *)(v2 + 26) = (v2 - v6) / 164 % 100;
     LOBYTE(v6) = *(_BYTE *)(v5 + v7 + 12);
     *(_BYTE *)(v5 + v7 + 12) = v6 + 1;
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[10];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[10];
     *(_BYTE *)(v2 + 58) = 64;
     *(_BYTE *)(v2 + 66) = 3;
     *(_WORD *)(v2 + 26) = 2;
@@ -44847,7 +44860,7 @@ int sub_395B0(int a1)
   *(_WORD *)(v1 + 28) = 1;
   LOBYTE(v4) = *(_BYTE *)(v5 + 12);
   *(_BYTE *)(v5 + 12) = v4 + 1;
-  *(_DWORD *)(v1 + 156) = (uint32)&unk_98F38[24];
+  *(_DWORD *)(v1 + 156) = (uint32)&creatureTypes_98F38[24];
   *(_BYTE *)(v1 + 63) = v4;
   LOWORD(v5) = *(_WORD *)(*(_DWORD *)(v1 + 156) + 26);
   LOWORD(v4) = *(unsigned __int8 *)(v1 + 63) % (__int16)v5;
@@ -44902,7 +44915,7 @@ int sub_396E0(int a1)
     *(_WORD *)(v2 + 26) = (v2 - v6) / 164 % 100;
     LOBYTE(v6) = *(_BYTE *)(v5 + v7 + 12);
     *(_BYTE *)(v5 + v7 + 12) = v6 + 1;
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[25];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[25];
     *(_BYTE *)(v2 + 58) = 64;
     *(_BYTE *)(v2 + 66) = 3;
     *(_WORD *)(v2 + 26) = 0;
@@ -45104,7 +45117,7 @@ int sub_39A10(int a1)
     *(_DWORD *)(v2 + 140) = 50;
     *(_DWORD *)(v2 + 8) = v3;
     BYTE1(v3) = *(_BYTE *)(v2 + 16);
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[5];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[5];
     *(_BYTE *)(v2 + 16) = BYTE1(v3) & 0xF7;
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
@@ -45133,7 +45146,7 @@ int sub_39A90(int a1)
     *(_WORD *)(result + 128) = 384;
     v3 = 4096 / *(__int16 *)(result + 126);
     *(_DWORD *)(v2 + 140) = 50;
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[2];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[2];
     *(_DWORD *)(v2 + 8) = v3;
     BYTE1(v3) = *(_BYTE *)(v2 + 16);
     *(_BYTE *)(v2 + 66) = 10;
@@ -45167,7 +45180,7 @@ int sub_39B40(int a1)
     *(_DWORD *)(v2 + 140) = 50;
     *(_DWORD *)(v2 + 8) = v3;
     BYTE1(v3) = *(_BYTE *)(v2 + 16);
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[1];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[1];
     *(_BYTE *)(v2 + 16) = BYTE1(v3) & 0xF7;
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
@@ -45197,7 +45210,7 @@ int sub_39BC0(int a1)
     *(_DWORD *)(v2 + 140) = 50;
     *(_DWORD *)(v2 + 8) = v3;
     BYTE1(v3) = *(_BYTE *)(v2 + 16);
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[1];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[1];
     *(_BYTE *)(v2 + 16) = BYTE1(v3) & 0xF7;
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
@@ -45227,7 +45240,7 @@ int sub_39C40(int a1)
     *(_DWORD *)(v2 + 140) = 50;
     *(_DWORD *)(v2 + 8) = v3;
     BYTE1(v3) = *(_BYTE *)(v2 + 16);
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[1];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[1];
     *(_BYTE *)(v2 + 16) = BYTE1(v3) & 0xF7;
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
@@ -45257,7 +45270,7 @@ int sub_39CC0(int a1)
     *(_DWORD *)(v2 + 140) = 50;
     *(_DWORD *)(v2 + 8) = v3;
     BYTE1(v3) = *(_BYTE *)(v2 + 16);
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[1];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[1];
     *(_BYTE *)(v2 + 16) = BYTE1(v3) & 0xF7;
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
@@ -45287,7 +45300,7 @@ int sub_39D40(int a1)
     *(_DWORD *)(v2 + 140) = 50;
     *(_DWORD *)(v2 + 8) = v3;
     BYTE1(v3) = *(_BYTE *)(v2 + 16);
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[1];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[1];
     *(_BYTE *)(v2 + 16) = BYTE1(v3) & 0xF7;
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
@@ -45317,7 +45330,7 @@ int sub_39DC0(int a1)
     *(_DWORD *)(v2 + 140) = 50;
     *(_DWORD *)(v2 + 8) = v3;
     BYTE1(v3) = *(_BYTE *)(v2 + 16);
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[1];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[1];
     *(_BYTE *)(v2 + 16) = BYTE1(v3) & 0xF7;
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
@@ -45347,7 +45360,7 @@ int sub_39E40(int a1)
     *(_DWORD *)(v2 + 140) = 50;
     *(_DWORD *)(v2 + 8) = v3;
     BYTE1(v3) = *(_BYTE *)(v2 + 16);
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[4];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[4];
     *(_BYTE *)(v2 + 16) = BYTE1(v3) & 0xF7;
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
@@ -45378,7 +45391,7 @@ int sub_39EC0(int a1)
     *(_DWORD *)(v2 + 140) = 50;
     *(_DWORD *)(v2 + 8) = v3;
     BYTE1(v3) = *(_BYTE *)(v2 + 16);
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[4];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[4];
     *(_BYTE *)(v2 + 16) = BYTE1(v3) & 0xF7;
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
@@ -45409,7 +45422,7 @@ int sub_39F40(int a1)
     *(_DWORD *)(v2 + 140) = 50;
     *(_DWORD *)(v2 + 8) = v3;
     BYTE1(v3) = *(_BYTE *)(v2 + 16);
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[1];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[1];
     *(_BYTE *)(v2 + 16) = BYTE1(v3) & 0xF7;
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
@@ -45439,7 +45452,7 @@ int sub_39FC0(int a1)
     *(_DWORD *)(v2 + 140) = 50;
     *(_DWORD *)(v2 + 8) = v3;
     BYTE1(v3) = *(_BYTE *)(v2 + 16);
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[1];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[1];
     *(_BYTE *)(v2 + 16) = BYTE1(v3) & 0xF7;
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
@@ -45469,7 +45482,7 @@ int sub_3A040(int a1)
     *(_DWORD *)(v2 + 140) = 50;
     *(_DWORD *)(v2 + 8) = v3;
     BYTE1(v3) = *(_BYTE *)(v2 + 16);
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[1];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[1];
     *(_BYTE *)(v2 + 16) = BYTE1(v3) & 0xF7;
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
@@ -45573,7 +45586,7 @@ int sub_3A270(int a1)
     *(_DWORD *)(v2 + 140) = 50;
     *(_DWORD *)(v2 + 8) = v3;
     BYTE1(v3) = *(_BYTE *)(v2 + 16);
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[5];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[5];
     *(_BYTE *)(v2 + 16) = BYTE1(v3) & 0xF7;
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
@@ -45604,7 +45617,7 @@ int sub_3A2F0(int a1)
     *(_DWORD *)(v2 + 140) = 50;
     *(_DWORD *)(v2 + 8) = v3;
     BYTE1(v3) = *(_BYTE *)(v2 + 16);
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[2];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[2];
     *(_BYTE *)(v2 + 16) = BYTE1(v3) & 0xF7;
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
@@ -45635,7 +45648,7 @@ int sub_3A390(int a1)
     *(_DWORD *)(v2 + 140) = 50;
     *(_DWORD *)(v2 + 8) = v3;
     BYTE1(v3) = *(_BYTE *)(v2 + 16);
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[5];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[5];
     *(_BYTE *)(v2 + 16) = BYTE1(v3) & 0xF7;
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
@@ -45666,7 +45679,7 @@ int sub_3A410(int a1)
     *(_DWORD *)(v2 + 140) = 50;
     *(_DWORD *)(v2 + 8) = v3;
     BYTE1(v3) = *(_BYTE *)(v2 + 16);
-    *(_DWORD *)(v2 + 156) = (uint32)&unk_98F38[5];
+    *(_DWORD *)(v2 + 156) = (uint32)&creatureTypes_98F38[5];
     *(_BYTE *)(v2 + 16) = BYTE1(v3) & 0xF7;
     sub_41CF0_42030((Type_AE400_29795*)v2, (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
@@ -49136,11 +49149,11 @@ void sub_3F370_3F6B0()
   /*
   v2[0] = 0;
   result = int386(0x33, (uint32)v2, (uint32)&v1);
-  dword_9AD98 = 0;
+  mouseInstalled_9AD98 = 0;
   */
 }
 // 62F78: using guessed type _DWORD int386(_DWORD, _DWORD, _DWORD);
-// 9AD98: using guessed type int dword_9AD98;
+// 9AD98: using guessed type int mouseInstalled_9AD98;
 // 3F370: using guessed type __int16 var_1C[14];
 
 //----- (0003F398) --------------------------------------------------------
@@ -49718,7 +49731,7 @@ char sub_3FCA0_3FFE0(
         if ( (*(_BYTE *)(dword_AE400_AE3F0() + 2049 * str_AE400_AE3F0->var_u16_8 + 13341) & 3) == 0 )
           lastPressedKey_12EF70_12EF60 = 28;
       }
-      if ( dword_9AD98 )
+      if ( mouseInstalled_9AD98 )
         sub_3F370_3F6B0();
       HIBYTE(a2) = byte_90B20;
       mouseRightButton_12EFDC_12EFCC = 0;
@@ -49796,7 +49809,7 @@ char sub_3FCA0_3FFE0(
     byte_90B20 = 0;
     if ( byte_9AD08 )
     {
-      if ( dword_9AD98 )
+      if ( mouseInstalled_9AD98 )
         sub_3F370_3F6B0();
       sub_5B210();
       v12 = dword_90B14;
@@ -49836,7 +49849,7 @@ char sub_3FCA0_3FFE0(
     }
     if ( (byte_90B23 & 2) != 0 || (byte_90B23 & 1) != 0 || (byte_90B23 & 0x20) != 0 )
     {
-      if ( dword_9AD98 )
+      if ( mouseInstalled_9AD98 )
         sub_3F370_3F6B0();
       LOBYTE(a1) = byte_B7700_B76F0;
       if ( byte_B7700_B76F0 )
@@ -50038,7 +50051,7 @@ char sub_3FCA0_3FFE0(
 // 90B23: using guessed type char byte_90B23;
 // 9AD08: using guessed type char byte_9AD08;
 // 9AD90: using guessed type int dmouse_9AD90.x;
-// 9AD98: using guessed type int dword_9AD98;
+// 9AD98: using guessed type int mouseInstalled_9AD98;
 // AE400: using guessed type int dword_AE400_AE3F0();
 // B7700: using guessed type char byte_B7700_B76F0;
 // B7702: using guessed type __int16 word_B7702_B76F2;
@@ -51450,18 +51463,18 @@ void sub_416B0()//2126B0_
   }
   //result = dword_AE400_AE3F0() + 29959;
   //999
-  //v7 = &unk_98F38[7] - str_AE400_AE3F0->str_29795[str_AE400_AE3F0->str_13323[0].playIndex_13333].var_u32_29951_156;
+  //v7 = &creatureTypes_98F38[7] - str_AE400_AE3F0->str_29795[str_AE400_AE3F0->str_13323[0].playIndex_13333].var_u32_29951_156;
   //v7 = str_AE400_AE3F0->str_29795[0].var_u32_29951_156 - str_AE400_AE3F0->str_29795[str_AE400_AE3F0->str_13323[0].playIndex_13333].var_u32_29951_156;
   //v7 = ((int64)0x257018 - (int64)str_AE400_AE3F0->str_29795[str_AE400_AE3F0->str_13323[0].playIndex_13333].var_u32_29951_156) / sizeof(Type_156);
   // PORT: delta computed once, before any entity is relocated (asm 0x41700..0x4174A): entities after the
   // wizard kept DOS-era type pointers (+156) - crashes in the menu demo and after loading saved games.
-  const ptrdiff_t delta = &unk_98F38[7] - str_AE400_AE3F0->str_29795[str_AE400_AE3F0->str_13323[0].playIndex_13333].var_u32_29951_156;
+  const ptrdiff_t delta = &creatureTypes_98F38[7] - str_AE400_AE3F0->str_29795[str_AE400_AE3F0->str_13323[0].playIndex_13333].var_u32_29951_156;
   for(int i=1;i<1000;i++)
   //while ( result < dword_AE400_AE3F0() + 193795 )
   {
     if (str_AE400_AE3F0->str_29795[i].var_u8_29859_64)
         //str_AE400_AE3F0->str_29795[i].var_u32_29951_156 += v7;
-        //str_AE400_AE3F0->str_29795[i].var_u32_29951_156 = &unk_98F38[7+v7+i];
+        //str_AE400_AE3F0->str_29795[i].var_u32_29951_156 = &creatureTypes_98F38[7+v7+i];
         str_AE400_AE3F0->str_29795[i].var_u32_29951_156 += delta; // PORT: was recomputed per entity from the already-relocated wizard pointer
     //result += 164;
   }
@@ -53865,7 +53878,7 @@ void sub_44730_44A70()//215730_
         sub_61C30_62140((TColor*)begWscreen_2ECFF4_2ECFE4);
     }
     sub_5C214_5C724();
-    if ( !dword_9AD98 )
+    if ( !mouseInstalled_9AD98 )
     {
       sub_44840_44B80();
       printf("ERROR : MOUSE DRIVER NOT FOUND.\n");
@@ -53881,7 +53894,7 @@ void sub_44730_44A70()//215730_
 }
 // 5CC03: using guessed type _DWORD printf(const char *, ...);
 // 93A84: using guessed type char byte_93A84;
-// 9AD98: using guessed type int dword_9AD98;
+// 9AD98: using guessed type int mouseInstalled_9AD98;
 // AE408: using guessed type int dword_AE408_AE3F8();
 // AE428: using guessed type int begPalDat_AE428_AE418_26C428_26C418;
 // AE450: using guessed type int begPointersTab_AE450_AE440_26C450_26C440;
@@ -54383,10 +54396,10 @@ int sub_45410_45750(Type_AE400_29795* a1x)//216410_
         v10 = 0;
     }
   }
-  //v4 = a1x->var_u32_29951_156->v_12;
+  //v4 = a1x->var_u32_29951_156->minHeight_12;
   v5 = GetTerrainHeight_11F50(&word_AE454_AE444);
-  if ( word_AE454_AE444.z < v5 + a1x->var_u32_29951_156->v_12)
-    word_AE454_AE444.z = a1x->var_u32_29951_156->v_12 + v5;
+  if ( word_AE454_AE444.z < v5 + a1x->var_u32_29951_156->minHeight_12)
+    word_AE454_AE444.z = a1x->var_u32_29951_156->minHeight_12 + v5;
   return v10;
 }
 
@@ -54433,7 +54446,7 @@ void sub_455D0_45910(Type_AE400_29795* a1x)//2165D0_
     v2 /= (int)abs32(v2);
   a1x->actSpeed_29921_126 += v2 * dword_93A88;
   v3 = GetTerrainHeight_11F50(&word_AE454_AE444);
-  v4 = a1x->var_u32_29951_156->v_10;
+  v4 = a1x->var_u32_29951_156->maxHeight_10;
   v5 = ((word_AE454_AE444.z - v3 - v4) << 10) / v4;
   if ( v5 < -256 )
     v5 = -256;
@@ -54452,7 +54465,7 @@ void sub_455D0_45910(Type_AE400_29795* a1x)//2165D0_
       {
         if (a1x->actSpeed_29921_126 <= 0 || v6 <= 0 )
         {
-          if ( !a1x->actSpeed_29921_126 && word_AE454_AE444.z > a1x->var_u32_29951_156->v_10 + v3 )
+          if ( !a1x->actSpeed_29921_126 && word_AE454_AE444.z > a1x->var_u32_29951_156->maxHeight_10 + v3 )
             word_AE454_AE444.z -= 8;
         }
         else
@@ -61404,7 +61417,7 @@ void sub_51DF0_52130(char a1)
   if ( (a1 & 2) != 0 )
   {
     InitDigijoy_3F7D0_3FB10((char*)(begGcSprTab_12CAF8_2EAAF8_2EAAE8 + 36));
-    if ( !dword_9AD98 )
+    if ( !mouseInstalled_9AD98 )
       goto LABEL_8;
   }
   else
@@ -61412,7 +61425,7 @@ void sub_51DF0_52130(char a1)
     if ( (a1 & 1) == 0 && (a1 & 0x20) == 0 )
       goto LABEL_8;
     InitAnojoy_3F820_sub_3FB60(v1, (int)begGcSprTab_12CAF8_2EAAF8_2EAAE8 + 60, (int)begGcSprTab_12CAF8_2EAAF8_2EAAE8 + 30, (int)begGcSprTab_12CAF8_2EAAF8_2EAAE8 + 36, a1);
-    if ( !dword_9AD98 )
+    if ( !mouseInstalled_9AD98 )
       goto LABEL_8;
   }
   sub_3F370_3F6B0();
@@ -61429,7 +61442,7 @@ LABEL_8:
 }
 // 51E3F: variable 'v1' is possibly undefined
 // 90B23: using guessed type char byte_90B23;
-// 9AD98: using guessed type int dword_9AD98;
+// 9AD98: using guessed type int mouseInstalled_9AD98;
 // AE400: using guessed type int dword_AE400_AE3F0();
 // 12CAF8: using guessed type int begGcSprTab_12CAF8_2EAAF8_2EAAE8;
 
@@ -66393,7 +66406,7 @@ void sub_59750(int16 x, int16 y)
 	//char v7[36]; // [esp+1Ch] [ebp-24h] BYREF
 
 	FixPerifery((char*)"MOUSE SET POS");
-	if (dword_9AD98 > 0)
+	if (mouseInstalled_9AD98 > 0)
 	{
 		if (x != -1 || y != -1)
 		{
@@ -66408,7 +66421,7 @@ void sub_59750(int16 x, int16 y)
 				if ((typeResolution_12F02E_12F01E & 1) != 0)
 					VGA_Set_mouse(x, mouse_9AD90.y);
 				else
-					VGA_Set_mouse(x * 8, mouse_9AD90.y *8);
+					VGA_Set_mouse(x, mouse_9AD90.y); // PORT: was x*8, y*8 (DOS driver units); VGA_Set_mouse takes pixels, see MouseEvents
 			}
             else
             {
@@ -66424,7 +66437,7 @@ void sub_59750(int16 x, int16 y)
                     if (y > 478)
                         y = 478;
                     mouse_9AD90.y = y;
-                    VGA_Set_mouse(x * 8, y * 8);
+                    VGA_Set_mouse(x, y); // PORT: was x*8, y*8 (DOS driver units)
                 }
             }
 		}
@@ -66434,7 +66447,7 @@ void sub_59750(int16 x, int16 y)
 	v3 = a2;
 	memset(v6, 0, sizeof(v6));
 	result = (int)memset(v7, 0, 28);
-	if ( dword_9AD98 > 0 )
+	if ( mouseInstalled_9AD98 > 0 )
 	{
 	  if ( a1 != -1 || (result = a2, a2 != -1) )
 	  {
@@ -66503,7 +66516,7 @@ void sub_59750(int16 x, int16 y)
 // 62F78: using guessed type _DWORD int386(_DWORD, _DWORD, _DWORD);
 // 9AD90: using guessed type __int16 mouse_9AD90.x;
 // 9AD92: using guessed type __int16 mouse_9AD90.y;
-// 9AD98: using guessed type int dword_9AD98;
+// 9AD98: using guessed type int mouseInstalled_9AD98;
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //----- (000599B0) --------------------------------------------------------
@@ -68127,7 +68140,7 @@ int sub_5BD40()//22CD40_
 
 void sub_5BDF8_5C308()
 {
-  if ( dword_9AD98 )
+  if ( mouseInstalled_9AD98 )
   {
     dword_9AD88 = 1;
     sub_5B95C_5BE6C();
@@ -68234,7 +68247,7 @@ int sub_5C214_5C724()
 
   FixPerifery((char*)"mouseRes");
 
-  dword_9AD98 = 0;
+  mouseInstalled_9AD98 = 0;
   segread((uint32)v5);
   v2[0] = 0;
   int386(51, (uint32)v2, (uint32)v1);//Mouse Reset/Get Mouse Installed Flag
@@ -68278,14 +68291,14 @@ int sub_5C214_5C724()
     FixPerifery((char*)"mouseSetPix");
     int386(51, (uint32)v2, (uint32)v1);//Set Mouse Mickey Pixel Ratio
   }
-  dword_9AD98 = 1;
+  mouseInstalled_9AD98 = 1;
   return 1;
 }
 // 5BE6C: using guessed type int sub_5BE6C();
 // 62F78: using guessed type _DWORD int386(_DWORD, _DWORD, _DWORD);
 // 636BC: using guessed type _DWORD segread(_DWORD);
 // 636E6: using guessed type _DWORD int386x(_DWORD, _DWORD, _DWORD, _DWORD);
-// 9AD98: using guessed type int dword_9AD98;
+// 9AD98: using guessed type int mouseInstalled_9AD98;
 // 12EF88: using guessed type int dword_12EF88_12EF78;
 // 12EF98: using guessed type int dword_12EF98_12EF88;
 // 12EFB4: using guessed type int dword_12EFB4;
