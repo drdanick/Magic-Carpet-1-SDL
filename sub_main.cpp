@@ -157,6 +157,7 @@ int __DS__;
 // PORT: reports DOS hardware access that the port does not emulate. Each distinct message is printed
 // once (they fire every frame otherwise).
 #include <set>
+#include <map>
 void FixPerifery(char* text = nullptr,int a = 0, int b = 0, int c = 0) {
     static std::set<std::string> seen;
     if (!seen.insert(text ? std::string(text) + std::to_string(a) : std::string()).second)
@@ -52211,8 +52212,33 @@ char sub_42650(int a1, int a2)
 // 1302A0: using guessed type int dword_1302A0_130290;
 // 1314A0: using guessed type int dword_1314A0;
 
+// PORT: screen buffers get a guard band on both sides. sub_2C410_2C450 draws rotated sprites row by row
+// from a start up to a view width above/below the screen and relies on clip tables in the BScreen
+// scratch area that a sprite right in front of the camera overruns (640x480): rows then get drawn
+// outside the screen. In DOS those writes landed in the neighbouring pool blocks; here they hit
+// unrelated heap memory (crash at the end of level 5). remc2 keeps the same tables for <= 640x480.
+static std::map<void*, void*> guardedBlocks;
+const size_t kScreenGuard = 1024 * 640;
+
+void* MallocGuarded(size_t size)
+{
+    uint8_t* base = (uint8_t*)malloc(size + 2 * kScreenGuard);
+    if (!base)
+        return nullptr;
+    memset(base, 0, size + 2 * kScreenGuard);
+    guardedBlocks[base + kScreenGuard] = base;
+    return base + kScreenGuard;
+}
+
 void free_426E0_42A20(void* buffer)
 {
+    auto it = guardedBlocks.find(buffer);
+    if (it != guardedBlocks.end())
+    {
+        free(it->second);
+        guardedBlocks.erase(it);
+        return;
+    }
     free(buffer);
 }
 
@@ -59355,7 +59381,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
         pressedKeys_12EEF0_12EEE0[57] = 0;//byte_12EF29 SPACE
         pressedKeys_12EEF0_12EEE0[28] = 0;//byte_12EF0C Enter
         pressedKeys_12EEF0_12EEE0[1] = 0;//byte_12EEF1_12EEE1 ESC
-        sub_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreenssfont2dat]);
+        // PORT: sfont2 is freed after the loop - this pass still draws the text with it (use after free)
       }
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
         CopyScreen_62FA8_634B8(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0xC8u);
@@ -59445,6 +59471,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
         Blit_599B0_59EC0(480);
     }
     while ( !v0 );
+    sub_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreenssfont2dat]);
     FadeInOut_61CC0_621D0(0, 0x10u, 0);
     sub_20E60_20E60();
     sub_5D010_5D520();
@@ -73979,7 +74006,10 @@ int sub_634E0_639F0(Pathstruct* pathstruct)//2344e0_
 	sub_634A0_639B0(pathstruct);
 	if (pathstruct->path[0] == '*')
 	{
-		*pathstruct->colorPalette_var28 = (uint8_t*)mallocVar(pathstruct->var36_size_buffer);
+		if (strstr(pathstruct->path, "Screen")) // PORT: *WScreen/*BScreen get a guard band, see MallocGuarded
+			*pathstruct->colorPalette_var28 = (uint8_t*)MallocGuarded(pathstruct->var36_size_buffer);
+		else
+			*pathstruct->colorPalette_var28 = (uint8_t*)mallocVar(pathstruct->var36_size_buffer);
 		if (!(*pathstruct->colorPalette_var28))
 			return 0;
 	}
