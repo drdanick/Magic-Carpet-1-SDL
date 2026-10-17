@@ -19,12 +19,91 @@ from emu import Machine
 ENTITY_BASE, ENTITY_SIZE, ENTITY_COUNT = 29795, 164, 1000
 
 
+DISPATCH = 0x41A71   # call dword ptr [eax+6] in UpdateEntities (push ebx = entity just before)
+AFTER_DISPATCH = 0x41A74
+
+
+def stepwise(m, a):
+    """Run the original tick; at every handler dispatch compare original vs port handler on the
+    current memory, keep the original's result and continue."""
+    from unicorn import UC_HOOK_CODE
+    from unicorn.x86_const import UC_X86_REG_EBX, UC_X86_REG_EAX, UC_X86_REG_EIP, UC_X86_REG_ESP
+    from emu import STACK_BASE, STACK_SIZE, TRAP
+    from diff_funcs import compare, port_name_for
+    import emu as emumod
+    mu = m.mu
+    stopped = {}
+
+    def hook(uc, address, size, user):
+        stopped['at'] = True
+        uc.emu_stop()
+
+    h = mu.hook_add(UC_HOOK_CODE, hook, begin=DISPATCH, end=DISPATCH)
+    names = {}
+    mu.context_restore(m.ctx)
+    esp = STACK_BASE + STACK_SIZE - 0x1000
+    mu.mem_write(esp, struct.pack('<I', TRAP))
+    mu.reg_write(UC_X86_REG_ESP, esp)
+    pc = 0x41780
+    st = m.state_addr
+    shown = steps = 0
+    while True:
+        stopped.clear()
+        mu.emu_start(pc, TRAP, count=500_000_000)
+        if not stopped:
+            break
+        ctx = mu.context_save()
+        ent = mu.reg_read(UC_X86_REG_EBX)
+        tbl = mu.reg_read(UC_X86_REG_EAX)
+        handler = struct.unpack('<I', bytes(mu.mem_read(tbl + 6, 4)))[0]
+        idx = (ent - st - ENTITY_BASE) // ENTITY_SIZE
+        if handler not in names:
+            names[handler] = port_name_for(m, handler)
+        pname = names[handler]
+        steps += 1
+        if pname:
+            m.begin(); r_o = m.call(handler, [ent], nested=True); e_o = m.stop_reason; w_o = m.end(); m.undo()
+            m.begin(); r_p = m.call(m.port_addr(pname), [ent], nested=True); e_p = m.stop_reason; w_p = m.end(); m.undo()
+            d, _ = compare(m, w_o, r_o, w_p, r_p, 6) if not (e_o or e_p) else ([f'error orig {e_o} port {e_p}'], None)
+            if d and shown < a.show:
+                shown += 1
+                eb = bytes(mu.mem_read(ent, 71))
+                print(f'step {steps}: entity {idx} (class {eb[64]} model {eb[65]} state {eb[70]}) {pname}:')
+                for x in d:
+                    print('    ' + x)
+            if steps == a.trace_step:
+                for label, fa in (('original', handler), ('port', m.port_addr(pname))):
+                    print(f'  calls ({label}):')
+                    for t, ar, r in m.trace_calls(fa, [ent]):
+                        print(f'    {t}({", ".join(hex(x) for x in ar)}) -> {r if r is None else hex(r)}')
+        # keep the original's result - and mirror its writes to original-addressed globals into the
+        # port's globals, so the next port call sees the same world (map cell lists, ...)
+        m.begin()
+        m.call(handler, [ent], nested=True)
+        kept = m.end()
+        m.wlog = []
+        for addr, val in kept.items():
+            if 0x10000 <= addr < 0x150000:
+                pa, _ = m.ida_to_port(addr)
+                if pa is not None:
+                    mu.mem_write(pa, bytes([val]))
+        mu.context_restore(ctx)
+        pc = AFTER_DISPATCH
+    mu.hook_del(h)
+    print(f'# {steps} handler calls in the tick, {shown} differed')
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('snapdir')
     ap.add_argument('--show', type=int, default=60)
+    ap.add_argument('--stepwise', action='store_true', help='compare every handler call of the tick in order')
+    ap.add_argument('--trace-step', type=int, default=-1, help='with --stepwise: log the calls of both versions at step N')
     a = ap.parse_args()
-    m = Machine(a.snapdir, load_port_code=False)
+    m = Machine(a.snapdir, load_port_code=a.stepwise)
+    if a.stepwise:
+        return stepwise(m, a)
     st, ss = m.state_addr, m.state_size
     org = bytes(m.mu.mem_read(st, ss))
     m.call(0x41780, [], max_insns=500_000_000)

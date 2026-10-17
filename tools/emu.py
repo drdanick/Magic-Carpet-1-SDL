@@ -258,10 +258,14 @@ class Machine:
         neighbouring table entries into fake pointers."""
         buf = bytearray(data)
         relocs = self.ps.reloc_sites
+        init = self.ps.initial_bytes(rva, len(buf)) if rva is not None else None
         o = 0
         while o < len(buf) - 3:
             v = struct.unpack_from('<I', buf, o)[0]
-            ok = (rva is not None and (rva + o) in relocs) or o % 4 == 0
+            # a pointer is either a relocated static value or something written at run time; a static
+            # table value that merely looks like an address (two packed words) is left alone
+            ok = (rva is not None and (rva + o) in relocs) or \
+                 (o % 4 == 0 and (init is None or init[o:o + 4] != bytes(buf[o:o + 4])))
             # (unaligned non-relocated dwords are never translated: table bytes can form fake pointers,
             # e.g. two trig entries spelled the address of a port function)
             t = self.translate_value(v) if ok and self.image_lo <= v < self.image_hi else None
@@ -338,10 +342,12 @@ class Machine:
         self.mu.mem_write(addr, data)
 
     # ---- calls -----------------------------------------------------------------------------------
-    def call(self, addr, args=(), max_insns=50_000_000):
+    def call(self, addr, args=(), max_insns=50_000_000, nested=False):
+        """Call addr(args) (cdecl) until it returns. nested=True uses the lower half of the stack area
+        (for calls made while an outer emulation, e.g. a tick, is paused)."""
         mu = self.mu
         mu.context_restore(self.ctx)
-        esp = STACK_BASE + STACK_SIZE - 0x1000
+        esp = STACK_BASE + (STACK_SIZE // 2 if nested else STACK_SIZE) - 0x1000
         frame = struct.pack('<I', TRAP) + b''.join(struct.pack('<I', x & 0xFFFFFFFF) for x in args)
         mu.mem_write(esp, frame)
         mu.reg_write(UC_X86_REG_ESP, esp)
@@ -380,6 +386,48 @@ class Machine:
         for addr, old in reversed(self.wlog):
             self.mu.mem_write(addr, old)
         self.wlog = []
+
+    def trace_calls(self, addr, args, nested=True):
+        """Call addr(args) logging every direct call made at depth 1: [(target name, args, eax)]. Undone."""
+        from capstone import Cs, CS_ARCH_X86, CS_MODE_32
+        md = Cs(CS_ARCH_X86, CS_MODE_32)
+        if not hasattr(self, '_fnames'):
+            self._fnames = {self.image_base + s.rva: s.name for s in self.ps.syms if s.tag == SymTagFunction}
+        out, pending = [], []
+        start_esp = [None]
+
+        def hook(uc, address, size, user):
+            esp = uc.reg_read(UC_X86_REG_ESP)
+            if start_esp[0] is None:
+                start_esp[0] = esp
+            if pending and address == pending[-1][0] and esp >= pending[-1][2]:
+                out[pending[-1][1]][2] = uc.reg_read(UC_X86_REG_EAX)
+                pending.pop()
+            if pending:
+                return
+            ins = next(md.disasm(bytes(uc.mem_read(address, size)), address), None)
+            if ins is None or ins.mnemonic != 'call':
+                return
+            tgt = ins.op_str
+            try:
+                t = int(tgt, 16)
+                b = bytes(uc.mem_read(t, 5))
+                if b[0] == 0xE9:
+                    t = t + 5 + struct.unpack('<i', b[1:])[0]
+                tgt = self._fnames.get(t, f'{t:#x}')
+            except ValueError:
+                pass
+            a = struct.unpack('<4I', bytes(uc.mem_read(esp, 16)))
+            out.append([tgt, a, None])
+            pending.append((address + size, len(out) - 1, esp))
+
+        h = self.mu.hook_add(UC_HOOK_CODE, hook)
+        self.begin()
+        self.call(addr, args, nested=nested)
+        self.end()
+        self.undo()
+        self.mu.hook_del(h)
+        return out
 
     def port_addr(self, name):
         s = self.sym_by_name[name]
