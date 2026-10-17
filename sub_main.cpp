@@ -61308,7 +61308,7 @@ int sub_51AF0_51E30(char a1)
   v5 = 4 * ((unsigned __int8)byte_12CBD1_12CBC1 + (unsigned __int8)byte_12CBD0_12CBC0 + str_AE408_AE3F8->var_u16_17);
   sprintf(v4, "%s%s\\save\\carpdd%02X.gam", "C:", "\\carpet.cd", (unsigned __int8)(a1 - 1));
   v1 = 0;
-  v2 = DataFileIO::CreateOrOpenFile((char*)v4, 512);
+  v2 = DataFileIO::CreateOrOpenFile(FixPath(v4), 512); // PORT: the DOS path was opened unmapped - loading a saved game always failed
   if ( v2 != nullptr )
   {
     DataFileIO::Read(v2, (uint8_t*)v6, 4);

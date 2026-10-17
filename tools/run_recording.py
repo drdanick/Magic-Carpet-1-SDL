@@ -33,6 +33,7 @@ def main():
     ap.add_argument("--to", dest="last", type=int, default=10**9, help="contact sheet / run: last frame")
     ap.add_argument("--cols", type=int, default=8)
     ap.add_argument("--width", type=int, default=200)
+    ap.add_argument("--keep-saves", action="store_true", help="copy <data>/CARPET.CD/SAVE into the fresh C: drive (recordings that load a saved game)")
     ap.add_argument("--real-audio", action="store_true", help="use the real audio device (recordings made with sound on can depend on it)")
     a, extra = ap.parse_known_args()
     a.extra = [x for x in extra if x != "--"]  # everything unknown goes to remc1
@@ -43,6 +44,11 @@ def main():
     os.makedirs(frames)
     os.makedirs(cdrive)
     replay_test.make_c_drive(a.data, cdrive)
+    if a.keep_saves:
+        src = os.path.join(a.data, "CARPET.CD", "SAVE")
+        dst = os.path.join(cdrive, "CARPET.CD", "SAVE")
+        for n in os.listdir(src):
+            shutil.copy(os.path.join(src, n), dst)
     cmd = [os.path.abspath(a.exe), "--headless", "--data", a.data, "--c-drive", cdrive,
            "--input-script", os.path.abspath(a.script)]
     if a.every:
