@@ -85,6 +85,8 @@ def main():
             continue
         nums = port_numbers(body)
         w = oc.walk(f['addr'])
+        # functions with a frame pointer (mov ebp, esp) address locals/arguments through ebp
+        frame = any(i.mnemonic == 'mov' and i.op_str == 'ebp, esp' for i in w['insns'].values())
         missing_disp, missing_imm = {}, {}
         for ins in w['insns'].values():
             # skip operands that are relocated addresses (globals/code): checked by other audits
@@ -92,6 +94,8 @@ def main():
             for op in ins.operands:
                 if op.type == x86.X86_OP_MEM:
                     if op.mem.base in STACK_REGS or op.mem.base == 0 and op.mem.index == 0:
+                        continue
+                    if frame and op.mem.base == x86.X86_REG_EBP:
                         continue
                     d = op.mem.disp
                     if reloc and (d & 0xFFFFFFFF) >= 0x10000:

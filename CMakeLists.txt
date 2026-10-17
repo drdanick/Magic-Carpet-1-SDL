@@ -84,6 +84,7 @@ set(REMC1_ENGINE_SOURCES
     portability/port_watchdog.cpp
     portability/SdlPresenter.cpp
     portability/port_sound.cpp
+    portability/MemSnapshot.cpp
     utilities/Compare.cpp
     utilities/DataFileIO.cpp
 )

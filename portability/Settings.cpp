@@ -147,6 +147,7 @@ static void PrintUsage()
 		"  --debug-log        write debug.txt next to the executable\n"
 		"  --dump-frames <dir> [--dump-every N]  save every Nth presented frame (default 30) as BMP\n"
 		"  --exit-after-frames N                  quit after N presented frames\n"
+		"  --snapshot-frame N [--snapshot-dir D]  dump memory around the entity tick of frame N (tools/diff_tick.py)\n"
 		"  --c-drive <dir>                        folder standing in for DOS C: (must contain CARPET.CD)\n"
 		"  --watchdog N                           abort with a stack trace if no frame is shown for N s\n"
 		"                                         (default 20 for scripted/headless runs, 0 = off)\n"
@@ -193,6 +194,8 @@ std::vector<std::string> InitSettings(int argc, char* argv[])
 		else if (a == "--dump-frames") g_settings.dumpFramesDir = next("a directory");
 		else if (a == "--dump-every") g_settings.dumpEvery = (std::max)(1, atoi(next("a number").c_str()));
 		else if (a == "--exit-after-frames") g_settings.exitAfterFrames = atoi(next("a number").c_str());
+		else if (a == "--snapshot-frame") g_settings.snapshotFrame = atoi(next("a number").c_str());
+		else if (a == "--snapshot-dir") g_settings.snapshotDir = next("a directory");
 		else if (a == "--frame-hashes") g_settings.frameHashFile = next("a file");
 		else if (a == "--frame-stats") g_settings.frameStats = true;
 		else if (a == "--headless") g_settings.headless = true;

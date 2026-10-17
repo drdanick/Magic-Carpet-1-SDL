@@ -40,6 +40,8 @@ struct Remc1Settings {
 	bool frameStats = false;   // --frame-stats: print frame-interval percentiles every 5 s (pacing work)
 	bool headless = false;     // SDL dummy video driver; live keyboard/mouse input is ignored
 	int watchdogSeconds = -1;  // freeze watchdog; -1 = default (20 s for automated runs, off otherwise), 0 = off
+	int snapshotFrame = -1;    // --snapshot-frame N: dump process memory before/after the entity tick of frame N (diff harness)
+	std::string snapshotDir;   // --snapshot-dir D: where the dumps go (default "snapshot")
 };
 
 extern Remc1Settings g_settings;

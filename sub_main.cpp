@@ -2,6 +2,7 @@
 #include "portability/Settings.h"
 #include "portability/port_timer.h"
 #include "portability/port_sound.h"
+#include "portability/MemSnapshot.h"
 
 // Debug switches inherited from the DOSBox-comparison workflow.
 // PORT: MODIFY_SETTINGS (injects Up/Down key presses at level start) and FIX_MOUSE (pins the mouse to
@@ -51122,6 +51123,7 @@ int compareindex_41780_2 = 0;
 /// entity's class/state update function from dword_96902.
 void UpdateEntities_41780_41AC0()//212780_
 {
+  MemSnapshot_Tick(true, str_AE400_AE3F0, sizeof(*str_AE400_AE3F0), str_AE408_AE3F8, sizeof(*str_AE408_AE3F8)); // PORT: diff harness (tools/diff_tick.py)
   char v3; // dh
   Type_AE400_29795* v4; // edi
   //int v5; // eax
@@ -51344,6 +51346,7 @@ LABEL_40:
 LABEL_52:
   if (pressedKeys_12EEF0_12EEE0[20] && pressedKeys_12EEF0_12EEE0[38])//byte_12EF04 t  byte_12EF16 l
     nullsub_3(0);
+  MemSnapshot_Tick(false, nullptr, 0, nullptr, 0);
 }
 
 //SYNCHRONIZED WITH REMC1
