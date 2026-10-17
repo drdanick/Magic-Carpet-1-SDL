@@ -198,3 +198,8 @@ void InputScript_FlushRecording()
 	if (recordFile)
 		fflush(recordFile);
 }
+
+bool InputScript_Playing()
+{
+	return !events.empty();
+}

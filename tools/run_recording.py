@@ -33,6 +33,7 @@ def main():
     ap.add_argument("--to", dest="last", type=int, default=10**9, help="contact sheet / run: last frame")
     ap.add_argument("--cols", type=int, default=8)
     ap.add_argument("--width", type=int, default=200)
+    ap.add_argument("--real-audio", action="store_true", help="use the real audio device (recordings made with sound on can depend on it)")
     a, extra = ap.parse_known_args()
     a.extra = [x for x in extra if x != "--"]  # everything unknown goes to remc1
 
@@ -52,7 +53,7 @@ def main():
     log_path = os.path.join(a.out, "log.txt")
     with open(log_path, "wb") as log:
         rc = subprocess.run(cmd, cwd=os.path.dirname(os.path.abspath(a.exe)), stdout=log,
-                            stderr=subprocess.STDOUT, env=dict(os.environ, SDL_AUDIODRIVER="dummy")).returncode
+                            stderr=subprocess.STDOUT, env=dict(os.environ) if a.real_audio else dict(os.environ, SDL_AUDIODRIVER="dummy")).returncode
     text = open(log_path, "rb").read().decode("latin-1", "replace").splitlines()
     interesting = [l for l in text if any(k in l for k in ("WATCHDOG", "  #", "allert_error", "exit", "exhausted", "quit"))]
     print(f"exit code {rc} ({rc & 0xFFFFFFFF:#x}); log: {log_path}")

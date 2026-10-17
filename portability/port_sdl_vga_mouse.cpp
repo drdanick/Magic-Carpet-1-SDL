@@ -706,8 +706,8 @@ int events()
 	uint32_t buttonresult;
 	while (SDL_PollEvent(&event))
 	{
-		if (g_settings.headless && event.type != SDL_QUIT)
-			continue; // replay/headless runs are driven by input scripts only
+		if ((g_settings.headless || InputScript_Playing()) && event.type != SDL_QUIT)
+			continue; // replays and headless runs are driven by the input script only (live mouse/keys would desync them)
 		switch (event.type)
 		{
 		case SDL_KEYDOWN:

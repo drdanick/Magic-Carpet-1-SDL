@@ -22,6 +22,8 @@ bool InputScript_StartRecording(const std::string& path);
 void InputScript_OnFrame(uint32_t frame);
 // true once a loaded script has no events left and graceFrames have passed since its last one
 bool InputScript_Exhausted(uint32_t frame, uint32_t graceFrames);
+// true while an input script is loaded: live input is then ignored (it would desynchronise the replay)
+bool InputScript_Playing();
 
 // Recording hooks (called from the SDL event pump)
 void InputScript_RecordKey(uint32_t frame, bool down, int sdlScancode);

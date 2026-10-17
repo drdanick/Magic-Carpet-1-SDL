@@ -1828,6 +1828,7 @@ typedef struct {
     void (*fnc)();
     uint16_t var;
 } TypeVoidF;
+void MenuContinueGame_4FF00();
 TypeVoidF dword_4A12C_4A46C[] = {
 {nullptr,0},
 {MenuNewGame_4FF30_50270,0},
@@ -1839,7 +1840,9 @@ TypeVoidF dword_4A12C_4A46C[] = {
 {nullptr,3},
 {nullptr,4},
 {nullptr,5},
-{nullptr,6}
+{nullptr,6},
+{MenuContinueGame_4FF00,0}, // PORT: entries 11-12 were missing (truncated initializer); the
+{nullptr,0}                 // menu's 'continue to the next level' hotspot (11) called garbage
 };
 /*
 __int16 word_4A130[] = {
@@ -59933,6 +59936,16 @@ void sub_4FEB0()
 }
 
 //SYNCHRONIZED WITH REMC1
+//----- (0004FF00) --------------------------------------------------------
+/// Main-menu 'continue': starts the next level after one was completed (menu action 11).
+void MenuContinueGame_4FF00()
+{
+  byte_12CBD5_12CBC5 |= 8u;
+  bool_96880 = true;
+  byte_9687C = 0;
+  mainMenuSelector_12CBCE_12CBBE = 5;//play game
+}
+
 /// Main-menu "new game": asks "New Game? Yes/No" (unless forced) and resets level and player state.
 void MenuNewGame_4FF30_50270()
 {
