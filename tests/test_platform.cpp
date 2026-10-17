@@ -165,3 +165,21 @@ TEST(InputScript, KeyEventsAreAppliedAtTheirFrame)
 	EXPECT_EQ(pressedKeys_12EEF0_12EEE0[0x39], 0);
 	std::filesystem::remove(path);
 }
+
+TEST(InputScript, MultiWordKeyNames)
+{
+	// Recordings use SDL key names, some of which contain spaces.
+	auto path = std::filesystem::temp_directory_path() / "remc1_test_script2.txt";
+	{
+		std::ofstream f(path);
+		f << "5 keydown Left Shift\n"
+		  << "6 keydown L   # comment\n";
+	}
+	VGA_mouse_clear_keys();
+	ASSERT_TRUE(InputScript_Load(path.string()));
+	InputScript_OnFrame(6);
+	EXPECT_EQ(pressedKeys_12EEF0_12EEE0[0x2A], 0x2A) << "Left Shift";
+	EXPECT_EQ(pressedKeys_12EEF0_12EEE0[0x4B], 0) << "must not be read as the Left arrow";
+	EXPECT_EQ(pressedKeys_12EEF0_12EEE0[0x26], 0x26) << "L";
+	std::filesystem::remove(path);
+}

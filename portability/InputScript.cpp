@@ -10,6 +10,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <cctype>
 #include <map>
 #include <vector>
 
@@ -77,8 +78,12 @@ bool InputScript_Load(const std::string& path)
 		if (!(ss >> frame >> cmd))
 			continue;
 		auto scancode = [&]() -> int {
+			// the rest of the line: SDL key names can contain spaces ("Left Shift", "Keypad Enter") -
+			// reading one word turned "Left Shift" into the Left arrow and desynchronised replays
 			std::string name;
-			ss >> name;
+			std::getline(ss >> std::ws, name);
+			while (!name.empty() && isspace((unsigned char)name.back()))
+				name.pop_back();
 			SDL_Scancode sc = SDL_GetScancodeFromName(name.c_str());
 			if (sc == SDL_SCANCODE_UNKNOWN)
 				std::cerr << "remc1: " << path << ":" << lineNo << ": unknown key '" << name << "'\n";

@@ -59,7 +59,7 @@ sub_634E0_639F0
 __int16 sub_51650_51990(int a1, int a2, __int16 a3, int a4)//222650_
 -problem
 
-test sub_519E0_51D20
+test RelocateFontGlyphs_519E0_51D20
 
 begSFont0Tab_12CB28_2EAB28_2EAB18 0x9baaa
 
@@ -296,7 +296,7 @@ void sub_10D40(Type_AE3E0* a1, Type_sub168_2* a2, __int16 a3);
 void sub_10EB0(Type_sub_AE3E0* a1);
 void sub_10F10(Type_sub_AE3E0* a1);
 Type_sub_AE3E0* sub_10FD0(Type_AE3E0* a1, __int16 a2);
-void sub_11010(Type_AE3E0* a1);
+void FreeAnimSequences_11010(Type_AE3E0** a1);
 bool sub_11050();
 void sub_111B0(int a1, int a2);
 int sub_11410(int a1, int a2);
@@ -667,8 +667,8 @@ Type_sub168* sub_36700_36AC0(int a1, unsigned __int16 a2, Type_168* a3);
 int sub_36850_36C10(Type_sub168* a1);
 // _DWORD ios::failure::cause(_DWORD); weak
 Type_sub168_2* sub_369E0_36DA0(Type_sub168* a1, unsigned int a2, __int16 a3);
-void sub_36A90_36E50(Type_sub168* a1, Type_sub168_2* a2);
-void sub_36C10_36FD0(Type_sub168* a1);
+void FreeSpriteCacheBlock_36A90_36E50(Type_sub168* a1, Type_sub168_2* a2);
+void DestroySpriteCache_36C10_36FD0(Type_sub168** a1);
 // void sub_36C65(int a1, int a2, int a3, int a4, int a5, int a6, int a7);
 void cleanPressedKeys_36D83();
 int sub_36DC2_37182();
@@ -1109,7 +1109,7 @@ int sub_51420_51760(_DWORD *a1, char *a2);
 void sub_51480_517C0(Type_dword_96884* a1, TypeStrFont* a2, TColor* colorBuffer);
 void DrawText_51560_518A0(_BYTE *a1, int a2, __int16 a3, char* text);
 __int16 sub_51650_51990(int a1, int a2, __int16 a3, int a4);
-void sub_519E0_51D20(TypeStrFont* a1);
+void RelocateFontGlyphs_519E0_51D20(TypeStrFont* a1);
 void sub_51A10_51D50();
 int LoadGame_51AF0_51E30(char a1);
 int SaveGame_51C90_51FD0(char a1);
@@ -15674,16 +15674,16 @@ Type_sub_AE3E0* sub_10FD0(Type_AE3E0* a1x, __int16 a2)//1E1FD0_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_11010(Type_AE3E0* a1x)
+/// Frees the animation sequence set *a1x and nulls the caller's pointer (original takes the address of
+/// dword_AE3E0_AE3D0). PORT: was by value - the global dangled after a level ended.
+void FreeAnimSequences_11010(Type_AE3E0** a1x)
 {
-    allert_error();//test it
-
-  if ( a1x )
+  if ( *a1x )
   {
-    free_426E0_42A20(a1x->var_2);
-    a1x->var_2 = nullptr;
-    free_426E0_42A20((void*)a1x);
-    a1x = nullptr;
+    free_426E0_42A20((*a1x)->var_2);
+    (*a1x)->var_2 = nullptr;
+    free_426E0_42A20((void*)*a1x);
+    *a1x = nullptr;
   }
 }
 
@@ -42761,7 +42761,9 @@ __int16 __cdecl sub_36A90_36E50_old(int a1, int a2)
 }
 
 //SYNChRONIZED WITH REMC1
-void sub_36A90_36E50(Type_sub168* a1x, Type_sub168_2* a2x)//207A90_
+/// Frees sprite cache block a2x in cache a1x: returns its bytes to the free pool, then slides every
+/// later block down over the gap (re-pointing each descriptor) so the cache stays contiguous.
+void FreeSpriteCacheBlock_36A90_36E50(Type_sub168* a1x, Type_sub168_2* a2x)//207A90_
 {
 	Type_sub168_2_2* v7x; // ebp
 	Type_sub168_2* v12x; // eax
@@ -42783,8 +42785,12 @@ void sub_36A90_36E50(Type_sub168* a1x, Type_sub168_2* a2x)//207A90_
 				a1x->var_12[v15 - 1].var_u32_0 = a1x->var_12[v15].var_u32_0;
 				v12x = a1x->var_12[v15].var_u32_0;
 				v12x->var_u16_8[0] = v15 - 1;
+				// PORT: read the block's old address before re-pointing it (asm 0x36B29: mov esi,[eax]
+				// precedes mov [eax],ebp). Re-pointing first made this copy a no-op, so every sprite moved
+				// by compaction kept garbage (worm segments broken after a level change).
+				Type_sub168_2_2* oldData = v12x->var_u32_0;
 				a1x->var_12[v15].var_u32_0->var_u32_0 = v7x;
-				qmemcpy(v7x, v12x->var_u32_0, a1x->var_12[v15].var_u32_0->var_u32_4);
+				memmove(v7x, oldData, a1x->var_12[v15].var_u32_0->var_u32_4); // overlapping move (original: rep movs forward)
 				v7x = (Type_sub168_2_2*)((uint8*)v7x + a1x->var_12[v15].var_u32_0->var_u32_4);
 			}
 			a1x->var_20--;
@@ -42793,20 +42799,21 @@ void sub_36A90_36E50(Type_sub168* a1x, Type_sub168_2* a2x)//207A90_
 }
 
 //SYNChRONIZED WITH REMC1
-void sub_36C10_36FD0(Type_sub168* a1)
+/// Frees the sprite cache allocator *a1 (if it owns its buffers, var_24 == 1) and nulls the caller's
+/// pointer. PORT: the original takes the address of the global (push offset dword_AE3EC; asm ends
+/// with mov [ebx], 0); passing the value left dword_AE3EC_AE3DC dangling after it was freed.
+void DestroySpriteCache_36C10_36FD0(Type_sub168** a1)
 {
-    allert_error();//test it
-
-  if ( a1 )
+  if ( *a1 )
   {
-    if (a1->var_24 == 1 )
+    if ((*a1)->var_24 == 1 )
     {
-      free_426E0_42A20(a1->var_16);
-      free_426E0_42A20(a1->var_8);
-      free_426E0_42A20(a1->var_12);
-      free_426E0_42A20(a1);
+      free_426E0_42A20((*a1)->var_16);
+      free_426E0_42A20((*a1)->var_8);
+      free_426E0_42A20((*a1)->var_12);
+      free_426E0_42A20(*a1);
     }
-    a1 = nullptr;
+    *a1 = nullptr;
   }
 }
 
@@ -60828,7 +60835,7 @@ int sub_51420_51760(_DWORD *a1, char *a2)
 //SYNCHRONIZED WITH REMC1
 void sub_51480_517C0(Type_dword_96884* a1x, TypeStrFont* a2x, TColor* colorBuffer)//222480_
 {
-  sub_519E0_51D20(a2x);
+  RelocateFontGlyphs_519E0_51D20(a2x);
   a1x->next = &a2x->bTab[1];
   a1x->var8_6 = sub_5CC70_5D180(colorBuffer, 0xFFu, 0xFFu, 0xFFu);
   a1x->var8_4 = 3;
@@ -61251,7 +61258,8 @@ LABEL_56:
 // 12EFF4: using guessed type int dword_12EFF4;
 
 //SYNCHRONIZED WITH REMC1
-void sub_519E0_51D20(TypeStrFont* a1x)//2229E0_
+/// Relocates a loaded font's glyph table: turns each glyph's file offset into a pointer into a1x->Dat.
+void RelocateFontGlyphs_519E0_51D20(TypeStrFont* a1x)//2229E0_
 {
   //TypeTab* result; // eax
     int resultx;
@@ -61261,7 +61269,7 @@ void sub_519E0_51D20(TypeStrFont* a1x)//2229E0_
   //resultx = 0;
   if (a1x->bTab < a1x->eTab)
   {
-    for(resultx = 0; resultx < a1x->eTab - &a1x->bTab[resultx]; resultx++)
+    for(resultx = 0; resultx < a1x->eTab - a1x->bTab; resultx++) // PORT: was "< eTab - &bTab[resultx]" - the bound shrank with the index, only half the glyphs were relocated
     //do
     {
       v2 = a1x->Dat;
@@ -65763,7 +65771,7 @@ char sub_58910_58E20(unsigned __int16 a1)
           v5 = sub_10FD0(dword_AE3E0_AE3D0, v3);
           sub_10F10(v5);
         }
-        sub_36A90_36E50(dword_AE3EC_AE3DC, dword_12D748_12D738[v3]);
+        FreeSpriteCacheBlock_36A90_36E50(dword_AE3EC_AE3DC, dword_12D748_12D738[v3]);
         dword_12DF8C_12DF7C[v3] = 0;
         dword_12D748_12D738[v3] = 0;
         dword_12CF00_12CEF0[v3] = 0;
@@ -65793,7 +65801,7 @@ char sub_58A00_58F10(unsigned __int16 a1)
         {
           sub_10F10(sub_10FD0(dword_AE3E0_AE3D0, i));
         }
-        sub_36A90_36E50(dword_AE3EC_AE3DC, dword_12D748_12D738[i]);
+        FreeSpriteCacheBlock_36A90_36E50(dword_AE3EC_AE3DC, dword_12D748_12D738[i]);
         dword_12DF8C_12DF7C[i] = 0;
         dword_12D748_12D738[i] = 0;
         dword_12CF00_12CEF0[i] = 0;
@@ -65973,8 +65981,8 @@ void sub_58E70_59380()
 //SYNCHRONIZED WITH REMC1
 void sub_58F00_59410()//229F00
 {
-  sub_36C10_36FD0(dword_AE3EC_AE3DC);
-  sub_11010(dword_AE3E0_AE3D0);
+  DestroySpriteCache_36C10_36FD0(&dword_AE3EC_AE3DC);
+  FreeAnimSequences_11010(&dword_AE3E0_AE3D0);
   sub_59140_59650();
   memset(dword_12DF8C_12DF7C, 0, sizeof(dword_12DF8C_12DF7C));
   memset(dword_12D748_12D738, 0, sizeof(dword_12D748_12D738));
