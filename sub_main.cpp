@@ -3433,7 +3433,7 @@ Type_96902;
 int sub_39A00(uint16_t* a1);
 int sub_39340(uint16_t* a1);
 int sub_38C60(uint16_t* a1);
-int sub_386DE(uint16_t* a1);
+int CreateGuard_386E0(uint16_t* a1);
 int sub_384B0(uint16_t* a1);
 
 Type_254A34 str_254A34[] = {
@@ -3518,7 +3518,7 @@ Type_254A34 str_255478[] = {
 { 0x002548F4, 0x0001, (Type_AE400_29795* (*)(axis_3d*))sub_38270, 0x0001, 0x0000 },
 { 0x002548F4, 0x0002, (Type_AE400_29795* (*)(axis_3d*))sub_38370, 0x0001, 0x0000 },
 { 0x002548F4, 0x0003, (Type_AE400_29795* (*)(axis_3d*))sub_384B0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, (Type_AE400_29795* (*)(axis_3d*))sub_386DE/*(Type_AE400_29795* (*)(axis_3d*))sub_386E0*/, 0x0001, 0x0000},
+{ 0x002548F4, 0x0004, (Type_AE400_29795* (*)(axis_3d*))CreateGuard_386E0, 0x0001, 0x0000},
 { 0x002548F4, 0x0005, (Type_AE400_29795* (*)(axis_3d*))sub_38890, 0x0001, 0x0000 },
 { 0x002548F4, 0x0006, (Type_AE400_29795* (*)(axis_3d*))sub_389E0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0007, (Type_AE400_29795* (*)(axis_3d*))sub_38C60, 0x0001, 0x0000 },
@@ -44115,8 +44115,8 @@ int sub_384B0(uint16_t* a1)//2094B0_
     return result;
 }
 
-//int unk_99138;//fix
-int sub_386DE(uint16_t* a1)
+/// Creates a guard (class 5, model 4, state 25) at a1. Returns the entity or 0.
+int CreateGuard_386E0(uint16_t* a1)
 {
     int v1; // eax
     int v2; // ebx
@@ -44153,7 +44153,7 @@ int sub_386DE(uint16_t* a1)
     *(_WORD*)(v2 + 28) = 1;
     LOBYTE(v5) = *(_BYTE*)(v6 + 12);
     *(_BYTE*)(v6 + 12) = v5 + 1;
-    *(_DWORD*)(v2 + 156) = (uint32)&unk_98F38[0];
+    *(_DWORD*)(v2 + 156) = (uint32)&unk_98F38[16]; // PORT: was [0] (a hovering type: max 0x700 above ground, sinks 4/tick) - the original stores 0x99138 = unk_98F38 + 0x200, so guards floated off the ground
     *(_BYTE*)(v2 + 63) = v5;
     v7 = *(__int16*)(*(_DWORD*)(v2 + 156) + 26)
         - *(unsigned __int8*)(v2 + 63) % *(__int16*)(*(_DWORD*)(v2 + 156) + 26);
