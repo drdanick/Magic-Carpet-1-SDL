@@ -26426,6 +26426,7 @@ LABEL_11:
   v20 = a3x->dim.y;
   v11 = a3x->Tab_0;
   v17 = scrWidth_12EFF0_12EFE0 * a2 + a1 + (int)begWscreen_2ECFF4_2ECFE4;
+  v4 = v17; // PORT: the write pointer started uninitialised (only reset per row); asm 0x23BCB uses eax for both
   if (a3x->dim.y)
   {
     do
@@ -47852,6 +47853,7 @@ void sub_3C9D0_3CD10()//20D9D0_
 			}
 			break;
 		case 3:
+			v68 = dword_AE400_AE3F0(); // PORT: was only set inside the loop (the asm loads it in the loop test)
 			for (Type_AE400_29795* evLoop = str_AE408_AE3F8->var_u32_36462[0]; evLoop > str_AE400_AE3F0->str_29795; evLoop = evLoop->next)
 				//for ( n = *(_DWORD *)(dword_AE408_AE3F8() + 36462); ; n = *(_DWORD *)n )
 			{
