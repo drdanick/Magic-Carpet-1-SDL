@@ -29,6 +29,8 @@ int mouseX = 320, mouseY = 240;
 
 FILE* recordFile = nullptr;
 std::map<uint64_t, uint32_t> tickLog;
+std::map<uint32_t, uint64_t> checksums; // frame -> expected game-state hash ("C" lines)
+bool desyncReported = false;
 
 const uint32_t kAutoRelease = 3;
 
@@ -54,6 +56,14 @@ bool InputScript_Load(const std::string& path)
 		if (hash != std::string::npos)
 			line.resize(hash);
 		std::istringstream ss(line);
+		if (!line.empty() && line[0] == 'C') { // state checksum: "C <frame> <hex hash>"
+			char c;
+			uint32_t f;
+			std::string hex;
+			if (ss >> c >> f >> hex)
+				checksums[f] = std::stoull(hex, nullptr, 16);
+			continue;
+		}
 		if (!line.empty() && line[0] == 'T') { // timer log: "T <syncIndex> <ticks>"
 			char t;
 			unsigned long long idx;
@@ -171,8 +181,8 @@ void InputScript_RecordMouseMove(uint32_t frame, int x, int y)
 {
 	if (!recordFile)
 		return;
-	if (pendingMouse && pendingFrame != frame)
-		FlushPendingMouse();
+	// every move is kept (collapsing them per frame lost intermediate positions live play applied)
+	FlushPendingMouse();
 	pendingMouse = true;
 	pendingFrame = frame;
 	pendingX = x;
@@ -202,4 +212,18 @@ void InputScript_FlushRecording()
 bool InputScript_Playing()
 {
 	return !events.empty();
+}
+
+void InputScript_CheckState(uint32_t frame, uint64_t hash)
+{
+	if (recordFile && frame % 30 == 0) {
+		FlushPendingMouse();
+		fprintf(recordFile, "C %u %016llx\n", frame, (unsigned long long)hash);
+	}
+	auto it = checksums.find(frame);
+	if (it != checksums.end() && it->second != hash && !desyncReported) {
+		desyncReported = true;
+		fprintf(stderr, "DESYNC at frame %u: game state differs from the recording (expected %016llx, got %016llx)\n",
+			frame, (unsigned long long)it->second, (unsigned long long)hash);
+	}
 }

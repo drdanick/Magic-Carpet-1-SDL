@@ -946,6 +946,10 @@ static void DebugFrameHooks()
 {
 	presentedFrames++;
 	Watchdog_Kick();
+	{
+		extern uint64_t Port_GameStateHash();
+		InputScript_CheckState(presentedFrames, Port_GameStateHash());
+	}
 	if (g_settings.frameStats)
 		FrameStats();
 	InputScript_FlushRecording();

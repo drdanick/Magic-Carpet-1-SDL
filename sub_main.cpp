@@ -51392,6 +51392,32 @@ unsigned __int16 sub_415C0_41900()
 // AE408: using guessed type int dword_AE408_AE3F8();
 
 //----- (000416B0) --------------------------------------------------------
+/// PORT: hash of the simulation state for replay desync detection (InputScript_CheckState):
+/// random seed + per live entity id, class, state, position, life, speed. Pointer fields are left
+/// out (heap addresses differ between runs). 0 until the game state exists.
+uint64_t Port_GameStateHash()
+{
+  if (!str_AE400_AE3F0)
+    return 0;
+  uint64_t h = 1469598103934665603ULL;
+  auto mix = [&h](uint32_t v) { h ^= v; h *= 1099511628211ULL; };
+  mix(str_AE400_AE3F0->rand_4);
+  for (int i = 1; i < 1000; i++)
+  {
+    const Type_AE400_29795& e = str_AE400_AE3F0->str_29795[i];
+    if (!e.var_u8_29859_64)
+      continue;
+    mix(i);
+    mix(e.id_29819_24 | (e.var_u8_29859_64 << 16) | (e.var_u8_29860_65 << 24));
+    mix(e.var_u8_29865_70);
+    mix(e.var_u32_29867_72.x | (e.var_u32_29867_72.y << 16));
+    mix((uint16_t)e.var_u32_29867_72.z);
+    mix((uint32_t)e.actLife_29807_12);
+    mix((uint16_t)e.actSpeed_29921_126);
+  }
+  return h;
+}
+
 void sub_416B0()//2126B0_
 {
   //int v0; // edi

@@ -55,7 +55,7 @@ def main():
         rc = subprocess.run(cmd, cwd=os.path.dirname(os.path.abspath(a.exe)), stdout=log,
                             stderr=subprocess.STDOUT, env=dict(os.environ) if a.real_audio else dict(os.environ, SDL_AUDIODRIVER="dummy")).returncode
     text = open(log_path, "rb").read().decode("latin-1", "replace").splitlines()
-    interesting = [l for l in text if any(k in l for k in ("WATCHDOG", "  #", "allert_error", "exit", "exhausted", "quit"))]
+    interesting = [l for l in text if any(k in l for k in ("WATCHDOG", "DESYNC", "  #", "allert_error", "exit", "exhausted", "quit"))]
     print(f"exit code {rc} ({rc & 0xFFFFFFFF:#x}); log: {log_path}")
     for l in (interesting or text)[-25:]:
         print("  " + l)

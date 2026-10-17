@@ -24,6 +24,9 @@ void InputScript_OnFrame(uint32_t frame);
 bool InputScript_Exhausted(uint32_t frame, uint32_t graceFrames);
 // true while an input script is loaded: live input is then ignored (it would desynchronise the replay)
 bool InputScript_Playing();
+// Called once per presented frame with a hash of the game state: recordings store it every 30 frames
+// ("C" lines); replays compare and report the first frame that differs ("DESYNC at frame N").
+void InputScript_CheckState(uint32_t frame, uint64_t hash);
 
 // Recording hooks (called from the SDL event pump)
 void InputScript_RecordKey(uint32_t frame, bool down, int sdlScancode);
