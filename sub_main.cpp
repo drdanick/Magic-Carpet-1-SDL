@@ -1111,8 +1111,8 @@ void DrawText_51560_518A0(_BYTE *a1, int a2, __int16 a3, char* text);
 __int16 sub_51650_51990(int a1, int a2, __int16 a3, int a4);
 void sub_519E0_51D20(TypeStrFont* a1);
 void sub_51A10_51D50();
-int sub_51AF0_51E30(char a1);
-int sub_51C90_51FD0(char a1);
+int LoadGame_51AF0_51E30(char a1);
+int SaveGame_51C90_51FD0(char a1);
 void sub_51DF0_52130(char a1);
 void sub_51E84_521C4(_BYTE *a1, _BYTE *a2, _BYTE *a3, int a4, char a5);
 int sub_51ECC_5220C(int a1, int a2, int a3, int a4, char a5, char a6);
@@ -57878,27 +57878,27 @@ void sub_4BD60_4C0A0()//21CD60_
         {
           case 1:
             if ( sub_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
-              sub_51AF0_51E30(1);
+              LoadGame_51AF0_51E30(1);
             break;
           case 2:
             if ( sub_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
-              sub_51AF0_51E30(2);
+              LoadGame_51AF0_51E30(2);
             break;
           case 3:
             if ( sub_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
-              sub_51AF0_51E30(3);
+              LoadGame_51AF0_51E30(3);
             break;
           case 4:
             if ( sub_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
-              sub_51AF0_51E30(4);
+              LoadGame_51AF0_51E30(4);
             break;
           case 5:
             if ( sub_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
-              sub_51AF0_51E30(5);
+              LoadGame_51AF0_51E30(5);
             break;
           case 6:
             if ( sub_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
-              sub_51AF0_51E30(6);
+              LoadGame_51AF0_51E30(6);
             break;
           default:
             break;
@@ -57965,27 +57965,27 @@ LABEL_70:
         {
           case 1:
             if ( sub_4CCA0_4CFE0(0) )
-              sub_51C90_51FD0(1);
+              SaveGame_51C90_51FD0(1);
             break;
           case 2:
             if ( sub_4CCA0_4CFE0(0) )
-              sub_51C90_51FD0(2);
+              SaveGame_51C90_51FD0(2);
             break;
           case 3:
             if ( sub_4CCA0_4CFE0(0) )
-              sub_51C90_51FD0(3);
+              SaveGame_51C90_51FD0(3);
             break;
           case 4:
             if ( sub_4CCA0_4CFE0(0) )
-              sub_51C90_51FD0(4);
+              SaveGame_51C90_51FD0(4);
             break;
           case 5:
             if ( sub_4CCA0_4CFE0(0) )
-              sub_51C90_51FD0(5);
+              SaveGame_51C90_51FD0(5);
             break;
           case 6:
             if ( sub_4CCA0_4CFE0(0) )
-              sub_51C90_51FD0(6);
+              SaveGame_51C90_51FD0(6);
             break;
           default:
             break;
@@ -61296,7 +61296,9 @@ void sub_51A10_51D50()
 }
 
 //----- (00051AF0) --------------------------------------------------------
-int sub_51AF0_51E30(char a1)
+/// Loads save slot a1 (1-based) from C:\carpet.cd\save\carpddNN.gam: progress only - slot name,
+/// settings blocks, level index (stored as 4 * (level + b0 + b1)), spell slots (+15318).
+int LoadGame_51AF0_51E30(char a1)
 {
   int v1; // esi
   FILE* v2; // ebx
@@ -61341,7 +61343,8 @@ int sub_51AF0_51E30(char a1)
 // 51AF0: using guessed type int var_14[5];
 
 //----- (00051C90) --------------------------------------------------------
-int sub_51C90_51FD0(char a1)
+/// Writes save slot a1 (1-based) in the layout LoadGame_51AF0_51E30 reads.
+int SaveGame_51C90_51FD0(char a1)
 {
   int v1; // esi
   char pathBuffer[40]; // [esp+0h] [ebp-3Ch] BYREF
