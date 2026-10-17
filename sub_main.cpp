@@ -30297,7 +30297,7 @@ void sub_29700(int a1)
   v1 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 5, 5);
   if ( v1 )
   {
-    ++*(int *)((char *)&dword_38C9F + dword_AE400_AE3F0());
+    ++*(int *)((char *)str_AE400_AE3F0 + 0x38C9F /* PORT: game-state field at 0x38C9F, was &dword_38C9F + state */);
     v2 = (int)CreateEntity_373F0_377B0(&word_AE454_AE444, 10, 1);
     if ( v2 )
       *(_WORD *)(v2 + 24) = *(_WORD *)(v1 + 24);
@@ -48244,11 +48244,16 @@ void sub_3C9D0_3CD10()//20D9D0_
 		}
 	LABEL_150:
 		//20EB27
+		// PORT: a player slot can point at entity 0 (no wizard - seen in the menu's demo after the
+		// level-1 ending) whose control block (+160) is null; DOS wrote to low memory, here it crashed.
+		if (actEvent->var_u8_29859_64 == 3 && actEvent->var_u32_29955_160)
+		{
 		int rollEnv = 2 * str_AE400_AE3F0->var_29715[v102x][3] - actEvent->var_u32_29955_160->u16_327;
 		actEvent->var_u32_29955_160->word_0x4_4 = (rollEnv - (my_sign32(rollEnv) << 2) + my_sign32(rollEnv)) >> 2;
 		int pitchEnv = 2 * str_AE400_AE3F0->var_29715[v102x][4] - actEvent->var_u32_29955_160->u16_329;
 		actEvent->var_u32_29955_160->word_0x6_6 = (pitchEnv - (my_sign32(pitchEnv) << 2) + my_sign32(pitchEnv)) >> 2;
 		actEvent->var_u32_29955_160->dw_0.dword = str_AE400_AE3F0->var_29715[v102x][5];
+		}
 		if (str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u8_13327 || v112)
 		{
 			v92 = v112;
@@ -51406,13 +51411,16 @@ void sub_416B0()//2126B0_
   //v7 = &unk_98F38[7] - str_AE400_AE3F0->str_29795[str_AE400_AE3F0->str_13323[0].playIndex_13333].var_u32_29951_156;
   //v7 = str_AE400_AE3F0->str_29795[0].var_u32_29951_156 - str_AE400_AE3F0->str_29795[str_AE400_AE3F0->str_13323[0].playIndex_13333].var_u32_29951_156;
   //v7 = ((int64)0x257018 - (int64)str_AE400_AE3F0->str_29795[str_AE400_AE3F0->str_13323[0].playIndex_13333].var_u32_29951_156) / sizeof(Type_156);
+  // PORT: delta computed once, before any entity is relocated (asm 0x41700..0x4174A): entities after the
+  // wizard kept DOS-era type pointers (+156) - crashes in the menu demo and after loading saved games.
+  const ptrdiff_t delta = &unk_98F38[7] - str_AE400_AE3F0->str_29795[str_AE400_AE3F0->str_13323[0].playIndex_13333].var_u32_29951_156;
   for(int i=1;i<1000;i++)
   //while ( result < dword_AE400_AE3F0() + 193795 )
   {
     if (str_AE400_AE3F0->str_29795[i].var_u8_29859_64)
         //str_AE400_AE3F0->str_29795[i].var_u32_29951_156 += v7;
         //str_AE400_AE3F0->str_29795[i].var_u32_29951_156 = &unk_98F38[7+v7+i];
-        str_AE400_AE3F0->str_29795[i].var_u32_29951_156 = &unk_98F38[&str_AE400_AE3F0->str_29795[i].var_u32_29951_156[7] - str_AE400_AE3F0->str_29795[str_AE400_AE3F0->str_13323[0].playIndex_13333].var_u32_29951_156];
+        str_AE400_AE3F0->str_29795[i].var_u32_29951_156 += delta; // PORT: was recomputed per entity from the already-relocated wizard pointer
     //result += 164;
   }
   //dword_AE400_AE3F0(dword_AE400_AE3F0());
@@ -53889,7 +53897,7 @@ int sub_448E0_44C20()
   v20 = 0;
   do
   {
-    if ( *(int *)((char *)&dword_38CA3 + dword_AE400_AE3F0() + v3) )
+    if ( *(int *)((char *)str_AE400_AE3F0 + 0x38CA3 /* PORT: game-state field at 0x38CA3, was &dword_38CA3 + state */ + v3) )
     {
       v4 = *(_DWORD *)(v1 + 160);
       ++v20;
@@ -53920,11 +53928,11 @@ int sub_448E0_44C20()
   }
   *(_DWORD *)(v6 + 363) = 100;
 LABEL_13:
-  if ( *(int *)((char *)&dword_38C9F + dword_AE400_AE3F0()) )
+  if ( *(int *)((char *)str_AE400_AE3F0 + 0x38C9F /* PORT: game-state field at 0x38C9F, was &dword_38C9F + state */) )
   {
     *(_DWORD *)(*(_DWORD *)(v1 + 160) + 359) = 100
                                              * *(_DWORD *)(*(_DWORD *)(v1 + 160) + 359)
-                                             / *(int *)((char *)&dword_38C9F + dword_AE400_AE3F0());
+                                             / *(int *)((char *)str_AE400_AE3F0 + 0x38C9F /* PORT: game-state field at 0x38C9F, was &dword_38C9F + state */);
     v7 = *(_DWORD *)(v1 + 160);
     if ( *(int *)(v7 + 359) <= 100 )
       goto LABEL_18;
@@ -53968,7 +53976,7 @@ LABEL_18:
     *(_DWORD *)(*(_DWORD *)(v1 + 160) + 375) += *(_DWORD *)(*(_DWORD *)(v1 + 160) + 363);
     v14 = 1;
   }
-  if ( *(int *)((char *)&dword_38C9F + dword_AE400_AE3F0()) )
+  if ( *(int *)((char *)str_AE400_AE3F0 + 0x38C9F /* PORT: game-state field at 0x38C9F, was &dword_38C9F + state */) )
   {
     ++v14;
     *(_DWORD *)(*(_DWORD *)(v1 + 160) + 375) += *(_DWORD *)(*(_DWORD *)(v1 + 160) + 359);
@@ -66032,7 +66040,10 @@ void sub_590D0_595E0()//22A0D0_
         if ( (dword_12DF8C_12DF7C[i]->var_u32_0->var_0 & 1) != 0 )
         {
           //v4 = sub_10FD0(dword_AE3E0_AE3D0, i);
-          sub_10EB0(sub_10FD0(dword_AE3E0_AE3D0, i));
+          // PORT: the lookup can return null at the end of a level (the animation set is released
+          // while entries still carry flags 8|1); DOS read/wrote low memory harmlessly, here it crashed.
+          if (Type_sub_AE3E0* anim = sub_10FD0(dword_AE3E0_AE3D0, i))
+            sub_10EB0(anim);
         }
       }
     }
