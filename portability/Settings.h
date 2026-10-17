@@ -41,7 +41,9 @@ struct Remc1Settings {
 	bool headless = false;     // SDL dummy video driver; live keyboard/mouse input is ignored
 	int watchdogSeconds = -1;  // freeze watchdog; -1 = default (20 s for automated runs, off otherwise), 0 = off
 	int snapshotFrame = -1;    // --snapshot-frame N: dump process memory before/after the entity tick of frame N (diff harness)
+	std::vector<int> snapshotFrames; // --snapshot-frame N1,N2,...: all requested frames (snapshotFrame = the next one)
 	std::string snapshotDir;   // --snapshot-dir D: where the dumps go (default "snapshot")
+	std::string snapshotWhat = "tick"; // --snapshot-what tick|draw: entity tick or one DrawWorld_30D90 call
 };
 
 extern Remc1Settings g_settings;

@@ -15941,8 +15941,9 @@ Type_AE400_29795* sub_11D10(Type_AE400_29795* event)//1E2D10
   int v9; // [esp+8h] [ebp-14h]
 
   v1 = event->collisionBox_29873_78.radiusX_29875_80 + 255;
-  v9 = (event->var_u32_29867_72.x + 128) >> 8;
-  v2 = (event->var_u32_29867_72.y + 128) >> 8;
+  // PORT: (__int16) - the original sign-extends x/y here (movsx); axis_3d has them unsigned (tools/audit_signedness.py)
+  v9 = ((__int16)event->var_u32_29867_72.x + 128) >> 8;
+  v2 = ((__int16)event->var_u32_29867_72.y + 128) >> 8;
   v3 = sub_11410(0, (v1 - (__CFSHL__(v1 >> 31, 8) + (v1 >> 31 << 8))) >> 8);
   if ( !v3 )
     return 0;
@@ -16139,10 +16140,12 @@ void sub_120B0(Type_AE400_29795* a1x, unsigned __int8 a2, unsigned __int16 a3)
         *(_WORD *)(i + 94) = a1x->id_29819_24;
       }
     }
-    v18 = (a1x->var_u32_29867_72.x
+    // PORT: x/y are sign-extended here (movsx) and divided rounding toward zero; with the unsigned
+    // axis_3d fields a position >= 0x8000 scanned a window one map cell off (tools/diff_tick.py)
+    v18 = ((__int16)a1x->var_u32_29867_72.x
          - 128
-         - (__CFSHL__((a1x->var_u32_29867_72.x - 128) >> 31, 8)
-          + ((a1x->var_u32_29867_72.x - 128) >> 31 << 8))) >> 8;
+         - (__CFSHL__(((__int16)a1x->var_u32_29867_72.x - 128) >> 31, 8)
+          + (((__int16)a1x->var_u32_29867_72.x - 128) >> 31 << 8))) >> 8;
     v16 = (a1x->collisionBox_29873_78.radiusX_29875_80
          + 255
          - (__CFSHL__((a1x->collisionBox_29873_78.radiusX_29875_80 + 255) >> 31, 8)
@@ -16151,10 +16154,10 @@ void sub_120B0(Type_AE400_29795* a1x, unsigned __int8 a2, unsigned __int16 a3)
     v15 = -v16;
     if ( -v16 <= v16 )
     {
-      v19 = ((a1x->var_u32_29867_72.y
+      v19 = (((__int16)a1x->var_u32_29867_72.y
             - 128
-            - (__CFSHL__((a1x->var_u32_29867_72.y - 128) >> 31, 8)
-             + ((a1x->var_u32_29867_72.y - 128) >> 31 << 8))) >> 8)
+            - (__CFSHL__(((__int16)a1x->var_u32_29867_72.y - 128) >> 31, 8)
+             + (((__int16)a1x->var_u32_29867_72.y - 128) >> 31 << 8))) >> 8)
           - v16;
       do
       {
@@ -16337,10 +16340,12 @@ int sub_127E0(Type_AE400_29795* a1x, char a2, unsigned __int16 a3)
         }
       }
     }
-    v11 = (a1x->var_u32_29867_72.x
+    // PORT: x/y are sign-extended here (movsx) and divided rounding toward zero; with the unsigned
+    // axis_3d fields a position >= 0x8000 scanned a window one map cell off (tools/diff_tick.py)
+    v11 = ((__int16)a1x->var_u32_29867_72.x
          - 128
-         - (__CFSHL__((a1x->var_u32_29867_72.x - 128) >> 31, 8)
-          + ((a1x->var_u32_29867_72.x - 128) >> 31 << 8))) >> 8;
+         - (__CFSHL__(((__int16)a1x->var_u32_29867_72.x - 128) >> 31, 8)
+          + (((__int16)a1x->var_u32_29867_72.x - 128) >> 31 << 8))) >> 8;
     v13 = (a1x->collisionBox_29873_78.radiusX_29875_80
          + 255
          - (__CFSHL__((a1x->collisionBox_29873_78.radiusX_29875_80 + 255) >> 31, 8)
@@ -16349,10 +16354,10 @@ int sub_127E0(Type_AE400_29795* a1x, char a2, unsigned __int16 a3)
     v10 = -v13;
     if ( -v13 <= v13 )
     {
-      v9 = ((a1x->var_u32_29867_72.y
+      v9 = (((__int16)a1x->var_u32_29867_72.y
            - 128
-           - (__CFSHL__((a1x->var_u32_29867_72.y - 128) >> 31, 8)
-            + ((a1x->var_u32_29867_72.y - 128) >> 31 << 8))) >> 8)
+           - (__CFSHL__(((__int16)a1x->var_u32_29867_72.y - 128) >> 31, 8)
+            + (((__int16)a1x->var_u32_29867_72.y - 128) >> 31 << 8))) >> 8)
          - v13;
       do
       {
@@ -18446,6 +18451,11 @@ LABEL_42:
 }
 
 //SYNCHRONIZED WITH REMC1
+/// Once per tick (UpdateEntities): every missile (list 3) whose owner (+24) is a wizard and that has a
+/// target (+146) is processed once (sets +16 bit 0x2000): the target wizard's per-player counter
+/// (+160 -> str_456[owner player].var_u16_4) against the owner grows by 1000/5000 (500/3000 for a
+/// non-player wizard target, by mana/4 via the owner of a class 10/39 target); past 50000 - a
+/// mana-based margin it sets the flag var_u16_6.
 void sub_16540()
 {
   Type_AE400_29795* i; // edi
@@ -18463,7 +18473,8 @@ void sub_16540()
   //unsigned int v13; // ebx
 
   int result;  
-  for ( i = str_AE408_AE3F8->var_u32_36462[0]; ; i = i->next )
+  // PORT: was var_u32_36462[0] (wizards); asm 0x1654D reads [settings + 8E7Ah] = list 3, the missiles
+  for ( i = str_AE408_AE3F8->var_u32_36462[3]; ; i = i->next )
   {
     //v12 = dword_AE400_AE3F0();
     //v13 = dword_AE400_AE3F0() + 29795;
@@ -18490,7 +18501,7 @@ void sub_16540()
       if ( *(_BYTE *)(((uint8_t*)v3) + 65) != 2 )
       {
         v7 = str_AE400_AE3F0->str_29795[v2->id_29819_24].var_u32_29955_160->str_456[v2->var_u32_29955_160->var_48].var_u16_4;
-        v8 = i->var_u8_29858_63;
+        v8 = i->var_u8_29860_65; // PORT: was var_u8_29858_63; asm 0x166F7 reads the model (+65) like the branch below
         if ( v8 < 0xAu )
         {
           if ( v8 >= 3u && v8 <= 4u )
@@ -20616,10 +20627,11 @@ LABEL_24:
       {
         if ( *(_WORD *)(v13 + 24) != a1x->id_29819_24)
         {
-          v14 = a1x->var_u32_29867_72.x - *(__int16 *)(v13 + 72);
+          // PORT: (__int16) - the original sign-extends x/y here (movsx); axis_3d has them unsigned (tools/audit_signedness.py)
+          v14 = (__int16)a1x->var_u32_29867_72.x - *(__int16 *)(v13 + 72);
           if ( (int)((HIDWORD(v14) ^ v14) - HIDWORD(v14)) < 256 )
           {
-            v15 = a1x->var_u32_29867_72.y - *(__int16 *)(v13 + 74);
+            v15 = (__int16)a1x->var_u32_29867_72.y - *(__int16 *)(v13 + 74);
             if ( (int)((HIDWORD(v15) ^ v15) - HIDWORD(v15)) < 256 )
             {
               a1x->var_u16_29829_34 = sub_42150_42490((axis_3d*)(_WORD *)(v13 + 72), &a1x->var_u32_29867_72);
@@ -20681,7 +20693,7 @@ void sub_1A800(Type_AE400_29795* a1x)
   {
     v1 = (_WORD *)dword_AE408_AE3F8();
     if ( (str_AE408_AE3F8->var_u8_1 & 2) != 0 )
-        a1x->var_u32_29935_140 = 5000;
+        a1x->mana_29935_140 = 5000;
     sub_27690(v1, a1x);
     v2 = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 10, 1);
     if ( v2 )
@@ -20824,7 +20836,7 @@ int sub_1AB70(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
   v15 = a1x->var_u16_29941_146;
   v18 = a1x->sModel_29862_67;
   v22 = a1x->sClass_29861_66;
-  v2 = (unsigned int)(7 * a1x->var_u32_29935_140) / a1x->var_u32_29931_136;
+  v2 = (unsigned int)(7 * a1x->mana_29935_140) / a1x->manaMax_29931_136;
   v3 = 0;
   LOWORD(v4) = 0;
   v5 = v2;
@@ -21762,7 +21774,7 @@ void sub_1BD20(Type_AE400_29795* a1x)
         }
         if ( v14 )
             a1x->var_u16_29941_146 = (int)(v14 - (dword_AE400_AE3F0() + 29795)) / 164;
-        if (a1x->var_u32_29931_136 + 500 < a1x->var_u32_29935_140)
+        if (a1x->manaMax_29931_136 + 500 < a1x->mana_29935_140)
         {
           v23 = (int)CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 10, 52);
           if ( v23 )
@@ -21770,7 +21782,7 @@ void sub_1BD20(Type_AE400_29795* a1x)
             v24 = 9377 * a1x->rand_29799_4 + 9439;
             a1x->rand_29799_4 = v24;
             *(_WORD *)(v23 + 26) = 10 * (v24 % 0xA) + 100;
-            a1x->var_u32_29935_140 -= 500;
+            a1x->mana_29935_140 -= 500;
           }
         }
       }
@@ -21893,7 +21905,7 @@ void sub_1C170(Type_AE400_29795* a1x)
         else
         {
           a1x->var_u16_29941_146 = 0;
-          a1x->var_u32_29935_140 += *(_DWORD *)(v9 + 140);
+          a1x->mana_29935_140 += *(_DWORD *)(v9 + 140);
           *(_WORD *)(v9 + 144) = 0;
           sub_41E80_421C0((Type_AE400_29795*)v9);
           sub_424F0_42830(a1x, 0x1Fu);
@@ -23580,7 +23592,7 @@ void sub_1E810(Type_AE400_29795* a1x)
   int v8; // eax
   unsigned int v9; // [esp+0h] [ebp-14h]
 
-  if (a1x->var_u32_29935_140 < a1x->var_u32_29931_136)
+  if (a1x->mana_29935_140 < a1x->manaMax_29931_136)
   {
     v1 = a1x->var_u32_29951_156->v_28;
     v9 = v1 * v1;
@@ -23602,7 +23614,7 @@ void sub_1E810(Type_AE400_29795* a1x)
     }
     if ( v3 )
     {
-      a1x->var_u32_29935_140 += *(_DWORD *)(v3 + 140);
+      a1x->mana_29935_140 += *(_DWORD *)(v3 + 140);
       *(_WORD *)(v3 + 144) = 0;
       *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)(v3 + 72);
       word_AE454_AE444.z = *(_WORD *)(v3 + 76);
@@ -24805,10 +24817,11 @@ void sub_20480(Type_AE400_29795* a1x)
   {
     if ( *(_WORD *)(i + 24) != a1x->id_29819_24)
     {
-      v7 = a1x->var_u32_29867_72.x - *(__int16 *)(i + 72);
+      // PORT: (__int16) - the original sign-extends x/y here (movsx); axis_3d has them unsigned (tools/audit_signedness.py)
+      v7 = (__int16)a1x->var_u32_29867_72.x - *(__int16 *)(i + 72);
       if ( (int)((HIDWORD(v7) ^ v7) - HIDWORD(v7)) < 256 )
       {
-        v8 = a1x->var_u32_29867_72.y - *(__int16 *)(i + 74);
+        v8 = (__int16)a1x->var_u32_29867_72.y - *(__int16 *)(i + 74);
         if ( (int)((HIDWORD(v8) ^ v8) - HIDWORD(v8)) < 256 )
         {
             a1x->var_u16_29829_34 = sub_42150_42490((axis_3d*)(_WORD *)(i + 72), &a1x->var_u32_29867_72);
@@ -25741,9 +25754,9 @@ void DrawGameFrame_20FB0()//1F1FB0_
 		index295 = str_AE400_AE3F0->str_29795[index323].var_u32_29955_160->var_676.var_u16[byte_99B88[spellIndex]];
 		if (&str_AE400_AE3F0->str_29795[index295] <= str_AE400_AE3F0->str_29795)
 			break;
-		var_132 = str_AE400_AE3F0->str_29795[index295].var_u16_29927_132;
+		var_132 = str_AE400_AE3F0->str_29795[index295].manaDelta_29927_132;
 		var_50 = str_AE400_AE3F0->str_29795[index323].var_u32_29955_160->var_50;
-		if (var_132 && (var_50 == 0 || var_132 > str_AE400_AE3F0->str_29795[var_50].var_u32_29935_140)
+		if (var_132 && (var_50 == 0 || var_132 > str_AE400_AE3F0->str_29795[var_50].mana_29935_140)
 			|| mouse_9AD90.x < locMouseX
 			|| mouse_9AD90.x >= locMouseX + 64
 			|| mouse_9AD90.y < locMouseY
@@ -26055,8 +26068,8 @@ void sub_22E50(Type_AE400_29795* a1x)//1F3E50_
       DrawBitmap_60D18_61228(v6, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[42]);
     v7 = v22 + 58;
     sub_22810(v22 + 58, 10, 64, 10, (v4x->actLife_29807_12 << 6) / v4x->maxLife_29803_8, 0x7Bu);
-    v8 = v4x->var_u32_29931_136;
-    v9 = a1x->var_u32_29955_160->u32_308 + v4x->var_u32_29935_140;
+    v8 = v4x->manaMax_29931_136;
+    v9 = a1x->var_u32_29955_160->u32_308 + v4x->mana_29935_140;
     if ( v9 == v8 )
     {
       //v10 = dword_AE408_AE3F8();
@@ -26067,14 +26080,14 @@ void sub_22E50(Type_AE400_29795* a1x)//1F3E50_
         v11 = v12;
         goto LABEL_21;
       }
-      v11 = v4x->var_u32_29931_136 << 6;
+      v11 = v4x->manaMax_29931_136 << 6;
       v21 = v27;
     }
     else
     {
       sub_22810(v7, 28, 64, 10, (v8 << 6) / str_AE408_AE3F8->str_184.var_u32_188, v27);
       v21 = v29;
-      v11 = (v4x->var_u32_29935_140 + a1x->var_u32_29955_160->u32_308) << 6;
+      v11 = (v4x->mana_29935_140 + a1x->var_u32_29955_160->u32_308) << 6;
       //v10 = dword_AE408_AE3F8();
     }
     v12 = v11;
@@ -26156,7 +26169,7 @@ LABEL_29:
         {
           if (v17x->actLife_29807_12 >= 0 )
             sub_22810(v25, 2 * v16 + 12, 64, 2, (v17x->actLife_29807_12 << 6) / v17x->maxLife_29803_8, 0x7Bu);
-          sub_22810(v25, 2 * v16 + 30, 64, 2, (v17x->var_u32_29935_140 << 6) / v17x->var_u32_29931_136, v29);
+          sub_22810(v25, 2 * v16 + 30, 64, 2, (v17x->mana_29935_140 << 6) / v17x->manaMax_29931_136, v29);
         }
         v16++;
       }
@@ -26193,8 +26206,8 @@ LABEL_29:
   }
   v20 = v24 + 58;
   sub_22810(v24 + 58, 10, 64, 10, (a1x->actLife_29807_12 << 6) / a1x->maxLife_29803_8, 0x7Bu);
-  sub_22810(v24 + 58, 28, 64, 10, (a1x->var_u32_29931_136 << 6) / str_AE408_AE3F8->str_184.var_u32_188, v27);
-  sub_22810(v24 + 58, 28, 64, 10, (a1x->var_u32_29935_140 << 6) / str_AE408_AE3F8->str_184.var_u32_188, v29);
+  sub_22810(v24 + 58, 28, 64, 10, (a1x->manaMax_29931_136 << 6) / str_AE408_AE3F8->str_184.var_u32_188, v27);
+  sub_22810(v24 + 58, 28, 64, 10, (a1x->mana_29935_140 << 6) / str_AE408_AE3F8->str_184.var_u32_188, v29);
   if ( (str_AE408_AE3F8->var_u8_0 & 0x10) == 0 )
   {
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -26520,13 +26533,13 @@ void sub_23D40(int a1, int a2, Type_AE400_29795* a3x, char a4)
           DrawBitmap_60CE0_611F0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[a3x->var_u8_29860_65 + 6]);
         else
           DrawBitmap_60D18_61228(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[a3x->var_u8_29860_65 + 6]);
-        v9 = 56 * (*(_DWORD *)(v5 + 140) % a3x->var_u32_29931_136);
+        v9 = 56 * (*(_DWORD *)(v5 + 140) % a3x->manaMax_29931_136);
         if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-          sub_24C20(a1 + 4, a2 + 36, v9 / a3x->var_u32_29931_136, 4, v26);
+          sub_24C20(a1 + 4, a2 + 36, v9 / a3x->manaMax_29931_136, 4, v26);
         else
-          sub_24CA0(a1 + 4, a2 + 36, v9 / a3x->var_u32_29931_136, 4, v26);
+          sub_24CA0(a1 + 4, a2 + 36, v9 / a3x->manaMax_29931_136, 4, v26);
         v22 = 0;
-        v10 = *(_DWORD *)(v5 + 140) / a3x->var_u32_29931_136;
+        v10 = *(_DWORD *)(v5 + 140) / a3x->manaMax_29931_136;
         v23 = 4;
         do
         {
@@ -26584,7 +26597,7 @@ void sub_23D40(int a1, int a2, Type_AE400_29795* a3x, char a4)
           sub_23AE0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[v4 + 30], (unsigned char)byte_AD167_AD157[1]);
         }
 LABEL_48:
-        v18 = a3x->var_u16_29927_132;
+        v18 = a3x->manaDelta_29927_132;
         if ( v18 )
         {
           v19 = *(_WORD *)(*(_DWORD *)(v21 + 160) + 50);
@@ -27181,8 +27194,9 @@ void sub_255D0(Type_AE400_29795* a1x, __int16 a2, __int16 a3)
   int v9[4]; // [esp+4h] [ebp-10h] BYREF
 
   LOWORD(v3) = a3;
-  v4 = (a1x->var_u32_29867_72.x + 128) >> 8;
-  v5 = (a1x->var_u32_29867_72.y + 128) >> 8;
+  // PORT: (__int16) - the original sign-extends x/y here (movsx); axis_3d has them unsigned (tools/audit_signedness.py)
+  v4 = ((__int16)a1x->var_u32_29867_72.x + 128) >> 8;
+  v5 = ((__int16)a1x->var_u32_29867_72.y + 128) >> 8;
   if ( a3 > (int)(a1x->collisionBox_29873_78.radiusX_29875_80 - (__CFSHL__((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32, 8) + ((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32 << 8))) >> 8 )
     v3 = (int)(a1x->collisionBox_29873_78.radiusX_29875_80 - (__CFSHL__((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32, 8) + ((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32 << 8))) >> 8;
   result = sub_11410(a2, (__int16)v3);
@@ -27926,8 +27940,9 @@ void sub_26760(int a1, _WORD *a2)
 void sub_26890(Type_AE400_29795* event)
 {
   uaxis_2d axis2d;
-  axis2d._axis_2d.x = (event->var_u32_29867_72.x + 128) >> 8;
-  axis2d._axis_2d.y = (event->var_u32_29867_72.y + 128) >> 8;
+  // PORT: (__int16) - the original sign-extends x/y here (movsx); axis_3d has them unsigned (tools/audit_signedness.py)
+  axis2d._axis_2d.x = ((__int16)event->var_u32_29867_72.x + 128) >> 8;
+  axis2d._axis_2d.y = ((__int16)event->var_u32_29867_72.y + 128) >> 8;
   for ( int i = event->var_u16_29821_26; i; i-- )
   {
     mapAngle_FC1E0_FC1D0[axis2d.word] = mapAngle_FC1E0_FC1D0[axis2d.word] & 0xF0 | 1;
@@ -28359,8 +28374,9 @@ void sub_27030(Type_AE400_29795* event)//1F8030_
     //v14 = tempV13;
     if (tempV13 > word_AE454_AE444.z )
     {
-      int32 tempshl = __CFSHL__(((int32)event->var_u16_29841_46) >> 31, 2);
-      event->var_u16_29841_46 = -(((int32)event->var_u16_29841_46 - tempshl + (((int32)event->var_u16_29841_46) >> 31)) >> 2);
+      // PORT: was "-((v - __CFSHL__(v >> 31, 2) + (v >> 31)) >> 2)", a broken rewrite of the signed
+      // division idiom (= (v - 2) >> 2 for v < 0); asm 0x273AB: sar/shl/sbb/sar = v / 4 toward zero
+      event->var_u16_29841_46 = -((int32)event->var_u16_29841_46 / 4);
       /*event->var_u16_29841_46 = -((int)(event->var_u16_29841_46
           - (__CFSHL__((unsigned __int64)event->var_u16_29841_46 >> 32, 2)
               + 4 * ((unsigned __int64)event->var_u16_29841_46 >> 32))) >> 2);*/
@@ -28400,7 +28416,7 @@ void sub_274D0(Type_AE400_29795* event)
 
   for ( i = 0; i < 7; ++i )
   {
-    if (event->var_u32_29935_140 <= dword_900A4[i] )
+    if (event->mana_29935_140 <= dword_900A4[i] )
       break;
   }
   v3 = dword_AE400_AE3F0() + 29795 + 164 * event->var_u16_29939_144;
@@ -28489,14 +28505,14 @@ void sub_27690(_WORD *result, Type_AE400_29795* a2x)
   int v6; // ebp
   __int16 v7; // ax
 
-  if (a2x->var_u32_29935_140 > 0 )
+  if (a2x->mana_29935_140 > 0 )
   {
     a2x->rand_29799_4 = 9377 * a2x->rand_29799_4 + 9439;
     result = (_WORD *)CreateEntity_373F0_377B0(&a2x->var_u32_29867_72, 10, 39);
     v2 = result;
     if ( result )
     {
-      *((_DWORD *)result + 35) = a2x->var_u32_29935_140;
+      *((_DWORD *)result + 35) = a2x->mana_29935_140;
       v3 = *((_DWORD *)result + 1);
       result[72] = a2x->var_u16_29939_144;
       v4 = 9377 * v3 + 9439;
@@ -28536,7 +28552,7 @@ void sub_277D0(Type_AE400_29795* ev1, Type_AE400_29795* ev2)//1F87D0_
   {
     if ( !ev1->var_u16_29939_144)
     {
-        ev1->var_u32_29935_140 += ev2->var_u32_29935_140;
+        ev1->mana_29935_140 += ev2->mana_29935_140;
       //LOWORD(v2) = ev2->var_u16_29939_144;
 //LABEL_20:
       ev1->var_u16_29939_144 = ev2->var_u16_29939_144;
@@ -28553,7 +28569,7 @@ void sub_277D0(Type_AE400_29795* ev1, Type_AE400_29795* ev2)//1F87D0_
       {
         if (str_AE400_AE3F0->str_29795[ev1->var_u16_29939_144].var_u8_29859_64 == 10 )
         {
-            ev1->var_u32_29935_140 += ev2->var_u32_29935_140;
+            ev1->mana_29935_140 += ev2->mana_29935_140;
           //v2 = 164 * ev2->var_u16_29939_144 / 164;
           ev1->var_u16_29939_144 = ev2->var_u16_29939_144;
           sub_41E90_421D0(ev2);
@@ -28561,49 +28577,49 @@ void sub_277D0(Type_AE400_29795* ev1, Type_AE400_29795* ev2)//1F87D0_
         }
         if (str_AE400_AE3F0->str_29795[ev2->var_u16_29939_144].var_u8_29859_64 == 10 )
         {
-          //v6 = ev2->var_u32_29935_140 + ev1->var_u32_29935_140;
+          //v6 = ev2->mana_29935_140 + ev1->mana_29935_140;
           //v7 = 164 * ev1->var_u16_29939_144;
           //v8 = v7;
           //LODWORD(v12) = 164 * ev1->var_u16_29939_144;
           //HIDWORD(v12) = (164 * ev1->var_u16_29939_144) >> 31;
           //v2 = v12 / 164;
-          ev1->var_u32_29935_140 *= ev2->var_u32_29935_140;
+          ev1->mana_29935_140 *= ev2->mana_29935_140;
           //ev1->var_u16_29939_144 = ev1->var_u16_29939_144; //fix it
           sub_41E90_421D0(ev2);
           return;
         }
         if (ev1->var_u16_29939_144 != ev2->var_u16_29939_144)
         {
-          if (str_AE400_AE3F0->str_29795[ev1->var_u16_29939_144].var_u32_29931_136 > str_AE400_AE3F0->str_29795[ev2->var_u16_29939_144].var_u32_29931_136)
+          if (str_AE400_AE3F0->str_29795[ev1->var_u16_29939_144].manaMax_29931_136 > str_AE400_AE3F0->str_29795[ev2->var_u16_29939_144].manaMax_29931_136)
           {
             //v11 = dword_AE400_AE3F0() + 29795;
-            ev1->var_u32_29935_140 += ev2->var_u32_29935_140;
+            ev1->mana_29935_140 += ev2->mana_29935_140;
             //v2 = (&str_AE400_AE3F0->str_29795[ev1->var_u16_29939_144] - v11) / 164;
             //ev1->var_u16_29939_144 = ev1->var_u16_29939_144;//fix it?
             sub_41E90_421D0(ev2);
             return;
           }
-          //v6 = ev2->var_u32_29935_140 + ev1->var_u32_29935_140;
+          //v6 = ev2->mana_29935_140 + ev1->mana_29935_140;
           //v8 = 164 * ev2->var_u16_29939_144;
           //v7 = v8;
 //LABEL_19:
           //LODWORD(v12) = 164 * ev2->var_u16_29939_144;
           //HIDWORD(v12) = (164 * ev2->var_u16_29939_144) >> 31;
           //v2 = v12 / 164;
-          ev1->var_u32_29935_140 *= ev2->var_u32_29935_140;
+          ev1->mana_29935_140 *= ev2->mana_29935_140;
           ev1->var_u16_29939_144 = ev2->var_u16_29939_144;
           sub_41E90_421D0(ev2);
           return;
         }
       }
     }
-    //v9 = ev2->var_u32_29935_140;
-    ev1->var_u32_29935_140 += ev2->var_u32_29935_140;
+    //v9 = ev2->mana_29935_140;
+    ev1->mana_29935_140 += ev2->mana_29935_140;
     sub_41E90_421D0(ev2);
     return;
   }
-  //v2 = ev2->var_u32_29935_140;
-  ev1->var_u32_29935_140 += ev2->var_u32_29935_140;
+  //v2 = ev2->mana_29935_140;
+  ev1->mana_29935_140 += ev2->mana_29935_140;
   sub_41E90_421D0(ev2);
 }
 
@@ -28852,8 +28868,9 @@ void sub_27D30(Type_AE400_29795* event)//1F8D30_
 	int v39; // [esp+20h] [ebp-18h]
 	unsigned __int8 v40; // [esp+24h] [ebp-14h]
 
-	v35 = (event->var_u32_29867_72.x + 128) >> 8;
-	v38 = (event->var_u32_29867_72.y + 128) >> 8;
+	// PORT: (__int16) - the original sign-extends x/y here (movsx); axis_3d has them unsigned (tools/audit_signedness.py)
+	v35 = ((__int16)event->var_u32_29867_72.x + 128) >> 8;
+	v38 = ((__int16)event->var_u32_29867_72.y + 128) >> 8;
 	v39 = event->var_u32_29867_72.z >> 5;
 	//v1 = (int)begBuildTab_AE440_AE430_26C440_26C430 + 6 * *(unsigned __int8*)(a1 + 71);
 	v2 = 0;
@@ -29635,7 +29652,7 @@ void sub_28DC0(Type_AE400_29795* event)
   if ( !(event->var_u8_29858_63 % 40) )
   {
     v6 = event->actSpeed_29923_128;
-    event->var_u32_29935_140 = event->var_u16_29821_26 << 8;
+    event->mana_29935_140 = event->var_u16_29821_26 << 8;
     if ( v6 > 5 && v6 == event->var_u16_29821_26)
     {
       v7 = event->actSpeed_29923_128;
@@ -37461,6 +37478,8 @@ int counter_30D90_30DD0_3;
 //SYNCHRONIZED WITH REMC1
 void DrawWorld_30D90_30DD0(int posX, int posY, __int16 yaw, int posZ, int pitch, int roll, int fow)//201D90_
 {
+	int snapArgs_[7] = { posX, posY, yaw, posZ, pitch, roll, fow }; // PORT: diff harness (tools/diff_call.py)
+	MemSnapshot_Call("draw", true, 0x30D90, snapArgs_, 7);
 	//unsigned __int16 v8; // ax
 	//unsigned __int16 v9; // cx
 	//int v10; // edx
@@ -37885,6 +37904,7 @@ void DrawWorld_30D90_30DD0(int posX, int posY, __int16 yaw, int posZ, int pitch,
             }
 		}
 	}
+	MemSnapshot_Call("draw", false, 0x30D90, snapArgs_, 7);
 }
 
 void sub_315C0_31600()//2025C0_
@@ -43816,8 +43836,8 @@ void sub_38820_38BA0(Type_AE400_29795* a1x)
 {
   int v1; // eax
 
-  v1 = a1x->var_u32_29935_140
-     / ((a1x->var_u32_29931_136 - (__CFSHL__(a1x->var_u32_29931_136 >> 31, 3) + 8 * (a1x->var_u32_29931_136 >> 31))) >> 3);
+  v1 = a1x->mana_29935_140
+     / ((a1x->manaMax_29931_136 - (__CFSHL__(a1x->manaMax_29931_136 >> 31, 3) + 8 * (a1x->manaMax_29931_136 >> 31))) >> 3);
   if ( (v1 & 0x8000u) != 0 )
     LOWORD(v1) = 0;
   if ( (__int16)v1 > 7 )
@@ -47757,7 +47777,7 @@ void sub_3C9D0_3CD10()//20D9D0_
 					//v55 = dword_AE400_AE3F0() + 29795;
 					v107 = 164;
 					v56 = actEvent - str_AE400_AE3F0->str_29795;
-					v54x->var_u16_29927_132 = 0;
+					v54x->manaDelta_29927_132 = 0;
 					v54x->var_u16_29837_42 = v56;
 					actEvent->var_u32_29955_160->var_14958_1635_532[v52x] = v54x - str_AE400_AE3F0->str_29795;
 					v57 = 0;
@@ -47799,11 +47819,11 @@ void sub_3C9D0_3CD10()//20D9D0_
 			ifsEvent = CreateEntity_373F0_377B0(&actEvent->var_u32_29867_72, 10, 39);
 			if (ifsEvent)
 			{
-				ifsEvent->var_u32_29935_140 = 100000;
+				ifsEvent->mana_29935_140 = 100000;
 				ifsEvent->var_u16_29939_144 = actEvent - str_AE400_AE3F0->str_29795;
 			}
 			//HIWORD(v65) = 0;
-			actEvent->var_u32_29935_140 = actEvent->var_u32_29931_136;
+			actEvent->mana_29935_140 = actEvent->manaMax_29931_136;
 			//v64 = dword_AE400_AE3F0();
 			//LOWORD(v65) = v108;
 			if (str_AE400_AE3F0->var_u16_8 == (unsigned __int16)v108)
@@ -50597,8 +50617,9 @@ int sub_40D30_41070(Type_AE400_29795* a1x, __int16 a2, __int16 a3, __int16 a4, c
   int v13[4]; // [esp+4h] [ebp-10h] BYREF
 
   LOWORD(v5) = a3;
-  v6 = (a1x->var_u32_29867_72.x + 128) >> 8;
-  v7 = (a1x->var_u32_29867_72.y + 128) >> 8;
+  // PORT: (__int16) - the original sign-extends x/y here (movsx); axis_3d has them unsigned (tools/audit_signedness.py)
+  v6 = ((__int16)a1x->var_u32_29867_72.x + 128) >> 8;
+  v7 = ((__int16)a1x->var_u32_29867_72.y + 128) >> 8;
   if ( a3 > (int)(a1x->collisionBox_29873_78.radiusX_29875_80 - (__CFSHL__((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32, 8) + ((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32 << 8))) >> 8 )
     v5 = (int)(a1x->collisionBox_29873_78.radiusX_29875_80 - (__CFSHL__((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32, 8) + ((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32 << 8))) >> 8;
   v8 = sub_11410(a2, (__int16)v5);
@@ -53864,7 +53885,7 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
         if (v2x->var_u32_29955_160->var_916[v11x->var_u8_29860_65])
         {
             v11x->var_u16_29881_86 = 280;
-            v11x->var_u16_29927_132 = 0;
+            v11x->manaDelta_29927_132 = 0;
             v11x->var_29811_16.byte[2] |= 4;
         }
       }
@@ -53950,12 +53971,12 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
             v17x->var_u16_29821_26 = ((uint8_t*)str_AE400_AE3F0)[0x38C97 + v2x->var_u32_29955_160->var_48] /* PORT: game-state field, see above */ - 1;
             sub_37150_37510(v17x, ((uint8_t*)str_AE400_AE3F0)[0x38C97 + v2x->var_u32_29955_160->var_48] /* PORT: game-state field, see above */ - 1);
             sub_47C60_47FA0((int)v17x);
-            v24 = v17x->var_u32_29931_136;
-            v17x->var_u32_29935_140 = v24;
+            v24 = v17x->manaMax_29931_136;
+            v17x->mana_29935_140 = v24;
             if ( v24 < 0 )
-              v17x->var_u32_29935_140 = 0;
-            if (v17x->var_u32_29935_140 > 320000)
-              v17x->var_u32_29935_140 = 320000;
+              v17x->mana_29935_140 = 0;
+            if (v17x->mana_29935_140 > 320000)
+              v17x->mana_29935_140 = 320000;
           }
         }
       }
@@ -53974,17 +53995,17 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
     v2x->var_29811_16.byte[0] |= 1u;
   if (a1x->var_u32_13347_24 == 0x0AE89E/*(uint32) &unk_AE89E*/)
   {
-    v2x->var_u32_29931_136 = 1000000;
+    v2x->manaMax_29931_136 = 1000000;
     v2x->maxLife_29803_8 = 1000000;
   }
   else
   {
-    v2x->var_u32_29931_136 = 1000;
+    v2x->manaMax_29931_136 = 1000;
     v2x->maxLife_29803_8 = 10000;
   }
   v2x->actLife_29807_12 = v2x->maxLife_29803_8;
-  v26 = v2x->var_u32_29931_136;
-  v2x->var_u32_29935_140 = v26;
+  v26 = v2x->manaMax_29931_136;
+  v2x->mana_29935_140 = v26;
   v2x->var_u32_29955_160->u32_322 = v26;
   sub_45C10_45F50(v2x);
   v28 = v2x->var_u32_29955_160->var_50;
@@ -54338,17 +54359,17 @@ void sub_45C90_45FD0(Type_AE400_29795* a1x)
   {
     if ( (str_AE408_AE3F8->var_u8_2 & 1) == 0 )
     {
-      a1x->var_u32_29935_140 += a1x->var_u16_29927_132;
+      a1x->mana_29935_140 += a1x->manaDelta_29927_132;
       //v7 = a1x->var_u32_29955_160->u32_383;
       if (a1x->var_u32_29955_160->u32_383)
           a1x->var_u32_29955_160->u32_383--;
       else
           a1x->actLife_29807_12 += a1x->var_u32_29955_160->u16_341;
-      if (a1x->var_u32_29935_140 < 0 )
-          a1x->var_u32_29935_140 = 0;
-      //v8 = a1x->var_u32_29931_136;
-      if (a1x->var_u32_29935_140 > a1x->var_u32_29931_136)
-        a1x->var_u32_29935_140 = a1x->var_u32_29931_136;
+      if (a1x->mana_29935_140 < 0 )
+          a1x->mana_29935_140 = 0;
+      //v8 = a1x->manaMax_29931_136;
+      if (a1x->mana_29935_140 > a1x->manaMax_29931_136)
+        a1x->mana_29935_140 = a1x->manaMax_29931_136;
       if (a1x->actLife_29807_12 < -1 )
           a1x->actLife_29807_12 = -1;
       //v9 = a1x->maxLife_29803_8;
@@ -54362,18 +54383,18 @@ void sub_45C90_45FD0(Type_AE400_29795* a1x)
           a1x->var_u32_29955_160->u16_528--;
       if (bool1 || (a1x->var_29811_16.byte[1] & 0x10) != 0 )
       {
-          a1x->var_u16_29927_132 = a1x->var_u32_29931_136 / 200;
+          a1x->manaDelta_29927_132 = a1x->manaMax_29931_136 / 200;
         a1x->var_u32_29955_160->u16_341 = a1x->maxLife_29803_8 / 250;
-        if (a1x->var_u16_29927_132 < 1000 )
-            a1x->var_u16_29927_132 = 1000;
+        if (a1x->manaDelta_29927_132 < 1000 )
+            a1x->manaDelta_29927_132 = 1000;
         a1x->var_29811_16.byte[1] &= ~0x10u;
       }
       else
       {
-          a1x->var_u16_29927_132 = a1x->var_u32_29931_136 / 2000;
+          a1x->manaDelta_29927_132 = a1x->manaMax_29931_136 / 2000;
         a1x->var_u32_29955_160->u16_341 = a1x->maxLife_29803_8 / 2000;
-        if (a1x->var_u16_29927_132 < 100 )
-            a1x->var_u16_29927_132 = 100;
+        if (a1x->manaDelta_29927_132 < 100 )
+            a1x->manaDelta_29927_132 = 100;
       }
     }
   }
@@ -54644,7 +54665,7 @@ int sub_46540_46880(Type_AE400_29795* a1x)
     {
       if ( *(_BYTE *)(v8 + 64) == 3 )
         *(_DWORD *)(v8 + 140) += a1x->str_29885_90.var_u16_29903_108;
-      a1x->var_u32_29935_140 -= a1x->str_29885_90.var_u16_29903_108;
+      a1x->mana_29935_140 -= a1x->str_29885_90.var_u16_29903_108;
       *(_BYTE *)((uint8_t*)a1x->var_u32_29955_160 + 392) = 4;
       *(_DWORD *)((uint8_t*)a1x->var_u32_29955_160 + 383) = 16;
     }
@@ -54656,7 +54677,7 @@ int sub_46540_46880(Type_AE400_29795* a1x)
     if ( (a1x->var_29811_16.byte[1] & 0x40) != 0 )
     {
       v10 = (a1x->str_29885_90.var_u16_29885_90 - (__CFSHL__(a1x->str_29885_90.var_u16_29885_90 >> 31, 2) + 4 * (a1x->str_29885_90.var_u16_29885_90 >> 31))) >> 2;
-      a1x->var_u32_29935_140 -= v10;
+      a1x->mana_29935_140 -= v10;
       v11 = a1x->var_29811_16.byte[1];
       a1x->str_29885_90.var_u16_29885_90 = v10;
       a1x->var_29811_16.byte[1] = v11 & 0xBF;
@@ -54826,13 +54847,13 @@ void sub_46B00_46E40(Type_AE400_29795* a1x, Type_AE400_29795* a2x, int a3, int a
       goto LABEL_20;
     if (str_AE400_AE3F0->str_29795[a1x->var_u32_29955_160->var_676.var_u16[21]].var_48)
         str_AE400_AE3F0->str_29795[a1x->var_u32_29955_160->var_676.var_u16[21]].var_48 = 0;
-    if ( a1x->var_u32_29935_140 >= a2x->var_u32_29931_136)
+    if ( a1x->mana_29935_140 >= a2x->manaMax_29931_136)
     {
 LABEL_20:
       if (a2x->var_u8_29857_62)
       {
         a2x->var_u8_29856_61++;
-        v8 = a1x->var_u32_29935_140 / a2x->var_u32_29931_136;
+        v8 = a1x->mana_29935_140 / a2x->manaMax_29931_136;
         if ( (__int16)v8 > a2x->var_u8_29857_62)
           LOWORD(v8) = a2x->var_u8_29857_62;
         if (a2x->var_u8_29856_61 < 0 )
@@ -54843,7 +54864,7 @@ LABEL_20:
         a1x->var_29811_16.dword |= a3;
         return;
       }
-      if (a1x->var_u32_29935_140 < a2x->var_u32_29931_136)
+      if (a1x->mana_29935_140 < a2x->manaMax_29931_136)
         return;
 LABEL_32:
       a2x->var_48 = a2x->var_50;
@@ -54861,7 +54882,7 @@ LABEL_32:
         sub_55370_558A0(0, a1x->var_u32_29955_160->var_48, 29);
         return;
       }
-      if (a1x->var_u32_29935_140 < a2x->var_u32_29931_136)
+      if (a1x->mana_29935_140 < a2x->manaMax_29931_136)
         return;
       goto LABEL_32;
     }
@@ -54869,7 +54890,7 @@ LABEL_32:
       goto LABEL_20;
     if (str_AE400_AE3F0->str_29795[a1x->var_u32_29955_160->var_676.var_u16[2]].var_48)
         str_AE400_AE3F0->str_29795[a1x->var_u32_29955_160->var_676.var_u16[2]].var_48 = 0;
-    if (a1x->var_u32_29935_140 >= a2x->var_u32_29931_136)
+    if (a1x->mana_29935_140 >= a2x->manaMax_29931_136)
       goto LABEL_20;
   }
 }
@@ -55631,8 +55652,8 @@ void sub_47DD0_48110(Type_AE400_29795* a1x)
         v7 = 0;
         break;
     }
-    v6->var_u32_29931_136 = v7;
-    v6->var_u32_29935_140 = v7 / v6->var_50;
+    v6->manaMax_29931_136 = v7;
+    v6->mana_29935_140 = v7 / v6->var_50;
   }
 }
 
@@ -55820,7 +55841,7 @@ void sub_48230_48570(Type_AE400_29795* a1)
     if ( v1 >= str_AE400_AE3F0->var_u16_10 )
       break;
     v3 = &str_AE400_AE3F0->str_29795[i->playIndex_13333];
-    v3->var_u32_29931_136 = v3->var_u32_29955_160->u32_322;
+    v3->manaMax_29931_136 = v3->var_u32_29955_160->u32_322;
     v1++;
     v3->var_u32_29955_160->u32_308 = 0;
   }
@@ -55854,7 +55875,7 @@ void sub_48230_48570(Type_AE400_29795* a1)
           if ( v12 )
           {
             if ( *(_DWORD *)(v12 + 160) )
-              *(_DWORD *)(*(_DWORD *)(v12 + 160) + 308) += str_AE400_AE3F0->str_29795[v7x].var_u32_29935_140;
+              *(_DWORD *)(*(_DWORD *)(v12 + 160) + 308) += str_AE400_AE3F0->str_29795[v7x].mana_29935_140;
           }
         }
         goto LABEL_20;
@@ -63360,7 +63381,11 @@ int sub_54F80(int a1)
       v6 = dword_AE400_AE3F0();
       if ( v5 < 37748736 )
       {
-        v7 = Distance_410CE_4140E(v4);
+        // PORT: was Distance_410CE_4140E(v4). The asm pushes edx right after calling sub_42410 (0x54FF8),
+        // which leaves dy*dy in edx (it returns dx*dx + dy*dy in eax), so +48 = |dy|, not the distance
+        // (Hex-Rays assumed edx survived the call: tools/audit_clobber.py).
+        int16 dy_ = (int16)(*(_WORD *)(164 * (unsigned __int16)v4 + dword_AE400_AE3F0() + 29795 + 74) - *(_WORD *)(a1 + 74));
+        v7 = Distance_410CE_4140E(dy_ * dy_);
         v8 = *(_WORD *)(a1 + 54);
         *(_WORD *)(a1 + 48) = v7;
         v6 = dword_AE400_AE3F0();
@@ -63849,7 +63874,7 @@ LABEL_31:
   if ( v25 || v24 == -1 )
     goto LABEL_40;
   if ( (a1x->var_29811_16.byte[2] & 4) != 0 )
-    a1x->var_u16_29927_132 = 0;
+    a1x->manaDelta_29927_132 = 0;
   dword_AE400_AE3F0(v11);
   sub_55370_558A0(v23x - str_AE400_AE3F0->str_29795, -1, 18);
   v19 = dword_AE400_AE3F0();
@@ -63948,13 +63973,12 @@ int sub_55E80_563B0(int a1, int a2)
   if ( v2 == *(_WORD *)(a1 + 50) )
   {
     v3 = *(_DWORD *)(a2 + 132);
-    //fix 
-    /*
+    // PORT: this mana charge was commented out ("//fix") - casting cost no mana. Restored as in the
+    // original (asm 0x55E93): the caster's mana change (+132) becomes minus the spell cost (+136).
     if ( v3 >= 0 )
       *(_DWORD *)(a2 + 132) = -*(_DWORD *)(a1 + 136);
     else
       *(_DWORD *)(a2 + 132) = v3 - *(_DWORD *)(a1 + 136);
-    */
     return 1;
   }
   else
@@ -67573,7 +67597,8 @@ void sub_5B650_5BB60()
   if ( (__int16)(scrHeight_12EFF8_12EFE8 - HIWORD(mouseXY_12EF80_12EF70)) > word_12EFC6_12EFB6 )
     word_12EF86_12EF76 = word_12EFC6_12EFB6;
   dword_12EFA8_12EF98 = dword_12EF88_12EF78;
-  dword_12EFA4_12EF94 = (int)&tempScreenBuffer_A0000[(unsigned __int16)mouseByteIndex2_12EF8C_12EF7C];
+  // PORT: full index - tempScreenBuffer_A0000 is linear, not a 64K VGA bank window (was (unsigned __int16))
+  dword_12EFA4_12EF94 = (int)&tempScreenBuffer_A0000[mouseByteIndex2_12EF8C_12EF7C];
   dword_12EFA0_12EF90 = (int)dword_12EFC8_12EFB8;
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
   {
@@ -67608,19 +67633,12 @@ void sub_5B650_5BB60()
         *v2 = *(_BYTE *)dword_12EFA4_12EF94;
         if ( *(_BYTE *)dword_12EFA0_12EF90 != 0xFE )
           *(_BYTE *)dword_12EFA4_12EF94 = *(_BYTE *)dword_12EFA0_12EF90;
-        if ( ++dword_12EFA4_12EF94 >= 0xB0000 )
-        {
-          sub_61A1C_61F2C(++word_12EFD0);
-          dword_12EFA4_12EF94 -= 0x10000;
-        }
+        // PORT: no 64K bank wrap - the DOS code compared with the window end 0xB0000, which a host
+        // pointer always exceeds: every pixel stepped back 64K (memory corruption in 640x480)
+        ++dword_12EFA4_12EF94;
         ++dword_12EFA0_12EF90;
       }
       dword_12EFA4_12EF94 += scrWidth_12EFF0_12EFE0 - (*(int *)((char *)&mouseXY_12EF80_12EF70 + 2) >> 16);
-      if ( dword_12EFA4_12EF94 >= 0xB0000 )
-      {
-        sub_61A1C_61F2C(++word_12EFD0);
-        dword_12EFA4_12EF94 -= 0x10000;
-      }
       dword_12EFA0_12EF90 += (*(int *)((char *)&dword_12EFC8_12EFB8 + 2) >> 16) - (*(int *)((char *)&mouseXY_12EF80_12EF70 + 2) >> 16);
     }
   }
@@ -67741,18 +67759,9 @@ void sub_5BB60_5C070()
         v3 = (_BYTE *)dword_12EFA8_12EF98++;
         v4 = (_BYTE *)dword_12EFA4_12EF94++;
         *v4 = *v3;
-        if ( dword_12EFA4_12EF94 >= 0xB0000)
-        {
-          sub_61A1C_61F2C(++word_12EFD0);
-          dword_12EFA4_12EF94 -= 0x10000;
-        }
+        // PORT: no 64K bank wrap (see sub_5B650_5BB60): it crashed in 640x480 (write into .text)
       }
       dword_12EFA4_12EF94 += scrWidth_12EFF0_12EFE0 - (*(int *)((char *)&mouseXY_12EF80_12EF70 + 2) >> 16);
-      if ( dword_12EFA4_12EF94 >= 0xB0000 )
-      {
-        sub_61A1C_61F2C(++word_12EFD0);
-        dword_12EFA4_12EF94 -= 0x10000;
-      }
     }
   }
 }

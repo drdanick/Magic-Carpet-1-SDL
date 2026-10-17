@@ -429,10 +429,12 @@ typedef struct _Type_AE400_29795 {// len 164
 
 	int16 actSpeed_29923_128;//128 // pre actspeed
 	uint16 acceleration_29925_130;//130 //acceleration
-	uint16 var_u16_29927_132;//132
-	uint8_t stub3[2];
-	uint32 var_u32_29931_136;//136
-	uint32 var_u32_29935_140;//140
+	// PORT: these three are signed 32-bit in the original (signed compares/idiv); +132 was a uint16 (+ stub)
+	// and +136/+140 uint32: negative mana changes (spell costs) were added as ~65000 and a mana value
+	// below 0 wrapped and was clamped to the capacity - mana never ran out (tools/diff_tick.py).
+	int32 manaDelta_29927_132;//132 per-tick mana change: regeneration, or minus a spell's cost
+	int32 manaMax_29931_136;//136 mana capacity
+	int32 mana_29935_140;//140 current mana
 	uint16 var_u16_29939_144;//144
 	uint16 var_u16_29941_146;//146 //index entity
 	uint8_t stub4[2];

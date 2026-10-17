@@ -100,8 +100,10 @@ def main():
     ap.add_argument('--show', type=int, default=60)
     ap.add_argument('--stepwise', action='store_true', help='compare every handler call of the tick in order')
     ap.add_argument('--trace-step', type=int, default=-1, help='with --stepwise: log the calls of both versions at step N')
+    ap.add_argument('--watch', default='', help='comma separated game-state offsets: print who writes them (original)')
     a = ap.parse_args()
     m = Machine(a.snapdir, load_port_code=a.stepwise)
+    m.watch = {m.state_addr + int(w, 0) for w in a.watch.split(',') if w}
     if a.stepwise:
         return stepwise(m, a)
     st, ss = m.state_addr, m.state_size

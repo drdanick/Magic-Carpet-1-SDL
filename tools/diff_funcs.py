@@ -78,7 +78,7 @@ def compare(m, w_orig, ret_orig, w_port, ret_port, show=8):
             o = m.mu.mem_read(k, 1)[0]  # unchanged in the original run = current (restored) value
         if p is None:
             p = m.mu.mem_read(k, 1)[0]
-        if o != p:
+        if o != p and k not in m.port_only:
             bad.append((k, o, p))
     # forgive pointer translations: a dword where port value translates to the original value
     real = []

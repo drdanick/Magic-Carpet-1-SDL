@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <string>
+#include <algorithm>
 
 #include "Settings.h"
 #include "port_sdl_vga_mouse.h"
@@ -14,11 +15,6 @@
 
 namespace {
 bool g_inTick = false;
-
-std::string Dir()
-{
-	return g_settings.snapshotDir.empty() ? std::string("snapshot") : g_settings.snapshotDir;
-}
 
 #ifdef _WIN32
 // File format: "MC1SNAP1", then records { uint32 base, uint32 size, bytes }, terminated by {0, 0}.
@@ -59,38 +55,108 @@ bool WriteDump(const std::string&) { return false; }
 #endif
 } // namespace
 
+extern void* MemSnapshot_State;
+extern size_t MemSnapshot_StateSize;
+void* MemSnapshot_State = nullptr;
+size_t MemSnapshot_StateSize = 0;
+
+namespace {
+// One requested frame: <dir>. Several (--snapshot-frame N1,N2,..): <dir>/f<N> for the frame being taken.
+std::string Dir()
+{
+	std::string base = g_settings.snapshotDir.empty() ? std::string("snapshot") : g_settings.snapshotDir;
+	if (g_settings.snapshotFrames.size() <= 1)
+		return base;
+#ifdef _WIN32
+	CreateDirectoryA(base.c_str(), nullptr);
+#endif
+	return base + "/f" + std::to_string(g_settings.snapshotFrame);
+}
+
+// Start a snapshot: create its directory and write meta.txt (the caller adds its own lines after the
+// common ones). Returns the directory.
+std::string Begin(const char* extra)
+{
+	std::string dir = Dir();
+#ifdef _WIN32
+	CreateDirectoryA(dir.c_str(), nullptr);
+#endif
+	FILE* m = fopen((dir + "/meta.txt").c_str(), "w");
+	if (m)
+	{
+#ifdef _WIN32
+		fprintf(m, "image_base %#x\n", (unsigned)(uintptr_t)GetModuleHandleA(nullptr));
+#endif
+		fprintf(m, "frame %u\n%s", VGA_PresentedFrames(), extra);
+		fclose(m);
+	}
+	if (!WriteDump(dir + "/before.bin"))
+		fprintf(stderr, "snapshot: cannot write %s/before.bin\n", dir.c_str());
+	return dir;
+}
+
+// Finish a snapshot; move on to the next requested frame, or exit after the last one.
+void End(const char* what)
+{
+	std::string dir = Dir();
+	WriteDump(dir + "/after.bin");
+	fprintf(stderr, "snapshot (%s): frame %u written to %s\n", what, VGA_PresentedFrames(), dir.c_str());
+	fflush(stderr);
+	auto& v = g_settings.snapshotFrames;
+	auto it = std::upper_bound(v.begin(), v.end(), g_settings.snapshotFrame);
+	if (it == v.end())
+		exit(0);
+	g_settings.snapshotFrame = (std::max)(*it, (int)VGA_PresentedFrames() + 1);
+}
+} // namespace
+
+void MemSnapshot_Call(const char* what, bool before, unsigned idaAddress, const int* args, int nargs)
+{
+	static bool inCall = false;
+	if (g_settings.snapshotFrame < 0 || g_settings.snapshotWhat != what)
+		return;
+	if (before)
+	{
+		if ((int)VGA_PresentedFrames() < g_settings.snapshotFrame || inCall)
+			return;
+		inCall = true;
+		char extra[512];
+		int n = snprintf(extra, sizeof(extra), "state %#x %u\ncall %#x", (unsigned)(uintptr_t)MemSnapshot_State,
+			(unsigned)MemSnapshot_StateSize, idaAddress);
+		for (int i = 0; i < nargs && n < (int)sizeof(extra) - 16; i++)
+			n += snprintf(extra + n, sizeof(extra) - n, " %d", args[i]);
+		snprintf(extra + n, sizeof(extra) - n, "\n");
+		Begin(extra);
+	}
+	else if (inCall)
+	{
+		inCall = false;
+		End(what);
+	}
+}
+
 void MemSnapshot_Tick(bool before, const void* state, size_t stateSize, const void* settings, size_t settingsSize)
 {
-	if (g_settings.snapshotFrame < 0)
+	if (before && state)
+	{
+		MemSnapshot_State = (void*)state;
+		MemSnapshot_StateSize = stateSize;
+	}
+	if (g_settings.snapshotFrame < 0 || g_settings.snapshotWhat != "tick")
 		return;
 	if (before)
 	{
 		if ((int)VGA_PresentedFrames() < g_settings.snapshotFrame || g_inTick)
 			return;
 		g_inTick = true;
-		std::string dir = Dir();
-#ifdef _WIN32
-		CreateDirectoryA(dir.c_str(), nullptr);
-#endif
-		FILE* m = fopen((dir + "/meta.txt").c_str(), "w");
-		if (m)
-		{
-#ifdef _WIN32
-			fprintf(m, "image_base %#x\n", (unsigned)(uintptr_t)GetModuleHandleA(nullptr));
-#endif
-			fprintf(m, "frame %u\nstate %#x %u\nsettings %#x %u\n", VGA_PresentedFrames(), (unsigned)(uintptr_t)state,
-				(unsigned)stateSize, (unsigned)(uintptr_t)settings, (unsigned)settingsSize);
-			fclose(m);
-		}
-		if (!WriteDump(dir + "/before.bin"))
-			fprintf(stderr, "snapshot: cannot write %s/before.bin\n", dir.c_str());
+		char extra[128];
+		snprintf(extra, sizeof(extra), "state %#x %u\nsettings %#x %u\n", (unsigned)(uintptr_t)state,
+			(unsigned)stateSize, (unsigned)(uintptr_t)settings, (unsigned)settingsSize);
+		Begin(extra);
 	}
 	else if (g_inTick)
 	{
-		std::string dir = Dir();
-		WriteDump(dir + "/after.bin");
-		fprintf(stderr, "snapshot: frame %u written to %s\n", VGA_PresentedFrames(), dir.c_str());
-		fflush(stderr);
-		exit(0);
+		g_inTick = false;
+		End("tick");
 	}
 }

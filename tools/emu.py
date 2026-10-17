@@ -30,7 +30,9 @@ SKIP_GLOBALS = {'tempScreenBuffer_A0000', 'unk_93AE0', 'off_96864', 'videoModes_
                 'unk_A1D34', 'str_254DBC', 'dword_999B8', 'off_9EF10', 'off_99A84', 'off_99B68'}
 CLIP_GLOBALS = {'dword_9334C': 1024}
 # sound: the original drives the HMI/SOS driver, the port SDL_mixer - neither is game logic
-SKIP_FUNCS = ['sub_55370_558A0']
+SKIP_FUNCS = ['sub_55370_558A0', 'sub_55890_55DC0',
+              # port-only diagnostics called from game functions (the snapshot hooks themselves)
+              'MemSnapshot_Call', 'MemSnapshot_Tick']
 
 
 def read_dump(path):
@@ -81,7 +83,7 @@ class Stop(Exception):
 
 
 class Machine:
-    def __init__(self, snapdir, exe='C:/mc1data/CD/CARPET.EXE', port='build/win-x86/RelWithDebInfo/remc1.exe',
+    def __init__(self, snapdir, exe='C:/mc1data/CD/CARPET.EXE', port=os.environ.get('REMC1_PORT_EXE', 'build/win-x86/RelWithDebInfo/remc1.exe'),
                  load_port_code=True):
         self.meta = read_meta(os.path.join(snapdir, 'meta.txt'))
         self.image_base = self.meta['image_base'][0]
@@ -95,6 +97,11 @@ class Machine:
         self.ps = PortSymbols(port)
         self.amap = PortAddrMap(self.ps, self.img)
         self.sym_by_name = self.ps.by_name()
+        # port-only instrumentation globals (call counters etc.): writes to them are not differences
+        self.port_only = set()
+        for s_ in self.ps.data_symbols():
+            if s_.name.startswith(('counter_', 'compare_', 'debugcounter')):
+                self.port_only.update(range(self.image_base + s_.rva, self.image_base + s_.rva + max(s_.size, 1)))
         ib = self.image_base
         self.image_lo = ib
         self.image_hi = ib + max(s[1] + max(s[2], s[4]) for s in self.ps.sections)
@@ -122,6 +129,7 @@ class Machine:
         self._copy_globals()
         self.wlog = []
         self.logging = False
+        self.watch = set()  # addresses whose writes are printed (diff_tick.py --watch)
         mu.hook_add(UC_HOOK_INTR, self._on_intr)
         mu.hook_add(UC_HOOK_MEM_INVALID, self._on_invalid)
         mu.hook_add(UC_HOOK_CODE, self._on_trap, begin=TRAP, end=TRAP + 16)
@@ -132,7 +140,9 @@ class Machine:
         self.skipped = {}
         for name in SKIP_FUNCS:
             from port_index import addr_from_name
-            self.skip_function(addr_from_name(name), 0)
+            oa = addr_from_name(name)
+            if oa is not None:
+                self.skip_function(oa, 0)
             if name in self.sym_by_name:
                 self.skip_function(self.port_addr(name), 0)
         self.ctx = mu.context_save()  # clean CPU state (segments!) restored before every call
@@ -211,8 +221,27 @@ class Machine:
         # variables) cover other globals; the more specific (smaller) global must win
         owner = {}  # ida byte -> (static match, global) of the global currently owning it
         self.dropped = []
+        # linker-like layout: a global ends where the next address-named global begins (port arrays
+        # were often enlarged - word_CC070 ran into mapTerrainType_CC1E0 - and IDA "tables" such as
+        # trig_9074C cover separately named variables). Static data cut off this way keeps the
+        # original's own (identical) bytes.
+        spans = []
+        for s in self.ps.data_symbols():
+            c = name_addresses(s.name, self.img)
+            if c and s.size:
+                spans.append((c[0], s.size, s.name))
+        # an unk_ placeholder lying entirely inside another global (e.g. unk_110003 inside the 128 KB
+        # mapEntityIndex) is IDA junk, not a variable: neither a boundary nor copied
+        self.junk = set()
+        for a0, n0, nm in spans:
+            if nm.startswith('unk_') and any(a1 < a0 and a0 + n0 <= a1 + n1 for a1, n1, _ in spans):
+                self.junk.add(nm)
+        starts = sorted({a0 for a0, n0, nm in spans if nm not in self.junk})
+        self.clip_end = {}
+        for i, a0 in enumerate(starts[:-1]):
+            self.clip_end[a0] = starts[i + 1]
         for s in sorted(self.ps.data_symbols(), key=lambda s: -s.size):
-            if s.name in SKIP_GLOBALS or s.size == 0:
+            if s.name in SKIP_GLOBALS or s.size == 0 or s.name in self.junk:
                 continue
             cands = name_addresses(s.name, self.img)
             if not cands:
@@ -220,7 +249,7 @@ class Machine:
             ida = cands[0]
             obase = self.img.object_at(ida)
             oend = obase + [o for o in self.img.objects if o[0] == obase][0][1]
-            size = min(s.size, oend - ida, CLIP_GLOBALS.get(s.name, s.size))
+            size = min(s.size, oend - ida, CLIP_GLOBALS.get(s.name, s.size), self.clip_end.get(ida, ida + s.size) - ida)
             data = self.bdump.read(self.image_base + s.rva, size)
             if data is None:
                 continue
@@ -236,7 +265,7 @@ class Machine:
                 continue
             for i in range(size):
                 owner[ida + i] = (match, s.name)
-            mu.mem_write(ida, self.translate_block(data, s.rva))
+            mu.mem_write(ida, self.translate_block(data, s.rva, s))
             self.global_map.append((ida, size, self.image_base + s.rva, s.name))
         self.global_map.sort()
         self.gm_pages = {}
@@ -252,28 +281,25 @@ class Machine:
                 return tida
         return None
 
-    def translate_block(self, data, rva=None):
-        """Translate port pointers inside a global's bytes. Only dwords that are relocation sites of
-        the port image, 4-byte aligned, or exact function starts - scanning every byte offset turns
-        neighbouring table entries into fake pointers."""
+    def translate_block(self, data, rva=None, sym=None):
+        """Translate port pointers inside a global's bytes to original addresses - only at the pointer
+        fields the PDB type of the global declares (guessing by value turned packed table words and
+        entity-index pairs into fake pointers). Falls back to relocation sites without a type."""
         buf = bytearray(data)
-        relocs = self.ps.reloc_sites
-        init = self.ps.initial_bytes(rva, len(buf)) if rva is not None else None
-        o = 0
-        while o < len(buf) - 3:
-            v = struct.unpack_from('<I', buf, o)[0]
-            # a pointer is either a relocated static value or something written at run time; a static
-            # table value that merely looks like an address (two packed words) is left alone
-            ok = (rva is not None and (rva + o) in relocs) or \
-                 (o % 4 == 0 and (init is None or init[o:o + 4] != bytes(buf[o:o + 4])))
-            # (unaligned non-relocated dwords are never translated: table bytes can form fake pointers,
-            # e.g. two trig entries spelled the address of a port function)
-            t = self.translate_value(v) if ok and self.image_lo <= v < self.image_hi else None
-            if t is not None:
-                struct.pack_into('<I', buf, o, t)
-                o += 4
+        if sym is not None and sym.type_index:
+            offs = self.ps.pointer_offsets(sym.type_index)
+        elif rva is not None:
+            offs = [r - rva for r in self.ps.reloc_sites if rva <= r < rva + len(buf)]
+        else:
+            offs = []
+        for o in offs:
+            if o + 4 > len(buf):
                 continue
-            o += 1
+            v = struct.unpack_from('<I', buf, o)[0]
+            if self.image_lo <= v < self.image_hi:
+                t = self.translate_value(v)
+                if t is not None:
+                    struct.pack_into('<I', buf, o, t)
         return bytes(buf)
 
     def ida_to_port(self, a):
@@ -301,6 +327,13 @@ class Machine:
     def _on_write(self, uc, access, address, size, value, user):
         if self.logging:
             self.wlog.append((address, bytes(uc.mem_read(address, size))))
+        if self.watch and any(address <= w < address + size for w in self.watch):
+            eip = uc.reg_read(UC_X86_REG_EIP)
+            esp = uc.reg_read(UC_X86_REG_ESP)
+            stack = struct.unpack('<64I', bytes(uc.mem_read(esp, 256)))
+            rets = [hex(v) for v in stack if 0x10000 <= v < 0x90000][:8]
+            print(f'  write {address:#x} size {size} value {value & ((1 << 8 * size) - 1):#x} at eip {eip:#x}; '
+                  f'stack code addresses {" ".join(rets)}')
 
     def arg(self, n):
         esp = self.mu.reg_read(UC_X86_REG_ESP)
@@ -328,6 +361,17 @@ class Machine:
         elif name in ('free', '__stdio_common_vfprintf', '__stdio_common_vsprintf', 'fflush', 'fputs', 'fputc',
                       '__acrt_iob_func', 'fwrite'):
             r = 0
+        elif name in ('_libm_sse2_pow_precise',):
+            from unicorn.x86_const import UC_X86_REG_XMM0, UC_X86_REG_XMM1
+            x0 = uc.reg_read(UC_X86_REG_XMM0) & ((1 << 64) - 1)
+            x1 = uc.reg_read(UC_X86_REG_XMM1) & ((1 << 64) - 1)
+            a_, b_ = struct.unpack('<d', struct.pack('<Q', x0))[0], struct.unpack('<d', struct.pack('<Q', x1))[0]
+            try:
+                res = a_ ** b_
+            except (OverflowError, ZeroDivisionError, ValueError):
+                res = float('nan')
+            uc.reg_write(UC_X86_REG_XMM0, struct.unpack('<Q', struct.pack('<d', float(res)))[0])
+            return
         elif name == 'rand':
             self.stop_reason = 'port called rand()'
             uc.emu_stop()

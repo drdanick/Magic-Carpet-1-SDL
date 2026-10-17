@@ -147,7 +147,7 @@ static void PrintUsage()
 		"  --debug-log        write debug.txt next to the executable\n"
 		"  --dump-frames <dir> [--dump-every N]  save every Nth presented frame (default 30) as BMP\n"
 		"  --exit-after-frames N                  quit after N presented frames\n"
-		"  --snapshot-frame N [--snapshot-dir D]  dump memory around the entity tick of frame N (tools/diff_tick.py)\n"
+		"  --snapshot-frame N[,N2,..] [--snapshot-dir D]  dump memory around the entity tick of frame N (tools/diff_tick.py)\n"
 		"  --c-drive <dir>                        folder standing in for DOS C: (must contain CARPET.CD)\n"
 		"  --watchdog N                           abort with a stack trace if no frame is shown for N s\n"
 		"                                         (default 20 for scripted/headless runs, 0 = off)\n"
@@ -194,8 +194,22 @@ std::vector<std::string> InitSettings(int argc, char* argv[])
 		else if (a == "--dump-frames") g_settings.dumpFramesDir = next("a directory");
 		else if (a == "--dump-every") g_settings.dumpEvery = (std::max)(1, atoi(next("a number").c_str()));
 		else if (a == "--exit-after-frames") g_settings.exitAfterFrames = atoi(next("a number").c_str());
-		else if (a == "--snapshot-frame") g_settings.snapshotFrame = atoi(next("a number").c_str());
+		else if (a == "--snapshot-frame")
+		{
+			// "N" or "N1,N2,...": several frames go to <dir>/f<N> each, the game exits after the last
+			std::string list = next("a frame number or list");
+			for (size_t p = 0; p < list.size();)
+			{
+				size_t c = list.find(',', p);
+				if (c == std::string::npos) c = list.size();
+				g_settings.snapshotFrames.push_back(atoi(list.substr(p, c - p).c_str()));
+				p = c + 1;
+			}
+			std::sort(g_settings.snapshotFrames.begin(), g_settings.snapshotFrames.end());
+			g_settings.snapshotFrame = g_settings.snapshotFrames.empty() ? -1 : g_settings.snapshotFrames[0];
+		}
 		else if (a == "--snapshot-dir") g_settings.snapshotDir = next("a directory");
+		else if (a == "--snapshot-what") g_settings.snapshotWhat = next("tick or draw");
 		else if (a == "--frame-hashes") g_settings.frameHashFile = next("a file");
 		else if (a == "--frame-stats") g_settings.frameStats = true;
 		else if (a == "--headless") g_settings.headless = true;
