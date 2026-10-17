@@ -33898,13 +33898,16 @@ void sub_2C410_2C450(unsigned int a1)//1FD410_
   // PORT: the rolled-sprite path is for passes 0/1 only - the original jumps past it when a1 == 2
   // (decompiled "if ( a1 != 2 )", commented out below; remc2 DrawSprite_41BD3 has the same check).
   // Running it for pass 2 wrote outside the screen buffer (crash in 640x480 mode).
-  if ( !byte_B5D3E_B5D2E && a1 != 2 )
+  // PORT: was "!byte_B5D3E_B5D2E && a1 != 2": a1 == 2 went to the unrotated path below. Asm 0x2C41C:
+  // byte_B5D3E == 0 always takes the rotated path; 0x2C9C3: a1 == 2 shares the a1 == 0 adjustment.
+  if ( !byte_B5D3E_B5D2E )
   {
     //if ( a1 )//1 2 3 4
     //{
       switch (a1)
       {
       case 0:
+      case 2:
           xRot_B5CB8_B5CA8 -= (cos_B5CE8_B5CD8 * scaledSprX_B5CA8_B5C98) >> 17;
           yRot_B5CB4_B5CA4 -= -(sin_B5CD4_B5CC4 * scaledSprX_B5CA8_B5C98) >> 17;
           break;
