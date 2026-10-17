@@ -31,6 +31,9 @@ SKIP_GLOBALS = {'tempScreenBuffer_A0000', 'unk_93AE0', 'off_96864', 'videoModes_
                 # pointer into sprite data whose header layout differs between the two programs; always set before use
                 'sprData_B5CB0_B5CA0'}
 CLIP_GLOBALS = {'dword_9334C': 1024}
+# original bytes without a port counterpart that are no behaviour: the high words of the viewport width and
+# height (dwords in the original, uint16 in the port)
+LAYOUT_IGNORE_IDA = [(0x93ADA, 0x93ADC), (0x93ADE, 0x93AE0)]
 # sound: the original drives the HMI/SOS driver, the port SDL_mixer - neither is game logic
 SKIP_FUNCS = ['sub_55370_558A0', 'sub_55890_55DC0',
               # port-only diagnostics called from game functions (the snapshot hooks themselves)
@@ -295,7 +298,7 @@ class Machine:
             self.global_map.append((ida, size, self.image_base + s.rva, s.name))
         self.global_map.sort()
         # skipped globals (scratch buffers, platform state): writes to them are no differences
-        self.skip_ida, self.skip_port = [], []
+        self.skip_ida, self.skip_port = list(LAYOUT_IGNORE_IDA), []
         for s in self.ps.data_symbols():
             if s.name in SKIP_GLOBALS and s.size:
                 self.skip_port.append((self.image_base + s.rva, self.image_base + s.rva + s.size))
