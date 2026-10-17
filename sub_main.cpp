@@ -1080,7 +1080,7 @@ void sub_4E320_4E660();
 void sub_4E3D0_4E710(unsigned __int8 a1);
 void sub_4E470_4E7B0(unsigned __int8 a1);
 void sub_4E510(unsigned __int8 a1);
-int sub_4E5B0_4E8F0();
+int ShowLevelPerformance_4E5B0_4E8F0();
 void sub_4EE70_4F1B0();
 void sub_4EFC0_4F300();
 void sub_4F120_4F460();
@@ -3351,8 +3351,10 @@ Type_dword_96884 str_9688C = { 0,1,0,0,0 };//25488C_
 //char byte_96890 = '\x01'; // weak
 //char byte_96892 = '\0'; // weak
 
-int dword_96894 = 0; // weak
-__int16 word_96898 = 16; // weak
+// PORT: was "int dword_96894" + "__int16 word_96898 = 16" - one font object in the original (glyph table, flags
+// 0x10 = glyphs are RLE sprites). As separate globals DrawText read its flags from whatever followed
+// dword_96894, drew the sprite glyphs as plain-font data and the score board showed only black dots.
+Type_dword_96884 perfFont_96894 = { 0,0x10,0,0,0 };//254894_ font of the level performance screen (sfont2)
 char byte_9689C[] = { '\x01' }; // weak
 char byte_9689D[] = { '\0' }; // weak
 char byte_9689E[22] =
@@ -57191,7 +57193,7 @@ void sub_4AB20_4AE60()//21BB20_21BE60
       sub_4D680_4D9C0();
       break;
     case 5:
-      sub_4E5B0_4E8F0();
+      ShowLevelPerformance_4E5B0_4E8F0();
       break;
     case 6:
       sub_4F3F0_4F730();//language
@@ -59203,7 +59205,9 @@ void sub_4E510(unsigned __int8 a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_4E5B0_4E8F0()
+/// Level performance screen shown after a level (pperf.dat background, sfont2 text): level name, creatures
+/// killed, ... percentages revealed one by one; any key/click or a timeout ends it.
+int ShowLevelPerformance_4E5B0_4E8F0()
 {
   int v0; // edi
   int v1; // ebx
@@ -59315,8 +59319,9 @@ int sub_4E5B0_4E8F0()
       sub_65D70_66280(begSFont2Tab_12CB40_2EAB40_2EAB30, endSFont2Tab_12CB44_2EAB44_2EAB34, begSFont2Dat_12CB48_2EAB48_2EAB38);
     else
       sub_65DC0_662D0(begSFont2Tab_12CB40_2EAB40_2EAB30, endSFont2Tab_12CB44_2EAB44_2EAB34, begSFont2Dat_12CB48_2EAB48_2EAB38);
-    word_96898 = 16;
-    dword_96894 = (int)begSFont2Tab_12CB40_2EAB40_2EAB30 + 6;
+    perfFont_96894.var8_4 = 16;
+    perfFont_96894.var8_5 = 0;
+    perfFont_96894.next = &begSFont2Tab_12CB40_2EAB40_2EAB30[1];
     sub_3EEA0_3F1E0((char*)"data/screens/pperf.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
     sub_3EEA0_3F1E0((char*)"data\\screens\\pperf.dat", (uint8_t*)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -59358,16 +59363,16 @@ int sub_4E5B0_4E8F0()
         CopyScreen_62FC4_634D4(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0x1E0u);
       if ( dword_AC5D4_AC5C4 > v18 )
       {
-        DrawText_51560_518A0((uint8*)&dword_96894, 40, 8, dword_999B8[str_AE408_AE3F8->var_u16_17]);
+        DrawText_51560_518A0((uint8*)&perfFont_96894, 40, 8, dword_999B8[str_AE408_AE3F8->var_u16_17]);
         if ( !v26 )
         {
           sub_65F10_66420(0, 3);
           v26 = 1;
         }
-        DrawText_51560_518A0((uint8*)&dword_96894, 40, 80, dword_AE238_AE228[66]);
+        DrawText_51560_518A0((uint8*)&perfFont_96894, 40, 80, dword_AE238_AE228[66]);
         sprintf((char*)v15, "% 3d %%", *(_DWORD *)(*(_DWORD *)(v7 + 160) + 359));
-        v8 = sub_51420_51760((uint32*)&dword_96894, (char *)v15);
-        DrawText_51560_518A0((uint8*)&dword_96894, (__int16)(600 - v8), 80, (char*)v15);
+        v8 = sub_51420_51760((uint32*)&perfFont_96894, (char *)v15);
+        DrawText_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v8), 80, (char*)v15);
       }
       if ( dword_AC5D4_AC5C4 > v23 )
       {
@@ -59376,10 +59381,10 @@ int sub_4E5B0_4E8F0()
           sub_65F10_66420(0, 3);
           v25 = 1;
         }
-        DrawText_51560_518A0((uint8*)&dword_96894, 40, 120, dword_AE238_AE228[67]);
+        DrawText_51560_518A0((uint8*)&perfFont_96894, 40, 120, dword_AE238_AE228[67]);
         sprintf((char*)v15, "% 3d %%", *(_DWORD *)(*(_DWORD *)(v7 + 160) + 367));
-        v9 = sub_51420_51760((uint32*)&dword_96894, (char *)v15);
-        DrawText_51560_518A0((uint8*)&dword_96894, (__int16)(600 - v9), 120, (char*)v15);
+        v9 = sub_51420_51760((uint32*)&perfFont_96894, (char *)v15);
+        DrawText_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v9), 120, (char*)v15);
       }
       if ( dword_AC5D4_AC5C4 > v21 )
       {
@@ -59388,10 +59393,10 @@ int sub_4E5B0_4E8F0()
           sub_65F10_66420(0, 3);
           v24 = 1;
         }
-        DrawText_51560_518A0((uint8*)&dword_96894, 40, 160, dword_AE238_AE228[68]);
+        DrawText_51560_518A0((uint8*)&perfFont_96894, 40, 160, dword_AE238_AE228[68]);
         sprintf((char*)v15, "% 3d %%", *(_DWORD *)(*(_DWORD *)(v7 + 160) + 363));
-        v10 = sub_51420_51760((uint32*)&dword_96894, (char *)v15);
-        DrawText_51560_518A0((uint8*)&dword_96894, (__int16)(600 - v10), 160, (char*)v15);
+        v10 = sub_51420_51760((uint32*)&perfFont_96894, (char *)v15);
+        DrawText_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v10), 160, (char*)v15);
       }
       if ( dword_AC5D4_AC5C4 > v17 )
       {
@@ -59400,10 +59405,10 @@ int sub_4E5B0_4E8F0()
           sub_65F10_66420(0, 3);
           v27 = 1;
         }
-        DrawText_51560_518A0((uint8*)&dword_96894, 40, 200, dword_AE238_AE228[59]);
+        DrawText_51560_518A0((uint8*)&perfFont_96894, 40, 200, dword_AE238_AE228[59]);
         sprintf((char*)v15, "% 3d %%", *(_DWORD *)(*(_DWORD *)(v7 + 160) + 371));
-        v11 = sub_51420_51760((uint32*)&dword_96894, (char *)v15);
-        DrawText_51560_518A0((uint8*)&dword_96894, (__int16)(600 - v11), 200, (char*)v15);
+        v11 = sub_51420_51760((uint32*)&perfFont_96894, (char *)v15);
+        DrawText_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v11), 200, (char*)v15);
       }
       if ( dword_AC5D4_AC5C4 > v22 )
       {
@@ -59412,10 +59417,10 @@ int sub_4E5B0_4E8F0()
           sub_65F10_66420(0, 3);
           v2 = 1;
         }
-        DrawText_51560_518A0((uint8*)&dword_96894, 40, 240, dword_AE238_AE228[69]);
+        DrawText_51560_518A0((uint8*)&perfFont_96894, 40, 240, dword_AE238_AE228[69]);
         sprintf((char*)v15, "% 3d %%", *(_DWORD *)(*(_DWORD *)(v7 + 160) + 375));
-        v12 = sub_51420_51760((uint32*)&dword_96894, (char *)v15);
-        DrawText_51560_518A0((uint8*)&dword_96894, (__int16)(600 - v12), 240, (char*)v15);
+        v12 = sub_51420_51760((uint32*)&perfFont_96894, (char *)v15);
+        DrawText_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v12), 240, (char*)v15);
       }
       if ( dword_AC5D4_AC5C4 > v19 )
       {
@@ -59424,15 +59429,15 @@ int sub_4E5B0_4E8F0()
           sub_65F10_66420(0, 3);
           v16 = 1;
         }
-        DrawText_51560_518A0((uint8*)&dword_96894, 40, 280, dword_AE238_AE228[79]);
+        DrawText_51560_518A0((uint8*)&perfFont_96894, 40, 280, dword_AE238_AE228[79]);
         sprintf(
             (char*)v15,
           "%dh% 02dm %02ds",
           *(_DWORD *)(*(_DWORD *)(v7 + 160) + 379) / 120 / 3600,
           *(_DWORD *)(*(_DWORD *)(v7 + 160) + 379) / 120 / 60 % 60,
           *(_DWORD *)(*(_DWORD *)(v7 + 160) + 379) / 120 % 60);
-        v13 = sub_51420_51760((uint32*)&dword_96894, (char *)v15);
-        DrawText_51560_518A0((uint8*)&dword_96894, (__int16)(600 - v13), 280, (char*)v15);
+        v13 = sub_51420_51760((uint32*)&perfFont_96894, (char *)v15);
+        DrawText_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v13), 280, (char*)v15);
       }
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
         Blit_5CDA0_5D2B0();
