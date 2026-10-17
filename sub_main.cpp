@@ -33633,8 +33633,22 @@ void DrawSkyTerrainParticles_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw
 
 int counter_sub_2C410_2C450 = 0;
 //SYNCHRONIZED WITH REMC1
+// PORT: the rotated sprite path of sub_2C410_2C450 does not clip rows against the screen bottom: a
+// sprite far below the view at a strong carpet roll in 640x480 is drawn ~1000 rows past the frame
+// buffer - the original does the same (diff harness: same address); under DOS4GW that silently hit
+// other memory, here it crashed. Writes outside the frame buffer are dropped, reads give 0.
+static uint8* g_fbLo = nullptr;
+static uint8* g_fbHi = (uint8*)~(uintptr_t)0;
+static inline void FbPut(uint8* p, uint8 v) { if (p >= g_fbLo && p < g_fbHi) *p = v; }
+static inline uint8 FbGet(const uint8* p) { return (p >= g_fbLo && p < g_fbHi) ? *p : 0; }
+
 void sub_2C410_2C450(unsigned int a1)//1FD410_
 {
+  // PORT: bounds of the frame buffer for FbPut/FbGet (see there)
+  g_fbLo = (uint8*)begWscreen_2ECFF4_2ECFE4;
+  g_fbHi = g_fbLo + scrWidth_12EFF0_12EFE0 * scrHeight_12EFF8_12EFE8;
+  if (beginFrame_93ACC < g_fbLo || beginFrame_93ACC >= g_fbHi) { g_fbLo = nullptr; g_fbHi = (uint8*)~(uintptr_t)0; }
+
   //int v1; // eax
   //int v2; // edx
   //int v3; // ecx
@@ -34340,7 +34354,7 @@ LABEL_181:
                           case 1:
                               tempPindex = (tempPointB >> 2) + 1;//1 2
                               if (sprData[0])
-                                  frameAdress[0] = sprData[0];
+                                  FbPut(frameAdress, sprData[0]);
                               sprData += begInt32Adress[2];
                               frameAdress += tempB3adr[3];
                               begInt32Adress += 4;
@@ -34350,11 +34364,11 @@ LABEL_181:
                           case 2:
                               tempPindex = (tempPointB >> 2) + 1;//1 2
                               if (sprData[0])
-                                  frameAdress[0] = sprData[0];
+                                  FbPut(frameAdress, sprData[0]);
                               sprData += begInt32Adress[2];
                               frameAdress += tempB3adr[3];
                               if (sprData[0])
-                                  frameAdress[0] = sprData[0];
+                                  FbPut(frameAdress, sprData[0]);
                               sprData += begInt32Adress[4];
                               frameAdress += tempB3adr[6];
                               begInt32Adress += 6;
@@ -34364,15 +34378,15 @@ LABEL_181:
                           case 3:
                               tempPindex = (tempPointB >> 2) + 1;//1 2
                               if (sprData[0])
-                                  frameAdress[0] = sprData[0];
+                                  FbPut(frameAdress, sprData[0]);
                               sprData += begInt32Adress[2];
                               frameAdress += tempB3adr[3];
                               if (sprData[0])
-                                  frameAdress[0] = sprData[0];
+                                  FbPut(frameAdress, sprData[0]);
                               sprData += begInt32Adress[4];
                               frameAdress += tempB3adr[6];
                               if (sprData[0])
-                                  frameAdress[0] = sprData[0];
+                                  FbPut(frameAdress, sprData[0]);
                               sprData += begInt32Adress[6];
                               frameAdress += tempB3adr[9];
                               begInt32Adress += 8;
@@ -34383,19 +34397,19 @@ LABEL_181:
                           while (tempPindex)
                           {
                             if (sprData[0])
-                                frameAdress[0] = sprData[0];
+                                FbPut(frameAdress, sprData[0]);
                             sprData += begInt32Adress[0];
                             frameAdress += tempB3adr[0];
                             if (sprData[0])
-                                frameAdress[0] = sprData[0];
+                                FbPut(frameAdress, sprData[0]);
                             sprData += begInt32Adress[2];
                             frameAdress += tempB3adr[3];
                             if (sprData[0])
-                                frameAdress[0] = sprData[0];
+                                FbPut(frameAdress, sprData[0]);
                             sprData += begInt32Adress[4];
                             frameAdress += tempB3adr[6];
                             if (sprData[0])
-                                frameAdress[0] = sprData[0];
+                                FbPut(frameAdress, sprData[0]);
                             sprData += begInt32Adress[6];
                             frameAdress += tempB3adr[9];
                             begInt32Adress += 8;
@@ -34418,7 +34432,7 @@ LABEL_181:
                               tempZx.byte[0] = sprData[0];
                               sprData += begInt32Adress[2];
                               if (tempZx.byte[0])
-                                  frameAdress[0] = strPal.fog_B7934_B7924[tempZx.dword];
+                                  FbPut(frameAdress, strPal.fog_B7934_B7924[tempZx.dword]);
                               frameAdress += tempB3adr[3];
                               begInt32Adress += 4;
                               tempB3adr += 6;
@@ -34428,12 +34442,12 @@ LABEL_181:
                             tempZx.byte[0] = sprData[0];
                             sprData += begInt32Adress[0];
                             if (tempZx.byte[0])
-                                frameAdress[0] = strPal.fog_B7934_B7924[tempZx.dword];
+                                FbPut(frameAdress, strPal.fog_B7934_B7924[tempZx.dword]);
                             frameAdress += tempB3adr[0];
                             tempZx.byte[0] = sprData[0];
                             sprData += begInt32Adress[2];
                             if (tempZx.byte[0])
-                                frameAdress[0] = strPal.fog_B7934_B7924[tempZx.dword];
+                                FbPut(frameAdress, strPal.fog_B7934_B7924[tempZx.dword]);
                             frameAdress += tempB3adr[3];
                             begInt32Adress += 4;
                             tempB3adr += 6;
@@ -34456,8 +34470,8 @@ LABEL_181:
                               sprData += begInt32Adress[2];
                               if (tempZx.byte[1])
                               {
-                                  tempZx.byte[0] = frameAdress[0];
-                                  frameAdress[0] = strPal.byte_BB934_BB924[tempZx.dword];
+                                  tempZx.byte[0] = FbGet(frameAdress);
+                                  FbPut(frameAdress, strPal.byte_BB934_BB924[tempZx.dword]);
                               }
                               frameAdress += tempB3adr[3];
                               begInt32Adress += 4;
@@ -34469,16 +34483,16 @@ LABEL_181:
                             sprData += begInt32Adress[0];
                             if (tempZx.byte[1])
                             {
-                                tempZx.byte[0] = frameAdress[0];
-                              frameAdress[0] = strPal.byte_BB934_BB924[tempZx.dword];
+                                tempZx.byte[0] = FbGet(frameAdress);
+                              FbPut(frameAdress, strPal.byte_BB934_BB924[tempZx.dword]);
                             }
                             frameAdress += tempB3adr[0];
                             tempZx.byte[1] = sprData[0];
                             sprData += begInt32Adress[2];
                             if (tempZx.byte[1])
                             {
-                                tempZx.byte[0] = frameAdress[0];
-                                frameAdress[0] = strPal.byte_BB934_BB924[tempZx.dword];
+                                tempZx.byte[0] = FbGet(frameAdress);
+                                FbPut(frameAdress, strPal.byte_BB934_BB924[tempZx.dword]);
                             }
                             frameAdress += tempB3adr[3];
                             begInt32Adress += 4;
@@ -34502,8 +34516,8 @@ LABEL_181:
                               sprData += begInt32Adress[2];
                               if (tempZx.byte[0])
                               {
-                                  tempZx.byte[1] = frameAdress[0];
-                                  frameAdress[0] = strPal.byte_BB934_BB924[tempZx.dword];
+                                  tempZx.byte[1] = FbGet(frameAdress);
+                                  FbPut(frameAdress, strPal.byte_BB934_BB924[tempZx.dword]);
                               }
                               frameAdress += tempB3adr[3];
                               begInt32Adress += 4;
@@ -34515,16 +34529,16 @@ LABEL_181:
                               sprData += begInt32Adress[0];
                               if (tempZx.byte[0])
                               {
-                                  tempZx.byte[1] = frameAdress[0];
-                                  frameAdress[0] = strPal.byte_BB934_BB924[tempZx.dword];
+                                  tempZx.byte[1] = FbGet(frameAdress);
+                                  FbPut(frameAdress, strPal.byte_BB934_BB924[tempZx.dword]);
                               }
                               frameAdress += tempB3adr[0];
                               tempZx.byte[0] = sprData[0];
                             sprData += begInt32Adress[2];
                             if (tempZx.byte[0])
                             {
-                                tempZx.byte[1] = frameAdress[0];
-                              frameAdress[0] = strPal.byte_BB934_BB924[tempZx.dword];
+                                tempZx.byte[1] = FbGet(frameAdress);
+                              FbPut(frameAdress, strPal.byte_BB934_BB924[tempZx.dword]);
                             }
                             frameAdress += tempB3adr[3];
                             begInt32Adress += 4;
@@ -34547,7 +34561,7 @@ LABEL_181:
                               tempZx.byte[0] = sprData[0];
                               sprData += begInt32Adress[2];
                               if (tempZx.byte[0])
-                                  frameAdress[0] = strPal.byte_BB934_BB924[tempZx.dword];
+                                  FbPut(frameAdress, strPal.byte_BB934_BB924[tempZx.dword]);
                               frameAdress += tempB3adr[3];
                               begInt32Adress += 4;
                               tempB3adr += 6;
@@ -34557,12 +34571,12 @@ LABEL_181:
                             tempZx.byte[0] = sprData[0];
                             sprData += begInt32Adress[0];
                             if (tempZx.byte[0])
-                                frameAdress[0] = strPal.byte_BB934_BB924[tempZx.dword];
+                                FbPut(frameAdress, strPal.byte_BB934_BB924[tempZx.dword]);
                             frameAdress += tempB3adr[0];
                             tempZx.byte[0] = sprData[0];
                             sprData += begInt32Adress[2];
                             if (tempZx.byte[0])
-                                frameAdress[0] = strPal.byte_BB934_BB924[tempZx.dword];
+                                FbPut(frameAdress, strPal.byte_BB934_BB924[tempZx.dword]);
                             frameAdress += tempB3adr[3];
                             begInt32Adress += 4;
                             tempB3adr += 6;
@@ -34583,7 +34597,7 @@ LABEL_181:
                               tempZx.byte[1] = sprData[0];
                               sprData += begInt32Adress[2];
                               if (tempZx.byte[1])
-                                  frameAdress[0] = strPal.byte_BB934_BB924[tempZx.dword];
+                                  FbPut(frameAdress, strPal.byte_BB934_BB924[tempZx.dword]);
                               frameAdress += tempB3adr[3];
                               begInt32Adress += 4;
                               tempB3adr += 6;
@@ -34593,12 +34607,12 @@ LABEL_181:
                               tempZx.byte[1] = sprData[0];
                               sprData += begInt32Adress[0];
                               if (tempZx.byte[1])
-                                  frameAdress[0] = strPal.byte_BB934_BB924[tempZx.dword];
+                                  FbPut(frameAdress, strPal.byte_BB934_BB924[tempZx.dword]);
                               frameAdress += tempB3adr[0];
                               tempZx.byte[1] = sprData[0];
                             sprData += begInt32Adress[2];
                             if (tempZx.byte[1])
-                                frameAdress[0] = strPal.byte_BB934_BB924[tempZx.dword];
+                                FbPut(frameAdress, strPal.byte_BB934_BB924[tempZx.dword]);
                             frameAdress += tempB3adr[3];
                             begInt32Adress += 4;
                             tempB3adr += 6;
@@ -34619,9 +34633,9 @@ LABEL_181:
                             sprData += begInt32Adress[0];
                             if (tempZx2.byte[1])
                             {
-                              tempZx2.byte[0] = frameAdress[0];
+                              tempZx2.byte[0] = FbGet(frameAdress);
                               tempZx.byte[0] = strPal.byte_BB934_BB924[tempZx2.dword];
-                              frameAdress[0] = strPal.fog_B7934_B7924[tempZx.dword];
+                              FbPut(frameAdress, strPal.fog_B7934_B7924[tempZx.dword]);
                             }
                             frameAdress += tempB3adr[0];
                             begInt32Adress += 2;
@@ -34643,9 +34657,9 @@ LABEL_181:
                             sprData += begInt32Adress[0];
                             if (tempZx2.byte[0])
                             {
-                                tempZx2.byte[1] = frameAdress[0];
+                                tempZx2.byte[1] = FbGet(frameAdress);
                               tempZx.byte[0] = strPal.byte_BB934_BB924[tempZx2.dword];
-                              frameAdress[0] = strPal.fog_B7934_B7924[tempZx.dword];
+                              FbPut(frameAdress, strPal.fog_B7934_B7924[tempZx.dword]);
                             }
                             frameAdress += tempB3adr[0];
                             begInt32Adress += 2;
@@ -34669,8 +34683,8 @@ LABEL_181:
                               sprData += begInt32Adress[2];
                               if (boolSprData)
                               {
-                                  tempZx.byte[0] = frameAdress[0];
-                                  frameAdress[0] = strPal.fog_B7934_B7924[tempZx.dword];
+                                  tempZx.byte[0] = FbGet(frameAdress);
+                                  FbPut(frameAdress, strPal.fog_B7934_B7924[tempZx.dword]);
                               }
                               frameAdress += tempB3adr[3];
                               begInt32Adress += 4;
@@ -34682,16 +34696,16 @@ LABEL_181:
                             sprData += begInt32Adress[0];
                             if (boolSprData)
                             {
-                                tempZx.byte[0] = frameAdress[0];
-                              frameAdress[0] = strPal.fog_B7934_B7924[tempZx.dword];
+                                tempZx.byte[0] = FbGet(frameAdress);
+                              FbPut(frameAdress, strPal.fog_B7934_B7924[tempZx.dword]);
                             }
                             frameAdress += tempB3adr[0];
                             boolSprData = sprData[0];
                             sprData += begInt32Adress[2];
                             if (boolSprData)
                             {
-                                tempZx.byte[0] = frameAdress[0];
-                                frameAdress[0] = strPal.fog_B7934_B7924[tempZx.dword];
+                                tempZx.byte[0] = FbGet(frameAdress);
+                                FbPut(frameAdress, strPal.fog_B7934_B7924[tempZx.dword]);
                             }
                             frameAdress += tempB3adr[3];
                             begInt32Adress += 4;
@@ -34713,7 +34727,7 @@ LABEL_181:
                           case 1:
                               tempPindex = (tempPointB >> 2) + 1;
                               if (sprData[0])
-                                  frameAdress[0] = tempZx.byte[1];
+                                  FbPut(frameAdress, tempZx.byte[1]);
                               frameAdress += tempB3adr[3];
                               sprData += begInt32Adress[2];
                               begInt32Adress += 4;
@@ -34723,11 +34737,11 @@ LABEL_181:
                           case 2:
                               tempPindex = (tempPointB >> 2) + 1;
                               if (sprData[0])
-                                  frameAdress[0] = tempZx.byte[1];
+                                  FbPut(frameAdress, tempZx.byte[1]);
                               sprData += begInt32Adress[2];
                               frameAdress += tempB3adr[3];
                               if (sprData[0])
-                                  frameAdress[0] = tempZx.byte[1];
+                                  FbPut(frameAdress, tempZx.byte[1]);
                               frameAdress += tempB3adr[6];
                               sprData += begInt32Adress[4];
                               begInt32Adress += 6;
@@ -34737,15 +34751,15 @@ LABEL_181:
                           case 3:
                               tempPindex = (tempPointB >> 2) + 1;
                               if (sprData[0])
-                                  frameAdress[0] = tempZx.byte[1];
+                                  FbPut(frameAdress, tempZx.byte[1]);
                               sprData += begInt32Adress[2];
                               frameAdress += tempB3adr[3];
                               if (sprData[0])
-                                  frameAdress[0] = tempZx.byte[1];
+                                  FbPut(frameAdress, tempZx.byte[1]);
                               sprData += begInt32Adress[4];
                               frameAdress += tempB3adr[6];
                               if (sprData[0])
-                                  frameAdress[0] = tempZx.byte[1];
+                                  FbPut(frameAdress, tempZx.byte[1]);
                               frameAdress += tempB3adr[9];
                               sprData += begInt32Adress[6];
                               begInt32Adress += 8;
@@ -34756,19 +34770,19 @@ LABEL_181:
                           while (tempPindex)
                           {
                             if (sprData[0])
-                                frameAdress[0] = tempZx.byte[1];
+                                FbPut(frameAdress, tempZx.byte[1]);
                             sprData += begInt32Adress[0];
                             frameAdress += tempB3adr[0];
                             if (sprData[0])
-                                frameAdress[0] = tempZx.byte[1];
+                                FbPut(frameAdress, tempZx.byte[1]);
                             sprData += begInt32Adress[2];
                             frameAdress += tempB3adr[3];
                             if (sprData[0])
-                                frameAdress[0] = tempZx.byte[1];
+                                FbPut(frameAdress, tempZx.byte[1]);
                             sprData += begInt32Adress[4];
                             frameAdress += tempB3adr[6];
                             if (sprData[0])
-                                frameAdress[0] = tempZx.byte[1];
+                                FbPut(frameAdress, tempZx.byte[1]);
                             frameAdress += tempB3adr[9];
                             sprData += begInt32Adress[6];
                             begInt32Adress += 8;
