@@ -47394,7 +47394,7 @@ int sub_3C420(int a1)
 //----- (0003C450) --------------------------------------------------------
 int sub_3C450(int a1)
 {
-  return sub_3BF70(a1, 22, 66, 75000, 101, 1, 0, (int)&loc_30D40, 7000);
+  return sub_3BF70(a1, 22, 66, 75000, 101, 1, 0, 200000, 7000);
 }
 
 //----- (0003C480) --------------------------------------------------------
@@ -49591,8 +49591,8 @@ void InitAnojoy_3F820_sub_3FB60(__int16 a2, int a3, int a4, int a5, char a6)
 		else
 		{
 			word_B7706_B76F6 = v17 + 3 * (unsigned __int16)(v26 - v17) / 10;
-			LODWORD(v19) = (uint32)&loc_40000;
-			HIDWORD(v19) = (int)&loc_40000 >> 31;
+			LODWORD(v19) = 0x40000;
+			HIDWORD(v19) = 0;
 			word_B770E_B76FE = v19 / ((unsigned __int16)v26 - word_B7706_B76F6);
 		}
 		if ((unsigned __int16)(v23 - v18) <= 0x1Eu)
@@ -49602,8 +49602,8 @@ void InitAnojoy_3F820_sub_3FB60(__int16 a2, int a3, int a4, int a5, char a6)
 		else
 		{
 			word_B7708_B76F8 = v18 + 3 * (unsigned __int16)(v23 - v18) / 10;
-			LODWORD(v20) = (uint32)&loc_40000;
-			HIDWORD(v20) = (int)&loc_40000 >> 31;
+			LODWORD(v20) = 0x40000;
+			HIDWORD(v20) = 0;
 			word_B7710_B7700 = v20 / ((unsigned __int16)v23 - word_B7708_B76F8);
 		}
 		if ((unsigned __int16)(v18 - v25) <= 0x1Eu)
@@ -49613,8 +49613,8 @@ void InitAnojoy_3F820_sub_3FB60(__int16 a2, int a3, int a4, int a5, char a6)
 		else
 		{
 			word_B770C_B76FC = v18 - 3 * (unsigned __int16)(v18 - v25) / 10;
-			LODWORD(v21) = (uint32)&loc_40000;
-			HIDWORD(v21) = (int)&loc_40000 >> 31;
+			LODWORD(v21) = 0x40000;
+			HIDWORD(v21) = 0;
 			word_B7714_B7704 = v21 / (word_B770C_B76FC - (unsigned __int16)v25);
 		}
 		if ((unsigned __int16)(v17 - v24) <= 0x1Eu)
@@ -49624,8 +49624,8 @@ void InitAnojoy_3F820_sub_3FB60(__int16 a2, int a3, int a4, int a5, char a6)
 		else
 		{
 			word_B770A_B76FA = v17 - 3 * (unsigned __int16)(v17 - v24) / 10;
-			LODWORD(v22) = (uint32)&loc_40000;
-			HIDWORD(v22) = (int)&loc_40000 >> 31;
+			LODWORD(v22) = 0x40000;
+			HIDWORD(v22) = 0;
 			word_B7712_B7702 = v22 / (word_B770A_B76FA - (unsigned __int16)v24);
 		}
 		result = a6;
@@ -55908,6 +55908,9 @@ int sub_47C60_47FA0(int a1)
     result = 164 * v2 + dword_AE400_AE3F0() + 29795;
   else
     result = 0;
+  // PORT: IDA showed the constants 80000 (0x13880), 160000 (0x27100) and 320000 (0x4E200) as
+  // addresses (&loc_13880, &loc_270FA + 6, &loc_4E200): the castle upgrade cost from level 4 on was an
+  // address, nobody could afford it and castles stopped at level 4 (5 of 8).
   switch ( *(_WORD *)(a1 + 26) )
   {
     case 0:
@@ -55923,16 +55926,16 @@ int sub_47C60_47FA0(int a1)
       result = sub_47BD0_47F10((_DWORD *)a1, result, 40000, 40000);
       break;
     case 4:
-      result = sub_47BD0_47F10((_DWORD *)a1, result, 60000, (int)&loc_13880);
+      result = sub_47BD0_47F10((_DWORD *)a1, result, 60000, 80000);
       break;
     case 5:
-      result = sub_47BD0_47F10((_DWORD *)a1, result, 60000, (int)&loc_270FA + 6);
+      result = sub_47BD0_47F10((_DWORD *)a1, result, 60000, 160000);
       break;
     case 6:
-      result = sub_47BD0_47F10((_DWORD *)a1, result, (int)&loc_13880, (int)&loc_4E200);
+      result = sub_47BD0_47F10((_DWORD *)a1, result, 80000, 320000);
       break;
     case 7:
-      result = sub_47BD0_47F10((_DWORD *)a1, result, (int)&loc_13880, 30000000);
+      result = sub_47BD0_47F10((_DWORD *)a1, result, 80000, 30000000);
       break;
     default:
       return result;
