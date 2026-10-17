@@ -80,6 +80,17 @@ TEST(Keyboard, WasdMapsToArrowsWhenEnabled)
 	g_settings.wasdAsArrows = saved;
 }
 
+TEST(Keyboard, TabMapsToEnterWhenEnabled)
+{
+	const bool saved = g_settings.tabAsEnter;
+	g_settings.tabAsEnter = true;
+	EXPECT_EQ(Port_RemapKey(SDL_SCANCODE_TAB), SDL_SCANCODE_RETURN);
+	EXPECT_EQ(Port_RemapKey(SDL_SCANCODE_RETURN), SDL_SCANCODE_RETURN);
+	g_settings.tabAsEnter = false;
+	EXPECT_EQ(Port_RemapKey(SDL_SCANCODE_TAB), SDL_SCANCODE_TAB);
+	g_settings.tabAsEnter = saved;
+}
+
 TEST(Keyboard, InjectKeyFillsPressedTable)
 {
 	VGA_mouse_clear_keys();

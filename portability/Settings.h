@@ -25,6 +25,7 @@ struct Remc1Settings {
 	int menuFps = 70;           // menu/movie frame cap and emulated vertical retrace rate
 	bool grabMouse = true;
 	bool wasdAsArrows = true;   // testing convenience: W/A/S/D send the arrow keys (can't type them then)
+	bool tabAsEnter = true;     // testing convenience: Tab sends Enter (opens the spell map in game)
 
 	// Audio
 	bool sound = true; // sound effects (SDL_mixer)

@@ -17,7 +17,8 @@
   },
   "input": {
     "grabMouse": true,
-    "wasdAsArrows": true
+    "wasdAsArrows": true,
+    "tabAsEnter": true
   },
   "debug": {
     "log": false

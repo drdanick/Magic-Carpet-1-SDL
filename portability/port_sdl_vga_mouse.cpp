@@ -937,6 +937,8 @@ SDL_Scancode Port_RemapKey(SDL_Scancode sc)
 		default: break;
 		}
 	}
+	if (g_settings.tabAsEnter && sc == SDL_SCANCODE_TAB)
+		return SDL_SCANCODE_RETURN;
 	return sc;
 }
 

@@ -122,6 +122,7 @@ static void LoadConfigFile(const fs::path& path)
 	if (j.contains("input")) {
 		s.grabMouse = j["input"].value("grabMouse", s.grabMouse);
 		s.wasdAsArrows = j["input"].value("wasdAsArrows", s.wasdAsArrows);
+		s.tabAsEnter = j["input"].value("tabAsEnter", s.tabAsEnter);
 	}
 	if (j.contains("debug")) {
 		s.debugLog = j["debug"].value("log", s.debugLog);
@@ -140,6 +141,7 @@ static void PrintUsage()
 		"  --no-grab          do not confine the mouse to the window\n"
 		"  --no-vsync         present without waiting for vertical sync\n"
 		"  --no-wasd          don't map W/A/S/D to the arrow keys\n"
+		"  --no-tab-enter     don't map Tab to Enter\n"
 		"  --fps N            in-game frame cap (default 30, 0 = uncapped; game speed follows it)\n"
 		"  --no-sound / --no-music   disable sound effects / music\n"
 		"  --debug-log        write debug.txt next to the executable\n"
@@ -183,6 +185,7 @@ std::vector<std::string> InitSettings(int argc, char* argv[])
 		else if (a == "--no-grab") cliNoGrab = true;
 		else if (a == "--no-vsync") g_settings.vsync = false;
 		else if (a == "--no-wasd") g_settings.wasdAsArrows = false;
+		else if (a == "--no-tab-enter") g_settings.tabAsEnter = false;
 		else if (a == "--fps") g_settings.maxGameFps = atoi(next("frames per second").c_str());
 		else if (a == "--no-sound") g_settings.sound = false;
 		else if (a == "--no-music") g_settings.music = false;
