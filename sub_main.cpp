@@ -17422,7 +17422,7 @@ bool sub_13BA0(int a1)
   result = sub_15440(a1, (int)v1);
   if ( result )
   {
-    *(_WORD *)(a1 + 34) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(((uint8_t*)v1) + 36));
+    *(_WORD *)(a1 + 34) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(v1 + 36)); // PORT: was ((uint8_t*)v1) + 36 - v1 is _WORD*, the target's position is at byte 72 (asm lea edi,[esi+48h])
     if ( sub_15470(a1, (int)v1, 1024, 3072) )
     {
       if ( sub_155F0(a1, 3u) )
