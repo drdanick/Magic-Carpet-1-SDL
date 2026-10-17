@@ -400,8 +400,18 @@ inline typename std::enable_if<sizeof(T) <= sizeof(F), T>::type __coerce(F f)
 #define COERCE_UNSIGNED_INT(v) __coerce<unsigned int>(v)
 #define COERCE_UNSIGNED_INT64(v) __coerce<uint64>(v)
 
-//#define __CFSHL__(x, y) printf("invalid_operation:__CFSHL__(x, y)") // Generate carry flag for (x<<y)
-#define __CFSHL__(x, y) (x<<y)
+// carry flag of (x << y): the last bit shifted out of x's width.
+// PORT: was "#define __CFSHL__(x, y) (x<<y)" - the shifted VALUE instead of one bit. Hex-Rays emits it
+// for signed division by 2^y rounding toward zero, (v - (__CFSHL__(v >> 31, y) + (v >> 31 << y))) >> y:
+// with the macro every such division of a negative number was off (player pitch -5 instead of -7,
+// headings, ... 87 sites; found by tools/diff_tick.py --stepwise).
+template<class T> int8 __CFSHL__(T x, int y)
+{
+  if ( y <= 0 || y > int(8 * sizeof(T)) )
+    return 0;
+  typedef typename std::make_unsigned<T>::type U;
+  return int8((U(x) >> (8 * sizeof(T) - y)) & 1);
+}
 #else // C++
 // For C, we just provide macros, they are not quite correct.
 #define __ROL__(x, y) __rotl__(x, y)      // Rotate left
