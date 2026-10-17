@@ -29944,7 +29944,7 @@ void sub_28D10(Type_AE400_29795* event)
       v4 = CreateEntity_373F0_377B0(&word_AE454_AE444, 5, 12);
       a1 = v4;
       if ( v4 )
-        result->var_u8_29865_70 = 73;
+        v4->var_u8_29865_70 = 73; // PORT: was result-> - result and v4 are both eax in the original; result is null here
       goto LABEL_10;
     default:
 LABEL_10:
