@@ -37352,6 +37352,7 @@ void sub_30B30_30B70()
     v13 = (int)widthViewPort_93AD8 >> 2;
     v15 = beginFrame_93ACC;
     v0 = heightViewPort_93ADC / 2;
+    v1 = (int)blurBuffer_AE404_AE3F4; // PORT: was never set (uninitialised source of the blur blend); asm 0x30B82: mov ebp, [0AE404h]
     v1 = (int)blurBuffer_AE404_AE3F4;
     for ( i = v0; i; --i )
     {
@@ -40524,6 +40525,8 @@ void sub_344F0()
 
 int counter_34530 = 0;
 //SYNCHRONIZED WITH REMC1
+// PORT: differential harness hooks: --snapshot-what <hex address> dumps memory around that call
+#define SNAP_CALL(addr, call) { MemSnapshot_Call(#addr + 2, true, addr, nullptr, 0); call; MemSnapshot_Call(#addr + 2, false, addr, nullptr, 0); }
 void DrawAndEventsInGame_34530_348F0()//205530_
 {
 	//debug
@@ -40534,12 +40537,12 @@ void DrawAndEventsInGame_34530_348F0()//205530_
 	if (!str_AE400_AE3F0->set.mod3D_8603)
 		UpdatePaletteEffects_34690_34A50();
 	if ((str_AE408_AE3F8->var_u8_2 & 1) == 0)
-		sub_590D0_595E0();
+		SNAP_CALL(0x590D0, sub_590D0_595E0())
 	if ((str_AE408_AE3F8->var_u8_0 & 4) == 0)
-		sub_17C20();
-	sub_3C9D0_3CD10();
+		SNAP_CALL(0x17C20, sub_17C20())
+	SNAP_CALL(0x3C9D0, sub_3C9D0_3CD10())
 	if ((str_AE408_AE3F8->var_u8_2 & 1) == 0)
-		sub_415C0_41900();
+		SNAP_CALL(0x415C0, sub_415C0_41900())
 	switch (str_AE408_AE3F8->gameSpeed_150)
 	{
 	case 1:
@@ -40586,7 +40589,7 @@ void DrawAndEventsInGame_34530_348F0()//205530_
 #endif debug1
 	//debug
 	str_AE408_AE3F8->var_u32_153 = dword_AC5D4_AC5C4 - str_AE408_AE3F8->var_u32_153;
-	sub_5A560_5AA70();
+	SNAP_CALL(0x5A560, sub_5A560_5AA70())
 	//2055F4
 	    //debug
 #ifdef debug1
@@ -40594,7 +40597,7 @@ void DrawAndEventsInGame_34530_348F0()//205530_
 #endif debug1
 		//debug
 	str_AE408_AE3F8->var_u32_153 = dword_AC5D4_AC5C4;
-	sub_30B30_30B70();
+	SNAP_CALL(0x30B30, sub_30B30_30B70())
 }
 
 //----- (00034610) --------------------------------------------------------
@@ -65810,7 +65813,9 @@ void sub_590D0_595E0()//22A0D0_
       //v3 = dword_12DF8C_12DF7C[i]->var_u32_0->x;
       if ( (dword_12DF8C_12DF7C[i]->var_u32_0->var_0 & 8) != 0 )
       {
-        //*result = v3 & 0xF7;
+        // PORT: restored "flags &= ~8" (asm 0x59101). The sprite drawers set 8 when they draw a sprite;
+        // without the reset every sprite drawn once kept its animation advancing (sub_10EB0) forever.
+        dword_12DF8C_12DF7C[i]->var_u32_0->var_0 &= 0xF7;
         if ( (dword_12DF8C_12DF7C[i]->var_u32_0->var_0 & 1) != 0 )
         {
           //v4 = sub_10FD0(dword_AE3E0_AE3D0, i);
