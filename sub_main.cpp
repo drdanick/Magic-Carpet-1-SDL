@@ -1163,7 +1163,7 @@ int sub_55E80_563B0(int a1, int a2);
 // int sub_55EF0_56420(__int16 a1, int a2, int a3);
 int CastFireball_56090_565C0(int a1);
 void sub_56270_567A0(int a1);
-void sub_56380_568B0(int a1);
+void SpeedSpellTick_56380_568B0(int a1);
 int sub_56510_56A40(int a1);
 int sub_566C0(int a1);
 void sub_56730(int a1);
@@ -4056,7 +4056,7 @@ Type_254A34x str_2563D8[] = {//2563D8
 { 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))sub_56270_567A0,0x0001,0x0000 },
 { 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))sub_56250,0x0001,0x0000 },
 { 0x002548F4,0x0005,sub_56260,0x0001,0x0000 },
-{ 0x002548F4,0x0006,(void (*)(Type_AE400_29795*))sub_56380_568B0,0x0001,0x0000 },
+{ 0x002548F4,0x0006,(void (*)(Type_AE400_29795*))SpeedSpellTick_56380_568B0,0x0001,0x0000 },
 { 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))sub_56250,0x0001,0x0000 },
 { 0x002548F4,0x0008,sub_56260,0x0001,0x0000 },
 { 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))sub_56510_56A40,0x0001,0x0000 },
@@ -64460,7 +64460,9 @@ void sub_56270_567A0(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_56380_568B0(int a1)
+/// Per-tick handler of an active speed spell (spell table action 6): while it lasts, sets the caster's
+/// speed to 2x its base (3x on the first tick) and spawns trail particles.
+void SpeedSpellTick_56380_568B0(int a1)
 {
   unsigned int v1; // esi
   int v2; // eax
@@ -64495,7 +64497,8 @@ void sub_56380_568B0(int a1)
           if ( v3 < 0 )
             *(_BYTE *)(a1 + 16) = v3 & 0x7F;
         }
-        ((void (*)(unsigned int))locret_455C0_45900)(v1);
+        // PORT: was a call through locret_455C0_45900 - an empty function (bare ret at 0x455C0) declared as
+        // a null data object, so casting the spell crashed. Nothing to call.
         if ( *(_WORD *)(a1 + 48) == *(_WORD *)(a1 + 50) )
         {
           v4 = 3 * *(_WORD *)(v1 + 128);
@@ -65537,7 +65540,7 @@ void sub_57F00_58410(int a1)
           if ( v3 < 0 )
             *(_BYTE *)(a1 + 16) = v3 & 0x7F;
         }
-        ((void (*)(unsigned int))locret_455C0_45900)(v1);
+        // PORT: empty function at 0x455C0 (bare ret), see SpeedSpellTick_56380_568B0.
         if ( *(_WORD *)(a1 + 48) == *(_WORD *)(a1 + 50) )
           *(_WORD *)(*(_DWORD *)(v1 + 160) + 12) = -3 * *(_WORD *)(v1 + 128);
         else
