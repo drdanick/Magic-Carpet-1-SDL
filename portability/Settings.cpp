@@ -209,7 +209,7 @@ std::vector<std::string> InitSettings(int argc, char* argv[])
 			g_settings.snapshotFrame = g_settings.snapshotFrames.empty() ? -1 : g_settings.snapshotFrames[0];
 		}
 		else if (a == "--snapshot-dir") g_settings.snapshotDir = next("a directory");
-		else if (a == "--snapshot-what") g_settings.snapshotWhat = next("tick or draw");
+		else if (a == "--snapshot-what") g_settings.snapshotWhat = next("tick, draw or frame");
 		else if (a == "--frame-hashes") g_settings.frameHashFile = next("a file");
 		else if (a == "--frame-stats") g_settings.frameStats = true;
 		else if (a == "--headless") g_settings.headless = true;

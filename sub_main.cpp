@@ -25181,7 +25181,16 @@ void sub_20E60_20E60()
 int DrawGameFrame_20FB0_index = 0;
 
 //----- (00020FB0) --------------------------------------------------------
-void DrawGameFrame_20FB0()//1F1FB0_
+static void DrawGameFrame_20FB0_body();
+// PORT: wrapper for the differential harness (--snapshot-what frame, tools/diff_call.py)
+void DrawGameFrame_20FB0()
+{
+	MemSnapshot_Call("frame", true, 0x20FB0, nullptr, 0);
+	DrawGameFrame_20FB0_body();
+	MemSnapshot_Call("frame", false, 0x20FB0, nullptr, 0);
+}
+
+static void DrawGameFrame_20FB0_body()//1F1FB0_
 {
 	__int64 v9; // rax
 	__int64 v10; // rax

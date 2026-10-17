@@ -102,7 +102,7 @@ class Machine:
         # port-only instrumentation globals (call counters etc.): writes to them are not differences
         self.port_only = set()
         for s_ in self.ps.data_symbols():
-            if s_.name.startswith(('counter_', 'compare_', 'debugcounter')):
+            if s_.name.startswith(('counter_', 'compare_', 'debugcounter')) or s_.name == 'DrawGameFrame_20FB0_index':
                 self.port_only.update(range(self.image_base + s_.rva, self.image_base + s_.rva + max(s_.size, 1)))
         ib = self.image_base
         self.image_lo = ib
@@ -220,12 +220,14 @@ class Machine:
         own name (e.g. strPal.fog_B7934_B7924: the renderer's fog/blend tables)."""
         from port_symbols import Sym, SymTagData
         out = list(self.ps.data_symbols())
+        self.member_syms = set()
         for s in self.ps.data_symbols():
             if s.size < 64 or name_addresses(s.name, self.img) or s.name in SKIP_GLOBALS:
                 continue
             for mname, off, mt, msize in self.ps.members(s.type_index):
                 if msize and name_addresses(mname, self.img):
                     out.append(Sym(mname, s.rva + off, msize, SymTagData, mt))
+                    self.member_syms.add(mname)
         return out
 
     def _copy_globals(self):
@@ -255,7 +257,9 @@ class Machine:
         for a0, n0, nm in spans:
             toks = [int(t, 16) for t in re.findall(r'_([0-9A-F]{5,6})(?=_|$)', nm)]
             dosbox_only = bool(toks) and all(t >= 0x200000 for t in toks)  # DOSBox = IDA + 0x1BE000
-            if (nm.startswith('unk_') or dosbox_only) and any(a1 < a0 and a0 + n0 <= a1 + n1 for a1, n1, _ in spans):
+            # (only inside struct-member tables: enlarged port arrays would otherwise swallow e.g. begWscreen)
+            inside = [n2 for a1, n1, n2 in spans if a1 < a0 and a0 + n0 <= a1 + n1]
+            if (nm.startswith('unk_') and inside) or (dosbox_only and any(n2 in self.member_syms for n2 in inside)):
                 self.junk.add(nm)
         # skipped globals are no boundary either (pathStrArray_F1EF0 would cut the 64 KB mapShading_EC1E0)
         starts = sorted({a0 for a0, n0, nm in spans if nm not in self.junk and nm not in SKIP_GLOBALS})

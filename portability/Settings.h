@@ -43,7 +43,7 @@ struct Remc1Settings {
 	int snapshotFrame = -1;    // --snapshot-frame N: dump process memory before/after the entity tick of frame N (diff harness)
 	std::vector<int> snapshotFrames; // --snapshot-frame N1,N2,...: all requested frames (snapshotFrame = the next one)
 	std::string snapshotDir;   // --snapshot-dir D: where the dumps go (default "snapshot")
-	std::string snapshotWhat = "tick"; // --snapshot-what tick|draw: entity tick or one DrawWorld_30D90 call
+	std::string snapshotWhat = "tick"; // --snapshot-what tick|draw|frame: entity tick, one DrawWorld_30D90 or one DrawGameFrame_20FB0 call
 };
 
 extern Remc1Settings g_settings;
