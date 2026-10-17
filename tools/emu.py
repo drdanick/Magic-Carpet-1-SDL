@@ -35,6 +35,7 @@ CLIP_GLOBALS = {'dword_9334C': 1024}
 # height (dwords in the original, uint16 in the port)
 # and the font table pointers at 0xAE3B8 (two dwords in the original, the struct array dword_AE3B8_2 in the port)
 LAYOUT_IGNORE_IDA = [(0x93ADA, 0x93ADC), (0x93ADE, 0x93AE0), (0xAE3B8, 0xAE3C0)]
+LAYOUT_IGNORE_PORT = ['dword_AE3B8_2']  # whole port symbols on the port side (12-byte font structs)
 # sound: the original drives the HMI/SOS driver, the port SDL_mixer - neither is game logic
 SKIP_FUNCS = ['sub_55370_558A0', 'sub_55890_55DC0',
               # port-only diagnostics called from game functions (the snapshot hooks themselves)
@@ -312,6 +313,10 @@ class Machine:
             for pg in range(g[0] >> 12, ((g[0] + g[1] - 1) >> 12) + 1):
                 self.gm_pages.setdefault(pg, []).append(g)
         # the port side of the known layout differences
+        for n in LAYOUT_IGNORE_PORT:
+            sym = self.sym_by_name.get(n)
+            if sym:
+                self.skip_port.append((self.image_base + sym.rva, self.image_base + sym.rva + sym.size))
         for lo, hi in LAYOUT_IGNORE_IDA:
             for a in range(lo, hi):
                 pa, _ = self.ida_to_port(a)
