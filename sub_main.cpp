@@ -27593,8 +27593,11 @@ void sub_25CE0(Type_AE400_29795* a1x)
 ///   missile 9/0 towards a point 1536 ahead (missile target type 10/17, +32 = -386).
 /// - During ticks 1..127 it spawns 10/16 entities (random 1 in 5 on non-multiples of 16) and turns
 ///   (+31 += 5); at 127 it removes itself and frees game-state +36.
-/// It looks like a periodic eruption/emitter (one active at a time via +36), but this is inferred, not
-/// verified. PORT: see the cast fix at the sub_41E80_421C0 call below (level 8 crash).
+/// It looks like a periodic eruption/emitter (one active at a time via +36). In play it runs when a
+/// volcano is spawned (user observation, level 8), which fits the terrain-height checks: likely the
+/// volcano's eruption (lava 10/16, fireball missile), possibly started by a map trigger for volcano
+/// spawns. Not verified against the volcano spell/trigger code yet. PORT: see the cast fix at the
+/// sub_41E80_421C0 call below (level 8 crash).
 void sub_25EC0(int a1)
 {
   unsigned int v1; // eax
