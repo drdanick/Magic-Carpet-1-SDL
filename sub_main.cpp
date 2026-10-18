@@ -17866,7 +17866,9 @@ int sub_15470(int a1, int a2, signed int a3, signed int a4)
   signed int v6; // esi
 
   *(_WORD *)(*(_DWORD *)(a1 + 160) + 14) = 0;
-  v4 = sub_42340_42680((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(a2 + 72));
+  // PORT: the original measures the distance to a2 + 0x48 before checking a2 (0 = no target, e.g.
+  // sub_138F0 -> reads DOS address 0x48, result unused). Only measure with a target (crash, level 7).
+  v4 = a2 ? sub_42340_42680((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(a2 + 72)) : 0;
   v5 = v4;
   if ( a2 )
   {
