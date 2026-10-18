@@ -561,9 +561,9 @@ void sub_262D0(Type_AE400_29795* a1);
 void sub_26360(Type_AE400_29795* a1);
 void sub_263C0(Type_AE400_29795* a1);
 _BOOL1 sub_264D0(unsigned __int16 a1);
-void sub_26560(int a1, int a2);
-void sub_26670(int a1, _WORD *a2);
-void sub_26760(int a1, _WORD *a2);
+void RaiseTerrainStripYUp_26560(int a2);
+void RaiseTerrainStripYDown_26670(_WORD *a2);
+void RaiseTerrainStripX_26760(_WORD *a2);
 void sub_26890(Type_AE400_29795* event);
 void sub_26920(Type_AE400_29795* a1);
 void sub_269A0(Type_AE400_29795* a1);
@@ -3991,9 +3991,9 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x0018,(void (*)(Type_AE400_29795*))sub_26350,0x0001,0x0000 },
 { 0x002548F4,0x0019,(void (*)(Type_AE400_29795*))sub_26360,0x0001,0x0000 },
 { 0x002548F4,0x001A,(void (*)(Type_AE400_29795*))sub_263C0,0x0001,0x0000 },
-{ 0x002548F4,0x001B,(void (*)(Type_AE400_29795*))sub_26670,0x0001,0x0000 },
-{ 0x002548F4,0x001C,(void (*)(Type_AE400_29795*))sub_26560,0x0001,0x0000 },
-{ 0x002548F4,0x001D,(void (*)(Type_AE400_29795*))sub_26760,0x0001,0x0000 },
+{ 0x002548F4,0x001B,(void (*)(Type_AE400_29795*))RaiseTerrainStripYDown_26670,0x0001,0x0000 },
+{ 0x002548F4,0x001C,(void (*)(Type_AE400_29795*))RaiseTerrainStripYUp_26560,0x0001,0x0000 },
+{ 0x002548F4,0x001D,(void (*)(Type_AE400_29795*))RaiseTerrainStripX_26760,0x0001,0x0000 },
 { 0x002548F4,0x001E,(void (*)(Type_AE400_29795*))sub_253E0,0x0001,0x0000 },
 { 0x002548F4,0x001F,(void (*)(Type_AE400_29795*))sub_253E0,0x0001,0x0000 },
 { 0x002548F4,0x0020,(void (*)(Type_AE400_29795*))sub_26890,0x0001,0x0000 },
@@ -27851,8 +27851,15 @@ _BOOL1 sub_264D0(unsigned __int16 a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_26560(int a1, int a2)
+/// Level-build step (class 10 type 27, states 27-29): raises a strip of terrain by 48 (width +12,
+/// length +26 tiles from the entity position), sets the tiles to terrain type 8, marks the strip edges
+/// in mapAngle (|= 0x80) and removes the entity. PORT: the original takes only the entity
+/// ([esp+1Ch] after the prologue = first argument); Hex-Rays gave it a leading dummy a1, so the
+/// table call passed the entity as a1 and a2 was stack garbage - the entity was never removed and
+/// level loading (sub_36620_369E0) looped forever (level 8 freeze).
+void RaiseTerrainStripYUp_26560(int a2)
 {
+  int a1 = 0; // PORT: scratch counter (was the dummy first parameter)
   __int16 i; // di
   unsigned __int16 v4; // [esp+0h] [ebp-18h]
   unsigned __int16 v5; // [esp+4h] [ebp-14h]
@@ -27882,8 +27889,15 @@ void sub_26560(int a1, int a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_26670(int a1, _WORD *a2)
+/// Level-build step (class 10 type 27, states 27-29): raises a strip of terrain by 48 (width +12,
+/// length +26 tiles from the entity position), sets the tiles to terrain type 8, marks the strip edges
+/// in mapAngle (|= 0x80) and removes the entity. PORT: the original takes only the entity
+/// ([esp+1Ch] after the prologue = first argument); Hex-Rays gave it a leading dummy a1, so the
+/// table call passed the entity as a1 and a2 was stack garbage - the entity was never removed and
+/// level loading (sub_36620_369E0) looped forever (level 8 freeze).
+void RaiseTerrainStripYDown_26670(_WORD *a2)
 {
+  int a1 = 0; // PORT: scratch counter (was the dummy first parameter)
   __int16 i; // di
   unsigned __int16 v4; // [esp+0h] [ebp-18h]
   char v5; // [esp+4h] [ebp-14h]
@@ -27911,8 +27925,15 @@ void sub_26670(int a1, _WORD *a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_26760(int a1, _WORD *a2)
+/// Level-build step (class 10 type 27, states 27-29): raises a strip of terrain by 48 (width +12,
+/// length +26 tiles from the entity position), sets the tiles to terrain type 8, marks the strip edges
+/// in mapAngle (|= 0x80) and removes the entity. PORT: the original takes only the entity
+/// ([esp+1Ch] after the prologue = first argument); Hex-Rays gave it a leading dummy a1, so the
+/// table call passed the entity as a1 and a2 was stack garbage - the entity was never removed and
+/// level loading (sub_36620_369E0) looped forever (level 8 freeze).
+void RaiseTerrainStripX_26760(_WORD *a2)
 {
+  int a1 = 0; // PORT: scratch counter (was the dummy first parameter)
   int v2; // eax
   __int16 j; // di
   unsigned __int16 v5; // [esp+0h] [ebp-18h]
