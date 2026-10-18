@@ -27583,6 +27583,18 @@ void sub_25CE0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
+/// Update handler of class 10 (effect) entities in state 18 (0x12) - EXACT PURPOSE STILL UNKNOWN, so not
+/// renamed yet. Observed (level 8, level_8_crash.txt):
+/// - +26 is a tick counter, incremented every call. After 2500 ticks it rerolls (1 in 100, and only while
+///   game-state +36 is free) and, if the terrain under it has not changed height, restarts at 0.
+/// - Whenever the terrain height under it changes, the entity removes itself.
+/// - On tick 0 it claims game-state +36 (its own index; the previous holder gets +26 = 250), creates a
+///   10/19 entity whose index it keeps in game-state +38 (removing the previous one), and fires a
+///   missile 9/0 towards a point 1536 ahead (missile target type 10/17, +32 = -386).
+/// - During ticks 1..127 it spawns 10/16 entities (random 1 in 5 on non-multiples of 16) and turns
+///   (+31 += 5); at 127 it removes itself and frees game-state +36.
+/// It looks like a periodic eruption/emitter (one active at a time via +36), but this is inferred, not
+/// verified. PORT: see the cast fix at the sub_41E80_421C0 call below (level 8 crash).
 void sub_25EC0(int a1)
 {
   unsigned int v1; // eax
