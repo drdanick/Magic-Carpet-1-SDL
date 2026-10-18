@@ -1137,7 +1137,7 @@ char sub_53070_533B0(int a1);
 char sub_530B0(int a1);
 char sub_530C0_53400(int a1);
 char sub_534C0_53800(int a1);
-__int16 sub_535E0_53920(unsigned int a1);
+__int16 LightningBoltTick_535E0_53920(unsigned int a1);
 void UpdateHomingSpawnMissile_53980_53CC0(int a1);
 char UpdateSpawningMissile_53B50_53E90(int a1);
 char sub_53DC0_54100(int a1);
@@ -3948,7 +3948,7 @@ Type_254A34x str_25573C[] = {
 { 0x002548F4,0x0006,(void (*)(Type_AE400_29795*))sub_53060,0x0001,0x0000 },
 { 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))sub_530B0,0x0001,0x0000 },
 { 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))sub_530C0_53400,0x0001,0x0000 },
-{ 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))sub_535E0_53920,0x0001,0x0000 },
+{ 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))LightningBoltTick_535E0_53920,0x0001,0x0000 },
 { 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))UpdateHomingSpawnMissile_53980_53CC0,0x0001,0x0000 },
 { 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))sub_53060,0x0001,0x0000 },
 { 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))sub_53DC0_54100,0x0001,0x0000 },
@@ -62358,7 +62358,10 @@ char sub_534C0_53800(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-__int16 sub_535E0_53920(unsigned int a1)
+/// Lightning bolt tick (missile class 9 / model 9, state 9): steers the bolt (sub_534C0_53800 until flag 4),
+/// steps it along heading/pitch by speed/8 and leaves a trail of 9/9 state-14 segment sprites (216);
+/// on contact (sub_11980) it hits the target (sub_526C0_52A00).
+__int16 LightningBoltTick_535E0_53920(unsigned int a1)
 {
   __int16 v1; // ax
   __int16 v2; // di
@@ -62386,8 +62389,11 @@ __int16 sub_535E0_53920(unsigned int a1)
   axis_3d v25_s; // PORT: v25 (int) + v26 (__int16) were one axis_3d on the DOS stack (passed as axis_3d*)
 #define v25 (*(int*)&v25_s)
 #define v26 (v25_s.z)
-  int v27; // [esp+10h] [ebp-2Ch] BYREF
-  int v28; // [esp+14h] [ebp-28h]
+  axis_3d v27_s; // PORT: v27 (x,y) + v28 (z) were one axis_3d at [esp+10h] (sub_41EC0 writes all three); as
+                 // separate ints the z step landed elsewhere, stayed 0 and lightning bolts never climbed or
+                 // dived towards their target (no lock-on)
+#define v27 (*(int*)&v27_s)
+#define v28 (v27_s.z)
   unsigned int v29; // [esp+18h] [ebp-24h]
   int v30; // [esp+1Ch] [ebp-20h]
   int v31; // [esp+20h] [ebp-1Ch]
@@ -62540,6 +62546,8 @@ LABEL_22:
 }
 #undef v25
 #undef v26
+#undef v27
+#undef v28
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick update of a spawning missile. If it has a target entity (+146) it homes on it and,
