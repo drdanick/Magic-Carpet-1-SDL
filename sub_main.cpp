@@ -27643,7 +27643,7 @@ LABEL_5:
         *(_WORD *)(v8 + 24) = *(_WORD *)(a1 + 24);
         v10 = 164 * *(unsigned __int16 *)(dword_AE400_AE3F0() + 38);
         if ( dword_AE400_AE3F0() + 29795 + v10 > (unsigned int)(dword_AE400_AE3F0() + 29795) )
-          sub_41E80_421C0((Type_AE400_29795*)dword_AE400_AE3F0() + 29795 + v10);
+          sub_41E80_421C0((Type_AE400_29795*)(dword_AE400_AE3F0() + 29795 + v10)); // PORT: was cast before the + (offsets counted in 164-byte entities: wild write, level 8 crash)
         *(_WORD *)(dword_AE400_AE3F0() + 38) = (v9 - (dword_AE400_AE3F0() + 29795)) / 164;
       }
     }
