@@ -328,7 +328,7 @@ int sub_132B0(int a1);
 int sub_136C0(int a1);
 bool sub_13800(int a1);
 int sub_138E0();
-int sub_138F0(int a1);
+int AiBuildCastle_138F0(int a1);
 bool sub_13990(_WORD *a1);
 int sub_13A10(int a1);
 bool sub_13A70(int a1);
@@ -361,8 +361,8 @@ unsigned int sub_15340(int a1, int a2);
 unsigned int sub_153B0(int a1, int a2);
 __int16 sub_15420(int a1);
 bool sub_15440(int a1, int a2);
-int sub_15470(int a1, int a2, signed int a3, signed int a4);
-int sub_155F0(int a1, unsigned __int8 a2);
+int AiApproachTarget_15470(int a1, int a2, signed int a3, signed int a4);
+int AiCastSpell_155F0(int a1, unsigned __int8 a2);
 int sub_15A00(int a1, unsigned __int8 a2);
 bool sub_15E60(int a1, unsigned __int8 a2);
 bool sub_15E90(int a1, unsigned __int8 a2);
@@ -955,7 +955,7 @@ int sub_42210_42550(__int16 a1, __int16 a2);
 int sub_42240_42580(int a1, __int16 a2);
 int sub_422A0_425E0(unsigned __int16 a1, __int16 a2, int a3, unsigned __int16 a4);
 int sub_42300_42640(_WORD *a1, _WORD *a2);
-unsigned int sub_42340_42680(axis_3d* a1, axis_3d* a2);
+unsigned int Distance3D_42340_42680(axis_3d* a1, axis_3d* a2);
 int sub_42390_426D0(_WORD *a1, _WORD *a2);
 unsigned int sub_423D0_42710(axis_3d* a1, axis_3d* a2);
 int sub_42410_42750(_WORD *a1, _WORD *a2);
@@ -16010,7 +16010,7 @@ int sub_11E50(__int16 *a1, char a2, char a3)
           break;
         v6 = *(_BYTE *)(v8 + 64);
         dword_AE400_AE3F0(v3);
-        if ( v6 == a2 && a3 == *(_BYTE *)(v8 + 65) && sub_42340_42680((axis_3d*)(uint16*)a1, (axis_3d*)(_WORD *)(v8 + 72)) <= 0x80 )
+        if ( v6 == a2 && a3 == *(_BYTE *)(v8 + 65) && Distance3D_42340_42680((axis_3d*)(uint16*)a1, (axis_3d*)(_WORD *)(v8 + 72)) <= 0x80 )
         {
           result = 1;
           v3 = dword_AE400_AE3F0();
@@ -16671,7 +16671,7 @@ int sub_13170(int a1)
       result = sub_136C0(a1);
       break;
     case 3:
-      sub_138F0(a1);
+      AiBuildCastle_138F0(a1);
       result = sub_136C0(a1);
       break;
     case 4:
@@ -16841,7 +16841,7 @@ int sub_132B0(int a1)
       sub_16890(a1, v24);
     }
     if ( *(_DWORD *)(a1 + 12) < *(_DWORD *)(a1 + 8) )
-      sub_155F0(a1, 1u);
+      AiCastSpell_155F0(a1, 1u);
   }
   v25 = (__int16)GetTerrainHeight_11F50((axis_3d*)(__int16 *)(a1 + 72));
   v26 = *(_DWORD *)(a1 + 156);
@@ -16926,9 +16926,9 @@ bool sub_13800(int a1)
   if ( result )
   {
     *(_WORD *)(a1 + 34) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v1 + 72));
-    if ( sub_15470(a1, v1, 512, 2048) )
+    if ( AiApproachTarget_15470(a1, v1, 512, 2048) )
     {
-      if ( sub_155F0(a1, 0x10u) )
+      if ( AiCastSpell_155F0(a1, 0x10u) )
         return 0;
       v3 = *(__int16 *)(a1 + 76) - (*(__int16 *)(v1 + 76) + 512);
       if ( v3 )
@@ -16950,17 +16950,18 @@ int sub_138E0()
 }
 
 //----- (000138F0) --------------------------------------------------------
-int sub_138F0(int a1)
+/// AI mode 3: fly to the chosen castle site (a1+150) and cast the castle spell there.
+int AiBuildCastle_138F0(int a1)
 {
   int result; // eax
   int v2; // ebx
   int v3; // eax
 
   *(_WORD *)(a1 + 34) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(a1 + 150));
-  result = sub_15470(a1, 0, 2048, 3072);
+  result = AiApproachTarget_15470(a1, 0, 2048, 3072);
   if ( result )
   {
-    if ( sub_155F0(a1, 0x10u) )
+    if ( AiCastSpell_155F0(a1, 0x10u) )
     {
       return 0;
     }
@@ -16989,7 +16990,7 @@ bool sub_13990(_WORD *a1)
   if ( result )
   {
     a1[17] = sub_42150_42490((axis_3d*)(a1 + 36), (axis_3d*)(_WORD *)(v1 + 72));
-    return sub_15470((int)a1, v1, 256, 2048) == 0;
+    return AiApproachTarget_15470((int)a1, v1, 256, 2048) == 0;
   }
   return result;
 }
@@ -17002,7 +17003,7 @@ int sub_13A10(int a1)
   {
     if ( sub_15A00(a1, 2u) )
     {
-      sub_155F0(a1, 2u);
+      AiCastSpell_155F0(a1, 2u);
       return 0;
     }
     *(_WORD *)(*(_DWORD *)(a1 + 160) + 12) = *(_WORD *)(a1 + 128);
@@ -17020,12 +17021,12 @@ bool sub_13A70(int a1)
   if ( v1 <= dword_AE400_AE3F0() + 29795 )
   {
     if ( sub_15A00(a1, 0xCu) )
-      sub_155F0(a1, 0xCu);
+      AiCastSpell_155F0(a1, 0xCu);
     if ( !sub_15E60(a1, 2u) )
     {
       if ( sub_15A00(a1, 2u) )
       {
-        sub_155F0(a1, 2u);
+        AiCastSpell_155F0(a1, 2u);
         return 0;
       }
       *(_WORD *)(*(_DWORD *)(a1 + 160) + 12) = *(_WORD *)(a1 + 128);
@@ -17033,13 +17034,13 @@ bool sub_13A70(int a1)
     }
     return 0;
   }
-  if ( sub_42410_42750((_WORD *)(a1 + 72), (_WORD *)(v1 + 72)) > 104857600 && sub_155F0(a1, 0x13u) )
+  if ( sub_42410_42750((_WORD *)(a1 + 72), (_WORD *)(v1 + 72)) > 104857600 && AiCastSpell_155F0(a1, 0x13u) )
     return 1;
-  sub_155F0(a1, 0xCu);
+  AiCastSpell_155F0(a1, 0xCu);
   if ( !sub_15440(a1, v1) )
     return 0;
   *(_WORD *)(a1 + 34) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v1 + 72));
-  return !sub_15470(a1, v1, 256, 2048);
+  return !AiApproachTarget_15470(a1, v1, 256, 2048);
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
 
@@ -17057,9 +17058,9 @@ bool sub_13BA0(int a1)
   if ( result )
   {
     *(_WORD *)(a1 + 34) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(v1 + 36)); // PORT: was ((uint8_t*)v1) + 36 - v1 is _WORD*, the target's position is at byte 72 (asm lea edi,[esi+48h])
-    if ( sub_15470(a1, (int)v1, 1024, 3072) )
+    if ( AiApproachTarget_15470(a1, (int)v1, 1024, 3072) )
     {
-      if ( sub_155F0(a1, 3u) )
+      if ( AiCastSpell_155F0(a1, 3u) )
       {
         v3 = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(v1 + 36));
         if ( (unsigned __int16)sub_42210_42550(*(_WORD *)(a1 + 30), v3) < 0x1Cu )
@@ -17093,13 +17094,13 @@ bool sub_13CA0(int a1)
   if ( result )
   {
     *(_WORD *)(a1 + 34) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v1 + 72));
-    if ( sub_15470(a1, v1, 2048, 3584) )
+    if ( AiApproachTarget_15470(a1, v1, 2048, 3584) )
     {
       v3 = *(__int16 *)(*(_DWORD *)(a1 + 160) + 526);
       if ( !(*(unsigned __int8 *)(a1 + 63) % (64 - ((v3 - (__CFSHL__(v3 >> 31, 2) + 4 * (v3 >> 31))) >> 2))) )
       {
         v4 = sub_16310((_DWORD *)a1);
-        if ( v4 != -1 && sub_155F0(a1, v4) )
+        if ( v4 != -1 && AiCastSpell_155F0(a1, v4) )
           return 0;
         v5 = *(__int16 *)(a1 + 76) - (*(__int16 *)(v1 + 76) + 512);
         if ( v5 )
@@ -17135,10 +17136,10 @@ bool sub_13DD0(int a1)
   if ( !result )
     return result;
   *(_WORD *)(a1 + 34) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v1 + 72));
-  if ( !sub_15470(a1, v1, 3072, 4096) || *(__int16 *)(*(_DWORD *)(a1 + 160) + 404) < 0 )
+  if ( !AiApproachTarget_15470(a1, v1, 3072, 4096) || *(__int16 *)(*(_DWORD *)(a1 + 160) + 404) < 0 )
     return 1;
   v3 = sub_16030(a1);
-  if ( v3 == -1 || (v4 = v3, !sub_15A00(a1, v3)) || !sub_155F0(a1, v4) )
+  if ( v3 == -1 || (v4 = v3, !sub_15A00(a1, v3)) || !AiCastSpell_155F0(a1, v4) )
   {
     v5 = *(__int16 *)(a1 + 76) - (*(__int16 *)(v1 + 76) + 512);
     if ( v5 )
@@ -17859,7 +17860,9 @@ bool sub_15440(int a1, int a2)
 }
 
 //----- (00015470) --------------------------------------------------------
-int sub_15470(int a1, int a2, signed int a3, signed int a4)
+/// AI wizard a1 approaches entity a2 (or, a2 = 0, the point at a1+150): within a3 it stops (returns 1);
+/// otherwise it flies at full speed, and beyond a4 may cast spell slot 2 (speed) instead. Returns 0.
+int AiApproachTarget_15470(int a1, int a2, signed int a3, signed int a4)
 {
   signed int v4; // eax
   signed int v5; // esi
@@ -17867,8 +17870,8 @@ int sub_15470(int a1, int a2, signed int a3, signed int a4)
 
   *(_WORD *)(*(_DWORD *)(a1 + 160) + 14) = 0;
   // PORT: the original measures the distance to a2 + 0x48 before checking a2 (0 = no target, e.g.
-  // sub_138F0 -> reads DOS address 0x48, result unused). Only measure with a target (crash, level 7).
-  v4 = a2 ? sub_42340_42680((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(a2 + 72)) : 0;
+  // AiBuildCastle_138F0 -> reads DOS address 0x48, result unused). Only measure with a target (crash, level 7).
+  v4 = a2 ? Distance3D_42340_42680((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(a2 + 72)) : 0;
   v5 = v4;
   if ( a2 )
   {
@@ -17878,7 +17881,7 @@ int sub_15470(int a1, int a2, signed int a3, signed int a4)
         return 0;
       if ( v5 > a4 && sub_15A00(a1, 2u) )
       {
-        sub_155F0(a1, 2u);
+        AiCastSpell_155F0(a1, 2u);
         return 0;
       }
       *(_WORD *)(*(_DWORD *)(a1 + 160) + 12) = *(_WORD *)(a1 + 128);
@@ -17896,7 +17899,7 @@ LABEL_8:
   {
     if ( v6 > a4 && sub_15A00(a1, 2u) )
     {
-      sub_155F0(a1, 2u);
+      AiCastSpell_155F0(a1, 2u);
       return 0;
     }
     *(_WORD *)(*(_DWORD *)(a1 + 160) + 12) = *(_WORD *)(a1 + 128);
@@ -17907,7 +17910,8 @@ LABEL_15:
 }
 
 //----- (000155F0) --------------------------------------------------------
-int sub_155F0(int a1, unsigned __int8 a2)
+/// AI wizard a1 casts spell a2 (castle 0x10, ...) if it owns the spell and has the mana; 1 if cast.
+int AiCastSpell_155F0(int a1, unsigned __int8 a2)
 {
   unsigned int v2; // esi
   int v3; // ebx
@@ -18639,14 +18643,14 @@ char sub_16890(int a1, int a2)
 LABEL_10:
         if ( sub_15A00(a1, 0xEu) )
         {
-          LOBYTE(v2) = sub_155F0(a1, 0xEu);
+          LOBYTE(v2) = AiCastSpell_155F0(a1, 0xEu);
           return v2;
         }
         v2 = sub_15A00(a1, 4u);
         if ( !v2 )
           return v2;
 LABEL_15:
-        LOBYTE(v2) = sub_155F0(a1, 4u);
+        LOBYTE(v2) = AiCastSpell_155F0(a1, 4u);
       }
     }
     else
@@ -20497,7 +20501,7 @@ LABEL_26:
   if ( !(a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26) )
   {
     v14 = a1x->var_u32_29951_156->v_28;
-    if ( sub_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v12 + 72)) >= v14 )
+    if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v12 + 72)) >= v14 )
       goto LABEL_26;
     if ( a3(a1x, v12) )
       return 1;
@@ -20801,7 +20805,7 @@ int sub_1AB10(Type_AE400_29795* a1x, int a2)
   int v2; // ebx
 
   v2 = 0;
-  if ( (int)sub_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(a2 + 72)) < 1024 )
+  if ( (int)Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(a2 + 72)) < 1024 )
   {
     v2 = 1;
     sub_12B50(a1x, a2, 0, a1x->var_u16_29839_44);
@@ -21387,7 +21391,7 @@ void sub_1B5D0(Type_AE400_29795* a1x)
         v36 = dword_AE400_AE3F0() + 29795 + 164 * v8;
         if ( *(_BYTE *)(v36 + 64) == 10 && *(_BYTE *)(v36 + 65) == 45 )
         {
-          if ( sub_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v36 + 72)) > 0x1000 )
+          if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v36 + 72)) > 0x1000 )
           {
             //LOWORD(v7) = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v36 + 72));
             a1x->var_u16_29829_34 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD*)(v36 + 72));
@@ -22072,7 +22076,7 @@ LABEL_30:
   if ( !v16 )
   {
     v17 = a1x->var_u32_29951_156->v_28;
-    if ( sub_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v10 + 72)) >= v17 )
+    if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v10 + 72)) >= v17 )
       goto LABEL_30;
     sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 37);
     a1x->var_u8_29866_71 = 5;
@@ -22606,7 +22610,7 @@ void sub_1D060(Type_AE400_29795* a1x)
     {
       a1x->var_u16_29829_34 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v52 + 72));
       v42 = *(__int16 *)(v52 + 80) + a1x->var_u32_29951_156->v_28;
-      if ( sub_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v52 + 72)) > v42 )
+      if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v52 + 72)) > v42 )
       {
         v10 = dword_AE400_AE3F0();
         v46 = 0;
@@ -22738,7 +22742,7 @@ void sub_1D060(Type_AE400_29795* a1x)
 LABEL_78:
         if ( v46 )
         {
-          if ( sub_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v46 + 72)) <= 0x600 )
+          if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v46 + 72)) <= 0x600 )
           {
             *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)(v46 + 72);
             word_AE454_AE444.z = *(_WORD *)(v46 + 76);
@@ -23037,7 +23041,7 @@ LABEL_29:
     v11 = a1x->var_u32_29951_156->v_28;
     if ( *(_BYTE *)(v9 + 64) == 3 && *(_BYTE *)(v9 + 65) == 2 )
       v11 += *(__int16 *)(v9 + 80);
-    if ( sub_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v9 + 72)) < v11 )
+    if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v9 + 72)) < v11 )
     {
       sub_1AA40(a1x, v9);
       goto LABEL_31;
@@ -23489,7 +23493,7 @@ void sub_1E380(Type_AE400_29795* a1x)
   if ( !(a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26) )
   {
     v11 = a1x->var_u32_29951_156->v_28;
-    if ( sub_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v9 + 72)) >= v11 )
+    if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v9 + 72)) >= v11 )
     {
       sub_1E720(a1x);
       return;
@@ -24011,7 +24015,7 @@ void sub_1F120(Type_AE400_29795* a1x)
       }
       v11 = (_WORD *)(v9 + 72);
       a1x->var_u16_29829_34 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v11);
-      if ( sub_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)v11) < 0xA00 )
+      if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)v11) < 0xA00 )
       {
         a1x->var_u16_29821_26 = 0;
         sub_424F0_42830(a1x, 0x48u);
@@ -24077,7 +24081,7 @@ void sub_1F390(Type_AE400_29795* a1x)
   {
     for ( j = *(_DWORD *)(dword_AE408_AE3F8() + 36470); j > dword_AE400_AE3F0() + 29795; j = *(_DWORD *)j )
     {
-      v10 = sub_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(j + 72));
+      v10 = Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(j + 72));
       if ( v10 && v10 < v1 )
       {
         v2 = j;
@@ -24224,7 +24228,7 @@ void sub_1F640(Type_AE400_29795* a1x)
         v16 = dword_AE400_AE3F0() + 29795 + 164 * a1x->var_u16_29941_146;
         if ( *(_BYTE *)(v16 + 64) != 10 || *(_BYTE *)(v16 + 65) != 45 )
           goto LABEL_36;
-        if ( sub_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v16 + 72)) > 0x800 )
+        if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v16 + 72)) > 0x800 )
         {
           LOWORD(j) = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v16 + 72));
           a1x->var_u16_29829_34 = j;
@@ -24400,7 +24404,7 @@ void sub_1FAC0(Type_AE400_29795* a1x)
         v16 = dword_AE400_AE3F0() + 29795 + 164 * a1x->var_u16_29941_146;
         if ( *(_BYTE *)(v16 + 64) != 10 || *(_BYTE *)(v16 + 65) != 45 )
           goto LABEL_37;
-        if ( sub_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v16 + 72)) > 0x800 )
+        if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v16 + 72)) > 0x800 )
         {
           LOWORD(j) = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v16 + 72));
           a1x->var_u16_29829_34 = j;
@@ -24675,7 +24679,7 @@ void sub_201D0(Type_AE400_29795* a1x)
     goto LABEL_25;
   v12 = a1x->var_u32_29951_156->v_28;
   v13 = (_WORD *)(v8 + 72);
-  if ( sub_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v8 + 72)) >= v12 )
+  if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v8 + 72)) >= v12 )
   {
 LABEL_22:
     sub_424F0_42830(a1x, 0x5Bu);
@@ -24985,7 +24989,7 @@ void sub_207E0(Type_AE400_29795* a1x)
   MoveCreature_196E0(a1x);
   v11 = dword_AE400_AE3F0() + 29795 + 164 * a1x->var_u16_29941_146;
   if ( (a1x->var_u8_29858_63 & 7) == 0
-    && (*(_BYTE *)(v11 + 64) == 3 || sub_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v11 + 72)) >= 0x200) )
+    && (*(_BYTE *)(v11 + 64) == 3 || Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v11 + 72)) >= 0x200) )
   {
     a1x->var_u16_29829_34 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v11 + 72));
   }
@@ -51708,7 +51712,8 @@ int sub_42300_42640(_WORD *a1, _WORD *a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-unsigned int sub_42340_42680(axis_3d* a1x, axis_3d* a2x)
+/// 3D distance between two points (Distance_410CE of dx*dx + dy*dy + dz*dz, 16-bit wrapped deltas).
+unsigned int Distance3D_42340_42680(axis_3d* a1x, axis_3d* a2x)
 {
   int v2 = (__int16)(a2x->y - a1x->y);
   return Distance_410CE_4140E((__int16)(a2x->x - a1x->x) * (__int16)(a2x->x - a1x->x) + v2 * v2 + (__int16)(a2x->z - a1x->z)
@@ -53794,7 +53799,7 @@ signed int sub_44C10_44F50(int a1)
 
   v1 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)(dword_AE400_AE3F0() + 2049 * str_AE400_AE3F0->var_u16_8 + 13333);
   v2 = *(_DWORD *)(v1 + 160);
-  result = sub_42340_42680((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v1 + 72));
+  result = Distance3D_42340_42680((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v1 + 72));
   if ( result <= *(_DWORD *)(v2 + 396) )
     *(_DWORD *)(*(_DWORD *)(v1 + 160) + 396) = result;
   return result;
@@ -53808,7 +53813,7 @@ void sub_44C90_44FD0(Type_AE400_29795* event)
 
   //v1 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)(dword_AE400_AE3F0() + 2049 * str_AE400_AE3F0->var_u16_8 + 13333);
   v1x = &str_AE400_AE3F0->str_29795[str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].playIndex_13333];
-  result = sub_42340_42680(&event->var_u32_29867_72, &v1x->var_u32_29867_72);
+  result = Distance3D_42340_42680(&event->var_u32_29867_72, &v1x->var_u32_29867_72);
   if ( result <= v1x->var_u32_29955_160->u32_400)
       v1x->var_u32_29955_160->u32_400 = result;
 }
@@ -54094,7 +54099,7 @@ int sub_45410_45750(Type_AE400_29795* a1x)//216410_
   {
     v1 = sub_42150_42490(&a1x->var_u32_29867_72, &word_AE454_AE444);
     v8 = sub_42180_424C0(&a1x->var_u32_29867_72, &word_AE454_AE444);
-    v7 = sub_42340_42680(&a1x->var_u32_29867_72, &word_AE454_AE444);
+    v7 = Distance3D_42340_42680(&a1x->var_u32_29867_72, &word_AE454_AE444);
     word_AE454_AE444 = a1x->var_u32_29867_72;
     v9 = ((((int)v1 >> 9) + 1) << 9) & 0x7FF;
     v2 = sub_42210_42550(v1, (int)v1 >> 9 << 9);
@@ -54243,7 +54248,7 @@ void sub_455D0_45910(Type_AE400_29795* a1x)//2165D0_
   v20 = dword_AE400_AE3F0() + 29795 + 164 * a1x->var_u32_29955_160->u16_314;
   if ( v20 > dword_AE400_AE3F0() + 29795 )
   {
-    v21 = sub_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v20 + 72));
+    v21 = Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v20 + 72));
     if ( v21 >= 5120 || *(int *)(v20 + 12) < 0 || a1x->var_u32_29955_160->u16_316 == 1000 )
     {
       a1x->var_u32_29955_160->u16_314 = 0;
@@ -54682,7 +54687,7 @@ int sub_46540_46880(Type_AE400_29795* a1x)
     {
       *(_WORD *)(*(_DWORD *)(v3 + 160) + 314) = a1x - str_AE400_AE3F0->str_29795;
       *(_WORD *)(*(_DWORD *)(v3 + 160) + 316) = 200;
-      *(_DWORD *)(*(_DWORD *)(v3 + 160) + 318) = sub_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v3 + 72));
+      *(_DWORD *)(*(_DWORD *)(v3 + 160) + 318) = Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v3 + 72));
       v4 = *(_DWORD *)(v3 + 160);
       if ( *(int *)(v4 + 318) < 1024 )
         *(_DWORD *)(v4 + 318) = 1024;
@@ -63078,7 +63083,7 @@ int FindMissileTarget_54520_548B0(int a1)
         if ( *(_WORD *)(v10 + 24) != *(_WORD *)(a1 + 24) && (*(_BYTE *)(v10 + 16) & 0x20) == 0 )
         {
           v24 = *(__int16 *)(*(_DWORD *)(v28 + 156) + 28);
-          if ( sub_42340_42680((axis_3d*)(_WORD *)(v10 + 72), (axis_3d*)(_WORD *)(a1 + 72)) <= v24 )
+          if ( Distance3D_42340_42680((axis_3d*)(_WORD *)(v10 + 72), (axis_3d*)(_WORD *)(a1 + 72)) <= v24 )
           {
             if ( *(_BYTE *)(v10 + 65) == 2 )
             {
@@ -63162,7 +63167,7 @@ LABEL_35:
         if ( (*(_BYTE *)(v21 + 16) & 0x20) != 0 )
           goto LABEL_76;
         v25 = *(__int16 *)(*(_DWORD *)(v27 + 156) + 28);
-        if ( sub_42340_42680((axis_3d*)(_WORD *)(v21 + 72), (axis_3d*)(_WORD *)(a1 + 72)) > v25 )
+        if ( Distance3D_42340_42680((axis_3d*)(_WORD *)(v21 + 72), (axis_3d*)(_WORD *)(a1 + 72)) > v25 )
           goto LABEL_76;
         if ( *(_BYTE *)(v21 + 65) == 2 )
         {
@@ -63197,7 +63202,7 @@ LABEL_76:
           if ( (*(_BYTE *)(v3 + 16) & 0x20) != 0 )
             goto LABEL_13;
           v23 = *(__int16 *)(a1 + 128) * *(_DWORD *)(a1 + 8);
-          if ( sub_42340_42680((axis_3d*)(_WORD *)(v3 + 72), (axis_3d*)(_WORD *)(a1 + 72)) > v23 )
+          if ( Distance3D_42340_42680((axis_3d*)(_WORD *)(v3 + 72), (axis_3d*)(_WORD *)(a1 + 72)) > v23 )
             goto LABEL_13;
           if ( *(_BYTE *)(v3 + 65) == 2 )
           {
