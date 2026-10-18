@@ -18,7 +18,8 @@
   "input": {
     "grabMouse": true,
     "wasdAsArrows": true,
-    "tabAsEnter": true
+    "tabAsEnter": true,
+    "bothButtonsSpellMenu": false
   },
   "debug": {
     "log": false

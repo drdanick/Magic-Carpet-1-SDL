@@ -19371,7 +19371,10 @@ LABEL_54:
         MakeControlCommand_188A0(28, 0);
         lastPressedKey_12EF70_12EF60 = 0;
       }
-      if ( mouseLeftButton_12EFDE_12EFCE && mouseRightButton_12EFDC_12EFCC )
+      // PORT: left+right together opening the spell menu is the setting input.bothButtonsSpellMenu (default
+      // off - it got in the way of casting both hands' spells at once). The menu still opens with Enter
+      // (Tab with input.tabAsEnter).
+      if ( g_settings.bothButtonsSpellMenu && mouseLeftButton_12EFDE_12EFCE && mouseRightButton_12EFDC_12EFCC )
       {
         if ( (str_AE408_AE3F8->var_u8_1 & 2) == 0 && *(int *)(v7 + 12) >= 0 )
           MakeControlCommand_188A0(20, 2);

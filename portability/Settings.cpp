@@ -123,6 +123,7 @@ static void LoadConfigFile(const fs::path& path)
 		s.grabMouse = j["input"].value("grabMouse", s.grabMouse);
 		s.wasdAsArrows = j["input"].value("wasdAsArrows", s.wasdAsArrows);
 		s.tabAsEnter = j["input"].value("tabAsEnter", s.tabAsEnter);
+		s.bothButtonsSpellMenu = j["input"].value("bothButtonsSpellMenu", s.bothButtonsSpellMenu);
 	}
 	if (j.contains("debug")) {
 		s.debugLog = j["debug"].value("log", s.debugLog);

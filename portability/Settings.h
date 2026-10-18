@@ -26,6 +26,7 @@ struct Remc1Settings {
 	bool grabMouse = true;
 	bool wasdAsArrows = true;   // testing convenience: W/A/S/D send the arrow keys (can't type them then)
 	bool tabAsEnter = true;     // testing convenience: Tab sends Enter (opens the spell map in game)
+	bool bothButtonsSpellMenu = false; // original: left+right mouse together opens the spell map (off: it got in the way of casting both hands)
 
 	// Audio
 	bool sound = true; // sound effects (SDL_mixer)
