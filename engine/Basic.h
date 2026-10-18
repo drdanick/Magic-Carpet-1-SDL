@@ -752,13 +752,13 @@ typedef struct {//size 6
 }
 Type_AD008_ACFF8;
 
-typedef struct {//size 6*4
-	int32 stub_0;
-	int32 stub_1;
-	int32 stub_2;
-	int32 stub_3;
-	Type_AD008_ACFF8* stub_4;
-	uint8* stub_5;
+typedef struct {//size 6*4 - ring iterator (BeginRingIter_11410 / NextRingOffset_114B0)
+	int32 firstRing_0;
+	int32 lastRing_4;
+	int32 ring_8; // current ring, -1 = iterator free
+	int32 indexInRing_12;
+	Type_AD008_ACFF8* ringDesc_16; // current ring: offsets + count
+	uint8* offsets_20; // next (dx, dy) signed byte pair, 4 bytes per entry
 }
 Type_AC5F0;
 

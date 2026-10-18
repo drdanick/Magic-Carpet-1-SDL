@@ -301,9 +301,9 @@ Type_sub_AE3E0* sub_10FD0(Type_AE3E0* a1, __int16 a2);
 void FreeAnimSequences_11010(Type_AE3E0** a1);
 bool sub_11050();
 void sub_111B0(int a1, int a2);
-int sub_11410(int a1, int a2);
-void sub_11490(int a1);
-int sub_114B0(int a1, _DWORD *a2, _DWORD *a3);
+int BeginRingIter_11410(int a1, int a2);
+void EndRingIter_11490(int a1);
+int NextRingOffset_114B0(int a1, _DWORD *a2, _DWORD *a3);
 void sub_11540();
 int IsMoveBlocked_11640(Type_AE400_29795* a1, axis_3d* a2, char a3);
 int sub_11760(axis_3d* a1);
@@ -12897,7 +12897,7 @@ __int16 word_AC5DC_AC5CC = 0; // weak
 __int16 word_AC5DE_AC5CE = 0; // weak
 uint16 word_AC5E0_AC5D0x = 0; // weak
 
-Type_AC5F0 dword_AC5F0_AC5E0[100];
+Type_AC5F0 ringIters_AC5F0_AC5E0[100];
 
 /*
 int dword_AC5F0[] = { 0 }; // weak
@@ -15495,7 +15495,9 @@ LABEL_26:
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_11410(int a1, int a2)//1E2410_
+/// Starts an iteration over the tile offsets of rings a1..a2 around a centre (ring tables
+/// dword_AD008_ACFF8y); returns the iterator index for NextRingOffset_114B0 / EndRingIter_11490.
+int BeginRingIter_11410(int a1, int a2)//1E2410_
 {
   //int v2; // edx
   //int ix; // eax
@@ -15507,30 +15509,33 @@ int sub_11410(int a1, int a2)//1E2410_
   int ix = 1;
   for (; ix < 100; ix++ )
   {
-    if (dword_AC5F0_AC5E0[ix].stub_2 == -1 )
+    if (ringIters_AC5F0_AC5E0[ix].ring_8 == -1 )
       break;
     //v2++;
   }
   //v4 = 3 * v2;
-  dword_AC5F0_AC5E0[ix].stub_0 = a1;
-  dword_AC5F0_AC5E0[ix].stub_2 = a1;
-  dword_AC5F0_AC5E0[ix].stub_3 = 0;
-  dword_AC5F0_AC5E0[ix].stub_1 = a2;
+  ringIters_AC5F0_AC5E0[ix].firstRing_0 = a1;
+  ringIters_AC5F0_AC5E0[ix].ring_8 = a1;
+  ringIters_AC5F0_AC5E0[ix].indexInRing_12 = 0;
+  ringIters_AC5F0_AC5E0[ix].lastRing_4 = a2;
   //v6 = (int *)((char *)&dword_AD008_ACFF8 + 6 * v5);
-  dword_AC5F0_AC5E0[ix].stub_4 = &dword_AD008_ACFF8y[dword_AC5F0_AC5E0[ix].stub_2];
-  dword_AC5F0_AC5E0[ix].stub_5 = dword_AD008_ACFF8y[dword_AC5F0_AC5E0[ix].stub_2].pointer_0;
+  ringIters_AC5F0_AC5E0[ix].ringDesc_16 = &dword_AD008_ACFF8y[ringIters_AC5F0_AC5E0[ix].ring_8];
+  ringIters_AC5F0_AC5E0[ix].offsets_20 = dword_AD008_ACFF8y[ringIters_AC5F0_AC5E0[ix].ring_8].pointer_0;
   return ix;
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_11490(int a1)
+/// Frees ring iterator a1.
+void EndRingIter_11490(int a1)
 {
-  dword_AC5F0_AC5E0[a1].stub_2 = -1;
+  ringIters_AC5F0_AC5E0[a1].ring_8 = -1;
 }
 
 int counter_sub_114B0 = 0;
 //SYNCHRONIZED WITH REMC1
-int sub_114B0(int a1, _DWORD *a2, _DWORD *a3)//1E24B0_
+/// Next tile offset of ring iterator a1: *a2 = dx, *a3 = dy (signed). Returns 1 while more offsets
+/// follow, 2 after the last one.
+int NextRingOffset_114B0(int a1, _DWORD *a2, _DWORD *a3)//1E24B0_
 {
   //int *v3; // eax
   //uint8*v4; // edx
@@ -15540,9 +15545,9 @@ int sub_114B0(int a1, _DWORD *a2, _DWORD *a3)//1E24B0_
   //int v8; // edi
   //int v9; // ebp
 
-  //v3 = &dword_AC5F0_AC5E0[a1][0];
-  //v4 = (uint8*)dword_AC5F0_AC5E0[a1][5];
-  //v5 = dword_AC5F0_AC5E0[a1].stub_4;
+  //v3 = &ringIters_AC5F0_AC5E0[a1][0];
+  //v4 = (uint8*)ringIters_AC5F0_AC5E0[a1][5];
+  //v5 = ringIters_AC5F0_AC5E0[a1].ringDesc_16;
 
   //debug
     if (counter_sub_114B0 == 0x110)
@@ -15555,27 +15560,29 @@ int sub_114B0(int a1, _DWORD *a2, _DWORD *a3)//1E24B0_
     uint8_t remakebyte20 = 0;
     char buffer1[500];
     sprintf(buffer1, "%08X-FFFFFFF5", 0x1e24d0);
-    int comp20 = compare_with_sequence(buffer1, (uint8_t*)dword_AC5F0_AC5E0[a1].stub_5, 0xFFFFFFF5, counter_sub_114B0 - 0, 8, 8, &origbyte20, &remakebyte20, 0, true);
+    int comp20 = compare_with_sequence(buffer1, (uint8_t*)ringIters_AC5F0_AC5E0[a1].offsets_20, 0xFFFFFFF5, counter_sub_114B0 - 0, 8, 8, &origbyte20, &remakebyte20, 0, true);
     */
     counter_sub_114B0++;
     //debug
   
-  *a2 = dword_AC5F0_AC5E0[a1].stub_5[0];
-  *a3 = dword_AC5F0_AC5E0[a1].stub_5[1];
+  // PORT: the offsets are signed bytes (asm movsx); read unsigned, every negative offset became +255..
+  // and area effects (meteor crater, ...) only reached one side of their centre
+  *a2 = (int8_t)ringIters_AC5F0_AC5E0[a1].offsets_20[0];
+  *a3 = (int8_t)ringIters_AC5F0_AC5E0[a1].offsets_20[1];
   //v6 = v3[3] + 1;
-  dword_AC5F0_AC5E0[a1].stub_5 += sizeof(uint8*);
-  dword_AC5F0_AC5E0[a1].stub_3++;
-  if (dword_AC5F0_AC5E0[a1].stub_4->pos_4 /* *(unsigned __int16 *)(v5 + 4)*/ > dword_AC5F0_AC5E0[a1].stub_3)
+  ringIters_AC5F0_AC5E0[a1].offsets_20 += sizeof(uint8*);
+  ringIters_AC5F0_AC5E0[a1].indexInRing_12++;
+  if (ringIters_AC5F0_AC5E0[a1].ringDesc_16->pos_4 /* *(unsigned __int16 *)(v5 + 4)*/ > ringIters_AC5F0_AC5E0[a1].indexInRing_12)
     return 1;
   //v7 = v3[4];
-  dword_AC5F0_AC5E0[a1].stub_3 = 0;
+  ringIters_AC5F0_AC5E0[a1].indexInRing_12 = 0;
   //v8 = v3[2];
-  dword_AC5F0_AC5E0[a1].stub_4++;
+  ringIters_AC5F0_AC5E0[a1].ringDesc_16++;
   //v8++;
-  dword_AC5F0_AC5E0[a1].stub_2++;
+  ringIters_AC5F0_AC5E0[a1].ring_8++;
   //v9 = v3[1];
   //v3[2] = v8;
-  if (dword_AC5F0_AC5E0[a1].stub_2 <= dword_AC5F0_AC5E0[a1].stub_1)
+  if (ringIters_AC5F0_AC5E0[a1].ring_8 <= ringIters_AC5F0_AC5E0[a1].lastRing_4)
     return 1;
   else
     return 2;
@@ -15590,7 +15597,7 @@ void sub_11540()//1E2540_
 
   sub_3EEA0_3F1E0((char*)"data/search.dat", begWscreen_2ECFF4_2ECFE4);
   for ( int i = 1; i < 100; i++)
-    dword_AC5F0_AC5E0[i].stub_2 = -1;
+    ringIters_AC5F0_AC5E0[i].ring_8 = -1;
   v1 = begSearch_AE3F4_26C3F4_26C3E4;
   for ( int j = 0; j < 32; j++ )
   {
@@ -15804,10 +15811,10 @@ int sub_11980(int a1)
   v1 = *(__int16 *)(a1 + 80) + 255;
   v9 = (*(__int16 *)(a1 + 72) + 128) >> 8;
   v2 = (*(__int16 *)(a1 + 74) + 128) >> 8;
-  v3 = sub_11410(0, (v1 - (__CFSHL__(v1 >> 31, 8) + (v1 >> 31 << 8))) >> 8);
+  v3 = BeginRingIter_11410(0, (v1 - (__CFSHL__(v1 >> 31, 8) + (v1 >> 31 << 8))) >> 8);
   if ( !v3 )
     return 0;
-  while ( sub_114B0(v3, (uint32*)&v8, (uint32*)&v7) == 1 )
+  while ( NextRingOffset_114B0(v3, (uint32*)&v8, (uint32*)&v7) == 1 )
   {
     for ( i = 164 * mapEntityIndex_10C1E0_10C1D0[256 * (unsigned __int8)(v2 + v7) + (unsigned __int8)(v8 + v9)];
           ;
@@ -15823,12 +15830,12 @@ int sub_11980(int a1)
         && *(_WORD *)(a1 + 24) != *(_WORD *)(v6 + 24)
         && EntitiesCollide_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)v6) )
       {
-        sub_11490(v3);
+        EndRingIter_11490(v3);
         return v6;
       }
     }
   }
-  sub_11490(v3);
+  EndRingIter_11490(v3);
   return 0;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -15851,10 +15858,10 @@ int sub_11AC0(_WORD *a1)
   v1 = (__int16)a1[40] + 255;
   v11 = ((__int16)a1[37] + 128) >> 8;
   v2 = ((__int16)a1[36] + 128) >> 8;
-  v3 = sub_11410(0, (v1 - (__CFSHL__(v1 >> 31, 8) + (v1 >> 31 << 8))) >> 8);
+  v3 = BeginRingIter_11410(0, (v1 - (__CFSHL__(v1 >> 31, 8) + (v1 >> 31 << 8))) >> 8);
   if ( !v3 )
     return 0;
-  while ( sub_114B0(v3, (uint32*)&v10, (uint32*)&v9) == 1 )
+  while ( NextRingOffset_114B0(v3, (uint32*)&v10, (uint32*)&v9) == 1 )
   {
     for ( i = 164 * mapEntityIndex_10C1E0_10C1D0[256 * (unsigned __int8)(v11 + v9) + (unsigned __int8)(v2 + v10)];
           ;
@@ -15871,14 +15878,14 @@ int sub_11AC0(_WORD *a1)
           v7 = a1[12];
           if ( v7 != *(_WORD *)(v8 + 24) && v7 != *(unsigned __int16 *)(v8 + 144) && EntitiesCollide_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)v8) )
           {
-            sub_11490(v3);
+            EndRingIter_11490(v3);
             return v8;
           }
         }
       }
     }
   }
-  sub_11490(v3);
+  EndRingIter_11490(v3);
   return 0;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -15899,10 +15906,10 @@ int sub_11C00(__int16 *a1)
   v1 = a1[40] + 255;
   v9 = (a1[37] + 128) >> 8;
   v2 = (a1[36] + 128) >> 8;
-  v3 = sub_11410(0, (v1 - (__CFSHL__(v1 >> 31, 8) + (v1 >> 31 << 8))) >> 8);
+  v3 = BeginRingIter_11410(0, (v1 - (__CFSHL__(v1 >> 31, 8) + (v1 >> 31 << 8))) >> 8);
   if ( !v3 )
     return 0;
-  while ( sub_114B0(v3, (uint32*)&v8, (uint32*)&v7) == 1 )
+  while ( NextRingOffset_114B0(v3, (uint32*)&v8, (uint32*)&v7) == 1 )
   {
     for ( i = mapEntityIndex_10C1E0_10C1D0[256 * (unsigned __int8)(v7 + v9) + (unsigned __int8)(v2 + v8)];
           ;
@@ -15916,12 +15923,12 @@ int sub_11C00(__int16 *a1)
         && *(_BYTE *)(v6 + 65) == 39
         && EntitiesCollide_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)v6) )
       {
-        sub_11490(v3);
+        EndRingIter_11490(v3);
         return v6;
       }
     }
   }
-  sub_11490(v3);
+  EndRingIter_11490(v3);
   return 0;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -15944,10 +15951,10 @@ Type_AE400_29795* sub_11D10(Type_AE400_29795* event)//1E2D10
   // PORT: (__int16) - the original sign-extends x/y here (movsx); axis_3d has them unsigned (tools/audit_signedness.py)
   v9 = ((__int16)event->var_u32_29867_72.x + 128) >> 8;
   v2 = ((__int16)event->var_u32_29867_72.y + 128) >> 8;
-  v3 = sub_11410(0, (v1 - (__CFSHL__(v1 >> 31, 8) + (v1 >> 31 << 8))) >> 8);
+  v3 = BeginRingIter_11410(0, (v1 - (__CFSHL__(v1 >> 31, 8) + (v1 >> 31 << 8))) >> 8);
   if ( !v3 )
     return 0;
-  while (sub_114B0(v3, (uint32*)&v8, (uint32*)&v7) == 1 )
+  while (NextRingOffset_114B0(v3, (uint32*)&v8, (uint32*)&v7) == 1 )
   {
     for ( i = mapEntityIndex_10C1E0_10C1D0[256 * (unsigned __int8)(v2 + v7) + (unsigned __int8)(v8 + v9)];
           ;
@@ -15972,12 +15979,12 @@ Type_AE400_29795* sub_11D10(Type_AE400_29795* event)//1E2D10
         && event->id_29819_24 != v6->id_29819_24
         && EntitiesCollide_11950(event, v6) )
       {
-        sub_11490(v3);
+        EndRingIter_11490(v3);
         return v6;
       }
     }
   }
-  sub_11490(v3);
+  EndRingIter_11490(v3);
   return nullptr;
 }
 
@@ -27006,11 +27013,11 @@ void sub_25130(int a1)
     *(_BYTE *)(a1 + 16) = v3 | 2;
     sub_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 3);
   }
-  result = sub_11410(*(__int16 *)(a1 + 26), *(__int16 *)(a1 + 26));
+  result = BeginRingIter_11410(*(__int16 *)(a1 + 26), *(__int16 *)(a1 + 26));
   v4 = result;
   if ( result )
   {
-    while ( sub_114B0(v4, (uint32*)v12, (uint32*)&v11) == 1 )
+    while ( NextRingOffset_114B0(v4, (uint32*)v12, (uint32*)&v11) == 1 )
     {
       v5 = 9377 * *(_DWORD *)(a1 + 4) + 9439;
       *(_DWORD *)(a1 + 4) = v5;
@@ -27034,7 +27041,7 @@ void sub_25130(int a1)
         }
       }
     }
-    sub_11490(v4);
+    EndRingIter_11490(v4);
   }
 }
 
@@ -27220,13 +27227,13 @@ void sub_255D0(Type_AE400_29795* a1x, __int16 a2, __int16 a3)
   v5 = ((__int16)a1x->var_u32_29867_72.y + 128) >> 8;
   if ( a3 > (int)(a1x->collisionBox_29873_78.radiusX_29875_80 - (__CFSHL__((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32, 8) + ((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32 << 8))) >> 8 )
     v3 = (int)(a1x->collisionBox_29873_78.radiusX_29875_80 - (__CFSHL__((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32, 8) + ((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32 << 8))) >> 8;
-  result = sub_11410(a2, (__int16)v3);
+  result = BeginRingIter_11410(a2, (__int16)v3);
   v7 = result;
   if ( result )
   {
-    while ( sub_114B0(v7, (uint32*)v9, (uint32*)&v8) == 1 )
+    while ( NextRingOffset_114B0(v7, (uint32*)v9, (uint32*)&v8) == 1 )
       sub_40A10_40D50(v4 + LOWORD(v9[0]), v5 + v8, -3, 0);
-    sub_11490(v7);
+    EndRingIter_11490(v7);
   }
 }
 
@@ -27551,11 +27558,11 @@ void sub_25CE0(Type_AE400_29795* a1x)
       v3 = 768 * a1x->var_u16_29821_26;
       sub_37130_374F0(a1x, (int)(v3 - (__CFSHL__(HIDWORD(v3), 2) + 4 * HIDWORD(v3))) >> 2, 512);
       sub_120B0(a1x, 0, a1x->var_u16_29839_44 / a1x->maxLife_29803_8);
-      v4 = sub_11410(a1x->var_u16_29821_26, a1x->var_u16_29821_26);
+      v4 = BeginRingIter_11410(a1x->var_u16_29821_26, a1x->var_u16_29821_26);
       if (v4)
       {
           a1x->rand_29799_4 = 9377 * a1x->rand_29799_4 + 9439;
-          while (sub_114B0(v4, (uint32*)v11, (uint32*)&v10) == 1)
+          while (NextRingOffset_114B0(v4, (uint32*)v11, (uint32*)&v10) == 1)
           {
               v5 = 9377 * a1x->rand_29799_4 + 9439;
               a1x->rand_29799_4 = v5;
@@ -27575,7 +27582,7 @@ void sub_25CE0(Type_AE400_29795* a1x)
                   v7x->var_u16_29821_26 = 0;
               }
           }
-          sub_11490(v4);
+          EndRingIter_11490(v4);
       }
       result = (__int16)(a1x->var_u16_29821_26 + 2) / 11;
       a1x->var_u16_29821_26 = (__int16)(a1x->var_u16_29821_26 + 2) % 11;
@@ -27721,10 +27728,10 @@ void sub_26140(Type_AE400_29795* a1x)
   if ( v1 >= 0 )
   {
     a1x->var_u16_29821_26 = 0;
-    v2 = sub_11410(0, a1x->var_u16_29821_26);
+    v2 = BeginRingIter_11410(0, a1x->var_u16_29821_26);
     if ( v2 )
     {
-      while ( sub_114B0(v2, (uint32*)v12, (uint32*)&v11) == 1 )
+      while ( NextRingOffset_114B0(v2, (uint32*)v12, (uint32*)&v11) == 1 )
       {
         v3 = 9377 * a1x->rand_29799_4 + 9439;
         a1x->rand_29799_4 = v3;
@@ -27753,7 +27760,7 @@ void sub_26140(Type_AE400_29795* a1x)
           }
         }
       }
-      sub_11490(v2);
+      EndRingIter_11490(v2);
     }
     a1x->var_u32_29867_72.z = GetTerrainHeight_11F50(&a1x->var_u32_29867_72);
   }
@@ -30048,11 +30055,11 @@ void sub_29780(Type_AE400_29795* a1x)
       {
           sub_37130_374F0(a1x, 512, 2048);
           sub_120B0(a1x, 0, a1x->var_u16_29839_44 / a1x->maxLife_29803_8);
-          v3_v4 = sub_11410(0, 1);
+          v3_v4 = BeginRingIter_11410(0, 1);
           if (v3_v4)
           {
               a1x->rand_29799_4 = 9377 * a1x->rand_29799_4 + 9439;
-              while (sub_114B0(v3_v4, (uint32*)v13_v11, (uint32*)&v12_v10) == 1)
+              while (NextRingOffset_114B0(v3_v4, (uint32*)v13_v11, (uint32*)&v12_v10) == 1)
               {
                   a1x->rand_29799_4 = 9377 * a1x->rand_29799_4 + 9439;
                   v11_v9.x = a1x->var_u32_29867_72.x - 96 + 112 * LOWORD(v13_v11[0]) + a1x->rand_29799_4 % 0x81 - 64;
@@ -30074,7 +30081,7 @@ void sub_29780(Type_AE400_29795* a1x)
                       v6_v7->var_u16_29841_46 = (a1x->var_u16_29821_26 << 8) / 2;
                   }
               }
-              sub_11490(v3_v4);
+              EndRingIter_11490(v3_v4);
           }
           a1x->var_u16_29821_26++;
           if (a1x->var_u16_29821_26 > 14)
@@ -30096,11 +30103,11 @@ void sub_29780(Type_AE400_29795* a1x)
           __int64 v3 = 768 * a1x->var_u16_29821_26;
           sub_37130_374F0(a1x, (int)(v3 - (__CFSHL__(HIDWORD(v3), 2) + 4 * HIDWORD(v3))) >> 2, 512);
           sub_120B0(a1x, 0, a1x->var_u16_29839_44 / a1x->maxLife_29803_8);
-          v3_v4 = sub_11410(a1x->var_u16_29821_26, a1x->var_u16_29821_26);
+          v3_v4 = BeginRingIter_11410(a1x->var_u16_29821_26, a1x->var_u16_29821_26);
           if (v3_v4)
           {
               a1x->rand_29799_4 = 9377 * a1x->rand_29799_4 + 9439;
-              while (sub_114B0(v3_v4, (uint32*)v13_v11, (uint32*)&v12_v10) == 1)
+              while (NextRingOffset_114B0(v3_v4, (uint32*)v13_v11, (uint32*)&v12_v10) == 1)
               {
                   a1x->rand_29799_4 = 9377 * a1x->rand_29799_4 + 9439;
                   v11_v9.x = a1x->var_u32_29867_72.x - 96 + 160 * LOWORD(v13_v11[0]) + a1x->rand_29799_4 % 0x81 - 64;
@@ -30117,7 +30124,7 @@ void sub_29780(Type_AE400_29795* a1x)
                       v6_v7->var_u16_29821_26 = 0;
                   }
               }
-              sub_11490(v3_v4);
+              EndRingIter_11490(v3_v4);
           }
           a1x->var_u16_29821_26 = (a1x->var_u16_29821_26 + 2) % 7;
       }
@@ -50700,20 +50707,20 @@ int sub_40D30_41070(Type_AE400_29795* a1x, __int16 a2, __int16 a3, __int16 a4, c
   v7 = ((__int16)a1x->var_u32_29867_72.y + 128) >> 8;
   if ( a3 > (int)(a1x->collisionBox_29873_78.radiusX_29875_80 - (__CFSHL__((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32, 8) + ((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32 << 8))) >> 8 )
     v5 = (int)(a1x->collisionBox_29873_78.radiusX_29875_80 - (__CFSHL__((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32, 8) + ((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32 << 8))) >> 8;
-  v8 = sub_11410(a2, (__int16)v5);
+  v8 = BeginRingIter_11410(a2, (__int16)v5);
   v9 = v8;
   if ( v8 )
   {
-    while ( sub_114B0(v9, (uint32*)v13, (uint32*)&v12) == 1 )
+    while ( NextRingOffset_114B0(v9, (uint32*)v13, (uint32*)&v12) == 1 )
     {
       if ( sub_40A10_40D50(v6 + LOWORD(v13[0]), v7 + v12, a4, a5) )
       {
-        sub_11490(v9);
+        EndRingIter_11490(v9);
         LOBYTE(v10) = 1;
         return nullsub_3(v10);
       }
     }
-    sub_11490(v9);
+    EndRingIter_11490(v9);
   }
   LOBYTE(v8) = 0;
   return nullsub_3(v8);
