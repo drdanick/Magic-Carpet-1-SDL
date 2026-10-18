@@ -16812,7 +16812,7 @@ int sub_132B0(int a1)
     *(_DWORD *)(v20 + 351) = v21 - 1;
   if ( v29 || (*(_BYTE *)(a1 + 17) & 0x10) != 0 )
   {
-    *(_DWORD *)(a1 + 132) = *(_DWORD *)(a1 + 136) / 200;
+    *(_DWORD *)(a1 + 132) = *(int *)(a1 + 136) / 200; // PORT: signed (idiv at 0x1353F); _DWORD made it unsigned
     *(_WORD *)(*(_DWORD *)(a1 + 160) + 341) = *(_DWORD *)(a1 + 8) / 200;
     if ( *(int *)(a1 + 132) < 1000 )
       *(_DWORD *)(a1 + 132) = 1000;
@@ -16820,7 +16820,7 @@ int sub_132B0(int a1)
   }
   else
   {
-    *(_DWORD *)(a1 + 132) = *(_DWORD *)(a1 + 136) / 2000;
+    *(_DWORD *)(a1 + 132) = *(int *)(a1 + 136) / 2000; // PORT: signed, see above
     *(_WORD *)(*(_DWORD *)(a1 + 160) + 341) = *(_DWORD *)(a1 + 8) / 500;
     if ( *(int *)(a1 + 132) < 100 )
       *(_DWORD *)(a1 + 132) = 100;
@@ -16828,7 +16828,7 @@ int sub_132B0(int a1)
   if ( *(int *)(a1 + 140) < 0 )
     *(_DWORD *)(a1 + 140) = 0;
   v22 = *(_DWORD *)(a1 + 136);
-  if ( *(_DWORD *)(a1 + 140) > v22 )
+  if ( *(int *)(a1 + 140) > v22 ) // PORT: signed compare (jle at 0x135E2)
     *(_DWORD *)(a1 + 140) = v22;
   sub_15EC0(a1);
   v23 = *(__int16 *)(*(_DWORD *)(a1 + 160) + 526);
@@ -24760,8 +24760,10 @@ void sub_20480(Type_AE400_29795* a1x)
   int v21; // [esp+10h] [ebp-10h]
 
   v20 = 0;
-  v18[0] = *(_DWORD *)sub_1FF40;
-  v18[1] = *((_DWORD *)sub_1FF40 + 1);
+  // PORT: was *(_DWORD *)sub_1FF40 - the bytes of the port's compiled function. The original copies the
+  // 4-word table that sits in its code segment at 0x1FF40: random weights per turn (0, +90, +180, -90 deg).
+  static const uint16 turnWeights_1FF40[4] = { 7000, 7000, 10, 7000 };
+  memcpy(v18, turnWeights_1FF40, sizeof(turnWeights_1FF40));
   v19 = 1;
   if ( !(a1x->var_u8_29858_63 % 8) )
   {
@@ -28593,7 +28595,7 @@ void sub_277D0(Type_AE400_29795* ev1, Type_AE400_29795* ev2)//1F87D0_
           //LODWORD(v12) = 164 * ev1->var_u16_29939_144;
           //HIDWORD(v12) = (164 * ev1->var_u16_29939_144) >> 31;
           //v2 = v12 / 164;
-          ev1->mana_29935_140 *= ev2->mana_29935_140;
+          ev1->mana_29935_140 += ev2->mana_29935_140; // PORT: was "*=" (asm 0x2790B/0x2798B: add) - merged mana balls multiplied their mana
           //ev1->var_u16_29939_144 = ev1->var_u16_29939_144; //fix it
           sub_41E90_421D0(ev2);
           return;
@@ -28616,7 +28618,7 @@ void sub_277D0(Type_AE400_29795* ev1, Type_AE400_29795* ev2)//1F87D0_
           //LODWORD(v12) = 164 * ev2->var_u16_29939_144;
           //HIDWORD(v12) = (164 * ev2->var_u16_29939_144) >> 31;
           //v2 = v12 / 164;
-          ev1->mana_29935_140 *= ev2->mana_29935_140;
+          ev1->mana_29935_140 += ev2->mana_29935_140; // PORT: was "*=" (asm 0x2790B/0x2798B: add) - merged mana balls multiplied their mana
           ev1->var_u16_29939_144 = ev2->var_u16_29939_144;
           sub_41E90_421D0(ev2);
           return;
