@@ -16,7 +16,7 @@ from port_index import PortIndex
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--exe', default='C:/mc1data/CD/CARPET.EXE')
+    ap.add_argument('--exe', default=os.path.join(os.environ.get('REMC1_DATA_DIR', 'C:/mc1data'), 'CD', 'CARPET.EXE'))
     ap.add_argument('--src', default='sub_main.cpp')
     ap.add_argument('--all', action='store_true', help='also list functions without differences')
     a = ap.parse_args()

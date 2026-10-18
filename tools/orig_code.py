@@ -7,6 +7,7 @@ into other known function starts (tail calls). It returns the instructions, the 
 immediates / memory displacements used (for the constant audit).
 """
 import struct
+import os
 import capstone
 from capstone import x86
 
@@ -14,7 +15,7 @@ from le_image import LeImage
 
 
 class OrigCode:
-    def __init__(self, exe='C:/mc1data/CD/CARPET.EXE'):
+    def __init__(self, exe=os.path.join(os.environ.get('REMC1_DATA_DIR', 'C:/mc1data'), 'CD', 'CARPET.EXE')):
         self.img = LeImage(exe)
         self.mem = self.img.memory()
         self.cbase, self.cend = self.img.code_range()

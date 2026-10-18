@@ -82,7 +82,7 @@ class PortAddrMap:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--exe', default='C:/mc1data/CD/CARPET.EXE')
+    ap.add_argument('--exe', default=os.path.join(os.environ.get('REMC1_DATA_DIR', 'C:/mc1data'), 'CD', 'CARPET.EXE'))
     ap.add_argument('--port', default='build/win-x86/RelWithDebInfo/remc1.exe')
     ap.add_argument('--show', type=int, default=6, help='differing items shown per symbol')
     a = ap.parse_args()

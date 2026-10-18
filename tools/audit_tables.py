@@ -21,7 +21,7 @@ TABLES = ['str_254A34', 'str_254D48', 'str_254B84', 'str_254DBC', 'str_255478', 
 
 
 def main():
-    img = LeImage('C:/mc1data/CD/CARPET.EXE')
+    img = LeImage(os.path.join(os.environ.get('REMC1_DATA_DIR', 'C:/mc1data'), 'CD', 'CARPET.EXE'))
     img.memory()
     ps = PortSymbols('build/win-x86/RelWithDebInfo/remc1.exe')
     amap = PortAddrMap(ps, img)

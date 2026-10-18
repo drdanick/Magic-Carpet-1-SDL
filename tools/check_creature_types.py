@@ -5,12 +5,13 @@ type-pointer immediates in the original CARPET.EXE. Lines marked CHECK need a lo
 Usage (from the repo root): python tools/check_creature_types.py [--exe <data>/CD/CARPET.EXE]
 """
 import re
+import os
 import struct
 import sys
 sys.path.insert(0, __import__('os').path.dirname(__file__))
 from exe_data import LeImage
 
-img = LeImage(sys.argv[sys.argv.index('--exe') + 1] if '--exe' in sys.argv else 'C:/mc1data/CD/CARPET.EXE')
+img = LeImage(sys.argv[sys.argv.index('--exe') + 1] if '--exe' in sys.argv else os.path.join(os.environ.get('REMC1_DATA_DIR', 'C:/mc1data'), 'CD', 'CARPET.EXE'))
 base, vsize, pidx, pcnt = img.objects[0]
 code = img.read(base, min(vsize, pcnt * img.page_size))
 BASE_T = 0x8F38

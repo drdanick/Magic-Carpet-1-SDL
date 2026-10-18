@@ -90,7 +90,7 @@ class Stop(Exception):
 
 
 class Machine:
-    def __init__(self, snapdir, exe='C:/mc1data/CD/CARPET.EXE', port=os.environ.get('REMC1_PORT_EXE', 'build/win-x86/RelWithDebInfo/remc1.exe'),
+    def __init__(self, snapdir, exe=os.path.join(os.environ.get('REMC1_DATA_DIR', 'C:/mc1data'), 'CD', 'CARPET.EXE'), port=os.environ.get('REMC1_PORT_EXE', 'build/win-x86/RelWithDebInfo/remc1.exe'),
                  load_port_code=True):
         self.meta = read_meta(os.path.join(snapdir, 'meta.txt'))
         self.image_base = self.meta['image_base'][0]
