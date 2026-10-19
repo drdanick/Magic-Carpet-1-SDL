@@ -12,7 +12,8 @@ You need your own copy of the game - no game data is included.
 - SDL2 window: windowed or fullscreen, resizable, 4:3 aspect, 320x200 and 640x480 game modes
 - keyboard and mouse, sound effects (SDL2_mixer)
 - settings in `config.json` and on the command line (`remc1 --help`)
-- input recording and deterministic replay, used by the test suite
+- input recording and deterministic replay, used by the test suite and for bug reports
+  ([docs/recordings.md](docs/recordings.md))
 - tests: unit, game-data and replay tests (GoogleTest / CTest)
 
 ## Getting started

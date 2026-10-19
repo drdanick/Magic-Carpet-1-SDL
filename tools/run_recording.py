@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Replay a user recording (or any input script) with a fresh C: drive and look at it.
 
+Accepts a recording bundle (<name>.recording/ = input.txt + saves/, see tools/recording.py; its saves
+are used automatically) or a bare input script (.txt).
+
 Creates a temporary copy of <data>/CARPET.CD exactly like the replay tests do (tools/replay_test.py),
 runs remc1 headless on the script, dumps every Nth frame, prints the tail of the log (crashes,
 watchdog stacks, allert_error lines) and builds a contact sheet of the last frames.
@@ -17,14 +20,14 @@ import subprocess
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import replay_test  # noqa: E402  (make_c_drive)
+import recording  # noqa: E402  (bundles, C: drive)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("script")
+    ap.add_argument("script", help="recording bundle (<name>.recording) or input script (.txt)")
     ap.add_argument("--out", required=True, help="output folder (frames, log, sheet.png); recreated")
     ap.add_argument("--exe", default=os.path.join(ROOT, "build", "win-x86", "RelWithDebInfo", "remc1.exe"))
     ap.add_argument("--data", default=os.environ.get("REMC1_DATA_DIR", "C:/mc1data"))
@@ -33,7 +36,8 @@ def main():
     ap.add_argument("--to", dest="last", type=int, default=10**9, help="contact sheet / run: last frame")
     ap.add_argument("--cols", type=int, default=8)
     ap.add_argument("--width", type=int, default=200)
-    ap.add_argument("--keep-saves", action="store_true", help="copy <data>/CARPET.CD/SAVE into the fresh C: drive (recordings that load a saved game)")
+    ap.add_argument("--keep-saves", action="store_true", help="legacy .txt: copy <data>/CARPET.CD/SAVE into the fresh C: drive")
+    ap.add_argument("--saves", help="use this folder as the C: drive's saves (overrides the bundle's)")
     ap.add_argument("--real-audio", action="store_true", help="use the real audio device (recordings made with sound on can depend on it)")
     a, extra = ap.parse_known_args()
     a.extra = [x for x in extra if x != "--"]  # everything unknown goes to remc1
@@ -43,14 +47,14 @@ def main():
     cdrive = os.path.join(a.out, "cdrive")
     os.makedirs(frames)
     os.makedirs(cdrive)
-    replay_test.make_c_drive(a.data, cdrive)
-    if a.keep_saves:
-        src = os.path.join(a.data, "CARPET.CD", "SAVE")
-        dst = os.path.join(cdrive, "CARPET.CD", "SAVE")
-        for n in os.listdir(src):
-            shutil.copy(os.path.join(src, n), dst)
+    script, saves = recording.resolve(a.script)
+    if a.saves:
+        saves = a.saves
+    elif saves is None and a.keep_saves:
+        saves = recording.install_saves(a.data)
+    recording.build_c_drive(a.data, cdrive, saves)
     cmd = [os.path.abspath(a.exe), "--headless", "--data", a.data, "--c-drive", cdrive,
-           "--input-script", os.path.abspath(a.script)]
+           "--input-script", os.path.abspath(script)]
     if a.every:
         cmd += ["--dump-frames", frames, "--dump-every", str(a.every)]
     if a.last < 10**9:
