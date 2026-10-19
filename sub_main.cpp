@@ -3728,7 +3728,8 @@ void sub_56260(Type_AE400_29795* a1x) {
     sub_55D30_56260(a1x);
 };
 int sub_43AF0() { return 0; };
-int sub_262C0() { return 0; };
+/// Empty entity state handler (original 0x262C0 is a bare ret); class 10 states 20-22 never change on their own.
+int EmptyStateHandler_262C0() { return 0; };
 int sub_26350() { return 0; };
 int sub_29B70() { return 0; };
 
@@ -3984,9 +3985,9 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))sub_25CE0,0x0001,0x0000 },
 { 0x002548F4,0x0012,(void (*)(Type_AE400_29795*))sub_25EC0,0x0001,0x0000 },
 { 0x002548F4,0x0013,(void (*)(Type_AE400_29795*))sub_26140,0x0001,0x0000 },
-{ 0x002548F4,0x0014,(void (*)(Type_AE400_29795*))sub_262C0,0x0001,0x0000 },
-{ 0x002548F4,0x0015,(void (*)(Type_AE400_29795*))sub_262C0,0x0001,0x0000 },
-{ 0x002548F4,0x0016,(void (*)(Type_AE400_29795*))sub_262C0,0x0001,0x0000 },
+{ 0x002548F4,0x0014,(void (*)(Type_AE400_29795*))EmptyStateHandler_262C0,0x0001,0x0000 },
+{ 0x002548F4,0x0015,(void (*)(Type_AE400_29795*))EmptyStateHandler_262C0,0x0001,0x0000 },
+{ 0x002548F4,0x0016,(void (*)(Type_AE400_29795*))EmptyStateHandler_262C0,0x0001,0x0000 },
 { 0x002548F4,0x0017,(void (*)(Type_AE400_29795*))sub_262D0,0x0001,0x0000 },
 { 0x002548F4,0x0018,(void (*)(Type_AE400_29795*))sub_26350,0x0001,0x0000 },
 { 0x002548F4,0x0019,(void (*)(Type_AE400_29795*))sub_26360,0x0001,0x0000 },
@@ -20520,6 +20521,10 @@ LABEL_26:
 /// Herd/segment follower AI (creature states a2..a2+4): follows the leader entity (+52) - copies
 /// its target and state changes, steers toward it, keeps its speed at leader speed + leader +130.
 /// Worms use it for their body segments and heads (state 21 -> a2 = 0x12).
+/// Tick of a chain segment (e.g. worm segments): +52 = leader, +54 = follower, a2 = base state.
+/// ORIGINAL-GAME BUG (kept, docs/original-bugs.md #1): when the segment dies it changes its leader
+/// (state a2 + 2, clears +52) without checking the leader is still a segment - a slot reused by
+/// another entity (an explosion) gets frozen in an empty state and stays on screen.
 void UpdateFollower_1A390(Type_AE400_29795* a1x, unsigned __int16 a2)
 {
   char v2; // al

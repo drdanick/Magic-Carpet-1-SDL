@@ -44,6 +44,9 @@ levels have not been played through yet. Fixes are verified against the original
 differential harness in `tools/` (the original machine code is run under Unicorn on a memory dump of
 the port and the results compared).
 
+Bugs found in the original game itself, and how the port handles them, are listed in
+[docs/original-bugs.md](docs/original-bugs.md).
+
 ### Remaining work
 
 - **Testing:** levels 14 onwards; multiplayer/network play is untested.
