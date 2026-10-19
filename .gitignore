@@ -356,3 +356,7 @@ debug.txt
 /out/
 /vcpkg_installed/
 CMakeUserPresets.json
+
+# bug recordings (tools/rec.py) hold saved games - keep them out of the repo
+recordings/
+*.recording/

@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
-"""Cross-check every unk_98F38[N] (creature Type_156 profile) use in sub_main.cpp against the
+"""Cross-check every creatureTypes_98F38[N] (was unk_98F38) (creature Type_156 profile) use in sub_main.cpp against the
 type-pointer immediates in the original CARPET.EXE. Lines marked CHECK need a look in the disassembly.
 
 Usage (from the repo root): python tools/check_creature_types.py [--exe <data>/CD/CARPET.EXE]
 """
 import re
 import os
+import remc1_paths  # noqa: E402
 import struct
 import sys
 sys.path.insert(0, __import__('os').path.dirname(__file__))
 from exe_data import LeImage
 
-img = LeImage(sys.argv[sys.argv.index('--exe') + 1] if '--exe' in sys.argv else os.path.join(os.environ.get('REMC1_DATA_DIR', 'C:/mc1data'), 'CD', 'CARPET.EXE'))
+img = LeImage(sys.argv[sys.argv.index('--exe') + 1] if '--exe' in sys.argv else remc1_paths.original_exe())
 base, vsize, pidx, pcnt = img.objects[0]
 code = img.read(base, min(vsize, pcnt * img.page_size))
 BASE_T = 0x8F38
@@ -32,7 +33,7 @@ for n, l in enumerate(lines, 1):
         name = m.group(1)
         a = addr_re.search(name)
         cur = (name, int(a.group(1), 16) if a else None)
-    for idx in re.findall(r'unk_98F38\[([^\]]+)\]', l):
+    for idx in re.findall(r'(?:creatureTypes|unk)_98F38\[([^\]]+)\]', l):
         if cur and not l.lstrip().startswith('//'):
             uses.setdefault(cur, []).append((n, idx))
 

@@ -22,15 +22,16 @@ You need your own copy of the game - no game data is included.
    supported yet).
 2. **Extract the game data** from a GOG install (Python 3, no other dependencies):
    ```bash
-   python tools/extract_data.py --gog "C:/GOG Games/Magic Carpet Plus" --out C:/mc1data
+   python tools/extract_data.py --gog "<GOG Magic Carpet Plus folder>" --out <datadir>
    ```
-   This creates `C:/mc1data/CD` (read-only CD contents) and `C:/mc1data/CARPET.CD` (the writable
+   This creates `<datadir>/CD` (read-only CD contents) and `<datadir>/CARPET.CD` (the writable
    install folder with saves).
 3. **Run**
    ```bash
-   build/win-x86/RelWithDebInfo/remc1.exe --data C:/mc1data
+   remc1 --data <datadir>
    ```
-   or set `paths.data` in `config.json` (looked up next to the executable).
+   (the executable is in `build/<preset>/...`, e.g. `build/win-x86/RelWithDebInfo/remc1.exe`), or set
+   `paths.data` in `config.json` (looked up next to the executable).
 
 Port controls that differ from the original (all configurable in `config.json`, section `input`):
 W/A/S/D act as the arrow keys, Tab acts as Enter (opens the spell map), and pressing both mouse

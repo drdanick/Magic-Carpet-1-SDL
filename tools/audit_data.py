@@ -12,6 +12,7 @@ Usage (repo root, after a build): python tools/audit_data.py [--exe ...] [--port
 import argparse
 import bisect
 import os
+import remc1_paths  # noqa: E402
 import re
 import struct
 import sys
@@ -82,13 +83,13 @@ class PortAddrMap:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--exe', default=os.path.join(os.environ.get('REMC1_DATA_DIR', 'C:/mc1data'), 'CD', 'CARPET.EXE'))
-    ap.add_argument('--port', default='build/win-x86/RelWithDebInfo/remc1.exe')
+    ap.add_argument('--exe', default=remc1_paths.original_exe())
+    ap.add_argument('--port', help='built port executable (default: newest build)')
     ap.add_argument('--show', type=int, default=6, help='differing items shown per symbol')
     a = ap.parse_args()
     img = LeImage(a.exe)
     mem = img.memory()
-    ps = PortSymbols(a.port)
+    ps = PortSymbols(a.port or remc1_paths.find_port_exe())
     amap = PortAddrMap(ps, img)
     orig_ptr = {}
     for site, (t, tgt) in img.fixup_sites.items():

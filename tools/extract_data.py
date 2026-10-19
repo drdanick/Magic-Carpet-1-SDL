@@ -2,7 +2,7 @@
 """Extract Magic Carpet 1 game data from a GOG install into the REMC1 data layout.
 
 Usage:
-    python tools/extract_data.py --gog "C:/GOG Games/Magic Carpet Plus" --out C:/mc1data
+    python tools/extract_data.py --gog "<GOG Magic Carpet Plus folder>" --out <datadir>
 
 Layout produced:
     <out>/CD/          contents of the CD's CARPET\\ folder (read-only game data: DATA, LEVELS, INTRO, ...)

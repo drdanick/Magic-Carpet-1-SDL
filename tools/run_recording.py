@@ -8,7 +8,7 @@ Creates a temporary copy of <data>/CARPET.CD exactly like the replay tests do (t
 runs remc1 headless on the script, dumps every Nth frame, prints the tail of the log (crashes,
 watchdog stacks, allert_error lines) and builds a contact sheet of the last frames.
 
-  python tools/run_recording.py C:/mc1data/level_1_playthrough.txt --out /tmp/run --every 20
+  python tools/run_recording.py recordings/castle_bug.recording --out out/run --every 20
   python tools/run_recording.py rec.txt --out /tmp/run --from 1200 --to 1500 --every 5 -- --no-sound
 
 Arguments after "--" are passed to remc1 (e.g. --no-sound for recordings made with sound off).
@@ -21,6 +21,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import recording  # noqa: E402  (bundles, C: drive)
+import remc1_paths  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -29,8 +30,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("script", help="recording bundle (<name>.recording) or input script (.txt)")
     ap.add_argument("--out", required=True, help="output folder (frames, log, sheet.png); recreated")
-    ap.add_argument("--exe", default=os.path.join(ROOT, "build", "win-x86", "RelWithDebInfo", "remc1.exe"))
-    ap.add_argument("--data", default=os.environ.get("REMC1_DATA_DIR", "C:/mc1data"))
+    ap.add_argument("--exe", help="built port executable (default: $REMC1_EXE or the newest build)")
+    ap.add_argument("--data", default=remc1_paths.default_data_dir())
     ap.add_argument("--every", type=int, default=20, help="dump every Nth frame (0 = none)")
     ap.add_argument("--from", dest="first", type=int, default=0, help="contact sheet: first frame")
     ap.add_argument("--to", dest="last", type=int, default=10**9, help="contact sheet / run: last frame")
@@ -41,6 +42,7 @@ def main():
     ap.add_argument("--real-audio", action="store_true", help="use the real audio device (recordings made with sound on can depend on it)")
     a, extra = ap.parse_known_args()
     a.extra = [x for x in extra if x != "--"]  # everything unknown goes to remc1
+    a.exe = a.exe or remc1_paths.find_port_exe()
 
     shutil.rmtree(a.out, ignore_errors=True)
     frames = os.path.join(a.out, "frames")

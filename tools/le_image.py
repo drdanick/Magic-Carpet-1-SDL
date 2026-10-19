@@ -6,12 +6,13 @@ at 0x10000, data at 0x90000, ...), with the LE fixup records applied. The raw fi
 offsets inside the target object; after `relocate()` they are absolute IDA addresses, and
 `fixup_sites` tells which dwords were relocated (pointer vs. plain number - used by the audits).
 
-    img = LeImage(os.path.join(os.environ.get('REMC1_DATA_DIR', 'C:/mc1data'), 'CD', 'CARPET.EXE'))
+    img = LeImage(remc1_paths.original_exe())
     mem = img.memory()            # dict: object base -> bytearray (relocated)
     img.read(0x9AD98, 4)          # relocated bytes at an IDA address
 """
 import struct
 import os
+import remc1_paths  # noqa: E402
 import sys
 
 
@@ -146,7 +147,7 @@ class LeImage:
 
 
 if __name__ == "__main__":
-    img = LeImage(sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.environ.get('REMC1_DATA_DIR', 'C:/mc1data'), 'CD', 'CARPET.EXE'))
+    img = LeImage(sys.argv[1] if len(sys.argv) > 1 else remc1_paths.original_exe())
     for i, o in enumerate(img.objects):
         print(f"object {i + 1}: base {o[0]:#x} size {o[1]:#x} flags {o[2]:#x} pages {o[3]}+{o[4]}")
     img.memory()

@@ -6,6 +6,7 @@ port lost (truncated initialisers) as well as different handlers.
 Usage (repo root, after a build): python tools/audit_tables.py
 """
 import os
+import remc1_paths  # noqa: E402
 import struct
 import sys
 
@@ -21,9 +22,9 @@ TABLES = ['str_254A34', 'str_254D48', 'str_254B84', 'str_254DBC', 'str_255478', 
 
 
 def main():
-    img = LeImage(os.path.join(os.environ.get('REMC1_DATA_DIR', 'C:/mc1data'), 'CD', 'CARPET.EXE'))
+    img = LeImage(remc1_paths.original_exe())
     img.memory()
-    ps = PortSymbols('build/win-x86/RelWithDebInfo/remc1.exe')
+    ps = PortSymbols(remc1_paths.find_port_exe())
     amap = PortAddrMap(ps, img)
     bn = ps.by_name()
     for t in TABLES:

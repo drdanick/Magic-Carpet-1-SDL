@@ -3,8 +3,8 @@
 the per-frame framebuffer hashes against a golden file.
 
 Usage:
-  python tools/replay_test.py --exe build/win-x86/Debug/remc1.exe --replay tests/replays/boot_intro.txt
-         [--data C:/mc1data] [--update] [--keep]
+  python tools/replay_test.py [--exe <built remc1>] --replay tests/replays/boot_intro.txt
+         [--data <datadir>] [--update] [--keep]
 
 Replay files are ordinary input scripts (portability/InputScript.h). Lines starting with "#!" add
 command-line options, e.g. "#! --exit-after-frames 600 --deterministic 5".
@@ -21,6 +21,9 @@ import shutil
 import subprocess
 import sys
 import tempfile
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import remc1_paths  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SKIP = 77
@@ -62,13 +65,14 @@ def read_hashes(path):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--exe", required=True)
+    ap.add_argument("--exe", help="built port executable (default: $REMC1_EXE or the newest build)")
     ap.add_argument("--replay", required=True)
     ap.add_argument("--data", default=os.environ.get("REMC1_DATA_DIR", ""))
     ap.add_argument("--update", action="store_true", help="rewrite the golden file")
     ap.add_argument("--keep", action="store_true", help="keep the temp folder (prints its path)")
     ap.add_argument("--timeout", type=int, default=900)
     args = ap.parse_args()
+    args.exe = args.exe or remc1_paths.find_port_exe()
 
     if not args.data or not os.path.isdir(os.path.join(args.data, "CD")):
         print("SKIP: set REMC1_DATA_DIR (or --data) to the extracted game data")

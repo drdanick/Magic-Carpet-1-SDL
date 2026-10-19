@@ -7,6 +7,7 @@ imports (CRT) are served by Python stubs. Used by tools/diff_tick.py and tools/d
 """
 import bisect
 import os
+import remc1_paths  # noqa: E402
 import struct
 import sys
 
@@ -90,8 +91,10 @@ class Stop(Exception):
 
 
 class Machine:
-    def __init__(self, snapdir, exe=os.path.join(os.environ.get('REMC1_DATA_DIR', 'C:/mc1data'), 'CD', 'CARPET.EXE'), port=os.environ.get('REMC1_PORT_EXE', 'build/win-x86/RelWithDebInfo/remc1.exe'),
+    def __init__(self, snapdir, exe=None, port=None,
                  load_port_code=True):
+        exe = exe or remc1_paths.original_exe()
+        port = port or os.environ.get('REMC1_PORT_EXE') or remc1_paths.find_port_exe()
         self.meta = read_meta(os.path.join(snapdir, 'meta.txt'))
         self.image_base = self.meta['image_base'][0]
         self.state_addr, self.state_size = self.meta['state']

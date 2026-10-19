@@ -30,7 +30,7 @@ Other presets: `win-x86-asan` (AddressSanitizer build, used by `tools/asan_run.s
 
 ### Tests
 ```bash
-REMC1_DATA_DIR=C:/mc1data ctest --preset win-x86-debug
+REMC1_DATA_DIR=<datadir> ctest --preset win-x86-debug
 ```
 Without `REMC1_DATA_DIR` the tests that need the game data (data hashes, replays) are skipped. Use
 the CTest bundled with Visual Studio if the one on `PATH` is too old.

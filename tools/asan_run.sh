@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 # Build the AddressSanitizer configuration and run remc1 with the given arguments; print the first
-# ASan report (stack + "located" line), or "no ASan errors". Windows / Git Bash.
+# ASan report (stack + "located" line), or "no ASan errors".
+# Windows (Git Bash) only for now: it uses the win-x86-asan preset. On Linux/macOS configure a build with
+# -DCMAKE_CXX_FLAGS=-fsanitize=address and run remc1 directly (no preset yet).
 #
 # Usage: tools/asan_run.sh [--no-build] -- <remc1 args...>
-#   e.g. tools/asan_run.sh -- --data C:/mc1data --input-script s.txt --exit-after-frames 1500
+#   e.g. tools/asan_run.sh -- --data <datadir> --input-script s.txt --exit-after-frames 1500
 # This is the main tool for finding decompilation memory bugs.
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
+case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) ;; *)
+  echo "asan_run.sh: Windows only for now (win-x86-asan preset); see the header for Linux/macOS" >&2; exit 2;;
+esac
 BUILD=1
 if [ "$1" == "--no-build" ]; then BUILD=0; shift; fi
 [ "$1" == "--" ] && shift

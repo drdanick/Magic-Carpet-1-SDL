@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Record and play bug recordings as bundles (<name>.recording/ = input.txt + saves/, see recording.py).
 
-  python tools/rec.py record C:/recordings/castle_bug          # play normally; quit the game to stop
-  python tools/rec.py play   C:/recordings/castle_bug.recording  # watch it at normal speed
+  python tools/rec.py record recordings/castle_bug            # play normally; quit the game to stop
+  python tools/rec.py play   recordings/castle_bug.recording  # watch it at normal speed
   python tools/rec.py play   old_recording.txt --keep-saves      # legacy .txt: use the install's saves
 
 record: copies <data>/CARPET.CD/SAVE into the bundle first (the saves the session starts from), then
@@ -12,7 +12,9 @@ play:   builds a temporary C: drive (install without saves + the bundle's saves)
         recording through --c-drive / --input-script; live input is ignored while it plays. Prints the
         first "DESYNC at frame N" if the game state drifts from the recording.
 
-Options: --data DIR (default $REMC1_DATA_DIR), --exe PATH, --headless (play only). Arguments after
+Options: --data DIR (default $REMC1_DATA_DIR, else C:/mc1data on Windows, ~/mc1data elsewhere), --exe
+PATH (default $REMC1_EXE, else the newest build under build/, see remc1_paths.py), --headless (play
+only). Arguments after
 "--" go to remc1.
 """
 import argparse
@@ -24,6 +26,7 @@ import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import recording  # noqa: E402
+import remc1_paths  # noqa: E402
 
 
 def run_game(cmd, exe):
@@ -76,12 +79,13 @@ def main():
     ap.add_argument("command", choices=["record", "play"])
     ap.add_argument("name", help="bundle (<name>[.recording]) or, for play, a legacy .txt recording")
     ap.add_argument("--data", default=recording.DEFAULT_DATA)
-    ap.add_argument("--exe", default=recording.DEFAULT_EXE)
+    ap.add_argument("--exe")
     ap.add_argument("--force", action="store_true", help="record: replace an existing bundle")
     ap.add_argument("--headless", action="store_true", help="play: no window")
     ap.add_argument("--keep-saves", action="store_true", help="play a legacy .txt with the install's current saves")
     a, extra = ap.parse_known_args()
     extra = [x for x in extra if x != "--"]
+    a.exe = a.exe or remc1_paths.find_port_exe()
     return record(a, extra) if a.command == "record" else play(a, extra)
 
 

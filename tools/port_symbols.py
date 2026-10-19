@@ -5,13 +5,14 @@ Uses dbghelp (Windows) to enumerate the PDB's data symbols (name, RVA, size) and
 contents from the PE image (.data/.rdata; uninitialised .bss reads as zeros). PE base relocations tell
 which dwords are pointers.
 
-    ps = PortSymbols('build/win-x86/RelWithDebInfo/remc1.exe')
+    ps = PortSymbols(remc1_paths.find_port_exe())
     for s in ps.data_symbols(): s.name, s.rva, s.size
     ps.initial_bytes(rva, size)
 """
 import ctypes
 import ctypes.wintypes as wt
 import os
+import remc1_paths  # noqa: E402
 import struct
 import sys
 
@@ -105,6 +106,8 @@ class PortSymbols:
 
     # ---- PDB ---------------------------------------------------------------------------------------
     def _load_syms(self):
+        if os.name != 'nt':  # the PDB of the MSVC build is read through Windows' dbghelp
+            raise OSError('port symbols need Windows (dbghelp + the MSVC .pdb); the diff harness is Windows-only for now')
         dbg = ctypes.WinDLL('dbghelp.dll')
         self.dbg = dbg
         self.h = wt.HANDLE(0x7357)
@@ -225,7 +228,7 @@ class PortSymbols:
 
 
 if __name__ == '__main__':
-    ps = PortSymbols(sys.argv[1] if len(sys.argv) > 1 else 'build/win-x86/RelWithDebInfo/remc1.exe')
+    ps = PortSymbols(sys.argv[1] if len(sys.argv) > 1 else remc1_paths.find_port_exe())
     d = ps.data_symbols()
     print(len(ps.syms), 'symbols,', len(d), 'data;', len(ps.reloc_sites), 'relocations')
     bn = ps.by_name()

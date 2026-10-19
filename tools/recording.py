@@ -12,10 +12,10 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import replay_test  # noqa: E402  (make_c_drive, find_ci)
+import remc1_paths  # noqa: E402  (find_port_exe, default_data_dir)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DEFAULT_EXE = os.path.join(ROOT, "build", "win-x86", "RelWithDebInfo", "remc1.exe")
-DEFAULT_DATA = os.environ.get("REMC1_DATA_DIR", "C:/mc1data")
+DEFAULT_DATA = remc1_paths.default_data_dir()
 SUFFIX = ".recording"
 INPUT = "input.txt"
 SAVES = "saves"

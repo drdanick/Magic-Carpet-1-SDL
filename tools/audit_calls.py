@@ -7,6 +7,7 @@ Usage (repo root): python tools/audit_calls.py [--exe <data>/CD/CARPET.EXE] [--a
 """
 import argparse
 import os
+import remc1_paths  # noqa: E402
 import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
@@ -16,7 +17,7 @@ from port_index import PortIndex
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--exe', default=os.path.join(os.environ.get('REMC1_DATA_DIR', 'C:/mc1data'), 'CD', 'CARPET.EXE'))
+    ap.add_argument('--exe', default=remc1_paths.original_exe())
     ap.add_argument('--src', default='sub_main.cpp')
     ap.add_argument('--all', action='store_true', help='also list functions without differences')
     a = ap.parse_args()
