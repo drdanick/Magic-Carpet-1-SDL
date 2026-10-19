@@ -13,11 +13,8 @@
 #include <sys/mman.h>
 #endif
 
-// The executable's own load address: its statics then have small positive offsets. A link-time
-// constant, so it is valid before any static initialiser runs. 0 on 32-bit builds (offsets = addresses).
-#if INTPTR_MAX == INT32_MAX
-#define IMAGE_START nullptr
-#elif defined(_WIN32)
+// The executable's own load address. A link-time constant, so it is valid before any static initialiser runs.
+#if defined(_WIN32)
 extern "C" char __ImageBase;
 #define IMAGE_START ((uint8_t*)&__ImageBase)
 #elif defined(__APPLE__)
@@ -27,19 +24,11 @@ extern "C" char _mh_execute_header;
 extern "C" char __executable_start;
 #define IMAGE_START ((uint8_t*)&__executable_start)
 #endif
-#if INTPTR_MAX == INT32_MAX
-#define STATICS_BASE IMAGE_START
-#else
 // statics at offset 4 MB + RVA, the numbers a 32-bit exe at 0x400000 would have: clear of the original's
 // addresses 0x10000..0x150000, so harness snapshots in offset space can hold both (MemSnapshot.cpp)
 #define STATICS_BASE (IMAGE_START - 0x400000)
-#endif
 uint8_t* const g_ptrBase = STATICS_BASE;
-#if INTPTR_MAX == INT32_MAX
-#define NO_WINDOW nullptr
-#else
 #define NO_WINDOW ((uint8_t*)(uintptr_t)0xFFFF800000000000ull)  // matches no user-space address (OFF)
-#endif
 // [1]: the arena (set by ArenaInit), [2][3]: the game stack (Port_PtrOutOfRange), the rest unused
 uint8_t* g_ptrBases[8] = { STATICS_BASE, NO_WINDOW, NO_WINDOW, NO_WINDOW, NO_WINDOW, NO_WINDOW, NO_WINDOW, NO_WINDOW };
 
@@ -95,7 +84,6 @@ int32_t Port_PtrOutOfRange(const void* p)
 	abort();
 }
 
-#if INTPTR_MAX != INT32_MAX
 #include <vector>
 static std::vector<void*> s_ext(1, nullptr);  // handle -> pointer (handle 0 = nullptr)
 
@@ -114,11 +102,10 @@ void* Port_ExtPointer(uint32_t h)
 {
 	return h < s_ext.size() ? s_ext[h] : nullptr;
 }
-#endif
 
-// Game memory arena. It sits at offset 512 MB in every build (on 32-bit that is the fixed address 0x20000000,
-// on 64-bit g_ptrBases[1] follows wherever the OS put it), and allocation is deterministic, so game objects get
-// the same 32-bit "addresses" in 32-bit and 64-bit builds and across code changes. That matters beyond OFF():
+// Game memory arena. It sits at offset 512 MB (g_ptrBases[1] follows wherever the OS put it; the old 32-bit
+// build had it at that fixed address), and allocation is deterministic, so game objects get the same 32-bit
+// "addresses" on every platform and across code changes. That matters beyond OFF():
 // the decompiled code turns addresses into numbers, e.g. (target - entity array) / 164 with a null target, and
 // such values end up in the game state; with a fixed layout they are the same everywhere (regression traces,
 // tools/regress.py). (A fixed distance from the executable is not possible: Linux puts the brk heap anywhere
@@ -132,13 +119,10 @@ static std::multimap<size_t, uint8_t*> s_free;  // freed blocks by size (best fi
 
 static void ArenaInit()
 {
-	uint8_t* want = sizeof(void*) == 4 ? (uint8_t*)kArenaOffset : nullptr;
 #ifdef _WIN32
-	s_arena = (uint8_t*)VirtualAlloc(want, kArenaSize, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
-	if (!s_arena && want)
-		s_arena = (uint8_t*)VirtualAlloc(nullptr, kArenaSize, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+	s_arena = (uint8_t*)VirtualAlloc(nullptr, kArenaSize, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
 #else
-	void* p = mmap(want, kArenaSize, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+	void* p = mmap(nullptr, kArenaSize, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 	s_arena = p == MAP_FAILED ? nullptr : (uint8_t*)p;
 #endif
 	if (!s_arena)
@@ -146,9 +130,6 @@ static void ArenaInit()
 		fprintf(stderr, "PORT: cannot reserve the %u MB game memory arena\n", (unsigned)(kArenaSize >> 20));
 		abort();
 	}
-	if (want && s_arena != want)
-		printf("PORT: game arena not at its usual place (%p instead of %p): replays still work, but "
-			"regression traces (tools/regress.py) may differ from other builds\n", (void*)s_arena, (void*)want);
 	g_ptrBases[1] = s_arena - kArenaOffset;
 	s_top = s_arena;
 }
@@ -161,10 +142,6 @@ void Port_ArenaRange(uint8_t** lo, uint8_t** top)
 
 bool Port_TryOff(const void* p, uint32_t* off)
 {
-#if INTPTR_MAX == INT32_MAX
-	*off = (uint32_t)(uintptr_t)p;
-	return true;
-#else
 	uintptr_t a = (uintptr_t)p;
 	if (a - (uintptr_t)g_ptrBase < 0x20000000)
 		*off = (uint32_t)(a - (uintptr_t)g_ptrBase);
@@ -175,7 +152,6 @@ bool Port_TryOff(const void* p, uint32_t* off)
 	else
 		return false;
 	return true;
-#endif
 }
 
 static bool InArena(const void* p)

@@ -1,17 +1,17 @@
 #pragma once
-// 32-bit "addresses" of the decompiled code on 64-bit builds.
+// 32-bit "addresses" of the decompiled code.
 //
 // The decompiled game code keeps addresses in 32-bit ints and in 4-byte slots of packed DOS-layout
-// structs (entity +156/+160, lists, tables). On 64-bit builds those ints are offsets into windows of
-// 512 MB, each with its own base (g_ptrBases[offset >> 29]):
+// structs (entity +156/+160, lists, tables). Those ints are offsets into windows of 512 MB, each with its
+// own base (g_ptrBases[offset >> 29]):
 //   0 .. 512 MB      from g_ptrBase: the executable's statics, at 4 MB + RVA (as a 32-bit exe at 0x400000)
 //   512 MB .. 1 GB   the game memory arena (Port_ArenaAlloc), wherever the OS put it
 //   1 GB .. 2 GB     the game thread's stack (the code passes addresses of locals around as ints)
-// So the offsets are the same numbers in every build: statics from the image start, the arena at 512 MB
-// (where the 32-bit build has it, address 0x20000000), whatever the OS address layout.
+// So the offsets are the same numbers on every platform: statics from the image start, the arena at 512 MB
+// (where the old 32-bit build had it, address 0x20000000), whatever the OS address layout.
 //   PTR(x)  int offset -> pointer (0 stays nullptr)      used where the code casts an int to a pointer
 //   OFF(p)  pointer -> int offset (nullptr stays 0)       used where the code casts a pointer to an int
-// OFF() aborts with a message for anything outside both windows. On 32-bit builds both are plain casts.
+// OFF() aborts with a message for anything outside the windows.
 //
 // TODO (before the code split/organisation phase): replace this with real typed pointers
 // (remc2 style) - see docs/DEVELOPER_GUIDE.md section 7.
@@ -29,10 +29,8 @@ void Port_ArenaFree(void* p);
 void Port_ArenaRange(uint8_t** lo, uint8_t** top);  // the arena and the end of its used part
 bool Port_TryOff(const void* p, uint32_t* off);    // OFF() without the abort: false outside the windows
 
-#if INTPTR_MAX == INT32_MAX
-inline uint8_t* PTR(uint32_t off) { return (uint8_t*)(uintptr_t)off; }
-template <class T> inline int32_t OFF(T* p) { return (int32_t)(uintptr_t)p; }
-#else
+static_assert(sizeof(void*) == 8, "64-bit builds only");
+
 inline uint8_t* PTR(uint32_t off) { return off ? g_ptrBases[off >> 29] + off : nullptr; }
 template <class T> inline int32_t OFF(T* p)
 {
@@ -47,17 +45,12 @@ template <class T> inline int32_t OFF(T* p)
 		return (int32_t)d;
 	return Port_PtrOutOfRange(reinterpret_cast<const void*>(p));
 }
-#endif
 inline int32_t OFF(std::nullptr_t) { return 0; }
 
-// Pointer fields of packed DOS-layout structs: 4 bytes in every build.
+// Pointer fields of packed DOS-layout structs: 4 bytes, as in the original.
 //   ptr32<T>     a game pointer stored as an OFF() offset (converts to/from T*)
-//   extptr32<T>  a pointer to memory outside the game window (FILE*), stored as a small handle
-// On 32-bit builds both are plain T* (the harness reads the PDB types of 32-bit builds).
-#if INTPTR_MAX == INT32_MAX
-template <class T> using ptr32 = T*;
-template <class T> using extptr32 = T*;
-#else
+//   extptr32<T>  a pointer to memory outside the game windows (FILE*), stored as a small handle
+// (tools/port_symbols.py recognises both by their type names in the PDB.)
 template <class T> struct ptr32
 {
 	int32_t off;
@@ -89,14 +82,13 @@ template <class T> struct extptr32
 	operator T*() const { return (T*)Port_ExtPointer(h); }
 	T* operator->() const { return (T*)Port_ExtPointer(h); }
 };
-#endif
 static_assert(sizeof(ptr32<int>) == 4 && sizeof(extptr32<int>) == 4, "pointer slots must stay 4 bytes");
 
 // Function-pointer tables of the decompiled code cast functions that take or return int "addresses" to
-// typed signatures, e.g. (void (*)(Type_AE400_29795*))sub_253E0 where sub_253E0(int a1). On 64-bit the
-// call would pass a 64-bit pointer into a 32-bit int, so PORT_FN(F, Sig) puts a thunk in the table that
-// converts every argument and the result (int <-> pointer through PTR/OFF). On 32-bit it is the plain
-// cast (the harness maps table entries back to the functions themselves).
+// typed signatures, e.g. (void (*)(Type_AE400_29795*))sub_253E0 where sub_253E0(int a1). The call would
+// pass a 64-bit pointer into a 32-bit int, so PORT_FN(F, Sig) puts a thunk in the table that converts every
+// argument and the result (int <-> pointer through PTR/OFF). The harness maps a thunk to the function it
+// wraps (tools/audit_data.py, PortAddrMap).
 #include <type_traits>
 template <class To, class From> inline To PortConv(From f)
 {
@@ -124,8 +116,4 @@ template <class R, class... A, class FR, class... FA, auto F> struct PortThunkIm
 	}
 };
 // usage: PORT_FN(function, signature) - the signature last, it may contain commas
-#if INTPTR_MAX == INT32_MAX
-#define PORT_FN(F, ...) ((std::add_pointer_t<__VA_ARGS__>)(F))
-#else
 #define PORT_FN(F, ...) (&PortThunkImpl<__VA_ARGS__, std::remove_pointer_t<decltype(&F)>, &F>::call)
-#endif

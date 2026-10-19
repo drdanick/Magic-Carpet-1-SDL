@@ -7,7 +7,7 @@ g_ptrBase (engine/ptr32.h), so each flagged cast converts explicitly:
     C4311  (int)ptr    pointer -> int   becomes  (int)OFF(ptr)     OFF(p) = p - g_ptrBase (nullptr -> 0)
 On 32-bit builds g_ptrBase is 0, so both are no-ops.
 
-Usage: build win-x64-experimental into a log, then
+Usage: build win-x64 into a log, then
     python tools/x64_rewrite_casts.py <build log> [--dry-run]
 MSVC columns are 1-based with a tab counted as one column and point at the cast's '('. Lines are
 edited right to left so earlier columns stay valid; run again after rebuilding until no warnings are left.

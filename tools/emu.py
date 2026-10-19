@@ -98,10 +98,11 @@ class Machine:
         port = port or os.environ.get('REMC1_PORT_EXE') or remc1_paths.find_port_exe()
         self.meta = read_meta(os.path.join(snapdir, 'meta.txt'))
         self.image_base = self.meta['image_base'][0]
-        # 64-bit builds write snapshots in the game's 32-bit offset space (portability/MemSnapshot.cpp); real
-        # pointers in their statics become offsets through these window bases (statics, arena, stack)
-        self.ptr64 = self.meta.get('pointer_size', [4])[0] == 8
-        self.bases = self.meta.get('bases', [0, 0, 0])
+        # snapshots are in the game's 32-bit offset space (portability/MemSnapshot.cpp); real pointers in the
+        # port's statics become offsets through these window bases (statics, arena, stack)
+        if self.meta.get('pointer_size', [4])[0] != 8 or 'bases' not in self.meta:
+            raise SystemExit(f'{snapdir}: not a snapshot of a 64-bit build (take a new one)')
+        self.bases = self.meta['bases']
         self.state_addr, self.state_size = self.meta['state']
         self.before = read_dump(os.path.join(snapdir, 'before.bin'))
         self.bdump = Dump(self.before)
@@ -143,13 +144,10 @@ class Machine:
         mu.mem_map(HEAP_BASE, HEAP_SIZE, UC_PROT_ALL)
         self.heap_ptr = HEAP_BASE
         self.stub_funcs = {}
-        self.mu64 = None  # 64-bit builds: the port's code runs in a second, 64-bit machine (_init_port64)
+        self.mu64 = None  # the port's code runs in a second, 64-bit machine (_init_port64)
         self.dirty = set()
         if load_port_code:
-            if self.ptr64:
-                self._init_port64()
-            else:
-                self._load_port_code()
+            self._init_port64()
         self._copy_globals()
         self.wlog = []
         self.logging = False
@@ -194,61 +192,6 @@ class Machine:
         self.skipped[addr] = self.mu.hook_add(UC_HOOK_CODE, hook, begin=addr, end=addr)
 
     # ---- setup -----------------------------------------------------------------------------------
-    def _load_port_code(self):
-        ps, mu, ib = self.ps, self.mu, self.image_base
-        pe = ps.pe
-        delta = ib - ps.image_base
-        relocs = sorted(ps.reloc_sites)
-        for name, va, vsize, rawptr, rawsize in ps.sections:
-            if name not in ('.text', '.rdata', '.idata', '.00cfg', '.tls'):
-                continue
-            lo = ib + va
-            size = (max(vsize, rawsize) + PAGE - 1) & ~(PAGE - 1)
-            if any(not (hi <= lo or l >= lo + size) for l, hi in self.mapped):
-                # already part of the dump (writable section) - keep runtime contents
-                continue
-            data = bytearray(pe[rawptr:rawptr + min(rawsize, vsize)])
-            data += b'\0' * (size - len(data))
-            i = bisect.bisect_left(relocs, va)
-            while i < len(relocs) and relocs[i] < va + size:
-                o = relocs[i] - va
-                if o + 4 <= len(data):
-                    v = struct.unpack_from('<I', data, o)[0]
-                    struct.pack_into('<I', data, o, (v + delta) & 0xFFFFFFFF)
-                i += 1
-            mu.mem_map(lo, size, UC_PROT_ALL)
-            mu.mem_write(lo, bytes(data))
-            self.mapped.append((lo, lo + size))
-        self._bind_imports()
-
-    def _bind_imports(self):
-        ps, pe, mu, ib = self.ps, self.ps.pe, self.mu, self.image_base
-        e = struct.unpack_from('<I', pe, 0x3C)[0]
-        dd = e + 24 + 96
-        imp_rva = struct.unpack_from('<I', pe, dd + 8)[0]
-        p = ps.rva_to_off(imp_rva)
-        k = 0
-        while True:
-            oft, ts, fc, name_rva, ft = struct.unpack_from('<IIIII', pe, p)
-            if name_rva == 0:
-                break
-            q = ps.rva_to_off(oft or ft)
-            j = 0
-            while True:
-                v = struct.unpack_from('<I', pe, q + 4 * j)[0]
-                if v == 0:
-                    break
-                fname = f'ord{v & 0xFFFF}'
-                if not v & 0x80000000:
-                    ho = ps.rva_to_off(v)
-                    fname = pe[ho + 2:pe.index(b'\0', ho + 2)].decode()
-                stub = STUBS + 16 * k
-                self.stub_funcs[stub] = fname
-                mu.mem_write(ib + ft + 4 * j, struct.pack('<I', stub))
-                k += 1
-                j += 1
-            p += 20
-
     def _global_syms(self):
         """Data symbols, plus the address-named members of struct globals that have no address in their
         own name (e.g. strPal.fog_B7934_B7924: the renderer's fog/blend tables)."""
@@ -371,29 +314,10 @@ class Machine:
         return None
 
     def project(self, sym, data, conv):
-        """The bytes of a 64-bit build's global in the 32-bit layout the original expects: every real 8-byte
-        pointer becomes a 4-byte offset (conv(value); 0 if unknown), everything else is kept (the game's structs
-        are packed). Returns (bytes, segments [(projected offset, port offset, length)]) - segments None if the
-        layout is unchanged (32-bit builds, globals without real pointers)."""
-        if not self.ptr64 or not sym.type_index:
-            return data, None
-        fields = [o for o, w, real in self.ps.pointer_fields(sym.type_index) if real and w == 8]
-        if not fields:
-            return data, None
-        out, segs, pos = bytearray(), [], 0
-        for o in fields:
-            if o < pos or o + 8 > len(data):
-                continue
-            segs.append((len(out), pos, o - pos))
-            out += data[pos:o]
-            v = struct.unpack_from('<Q', data, o)[0]
-            t = conv(v) if v else 0
-            segs.append((len(out), o, 4))
-            out += struct.pack('<I', (t or 0) & 0xFFFFFFFF)
-            pos = o + 8
-        segs.append((len(out), pos, len(data) - pos))
-        out += data[pos:]
-        return bytes(out), segs
+        """The bytes of a port global in the 32-bit layout the original expects (PortSymbols.project32):
+        (bytes, segments or None)."""
+        d, segs, _ = self.ps.project32(sym, data, conv)
+        return d, segs
 
     @staticmethod
     def seg_port_offset(segs, rel):
@@ -415,9 +339,10 @@ class Machine:
         """Translate port pointers inside a global's bytes to original addresses - only at the pointer
         fields the PDB type of the global declares (guessing by value turned packed table words and
         entity-index pairs into fake pointers). Falls back to relocation sites without a type.
-        64-bit builds: data is in the 32-bit layout (project(), segs) and every pointer field 4 bytes."""
+        data is in the 32-bit layout (project(), segs): every pointer field is 4 bytes."""
         buf = bytearray(data)
-        if self.ptr64 and sym is not None and sym.type_index:
+        offs = []
+        if sym is not None and sym.type_index:
             offs = []
             for o, w, real in self.ps.pointer_fields(sym.type_index):
                 if not segs:
@@ -427,12 +352,6 @@ class Machine:
                         if so <= o < so + max(n, 1) and (n == 4 or not real):
                             offs.append(po + o - so)
                             break
-        elif sym is not None and sym.type_index:
-            offs = self.ps.pointer_offsets(sym.type_index)
-        elif rva is not None:
-            offs = [r - rva for r in self.ps.reloc_sites if rva <= r < rva + len(buf)]
-        else:
-            offs = []
         for o in offs:
             if o + 4 > len(buf):
                 continue

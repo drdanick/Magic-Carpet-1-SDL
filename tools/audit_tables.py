@@ -44,15 +44,16 @@ def main():
                 break
         port = []
         if s:
-            for k in range(s.size // 14):
-                rva = s.rva + 14 * k
-                raw = ps.initial_bytes(rva, 14)
+            # the table in the original's layout (8-byte function pointers -> 4-byte game offsets)
+            data = ps.project32(s, ps.initial_bytes(s.rva, s.size), lambda v: v - ps.image_base + ps.STATICS)[0]
+            for k in range(len(data) // 14):
+                raw = data[14 * k:14 * k + 14]
                 tag, idx, fn, en, x = struct.unpack('<IHIHH', raw)
                 if tag == 0 and fn == 0 and idx == 0 and en == 0:
                     break
                 tgt = None
                 if fn:
-                    sym, ida = amap.lookup(fn - ps.image_base)
+                    sym, ida = amap.lookup(fn - ps.STATICS)
                     tgt = ida if ida is not None else ('?' + (sym.name if sym else ''))
                 port.append((idx, tgt, en, x))
         issues = []

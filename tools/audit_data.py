@@ -106,20 +106,19 @@ def main():
         cands = name_addresses(s.name, img)
         if not cands or s.size == 0:
             continue
-        port_ptr = {}
-        for r in range(s.rva - 3, s.rva + s.size):
-            if r in ps.reloc_sites:
-                port_ptr[r - s.rva] = struct.unpack('<I', ps.initial_bytes(r, 4))[0]
+        # the global in the original's 32-bit layout, its pointers as game offsets (statics at ps.STATICS + RVA)
+        pb, _, poffs = ps.project32(s, ps.initial_bytes(s.rva, s.size), lambda v: v - ps.image_base + ps.STATICS)
+        port_ptr = {o: struct.unpack_from('<I', pb, o)[0] for o in poffs if o + 4 <= len(pb)}
+        port_ptr = {o: v for o, v in port_ptr.items() if v}
         port_ptr_bytes = set()
         for o in port_ptr:
             port_ptr_bytes.update(range(o, o + 4))
-        pb = ps.initial_bytes(s.rva, s.size)
         best = None
         for addr in cands:
             base = img.object_at(addr)
             buf = mem[base]
             o = addr - base
-            n = min(s.size, len(buf) - o)
+            n = min(len(pb), len(buf) - o)
             ob = bytes(buf[o:o + n])
             diffs = [i for i in range(n) if i not in port_ptr_bytes and (addr + i) not in orig_ptr_bytes and ob[i] != pb[i]]
             # pointer comparison
@@ -130,18 +129,18 @@ def main():
                 if op is None and pp is None:
                     continue
                 if op is not None and pp is not None:
-                    tsym, tida = amap.lookup(pp - ps.image_base)
+                    tsym, tida = amap.lookup(pp - ps.STATICS)
                     if tida is None:
                         pdiffs.append((i, op, f'{tsym.name if tsym else "?"} (no address)'))
                     elif tida != op:
-                        pdiffs.append((i, op, f'{tsym.name}+{(pp - ps.image_base) - tsym.rva} -> {tida:X}'))
+                        pdiffs.append((i, op, f'{tsym.name}+{(pp - ps.STATICS) - tsym.rva} -> {tida:X}'))
                 elif op is not None:
                     v = struct.unpack_from('<I', pb, i)[0]
                     if v - DOSBOX_DATA == op:
                         continue  # DOSBox-address constant standing in for the pointer (0x2548F4 type tags)
                     pdiffs.append((i, op, f'not a pointer in port ({v:#x})'))
                 else:
-                    tsym, tida = amap.lookup(pp - ps.image_base)
+                    tsym, tida = amap.lookup(pp - ps.STATICS)
                     ov = struct.unpack_from('<I', ob, i)[0]
                     pdiffs.append((i, None, f'port pointer {tsym.name if tsym else "?"}, original value {ov:#x}'))
             score = len(diffs) + 4 * len(pdiffs)
