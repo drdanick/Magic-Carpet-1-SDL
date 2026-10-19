@@ -23,6 +23,9 @@
 #include <adlmidi.h>
 #include "midi_sequencer.hpp"
 #endif
+#if REMC1_FLUIDSYNTH
+#include <fluidsynth.h>
+#endif
 
 namespace {
 
@@ -163,6 +166,80 @@ private:
 	ADL_MIDIPlayer* player_ = nullptr;
 };
 
+#if REMC1_FLUIDSYNTH
+// General MIDI songs on a SoundFont.
+class FluidSynth : public Synth {
+public:
+	FluidSynth(int rate, const std::string& soundfont)
+	{
+		fluid_set_log_function(FLUID_INFO, nullptr, nullptr);
+		fluid_set_log_function(FLUID_DBG, nullptr, nullptr);
+		settings_ = new_fluid_settings();
+		if (!settings_)
+			return;
+		fluid_settings_setnum(settings_, "synth.sample-rate", rate);
+		fluid_settings_setnum(settings_, "synth.gain", 0.3); // about as loud as the AdLib music, no clipping
+		fluid_settings_setint(settings_, "synth.threadsafe-api", 0); // port_music serialises the calls
+		synth_ = new_fluid_synth(settings_);
+		if (synth_ && fluid_synth_sfload(synth_, soundfont.c_str(), 1) == FLUID_FAILED) {
+			delete_fluid_synth(synth_);
+			synth_ = nullptr;
+		}
+	}
+	~FluidSynth() override
+	{
+		if (synth_)
+			delete_fluid_synth(synth_);
+		if (settings_)
+			delete_fluid_settings(settings_);
+	}
+	bool Ok() const { return synth_ != nullptr; }
+
+	void NoteOn(uint8_t c, uint8_t n, uint8_t v) override { fluid_synth_noteon(synth_, c, n, v); }
+	void NoteOff(uint8_t c, uint8_t n) override { fluid_synth_noteoff(synth_, c, n); }
+	void NoteAfterTouch(uint8_t c, uint8_t n, uint8_t v) override { fluid_synth_key_pressure(synth_, c, n, v); }
+	void ChannelAfterTouch(uint8_t c, uint8_t v) override { fluid_synth_channel_pressure(synth_, c, v); }
+	void ControllerChange(uint8_t c, uint8_t t, uint8_t v) override { fluid_synth_cc(synth_, c, t, v); }
+	void PatchChange(uint8_t c, uint8_t p) override { fluid_synth_program_change(synth_, c, p); }
+	void PitchBend(uint8_t c, uint8_t msb, uint8_t lsb) override { fluid_synth_pitch_bend(synth_, c, (msb << 7) | lsb); }
+	void SysEx(const uint8_t* msg, size_t size) override
+	{
+		// FluidSynth takes the message without its F0 / F7 framing
+		if (size && msg[0] == 0xF0) { msg++; size--; }
+		if (size && msg[size - 1] == 0xF7) size--;
+		if (size)
+			fluid_synth_sysex(synth_, (const char*)msg, (int)size, nullptr, nullptr, nullptr, 0);
+	}
+	void Reset() override { fluid_synth_system_reset(synth_); }
+	void Render(int16_t* out, int frames) override { fluid_synth_write_s16(synth_, frames, out, 0, 2, out, 1, 2); }
+
+private:
+	fluid_settings_t* settings_ = nullptr;
+	fluid_synth_t* synth_ = nullptr;
+};
+
+// --soundfont / audio.soundfont, else the usual system locations (Linux distributions' GM SoundFonts).
+std::string FindSoundFont()
+{
+	if (!g_settings.soundfont.empty())
+		return g_settings.soundfont;
+	static const char* const candidates[] = {
+		"/usr/share/soundfonts/default.sf2",       // Fedora, Arch (symlink to the installed GM SoundFont)
+		"/usr/share/soundfonts/FluidR3_GM.sf2",    // Arch soundfont-fluid
+		"/usr/share/sounds/sf2/default-GM.sf2",    // Debian / Ubuntu
+		"/usr/share/sounds/sf2/FluidR3_GM.sf2",    // Debian / Ubuntu fluid-soundfont-gm
+		"/usr/local/share/soundfonts/default.sf2",
+		"/opt/homebrew/share/soundfonts/default.sf2",
+	};
+	for (const char* path : candidates)
+		if (FILE* f = fopen(path, "rb")) {
+			fclose(f);
+			return path;
+		}
+	return std::string();
+}
+#endif // REMC1_FLUIDSYNTH
+
 // --- Player: sequencer + synth, driven by the SDL_mixer music hook ------------------------------------
 std::mutex audioMutex; // guards everything below against the audio callback
 std::unique_ptr<Synth> synth;
@@ -290,11 +367,31 @@ void PortMusic_Init(PortMusicDevice device)
 		fprintf(stderr, "music: unsupported output format, music disabled\n");
 		return;
 	}
-	// General MIDI / MT-32 songs: OPL3 with a General MIDI bank for now
 	std::unique_ptr<Synth> s;
-	auto adl = std::make_unique<AdlSynth>(rate, device == PortMusicDevice::AdLib);
-	if (adl->Ok())
-		s = std::move(adl);
+#if REMC1_FLUIDSYNTH
+	// General MIDI songs (also chosen for Roland): FluidSynth on a SoundFont
+	if (device != PortMusicDevice::AdLib) {
+		const std::string soundfont = FindSoundFont();
+		if (soundfont.empty())
+			fprintf(stderr, "music: no SoundFont found (set --soundfont or audio.soundfont in config.json); "
+				"General MIDI plays on the OPL3 emulator\n");
+		else {
+			auto fluid = std::make_unique<FluidSynth>(rate, soundfont);
+			if (fluid->Ok()) {
+				printf("music: FluidSynth, %s\n", soundfont.c_str());
+				s = std::move(fluid);
+			}
+			else
+				fprintf(stderr, "music: cannot load the SoundFont %s; General MIDI plays on the OPL3 emulator\n", soundfont.c_str());
+		}
+	}
+#endif
+	// AdLib songs, and General MIDI without a SoundFont: OPL3 emulation
+	if (!s) {
+		auto adl = std::make_unique<AdlSynth>(rate, device == PortMusicDevice::AdLib);
+		if (adl->Ok())
+			s = std::move(adl);
+	}
 	if (!s) {
 		fprintf(stderr, "music: cannot create the synthesizer, music is silent\n");
 		return;

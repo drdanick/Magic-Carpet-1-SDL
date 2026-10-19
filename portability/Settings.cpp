@@ -121,6 +121,11 @@ static void LoadConfigFile(const fs::path& path)
 		s.musicDevice = j["audio"].value("musicDevice", s.musicDevice);
 		s.musicVolume = j["audio"].value("musicVolume", s.musicVolume);
 		s.oplEmulator = j["audio"].value("oplEmulator", s.oplEmulator);
+		std::string soundfont = j["audio"].value("soundfont", std::string());
+		if (!soundfont.empty()) {
+			fs::path sf = soundfont;
+			s.soundfont = (sf.is_relative() ? path.parent_path() / sf : sf).string();
+		}
 	}
 	if (j.contains("input")) {
 		s.grabMouse = j["input"].value("grabMouse", s.grabMouse);
@@ -151,6 +156,7 @@ static void PrintUsage()
 		"  --music-device <d>        auto (the game's sound setup), adlib, gm, mt32 or none\n"
 		"  --music-volume <0-100>    music volume in percent\n"
 		"  --opl-emulator <e>        AdLib music emulator: dosbox (default) or nuked\n"
+		"  --soundfont <file.sf2>    SoundFont for the General MIDI music (FluidSynth builds)\n"
 		"  --debug-log        write debug.txt next to the executable\n"
 		"  --dump-frames <dir> [--dump-every N]  save every Nth presented frame (default 30) as BMP\n"
 		"  --exit-after-frames N                  quit after N presented frames\n"
@@ -203,6 +209,7 @@ std::vector<std::string> InitSettings(int argc, char* argv[])
 		else if (a == "--music-device") g_settings.musicDevice = next("auto, adlib, gm, mt32 or none");
 		else if (a == "--music-volume") g_settings.musicVolume = (std::min)(100, (std::max)(0, atoi(next("a percentage").c_str())));
 		else if (a == "--opl-emulator") g_settings.oplEmulator = next("dosbox or nuked");
+		else if (a == "--soundfont") g_settings.soundfont = next("a SoundFont (.sf2) file");
 		else if (a == "--debug-log") cliDebugLog = true;
 		else if (a == "--dump-frames") g_settings.dumpFramesDir = next("a directory");
 		else if (a == "--dump-every") g_settings.dumpEvery = (std::max)(1, atoi(next("a number").c_str()));

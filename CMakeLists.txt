@@ -42,6 +42,31 @@ if(REMC1_MUSIC)
         URL https://github.com/Wohlstand/libADLMIDI/archive/refs/tags/v1.6.2.1.tar.gz
         URL_HASH SHA256=e01aec7b2bc284476eedab77a8b6e177c5beda2bc2f4545166339badfc0464c5)
     FetchContent_MakeAvailable(libadlmidi)
+
+    # General MIDI songs on a SoundFont synth (optional; without it they play on OPL3 with a GM bank)
+    option(REMC1_FLUIDSYNTH "Use FluidSynth for the General MIDI music when it is found" ON)
+    if(REMC1_FLUIDSYNTH)
+        # pkg-config first: Ubuntu's CMake package for FluidSynth fails unless the fluidsynth program is
+        # installed too. vcpkg (Windows) provides the CMake package.
+        find_package(PkgConfig QUIET)
+        if(PkgConfig_FOUND)
+            pkg_check_modules(FLUIDSYNTH QUIET IMPORTED_TARGET GLOBAL fluidsynth)
+            if(FLUIDSYNTH_FOUND)
+                set(REMC1_FLUIDSYNTH_TARGET PkgConfig::FLUIDSYNTH)
+            endif()
+        endif()
+        if(NOT REMC1_FLUIDSYNTH_TARGET)
+            find_package(FluidSynth CONFIG QUIET)
+            if(TARGET FluidSynth::libfluidsynth)
+                set(REMC1_FLUIDSYNTH_TARGET FluidSynth::libfluidsynth)
+            endif()
+        endif()
+        if(REMC1_FLUIDSYNTH_TARGET)
+            message(STATUS "Music: FluidSynth found (General MIDI on SoundFonts)")
+        else()
+            message(STATUS "Music: FluidSynth not found - General MIDI songs play on the OPL3 emulator")
+        endif()
+    endif()
 endif()
 
 # ---------------------------------------------------------------------------
@@ -125,6 +150,10 @@ if(REMC1_MUSIC)
     target_include_directories(remc1_engine PRIVATE ${libadlmidi_SOURCE_DIR}/src/midiseq)
     target_link_libraries(remc1_engine PRIVATE ADLMIDI_static)
     target_compile_definitions(remc1_engine PRIVATE REMC1_MUSIC=1)
+    if(REMC1_FLUIDSYNTH_TARGET)
+        target_link_libraries(remc1_engine PRIVATE ${REMC1_FLUIDSYNTH_TARGET})
+        target_compile_definitions(remc1_engine PRIVATE REMC1_FLUIDSYNTH=1)
+    endif()
 endif()
 
 # ---------------------------------------------------------------------------

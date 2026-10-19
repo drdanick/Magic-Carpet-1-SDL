@@ -12,8 +12,9 @@ You need your own copy of the game - no game data is included.
 - SDL2 window: windowed or fullscreen, resizable, 4:3 aspect, 320x200 and 640x480 game modes
 - keyboard and mouse, sound effects (SDL2_mixer)
 - music: the AdLib soundtrack with the game's own instruments (OPL3 emulation by
-  [libADLMIDI](https://github.com/Wohlstand/libADLMIDI)), including the danger music that fades in
-  when enemies are near
+  [libADLMIDI](https://github.com/Wohlstand/libADLMIDI)) or the General MIDI soundtrack on a SoundFont
+  ([FluidSynth](https://www.fluidsynth.org)), including the danger music that fades in when enemies are
+  near; the card chosen in the game's sound setup decides, or `--music-device adlib|gm|none`
 - settings in `config.json` and on the command line (`remc1 --help`)
 - input recording and deterministic replay, used by the test suite and for bug reports
   ([docs/recordings.md](docs/recordings.md))
@@ -66,9 +67,7 @@ Bugs found in the original game itself, and how the port handles them, are liste
 - **Known bugs:**
   - 640x480: the sprite blitter draws occasional horizontal streaks the original does not;
   - the main-menu attract demo (after about 2 minutes idle) is unverified and may crash.
-- **Music:** the AdLib version plays as in the original; the General MIDI songs play through the OPL3
-  emulator with a General MIDI bank (a wavetable synth via FluidSynth is planned); Roland MT-32 is not
-  supported (choosing it plays the General MIDI songs).
+- **Music:** Roland MT-32 is not supported (choosing it plays the General MIDI songs).
 - **Platforms:** Windows on ARM builds but has not been run yet; macOS is untested; no CI yet.
 - **Code structure:** the game code is still one large decompiled file (`sub_main.cpp`); splitting it
   into modules and naming the remaining `sub_*` routines is ongoing.
