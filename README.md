@@ -61,12 +61,10 @@ Bugs found in the original game itself, and how the port handles them, are liste
 
 - **Testing:** levels 14 onwards; multiplayer/network play is untested.
 - **Known bugs:**
-  - level 12: a castle can be built inside an impassable wall, which then lets the player fly
-    through it;
   - 640x480: the sprite blitter draws occasional horizontal streaks the original does not;
   - the main-menu attract demo (after about 2 minutes idle) is unverified and may crash.
 - **Music** is not implemented yet (sound effects are).
-- **Platforms:** macOS and Windows on ARM build files are in place but untested; no CI yet.
+- **Platforms:** Windows on ARM builds but has not been run yet; macOS is untested; no CI yet.
 - **Code structure:** the game code is still one large decompiled file (`sub_main.cpp`); splitting it
   into modules and naming the remaining `sub_*` routines is ongoing.
 - An OpenGL renderer (the presenter interface is in place, only SDL2 exists today).

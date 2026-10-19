@@ -17,7 +17,7 @@ Status:
 | 3 | AI wizard measures its distance to a missing target | `AiApproachTarget_15470` | worked around |
 | 4 | Reads/writes through null or stale pointers | several (see below) | worked around |
 | 5 | Level performance screen draws with a freed font | `ShowLevelPerformance_4E5B0_4E8F0` | worked around |
-| 6 | Terrain smoothing reads in front of the map on its first row | `sub_360C0_36480` | worked around (fix pending) |
+| 6 | Terrain smoothing reads in front of the map on its first row | `sub_360C0_36480` | fixed |
 
 ## 1. Stuck explosion after a worm segment dies (kept)
 
@@ -70,7 +70,7 @@ a live wizard") and otherwise behaves the same.
 screen once more with it. DOS's memory pool kept the data, so nothing was visible; the port frees the
 font after the loop instead.
 
-## 6. Terrain smoothing reads in front of the map on its first row (worked around, fix pending)
+## 6. Terrain smoothing reads in front of the map on its first row (fixed)
 
 `sub_360C0_36480` smooths a tile's height only if the terrain types of the tiles at -257, -256 and -1
 (the neighbours above-left, above and left) and of the tile itself are all "open" (type 0..5 or
@@ -81,6 +81,6 @@ The 3x3 averaging loop right after it wraps around the map with 16-bit arithmeti
 what was meant. Found from the disassembly while porting to Linux: the bytes in front of the array
 depend on the compiler's layout, so GCC builds smoothed different first-row tiles than MSVC builds.
 
-The port reads, on every compiler, what the MSVC builds found there (the end of `mapEntityIndex`), so
-the regression recordings stay valid. `REMC1_FIX_MAP_EDGE_READS` (temporary, `sub_main.cpp`) switches to
-wrapping around the map; it becomes permanent when the 64-bit port is done.
+The port wraps those three reads around the map, like the averaging loop. (During the 64-bit port it
+read what the 32-bit MSVC build found there, the end of `mapEntityIndex`, to keep the old recordings
+valid.)

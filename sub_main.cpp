@@ -5,17 +5,6 @@
 #include "portability/port_sound.h"
 #include "portability/MemSnapshot.h"
 
-// PORT: TEMPORARY switches, until the 64-bit port is done (then delete them and keep the fixes on):
-// the user's regression recordings (<datadir>/recordings) were made before these fixes, so they
-// are off to keep those recordings in sync while the 64-bit port is verified frame by frame.
-#define REMC1_FIX_WALL_CHECKS 0    // impassable-tile tests (mapAngle bit 0x80) in IsCastleSiteFree_12F70,
-                                   // CanCastleGrow_12D10 and AddTileHeight_40A10_40D50
-#define REMC1_FIX_THREAT_TARGET 0  // sub_16540 reads the target's threat score, not the caster's
-#define REMC1_FIX_TERRAIN_CORNER 0 // sub_33AE0_33ED0 marks tile (x-1, y-1) like the original (32-bit port: (x, y-1))
-#define REMC1_FIX_MAP_EDGE_READS 0 // sub_360C0_36480 wraps tile - 257/-256/-1 around the map; off: reads in front of
-                                   // the map as the MSVC builds did (the original read DOS variables, see original-bugs.md)
-#define TILE_IMPASSABLE(i) (REMC1_FIX_WALL_CHECKS && (mapAngle_FC1E0_FC1D0[i] & 0x80) != 0)
-
 // Debug switches inherited from the DOSBox-comparison workflow.
 // PORT: MODIFY_SETTINGS (injects Up/Down key presses at level start) and FIX_MOUSE (pins the mouse to
 // the screen centre, disabling steering) must stay OFF for normal play; enable only when reproducing
@@ -16536,7 +16525,7 @@ LABEL_13:
         goto LABEL_14;
     }
     // PORT: test 0x80 (impassable tile), as the original; '< 0' / '>= 0' on the uint8_t array was constant
-    while ( !TILE_IMPASSABLE(v4) )
+    while ( (mapAngle_FC1E0_FC1D0[v4] & 0x80) == 0 )
     {
       LOBYTE(v4) = v4 + 1;
       if ( !--v5 )
@@ -16562,7 +16551,7 @@ LABEL_18:
         goto LABEL_19;
     }
     // PORT: test 0x80 (impassable tile), as the original; '< 0' / '>= 0' on the uint8_t array was constant
-    while ( !TILE_IMPASSABLE(v7) )
+    while ( (mapAngle_FC1E0_FC1D0[v7] & 0x80) == 0 )
     {
       LOBYTE(v7) = v7 + 1;
       if ( !--v8 )
@@ -16588,7 +16577,7 @@ LABEL_23:
         goto LABEL_24;
     }
     // PORT: test 0x80 (impassable tile), as the original; '< 0' / '>= 0' on the uint8_t array was constant
-    while ( !TILE_IMPASSABLE(v10) )
+    while ( (mapAngle_FC1E0_FC1D0[v10] & 0x80) == 0 )
     {
       LOBYTE(v10) = v10 + 1;
       if ( !--v11 )
@@ -16614,7 +16603,7 @@ LABEL_29:
         goto LABEL_30;
     }
     // PORT: test 0x80 (impassable tile), as the original; '< 0' / '>= 0' on the uint8_t array was constant
-    while ( !TILE_IMPASSABLE(v13) )
+    while ( (mapAngle_FC1E0_FC1D0[v13] & 0x80) == 0 )
     {
       LOBYTE(v13) = v13 + 1;
       if ( !--v14 )
@@ -16673,7 +16662,7 @@ _BOOL1 IsCastleSiteFree_12F70(_WORD *a1)
         if ( v1 )
           break;
         // PORT: test 0x80 (impassable tile), as the original; '< 0' / '>= 0' on the uint8_t array was constant
-        v1 = TILE_IMPASSABLE(v3);
+        v1 = (mapAngle_FC1E0_FC1D0[v3] & 0x80) != 0;
         LOBYTE(v3) = v3 + 1;
         --v4;
       }
@@ -18548,7 +18537,7 @@ void sub_16540()
       {
         // PORT: was str_29795[v2->id_29819_24] (the caster's wizard); asm 0x166D2 reads the target's (ecx) +24,
         // like the castle branch and the store at LABEL_49 - the caster's score was written into the target's
-        v7 = str_AE400_AE3F0->str_29795[(REMC1_FIX_THREAT_TARGET ? v3 : v2)->id_29819_24].var_u32_29955_160->str_456[v2->var_u32_29955_160->var_48].var_u16_4;
+        v7 = str_AE400_AE3F0->str_29795[v3->id_29819_24].var_u32_29955_160->str_456[v2->var_u32_29955_160->var_48].var_u16_4;
         v8 = i->var_u8_29860_65; // PORT: was var_u8_29858_63; asm 0x166F7 reads the model (+65) like the branch below
         if ( v8 < 0xAu )
         {
@@ -40096,10 +40085,9 @@ unsigned __int16 sub_33AE0_33ED0(unsigned __int16 a1, char a2)
   mapTerrainType_CC1E0_CC1D0[a1] = a2;
   v3 = v2;
   // PORT: v2 and result are both ax in the original: result starts as v2, so the third write is (x-1, y-1).
-  // Hex-Rays split them and result was read uninitialised; the 32-bit build kept it in a1's stack slot, so
-  // its low byte was a1's: tile (x, y-1) was written twice and (x-1, y-1) never. The user's recordings depend
-  // on that, so it stays (deterministically) until the 64-bit port is done - see REMC1_FIX_TERRAIN_CORNER.
-  result = REMC1_FIX_TERRAIN_CORNER ? v2 : a1;
+  // Hex-Rays split them and result was read uninitialised (the old 32-bit build happened to write (x, y-1)
+  // twice and (x-1, y-1) never).
+  result = v2;
   HIBYTE(result) = HIBYTE(a1) - 1;
   mapTerrainType_CC1E0_CC1D0[v3] = a2;
   v4 = result;
@@ -41918,15 +41906,9 @@ int sub_360C0_36480(int a1)//2070C0_
   {
     if ( mapHeightmap_DC1E0_DC1D0[(unsigned __int16)a1] )
     {
-      // PORT: the original indexes (uint16)a1 - 257 etc. without wrapping, reading in front of the map for row 0
-      // (DOS variables; in the port whatever the compiler put there - MSVC: the end of mapEntityIndex, which
-      // the 32-bit regression recordings depend on, so that is what the off-switch reads on every compiler).
-      // See REMC1_FIX_MAP_EDGE_READS.
-      auto terrainAt = [](int i) -> uint8_t {
-        if (REMC1_FIX_MAP_EDGE_READS)
-          return mapTerrainType_CC1E0_CC1D0[(uint16_t)i];
-        return i >= 0 ? mapTerrainType_CC1E0_CC1D0[i] : ((uint8_t*)mapEntityIndex_10C1E0_10C1D0)[sizeof(mapEntityIndex_10C1E0_10C1D0) + i];
-      };
+      // PORT: the original indexes (uint16)a1 - 257 etc. without wrapping and reads in front of the map for
+      // row 0 (DOS variables, docs/original-bugs.md #6); wrap around the map like the averaging loop below.
+      auto terrainAt = [](int i) -> uint8_t { return mapTerrainType_CC1E0_CC1D0[(uint16_t)i]; };
       v4 = terrainAt((unsigned __int16)a1 - 257);
       if ( (unsigned __int8)v4 <= 5u || (unsigned __int8)v4 > 0x22u )
       {
@@ -50704,7 +50686,7 @@ char AddTileHeight_40A10_40D50(__int16 a1, __int16 a2, __int16 a3, char a4)
       v8 = 1;
   }
   // PORT: test 0x80 (impassable tile), as the original; '< 0' / '>= 0' on the uint8_t array was constant
-  if ( a4 && TILE_IMPASSABLE(v9) )
+  if ( a4 && (mapAngle_FC1E0_FC1D0[v9] & 0x80) != 0 )
     return 1;
   mapHeightmap_DC1E0_DC1D0[v9] = v4;
   if ( v4 )
