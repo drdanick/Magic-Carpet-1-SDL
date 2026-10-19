@@ -48,7 +48,7 @@ def find_port_exe(required=True):
     if cands:
         return min(cands, key=_rank)
     if required:
-        raise SystemExit(f"no {EXE_NAME} under {os.path.join(ROOT, 'build')} - build first (docs/building.md) "
+        raise SystemExit(f"no {EXE_NAME} under {os.path.join(ROOT, 'build')} - build first (docs/building-<platform>.md) "
                          "or set REMC1_EXE / pass --exe")
     return None
 

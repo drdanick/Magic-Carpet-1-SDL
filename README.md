@@ -18,8 +18,14 @@ You need your own copy of the game - no game data is included.
 
 ## Getting started
 
-1. **Build** - see [docs/building.md](docs/building.md) (Windows today; Linux and macOS are not
-   supported yet).
+1. **Build** - REMC1 is a 64-bit program (x64 and arm64):
+
+   | Platform | Guide |
+   |----------|-------|
+   | Windows (Visual Studio 2022) | [docs/building-windows.md](docs/building-windows.md) |
+   | Linux (Ubuntu, Debian, Fedora, Arch) | [docs/building-linux.md](docs/building-linux.md) |
+   | macOS (Homebrew) | [docs/building-macos.md](docs/building-macos.md) |
+
 2. **Extract the game data** from a GOG install (Python 3, no other dependencies):
    ```bash
    python tools/extract_data.py --gog "<GOG Magic Carpet Plus folder>" --out <datadir>
@@ -30,8 +36,9 @@ You need your own copy of the game - no game data is included.
    ```bash
    remc1 --data <datadir>
    ```
-   (the executable is in `build/<preset>/...`, e.g. `build/win-x86/RelWithDebInfo/remc1.exe`), or set
-   `paths.data` in `config.json` (looked up next to the executable).
+   (the executable is in `build/<preset>/<config>/`, e.g. `build/win-x64/RelWithDebInfo/remc1.exe` or
+   `build/linux/RelWithDebInfo/remc1`), or set `paths.data` in `config.json` (looked up next to the
+   executable).
 
 Port controls that differ from the original (all configurable in `config.json`, section `input`):
 W/A/S/D act as the arrow keys, Tab acts as Enter (opens the spell map), and pressing both mouse
@@ -40,10 +47,12 @@ buttons does *not* open the spell map (`bothButtonsSpellMenu`, off by default). 
 
 ## Status
 
-The game is playable on Windows. It has been tested **from the start through level 13**; later
-levels have not been played through yet. Fixes are verified against the original executable with a
-differential harness in `tools/` (the original machine code is run under Unicorn on a memory dump of
-the port and the results compared).
+The game is playable on Windows. It has been tested **from the start through level 13**; later levels
+have not been played through yet. Recordings of levels 1-11 replay identically, frame by frame (whole
+game state and every image), on Windows x64 and on Linux with GCC and Clang (`tools/regress.py`);
+interactive play on Linux has had little testing so far. Fixes are verified against the original executable with a differential harness
+in `tools/` (the original machine code is run under Unicorn on a memory dump of the port and the
+results compared; Windows only).
 
 Bugs found in the original game itself, and how the port handles them, are listed in
 [docs/original-bugs.md](docs/original-bugs.md).
@@ -57,8 +66,7 @@ Bugs found in the original game itself, and how the port handles them, are liste
   - 640x480: the sprite blitter draws occasional horizontal streaks the original does not;
   - the main-menu attract demo (after about 2 minutes idle) is unverified and may crash.
 - **Music** is not implemented yet (sound effects are).
-- **Linux and macOS:** the game code assumes 32-bit pointers; it needs a 64-bit conversion before
-  it runs there (the build files already have experimental presets). No CI yet.
+- **Platforms:** macOS and Windows on ARM build files are in place but untested; no CI yet.
 - **Code structure:** the game code is still one large decompiled file (`sub_main.cpp`); splitting it
   into modules and naming the remaining `sub_*` routines is ongoing.
 - An OpenGL renderer (the presenter interface is in place, only SDL2 exists today).
