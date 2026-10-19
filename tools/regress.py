@@ -115,12 +115,12 @@ def main():
                 continue
             s, i, note = compare(read_trace(ref_path), lines)
             if s is None and i is None and not note:
-                print(f"{name}: OK ({len(lines)} frames)")
+                print(f"{name}: OK ({len(lines)} frames){info}")
             else:
                 failed += 1
                 parts = [f"state differs from frame {s}" if s is not None else "",
                          f"image differs from frame {i}" if i is not None else "", note]
-                print(f"{name}: DIFFERS - " + "; ".join(p for p in parts if p))
+                print(f"{name}: DIFFERS - " + "; ".join(p for p in parts if p) + info)
     print(f"{len(bundles) - failed}/{len(bundles)} bundles OK" if not a.update else "")
     return 1 if failed else 0
 

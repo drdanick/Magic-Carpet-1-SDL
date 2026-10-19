@@ -11,6 +11,7 @@
 #define REMC1_FIX_WALL_CHECKS 0    // impassable-tile tests (mapAngle bit 0x80) in IsCastleSiteFree_12F70,
                                    // CanCastleGrow_12D10 and AddTileHeight_40A10_40D50
 #define REMC1_FIX_THREAT_TARGET 0  // sub_16540 reads the target's threat score, not the caster's
+#define REMC1_FIX_TERRAIN_CORNER 0 // sub_33AE0_33ED0 marks tile (x-1, y-1) like the original (32-bit port: (x, y-1))
 #define TILE_IMPASSABLE(i) (REMC1_FIX_WALL_CHECKS && (mapAngle_FC1E0_FC1D0[i] & 0x80) != 0)
 
 // Debug switches inherited from the DOSBox-comparison workflow.
@@ -40088,6 +40089,11 @@ unsigned __int16 sub_33AE0_33ED0(unsigned __int16 a1, char a2)
   LOBYTE(v2) = a1 - 1;
   mapTerrainType_CC1E0_CC1D0[a1] = a2;
   v3 = v2;
+  // PORT: v2 and result are both ax in the original: result starts as v2, so the third write is (x-1, y-1).
+  // Hex-Rays split them and result was read uninitialised; the 32-bit build kept it in a1's stack slot, so
+  // its low byte was a1's: tile (x, y-1) was written twice and (x-1, y-1) never. The user's recordings depend
+  // on that, so it stays (deterministically) until the 64-bit port is done - see REMC1_FIX_TERRAIN_CORNER.
+  result = REMC1_FIX_TERRAIN_CORNER ? v2 : a1;
   HIBYTE(result) = HIBYTE(a1) - 1;
   mapTerrainType_CC1E0_CC1D0[v3] = a2;
   v4 = result;
@@ -51235,7 +51241,8 @@ static uint32_t Port_NormPtr(const void* p)
 
 /// PORT: hash of the whole simulation state for tools/regress.py (--state-trace): every byte of the
 /// game state (str_AE400_AE3F0) and of str_AE408_AE3F8, with the pointer slots replaced by
-/// Port_NormPtr values, so 32-bit and 64-bit builds of the same recording give the same hash.
+/// Port_NormPtr values, so 32-bit and 64-bit builds of the same recording give the same hash, plus
+/// the map arrays (terrain type, height, shading, angle/flags, entity index per tile).
 /// 0 until the game state exists. With dump, the two normalised buffers are also written there
 /// (--state-dump: compare 32-bit and 64-bit builds byte by byte, tools/diff_state.py).
 uint64_t Port_FullStateHash(FILE* dump)
@@ -51278,6 +51285,18 @@ uint64_t Port_FullStateHash(FILE* dump)
   hash(buf);
   if (dump)
     fwrite(buf.data(), 1, buf.size(), dump);
+
+  const std::pair<const void*, size_t> maps[] = {
+    { mapTerrainType_CC1E0_CC1D0, sizeof(mapTerrainType_CC1E0_CC1D0) }, { mapHeightmap_DC1E0_DC1D0, sizeof(mapHeightmap_DC1E0_DC1D0) },
+    { mapShading_EC1E0_EC1D0, sizeof(mapShading_EC1E0_EC1D0) }, { mapAngle_FC1E0_FC1D0, sizeof(mapAngle_FC1E0_FC1D0) },
+    { mapEntityIndex_10C1E0_10C1D0, sizeof(mapEntityIndex_10C1E0_10C1D0) } };
+  for (const auto& m : maps)
+  {
+    buf.assign((const uint8_t*)m.first, (const uint8_t*)m.first + m.second);
+    hash(buf);
+    if (dump)
+      fwrite(buf.data(), 1, buf.size(), dump);
+  }
   return h;
 }
 
@@ -51311,14 +51330,17 @@ void sub_416B0()//2126B0_
   //v7 = ((int64)0x257018 - (int64)str_AE400_AE3F0->str_29795[str_AE400_AE3F0->str_13323[0].playIndex_13333].var_u32_29951_156) / sizeof(Type_156);
   // PORT: delta computed once, before any entity is relocated (asm 0x41700..0x4174A): entities after the
   // wizard kept DOS-era type pointers (+156) - crashes in the menu demo and after loading saved games.
-  const ptrdiff_t delta = &creatureTypes_98F38[7] - str_AE400_AE3F0->str_29795[str_AE400_AE3F0->str_13323[0].playIndex_13333].var_u32_29951_156;
+  // PORT (64-bit): a byte delta on the stored offsets. A saved game holds the type pointers of the build that
+  // wrote it; an element difference (&creatureTypes_98F38[7] - saved pointer) assumes the two are a whole
+  // number of 32-byte entries apart, which holds within one build but not across builds/pointer sizes.
+  const int32_t delta = OFF(&creatureTypes_98F38[7]) - OFF(str_AE400_AE3F0->str_29795[str_AE400_AE3F0->str_13323[0].playIndex_13333].var_u32_29951_156);
   for(int i=1;i<1000;i++)
   //while ( result < dword_AE400_AE3F0() + 193795 )
   {
     if (str_AE400_AE3F0->str_29795[i].var_u8_29859_64)
         //str_AE400_AE3F0->str_29795[i].var_u32_29951_156 += v7;
         //str_AE400_AE3F0->str_29795[i].var_u32_29951_156 = &creatureTypes_98F38[7+v7+i];
-        str_AE400_AE3F0->str_29795[i].var_u32_29951_156 += delta; // PORT: was recomputed per entity from the already-relocated wizard pointer
+        str_AE400_AE3F0->str_29795[i].var_u32_29951_156 = (Type_156*)PTR(OFF(str_AE400_AE3F0->str_29795[i].var_u32_29951_156) + delta); // PORT: was recomputed per entity from the already-relocated wizard pointer
     //result += 164;
   }
   //dword_AE400_AE3F0(dword_AE400_AE3F0());
@@ -67239,7 +67261,7 @@ void sub_5A560_5AA70()
       else
         v29 = byte_AD167_AD157[3841];
       DrawText_5A180_5A690(v32, v27, i, v29);
-      LOWORD(v30) = GetLetterY_5A3B0_5A8C0();
+      v30 = (uint16_t)GetLetterY_5A3B0_5A8C0(); // PORT: was LOWORD(v30) = - the high word was never set (audit_partial_init.py)
       i += v30;
       if ( (__int16)i > 400 - GetLetterY_5A3B0_5A8C0() )
       {
@@ -80067,10 +80089,10 @@ char __stdcall sub_70044(__int16 a1)
 
   v1 = word_A160A;
   word_A160A = a1;
-  if ( (unsigned __int16)a1 < 0x300u || (LOBYTE(v2) = sub_7008A(), v2) )
+  if ( (unsigned __int16)a1 < 0x300u || (v2 = sub_7008A(), v2) ) // PORT: was LOBYTE(v2) = - the high byte was never set
   {
     HIBYTE(word_A160A) += 4;
-    LOBYTE(v2) = sub_7008A();
+    v2 = sub_7008A(); // PORT: was LOBYTE(v2) =
     if ( v2 )
     {
       word_A160A = v1;
