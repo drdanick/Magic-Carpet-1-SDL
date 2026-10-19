@@ -159,6 +159,9 @@ int __DS__;
 // once (they fire every frame otherwise).
 #include <set>
 #include <map>
+#include <vector>
+#include <cstddef>
+#include <cstring>
 void FixPerifery(char* text = nullptr,int a = 0, int b = 0, int c = 0) {
     static std::set<std::string> seen;
     if (!seen.insert(text ? std::string(text) + std::to_string(a) : std::string()).second)
@@ -13647,7 +13650,6 @@ __int16 posX_B5D3C_B5D2C; // weak
 char byte_B5D3E_B5D2E; // weak
 char byte_B5D3F_B5D2F; // weak
 char byte_B5D40_B5D30[7*7*7*7][2]; // weak//273d40
-char byte_B5D41[4812]; // weak
 uint8_t byte_B7010[256 * 3]; // weak  in-game effect palette (hit flash, spell tints)
 // PORT: byte_B700D/E/F are not separate objects: IDA named byte_B7010 - 3/-2/-1, which the effect
 // loops write through after advancing the index by 3 (pattern 6.2.7). As separate 9999-byte arrays
@@ -51196,6 +51198,65 @@ uint64_t Port_GameStateHash()
     mix((uint32_t)e.actLife_29807_12);
     mix((uint16_t)e.actSpeed_29921_126);
   }
+  return h;
+}
+
+/// PORT: a pointer slot as an address- and pointer-size-independent value for Port_FullStateHash:
+/// offset into the game state, offset into creatureTypes_98F38, 0 for null, ~0 for anything else.
+static uint32_t Port_NormPtr(const void* p)
+{
+  const uint8_t* q = (const uint8_t*)p;
+  const uint8_t* s = (const uint8_t*)str_AE400_AE3F0;
+  const uint8_t* t = (const uint8_t*)creatureTypes_98F38;
+  if (!q)
+    return 0;
+  if (q >= s && q < s + sizeof(Type_str_AE400_AE3F0))
+    return 0x10000000u + (uint32_t)(q - s);
+  if (q >= t && q < t + sizeof(creatureTypes_98F38))
+    return 0x20000000u + (uint32_t)(q - t);
+  return 0xFFFFFFFFu;
+}
+
+/// PORT: hash of the whole simulation state for tools/regress.py (--state-trace): every byte of the
+/// game state (str_AE400_AE3F0) and of str_AE408_AE3F8, with the pointer slots replaced by
+/// Port_NormPtr values, so 32-bit and 64-bit builds of the same recording give the same hash.
+/// 0 until the game state exists.
+uint64_t Port_FullStateHash()
+{
+  if (!str_AE400_AE3F0 || !str_AE408_AE3F8)
+    return 0;
+  static std::vector<uint8_t> buf;
+  uint64_t h = 1469598103934665603ULL;
+  auto hash = [&h](const std::vector<uint8_t>& b) {
+    for (uint8_t c : b) { h ^= c; h *= 1099511628211ULL; }
+  };
+  auto put = [](std::vector<uint8_t>& b, size_t off, const void* p) {
+    uint32_t v = Port_NormPtr(p);
+    memcpy(&b[off], &v, 4);
+  };
+
+  const Type_str_AE400_AE3F0& g = *str_AE400_AE3F0;
+  buf.assign((const uint8_t*)&g, (const uint8_t*)&g + sizeof(g));
+  for (int i = 0; i < 1000; i++)
+  {
+    put(buf, offsetof(Type_str_AE400_AE3F0, var_u32_593) + 4 * i, g.var_u32_593[i]);
+    put(buf, offsetof(Type_str_AE400_AE3F0, var_u32_4597) + 4 * i, g.var_u32_4597[i]);
+    size_t e = offsetof(Type_str_AE400_AE3F0, str_29795) + sizeof(Type_AE400_29795) * i;
+    put(buf, e + offsetof(Type_AE400_29795, next), g.str_29795[i].next);
+    put(buf, e + offsetof(Type_AE400_29795, var_u32_29951_156), g.str_29795[i].var_u32_29951_156);
+    put(buf, e + offsetof(Type_AE400_29795, var_u32_29955_160), g.str_29795[i].var_u32_29955_160);
+  }
+  hash(buf);
+
+  const Type_str_AE408_AE3F8& l = *str_AE408_AE3F8;
+  buf.assign((const uint8_t*)&l, (const uint8_t*)&l + sizeof(l));
+  put(buf, offsetof(Type_str_AE408_AE3F8, var_u32_9), l.var_u32_9);
+  put(buf, offsetof(Type_str_AE408_AE3F8, var_u32_168), l.var_u32_168);
+  for (int i = 0; i < 20; i++)
+    put(buf, offsetof(Type_str_AE408_AE3F8, str_36382x) + 4 * i, l.str_36382x[i]);
+  for (int i = 0; i < 4; i++)
+    put(buf, offsetof(Type_str_AE408_AE3F8, var_u32_36462) + 4 * i, l.var_u32_36462[i]);
+  hash(buf);
   return h;
 }
 

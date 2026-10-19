@@ -154,6 +154,7 @@ static void PrintUsage()
 		"                                         (default 20 for scripted/headless runs, 0 = off)\n"
 		"  --headless                           no visible window (SDL dummy driver), live input ignored\n"
 		"  --frame-hashes <file>                  log a hash of every presented frame (replay tests)\n"
+		"  --state-trace <file>                   log game-state + frame hashes of every frame (tools/regress.py)\n"
 		"  --frame-stats                          print frame-time percentiles every 5 s (smoothness)\n"
 		"  --deterministic [N]                   game timer advances N ticks (default 5) per frame instead of real time\n"
 		"  --input-script <file>                 play scripted input (format: portability/InputScript.h)\n"
@@ -212,6 +213,7 @@ std::vector<std::string> InitSettings(int argc, char* argv[])
 		else if (a == "--snapshot-dir") g_settings.snapshotDir = next("a directory");
 		else if (a == "--snapshot-what") g_settings.snapshotWhat = next("tick, draw or frame");
 		else if (a == "--frame-hashes") g_settings.frameHashFile = next("a file");
+		else if (a == "--state-trace") g_settings.stateTraceFile = next("a file");
 		else if (a == "--frame-stats") g_settings.frameStats = true;
 		else if (a == "--headless") g_settings.headless = true;
 		else if (a == "--watchdog") g_settings.watchdogSeconds = atoi(next("seconds").c_str());
@@ -253,7 +255,7 @@ std::vector<std::string> InitSettings(int argc, char* argv[])
 	if (cliDebugLog) g_settings.debugLog = true;
 	if (cliW > 0 && cliH > 0) { g_settings.windowWidth = cliW; g_settings.windowHeight = cliH; }
 	if (g_settings.watchdogSeconds < 0) {
-		bool automated = g_settings.headless || g_settings.exitAfterFrames > 0 || !g_settings.frameHashFile.empty();
+		bool automated = g_settings.headless || g_settings.exitAfterFrames > 0 || !g_settings.frameHashFile.empty() || !g_settings.stateTraceFile.empty();
 		for (int i = 1; i < argc; i++)
 			if (std::string(argv[i]) == "--input-script")
 				automated = true;

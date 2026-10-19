@@ -954,27 +954,37 @@ static void DebugFrameHooks()
 		FrameStats();
 	InputScript_FlushRecording();
 	PortTimer_OnFrame();
-	if (!g_settings.frameHashFile.empty())
+	if (!g_settings.frameHashFile.empty() || !g_settings.stateTraceFile.empty())
 	{
-		static FILE* hashFile = fopen(g_settings.frameHashFile.c_str(), "w");
+		// FNV-1a 64 over the visible indexed image and the palette: identical across platforms
+		// and pointer sizes, so replay goldens from the 32-bit build verify the 64-bit one.
+		uint64_t h = 0xcbf29ce484222325ull;
+		auto mix = [&h](const uint8_t* p, size_t n) {
+			for (size_t i = 0; i < n; i++) { h ^= p[i]; h *= 0x100000001b3ull; }
+		};
+		const uint8_t* px = (const uint8_t*)m_gamePalletisedSurface->pixels;
+		for (int y = 0; y < m_gamePalletisedSurface->h; y++)
+			mix(px + y * m_gamePalletisedSurface->pitch, (size_t)m_gamePalletisedSurface->w * act_ColorsByte);
+		for (int i = 0; i < 256; i++) {
+			uint8_t rgb[3] = { m_currentPalletColours[i].r, m_currentPalletColours[i].g, m_currentPalletColours[i].b };
+			mix(rgb, 3);
+		}
+		static FILE* hashFile = g_settings.frameHashFile.empty() ? nullptr : fopen(g_settings.frameHashFile.c_str(), "w");
 		if (hashFile)
 		{
-			// FNV-1a 64 over the visible indexed image and the palette: identical across platforms
-			// and pointer sizes, so replay goldens from the 32-bit build verify the 64-bit one.
-			uint64_t h = 0xcbf29ce484222325ull;
-			auto mix = [&h](const uint8_t* p, size_t n) {
-				for (size_t i = 0; i < n; i++) { h ^= p[i]; h *= 0x100000001b3ull; }
-			};
-			const uint8_t* px = (const uint8_t*)m_gamePalletisedSurface->pixels;
-			for (int y = 0; y < m_gamePalletisedSurface->h; y++)
-				mix(px + y * m_gamePalletisedSurface->pitch, (size_t)m_gamePalletisedSurface->w * act_ColorsByte);
-			for (int i = 0; i < 256; i++) {
-				uint8_t rgb[3] = { m_currentPalletColours[i].r, m_currentPalletColours[i].g, m_currentPalletColours[i].b };
-				mix(rgb, 3);
-			}
 			fprintf(hashFile, "%u %dx%d %016llx\n", presentedFrames, m_gamePalletisedSurface->w,
 				m_gamePalletisedSurface->h, (unsigned long long)h);
 			fflush(hashFile);
+		}
+		// state trace (tools/regress.py): whole game state (pointer slots normalised) + this frame
+		static FILE* traceFile = g_settings.stateTraceFile.empty() ? nullptr : fopen(g_settings.stateTraceFile.c_str(), "w");
+		if (traceFile)
+		{
+			extern uint64_t Port_FullStateHash();
+			fprintf(traceFile, "%u %016llx %016llx\n", presentedFrames, (unsigned long long)Port_FullStateHash(),
+				(unsigned long long)h);
+			if (presentedFrames % 256 == 0)
+				fflush(traceFile);
 		}
 	}
 	if (!g_settings.dumpFramesDir.empty() && (presentedFrames % g_settings.dumpEvery) == 0)
