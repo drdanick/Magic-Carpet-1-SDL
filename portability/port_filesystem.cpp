@@ -1,5 +1,6 @@
 #include "port_filesystem.h"
 #include "../engine/CommandLineParser.h"
+#include "Settings.h"
 #include <string>
 #include <vector>
 #include <filesystem>
@@ -41,7 +42,7 @@ bool firstrun = true;
 std::string get_exe_path() {
 #ifdef _MSC_VER
 	LPWSTR buffer = new WCHAR[MAX_PATH];
-	GetModuleFileName(NULL, buffer, MAX_PATH);
+	GetModuleFileNameW(NULL, buffer, MAX_PATH);
 	std::string locstr = utf8_encode(buffer);
 	delete[] buffer;
 	std::string::size_type pos = std::string(locstr).find_last_of("\\/");
@@ -114,38 +115,31 @@ FILE* mycreate(const char* path, uint32_t  /*flags*/) {
 	return fp;
 };
 
-FILE* debug_output;
+FILE* debug_output = nullptr;
 
-bool debug_first = false;
-const char* debug_filename = "../debug.txt";
-std::string path = {};
-
+// Only active with --debug-log (or "debug": {"log": true}); written next to the executable,
+// truncated once per run and flushed per line so it survives crashes.
 void debug_printf(const char* format, ...) {
+	if (!g_settings.debugLog)
+		return;
 	char prbuffer[1024];
-#ifndef FLATPAK
 	va_list arg;
-	//int done;
 	va_start(arg, format);
-	vsprintf(prbuffer, format, arg);
+	vsnprintf(prbuffer, sizeof(prbuffer), format, arg);
 	va_end(arg);
 
-	std::string exepath = get_exe_path();
-	path = exepath + "/" + debug_filename;
-
-	if (debug_first)
+	if (!debug_output)
 	{
-		debug_output = fcaseopen(path.c_str(), "wt");
-		debug_first = false;
+		std::string path = get_exe_path() + "/debug.txt";
+		debug_output = fopen(path.c_str(), "wt");
+		if (!debug_output)
+			return;
 	}
-	else
-		debug_output = fcaseopen(path.c_str(), "at");
-
-	fprintf(debug_output, "%s", prbuffer);
-	fclose(debug_output);
+	fputs(prbuffer, debug_output);
+	fflush(debug_output);
 	#ifdef DEBUG_PRINT_DEBUG_TO_SCREEN
-		printf(prbuffer);
+		printf("%s", prbuffer);
 	#endif
-#endif
 }
 
 int32_t myaccess(const char* path, uint32_t  /*flags*/) {
@@ -499,17 +493,17 @@ std::string getExistingDataPath(std::filesystem::path path)
 	if (env_xdg_data_home_dir) xdg_data_home_dir = env_xdg_data_home_dir;
 
 	if (std::filesystem::exists(xdg_data_home_dir)) {
-		file_locations.emplace_back(xdg_data_home_dir / "remc2" / path);
+		file_locations.emplace_back(xdg_data_home_dir / "remc1" / path);
 	}
 	if (std::filesystem::exists(home_dir)) {
-		file_locations.emplace_back(home_dir / ".local" / "share" / "remc2" / path);
+		file_locations.emplace_back(home_dir / ".local" / "share" / "remc1" / path);
 	}
 #else //__linux__
 	auto home_drive = std::getenv("HOMEDRIVE");
 	auto home_path =  std::getenv("HOMEPATH");
 	if (home_drive && home_path) {
 		std::filesystem::path home_dir(std::string(home_drive) + "/" + std::string(home_path));
-		file_locations.push_back((home_dir / "remc2" / path).string());
+		file_locations.push_back((home_dir / "remc1" / path).string());
 	}
 #endif //__linux__
 	file_locations.push_back(get_exe_path() + "/" + path.string());
