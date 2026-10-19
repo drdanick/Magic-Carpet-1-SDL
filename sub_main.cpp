@@ -14165,18 +14165,20 @@ _DWORD settextposition(_DWORD a, _DWORD b) { return 0; };// weak
 void port_cli() {}; // PORT: DOS CLI/STI (_disable/_enable) are no-ops; the MSVC intrinsics would execute privileged instructions
 void port_sti() {};
 int _FDFS(void) { return 0; };// weak	
-int __readgsbyte(int a) { return 0; };
-int __readgsdword(int a) { return 0; };
-int __readgsword(int a) { return 0; };
+// PORT: IDA's __readgs*/__writegs*/__writeeflags (DOS segment access), renamed: MSVC x64 has intrinsics
+// with those names
+int port_readgsbyte(int a) { return 0; };
+int port_readgsdword(int a) { return 0; };
+int port_readgsword(int a) { return 0; };
 //int __ROL2__(int a, int b) { return 0; };
 //int __ROL4__(int a, int b) { return 0; };
 //int __ROR2__(int a, int b) { return 0; };
-void __writegsbyte(int a, int b) {};
-void __writegsdword(int a, int b) {};
-void __writegsword(int a, int b) {};
+void port_writegsbyte(int a, int b) {};
+void port_writegsdword(int a, int b) {};
+void port_writegsword(int a, int b) {};
 
 //int __readeflags() { return 0; };
-void __writeeflags(int a) {};
+void port_writeeflags(int a) {};
 //_DWORD access(_DWORD a, _DWORD b) { return 0; };// weak
 //_DWORD gets(_DWORD a) { return 0; };// weak
 //_DWORD mkdir(_DWORD a) { return 0; };// weak
@@ -19801,7 +19803,7 @@ void sub_192D8()
 {
 	unsigned int tempFlag = __readeflags();
 	sub_193EE(sub_192F3());
-	__writeeflags(tempFlag);
+	port_writeeflags(tempFlag);
 }
 
 //----- (000192F3) --------------------------------------------------------
@@ -19829,7 +19831,7 @@ int sub_192F3()
 
   //fix __asm { pushfw }
   v4 = __readeflags();
-  __writeeflags((unsigned int)&loc_40000 ^ v4);
+  port_writeeflags((unsigned int)&loc_40000 ^ v4);
   v5 = __readeflags();
   result = v4 ^ v5;
   cpuVar_90084 = 3;
@@ -19837,7 +19839,7 @@ int sub_192F3()
   {
     cpuVar_90084 = 4;
     v7 = __readeflags();
-    __writeeflags(v7 ^ 0x200000);
+    port_writeeflags(v7 ^ 0x200000);
     v8 = __readeflags();
     result = v7 ^ v8;
     if ( v7 != v8 )
@@ -67512,16 +67514,16 @@ int sub_5B210()
   {
     if ( byte_9AD08 )
     {
-      word_12EE9C_12EE8C[0] = __readgsword(*(unsigned int *)byte_12EE6E_12EE5E);
-      word_12EE9C_12EE8C[1] = __readgsword(*(_DWORD *)byte_12EE6E_12EE5E + 2);
-      word_12EE9C_12EE8C[2] = __readgsword(*(_DWORD*)byte_12EE6E_12EE5E + 4);
+      word_12EE9C_12EE8C[0] = port_readgsword(*(unsigned int *)byte_12EE6E_12EE5E);
+      word_12EE9C_12EE8C[1] = port_readgsword(*(_DWORD *)byte_12EE6E_12EE5E + 2);
+      word_12EE9C_12EE8C[2] = port_readgsword(*(_DWORD*)byte_12EE6E_12EE5E + 4);
     }
     if ( byte_9AD09 )
     {
-      str_12EEDA_12EECA.word_0 = __readgsword(*(unsigned int *)byte_12EE44_12EE34);
-      str_12EEDA_12EECA.word_2 = __readgsword(*(_DWORD *)byte_12EE44_12EE34 + 2);
-      str_12EEDA_12EECA.word_4 = __readgsword(*(_DWORD *)byte_12EE44_12EE34 + 4);
-      str_12EEDA_12EECA.byte_6 = __readgsbyte(*(_DWORD*)byte_12EE44_12EE34 + 6);
+      str_12EEDA_12EECA.word_0 = port_readgsword(*(unsigned int *)byte_12EE44_12EE34);
+      str_12EEDA_12EECA.word_2 = port_readgsword(*(_DWORD *)byte_12EE44_12EE34 + 2);
+      str_12EEDA_12EECA.word_4 = port_readgsword(*(_DWORD *)byte_12EE44_12EE34 + 4);
+      str_12EEDA_12EECA.byte_6 = port_readgsbyte(*(_DWORD*)byte_12EE44_12EE34 + 6);
     }
     return 1;
   }
@@ -69289,7 +69291,7 @@ int sub_5D97B(unsigned int a1, int a2, __int16 a3, unsigned int a4)
   }
   if ( (_BYTE)dword_A01C4 )
     sub_66E21();
-  __writegsdword(a4, v7);
+  port_writegsdword(a4, v7);
   return 0;
 }
 // 10000: using guessed type void sub_10000();
@@ -69490,14 +69492,14 @@ int sub_5DF83(int a1, unsigned int a2, unsigned __int16 a3, int a4, int a5)
   v9 = -1;
   if ( dword_9EBC9 )
   {
-    v18 = __readgsbyte(a2);
+    v18 = port_readgsbyte(a2);
     v20 = v18 & 0xF;
     for ( i = byte_9DF8F[128 * a4 + 16 * a1 + (v18 & 0xF)]; ; i = 9 )
     {
 LABEL_9:
       if ( i != 0xFF )
       {
-        __writegsbyte(a2, v18 & 0xF0 | i);
+        port_writegsbyte(a2, v18 & 0xF0 | i);
         goto LABEL_66;
       }
       if ( v20 != 9 )
@@ -69514,7 +69516,7 @@ LABEL_9:
         i = j;
         byte_9E25F[16 * a4 + j] = v20;
         byte_9E2AF[16 * a4 + j] = a1;
-        byte_9E20F[16 * a4 + j] = __readgsbyte(*(_DWORD *)&byte_9C176[6 * a1] + 4 * v20 + 64);
+        byte_9E20F[16 * a4 + j] = port_readgsbyte(*(_DWORD *)&byte_9C176[6 * a1] + 4 * v20 + 64);
         v10 = (unsigned __int8)byte_9E93F[128 * a4 + 16 * a1 + v20];
         if ( v10 == 255 )
         {
@@ -69607,14 +69609,14 @@ LABEL_9:
     }
     if ( v16 == 0xFF )
       goto LABEL_66;
-    if ( v17 > __readgsdword(*(_DWORD *)&byte_9C176[6 * a1] + 4 * v20 + 64) )
+    if ( v17 > port_readgsdword(*(_DWORD *)&byte_9C176[6 * a1] + 4 * v20 + 64) )
     {
       byte_9DF8F[128 * a4 + 16 * a1 + v20] = v16;
       byte_9DF8F[128 * a4 + 16 * (unsigned __int8)byte_9E2AF[16 * a4 + v16] + (unsigned __int8)byte_9E25F[16 * a4 + v16]] = -1;
       byte_9E25F[16 * a4 + v16] = v20;
       byte_9E2AF[16 * a4 + v16] = a1;
       i = v16;
-      byte_9E20F[16 * a4 + v16] = __readgsbyte(*(_DWORD *)&byte_9C176[6 * a1] + 4 * v20 + 64);
+      byte_9E20F[16 * a4 + v16] = port_readgsbyte(*(_DWORD *)&byte_9C176[6 * a1] + 4 * v20 + 64);
       byte_9ECAE[16 * a4 + v16] = 127;
       byte_9EBBF = v16 | 0xB0;
       byte_9EBC0 = 123;
@@ -69665,8 +69667,8 @@ LABEL_9:
 LABEL_66:
     if ( v20 == 9 )
     {
-      if ( v18 == 0xB9 && __readgsbyte(a2 + 1) == 7 )
-        v9 = __readgsbyte(a2 + 2);
+      if ( v18 == 0xB9 && port_readgsbyte(a2 + 1) == 7 )
+        v9 = port_readgsbyte(a2 + 2);
       byte_9ECB7[16 * a4] = v9;
     }
     else
@@ -69676,29 +69678,29 @@ LABEL_66:
       {
         if ( v6 == 0xB0 )
         {
-          v7 = __readgsbyte(a2 + 1);
+          v7 = port_readgsbyte(a2 + 1);
           if ( v7 >= 7u )
           {
             if ( v7 <= 7u )
             {
-              byte_9E301[320 * a4 + 20 * v20 + 5 * (unsigned __int8)byte_9E93F[128 * a4 + 16 * a1 + v20]] = __readgsbyte(a2 + 2);
-              v9 = __readgsbyte(a2 + 2);
+              byte_9E301[320 * a4 + 20 * v20 + 5 * (unsigned __int8)byte_9E93F[128 * a4 + 16 * a1 + v20]] = port_readgsbyte(a2 + 2);
+              v9 = port_readgsbyte(a2 + 2);
               byte_9ECAE[16 * a4 + i] = v9;
             }
             else if ( v7 == 64 )
             {
-              byte_9E303[320 * a4 + 20 * v20 + 5 * (unsigned __int8)byte_9E93F[128 * a4 + 16 * a1 + v20]] = __readgsbyte(a2 + 2);
+              byte_9E303[320 * a4 + 20 * v20 + 5 * (unsigned __int8)byte_9E93F[128 * a4 + 16 * a1 + v20]] = port_readgsbyte(a2 + 2);
             }
           }
         }
       }
       else if ( v6 <= 0xC0u )
       {
-        byte_9E302[320 * a4 + 20 * v20 + 5 * (unsigned __int8)byte_9E93F[128 * a4 + 16 * a1 + v20]] = __readgsbyte(a2 + 1);
+        byte_9E302[320 * a4 + 20 * v20 + 5 * (unsigned __int8)byte_9E93F[128 * a4 + 16 * a1 + v20]] = port_readgsbyte(a2 + 1);
       }
       else if ( v6 == 0xE0 )
       {
-        byte_9E300[320 * a4 + 20 * v20 + 5 * (unsigned __int8)byte_9E93F[128 * a4 + 16 * a1 + v20]] = __readgsbyte(a2 + 2);
+        byte_9E300[320 * a4 + 20 * v20 + 5 * (unsigned __int8)byte_9E93F[128 * a4 + 16 * a1 + v20]] = port_readgsbyte(a2 + 2);
       }
     }
     if ( i == 0xFF )
@@ -69708,23 +69710,23 @@ LABEL_66:
     else
     {
       if ( v9 != -1 )
-        __writegsbyte(a2 + 2, (v9 * (unsigned int)(unsigned __int8)byte_9ECAD) >> 7);
+        port_writegsbyte(a2 + 2, (v9 * (unsigned int)(unsigned __int8)byte_9ECAD) >> 7);
       //fix MK_FP(*(_WORD *)&byte_9C062[36 * a4 + 4], *(_DWORD *)&byte_9C062[36 * a4])(a2, a3, a5, a4);
-      __writegsbyte(a2, v18);
+      port_writegsbyte(a2, v18);
       if ( v9 != -1 )
-        __writegsbyte(a2 + 2, v9);
+        port_writegsbyte(a2 + 2, v9);
       return 0;
     }
   }
   else
   {
-    if ( (__readgsbyte(a2) & 0xF0) == 0xB0 )
+    if ( (port_readgsbyte(a2) & 0xF0) == 0xB0 )
     {
-      if ( __readgsbyte(a2 + 1) == 7 )
+      if ( port_readgsbyte(a2 + 1) == 7 )
       {
-        byte_9EBBF = __readgsbyte(a2);
+        byte_9EBBF = port_readgsbyte(a2);
         byte_9EBC0 = 7;
-        byte_9EBC1 = (__readgsbyte(a2 + 2) * (unsigned int)(unsigned __int8)byte_9ECAD) >> 7;
+        byte_9EBC1 = (port_readgsbyte(a2 + 2) * (unsigned int)(unsigned __int8)byte_9ECAD) >> 7;
       }
       //fix
       /*
@@ -69759,10 +69761,10 @@ int sub_5E9C1(int a1)
 
   for ( i = 0; i < dword_9C042[a1]; ++i )
   {
-    v3 = __readgsdword(*(int *)((char *)&dword_9BFF2 + 6 * a1) + 4 * i);
+    v3 = port_readgsdword(*(int *)((char *)&dword_9BFF2 + 6 * a1) + 4 * i);
     if ( v3 != -1 && v3 != 255 )
     {
-      v5 = __readgsbyte(*(int *)((char *)&dword_9D98F[48 * a1] + 6 * i) + 8);
+      v5 = port_readgsbyte(*(int *)((char *)&dword_9D98F[48 * a1] + 6 * i) + 8);
       if ( dword_9EBC9 )
       {
         v4 = byte_9DF8F[128 * v3 + 16 * a1 + v5];
@@ -69934,7 +69936,7 @@ int sub_5EE22(unsigned int a1, int a2, int a3, __int16 a4, unsigned int a5)
   v26 = 0;
   for ( i = 0; byte_9ECFF[i]; ++i )
   {
-    if ( byte_9ECFF[i] != __readgsbyte(__readgsdword(a1) + i) )
+    if ( byte_9ECFF[i] != port_readgsbyte(port_readgsdword(a1) + i) )
       return 14;
   }
   for ( j = 0; j < 8; ++j )
@@ -69947,7 +69949,7 @@ int sub_5EE22(unsigned int a1, int a2, int a3, __int16 a4, unsigned int a5)
   }
   if ( j == 8 )
     return 11;
-  v5 = sub_66EF6(__readgsdword(a1), __readgsword(a1 + 4));
+  v5 = sub_66EF6(port_readgsdword(a1), port_readgsword(a1 + 4));
   v6 = v5;
   LODWORD(v5) = 6 * v22;
   *(_WORD *)&byte_9C176[v5 + 4] = WORD2(v5);
@@ -69957,12 +69959,12 @@ int sub_5EE22(unsigned int a1, int a2, int a3, __int16 a4, unsigned int a5)
   v7 = 3 * v22;
   word_9BFF6[v7] = a4;
   *(int *)((char *)&dword_9BFF2 + v7 * 2) = a3;
-  dword_9C022[v22] = __readgsdword(*(_DWORD *)&byte_9C176[6 * v22] + 48);
+  dword_9C022[v22] = port_readgsdword(*(_DWORD *)&byte_9C176[6 * v22] + 48);
   dword_9C042[v22] = dword_9C022[v22];
   LODWORD(v5) = *(_DWORD *)&byte_9C176[6 * v22];
-  v8 = __readgsdword(a1 + 8);
-  __writegsword(v5 + 772, __readgsword(a1 + 12));
-  __writegsdword(v5 + 768, v8);
+  v8 = port_readgsdword(a1 + 8);
+  port_writegsword(v5 + 772, port_readgsword(a1 + 12));
+  port_writegsdword(v5 + 768, v8);
   for ( k = 0; k < dword_9C022[v22]; ++k )
   {
     dword_9BBF2[32 * v22 + k] = 0;
@@ -69984,51 +69986,51 @@ int sub_5EE22(unsigned int a1, int a2, int a3, __int16 a4, unsigned int a5)
         + *(_DWORD *)&byte_9B1F2[v13];
     *(_WORD *)&byte_9B1F2[v13 + 4] = *(_WORD *)&byte_9B1F2[v13 + 4];
     *(_DWORD *)&byte_9B1F2[v13] = v18;
-    v26 += __readgsdword(sub_66EF6(v26 + v16, v17) + 4);
+    v26 += port_readgsdword(sub_66EF6(v26 + v16, v17) + 4);
   }
   for ( m = 0; m < dword_9C042[v22]; ++m )
   {
-    if ( __readgsdword(*(int *)((char *)&dword_9BFF2 + 6 * v22) + 4 * m) == 255 )
+    if ( port_readgsdword(*(int *)((char *)&dword_9BFF2 + 6 * v22) + 4 * m) == 255 )
     {
       v20 = 0;
-      for ( n = 0; __readgsdword(*(_DWORD *)&byte_9C176[6 * v22] + 20 * m + 4 * n + 128) && !v20 && n < 5; ++n )
+      for ( n = 0; port_readgsdword(*(_DWORD *)&byte_9C176[6 * v22] + 20 * m + 4 * n + 128) && !v20 && n < 5; ++n )
       {
         for ( ii = 0; ii < 5; ++ii )
         {
-          if ( __readgsdword(*(_DWORD *)&byte_9C176[6 * v22] + 20 * m + 4 * n + 128) == 40960 )
+          if ( port_readgsdword(*(_DWORD *)&byte_9C176[6 * v22] + 20 * m + 4 * n + 128) == 40960 )
           {
             if ( dword_9B1B6[ii] == 40960 || dword_9B1B6[ii] == 40961 || dword_9B1B6[ii] == 40968 )
             {
 LABEL_38:
-              __writegsdword(*(int *)((char *)&dword_9BFF2 + 6 * v22) + 4 * m, ii);
+              port_writegsdword(*(int *)((char *)&dword_9BFF2 + 6 * v22) + 4 * m, ii);
               v20 = 1;
               break;
             }
           }
-          else if ( dword_9B1B6[ii] == __readgsdword(*(_DWORD *)&byte_9C176[6 * v22] + 20 * m + 4 * n + 128) )
+          else if ( dword_9B1B6[ii] == port_readgsdword(*(_DWORD *)&byte_9C176[6 * v22] + 20 * m + 4 * n + 128) )
           {
             goto LABEL_38;
           }
         }
       }
-      if ( __readgsdword(*(_DWORD *)&byte_9C176[6 * v22] + 20 * m + 128) )
+      if ( port_readgsdword(*(_DWORD *)&byte_9C176[6 * v22] + 20 * m + 128) )
       {
         if ( !v20 )
         {
           v14 = 6 * m + 192 * v22;
           *(_WORD *)&byte_9B1F2[v14 + 4] = 0;
           *(_DWORD *)&byte_9B1F2[v14] = 0;
-          __writegsdword(*(int *)((char *)&dword_9BFF2 + 6 * v22) + 4 * m, 0xFFu);
+          port_writegsdword(*(int *)((char *)&dword_9BFF2 + 6 * v22) + 4 * m, 0xFFu);
           --dword_9C022[v22];
         }
       }
       else
       {
-        __writegsdword(*(int *)((char *)&dword_9BFF2 + 6 * v22) + 4 * m, 0);
+        port_writegsdword(*(int *)((char *)&dword_9BFF2 + 6 * v22) + 4 * m, 0);
       }
     }
   }
-  __writegsdword(a5, v22);
+  port_writegsdword(a5, v22);
   return 0;
 }
 // 5EEE0: variable 'v22' is possibly undefined
@@ -70068,7 +70070,7 @@ int sub_5F398(int a1)
   //fix
   /*
   v3 = sub_5D97B(
-         __readgsdword(*(_DWORD *)&byte_9C176[6 * a1] + 56),
+         port_readgsdword(*(_DWORD *)&byte_9C176[6 * a1] + 56),
          (int)sub_66F3C,
          __CS__,
          (unsigned int)&dword_9C1A6[a1]);*/
@@ -70102,8 +70104,8 @@ int sub_5F420(unsigned int a1)
     v5 = *(_WORD *)&byte_9C176[6 * a1 + 4];
     v4 = *(_DWORD *)&byte_9C176[6 * a1];
     v1 = *(_DWORD *)&byte_9C176[6 * a1];
-    v7 = __readgsword(v1 + 772);
-    v6 = __readgsdword(v1 + 768);
+    v7 = port_readgsword(v1 + 772);
+    v6 = port_readgsdword(v1 + 768);
     sub_5E9C1(a1);
     dword_9C136[a1] = 0;
     v2 = 6 * a1;
@@ -70136,19 +70138,19 @@ int sub_5F529(int a1, unsigned int a2)
   unsigned int j; // [esp+24h] [ebp-4h]
 
   v15 = 0;
-  v2 = sub_66EF6(__readgsdword(a2), __readgsword(a2 + 4));
+  v2 = sub_66EF6(port_readgsdword(a2), port_readgsword(a2 + 4));
   v3 = v2;
   LODWORD(v2) = 6 * a1;
   *(_WORD *)&byte_9C176[v2 + 4] = WORD2(v2);
   *(_DWORD *)&byte_9C176[v2] = v3;
   v14 = *(_WORD *)&byte_9C176[6 * a1 + 4];
   v13 = *(_DWORD *)&byte_9C176[6 * a1] + 776;
-  dword_9C022[a1] = __readgsdword(*(_DWORD *)&byte_9C176[6 * a1] + 48);
+  dword_9C022[a1] = port_readgsdword(*(_DWORD *)&byte_9C176[6 * a1] + 48);
   dword_9C042[a1] = dword_9C022[a1];
   LODWORD(v2) = *(_DWORD *)&byte_9C176[6 * a1];
-  v4 = __readgsdword(a2 + 8);
-  __writegsword(v2 + 772, __readgsword(a2 + 12));
-  __writegsdword(v2 + 768, v4);
+  v4 = port_readgsdword(a2 + 8);
+  port_writegsword(v2 + 772, port_readgsword(a2 + 12));
+  port_writegsdword(v2 + 768, v4);
   for ( i = 0; i < dword_9C022[a1]; ++i )
   {
     dword_9BBF2[32 * a1 + i] = 0;
@@ -70170,11 +70172,11 @@ int sub_5F529(int a1, unsigned int a2)
         + *(_DWORD *)&byte_9B1F2[v9];
     *(_WORD *)&byte_9B1F2[v9 + 4] = *(_WORD *)&byte_9B1F2[v9 + 4];
     *(_DWORD *)&byte_9B1F2[v9] = v12;
-    v15 += __readgsdword(sub_66EF6(v15 + v13, v14) + 4);
+    v15 += port_readgsdword(sub_66EF6(v15 + v13, v14) + 4);
   }
   for ( j = 0; j < dword_9C042[a1]; ++j )
   {
-    if ( __readgsdword(*(int *)((char *)&dword_9BFF2 + 6 * a1) + 4 * j) == 255 )
+    if ( port_readgsdword(*(int *)((char *)&dword_9BFF2 + 6 * a1) + 4 * j) == 255 )
     {
       v10 = 192 * a1 + 6 * j;
       *(_WORD *)&byte_9B1F2[v10 + 4] = 0;
@@ -70210,14 +70212,14 @@ int sub_5F7C7(unsigned int a1, int a2, unsigned int a3)
   {
     ++v5;
     v3 = a1++;
-    v9 = __readgsbyte(v3);
+    v9 = port_readgsbyte(v3);
     if ( v9 < 0 )
       v8 = 1;
     v6 |= (v9 & 0x7F) << v7;
     v7 += 7;
   }
   while ( !v8 );
-  __writegsdword(a3, v6);
+  port_writegsdword(a3, v6);
   return v5;
 }
 
@@ -70508,8 +70510,8 @@ int sub_6035F(unsigned int a1, unsigned int a2, int a3, int a4, int a5, unsigned
   v25 = 0;
   //fix
 
-  v34 = __readgsdword(a4 + 24);
-  v33 = __readgsdword(a4 + 28);
+  v34 = port_readgsdword(a4 + 24);
+  v33 = port_readgsdword(a4 + 28);
   v31 = 6;
   for ( i = 0; i < 5; ++i )
   {
@@ -70542,10 +70544,10 @@ int sub_6035F(unsigned int a1, unsigned int a2, int a3, int a4, int a5, unsigned
       //fix
       /*
       v13 = MK_FP(*(_WORD *)&byte_9C068[36 * v31 + 4], *(_DWORD *)&byte_9C068[36 * v31])(
-              __readgsdword(a4 + 16),
-              __readgsword(a4 + 20),
+              port_readgsdword(a4 + 16),
+              port_readgsword(a4 + 20),
               v31,
-              __readgsdword(a2));*/
+              port_readgsdword(a2));*/
       v28 = v13;
       if ( !v13 )
         goto LABEL_47;
@@ -70564,8 +70566,8 @@ int sub_6035F(unsigned int a1, unsigned int a2, int a3, int a4, int a5, unsigned
       //fix
       /*
       v16 = MK_FP(*(_WORD *)&byte_9C068[36 * v31 + 4], *(_DWORD *)&byte_9C068[36 * v31])(
-              __readgsdword(a4 + 16),
-              __readgsword(a4 + 20),
+              port_readgsdword(a4 + 16),
+              port_readgsword(a4 + 20),
               v31,
               dword_9EF0C);*/
       v28 = v16;
@@ -70586,8 +70588,8 @@ int sub_6035F(unsigned int a1, unsigned int a2, int a3, int a4, int a5, unsigned
       //fix
       /*
       v10 = MK_FP(*(_WORD *)&byte_9C068[36 * v31 + 4], *(_DWORD *)&byte_9C068[36 * v31])(
-              __readgsdword(a4 + 16),
-              __readgsword(a4 + 20),
+              port_readgsdword(a4 + 16),
+              port_readgsword(a4 + 20),
               v31,
               dword_9EF0C);*/
       v28 = v10;
@@ -70608,10 +70610,10 @@ int sub_6035F(unsigned int a1, unsigned int a2, int a3, int a4, int a5, unsigned
       //fix
       /*
       v19 = MK_FP(*(_WORD *)&byte_9C068[36 * v31 + 4], *(_DWORD *)&byte_9C068[36 * v31])(
-              __readgsdword(a4 + 16),
-              __readgsword(a4 + 20),
+              port_readgsdword(a4 + 16),
+              port_readgsword(a4 + 20),
               v31,
-              __readgsdword(a2));*/
+              port_readgsdword(a2));*/
       v28 = v19;
       if ( !v19 )
         goto LABEL_47;
@@ -70620,15 +70622,15 @@ int sub_6035F(unsigned int a1, unsigned int a2, int a3, int a4, int a5, unsigned
     default:
       word_9EF0A = 0;
       dword_9EF06 = 0;
-      v20 = __readgsword(a4 + 8);
-      if ( !__readgsdword(a4 + 4) && v20 == word_9EF0A )
+      v20 = port_readgsword(a4 + 8);
+      if ( !port_readgsdword(a4 + 4) && v20 == word_9EF0A )
       {
         v28 = sub_68622_68B32((__int16)&v24, v6, a1, v31, (int *)&v29, (unsigned int)&v24);
         if ( v28 )
           return v28;
-        __writegsword(a4 + 8, v25);
-        __writegsdword(a4 + 4, v24);
-        __writegsdword(a4 + 12, (unsigned int)v29);
+        port_writegsword(a4 + 8, v25);
+        port_writegsdword(a4 + 4, v24);
+        port_writegsdword(a4 + 12, (unsigned int)v29);
         v22 = 3 * v31;
         word_9B160[v22] = v25;
         *(int *)((char *)&dword_9B15C + v22 * 2) = v24;
@@ -70636,9 +70638,9 @@ int sub_6035F(unsigned int a1, unsigned int a2, int a3, int a4, int a5, unsigned
       }
       else
       {
-        LOWORD(v25) = __readgsword(a4 + 8);
-        v24 = __readgsdword(a4 + 4);
-        v29 = (void (*)(_DWORD))__readgsdword(a4 + 12);
+        LOWORD(v25) = port_readgsword(a4 + 8);
+        v24 = port_readgsdword(a4 + 4);
+        v29 = (void (*)(_DWORD))port_readgsdword(a4 + 12);
         v21 = 3 * v31;
         word_9B160[v21] = v25;
         *(int *)((char *)&dword_9B15C + v21 * 2) = v24;
@@ -70651,10 +70653,10 @@ int sub_6035F(unsigned int a1, unsigned int a2, int a3, int a4, int a5, unsigned
         dword_9EF06,
         (unsigned __int16)word_9EF0A,
         dword_9EF0C,
-        __readgsdword(a2));*/
+        port_readgsdword(a2));*/
 LABEL_47:
       dword_9B18E[v31] = 1;
-      __writegsdword(a6, v31);
+      port_writegsdword(a6, v31);
       v30 = 0;
       break;
   }
@@ -74053,7 +74055,7 @@ int sub_63C5A_6416A(const void *a1, unsigned int a2, char *a3, __int16 a4, unsig
   if ( !v8 )
     return 8;
   sub_6765C_67B6C(a1, (int (*)(_DWORD))dword_131584, dword_1315B4, word_1315B8, a3, a4);
-  __writegsdword(a5, v8);
+  port_writegsdword(a5, v8);
   dword_131570 = v7;
   return 0;
 }
@@ -74081,9 +74083,9 @@ int sub_64248(unsigned int a1, __int16 a2)
   read(dword_131574, (void*)dword_131578, dword_131564);
   sub_67710((int (*)(_DWORD))dword_131584);
   sub_6773B((int (*)(_DWORD))dword_131584);
-  __writegsdword(a1, dword_A06DC);
-  __writegsdword(a1 + 8, dword_A06E0);
-  __writegsdword(a1 + 4, dword_A06E4);
+  port_writegsdword(a1, dword_A06DC);
+  port_writegsdword(a1 + 8, dword_A06E0);
+  port_writegsdword(a1 + 4, dword_A06E4);
   return 0;
 }
 // 6692C: using guessed type _DWORD read(_DWORD, _DWORD, _DWORD);
@@ -74235,14 +74237,14 @@ int sub_64846_64D56(
   v36 = 0;
   //fix
 
-  v49 = __readgsdword(a6);
-  v48 = (void (*)(_DWORD))__readgsdword(a6 + 16);
-  v30 = __readgsword(a6 + 8);
-  v29 = __readgsdword(a6 + 4);
-  v46 = __readgsdword(a6 + 12);
+  v49 = port_readgsdword(a6);
+  v48 = (void (*)(_DWORD))port_readgsdword(a6 + 16);
+  v30 = port_readgsword(a6 + 8);
+  v29 = port_readgsdword(a6 + 4);
+  v46 = port_readgsdword(a6 + 12);
   v45[4] = v48;
-  v45[3] = (void (*)(_DWORD))__readgsdword(a6 + 20);
-  v45[2] = (void (*)(_DWORD))__readgsdword(a6 + 24);
+  v45[3] = (void (*)(_DWORD))port_readgsdword(a6 + 20);
+  v45[2] = (void (*)(_DWORD))port_readgsdword(a6 + 24);
   v43 = 6;
   for ( i = 0; i < 5; ++i )
   {
@@ -74255,11 +74257,11 @@ int sub_64846_64D56(
   if ( v43 == 6 )
     return 11;
   dword_A0338[v43] = a3;
-  if ( __readgsdword(a6 + 36) || __readgsword(a6 + 40) )
+  if ( port_readgsdword(a6 + 36) || port_readgsword(a6 + 40) )
   {
-    LOWORD(v36) = __readgsword(a6 + 40);
-    v35 = __readgsdword(a6 + 36);
-    v41 = (int (*)(_DWORD))__readgsdword(a6 + 44);
+    LOWORD(v36) = port_readgsword(a6 + 40);
+    v35 = port_readgsdword(a6 + 36);
+    v41 = (int (*)(_DWORD))port_readgsdword(a6 + 44);
     v8 = 3 * v43;
     word_A01D0[v8] = v36;
     *(int *)((char *)&dword_A01CC + v8 * 2) = v35;
@@ -74270,9 +74272,9 @@ int sub_64846_64D56(
     v42 = sub_6DE34_6E344((__int16)&v35, a1, a3, v43, (int *)&v41, (unsigned int)&v35);
     if ( v42 )
       return v42;
-    __writegsword(a6 + 40, v36);
-    __writegsdword(a6 + 36, v35);
-    __writegsdword(a6 + 44, (unsigned int)v41);
+    port_writegsword(a6 + 40, v36);
+    port_writegsdword(a6 + 36, v35);
+    port_writegsdword(a6 + 44, (unsigned int)v41);
     v9 = 3 * v43;
     word_A01D0[v9] = v36;
     *(int *)((char *)&dword_A01CC + v9 * 2) = v35;
@@ -74308,23 +74310,23 @@ int sub_64846_64D56(
         v11 = 3 * v43;
         word_A0298[v11] = v30;
         *(int *)((char *)&dword_A0294 + v11 * 2) = a1;
-        if ( __readgsdword(*(_DWORD *)&byte_A0350[6 * v43] + 36) == 8 )
+        if ( port_readgsdword(*(_DWORD *)&byte_A0350[6 * v43] + 36) == 8 )
         {
-          if ( (__readgsbyte(*(_DWORD *)&byte_A0350[6 * v43] + 61) & 0x80u) == 0 )
+          if ( (port_readgsbyte(*(_DWORD *)&byte_A0350[6 * v43] + 61) & 0x80u) == 0 )
           {
             for ( j = 0; j < v49; ++j )
-              __writegsbyte(j + a1, 0x80u);
+              port_writegsbyte(j + a1, 0x80u);
           }
           else
           {
             for ( j = 0; j < v49; ++j )
-              __writegsbyte(j + a1, 0);
+              port_writegsbyte(j + a1, 0);
           }
         }
         else
         {
           for ( j = 0; j < v49; ++j )
-            __writegsbyte(j + a1, 0);
+            port_writegsbyte(j + a1, 0);
         }
       }
       else
@@ -74334,16 +74336,16 @@ int sub_64846_64D56(
         *(int *)((char *)&dword_A0294 + v12 * 2) = v29;
         dword_9EF6C[v43] = 0;
       }
-      __writegsword(a6 + 8, v30);
-      __writegsdword(a6 + 4, v29);
-      if ( __readgsdword(a6 + 48) || __readgsword(a6 + 52) )
+      port_writegsword(a6 + 8, v30);
+      port_writegsdword(a6 + 4, v29);
+      if ( port_readgsdword(a6 + 48) || port_readgsword(a6 + 52) )
       {
-        LOWORD(v32) = __readgsword(a6 + 52);
-        v31 = __readgsdword(a6 + 48);
+        LOWORD(v32) = port_readgsword(a6 + 52);
+        v31 = port_readgsdword(a6 + 48);
       }
-      else if ( __readgsdword(a6 + 60) )
+      else if ( port_readgsdword(a6 + 60) )
       {
-        v42 = sub_6E09A_6E5AA(a6, a1, __readgsdword(a6 + 60), (int *)v45, (unsigned int)&v31);
+        v42 = sub_6E09A_6E5AA(a6, a1, port_readgsdword(a6 + 60), (int *)v45, (unsigned int)&v31);
         if ( v42 )
           return v42;
       }
@@ -74352,20 +74354,20 @@ int sub_64846_64D56(
         v42 = sub_6E09A_6E5AA(
                 (__int16)&v31,
                 a1,
-                __readgsdword(*(_DWORD *)&byte_A0350[6 * v43] + 104),
+                port_readgsdword(*(_DWORD *)&byte_A0350[6 * v43] + 104),
                 (int *)v45,
                 (unsigned int)&v31);
         if ( v42 )
           return v42;
       }
-      __writegsword(a6 + 52, v32);
-      __writegsdword(a6 + 48, v31);
+      port_writegsword(a6 + 52, v32);
+      port_writegsdword(a6 + 48, v31);
       v13 = 3 * v43;
       word_A0202[v13] = v32;
       *(int *)((char *)&dword_A01FE + v13 * 2) = v31;
       dword_A021C[v43] = (int)v45[0];
       dword_A0244[v43] = 1;
-      v47 = __readgsdword(a4 + 8);
+      v47 = port_readgsdword(a4 + 8);
       v47 = dword_A0374[v47];
       sub_677E3_67CF3(a2, v45[0], v31, (unsigned __int16)v32, v29, v30, v49, v47, v43, (int)&dword_1315BC);
       v14 = 3 * v43;
@@ -74379,13 +74381,13 @@ int sub_64846_64D56(
       sub_67527((int)&byte_131724[192 * v43], dword_1315CC, word_1315D0);
     }
     v19 = *(int *)((char *)&dword_A02DA + 6 * v43);
-    __writegsword(a6 + 32, word_A02DE[3 * v43]);
-    __writegsdword(a6 + 28, v19);
+    port_writegsword(a6 + 32, word_A02DE[3 * v43]);
+    port_writegsdword(a6 + 28, v19);
     sub_6790D();
     dword_A02B2[v43] = v40;
-    v45[1] = (void (*)(_DWORD))__readgsdword(a4);
-    v38 = __readgsdword(a4 + 4);
-    v47 = __readgsdword(a4 + 8);
+    v45[1] = (void (*)(_DWORD))port_readgsdword(a4);
+    v38 = port_readgsdword(a4 + 4);
+    v47 = port_readgsdword(a4 + 8);
     byte_A0394[v43] = v47;
     sub_67845(v41);
     sub_678DE(v41);
@@ -74394,29 +74396,29 @@ int sub_64846_64D56(
     sub_6787E(v41);
     dword_A0230[v43] = 1;
     dword_A0258[v43] = 1;
-    dword_1315E4[16 * v43] = __readgsdword(a6);
+    dword_1315E4[16 * v43] = port_readgsdword(a6);
     v20 = v43 << 6;
-    v21 = __readgsdword(a6 + 4);
-    *(__int16 *)((char *)&word_1315EC + v20) = __readgsword(a6 + 8);
+    v21 = port_readgsdword(a6 + 4);
+    *(__int16 *)((char *)&word_1315EC + v20) = port_readgsword(a6 + 8);
     *(int *)((char *)&dword_1315E8 + v20) = v21;
-    dword_1315F0[16 * v43] = __readgsdword(a6 + 12);
-    dword_1315F4[16 * v43] = __readgsdword(a6 + 16);
+    dword_1315F0[16 * v43] = port_readgsdword(a6 + 12);
+    dword_1315F4[16 * v43] = port_readgsdword(a6 + 16);
     dword_1315F8[16 * v43] = a3;
-    dword_1315FC[16 * v43] = __readgsdword(a6 + 24);
+    dword_1315FC[16 * v43] = port_readgsdword(a6 + 24);
     v22 = v43 << 6;
-    v23 = __readgsdword(a6 + 28);
-    *(__int16 *)((char *)&word_131604 + v22) = __readgsword(a6 + 32);
+    v23 = port_readgsdword(a6 + 28);
+    *(__int16 *)((char *)&word_131604 + v22) = port_readgsword(a6 + 32);
     *(int *)((char *)&dword_131600 + v22) = v23;
     v24 = v43 << 6;
-    v25 = __readgsdword(a6 + 36);
-    *(__int16 *)((char *)&word_13160C + v24) = __readgsword(a6 + 40);
+    v25 = port_readgsdword(a6 + 36);
+    *(__int16 *)((char *)&word_13160C + v24) = port_readgsword(a6 + 40);
     *(int *)((char *)&dword_131608 + v24) = v25;
     v26 = v43 << 6;
-    v27 = __readgsdword(a6 + 48);
-    *(__int16 *)((char *)&word_131618 + v26) = __readgsword(a6 + 52);
+    v27 = port_readgsdword(a6 + 48);
+    *(__int16 *)((char *)&word_131618 + v26) = port_readgsword(a6 + 52);
     *(int *)((char *)&dword_131614 + v26) = v27;
-    dword_131620[16 * v43] = __readgsdword(a6 + 60);
-    __writegsdword(a8, v43);
+    dword_131620[16 * v43] = port_readgsdword(a6 + 60);
+    port_writegsdword(a8, v43);
     return 0;
   }
   return v42;
@@ -75194,24 +75196,24 @@ LABEL_31:
   }
   while ( 1 )
   {
-    if ( __readgsbyte(*(_DWORD *)&byte_9B1F2[192 * (unsigned __int8)byte_A04D1 + 6 * i]) >= 0xF0u )
-      v2 = (unsigned __int8)byte_9C166[__readgsbyte(*(_DWORD *)&byte_9B1F2[192 * (unsigned __int8)byte_A04D1 + 6 * i]) & 0xF];
+    if ( port_readgsbyte(*(_DWORD *)&byte_9B1F2[192 * (unsigned __int8)byte_A04D1 + 6 * i]) >= 0xF0u )
+      v2 = (unsigned __int8)byte_9C166[port_readgsbyte(*(_DWORD *)&byte_9B1F2[192 * (unsigned __int8)byte_A04D1 + 6 * i]) & 0xF];
     else
-      v2 = (unsigned __int8)byte_9C156[(int)__readgsbyte(*(_DWORD *)&byte_9B1F2[192 * (unsigned __int8)byte_A04D1
+      v2 = (unsigned __int8)byte_9C156[(int)port_readgsbyte(*(_DWORD *)&byte_9B1F2[192 * (unsigned __int8)byte_A04D1
                                                                               + 6 * i]) >> 4];
     v21 = v2;
-    if ( __readgsbyte(*(_DWORD *)&byte_9B1F2[192 * (unsigned __int8)byte_A04D1 + 6 * i]) != 0xFF )
+    if ( port_readgsbyte(*(_DWORD *)&byte_9B1F2[192 * (unsigned __int8)byte_A04D1 + 6 * i]) != 0xFF )
     {
       v7 = 192 * (unsigned __int8)byte_A04D1 + 6 * i;
       sub_5DF83(
         (unsigned __int8)byte_A04D1,
         *(_DWORD *)&byte_9B1F2[v7],
         *(_WORD *)&byte_9B1F2[v7 + 4],
-        __readgsdword(*(int *)((char *)&dword_9BFF2 + 6 * (unsigned __int8)byte_A04D1) + 4 * i),
+        port_readgsdword(*(int *)((char *)&dword_9BFF2 + 6 * (unsigned __int8)byte_A04D1) + 4 * i),
         v21);
       goto LABEL_28;
     }
-    v13 = __readgsbyte(*(_DWORD *)&byte_9B1F2[192 * (unsigned __int8)byte_A04D1 + 6 * i] + 1);
+    v13 = port_readgsbyte(*(_DWORD *)&byte_9B1F2[192 * (unsigned __int8)byte_A04D1 + 6 * i] + 1);
     if ( v13 < 0x2Fu )
       goto LABEL_28;
     if ( v13 > 0x2Fu )
@@ -75259,8 +75261,8 @@ LABEL_28:
   byte_A04C1[dword_9C1A6[(unsigned __int8)byte_A04D1]] = -1;
   dword_9C1A6[(unsigned __int8)byte_A04D1] = -1;
   v5 = *(_DWORD *)&byte_9C176[6 * (unsigned __int8)byte_A04D1];
-  LOWORD(v18[1]) = __readgsword(v5 + 772);
-  v18[0] = __readgsdword(v5 + 768);
+  LOWORD(v18[1]) = port_readgsword(v5 + 772);
+  v18[0] = port_readgsdword(v5 + 768);
   v6 = 6 * (unsigned __int8)byte_A04D1;
   v15 = *(_WORD *)&byte_9C176[v6 + 4];
   v14 = *(_DWORD *)&byte_9C176[v6];
@@ -75365,12 +75367,7 @@ int sub_67582()
 {
 
     FixPerifery();
-  __asm
-  {
-      //fix int     31h; DPMI Services   ax=func xxxxh
-    //fix int     31h; DPMI Services   ax=func xxxxh
-    //fix int     31h; DPMI Services   ax=func xxxxh
-  }
+  // PORT: three DPMI int 31h calls (empty __asm block; x64 has no inline asm)
   return 0;
 }
 
@@ -75637,7 +75634,7 @@ int sub_67A96(unsigned int a1, int a2, int a3, int a4)
   int v10; // [esp+Ch] [ebp-4h]
   void *retaddr[2]; // [esp+1Ch] [ebp+Ch]
 
-  if ( (__readgsbyte(a1) & 0xF0) == 0xB0 && __readgsbyte(a1 + 1) == 123 )
+  if ( (port_readgsbyte(a1) & 0xF0) == 0xB0 && port_readgsbyte(a1 + 1) == 123 )
   {
     while ( dword_9C9F0[a4] )
     {
@@ -75645,13 +75642,13 @@ int sub_67A96(unsigned int a1, int a2, int a3, int a4)
       sub_65965(dword_9D922[a4], v7 + 1);
     }
   }
-  if ( (__readgsbyte(a1) & 0xF0) == 0x90 && *(_DWORD *)&byte_9CA04[768 * a4 + 6 * __readgsbyte(a1 + 1)] )
+  if ( (port_readgsbyte(a1) & 0xF0) == 0x90 && *(_DWORD *)&byte_9CA04[768 * a4 + 6 * port_readgsbyte(a1 + 1)] )
   {
-    if ( __readgsbyte(a1 + 2) )
+    if ( port_readgsbyte(a1 + 2) )
     {
-      if ( __readgsword(*(_DWORD *)&byte_9CA04[768 * a4 + 6 * __readgsbyte(a1 + 1)] + 26) != 0x8000 )
+      if ( port_readgsword(*(_DWORD *)&byte_9CA04[768 * a4 + 6 * port_readgsbyte(a1 + 1)] + 26) != 0x8000 )
       {
-        v8 = sub_68491(a4, __readgsbyte(a1 + 1));
+        v8 = sub_68491(a4, port_readgsbyte(a1 + 1));
         if ( v8 != -1 )
           sub_65965(dword_9D922[a4], v8 + 1);
       }
@@ -75660,24 +75657,24 @@ int sub_67A96(unsigned int a1, int a2, int a3, int a4)
         v9 = sub_682CB(a4);
         sub_65965(dword_9D922[a4], v9 + 1);
       }
-      v4 = 768 * a4 + 6 * __readgsbyte(a1 + 1);
-      __writegsword(
+      v4 = 768 * a4 + 6 * port_readgsbyte(a1 + 1);
+      port_writegsword(
         *(_DWORD *)&byte_9CA04[v4] + 18,
         sub_68207(a4, *(_DWORD *)&byte_9CA04[v4], *(_WORD *)&byte_9CA04[v4 + 4]) + 1);
       if ( dword_9D972[a4] )
       {
-        __writegsword(
-          *(_DWORD *)&byte_9CA04[768 * a4 + 6 * __readgsbyte(a1 + 1)] + 16,
-          ((unsigned __int8)byte_9ECAD * (unsigned int)__readgsbyte(a1 + 2)) >> 7);
-        v5 = &byte_9CA04[768 * a4 + 6 * __readgsbyte(a1 + 1)];
-        __writegsword(*(_DWORD *)v5 + 16, __readgsword(*(_DWORD *)v5 + 16) << 8);
+        port_writegsword(
+          *(_DWORD *)&byte_9CA04[768 * a4 + 6 * port_readgsbyte(a1 + 1)] + 16,
+          ((unsigned __int8)byte_9ECAD * (unsigned int)port_readgsbyte(a1 + 2)) >> 7);
+        v5 = &byte_9CA04[768 * a4 + 6 * port_readgsbyte(a1 + 1)];
+        port_writegsword(*(_DWORD *)v5 + 16, port_readgsword(*(_DWORD *)v5 + 16) << 8);
       }
-      sub_6535C(dword_9D922[a4], *(_DWORD *)&byte_9CA04[768 * a4 + 6 * __readgsbyte(a1 + 1)]);
-      __writegsword(*(_DWORD *)&byte_9CA04[768 * a4 + 6 * __readgsbyte(a1 + 1)] + 18, __readgsbyte(a1 + 1));
+      sub_6535C(dword_9D922[a4], *(_DWORD *)&byte_9CA04[768 * a4 + 6 * port_readgsbyte(a1 + 1)]);
+      port_writegsword(*(_DWORD *)&byte_9CA04[768 * a4 + 6 * port_readgsbyte(a1 + 1)] + 18, port_readgsbyte(a1 + 1));
     }
-    else if ( __readgsword(*(_DWORD *)&byte_9CA04[768 * a4 + 6 * __readgsbyte(a1 + 1)] + 26) != 0x8000 )
+    else if ( port_readgsword(*(_DWORD *)&byte_9CA04[768 * a4 + 6 * port_readgsbyte(a1 + 1)] + 26) != 0x8000 )
     {
-      v10 = sub_68491(a4, __readgsbyte(a1 + 1));
+      v10 = sub_68491(a4, port_readgsbyte(a1 + 1));
       if ( v10 != -1 )
         sub_65965(dword_9D922[a4], v10 + 1);
     }
@@ -75702,7 +75699,7 @@ int sub_67D9D(int a1, int a2, unsigned int a3, int a4, int a5)
 
   for ( i = 0; i < 5; ++i )
   {
-    if ( dword_1315F8[16 * i] == __readgsdword(a3) )
+    if ( dword_1315F8[16 * i] == port_readgsdword(a3) )
     {
       dword_9D922[a5] = i;
       break;
@@ -75714,17 +75711,17 @@ int sub_67D9D(int a1, int a2, unsigned int a3, int a4, int a5)
     v7 = sub_64846_64D56(
            a1,
            a2,
-           __readgsdword(a3),
-           __readgsdword(a3 + 28),
-           __readgsword(a3 + 32),
-           __readgsdword(a3 + 20),
-           __readgsword(a3 + 24),
+           port_readgsdword(a3),
+           port_readgsdword(a3 + 28),
+           port_readgsword(a3 + 32),
+           port_readgsdword(a3 + 20),
+           port_readgsword(a3 + 24),
            (unsigned int)&v8);
     if (v7)
         0;//fix return MK_FP(retaddr[0], retaddr[0])(v7);
     dword_9D922[a5] = v8;
-    v6 = __readgsdword(a3 + 20);
-    v7 = sub_5D97B(__readgsdword(a3 + 4), __readgsdword(v6 + 28), __readgsword(v6 + 32), (unsigned int)&dword_9D94A[a5]);
+    v6 = port_readgsdword(a3 + 20);
+    v7 = sub_5D97B(port_readgsdword(a3 + 4), port_readgsdword(v6 + 28), port_readgsword(v6 + 32), (unsigned int)&dword_9D94A[a5]);
     if (v7)
         return 0;//fix MK_FP(retaddr[0], retaddr[0])(v7);
     dword_9D936[a5] = 1;
@@ -75733,8 +75730,8 @@ int sub_67D9D(int a1, int a2, unsigned int a3, int a4, int a5)
   {
     dword_9D95E[a5] = 0;
   }
-  dword_9D972[a5] = __readgsdword(a3 + 16);
-  sub_68180(a5, __readgsdword(a3 + 12));
+  dword_9D972[a5] = port_readgsdword(a3 + 16);
+  sub_68180(a5, port_readgsdword(a3 + 12));
   return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
 }
 // 9D922: using guessed type int dword_9D922[5];
@@ -75800,13 +75797,13 @@ int sub_67FB3(int a1, __int16 a2, int a3, int a4)
   }
   for ( j = 0; byte_9D986[j]; ++j )
   {
-      if (byte_9D986[j] != __readgsbyte(j + a1))
+      if (byte_9D986[j] != port_readgsbyte(j + a1))
           return 0;//fix MK_FP(retaddr[0], retaddr[0])(14);
   }
   v14 = 40;
   do
   {
-    v12 = (__int16)__readgsword(sub_66EF6(v14 + a1, a2) + 18);
+    v12 = (__int16)port_readgsword(sub_66EF6(v14 + a1, a2) + 18);
     v7 = sub_66EF6(v14 + a1, a2);
     v8 = v7;
     LODWORD(v7) = 6 * v12 + 768 * a4;
@@ -75815,14 +75812,14 @@ int sub_67FB3(int a1, __int16 a2, int a3, int a4)
     v9 = sub_66EF6(v14 + a1 + 84, a2);
     v10 = v9;
     LODWORD(v9) = *(_DWORD *)&byte_9CA04[768 * a4 + 6 * v12];
-    __writegsword(v9 + 4, WORD2(v9));
-    __writegsdword(v9, v10);
+    port_writegsword(v9 + 4, WORD2(v9));
+    port_writegsdword(v9, v10);
     LODWORD(v9) = *(_DWORD *)&byte_9CA04[768 * a4 + 6 * v12];
-    //fix __writegsword(v9 + 24, __CS__);
-    __writegsdword(v9 + 20, (unsigned int)sub_6813F);
-    v14 += __readgsdword(*(_DWORD *)&byte_9CA04[768 * a4 + 6 * v12] + 8) + 84;
+    //fix port_writegsword(v9 + 24, __CS__);
+    port_writegsdword(v9 + 20, (unsigned int)sub_6813F);
+    v14 += port_readgsdword(*(_DWORD *)&byte_9CA04[768 * a4 + 6 * v12] + 8) + 84;
   }
-  while ( v14 < __readgsdword(*(_DWORD *)&byte_9D904[6 * a4] + 36) );
+  while ( v14 < port_readgsdword(*(_DWORD *)&byte_9D904[6 * a4] + 36) );
   return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
 }
 
@@ -75892,7 +75889,7 @@ int sub_68207(int a1, int a2, __int16 a3)
   else
     ++dword_9C9B4[a1];
   v6 = dword_9C9B4[a1];
-  dword_9C234[96 * a1 + 3 * v6] = (__int16)__readgsword(a2 + 18);
+  dword_9C234[96 * a1 + 3 * v6] = (__int16)port_readgsword(a2 + 18);
   v3 = 384 * a1 + 12 * v6;
   *(__int16 *)((char *)&word_9C23C + v3) = a3;
   *(int *)((char *)&dword_9C238 + v3) = a2;
@@ -76075,8 +76072,8 @@ int sub_68622_68B32(
         close(v14);
         dword_9B1A2[a4] = dword_9C226;
         dword_9B18E[a4] = 1;
-        __writegsword(a6 + 4, v8);
-        __writegsdword(a6, v7);
+        port_writegsword(a6 + 4, v8);
+        port_writegsdword(a6, v7);
         return 0;
       }
       read(v14, (void*)&unk_9C1FE, 44);
@@ -76180,25 +76177,25 @@ int sub_68A14(int a1, int a2, int a3, unsigned int a4)
   unsigned __int8 v6; // [esp+0h] [ebp-8h]
   void *retaddr[2]; // [esp+14h] [ebp+Ch]
 
-  v6 = __readgsbyte(a4) & 0xF0;
+  v6 = port_readgsbyte(a4) & 0xF0;
   if ( v6 >= 0xB0u )
   {
     if ( v6 <= 0xB0u )
     {
-      sub_6FA53(__readgsbyte(a4 + 2), __readgsbyte(a4 + 1), __readgsbyte(a4) & 0xF);
+      sub_6FA53(port_readgsbyte(a4 + 2), port_readgsbyte(a4 + 1), port_readgsbyte(a4) & 0xF);
     }
     else if ( v6 < 0xD0u )
     {
       if ( v6 == 0xC0 )
-        sub_6FC44(__readgsbyte(a4 + 1), __readgsbyte(a4) & 0xF);
+        sub_6FC44(port_readgsbyte(a4 + 1), port_readgsbyte(a4) & 0xF);
     }
     else if ( v6 <= 0xD0u )
     {
-      sub_6FDA4(__readgsbyte(a4 + 2), __readgsbyte(a4 + 1), __readgsbyte(a4) & 0xF);
+      sub_6FDA4(port_readgsbyte(a4 + 2), port_readgsbyte(a4 + 1), port_readgsbyte(a4) & 0xF);
     }
     else if ( v6 == 0xE0 )
     {
-      sub_6FDEC(__readgsbyte(a4 + 2), __readgsbyte(a4 + 1), __readgsbyte(a4) & 0xF);
+      sub_6FDEC(port_readgsbyte(a4 + 2), port_readgsbyte(a4 + 1), port_readgsbyte(a4) & 0xF);
     }
     return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
   }
@@ -76207,21 +76204,21 @@ int sub_68A14(int a1, int a2, int a3, unsigned int a4)
       if (v6 != 0x80)
           return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
 LABEL_14:
-    sub_6F3B3(__readgsbyte(a4 + 2), __readgsbyte(a4 + 1), __readgsbyte(a4) & 0xF);
+    sub_6F3B3(port_readgsbyte(a4 + 2), port_readgsbyte(a4 + 1), port_readgsbyte(a4) & 0xF);
     return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
   }
   if ( v6 <= 0x90u )
   {
-    if ( __readgsbyte(a4 + 2) )
+    if ( port_readgsbyte(a4 + 2) )
     {
-      v4 = __readgsbyte(a4 + 2);
-      sub_6F4CB(v4, a1, a3, a2, (unsigned __int8)v4, __readgsbyte(a4 + 1), __readgsbyte(a4) & 0xF);
+      v4 = port_readgsbyte(a4 + 2);
+      sub_6F4CB(v4, a1, a3, a2, (unsigned __int8)v4, port_readgsbyte(a4 + 1), port_readgsbyte(a4) & 0xF);
       return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
     }
     goto LABEL_14;
   }
   if ( v6 == 0xA0 )
-    sub_6FDAC(__readgsbyte(a4 + 1), __readgsbyte(a4) & 0xF);
+    sub_6FDAC(port_readgsbyte(a4 + 1), port_readgsbyte(a4) & 0xF);
   return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
 }
 
@@ -76298,23 +76295,23 @@ char sub_68CBD(int a1, int a2, unsigned int a3)
   unsigned int i; // [esp+0h] [ebp-4h]
 
   LOBYTE(v3) = a3;
-  if ( __readgsbyte(a3) < 0x10u )
+  if ( port_readgsbyte(a3) < 0x10u )
   {
     LOBYTE(v3) = a3;
-    if ( __readgsbyte(a3) != 9 )
+    if ( port_readgsbyte(a3) != 9 )
     {
-      dword_A082C[__readgsbyte(a3)] = __readgsbyte(a3 + 1);
-      v3 = 4 * __readgsbyte(a3);
+      dword_A082C[port_readgsbyte(a3)] = port_readgsbyte(a3 + 1);
+      v3 = 4 * port_readgsbyte(a3);
       *(int *)((char *)dword_A086C + v3) = 1;
       for ( i = 0; i < 9; ++i )
       {
         LOBYTE(v3) = i;
         if ( byte_A0764[i] )
         {
-          LOBYTE(v3) = __readgsbyte(a3);
+          LOBYTE(v3) = port_readgsbyte(a3);
           if ( (unsigned __int8)v3 == dword_A0808[i] )
           {
-            v4 = sub_68D7F(__readgsbyte(a3 + 1), (unsigned __int8)byte_A0764[i], i);
+            v4 = sub_68D7F(port_readgsbyte(a3 + 1), (unsigned __int8)byte_A0764[i], i);
             LOBYTE(v3) = sub_6A085(i, v4);
           }
         }
@@ -76381,20 +76378,20 @@ char sub_68F37(int a1, int a2, unsigned int a3)
 {
   int v3; // eax
 
-  LOBYTE(v3) = __readgsbyte(a3 + 1);
+  LOBYTE(v3) = port_readgsbyte(a3 + 1);
   if ( (unsigned __int8)v3 < 0x66u )
   {
     if ( (unsigned __int8)v3 >= 7u )
     {
       if ( (unsigned __int8)v3 <= 7u )
       {
-        LOBYTE(v3) = sub_70B8B(__readgsbyte(a3), __readgsbyte(a3 + 2));
+        LOBYTE(v3) = sub_70B8B(port_readgsbyte(a3), port_readgsbyte(a3 + 2));
       }
       else if ( (_BYTE)v3 == 64 )
       {
-        dword_A0994[__readgsbyte(a3)] = __readgsbyte(a3 + 2);
+        dword_A0994[port_readgsbyte(a3)] = port_readgsbyte(a3 + 2);
         LOBYTE(v3) = a3;
-        if ( !__readgsbyte(a3 + 2) )
+        if ( !port_readgsbyte(a3 + 2) )
         {
           while ( dword_A09F0 )
           {
@@ -76407,18 +76404,18 @@ char sub_68F37(int a1, int a2, unsigned int a3)
   }
   else if ( (unsigned __int8)v3 <= 0x66u )
   {
-    v3 = 4 * __readgsbyte(a3);
-    *(int *)((char *)dword_A08AC + v3) = __readgsbyte(a3 + 2);
+    v3 = 4 * port_readgsbyte(a3);
+    *(int *)((char *)dword_A08AC + v3) = port_readgsbyte(a3 + 2);
   }
   else if ( (unsigned __int8)v3 >= 0x79u )
   {
     if ( (unsigned __int8)v3 <= 0x79u )
     {
-      LOBYTE(v3) = sub_69716(__readgsbyte(a3));
+      LOBYTE(v3) = sub_69716(port_readgsbyte(a3));
     }
     else if ( (_BYTE)v3 == 123 )
     {
-      LOBYTE(v3) = sub_6966D(__readgsbyte(a3));
+      LOBYTE(v3) = sub_6966D(port_readgsbyte(a3));
     }
   }
   return v3;
@@ -76471,7 +76468,7 @@ void sub_6907E(unsigned __int8 a1, unsigned __int8 a2, unsigned __int8 a3)
                                                                  * 2
                                                                  * (64
                                                                   - (unsigned int)(unsigned __int8)byte_A0A24[(int)(unsigned __int8)(((dword_A08F0[9] << 7) / 127 * dword_A0930[v8]) >> 7) >> 1])) >> 7));
-      sub_6A1D5(v8, dword_A0A38[__readgsbyte(dword_A07B0 + 12 * a1 + 2)]);
+      sub_6A1D5(v8, dword_A0A38[port_readgsbyte(dword_A07B0 + 12 * a1 + 2)]);
       byte_A0764[v8] = a1;
     }
     else
@@ -76493,7 +76490,7 @@ void sub_6907E(unsigned __int8 a1, unsigned __int8 a2, unsigned __int8 a3)
            - (unsigned int)(unsigned __int8)byte_A0A24[(int)(unsigned __int8)(((dword_A08F0[a3] << 7)
                                                                              / 127
                                                                              * dword_A0930[v7]) >> 7) >> 1])) >> 7;
-      if ( !__readgsbyte(dword_A07A0 + 30 * dword_A07C8[a3] + 14) )
+      if ( !port_readgsbyte(dword_A07A0 + 30 * dword_A07C8[a3] + 14) )
         sub_6A640(byte_A0775[2 * v7] + 64, byte_A0704[(unsigned __int8)byte_A0775[2 * v7]] & 0xC0 | v6);
       sub_6A640(byte_A0776[2 * v7] + 64, byte_A0704[(unsigned __int8)byte_A0776[2 * v7]] & 0xC0 | v6);
       sub_6A1D5(v7, dword_A0A38[a1]);
@@ -76542,14 +76539,14 @@ char sub_6956E(int a1, int a2, unsigned int a3)
   unsigned int i; // [esp+4h] [ebp-8h]
 
   LOBYTE(v3) = a3;
-  if ( __readgsbyte(a3 + 2) < 0x10u )
+  if ( port_readgsbyte(a3 + 2) < 0x10u )
   {
-    v3 = 4 * __readgsbyte(a3 + 2);
+    v3 = 4 * port_readgsbyte(a3 + 2);
     if ( *(int *)((char *)dword_A0994 + v3) && (unsigned int)dword_A09F0 < 0x10 )
     {
-      byte_A09F4[3 * dword_A09F0] = __readgsbyte(a3);
-      byte_A09F5[3 * dword_A09F0] = __readgsbyte(a3 + 1);
-      LOBYTE(v3) = __readgsbyte(a3 + 2);
+      byte_A09F4[3 * dword_A09F0] = port_readgsbyte(a3);
+      byte_A09F5[3 * dword_A09F0] = port_readgsbyte(a3 + 1);
+      LOBYTE(v3) = port_readgsbyte(a3 + 2);
       byte_A09F6[3 * dword_A09F0++] = v3;
     }
     else
@@ -76557,9 +76554,9 @@ char sub_6956E(int a1, int a2, unsigned int a3)
       for ( i = 0; i < 9; ++i )
       {
         LOBYTE(v3) = a3;
-        if ( byte_A0764[i] == __readgsbyte(a3) )
+        if ( byte_A0764[i] == port_readgsbyte(a3) )
         {
-          LOBYTE(v3) = __readgsbyte(a3 + 2);
+          LOBYTE(v3) = port_readgsbyte(a3 + 2);
           if ( (unsigned __int8)v3 == dword_A0808[i] )
           {
             sub_6A297(i);
@@ -76651,7 +76648,7 @@ void sub_697C0(int a1, int a2, unsigned int a3)
 {
   unsigned __int8 v3; // [esp+0h] [ebp-4h]
 
-  v3 = __readgsbyte(a3) & 0xF0;
+  v3 = port_readgsbyte(a3) & 0xF0;
   if ( v3 < 0xB0u )
   {
     if ( v3 >= 0x80u )
@@ -76660,37 +76657,37 @@ void sub_697C0(int a1, int a2, unsigned int a3)
       {
         if ( v3 != 0x90 )
           return;
-        if ( __readgsbyte(a3 + 2) )
+        if ( port_readgsbyte(a3 + 2) )
         {
-          sub_6907E(__readgsbyte(a3 + 1), __readgsbyte(a3 + 2), __readgsbyte(a3) & 0xF);
+          sub_6907E(port_readgsbyte(a3 + 1), port_readgsbyte(a3 + 2), port_readgsbyte(a3) & 0xF);
           return;
         }
       }
-      byte_A09E0 = __readgsbyte(a3) & 0xF;
-      byte_A09DE = __readgsbyte(a3 + 1);
-      byte_A09DF = __readgsbyte(a3 + 2);
+      byte_A09E0 = port_readgsbyte(a3) & 0xF;
+      byte_A09DE = port_readgsbyte(a3 + 1);
+      byte_A09DF = port_readgsbyte(a3 + 2);
       sub_6956E(0, 0, (unsigned int)&byte_A09DE);
     }
   }
   else if ( v3 <= 0xB0u )
   {
-    byte_A09E3 = __readgsbyte(a3) & 0xF;
-    byte_A09E4 = __readgsbyte(a3 + 1);
-    byte_A09E5 = __readgsbyte(a3 + 2);
+    byte_A09E3 = port_readgsbyte(a3) & 0xF;
+    byte_A09E4 = port_readgsbyte(a3 + 1);
+    byte_A09E5 = port_readgsbyte(a3 + 2);
     sub_68F37(0, 0, (unsigned int)&byte_A09E3);
   }
   else if ( v3 >= 0xC0u )
   {
     if ( v3 <= 0xC0u )
     {
-      byte_A09E1 = __readgsbyte(a3 + 1);
-      byte_A09E2 = __readgsbyte(a3) & 0xF;
+      byte_A09E1 = port_readgsbyte(a3 + 1);
+      byte_A09E2 = port_readgsbyte(a3) & 0xF;
       sub_70E1C(0, 0, (unsigned int)&byte_A09E1);
     }
     else if ( v3 == 0xE0 )
     {
-      byte_A09E6 = __readgsbyte(a3) & 0xF;
-      byte_A09E7 = __readgsbyte(a3 + 2);
+      byte_A09E6 = port_readgsbyte(a3) & 0xF;
+      byte_A09E7 = port_readgsbyte(a3 + 2);
       sub_68CBD(0, 0, (unsigned int)&byte_A09E6);
     }
   }
@@ -76782,10 +76779,10 @@ int sub_69AA5(int a1, int a2, int a3, __int16 a4)
     dword_A08EC = 0;
     word_A07AE = a4;
     dword_A07AA = a3;
-    v7 = __readgsdword(*(_DWORD *)byte_A0794 + 12);
+    v7 = port_readgsdword(*(_DWORD *)byte_A0794 + 12);
     word_A07B4 = a4;
     dword_A07B0 = v7 + a3;
-    v8 = __readgsdword(*(_DWORD *)byte_A0794 + 16);
+    v8 = port_readgsdword(*(_DWORD *)byte_A0794 + 16);
     word_A07BA = a4;
     result = v8 + a3;
     dword_A07B6 = v8 + a3;
@@ -76796,11 +76793,11 @@ int sub_69AA5(int a1, int a2, int a3, __int16 a4)
     dword_A08EC = 1;
     *(_WORD *)&byte_A0794[4] = a4;
     *(_DWORD *)byte_A0794 = a3;
-    dword_A078C = (__int16)__readgsword(a3 + 8);
-    v4 = __readgsdword(a3 + 12);
+    dword_A078C = (__int16)port_readgsword(a3 + 8);
+    v4 = port_readgsdword(a3 + 12);
     word_A079E = a4;
     dword_A079A = v4 + a3;
-    v5 = __readgsdword(a3 + 16);
+    v5 = port_readgsdword(a3 + 16);
     word_A07A4 = a4;
     result = v5 + a3;
     dword_A07A0 = v5 + a3;
@@ -76842,26 +76839,26 @@ int sub_69BFE(int a1)
   int v2; // [esp+0h] [ebp-10h]
   unsigned __int16 i; // [esp+Ch] [ebp-4h]
 
-  v2 = __readgsdword(a1 + 16) + a1;
+  v2 = port_readgsdword(a1 + 16) + a1;
   for ( i = 0; ; ++i )
   {
-    result = (__int16)__readgsword(a1 + 8) - 2;
+    result = (__int16)port_readgsword(a1 + 8) - 2;
     if ( i >= result )
       break;
-    __writegsbyte(
+    port_writegsbyte(
       v2 + 11,
-      (32 * __readgsbyte(v2 + 7)) | (__readgsbyte(v2 + 12) << 6) | (__readgsbyte(v2 + 11) << 7) | (16
-                                                                                                 * __readgsbyte(v2 + 13)) | __readgsbyte(v2 + 3));
-    __writegsbyte(v2 + 2, __readgsbyte(v2 + 10) | (__readgsbyte(v2 + 2) << 6));
-    __writegsbyte(v2 + 5, __readgsbyte(v2 + 8) | (16 * __readgsbyte(v2 + 5)));
-    __writegsbyte(v2 + 6, __readgsbyte(v2 + 9) | (16 * __readgsbyte(v2 + 6)));
-    __writegsbyte(v2 + 14, __readgsbyte(v2 + 14) | (2 * __readgsbyte(v2 + 4)));
-    __writegsbyte(
+      (32 * port_readgsbyte(v2 + 7)) | (port_readgsbyte(v2 + 12) << 6) | (port_readgsbyte(v2 + 11) << 7) | (16
+                                                                                                 * port_readgsbyte(v2 + 13)) | port_readgsbyte(v2 + 3));
+    port_writegsbyte(v2 + 2, port_readgsbyte(v2 + 10) | (port_readgsbyte(v2 + 2) << 6));
+    port_writegsbyte(v2 + 5, port_readgsbyte(v2 + 8) | (16 * port_readgsbyte(v2 + 5)));
+    port_writegsbyte(v2 + 6, port_readgsbyte(v2 + 9) | (16 * port_readgsbyte(v2 + 6)));
+    port_writegsbyte(v2 + 14, port_readgsbyte(v2 + 14) | (2 * port_readgsbyte(v2 + 4)));
+    port_writegsbyte(
       v2 + 24,
-      __readgsbyte(v2 + 16) | (16 * __readgsbyte(v2 + 26)) | (32 * __readgsbyte(v2 + 20)) | (__readgsbyte(v2 + 25) << 6) | (__readgsbyte(v2 + 24) << 7));
-    __writegsbyte(v2 + 15, __readgsbyte(v2 + 23) | (__readgsbyte(v2 + 15) << 6));
-    __writegsbyte(v2 + 18, __readgsbyte(v2 + 21) | (16 * __readgsbyte(v2 + 18)));
-    __writegsbyte(v2 + 19, __readgsbyte(v2 + 22) | (16 * __readgsbyte(v2 + 19)));
+      port_readgsbyte(v2 + 16) | (16 * port_readgsbyte(v2 + 26)) | (32 * port_readgsbyte(v2 + 20)) | (port_readgsbyte(v2 + 25) << 6) | (port_readgsbyte(v2 + 24) << 7));
+    port_writegsbyte(v2 + 15, port_readgsbyte(v2 + 23) | (port_readgsbyte(v2 + 15) << 6));
+    port_writegsbyte(v2 + 18, port_readgsbyte(v2 + 21) | (16 * port_readgsbyte(v2 + 18)));
+    port_writegsbyte(v2 + 19, port_readgsbyte(v2 + 22) | (16 * port_readgsbyte(v2 + 19)));
     v2 += 30;
   }
   return result;
@@ -76912,7 +76909,7 @@ char sub_69E85(int a1, int a2, unsigned int a3)
 {
   char result; // al
 
-  dword_A06EC = __readgsdword(a3);
+  dword_A06EC = port_readgsdword(a3);
   sub_69FE4((unsigned int)&dword_A06EC);
   result = sub_6A11B();
   dword_A0788 = 1;
@@ -76995,10 +76992,10 @@ void sub_69FD3()
 //----- (00069FE4) --------------------------------------------------------
 char sub_69FE4(unsigned int a1)
 {
-  if ( __readgsdword(a1) != 904 && __readgsdword(a1) != 896 )
+  if ( port_readgsdword(a1) != 904 && port_readgsdword(a1) != 896 )
     return 1;
-  dword_A076F = __readgsdword(a1);
-  dword_A06F0 = __readgsdword(a1);
+  dword_A076F = port_readgsdword(a1);
+  dword_A06F0 = port_readgsdword(a1);
   sub_6A640(1u, 0x20u);
   byte_A0758 = 0;
   sub_6A11B();
@@ -77176,17 +77173,17 @@ char sub_6A405(int a1, int a2, unsigned __int8 a3)
   unsigned __int8 v16; // [esp+2Ch] [ebp-Ch]
 
   v12 = (unsigned __int8)byte_A0775[2 * a3];
-  v15 = __readgsbyte(a1 + 11);
-  v16 = __readgsbyte(a1 + 2);
-  v5 = __readgsbyte(a1 + 5);
-  v14 = __readgsbyte(a1 + 6);
-  v4 = __readgsbyte(a1 + 14);
-  v11 = __readgsbyte(a1 + 28);
-  v10 = __readgsbyte(a1 + 24);
-  v9 = __readgsbyte(a1 + 15);
-  v8 = __readgsbyte(a1 + 18);
-  v7 = __readgsbyte(a1 + 19);
-  v6 = __readgsbyte(a1 + 29);
+  v15 = port_readgsbyte(a1 + 11);
+  v16 = port_readgsbyte(a1 + 2);
+  v5 = port_readgsbyte(a1 + 5);
+  v14 = port_readgsbyte(a1 + 6);
+  v4 = port_readgsbyte(a1 + 14);
+  v11 = port_readgsbyte(a1 + 28);
+  v10 = port_readgsbyte(a1 + 24);
+  v9 = port_readgsbyte(a1 + 15);
+  v8 = port_readgsbyte(a1 + 18);
+  v7 = port_readgsbyte(a1 + 19);
+  v6 = port_readgsbyte(a1 + 29);
   byte_A0724[(unsigned __int8)byte_A0776[2 * a3]] = v7;
   byte_A0724[(unsigned __int8)byte_A0775[2 * a3]] = v14;
   sub_6A640(v12 + 32, v15);
@@ -78576,8 +78573,8 @@ int sub_6DE34_6E344(
         close(v14);
         dword_A02C6[a4] = dword_131BA8;
         dword_A0230[a4] = 1;
-        __writegsword(a6 + 4, v8);
-        __writegsdword(a6, v7);
+        port_writegsword(a6 + 4, v8);
+        port_writegsdword(a6, v7);
         return 0;
       }
       read(v14, (void*)unk_131B80, 48);
@@ -78659,8 +78656,8 @@ int sub_6E09A_6E5AA(__int16 a1, int a2, unsigned int a3, int *a4, unsigned int a
       if ( v10 > dword_131BD0 || v11 )
       {
         close(v13);
-        __writegsword(a5 + 4, v7);
-        __writegsdword(a5, v6);
+        port_writegsword(a5 + 4, v7);
+        port_writegsdword(a5, v6);
         return 0;
       }
       read(v13, (void*)unk_131B80, 48);
@@ -80505,7 +80502,7 @@ char sub_70B8B(unsigned int a1, unsigned __int8 a2)
               * ((2
                 * (64
                  - (unsigned __int8)byte_A0A24[(int)(unsigned __int8)((dword_A0930[i] * ((a2 << 7) / 0x7Fu)) >> 7) >> 1])) & 0x3FFFFFFu)) >> 7;
-          if ( !__readgsbyte(dword_A07A0 + 30 * dword_A07C8[dword_A0808[i]] + 14) )
+          if ( !port_readgsbyte(dword_A07A0 + 30 * dword_A07C8[dword_A0808[i]] + 14) )
             sub_6A640(byte_A0775[2 * i] + 64, byte_A0704[(unsigned __int8)byte_A0775[2 * i]] & 0xC0 | v4);
           LOBYTE(v2) = sub_6A640(byte_A0776[2 * i] + 64, byte_A0704[(unsigned __int8)byte_A0776[2 * i]] & 0xC0 | v4);
         }
@@ -80557,8 +80554,8 @@ int sub_70E1C(int a1, int a2, unsigned int a3)
 {
   int result; // eax
 
-  result = __readgsbyte(a3 + 1);
-  dword_A07C8[result] = __readgsbyte(a3);
+  result = port_readgsbyte(a3 + 1);
+  dword_A07C8[result] = port_readgsbyte(a3);
   return result * 4;
 }
 // A07C8: using guessed type int dword_A07C8[];
