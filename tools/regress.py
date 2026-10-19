@@ -85,6 +85,9 @@ def main():
     ap.add_argument("-j", type=int, default=max(1, (os.cpu_count() or 2) // 2), help="parallel runs")
     a = ap.parse_args()
     a.exe = a.exe or remc1_paths.find_port_exe()
+    if not os.path.isfile(a.exe):
+        print(f"{a.exe}: no such executable")
+        return 1
     bundles = a.bundles or sorted(glob.glob(os.path.join(a.data, "recordings", "*" + recording.SUFFIX)),
                                   key=lambda p: (len(p), p))
     if not bundles:
