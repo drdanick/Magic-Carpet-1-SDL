@@ -12,7 +12,7 @@ import struct
 import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
-from unicorn import Uc, UcError, UC_ARCH_X86, UC_MODE_32, UC_PROT_ALL, UC_HOOK_INTR, UC_HOOK_MEM_INVALID, \
+from unicorn import Uc, UcError, UC_ARCH_X86, UC_MODE_32, UC_PROT_ALL, UC_PROT_READ, UC_HOOK_INTR, UC_HOOK_MEM_INVALID, \
     UC_HOOK_CODE, UC_HOOK_MEM_WRITE
 from unicorn.x86_const import UC_X86_REG_ESP, UC_X86_REG_EIP, UC_X86_REG_EAX, UC_X86_REG_EBX, UC_X86_REG_ECX, \
     UC_X86_REG_EDX, UC_X86_REG_ESI, UC_X86_REG_EDI, UC_X86_REG_EBP
@@ -126,6 +126,10 @@ class Machine:
         mu.mem_map(IDA_LO, IDA_HI - IDA_LO, UC_PROT_ALL)
         for (obase, vsize, flags, pidx, pcnt) in self.img.objects:
             mu.mem_write(obase, bytes(self.omem[obase]))
+        if not any(lo < PAGE for lo, _ in self.mapped):
+            # DOS low memory (IVT/BIOS data) is readable under DOS/4GW, and the original reads it
+            # through null entity pointers (docs/original-bugs.md #3): map it read-only, zeroed
+            mu.mem_map(0, PAGE, UC_PROT_READ)
         mu.mem_map(STACK_BASE, STACK_SIZE, UC_PROT_ALL)
         mu.mem_map(TRAP, PAGE, UC_PROT_ALL)
         mu.mem_write(TRAP, b'\xf4' * 16)

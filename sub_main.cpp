@@ -321,8 +321,8 @@ int sub_124F0(int a1, char a2, unsigned __int16 a3);
 int sub_127E0(Type_AE400_29795* a1, char a2, unsigned __int16 a3);
 int sub_12B50(Type_AE400_29795* a1, int a2, unsigned __int8 a3, unsigned __int16 a4);
 void sub_12C50(_WORD *a1);
-char sub_12D10(_WORD *a1);
-_BOOL1 sub_12F70(_WORD *a1);
+char CanCastleGrow_12D10(_WORD *a1);
+_BOOL1 IsCastleSiteFree_12F70(_WORD *a1);
 int sub_13170(int a1);
 int sub_132B0(int a1);
 int sub_136C0(int a1);
@@ -922,7 +922,7 @@ void sub_40550_40890();
 void sub_407A0_40AE0();
 void sub_408D0_40C10();
 _BOOL1 sub_409E0_40D20(unsigned __int16 a1);
-char sub_40A10_40D50(__int16 a1, __int16 a2, __int16 a3, char a4);
+char AddTileHeight_40A10_40D50(__int16 a1, __int16 a2, __int16 a3, char a4);
 int sub_40D30_41070(Type_AE400_29795* a1, __int16 a2, __int16 a3, __int16 a4, char a5);
 int nullsub_3(_DWORD); // weak
 int sub_40E20_41160(unsigned __int16 a1, unsigned __int16 a2);
@@ -16459,7 +16459,10 @@ void sub_12C50(_WORD *a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-char sub_12D10(_WORD *a1)
+/// Castle a1: sets its box to the next level's size, then checks other castles (class 3/2) and the
+/// tiles of the enlarged footprint for impassable ones (mapAngle bit 0x80); restores the box.
+/// @return 1 if the castle can grow one level.
+char CanCastleGrow_12D10(_WORD *a1)
 {
   unsigned int i; // ebx
   __int16 v3; // si
@@ -16511,7 +16514,8 @@ LABEL_13:
       if ( !--v3 )
         goto LABEL_14;
     }
-    while ( mapAngle_FC1E0_FC1D0[v4] >= 0 )
+    // PORT: test 0x80 (impassable tile), as the original; '< 0' / '>= 0' on the uint8_t array was constant
+    while ( (mapAngle_FC1E0_FC1D0[v4] & 0x80) == 0 )
     {
       LOBYTE(v4) = v4 + 1;
       if ( !--v5 )
@@ -16536,7 +16540,8 @@ LABEL_18:
       if ( !--v6 )
         goto LABEL_19;
     }
-    while ( mapAngle_FC1E0_FC1D0[v7] >= 0 )
+    // PORT: test 0x80 (impassable tile), as the original; '< 0' / '>= 0' on the uint8_t array was constant
+    while ( (mapAngle_FC1E0_FC1D0[v7] & 0x80) == 0 )
     {
       LOBYTE(v7) = v7 + 1;
       if ( !--v8 )
@@ -16561,7 +16566,8 @@ LABEL_23:
       if ( !--v9 )
         goto LABEL_24;
     }
-    while ( mapAngle_FC1E0_FC1D0[v10] >= 0 )
+    // PORT: test 0x80 (impassable tile), as the original; '< 0' / '>= 0' on the uint8_t array was constant
+    while ( (mapAngle_FC1E0_FC1D0[v10] & 0x80) == 0 )
     {
       LOBYTE(v10) = v10 + 1;
       if ( !--v11 )
@@ -16586,7 +16592,8 @@ LABEL_29:
       if ( !--v12 )
         goto LABEL_30;
     }
-    while ( mapAngle_FC1E0_FC1D0[v13] >= 0 )
+    // PORT: test 0x80 (impassable tile), as the original; '< 0' / '>= 0' on the uint8_t array was constant
+    while ( (mapAngle_FC1E0_FC1D0[v13] & 0x80) == 0 )
     {
       LOBYTE(v13) = v13 + 1;
       if ( !--v14 )
@@ -16602,7 +16609,10 @@ LABEL_30:
 }
 
 //----- (00012F70) --------------------------------------------------------
-_BOOL1 sub_12F70(_WORD *a1)
+/// Castle spell site check at a1 (axis_3d*): 1 if no castle (class 3/2) is within its box + 2048 and no
+/// impassable tile (mapAngle bit 0x80) lies in the 8x8 tiles from tile (x-8, y-8). The castle missile
+/// builds at the last point of its path where this holds (UpdateSpawningMissile_53B50_53E90).
+_BOOL1 IsCastleSiteFree_12F70(_WORD *a1)
 {
   _BOOL1 v1; // bl
   unsigned int v2; // ecx
@@ -16641,7 +16651,8 @@ _BOOL1 sub_12F70(_WORD *a1)
       {
         if ( v1 )
           break;
-        v1 = mapAngle_FC1E0_FC1D0[v3] < 0;
+        // PORT: test 0x80 (impassable tile), as the original; '< 0' / '>= 0' on the uint8_t array was constant
+        v1 = (mapAngle_FC1E0_FC1D0[v3] & 0x80) != 0;
         LOBYTE(v3) = v3 + 1;
         --v4;
       }
@@ -17243,7 +17254,7 @@ int sub_14120(int a1)
     return 0;
   v4 = *(_DWORD *)(a1 + 160);
   if ( *(_WORD *)(v4 + 756)
-    || !sub_12D10((_WORD *)(164 * *(unsigned __int16 *)(v4 + 50) + dword_AE400_AE3F0() + 29795))
+    || !CanCastleGrow_12D10((_WORD *)(164 * *(unsigned __int16 *)(v4 + 50) + dword_AE400_AE3F0() + 29795))
     || *(_DWORD *)(a1 + 136) < *(_DWORD *)(v3 + 136)
     || *(_BYTE *)(v1 + 70) != 4 )
   {
@@ -18137,7 +18148,7 @@ int sub_15A00(int a1, unsigned __int8 a2)
           goto LABEL_37;
         if ( *(_WORD *)(v10 + 724) )
           goto LABEL_37;
-        if ( !sub_12D10((_WORD *)(164 * *(unsigned __int16 *)(v9 + 50) + dword_AE400_AE3F0() + 29795)) )
+        if ( !CanCastleGrow_12D10((_WORD *)(164 * *(unsigned __int16 *)(v9 + 50) + dword_AE400_AE3F0() + 29795)) )
           goto LABEL_37;
         if ( *(_DWORD *)(a1 + 140) < *(_DWORD *)(v8 + 136) )
           goto LABEL_37;
@@ -27241,7 +27252,7 @@ void sub_255D0(Type_AE400_29795* a1x, __int16 a2, __int16 a3)
   if ( result )
   {
     while ( NextRingOffset_114B0(v7, (uint32*)v9, (uint32*)&v8) == 1 )
-      sub_40A10_40D50(v4 + LOWORD(v9[0]), v5 + v8, -3, 0);
+      AddTileHeight_40A10_40D50(v4 + LOWORD(v9[0]), v5 + v8, -3, 0);
     EndRingIter_11490(v7);
   }
 }
@@ -50627,7 +50638,9 @@ _BOOL1 sub_409E0_40D20(unsigned __int16 a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-char sub_40A10_40D50(__int16 a1, __int16 a2, __int16 a3, char a4)
+/// Adds a3 to the height of tile (a1, a2) (clamped to 0..200) and updates its flags. With a4 set,
+/// impassable tiles (mapAngle bit 0x80) are left alone and 1 is returned.
+char AddTileHeight_40A10_40D50(__int16 a1, __int16 a2, __int16 a3, char a4)
 {
   __int16 v4; // bx
   char v5; // al
@@ -50651,7 +50664,8 @@ char sub_40A10_40D50(__int16 a1, __int16 a2, __int16 a3, char a4)
     if ( !a1 && !a2 )
       v8 = 1;
   }
-  if ( a4 && mapAngle_FC1E0_FC1D0[v9] < 0 )
+  // PORT: test 0x80 (impassable tile), as the original; '< 0' / '>= 0' on the uint8_t array was constant
+  if ( a4 && (mapAngle_FC1E0_FC1D0[v9] & 0x80) != 0 )
     return 1;
   mapHeightmap_DC1E0_DC1D0[v9] = v4;
   if ( v4 )
@@ -50722,7 +50736,7 @@ int sub_40D30_41070(Type_AE400_29795* a1x, __int16 a2, __int16 a3, __int16 a4, c
   {
     while ( NextRingOffset_114B0(v9, (uint32*)v13, (uint32*)&v12) == 1 )
     {
-      if ( sub_40A10_40D50(v6 + LOWORD(v13[0]), v7 + v12, a4, a5) )
+      if ( AddTileHeight_40A10_40D50(v6 + LOWORD(v13[0]), v7 + v12, a4, a5) )
       {
         EndRingIter_11490(v9);
         LOBYTE(v10) = 1;
@@ -55124,7 +55138,7 @@ char sub_46F10_47250(int a1)
   {
     case 0:
       sub_12C50((_WORD *)a1);
-      if ( !*(_WORD *)(a1 + 26) || (LOBYTE(v1) = sub_12D10((_WORD *)a1), (_BYTE)v1) )
+      if ( !*(_WORD *)(a1 + 26) || (LOBYTE(v1) = CanCastleGrow_12D10((_WORD *)a1), (_BYTE)v1) )
       {
         if ( (*(_BYTE *)(a1 + 16) & 2) == 0 )
         {
@@ -62710,7 +62724,7 @@ char UpdateSpawningMissile_53B50_53E90(int a1)
       word_AE454_AE444.z = v2;
       if ( (__int16)v2 > v10
         || (v11 = *(_DWORD *)(a1 + 12) - 1, *(_DWORD *)(a1 + 12) = v11, v11 < 0)
-        || (LOBYTE(v2) = !sub_12F70((_WORD *)(a1 + 72)), (v16 = v2) != 0) )
+        || (LOBYTE(v2) = !IsCastleSiteFree_12F70((_WORD *)(a1 + 72)), (v16 = v2) != 0) )
       {
         v15 = 1;
       }
@@ -62737,7 +62751,7 @@ char UpdateSpawningMissile_53B50_53E90(int a1)
   else
   {
     *(_BYTE *)(a1 + 16) = v1 | 2;
-    LOBYTE(v2) = sub_12F70((_WORD *)(a1 + 72));
+    LOBYTE(v2) = IsCastleSiteFree_12F70((_WORD *)(a1 + 72));
     if ( !(_BYTE)v2 )
     {
       sub_46D20_47060((Type_AE400_29795*)a1, 0);
