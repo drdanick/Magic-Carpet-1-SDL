@@ -270,6 +270,7 @@ static void Port_OutByte(unsigned int port, unsigned char value)
 }
 #define __inbyte(port) Port_InByte(port)
 #define __outbyte(port, value) Port_OutByte((port), (value))
+#define __readeflags() 0x202u // PORT: EFLAGS as in user mode (IF set); MSVC x86/x64-only intrinsic before
 #define __outword(port, value) FixPerifery((char*)"outword", (int)(port)) // PORT: DOS sound hardware access (a real, faulting OUT instruction under MSVC before)
 
 char dataPath[MAX_PATH];
@@ -24543,7 +24544,7 @@ void sub_1FF40(char a1, Type_AE400_29795* a2x, char a3, int a4, int a5)
 
   v5 = a4 - (a1 + *(_DWORD *)PTR(v6 + 27));
   *(_BYTE *)PTR(v5 - 1957008686) += a3 - *(_BYTE *)PTR(a5 + 128);
-  sub_19B10(a2x, (char)&retaddr);
+  sub_19B10(a2x, (char)(uintptr_t)&retaddr);
 }
 // 1FF47: positive sp value 8 has been found
 // 1FF41: variable 'v6' is possibly undefined
@@ -32347,7 +32348,7 @@ LABEL_26:
             LOBYTE(v136) = v221[9];
             v29 += 44;
             LOBYTE(v231) = v137;
-            HIBYTE(v231) += (_BYTE)v136;
+            HIBYTE(v231) += (_BYTE)(uintptr_t)v136;
             --v243;
         } while (v243);
         LOBYTE(v231) = v221[6] + v137;
@@ -42006,21 +42007,21 @@ void sub_362C0_36680(Type_AE400_193795* a1, Type_1090* a2)
     if ( v3 < 0x1Du )
     {
       if ( v3 == 28 )
-        v8 = sub_35960_35D20;
+        v8 = (void*)sub_35960_35D20;
     }
     else if ( v3 <= 0x1Du )
     {
-      v8 = sub_35BF0_35FB0;
+      v8 = (void*)sub_35BF0_35FB0;
     }
     else if ( v3 >= 0x1Fu )
     {
       if ( v3 <= 0x1Fu )
       {
-        v8 = sub_35D30_360F0;
+        v8 = (void*)sub_35D30_360F0;
       }
       else if ( v3 == 50 )
       {
-        v8 = sub_35DE0_361A0;
+        v8 = (void*)sub_35DE0_361A0;
       }
     }
   }
@@ -60598,7 +60599,7 @@ LABEL_73:
     }
     v17 = a5;
     v18 = v32;
-    v19 = (_WORD)v10 - (_WORD)a5;
+    v19 = (_WORD)(uintptr_t)v10 - (_WORD)(uintptr_t)a5;
     do
     {
       v20 = *v17;
@@ -70680,7 +70681,7 @@ int sub_6035F(unsigned int a1, unsigned int a2, int a3, int a4, int a5, unsigned
       v20 = port_readgsword(a4 + 8);
       if ( !port_readgsdword(a4 + 4) && v20 == word_9EF0A )
       {
-        v28 = sub_68622_68B32((__int16)&v24, v6, a1, v31, (int *)&v29, (unsigned int)OFF(&v24));
+        v28 = sub_68622_68B32((__int16)(uintptr_t)&v24, v6, a1, v31, (int *)&v29, (unsigned int)OFF(&v24));
         if ( v28 )
           return v28;
         port_writegsword(a4 + 8, v25);
@@ -74324,7 +74325,7 @@ int sub_64846_64D56(
   }
   else
   {
-    v42 = sub_6DE34_6E344((__int16)&v35, a1, a3, v43, (int *)&v41, (unsigned int)OFF(&v35));
+    v42 = sub_6DE34_6E344((__int16)(uintptr_t)&v35, a1, a3, v43, (int *)&v41, (unsigned int)OFF(&v35));
     if ( v42 )
       return v42;
     port_writegsword(a6 + 40, v36);
@@ -74407,7 +74408,7 @@ int sub_64846_64D56(
       else
       {
         v42 = sub_6E09A_6E5AA(
-                (__int16)&v31,
+                (__int16)(uintptr_t)&v31,
                 a1,
                 port_readgsdword(*(_DWORD *)&byte_A0350[6 * v43] + 104),
                 (int *)v45,
