@@ -72,6 +72,7 @@ endif()
 set(REMC1_ENGINE_SOURCES
     sub_main.cpp
     engine/Basic.cpp
+    engine/ptr32.cpp
     engine/CommandLineParser.cpp
     portability/fcaseopen.cpp
     portability/port_filesystem.cpp

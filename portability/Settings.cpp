@@ -155,6 +155,8 @@ static void PrintUsage()
 		"  --headless                           no visible window (SDL dummy driver), live input ignored\n"
 		"  --frame-hashes <file>                  log a hash of every presented frame (replay tests)\n"
 		"  --state-trace <file>                   log game-state + frame hashes of every frame (tools/regress.py)\n"
+		"  --state-dump <frame>:<file>            write the normalised game state of one frame (tools/diff_state.py)\n"
+		"  --trace-handlers <frame>               print the game-state hash after every entity handler of that tick\n"
 		"  --frame-stats                          print frame-time percentiles every 5 s (smoothness)\n"
 		"  --deterministic [N]                   game timer advances N ticks (default 5) per frame instead of real time\n"
 		"  --input-script <file>                 play scripted input (format: portability/InputScript.h)\n"
@@ -214,6 +216,15 @@ std::vector<std::string> InitSettings(int argc, char* argv[])
 		else if (a == "--snapshot-what") g_settings.snapshotWhat = next("tick, draw or frame");
 		else if (a == "--frame-hashes") g_settings.frameHashFile = next("a file");
 		else if (a == "--state-trace") g_settings.stateTraceFile = next("a file");
+		else if (a == "--trace-handlers") g_settings.traceHandlersFrame = atoi(next("a frame").c_str());
+		else if (a == "--state-dump")
+		{
+			std::string v = next("<frame>:<file>");
+			size_t c = v.find(':');
+			if (c == std::string::npos || c == 0) { fprintf(stderr, "--state-dump needs <frame>:<file>\n"); exit(2); }
+			g_settings.stateDumpFrame = (uint32_t)strtoul(v.substr(0, c).c_str(), nullptr, 10);
+			g_settings.stateDumpFile = v.substr(c + 1);
+		}
 		else if (a == "--frame-stats") g_settings.frameStats = true;
 		else if (a == "--headless") g_settings.headless = true;
 		else if (a == "--watchdog") g_settings.watchdogSeconds = atoi(next("seconds").c_str());

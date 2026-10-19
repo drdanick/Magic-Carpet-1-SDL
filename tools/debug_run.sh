@@ -27,10 +27,17 @@ cd "$(dirname "$EXE")" || exit 1
 LOG="${DEBUG_RUN_LOG:-$(mktemp)}"
 case "$(uname -s)" in
   MINGW*|MSYS*|CYGWIN*)
-    CDB="${CDB:-/c/Program Files (x86)/Windows Kits/10/Debuggers/x86/cdb.exe}"
-    "$CDB" -hd -o -lines \
-      -c "sxe av; bu ucrtbased!exit \"kP 30; q\"; bu ucrtbase!exit \"kP 30; q\"; g; .ecxr; kP 30; r; q" \
-      "./$(basename "$EXE")" "$@" > "$LOG" 2>&1
+    # the debugger must match the executable (PE machine field: 0x8664 = x64, 0xAA64 = arm64)
+    MACHINE="$("$PY" -c "import struct,sys; d=open(sys.argv[1],'rb').read(4096); print(hex(struct.unpack_from('<H', d, struct.unpack_from('<I', d, 0x3C)[0] + 4)[0]))" "$(cygpath -m "$EXE")")"
+    case "$MACHINE" in 0x8664) ARCH=x64 ;; 0xaa64) ARCH=arm64 ;; *) ARCH=x86 ;; esac
+    CDB="${CDB:-/c/Program Files (x86)/Windows Kits/10/Debuggers/$ARCH/cdb.exe}"
+    if [ "$ARCH" = x86 ]; then
+      CMDS="sxe av; bu ucrtbased!exit \"kP 30; q\"; bu ucrtbase!exit \"kP 30; q\"; g; .ecxr; kP 30; r; q"
+    else
+      # 64-bit ucrtbase exports exit/_exit/_Exit ambiguously for bu; abort() breaks into the debugger anyway
+      CMDS="sxe av; g; .ecxr; kP 30; r; q"
+    fi
+    "$CDB" -hd -o -lines -c "$CMDS" "./$(basename "$EXE")" "$@" > "$LOG" 2>&1
     # show from the first exception/breakpoint onwards
     grep -v -e "^ModLoad" -e "NatVis" -e "^\*\*\*\*" -e "Symbol search path" -e "^$" "$LOG" \
       | sed -n -e '/violation\|Breakpoint\|exception -\|Privileged\|Illegal\|ChildEBP/,$p' | head -120

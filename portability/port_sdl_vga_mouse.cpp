@@ -954,7 +954,7 @@ static void DebugFrameHooks()
 		FrameStats();
 	InputScript_FlushRecording();
 	PortTimer_OnFrame();
-	if (!g_settings.frameHashFile.empty() || !g_settings.stateTraceFile.empty())
+	if (!g_settings.frameHashFile.empty() || !g_settings.stateTraceFile.empty() || g_settings.stateDumpFrame)
 	{
 		// FNV-1a 64 over the visible indexed image and the palette: identical across platforms
 		// and pointer sizes, so replay goldens from the 32-bit build verify the 64-bit one.
@@ -978,13 +978,22 @@ static void DebugFrameHooks()
 		}
 		// state trace (tools/regress.py): whole game state (pointer slots normalised) + this frame
 		static FILE* traceFile = g_settings.stateTraceFile.empty() ? nullptr : fopen(g_settings.stateTraceFile.c_str(), "w");
+		extern uint64_t Port_FullStateHash(FILE* dump);
 		if (traceFile)
 		{
-			extern uint64_t Port_FullStateHash();
-			fprintf(traceFile, "%u %016llx %016llx\n", presentedFrames, (unsigned long long)Port_FullStateHash(),
+			fprintf(traceFile, "%u %016llx %016llx\n", presentedFrames, (unsigned long long)Port_FullStateHash(nullptr),
 				(unsigned long long)h);
 			if (presentedFrames % 256 == 0)
 				fflush(traceFile);
+		}
+		// --state-dump <frame>:<file>: the normalised game state of one frame (tools/diff_state.py)
+		if (g_settings.stateDumpFrame == presentedFrames && !g_settings.stateDumpFile.empty())
+		{
+			if (FILE* f = fopen(g_settings.stateDumpFile.c_str(), "wb"))
+			{
+				Port_FullStateHash(f);
+				fclose(f);
+			}
 		}
 	}
 	if (!g_settings.dumpFramesDir.empty() && (presentedFrames % g_settings.dumpEvery) == 0)
