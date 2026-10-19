@@ -12,6 +12,9 @@
 
 #include "sub_main.h"
 #include "engine/Basic.h"
+#include "support/test_support.h"
+
+using remc1test::GameBytes;
 
 // Rasteriser state, defined in sub_main.cpp.
 extern uint8* beginPrevLineFrame_93AC8;
@@ -35,10 +38,10 @@ constexpr int W = 320, H = 200;
 
 // Draws the triangle with the given vertex order; returns the frame. With a constant texture and
 // shade table mapping (shade << 8 | texel) -> shade, every pixel holds the interpolated shade.
-std::vector<uint8_t> Draw(uint8_t mode, const Type_RenderPoint (&tri)[3], const int (&order)[3])
+GameBytes Draw(uint8_t mode, const Type_RenderPoint (&tri)[3], const int (&order)[3])
 {
-	static std::vector<uint8_t> texture(0x20000, 0x20); // texel >= 12: mode 26 does not blend with the screen
-	std::vector<uint8_t> screen(W * H, 0xFF);
+	static GameBytes texture(0x20000, 0x20); // texel >= 12: mode 26 does not blend with the screen
+	GameBytes screen(W * H, 0xFF);
 	for (int i = 0; i < 0x10000; i++)
 		strPal.byte_BB934_BB924[i] = (char)(i >> 8);
 	for (int i = 0; i < 0x4000; i++)
@@ -94,10 +97,10 @@ void ExpectOrderIndependent(uint8_t mode, const Type_RenderPoint (&tri)[3])
 namespace {
 
 // Draws `tri` into a viewport of height `h` starting `rowOffset` rows into a W x 400 buffer.
-std::vector<uint8_t> DrawAt(uint8_t mode, Type_RenderPoint (&tri)[3], int rowOffset, int h, int order)
+GameBytes DrawAt(uint8_t mode, Type_RenderPoint (&tri)[3], int rowOffset, int h, int order)
 {
-	static std::vector<uint8_t> texture(0x20000, 0x20);
-	std::vector<uint8_t> screen(W * 400, 0xFF);
+	static GameBytes texture(0x20000, 0x20);
+	GameBytes screen(W * 400, 0xFF);
 	for (int i = 0; i < 0x10000; i++)
 		strPal.byte_BB934_BB924[i] = (char)(i >> 8);
 	for (int i = 0; i < 0x4000; i++)
@@ -155,15 +158,15 @@ TEST(Rasteriser, TopClippingKeepsTextureCoordinates)
 	// Texel value encodes u (texel = 0x40 + (u & 0x3F)); the shade tables pass the texel through, so
 	// every pixel shows which u the rasteriser sampled. A triangle crossing the top edge must sample
 	// the same texels as the unclipped reference.
-	static std::vector<uint8_t> texture(0x20000);
+	static GameBytes texture(0x20000);
 	for (size_t i = 0; i < texture.size(); i++)
 		texture[i] = (uint8_t)(0x40 + (i & 0x3F));
 	const int s[6] = { 40, -60, 220, 30, 90, 150 };
 	for (uint8_t mode : { (uint8_t)5, (uint8_t)26 }) {
-		std::vector<uint8_t> out[2];
+		GameBytes out[2];
 		for (int pass = 0; pass < 2; pass++) {
 			const int dy = pass ? 100 : 0;
-			std::vector<uint8_t> screen(W * 400, 0xFF);
+			GameBytes screen(W * 400, 0xFF);
 			for (int i = 0; i < 0x10000; i++)
 				strPal.byte_BB934_BB924[i] = (char)(i & 0xFF);
 			for (int i = 0; i < 0x4000; i++)
@@ -212,10 +215,10 @@ TEST(Rasteriser, ShadeStaysBetweenVertexShades)
 		{ "two above top, wide", { 20, 40, 200, -30, 260, -10 }, { 35, 34, 33 } },
 		{ "two above top, lowest second (label124)", { 181, 40, 173, -5, 221, -12 }, { 28, 33, 30 } },
 	};
-	static std::vector<uint8_t> texture(0x20000, 0x20);
+	static GameBytes texture(0x20000, 0x20);
 	for (const Tri& t : tris) {
 		for (int order = 0; order < 3; order++) {
-			std::vector<uint8_t> screen(W * H, 0xFF);
+			GameBytes screen(W * H, 0xFF);
 			for (int i = 0; i < 0x10000; i++)
 				strPal.byte_BB934_BB924[i] = (char)(i >> 8);
 			for (int i = 0; i < 0x4000; i++)
@@ -262,10 +265,10 @@ TEST(Rasteriser, CapturedTopEdgeCells)
 		{ 0, { 105, 44, 0, 0, 1933312 }, { 142, 5, 2097151, 0, 2260992 }, { 173, -5, 2097151, 2097151, 2195456 }, { 133, 43, 0, 2097151, 1867776 } },
 		{ 1, { 133, 43, 0, 2097151, 1867776 }, { 173, -5, 2097151, 2097151, 2195456 }, { 221, -12, 2097151, 0, 1998848 }, { 181, 40, 0, 0, 1867776 } },
 	};
-	static std::vector<uint8_t> texture(0x20000, 0x20);
+	static GameBytes texture(0x20000, 0x20);
 	int idx = 0;
 	for (const Cell& c : cells) {
-		std::vector<uint8_t> screen(W * H, 0xFF);
+		GameBytes screen(W * H, 0xFF);
 		for (int i = 0; i < 0x10000; i++)
 			strPal.byte_BB934_BB924[i] = (char)(i >> 8);
 		for (int i = 0; i < 0x4000; i++)
