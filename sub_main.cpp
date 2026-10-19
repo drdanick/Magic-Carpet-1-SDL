@@ -5,13 +5,15 @@
 #include "portability/port_sound.h"
 #include "portability/MemSnapshot.h"
 
-// PORT: TEMPORARY switches, until the 64-bit port is done (then delete them and keep both fixes on):
-// the user's regression recordings (<datadir>/recordings) were made before these two fixes, so they
+// PORT: TEMPORARY switches, until the 64-bit port is done (then delete them and keep the fixes on):
+// the user's regression recordings (<datadir>/recordings) were made before these fixes, so they
 // are off to keep those recordings in sync while the 64-bit port is verified frame by frame.
 #define REMC1_FIX_WALL_CHECKS 0    // impassable-tile tests (mapAngle bit 0x80) in IsCastleSiteFree_12F70,
                                    // CanCastleGrow_12D10 and AddTileHeight_40A10_40D50
 #define REMC1_FIX_THREAT_TARGET 0  // sub_16540 reads the target's threat score, not the caster's
 #define REMC1_FIX_TERRAIN_CORNER 0 // sub_33AE0_33ED0 marks tile (x-1, y-1) like the original (32-bit port: (x, y-1))
+#define REMC1_FIX_MAP_EDGE_READS 0 // sub_360C0_36480 wraps tile - 257/-256/-1 around the map; off: reads in front of
+                                   // the map as the MSVC builds did (the original read DOS variables, see original-bugs.md)
 #define TILE_IMPASSABLE(i) (REMC1_FIX_WALL_CHECKS && (mapAngle_FC1E0_FC1D0[i] & 0x80) != 0)
 
 // Debug switches inherited from the DOSBox-comparison workflow.
@@ -268,6 +270,7 @@ static void Port_OutByte(unsigned int port, unsigned char value)
 }
 #define __inbyte(port) Port_InByte(port)
 #define __outbyte(port, value) Port_OutByte((port), (value))
+#define __outword(port, value) FixPerifery((char*)"outword", (int)(port)) // PORT: DOS sound hardware access (a real, faulting OUT instruction under MSVC before)
 
 char dataPath[MAX_PATH];
 char* FixPath(char* inPath)
@@ -275,11 +278,13 @@ char* FixPath(char* inPath)
     // "C:\carpet.cd..." / "c:/CARPET.CD..." (any case, either separator) -> the install folder
     if (strlen(inPath) >= 12 && (inPath[0] == 'c' || inPath[0] == 'C') && inPath[1] == ':'
         && (inPath[2] == '\\' || inPath[2] == '/') && !strnicmp(&inPath[3], "carpet.cd", 9))
-    {
         sprintf(dataPath, "%s/%s", gameDataPath2.c_str(), &inPath[3]);
-        return dataPath;
-    }
-    sprintf(dataPath, "%s/%s", gameDataPath.c_str(), inPath);
+    else
+        sprintf(dataPath, "%s/%s", gameDataPath.c_str(), inPath);
+#ifndef _WIN32
+    // PORT: case-sensitive file systems - match the existing files whatever case the DOS code uses
+    snprintf(dataPath, sizeof(dataPath), "%s", casepath(dataPath).c_str());
+#endif
     return dataPath;
 }
 
@@ -3335,14 +3340,14 @@ char byte_967E0 = 'p'; // weak
 uint8 byte_967E1 = 0; // weak
 char byte_967E4 = '\0'; // weak
 //char dword_96860[7][21] = { (char*)83894304 }; // weak
-char off_96864[6][21] =
+char off_96864[6][21] = // PORT: rows were (char*)"..." - GCC turned each pointer into one char
 {
-  (char*)"Game One            ",
-  (char*)"Game Two            ",
-  (char*)"Game Three          ",
-  (char*)"Game Four           ",
-  (char*)"Game Five           ",
-  (char*)"Game Six            "
+  "Game One            ",
+  "Game Two            ",
+  "Game Three          ",
+  "Game Four           ",
+  "Game Five           ",
+  "Game Six            "
 }; // weak
 char byte_9687C = '\x01'; // weak
 bool bool_96880 = false; // weak
@@ -21456,7 +21461,7 @@ void sub_1B5D0(Type_AE400_29795* a1x)
       {
         v9 = 9377 * a1x->rand_29799_4 + 9439;
         a1x->rand_29799_4 = v9;
-        v10 = 2 * (v9 % 0x9D / 79i64);
+        v10 = 2 * (v9 % 0x9D / 79LL);
         v11 = 9377 * a1x->rand_29799_4 + 9439;
         a1x->rand_29799_4 = v11;
         a1x->var_u16_29829_34 += ((unsigned __int8)v11 + 85) * (v10 - 1);
@@ -22672,7 +22677,7 @@ void sub_1D060(Type_AE400_29795* a1x)
       a1x->rand_29799_4 = v13;
       v14 = a1x->rand_29799_4;
       a1x->rand_29799_4 = 9377 * v14 + 9439;
-      a1x->var_u16_29829_34 += ((unsigned __int8)(-95 * v14 - 33) + 85) * (2 * (v13 % 0x9D / 79i64) - 1);
+      a1x->var_u16_29829_34 += ((unsigned __int8)(-95 * v14 - 33) + 85) * (2 * (v13 % 0x9D / 79LL) - 1);
       a1x->var_u16_29829_34 &= 0x7ffu;
     }
     dword_AE400_AE3F0(v10);
@@ -23955,7 +23960,7 @@ LABEL_23:
     {
       v10 = 9377 * a1x->rand_29799_4 + 9439;
       a1x->rand_29799_4 = v10;
-      v11 = 2 * (v10 % 0x9D / 79i64);
+      v11 = 2 * (v10 % 0x9D / 79LL);
       v12 = 9377 * a1x->rand_29799_4 + 9439;
       a1x->rand_29799_4 = v12;
       a1x->var_u16_29829_34 += ((unsigned __int8)v12 + 85) * (v11 - 1);
@@ -24297,7 +24302,7 @@ LABEL_36:
         a1x->rand_29799_4 = j;
         v11 = 9377 * a1x->rand_29799_4 + 9439;
         a1x->rand_29799_4 = v11;
-        a1x->var_u16_29829_34 += (2 * (j % 0x9D / 79i64) - 1) * ((unsigned __int8)v11 + 85);
+        a1x->var_u16_29829_34 += (2 * (j % 0x9D / 79LL) - 1) * ((unsigned __int8)v11 + 85);
         a1x->var_u16_29829_34 &= 0x7ffu;
         LOWORD(j) = a1x->var_u8_29858_63 / a1x->var_u32_29951_156->v_26;
         if ( !(a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26) )
@@ -24473,7 +24478,7 @@ LABEL_37:
         a1x->rand_29799_4 = j;
         v11 = a1x->rand_29799_4;
         a1x->rand_29799_4 = 9377 * v11 + 9439;
-        a1x->var_u16_29829_34 += ((unsigned __int8)(-95 * v11 - 33) + 85) * (2 * (j % 0x9D / 79i64) - 1);
+        a1x->var_u16_29829_34 += ((unsigned __int8)(-95 * v11 - 33) + 85) * (2 * (j % 0x9D / 79LL) - 1);
         a1x->var_u16_29829_34 &= 0x7ffu;
         LOWORD(j) = a1x->var_u8_29858_63 / a1x->var_u32_29951_156->v_26;
         if ( !(a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26) )
@@ -27058,7 +27063,7 @@ void sub_25130(int a1)
     {
       v5 = 9377 * *(_DWORD *)PTR(a1 + 4) + 9439;
       *(_DWORD *)PTR(a1 + 4) = v5;
-      if ( (int)(2 * (v5 % 0x9D / 79i64) - 1) > 0 )
+      if ( (int)(2 * (v5 % 0x9D / 79LL) - 1) > 0 )
       {
         v6 = 9377 * *(_DWORD *)PTR(a1 + 4) + 9439;
         *(_DWORD *)PTR(a1 + 4) = v6;
@@ -27772,7 +27777,7 @@ void sub_26140(Type_AE400_29795* a1x)
       {
         v3 = 9377 * a1x->rand_29799_4 + 9439;
         a1x->rand_29799_4 = v3;
-        if ( (int)(2 * (v3 % 0x9D / 79i64) - 1) > 0 )
+        if ( (int)(2 * (v3 % 0x9D / 79LL) - 1) > 0 )
         {
           v4 = 9377 * a1x->rand_29799_4 + 9439;
           a1x->rand_29799_4 = v4;
@@ -41912,13 +41917,22 @@ int sub_360C0_36480(int a1)//2070C0_
   {
     if ( mapHeightmap_DC1E0_DC1D0[(unsigned __int16)a1] )
     {
-      v4 = mapTerrainType_CC1E0_CC1D0[(unsigned __int16)a1-257];
+      // PORT: the original indexes (uint16)a1 - 257 etc. without wrapping, reading in front of the map for row 0
+      // (DOS variables; in the port whatever the compiler put there - MSVC: the end of mapEntityIndex, which
+      // the 32-bit regression recordings depend on, so that is what the off-switch reads on every compiler).
+      // See REMC1_FIX_MAP_EDGE_READS.
+      auto terrainAt = [](int i) -> uint8_t {
+        if (REMC1_FIX_MAP_EDGE_READS)
+          return mapTerrainType_CC1E0_CC1D0[(uint16_t)i];
+        return i >= 0 ? mapTerrainType_CC1E0_CC1D0[i] : ((uint8_t*)mapEntityIndex_10C1E0_10C1D0)[sizeof(mapEntityIndex_10C1E0_10C1D0) + i];
+      };
+      v4 = terrainAt((unsigned __int16)a1 - 257);
       if ( (unsigned __int8)v4 <= 5u || (unsigned __int8)v4 > 0x22u )
       {
-        v5 = mapTerrainType_CC1E0_CC1D0[(unsigned __int16)a1 - 256];
+        v5 = terrainAt((unsigned __int16)a1 - 256);
         if ( (unsigned __int8)v5 <= 5u || (unsigned __int8)v5 > 0x22u )
         {
-          v6 = mapTerrainType_CC1E0_CC1D0[(unsigned __int16)a1-1];
+          v6 = terrainAt((unsigned __int16)a1 - 1);
           if ( (unsigned __int8)v6 <= 5u || (unsigned __int8)v6 > 0x22u )
           {
             v7 = mapTerrainType_CC1E0_CC1D0[(unsigned __int16)a1];
@@ -48746,12 +48760,12 @@ void CreateGameDir_3EC90_3EFD0(uint8_t diskChar, char* dir1, char* dir2)
     sprintf(textBuffer1, "%c:%s", diskChar, dir1);
     if (access_3EC80_3EFC0(FixPath(textBuffer1)) <= -1)
     {
-        if (mkdir(FixPath(textBuffer1)))
+        if (mymkdir(FixPath(textBuffer1)))
             return;
         strcpy(textBuffer2, textBuffer1);
         strcpy(&textBuffer2[strlen(textBuffer2)], "/");
         strcpy(&textBuffer2[strlen(textBuffer2)], dir2);
-        if ((access_3EC80_3EFC0(FixPath(textBuffer2)) & 0x8000u) != 0 && mkdir(FixPath(textBuffer2)))
+        if ((access_3EC80_3EFC0(FixPath(textBuffer2)) & 0x8000u) != 0 && mymkdir(FixPath(textBuffer2)))
             return;
     }
     else
@@ -48759,7 +48773,7 @@ void CreateGameDir_3EC90_3EFD0(uint8_t diskChar, char* dir1, char* dir2)
         strcpy(textBuffer2, textBuffer1);
         strcpy(&textBuffer2[strlen(textBuffer2)], "/");
         strcpy(&textBuffer2[strlen(textBuffer2)], dir2);
-        if ((access_3EC80_3EFC0(FixPath(textBuffer2)) & 0x8000u) != 0 && mkdir(FixPath(textBuffer2)))
+        if ((access_3EC80_3EFC0(FixPath(textBuffer2)) & 0x8000u) != 0 && mymkdir(FixPath(textBuffer2)))
             return;
     }
 }
@@ -50921,11 +50935,11 @@ __int16 sub_40F87_412C7(__int16 a1, __int16 a2)
 
 unsigned int Distance_410CE_4140E(unsigned int square)//2120CE_
 {
-  unsigned int bitcount;
+  unsigned long bitcount; // PORT: was unsigned int, written through unsigned long* (8 bytes on LP64)
   int i;
   if ( !square)
     return 0;
-  _BitScanReverse((unsigned long*)&bitcount, square);
+  _BitScanReverse(&bitcount, square);
   for (i = bitSqrt_41104[bitcount]; (square / i) < i; i = (square / i + i) >> 1);
   return i;
 }
@@ -62596,7 +62610,7 @@ __int16 LightningBoltTick_535E0_53920(unsigned int a1)
         {
           v11 = 9377 * *(_DWORD *)PTR(a1 + 4) + 9439;
           *(_DWORD *)PTR(a1 + 4) = v11;
-          v32 = 2 * (v11 % 0x9D / 79i64) - 1 + v10;
+          v32 = 2 * (v11 % 0x9D / 79LL) - 1 + v10;
         }
         else
         {
@@ -62615,7 +62629,7 @@ __int16 LightningBoltTick_535E0_53920(unsigned int a1)
       {
         v15 = 9377 * *(_DWORD *)PTR(a1 + 4) + 9439;
         *(_DWORD *)PTR(a1 + 4) = v15;
-        v12 = 2 * (v15 % 0x9D / 79i64) - 1 + v14;
+        v12 = 2 * (v15 % 0x9D / 79LL) - 1 + v14;
         goto LABEL_20;
       }
       ++v31;
@@ -73742,7 +73756,7 @@ void sub_63010_63520()//234010_
         ++v9;
       }
     }
-    qsort(dword_12F6A0_12F690, v9, 12, (_CoreCrtNonSecureSearchSortCompareFunction)sub_62FF0);
+    qsort(dword_12F6A0_12F690, v9, 12, (int (*)(const void*, const void*))sub_62FF0);
     for ( jj = 0; jj < 256; ++jj )
       *(int *)((char *)&dword_1302A4 + 18 * jj) = 0;
     for ( kk = 0; kk < v9; ++kk )

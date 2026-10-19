@@ -55,8 +55,11 @@ if(MSVC)
         endif()
     endif()
 else()
+    # -U_FORTIFY_SOURCE: Ubuntu's GCC enables it by default; the decompiled code writes across field
+    # boundaries of the packed DOS structs on purpose (e.g. a 12-character name plus its 0 into a 12-byte
+    # field, the 0 landing in the next field, as in the original), which fortify aborts on.
     target_compile_options(remc1_options INTERFACE
-        $<$<COMPILE_LANGUAGE:CXX>:-fpermissive> -Wno-narrowing -fno-strict-aliasing -fwrapv)
+        $<$<COMPILE_LANGUAGE:CXX>:-fpermissive> -Wno-narrowing -fno-strict-aliasing -fwrapv -U_FORTIFY_SOURCE)
     if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm|aarch64")
         target_compile_options(remc1_options INTERFACE -fsigned-char)
     endif()

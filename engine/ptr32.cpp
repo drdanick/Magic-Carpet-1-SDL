@@ -28,9 +28,15 @@ extern "C" char __executable_start;
 #define IMAGE_START ((uint8_t*)&__executable_start)
 #endif
 uint8_t* const g_ptrBase = IMAGE_START;
-uint8_t* g_ptrBases[4] = { IMAGE_START, IMAGE_START, IMAGE_START, IMAGE_START };  // [1]: the game stack
+#if INTPTR_MAX == INT32_MAX
+#define NO_WINDOW nullptr
+#else
+#define NO_WINDOW ((uint8_t*)(uintptr_t)0xFFFF800000000000ull)  // matches no user-space address (OFF)
+#endif
+// [1]: the arena (set by ArenaInit), [2][3]: the game stack (Port_PtrOutOfRange), the rest unused
+uint8_t* g_ptrBases[8] = { IMAGE_START, NO_WINDOW, NO_WINDOW, NO_WINDOW, NO_WINDOW, NO_WINDOW, NO_WINDOW, NO_WINDOW };
 
-static const intptr_t kWindow = 0x40000000;  // 1 GB per window
+static const intptr_t kStackOffset = 0x40000000;  // the stack window: 1 GB .. 2 GB
 static uint8_t* s_stackLo;
 static uint8_t* s_stackHi;
 
@@ -66,15 +72,15 @@ int32_t Port_PtrOutOfRange(const void* p)
 		// the first stack address: the thread running the game owns the stack window from now on
 		uint8_t *lo, *hi;
 		ThreadStack(&lo, &hi);
-		if (q >= lo && q < hi && hi - lo < kWindow)
+		if (q >= lo && q < hi && hi - lo < kStackOffset)
 		{
 			s_stackLo = lo;
 			s_stackHi = hi;
-			g_ptrBases[1] = lo - kWindow;
+			g_ptrBases[2] = g_ptrBases[3] = lo - kStackOffset;
 		}
 	}
 	if (q >= s_stackLo && q < s_stackHi)
-		return (int32_t)(q - g_ptrBases[1]);
+		return (int32_t)(q - g_ptrBases[2]);
 	fprintf(stderr, "PORT: pointer %p is outside the game address windows (statics/arena at %p, game stack "
 		"%p-%p; OFF in engine/ptr32.h): allocate it from the game arena or keep it out of 32-bit ints\n", p,
 		(const void*)g_ptrBase, (const void*)s_stackLo, (const void*)s_stackHi);
@@ -103,11 +109,13 @@ void* Port_ExtPointer(uint32_t h)
 }
 #endif
 
-// Game memory arena. It sits at the same offset from g_ptrBase in every build (on 32-bit that is a fixed
-// address), and allocation is deterministic, so game objects get the same 32-bit "addresses" in 32-bit and
-// 64-bit builds and across code changes. That matters beyond OFF(): the decompiled code turns addresses
-// into numbers, e.g. (target - entity array) / 164 with a null target, and such values end up in the game
-// state; with a fixed layout they are the same everywhere (regression traces, tools/regress.py).
+// Game memory arena. It sits at offset 512 MB in every build (on 32-bit that is the fixed address 0x20000000,
+// on 64-bit g_ptrBases[1] follows wherever the OS put it), and allocation is deterministic, so game objects get
+// the same 32-bit "addresses" in 32-bit and 64-bit builds and across code changes. That matters beyond OFF():
+// the decompiled code turns addresses into numbers, e.g. (target - entity array) / 164 with a null target, and
+// such values end up in the game state; with a fixed layout they are the same everywhere (regression traces,
+// tools/regress.py). (A fixed distance from the executable is not possible: Linux puts the brk heap anywhere
+// in the first GB after it.)
 static const uintptr_t kArenaOffset = 0x20000000;
 static const size_t kArenaSize = 0x10000000;  // 256 MB
 static const size_t kHeader = 16;             // block size in front of every block, keeps 16-byte alignment
@@ -117,19 +125,13 @@ static std::multimap<size_t, uint8_t*> s_free;  // freed blocks by size (best fi
 
 static void ArenaInit()
 {
-	uint8_t* want = g_ptrBase + kArenaOffset;
+	uint8_t* want = sizeof(void*) == 4 ? (uint8_t*)kArenaOffset : nullptr;
 #ifdef _WIN32
 	s_arena = (uint8_t*)VirtualAlloc(want, kArenaSize, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
-	if (!s_arena)
+	if (!s_arena && want)
 		s_arena = (uint8_t*)VirtualAlloc(nullptr, kArenaSize, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
 #else
-	int flags = MAP_PRIVATE | MAP_ANONYMOUS;
-#ifdef MAP_FIXED_NOREPLACE
-	flags |= MAP_FIXED_NOREPLACE;
-#endif
-	void* p = mmap(want, kArenaSize, PROT_READ | PROT_WRITE, flags, -1, 0);
-	if (p == MAP_FAILED)
-		p = mmap(nullptr, kArenaSize, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+	void* p = mmap(want, kArenaSize, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 	s_arena = p == MAP_FAILED ? nullptr : (uint8_t*)p;
 #endif
 	if (!s_arena)
@@ -137,9 +139,10 @@ static void ArenaInit()
 		fprintf(stderr, "PORT: cannot reserve the %u MB game memory arena\n", (unsigned)(kArenaSize >> 20));
 		abort();
 	}
-	if (s_arena != want)
+	if (want && s_arena != want)
 		printf("PORT: game arena not at its usual place (%p instead of %p): replays still work, but "
 			"regression traces (tools/regress.py) may differ from other builds\n", (void*)s_arena, (void*)want);
+	g_ptrBases[1] = s_arena - kArenaOffset;
 	s_top = s_arena;
 }
 

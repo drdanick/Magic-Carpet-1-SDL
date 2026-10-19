@@ -4,6 +4,7 @@
 // Original DOS game options ("-level 3", "-cheat 1", ...) are passed through untouched to
 // ProcessCommandLine_34DD0_35190.
 
+#include <cstdint>
 #include <string>
 #include <vector>
 

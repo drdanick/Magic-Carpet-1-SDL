@@ -2,9 +2,13 @@
 // 32-bit "addresses" of the decompiled code on 64-bit builds.
 //
 // The decompiled game code keeps addresses in 32-bit ints and in 4-byte slots of packed DOS-layout
-// structs (entity +156/+160, lists, tables). On 64-bit builds those ints are offsets into two windows:
-//   0 .. 1 GB      from g_ptrBase (the executable): its statics and the game memory arena (Port_ArenaAlloc)
-//   1 GB .. 2 GB   the game thread's stack (the code passes addresses of locals around as ints)
+// structs (entity +156/+160, lists, tables). On 64-bit builds those ints are offsets into windows of
+// 512 MB, each with its own base (g_ptrBases[offset >> 29]):
+//   0 .. 512 MB      from g_ptrBase (the executable): its statics
+//   512 MB .. 1 GB   the game memory arena (Port_ArenaAlloc), wherever the OS put it
+//   1 GB .. 2 GB     the game thread's stack (the code passes addresses of locals around as ints)
+// So the offsets are the same numbers in every build: statics from the image start, the arena at 512 MB
+// (where the 32-bit build has it, address 0x20000000), whatever the OS address layout.
 //   PTR(x)  int offset -> pointer (0 stays nullptr)      used where the code casts an int to a pointer
 //   OFF(p)  pointer -> int offset (nullptr stays 0)       used where the code casts a pointer to an int
 // OFF() aborts with a message for anything outside both windows. On 32-bit builds both are plain casts.
@@ -15,10 +19,10 @@
 #include <cstdint>
 
 extern uint8_t* const g_ptrBase;
-extern uint8_t* g_ptrBases[4];  // per offset >> 30: [0] g_ptrBase, [1] game stack - 1 GB, [2][3] g_ptrBase
+extern uint8_t* g_ptrBases[8];  // per offset >> 29: [0] g_ptrBase, [1] arena - 512 MB, [2][3] game stack - 1 GB
 int32_t Port_PtrOutOfRange(const void* p);  // the stack window (registered on first use), else abort
 
-// Game memory (zeroed), at a fixed offset from g_ptrBase with a deterministic layout - see ptr32.cpp.
+// Game memory (zeroed), at offset 512 MB with a deterministic layout - see ptr32.cpp.
 // Port_ArenaFree passes pointers from elsewhere on to free().
 void* Port_ArenaAlloc(size_t size);
 void Port_ArenaFree(void* p);
@@ -27,13 +31,17 @@ void Port_ArenaFree(void* p);
 inline uint8_t* PTR(uint32_t off) { return (uint8_t*)(uintptr_t)off; }
 template <class T> inline int32_t OFF(T* p) { return (int32_t)(uintptr_t)p; }
 #else
-inline uint8_t* PTR(uint32_t off) { return off ? g_ptrBases[off >> 30] + off : nullptr; }
+inline uint8_t* PTR(uint32_t off) { return off ? g_ptrBases[off >> 29] + off : nullptr; }
 template <class T> inline int32_t OFF(T* p)
 {
 	if (!p)
 		return 0;
-	intptr_t d = (intptr_t)reinterpret_cast<uintptr_t>(p) - (intptr_t)g_ptrBase;
-	if (d > 0 && d < 0x40000000)
+	uintptr_t a = reinterpret_cast<uintptr_t>(p);
+	uintptr_t d = a - (uintptr_t)g_ptrBase;
+	if (d < 0x20000000)
+		return (int32_t)d;
+	d = a - (uintptr_t)g_ptrBases[1];
+	if (d - 0x20000000 < 0x20000000)
 		return (int32_t)d;
 	return Port_PtrOutOfRange(reinterpret_cast<const void*>(p));
 }
