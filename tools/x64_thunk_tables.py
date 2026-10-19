@@ -11,7 +11,7 @@ Usage (repo root): python tools/x64_thunk_tables.py [--dry-run]
 import re
 import sys
 
-CAST = re.compile(r'\(\s*([A-Za-z_][\w ]*?\s*\**)\s*\(\s*\*\s*\)\s*\(([^()]*)\)\s*\)\s*([A-Za-z_]\w*)\b(?!\s*\()')
+CAST = re.compile(r'\(\s*([A-Za-z_][\w ]*?\s*\**)\s*\(\s*\*\s*\)\s*\(([^()]*)\)\s*\)\s*&?\s*([A-Za-z_]\w*)\b(?!\s*\()')
 PROTO = re.compile(r'^\s*(?:static\s+)?([A-Za-z_][\w \*]*?)\s*\b(\w+)\s*\(([^()]*)\)\s*;', re.M)
 
 
