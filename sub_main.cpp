@@ -26008,14 +26008,14 @@ int sub_22880()
                 (__int16)v5 + 4,
                 *(unsigned __int8 *)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 520) - 8,
                 *(unsigned __int8 *)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 521) - 8,
-                (unsigned __int8)&byte_AD167_AD157[1]);
+                byte_AD167_AD157[1]); // PORT: was (unsigned __int8)&byte_AD167_AD157[1] - the original reads the byte (mov al, [0xad168])
             else
               sub_24CA0(
                 v9 + 4,
                 (__int16)v5 + 4,
                 *(unsigned __int8 *)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 520) - 8,
                 *(unsigned __int8 *)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 521) - 8,
-                (unsigned __int8)&byte_AD167_AD157[1]);
+                byte_AD167_AD157[1]); // PORT: was (unsigned __int8)&byte_AD167_AD157[1] - the original reads the byte (mov al, [0xad168])
           }
         }
         else
