@@ -18529,7 +18529,9 @@ void sub_16540()
     {
       if ( *(_BYTE *)(((uint8_t*)v3) + 65) != 2 )
       {
-        v7 = str_AE400_AE3F0->str_29795[v2->id_29819_24].var_u32_29955_160->str_456[v2->var_u32_29955_160->var_48].var_u16_4;
+        // PORT: was str_29795[v2->id_29819_24] (the caster's wizard); asm 0x166D2 reads the target's (ecx) +24,
+        // like the castle branch and the store at LABEL_49 - the caster's score was written into the target's
+        v7 = str_AE400_AE3F0->str_29795[v3->id_29819_24].var_u32_29955_160->str_456[v2->var_u32_29955_160->var_48].var_u16_4;
         v8 = i->var_u8_29860_65; // PORT: was var_u8_29858_63; asm 0x166F7 reads the model (+65) like the branch below
         if ( v8 < 0xAu )
         {
