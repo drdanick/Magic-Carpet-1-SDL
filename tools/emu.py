@@ -26,6 +26,7 @@ STACK_BASE, STACK_SIZE = 0x7F000000, 0x100000
 TRAP = 0x7E000000
 STUBS = 0x7D000000
 HEAP_BASE, HEAP_SIZE = 0x7A000000, 0x2000000
+TEB64 = 0x7C000000  # 64-bit port machine: a minimal thread environment block (GS base)
 
 SKIP_GLOBALS = {'tempScreenBuffer_A0000', 'unk_93AE0', 'off_96864', 'videoModes_12F080', 'pathStrArray_F1EF0',
                 'unk_A1D34', 'str_254DBC', 'dword_999B8', 'off_9EF10', 'off_99A84', 'off_99B68',
@@ -142,8 +143,13 @@ class Machine:
         mu.mem_map(HEAP_BASE, HEAP_SIZE, UC_PROT_ALL)
         self.heap_ptr = HEAP_BASE
         self.stub_funcs = {}
+        self.mu64 = None  # 64-bit builds: the port's code runs in a second, 64-bit machine (_init_port64)
+        self.dirty = set()
         if load_port_code:
-            self._load_port_code()
+            if self.ptr64:
+                self._init_port64()
+            else:
+                self._load_port_code()
         self._copy_globals()
         self.wlog = []
         self.logging = False
@@ -167,6 +173,18 @@ class Machine:
 
     def skip_function(self, addr, retval=0):
         """Make every call to addr return immediately with eax = retval."""
+        if self.mu64 is not None and self.image_lo <= addr < self.image_hi:
+            from unicorn.x86_const import UC_X86_REG_RSP, UC_X86_REG_RAX, UC_X86_REG_RIP
+
+            def hook64(uc, address, size, user):
+                rsp = uc.reg_read(UC_X86_REG_RSP)
+                ret = struct.unpack('<Q', bytes(uc.mem_read(rsp, 8)))[0]
+                uc.reg_write(UC_X86_REG_RSP, rsp + 8)
+                uc.reg_write(UC_X86_REG_RAX, retval)
+                uc.reg_write(UC_X86_REG_RIP, ret)
+            ra = self.real_addr(addr)
+            self.skipped[addr] = self.mu64.hook_add(UC_HOOK_CODE, hook64, begin=ra, end=ra)
+            return
         def hook(uc, address, size, user):
             esp = uc.reg_read(UC_X86_REG_ESP)
             ret = struct.unpack('<I', bytes(uc.mem_read(esp, 4)))[0]
@@ -454,6 +472,9 @@ class Machine:
     def _on_write(self, uc, access, address, size, value, user):
         if self.logging:
             self.wlog.append((address, bytes(uc.mem_read(address, size))))
+        if self.mu64 is not None:
+            self.dirty.add(address >> 12)
+            self.dirty.add((address + size - 1) >> 12)
         if self.watch and any(address <= w < address + size for w in self.watch):
             eip = uc.reg_read(UC_X86_REG_EIP)
             esp = uc.reg_read(UC_X86_REG_ESP)
@@ -515,9 +536,19 @@ class Machine:
         self.mu.mem_write(addr, data)
 
     # ---- calls -----------------------------------------------------------------------------------
+    def write(self, addr, data):
+        """Write memory from the host (tools mirroring results): keeps the 64-bit port machine in sync."""
+        self.mu.mem_write(addr, data)
+        if self.mu64 is not None:
+            for pg in range(addr >> 12, ((addr + len(data) - 1) >> 12) + 1):
+                self.dirty.add(pg)
+
     def call(self, addr, args=(), max_insns=50_000_000, nested=False):
         """Call addr(args) (cdecl) until it returns. nested=True uses the lower half of the stack area
-        (for calls made while an outer emulation, e.g. a tick, is paused)."""
+        (for calls made while an outer emulation, e.g. a tick, is paused). 64-bit builds: port functions run
+        in the 64-bit machine (_call64); args and the result are game offsets either way."""
+        if self.mu64 is not None and self.image_lo <= addr < self.image_hi:
+            return self._call64(addr, args, max_insns, nested)
         mu = self.mu
         mu.context_restore(self.ctx)
         esp = STACK_BASE + (STACK_SIZE // 2 if nested else STACK_SIZE) - 0x1000
@@ -538,6 +569,7 @@ class Machine:
 
     def begin(self):
         self.wlog = []
+        self.wlog64 = []
         self.logging = True
 
     def end(self):
@@ -553,15 +585,259 @@ class Machine:
         if out:
             for a in list(out):
                 out[a] = mu.mem_read(a, 1)[0]
+        if self.mu64 is not None:
+            out.update(self._end64())
         return out
 
     def undo(self):
         for addr, old in reversed(self.wlog):
             self.mu.mem_write(addr, old)
         self.wlog = []
+        if self.mu64 is not None:
+            for addr, old in reversed(self.wlog64):
+                self.mu64.mem_write(addr, old)
+            self.wlog64 = []
+
+    # ---- 64-bit builds: the port's code in a 64-bit machine -------------------------------------------------
+    # The 32-bit machine (self.mu) stays the reference memory in the game's offset space - the original runs
+    # there, and the tools read and compare it. self.mu64 holds the same memory at the snapshotted process'
+    # real addresses with the port's x64 code. Before every port call, pages written in self.mu are copied
+    # over (real pointers held in port statics are kept as offsets in self.mu and converted on the way);
+    # the port's writes are reported in offset space (_end64).
+    def real_addr(self, off):
+        """game offset -> real address of the snapshotted 64-bit process."""
+        return off + (self.bases[0] if off < 0x20000000 else self.bases[1] if off < 0x40000000 else self.bases[2])
+
+    def _init_port64(self):
+        from unicorn import UC_MODE_64
+        from unicorn.x86_const import UC_X86_REG_GS_BASE
+        ps = self.ps
+        self.mu64 = m64 = Uc(UC_ARCH_X86, UC_MODE_64)
+        mapped = []
+        for off, data in sorted(self.before):
+            ra = self.real_addr(off)
+            m64.mem_map(ra, len(data), UC_PROT_ALL)
+            m64.mem_write(ra, data)
+            mapped.append((ra, ra + len(data)))
+        # code and constant data at the real image base, relocated (writable sections came with the dump)
+        rb = self.real_addr(self.image_base)
+        delta = rb - ps.image_base
+        relocs = sorted(ps.reloc64_sites)
+        for name, va, vsize, rawptr, rawsize in ps.sections:
+            lo = rb + va
+            size = (max(vsize, rawsize) + PAGE - 1) & ~(PAGE - 1)
+            if any(not (hi <= lo or l >= lo + size) for l, hi in mapped):
+                continue
+            data = bytearray(ps.pe[rawptr:rawptr + min(rawsize, vsize)])
+            data += bytes(size - len(data))
+            i = bisect.bisect_left(relocs, va)
+            while i < len(relocs) and relocs[i] < va + size:
+                o = relocs[i] - va
+                if o + 8 <= len(data):
+                    struct.pack_into('<Q', data, o, (struct.unpack_from('<Q', data, o)[0] + delta) & ((1 << 64) - 1))
+                i += 1
+            m64.mem_map(lo, size, UC_PROT_ALL)
+            m64.mem_write(lo, bytes(data))
+            mapped.append((lo, lo + size))
+        self.stub_funcs64 = {}
+        self._bind_imports64(rb)
+        m64.mem_map(STACK_BASE, STACK_SIZE, UC_PROT_ALL)
+        m64.mem_map(TRAP, PAGE, UC_PROT_ALL)
+        m64.mem_write(TRAP, bytes([0xF4]) * 16)
+        m64.mem_map(STUBS, 0x10000, UC_PROT_ALL)
+        m64.mem_write(STUBS, bytes([0xC3]) * 0x10000)
+        m64.mem_map(HEAP_BASE, HEAP_SIZE, UC_PROT_ALL)
+        self.heap64 = HEAP_BASE
+        # a minimal TEB for __chkstk (stack base/limit) and TLS reads: gs:[8] / gs:[0x10] / gs:[0x30] / gs:[0x58]
+        teb = TEB64
+        m64.mem_map(teb, 0x10000, UC_PROT_ALL)
+        for o, v in ((8, STACK_BASE + STACK_SIZE), (0x10, STACK_BASE), (0x30, teb), (0x58, teb + 0x1000)):
+            m64.mem_write(teb + o, struct.pack('<Q', v))
+        m64.mem_write(teb + 0x1000, struct.pack('<Q', teb + 0x2000) * 64)
+        m64.reg_write(UC_X86_REG_GS_BASE, teb)
+        m64.hook_add(UC_HOOK_MEM_INVALID, self._on_invalid64)
+        m64.hook_add(UC_HOOK_INTR, self._on_intr64)
+        m64.hook_add(UC_HOOK_CODE, self._on_trap, begin=TRAP, end=TRAP + 16)
+        m64.hook_add(UC_HOOK_CODE, self._on_stub64, begin=STUBS, end=STUBS + 0xFFFF)
+        m64.hook_add(UC_HOOK_MEM_WRITE, self._on_write64)
+        self.wlog64 = []
+        self.ctx64 = m64.context_save()
+        # real pointers held in port statics: offset form in the 32-bit machine (4-byte offset, 4 zero bytes)
+        self.ptr_fields = sorted({self.image_base + s_.rva + o for s_ in ps.data_symbols() if s_.type_index and s_.size
+                                  for o, w, real in ps.pointer_fields(s_.type_index) if real and w == 8})
+        for p in self.ptr_fields:
+            b = self.bdump.read(p, 8)
+            if b is not None:
+                v = struct.unpack('<Q', b)[0]
+                self.mu.mem_write(p, struct.pack('<II', (self.real_to_off(v) or 0) if v else 0, 0))
+        self._sigs = {}
+        self._fn_by_rva = {s_.rva: s_ for s_ in ps.syms if s_.tag == SymTagFunction}
+
+    def _bind_imports64(self, rb):
+        ps, pe = self.ps, self.ps.pe
+        imp_rva = struct.unpack_from('<I', pe, ps.data_dirs + 8)[0]
+        p = ps.rva_to_off(imp_rva)
+        k = 0
+        while p is not None:
+            oft, ts, fc, name_rva, ft = struct.unpack_from('<IIIII', pe, p)
+            if name_rva == 0:
+                break
+            q = ps.rva_to_off(oft or ft)
+            j = 0
+            while True:
+                v = struct.unpack_from('<Q', pe, q + 8 * j)[0]
+                if v == 0:
+                    break
+                fname = f'ord{v & 0xFFFF}'
+                if not v >> 63:
+                    ho = ps.rva_to_off(v & 0x7FFFFFFF)
+                    fname = pe[ho + 2:pe.index(bytes(1), ho + 2)].decode()
+                stub = STUBS + 16 * k
+                self.stub_funcs64[stub] = fname
+                self.mu64.mem_write(rb + ft + 8 * j, struct.pack('<Q', stub))
+                k += 1
+                j += 1
+            p += 20
+
+    def _on_invalid64(self, uc, access, address, size, value, user):
+        from unicorn.x86_const import UC_X86_REG_RIP
+        self.stop_reason = f'port: invalid memory access (type {access}) at {address:#x}, rip {uc.reg_read(UC_X86_REG_RIP):#x}'
+        return False
+
+    def _on_intr64(self, uc, intno, user):
+        from unicorn.x86_const import UC_X86_REG_RIP
+        self.stop_reason = f'port: interrupt {intno:#x} at {uc.reg_read(UC_X86_REG_RIP):#x}'
+        uc.emu_stop()
+
+    def _on_write64(self, uc, access, address, size, value, user):
+        if self.logging:
+            self.wlog64.append((address, bytes(uc.mem_read(address, size))))
+
+    def _logged_write64(self, addr, data):
+        if self.logging:
+            self.wlog64.append((addr, bytes(self.mu64.mem_read(addr, len(data)))))
+        self.mu64.mem_write(addr, data)
+
+    def _on_stub64(self, uc, address, size, user):
+        from unicorn.x86_const import UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_RAX
+        name = self.stub_funcs64.get(address, '?')
+        a0, a1, a2 = (uc.reg_read(r) for r in (UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8))
+        r = 0
+        if name in ('memcpy', 'memmove'):
+            if a2:
+                self._logged_write64(a0, bytes(uc.mem_read(a1, a2)))
+            r = a0
+        elif name == 'memset':
+            if a2:
+                self._logged_write64(a0, bytes([a1 & 0xFF]) * a2)
+            r = a0
+        elif name in ('malloc', 'calloc'):
+            n = a0 * (a1 if name == 'calloc' else 1)
+            r = self.heap64
+            self.heap64 += (n + 15) & ~15
+        elif name in ('free', '__stdio_common_vfprintf', '__stdio_common_vsprintf', 'fflush', 'fputs', 'fputc',
+                      '__acrt_iob_func', 'fwrite'):
+            r = 0
+        elif name == 'pow':
+            from unicorn.x86_const import UC_X86_REG_XMM0, UC_X86_REG_XMM1
+            x0 = uc.reg_read(UC_X86_REG_XMM0) & ((1 << 64) - 1)
+            x1 = uc.reg_read(UC_X86_REG_XMM1) & ((1 << 64) - 1)
+            a_, b_ = struct.unpack('<d', struct.pack('<Q', x0))[0], struct.unpack('<d', struct.pack('<Q', x1))[0]
+            try:
+                res = a_ ** b_
+            except (OverflowError, ZeroDivisionError, ValueError):
+                res = float('nan')
+            uc.reg_write(UC_X86_REG_XMM0, struct.unpack('<Q', struct.pack('<d', float(res)))[0])
+            return
+        else:
+            self.stop_reason = f'port called import {name}'
+            uc.emu_stop()
+        uc.reg_write(UC_X86_REG_RAX, r)
+
+    def _sync64(self):
+        """Copy the pages written in the 32-bit machine since the last port call into the 64-bit one."""
+        if not self.dirty:
+            return
+        pages, self.dirty = sorted(self.dirty), set()
+        for pg in pages:
+            a = pg << 12
+            if IDA_LO <= a < IDA_HI or a >= HEAP_BASE:  # the original's memory, harness stack/stubs/heap
+                continue
+            try:
+                data = bytes(self.mu.mem_read(a, PAGE))
+                self.mu64.mem_write(self.real_addr(a), data)
+            except UcError:
+                continue
+            i = bisect.bisect_left(self.ptr_fields, a - 7)
+            while i < len(self.ptr_fields) and self.ptr_fields[i] < a + PAGE:
+                p = self.ptr_fields[i]
+                i += 1
+                try:
+                    t = struct.unpack('<I', bytes(self.mu.mem_read(p, 4)))[0]
+                    self.mu64.mem_write(self.real_addr(p), struct.pack('<Q', self.real_addr(t) if t else 0))
+                except UcError:
+                    pass
+
+    def _signature(self, addr):
+        if addr not in self._sigs:
+            s_ = self._fn_by_rva.get(addr - self.image_base)
+            self._sigs[addr] = self.ps.signature(s_) if s_ else None
+        return self._sigs[addr]
+
+    def _call64(self, addr, args, max_insns, nested):
+        from unicorn.x86_const import UC_X86_REG_RSP, UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9
+        from unicorn.x86_const import UC_X86_REG_RAX, UC_X86_REG_RIP
+        self._sync64()
+        m64 = self.mu64
+        m64.context_restore(self.ctx64)
+        sig = self._signature(addr)
+        vals = []
+        for i, x in enumerate(args):
+            x &= 0xFFFFFFFF
+            ptr = sig is not None and i < len(sig[1]) and sig[1][i] == 'ptr'
+            vals.append(self.real_addr(x) if ptr and x else x)
+        # Windows x64: rcx, rdx, r8, r9, then the stack above 32 bytes of shadow space; rsp % 16 == 8 at entry
+        rsp = STACK_BASE + (STACK_SIZE // 2 if nested else STACK_SIZE) - 0x1008
+        m64.mem_write(rsp, struct.pack('<Q', TRAP) + bytes(32) + b''.join(struct.pack('<Q', v) for v in vals[4:]))
+        m64.reg_write(UC_X86_REG_RSP, rsp)
+        for reg, v in zip((UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9), vals[:4]):
+            m64.reg_write(reg, v)
+        self.stop_reason = None
+        try:
+            m64.emu_start(self.real_addr(addr), TRAP, count=max_insns)
+        except UcError as e:
+            self.stop_reason = self.stop_reason or f'port: {e} at rip {m64.reg_read(UC_X86_REG_RIP):#x}'
+        if self.stop_reason is None and m64.reg_read(UC_X86_REG_RIP) != TRAP:
+            self.stop_reason = f'port did not return (rip {m64.reg_read(UC_X86_REG_RIP):#x})'
+        rax = m64.reg_read(UC_X86_REG_RAX)
+        if sig is not None and sig[0] == 'ptr':
+            return (self.real_to_off(rax) or 0) if rax else 0
+        return rax & 0xFFFFFFFF
+
+    def _end64(self):
+        """The port's writes since begin() in offset space ({offset: byte}); real pointers it stored in its
+        statics in offset form (4-byte offset, 4 zero bytes - as the 32-bit machine holds them)."""
+        offs = set()
+        for addr, old in self.wlog64:
+            for i in range(len(old)):
+                o = self.real_to_off(addr + i)
+                if o is not None:
+                    offs.add(o)
+        out = {}
+        for o in offs:
+            i = bisect.bisect_right(self.ptr_fields, o) - 1
+            if i >= 0 and self.ptr_fields[i] <= o < self.ptr_fields[i] + 8:
+                p = self.ptr_fields[i]
+                v = struct.unpack('<Q', bytes(self.mu64.mem_read(self.real_addr(p), 8)))[0]
+                out[o] = struct.pack('<II', (self.real_to_off(v) or 0) if v else 0, 0)[o - p]
+            else:
+                out[o] = self.mu64.mem_read(self.real_addr(o), 1)[0]
+        return out
 
     def trace_calls(self, addr, args, nested=True):
         """Call addr(args) logging every direct call made at depth 1: [(target name, args, eax)]. Undone."""
+        if self.mu64 is not None and self.image_lo <= addr < self.image_hi:
+            return self._trace_calls64(addr, args, nested)
         from capstone import Cs, CS_ARCH_X86, CS_MODE_32
         md = Cs(CS_ARCH_X86, CS_MODE_32)
         if not hasattr(self, '_fnames'):
@@ -600,6 +876,50 @@ class Machine:
         self.end()
         self.undo()
         self.mu.hook_del(h)
+        return out
+
+    def _trace_calls64(self, addr, args, nested):
+        """trace_calls for port code on 64-bit builds: register arguments (rcx, rdx, r8, r9; real pointers
+        shown as game offsets), return value from rax."""
+        from capstone import Cs, CS_ARCH_X86, CS_MODE_64
+        from unicorn.x86_const import UC_X86_REG_RSP, UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9
+        from unicorn.x86_const import UC_X86_REG_RAX
+        md = Cs(CS_ARCH_X86, CS_MODE_64)
+        rb = self.real_addr(self.image_base)
+        if not hasattr(self, '_fnames64'):
+            self._fnames64 = {rb + s_.rva: s_.name for s_ in self.ps.syms if s_.tag == SymTagFunction}
+        out, pending = [], []
+
+        def hook(uc, address, size, user):
+            rsp = uc.reg_read(UC_X86_REG_RSP)
+            if pending and address == pending[-1][0] and rsp >= pending[-1][2]:
+                out[pending[-1][1]][2] = uc.reg_read(UC_X86_REG_RAX) & 0xFFFFFFFF
+                pending.pop()
+            if pending:
+                return
+            ins = next(md.disasm(bytes(uc.mem_read(address, size)), address), None)
+            if ins is None or ins.mnemonic != 'call':
+                return
+            tgt = ins.op_str
+            try:
+                t = int(tgt, 16)
+                b_ = bytes(uc.mem_read(t, 5))
+                if b_[0] == 0xE9:
+                    t = t + 5 + struct.unpack('<i', b_[1:])[0]
+                tgt = self._fnames64.get(t, f'{t:#x}')
+            except ValueError:
+                pass
+            regs = [uc.reg_read(r) for r in (UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9)]
+            out.append([tgt, tuple(self.real_to_off(v) if v > 0xFFFFFFFF and self.real_to_off(v) is not None
+                                   else v & 0xFFFFFFFF for v in regs), None])
+            pending.append((address + size, len(out) - 1, rsp))
+
+        h = self.mu64.hook_add(UC_HOOK_CODE, hook, begin=rb, end=self.real_addr(self.image_hi))
+        self.begin()
+        self.call(addr, args, nested=nested)
+        self.end()
+        self.undo()
+        self.mu64.hook_del(h)
         return out
 
     def port_addr(self, name):

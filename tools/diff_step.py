@@ -56,7 +56,7 @@ def main():
             if 0x10000 <= addr < 0x150000:
                 pa, _ = m.ida_to_port(addr)
                 if pa is not None:
-                    mu.mem_write(pa, bytes([val]))
+                    m.write(pa, bytes([val]))
 
     while True:
         stopped.clear()

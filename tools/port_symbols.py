@@ -248,6 +248,34 @@ class PortSymbols:
         self._pf_cache[ti] = out
         return out
 
+    def signature(self, sym):
+        """(return kind, [parameter kinds]) of a function symbol, each 'ptr' (a machine pointer), 'void' or
+        'int' (anything else), from its PDB function type; None if the PDB has no type for it."""
+        TI_GET_SYMTAG, TI_GET_TYPEID, TI_FINDCHILDREN, TI_GET_CHILDRENCOUNT = 0, 4, 7, 13
+
+        def kind(ti):
+            while ti and self._ti(ti, TI_GET_SYMTAG) == 17:  # typedef
+                ti = self._ti(ti, TI_GET_TYPEID)
+            tag = self._ti(ti, TI_GET_SYMTAG) if ti else None
+            if tag == 14:
+                return 'ptr'
+            if tag == 16 and self._ti(ti, 5) == 1:  # TI_GET_BASETYPE btVoid
+                return 'void'
+            return 'int'
+        ft = sym.type_index
+        if not ft or self._ti(ft, TI_GET_SYMTAG) != 13:  # FunctionType
+            return None
+        ret = kind(self._ti(ft, TI_GET_TYPEID))
+        n = self._ti(ft, TI_GET_CHILDRENCOUNT) or 0
+        args = []
+        if n:
+            class FC(ctypes.Structure):
+                _fields_ = [('Count', ctypes.c_uint32), ('Start', ctypes.c_uint32), ('ChildId', ctypes.c_uint32 * n)]
+            fc = FC(n, 0)
+            if self.dbg.SymGetTypeInfo(self.h, self.BASE, ft, TI_FINDCHILDREN, ctypes.byref(fc)):
+                args = [kind(self._ti(c, TI_GET_TYPEID)) for c in fc.ChildId if self._ti(c, TI_GET_SYMTAG) == 20]
+        return ret, args
+
     def members(self, ti):
         """Data members of a struct type: [(name, offset, type index, size)] (empty for other types)."""
         TI_GET_SYMTAG, TI_GET_SYMNAME, TI_GET_TYPEID, TI_FINDCHILDREN, TI_GET_OFFSET, TI_GET_CHILDRENCOUNT = 0, 1, 4, 7, 10, 13
