@@ -396,7 +396,7 @@ void sub_1A6C0(Type_AE400_29795* a1, char a2);
 void sub_1A800(Type_AE400_29795* a1);
 int sub_1A8E0(Type_AE400_29795* a1, Type_AE400_29795* a2);
 int sub_1A990(Type_AE400_29795* a1, Type_AE400_29795* a2);
-void sub_1AA40(Type_AE400_29795* a1, int a2);
+void CreatureShootAt_1AA40(Type_AE400_29795* a1, int a2);
 int sub_1AB10(Type_AE400_29795* a1, int a2);
 int sub_1AB70(Type_AE400_29795* a1, Type_AE400_29795* a2);
 int sub_1AE30(Type_AE400_29795* a1, Type_AE400_29795* a2);
@@ -949,8 +949,8 @@ void sub_41EC0_42200(axis_3d* a1, unsigned __int16 a2, __int16 a3, __int16 a4);
 void sub_41F50_42290(axis_3d* pos1, axis_3d* pos2);
 int KeepHeightAboveGround_42000_42340(axis_3d* a1, int a2, int a3, int a4, int a5);
 int sub_42090_423D0(axis_3d* a1, int a2, int a3, int a4, int a5);
-__int16 sub_42150_42490(axis_3d* a1, axis_3d* a2);
-__int16 sub_42180_424C0(axis_3d* a1, axis_3d* a2);
+__int16 HeadingTo_42150_42490(axis_3d* a1, axis_3d* a2);
+__int16 PitchTo_42180_424C0(axis_3d* a1, axis_3d* a2);
 int sub_42210_42550(__int16 a1, __int16 a2);
 int sub_42240_42580(int a1, __int16 a2);
 int sub_422A0_425E0(unsigned __int16 a1, __int16 a2, int a3, unsigned __int16 a4);
@@ -15652,7 +15652,7 @@ int IsMoveBlocked_11640(Type_AE400_29795* a1x, axis_3d* a2x, char a3)
   {
     if ( (a3 & 4) != 0 )
     {
-      v7 = sub_42180_424C0(&a1x->var_u32_29867_72, a2x);
+      v7 = PitchTo_42180_424C0(&a1x->var_u32_29867_72, a2x);
       v8 = sub_42240_42580(0, v7);
       if ( v8 < 0 )
       {
@@ -16932,7 +16932,7 @@ bool sub_13800(int a1)
   result = sub_15440(a1, v1);
   if ( result )
   {
-    *(_WORD *)(a1 + 34) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v1 + 72));
+    *(_WORD *)(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v1 + 72));
     if ( AiApproachTarget_15470(a1, v1, 512, 2048) )
     {
       if ( AiCastSpell_155F0(a1, 0x10u) )
@@ -16964,7 +16964,7 @@ int AiBuildCastle_138F0(int a1)
   int v2; // ebx
   int v3; // eax
 
-  *(_WORD *)(a1 + 34) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(a1 + 150));
+  *(_WORD *)(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(a1 + 150));
   result = AiApproachTarget_15470(a1, 0, 2048, 3072);
   if ( result )
   {
@@ -16996,7 +16996,7 @@ bool sub_13990(_WORD *a1)
   result = sub_15440((int)a1, v1);
   if ( result )
   {
-    a1[17] = sub_42150_42490((axis_3d*)(a1 + 36), (axis_3d*)(_WORD *)(v1 + 72));
+    a1[17] = HeadingTo_42150_42490((axis_3d*)(a1 + 36), (axis_3d*)(_WORD *)(v1 + 72));
     return AiApproachTarget_15470((int)a1, v1, 256, 2048) == 0;
   }
   return result;
@@ -17046,7 +17046,7 @@ bool sub_13A70(int a1)
   AiCastSpell_155F0(a1, 0xCu);
   if ( !sub_15440(a1, v1) )
     return 0;
-  *(_WORD *)(a1 + 34) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v1 + 72));
+  *(_WORD *)(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v1 + 72));
   return !AiApproachTarget_15470(a1, v1, 256, 2048);
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -17064,12 +17064,12 @@ bool sub_13BA0(int a1)
   result = sub_15440(a1, (int)v1);
   if ( result )
   {
-    *(_WORD *)(a1 + 34) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(v1 + 36)); // PORT: was ((uint8_t*)v1) + 36 - v1 is _WORD*, the target's position is at byte 72 (asm lea edi,[esi+48h])
+    *(_WORD *)(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(v1 + 36)); // PORT: was ((uint8_t*)v1) + 36 - v1 is _WORD*, the target's position is at byte 72 (asm lea edi,[esi+48h])
     if ( AiApproachTarget_15470(a1, (int)v1, 1024, 3072) )
     {
       if ( AiCastSpell_155F0(a1, 3u) )
       {
-        v3 = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(v1 + 36));
+        v3 = HeadingTo_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(v1 + 36));
         if ( (unsigned __int16)sub_42210_42550(*(_WORD *)(a1 + 30), v3) < 0x1Cu )
           v1[72] = *(_WORD *)(a1 + 24);
       }
@@ -17100,7 +17100,7 @@ bool sub_13CA0(int a1)
   result = sub_15440(a1, v1);
   if ( result )
   {
-    *(_WORD *)(a1 + 34) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v1 + 72));
+    *(_WORD *)(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v1 + 72));
     if ( AiApproachTarget_15470(a1, v1, 2048, 3584) )
     {
       v3 = *(__int16 *)(*(_DWORD *)(a1 + 160) + 526);
@@ -17142,7 +17142,7 @@ bool sub_13DD0(int a1)
   result = sub_15440(a1, v1);
   if ( !result )
     return result;
-  *(_WORD *)(a1 + 34) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v1 + 72));
+  *(_WORD *)(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v1 + 72));
   if ( !AiApproachTarget_15470(a1, v1, 3072, 4096) || *(__int16 *)(*(_DWORD *)(a1 + 160) + 404) < 0 )
     return 1;
   v3 = sub_16030(a1);
@@ -17946,7 +17946,7 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
         return 0;
       }
       *(_WORD *)(2 * a2 + *(_DWORD *)(a1 + 160) + 724) = word_90034[a2];
-      *(_WORD *)(a1 + 32) = sub_42180_424C0(
+      *(_WORD *)(a1 + 32) = PitchTo_42180_424C0(
           (axis_3d*)(_WORD *)(a1 + 72),
           (axis_3d*)(_WORD *)(164 * *(unsigned __int16 *)(a1 + 146) + dword_AE400_AE3F0() + 29795 + 72));
       *(_WORD *)(v2 + 48) = *(_WORD *)(v2 + 50);
@@ -17994,7 +17994,7 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
         return 0;
       }
       *(_WORD *)(2 * a2 + *(_DWORD *)(a1 + 160) + 724) = word_90034[a2];
-      *(_WORD *)(a1 + 32) = sub_42180_424C0(
+      *(_WORD *)(a1 + 32) = PitchTo_42180_424C0(
           (axis_3d*)(_WORD *)(a1 + 72),
           (axis_3d*)(_WORD *)(dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)(a1 + 146) + 72));
       *(_WORD *)(v5 + 48) = *(_WORD *)(v5 + 50);
@@ -19956,8 +19956,8 @@ __int16 sub_19550(int a1)
     sub_41E80_421C0((Type_AE400_29795*)a1);
   if ( *(_BYTE *)(a1 + 58) )
   {
-    *(_WORD *)(a1 + 30) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v2 + 72));
-    *(_WORD *)(a1 + 32) = sub_42180_424C0((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v2 + 72));
+    *(_WORD *)(a1 + 30) = HeadingTo_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v2 + 72));
+    *(_WORD *)(a1 + 32) = PitchTo_42180_424C0((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v2 + 72));
     v3 = v2 + 72;
     *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)v3;
     word_AE454_AE444.z = *(_WORD *)(v3 + 4);
@@ -20240,7 +20240,7 @@ void sub_19B10(Type_AE400_29795* a1x, char a2)
         if ( v13 <= v15 )
         {
           v16 = a1x->var_u32_29951_156->v_30;
-          v14 = sub_42150_42490(&a1x->var_u32_29867_72, &v9x->var_u32_29867_72);
+          v14 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, &v9x->var_u32_29867_72);
           if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v14) < v16 && v13 < v10 )
           {
             v17x = v9x;
@@ -20367,7 +20367,7 @@ void sub_19D70(Type_AE400_29795* a1x, char a2)
         if ( v14 <= v22 && (*(_BYTE *)(j + 16) & 0x20) == 0 )
         {
           v23 = a1x->var_u32_29951_156->v_30;
-          v15 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(j + 72));
+          v15 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(j + 72));
           if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v15) < v23 && v14 < v11 )
           {
             v26 = j;
@@ -20399,7 +20399,7 @@ LABEL_42:
           if ( v20 <= v25 )
           {
             v24 = a1x->var_u32_29951_156->v_30;
-            v21 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v18 + 72));
+            v21 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v18 + 72));
             if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v21) < v24 && v20 < v17 )
             {
               v27 = v18;
@@ -20497,7 +20497,7 @@ int sub_1A120(Type_AE400_29795* a1x, char a2, unsigned __int16 (*a3)(Type_AE400_
   MoveCreature_196E0(a1x);
   v12 = dword_AE400_AE3F0() + 29795 + 164 * a1x->var_u16_29941_146;
   if ( (a1x->var_u8_29858_63 & 3) == 0 )
-      a1x->var_u16_29829_34 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v12 + 72));
+      a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v12 + 72));
   if ( *(int *)(v12 + 12) < 0 || (*(_BYTE *)(v12 + 17) & 4) != 0 )
   {
 LABEL_26:
@@ -20629,7 +20629,7 @@ LABEL_35:
         case 3:
             a1x->var_u16_29847_52 = v3x->var_u16_29847_52;
 LABEL_24:
-            a1x->var_u16_29829_34 = sub_42150_42490(
+            a1x->var_u16_29829_34 = HeadingTo_42150_42490(
               &a1x->var_u32_29867_72,
               (axis_3d*)(_WORD *)(164 * a1x->var_u16_29847_52 + dword_AE400_AE3F0() + 29795 + 72));
           v13 = *(_DWORD *)(dword_AE408_AE3F8() + 4 * a1x->var_u8_29860_65 + 36382);
@@ -20650,7 +20650,7 @@ LABEL_24:
             v15 = (__int16)a1x->var_u32_29867_72.y - *(__int16 *)(v13 + 74);
             if ( (int)((HIDWORD(v15) ^ v15) - HIDWORD(v15)) < 256 )
             {
-              a1x->var_u16_29829_34 = sub_42150_42490((axis_3d*)(_WORD *)(v13 + 72), &a1x->var_u32_29867_72);
+              a1x->var_u16_29829_34 = HeadingTo_42150_42490((axis_3d*)(_WORD *)(v13 + 72), &a1x->var_u32_29867_72);
               break;
             }
           }
@@ -20736,8 +20736,8 @@ int sub_1A8E0(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
     *(_BYTE *)(v3 + 68) = 10;
     *(_BYTE *)(v3 + 69) = 0;
     *(_WORD *)(v3 + 24) = a1x->id_29819_24;
-    *(_WORD *)(v3 + 30) = sub_42150_42490(v2x, &a2x->var_u32_29867_72);
-    *(_WORD *)(v4 + 32) = sub_42180_424C0(v2x, &a2x->var_u32_29867_72);
+    *(_WORD *)(v3 + 30) = HeadingTo_42150_42490(v2x, &a2x->var_u32_29867_72);
+    *(_WORD *)(v4 + 32) = PitchTo_42180_424C0(v2x, &a2x->var_u32_29867_72);
     *(_WORD *)(v4 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
     v5 = a1x->var_u16_29941_146;
     *(_DWORD *)(v4 + 156) = (uint32)&creatureTypes_98F38[6];
@@ -20765,8 +20765,8 @@ int sub_1A990(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
   if ( v3 )
   {
     *(_WORD *)(v3 + 24) = a1x->id_29819_24;
-    *(_WORD *)(v3 + 30) = sub_42150_42490(v2x, &a2x->var_u32_29867_72);
-    *(_WORD *)(v3 + 32) = sub_42180_424C0(v2x, &a2x->var_u32_29867_72);
+    *(_WORD *)(v3 + 30) = HeadingTo_42150_42490(v2x, &a2x->var_u32_29867_72);
+    *(_WORD *)(v3 + 32) = PitchTo_42180_424C0(v2x, &a2x->var_u32_29867_72);
     *(_WORD *)(v3 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
     *(_WORD *)(v3 + 146) = a1x->var_u16_29941_146;
     *(_BYTE *)(v3 + 67) = a1x->sModel_29862_67;
@@ -20780,7 +20780,9 @@ int sub_1A990(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1AA40(Type_AE400_29795* a1x, int a2)
+/// Creature a1x fires a projectile (9/13, sprite 203) at entity a2: aimed at a2's position, speed
+/// +44 = 600 when a1x has +144 set, else 400.
+void CreatureShootAt_1AA40(Type_AE400_29795* a1x, int a2)
 {
   axis_3d* v2x; // edi
   int v3; // ebx
@@ -20792,8 +20794,10 @@ void sub_1AA40(Type_AE400_29795* a1x, int a2)
   if ( v3 )
   {
     *(_WORD *)(v3 + 24) = a1x->id_29819_24;
-    *(_WORD *)(v3 + 30) = sub_42150_42490(v2x, &a1x->var_u32_29867_72);
-    *(_WORD *)(v3 + 32) = sub_42180_424C0(v2x, &a1x->var_u32_29867_72);
+    // PORT: aim at the target a2 (asm: ebp = a2 + 48h); was the shooter's own position, so every shot
+    // left with heading/pitch 0 - skeletons fired into empty space
+    *(_WORD *)(v3 + 30) = HeadingTo_42150_42490(v2x, (axis_3d*)(a2 + 72));
+    *(_WORD *)(v3 + 32) = PitchTo_42180_424C0(v2x, (axis_3d*)(a2 + 72));
     *(_WORD *)(v3 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
     *(_WORD *)(v3 + 146) = a1x->var_u16_29941_146;
     *(_BYTE *)(v3 + 67) = a1x->sModel_29862_67;
@@ -20846,8 +20850,8 @@ int sub_1AB70(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 
   v20 = a1x->id_29819_24;
   v17 = 0;
-  v19 = sub_42150_42490(&a1x->var_u32_29867_72, &a2x->var_u32_29867_72);
-  v21 = sub_42180_424C0(&a1x->var_u32_29867_72, &a2x->var_u32_29867_72);
+  v19 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, &a2x->var_u32_29867_72);
+  v21 = PitchTo_42180_424C0(&a1x->var_u32_29867_72, &a2x->var_u32_29867_72);
   v16 = a1x->collisionBox_29873_78.radiusZ_29879_84;
   v15 = a1x->var_u16_29941_146;
   v18 = a1x->sModel_29862_67;
@@ -20963,8 +20967,8 @@ int sub_1AE30(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
     *(_BYTE *)(v3 + 68) = 10;
     *(_BYTE *)(v3 + 69) = 0;
     *(_WORD *)(v3 + 24) = a1x->id_29819_24;
-    *(_WORD *)(v3 + 30) = sub_42150_42490(v2x, &a2x->var_u32_29867_72);
-    *(_WORD *)(v4 + 32) = sub_42180_424C0(v2x, &a2x->var_u32_29867_72);
+    *(_WORD *)(v3 + 30) = HeadingTo_42150_42490(v2x, &a2x->var_u32_29867_72);
+    *(_WORD *)(v4 + 32) = PitchTo_42180_424C0(v2x, &a2x->var_u32_29867_72);
     *(_WORD *)(v4 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
     v5 = a1x->var_u16_29941_146;
     *(_DWORD *)(v4 + 156) = (uint32)&creatureTypes_98F38[6];
@@ -20996,8 +21000,8 @@ int sub_1AEE0(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
     *(_BYTE *)(v4 + 68) = 10;
     *(_BYTE *)(v4 + 69) = 23;
     *(_WORD *)(v4 + 24) = a1x->id_29819_24;
-    *(_WORD *)(v4 + 30) = sub_42150_42490(v2x, &a2x->var_u32_29867_72);
-    *(_WORD *)(v5 + 32) = sub_42180_424C0(v2x, &a2x->var_u32_29867_72);
+    *(_WORD *)(v4 + 30) = HeadingTo_42150_42490(v2x, &a2x->var_u32_29867_72);
+    *(_WORD *)(v5 + 32) = PitchTo_42180_424C0(v2x, &a2x->var_u32_29867_72);
     *(_WORD *)(v5 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
     *(_WORD *)(v5 + 146) = a1x->var_u16_29941_146;
     *(_DWORD *)(v5 + 156) = (uint32)&creatureTypes_98F38[6];
@@ -21082,7 +21086,7 @@ void sub_1B160(Type_AE400_29795* a1x)
       v2 = 164 * a1x->var_u16_29941_146 + dword_AE400_AE3F0() + 29795;
       if ( *(_BYTE *)(v2 + 64) )
       {
-        a1x->var_u16_29829_34 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD*)(v2 + 72));
+        a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD*)(v2 + 72));
       }
       else
       {
@@ -21400,8 +21404,8 @@ void sub_1B5D0(Type_AE400_29795* a1x)
         {
           if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v36 + 72)) > 0x1000 )
           {
-            //LOWORD(v7) = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v36 + 72));
-            a1x->var_u16_29829_34 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD*)(v36 + 72));
+            //LOWORD(v7) = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v36 + 72));
+            a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD*)(v36 + 72));
           }
           else
           {
@@ -21446,7 +21450,7 @@ void sub_1B5D0(Type_AE400_29795* a1x)
             if ( v18 <= v43 && (*(_BYTE *)(v16 + 16) & 0x20) == 0 )
             {
               v39 = a1x->var_u32_29951_156->v_30;
-              v19 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v16 + 72));
+              v19 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v16 + 72));
               if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v19) < v39 && v18 < v15 )
               {
                 v38 = v16;
@@ -21514,7 +21518,7 @@ void sub_1B5D0(Type_AE400_29795* a1x)
                 if ( v34 <= v42 )
                 {
                   v40 = a1x->var_u32_29951_156->v_30;
-                  v35 = sub_42150_42490(&a1x->var_u32_29867_72, &v30x->var_u32_29867_72);
+                  v35 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, &v30x->var_u32_29867_72);
                   if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v35) < v40 && v34 < v31 )
                   {
                     v41x = v30x;
@@ -21734,7 +21738,7 @@ void sub_1BD20(Type_AE400_29795* a1x)
         if ( v11 <= v30 && (*(_BYTE *)(v8 + 16) & 0x20) == 0 )
         {
           v27 = a1x->var_u32_29951_156->v_30;
-          v12 = sub_42150_42490(v28x, (axis_3d*)(_WORD *)(v8 + 72));
+          v12 = HeadingTo_42150_42490(v28x, (axis_3d*)(_WORD *)(v8 + 72));
           if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v12) < v27 && v11 < v7 )
           {
             v29 = v8;
@@ -21758,7 +21762,7 @@ void sub_1BD20(Type_AE400_29795* a1x)
           v17 = a1x->actSpeed_29923_128 << 7;
           if ( sub_423D0_42710(v28x, (axis_3d*)(_WORD *)(v15 + 72)) > v17 )
           {
-             a1x->var_u16_29829_34 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v16);
+             a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v16);
           }
           else
           {
@@ -21915,7 +21919,7 @@ void sub_1C170(Type_AE400_29795* a1x)
         {
           if ( v10 <= 20 * v11 )
               a1x->var_u16_29821_26 = 3;
-          result = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v9 + 72));
+          result = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v9 + 72));
           a1x->var_u16_29829_34 = result;
         }
         else
@@ -22053,7 +22057,7 @@ void sub_1C4F0(Type_AE400_29795* a1x)
   MoveCreature_196E0(a1x);
   v10 = 164 * a1x->var_u16_29941_146 + dword_AE400_AE3F0() + 29795;
   if ( (a1x->var_u8_29858_63 & 3) == 0 )
-    a1x->var_u16_29829_34 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v10 + 72));
+    a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v10 + 72));
   if ( *(int *)(v10 + 12) < 0 || (*(_BYTE *)(v10 + 17) & 4) != 0 )
   {
 LABEL_30:
@@ -22068,7 +22072,7 @@ LABEL_30:
   if ( a1x->var_u16_29821_26 > 0 )
   {
     dword_AE400_AE3F0(v12);
-    v13 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v10 + 72));
+    v13 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v10 + 72));
     HIBYTE(v13) = (HIBYTE(v13) + 4) & 7;
     *(_WORD *)(*(_DWORD *)(v10 + 160) + 24) = v13;
     *(_WORD *)(*(_DWORD *)(v10 + 160) + 26) = 256;
@@ -22100,8 +22104,8 @@ LABEL_30:
       *(_BYTE *)(v19 + 68) = 10;
       *(_BYTE *)(v19 + 69) = 23;
       *(_WORD *)(v19 + 24) = a1x->id_29819_24;
-      *(_WORD *)(v19 + 30) = sub_42150_42490(v22x, (axis_3d*)(_WORD *)(v10 + 72));
-      *(_WORD *)(v20 + 32) = sub_42180_424C0(v22x, (axis_3d*)(_WORD *)(v10 + 72));
+      *(_WORD *)(v19 + 30) = HeadingTo_42150_42490(v22x, (axis_3d*)(_WORD *)(v10 + 72));
+      *(_WORD *)(v20 + 32) = PitchTo_42180_424C0(v22x, (axis_3d*)(_WORD *)(v10 + 72));
       *(_WORD *)(v20 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
       v21 = a1x->var_u16_29941_146;
       *(_DWORD *)(v20 + 156) = (uint32)&creatureTypes_98F38[6];
@@ -22337,7 +22341,7 @@ void sub_1CA50(Type_AE400_29795* a1x)
           if ( v12 <= v23 )
           {
             v20 = a1x->var_u32_29951_156->v_30;
-            v13 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(j + 72));
+            v13 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(j + 72));
             if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v13) < v20 && v12 < v9 )
             {
               v25 = j;
@@ -22369,7 +22373,7 @@ void sub_1CA50(Type_AE400_29795* a1x)
               if ( v18 <= v22 )
               {
                 v21 = a1x->var_u32_29951_156->v_30;
-                v19 = sub_42150_42490(&a1x->var_u32_29867_72, &v16x->var_u32_29867_72);
+                v19 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, &v16x->var_u32_29867_72);
                 if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v19) < v21 && v18 < v15 )
                 {
                   v24x = v16x;
@@ -22615,7 +22619,7 @@ void sub_1D060(Type_AE400_29795* a1x)
     v46 = v52;
     if ( v52 )
     {
-      a1x->var_u16_29829_34 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v52 + 72));
+      a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v52 + 72));
       v42 = *(__int16 *)(v52 + 80) + a1x->var_u32_29951_156->v_28;
       if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v52 + 72)) > v42 )
       {
@@ -22661,7 +22665,7 @@ void sub_1D060(Type_AE400_29795* a1x)
             if ( v20 <= v48 && (*(_BYTE *)(k + 16) & 0x20) == 0 )
             {
               v43 = a1x->var_u32_29951_156->v_30;
-              v21 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(k + 72));
+              v21 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(k + 72));
               if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v21) < v43 && v20 < v44 )
               {
                 v41 = k;
@@ -23042,7 +23046,7 @@ LABEL_29:
     goto LABEL_31;
   }
   if ( !(a1x->var_u8_29858_63 % 10) )
-      a1x->var_u16_29829_34 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v9 + 72));
+      a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v9 + 72));
   if ( !(a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26) )
   {
     v11 = a1x->var_u32_29951_156->v_28;
@@ -23050,7 +23054,7 @@ LABEL_29:
       v11 += *(__int16 *)(v9 + 80);
     if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v9 + 72)) < v11 )
     {
-      sub_1AA40(a1x, v9);
+      CreatureShootAt_1AA40(a1x, v9);
       goto LABEL_31;
     }
     goto LABEL_29;
@@ -23341,7 +23345,7 @@ LABEL_53:
             if ( v13 <= v23 && (*(_BYTE *)(j + 16) & 0x20) == 0 )
             {
               v22 = a1x->var_u32_29951_156->v_30;
-              v14 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(j + 72));
+              v14 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(j + 72));
               if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v14) < v22 && v13 < v10 )
               {
                 v21 = j;
@@ -23484,7 +23488,7 @@ void sub_1E380(Type_AE400_29795* a1x)
     if ( *(int *)(v9 + 12) >= 0 && (*(_BYTE *)(v9 + 17) & 4) == 0 && *(_BYTE *)(v9 + 64) )
     {
       if ( (a1x->var_u8_29858_63 & 7) == 0 )
-        a1x->var_u16_29829_34 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v9 + 72));
+        a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v9 + 72));
     }
     else
     {
@@ -23541,8 +23545,8 @@ LABEL_38:
       *(_WORD *)(v15 + 76) = v16 + v17;
       v18 = (_WORD *)(v9 + 72);
       *(_WORD *)(v15 + 146) = a1x->var_u16_29941_146;
-      *(_WORD *)(v15 + 30) = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v18);
-      v19 = sub_42180_424C0(&a1x->var_u32_29867_72, (axis_3d*)v18);
+      *(_WORD *)(v15 + 30) = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v18);
+      v19 = PitchTo_42180_424C0(&a1x->var_u32_29867_72, (axis_3d*)v18);
       //v20 = a1 - (dword_AE400_AE3F0() + 29795);
       *(_WORD *)(v15 + 32) = v19;
       sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 9);
@@ -24021,7 +24025,7 @@ void sub_1F120(Type_AE400_29795* a1x)
         sub_424F0_42830(a1x, 0x49u);
       }
       v11 = (_WORD *)(v9 + 72);
-      a1x->var_u16_29829_34 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v11);
+      a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v11);
       if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)v11) < 0xA00 )
       {
         a1x->var_u16_29821_26 = 0;
@@ -24237,7 +24241,7 @@ void sub_1F640(Type_AE400_29795* a1x)
           goto LABEL_36;
         if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v16 + 72)) > 0x800 )
         {
-          LOWORD(j) = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v16 + 72));
+          LOWORD(j) = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v16 + 72));
           a1x->var_u16_29829_34 = j;
           return;
         }
@@ -24413,7 +24417,7 @@ void sub_1FAC0(Type_AE400_29795* a1x)
           goto LABEL_37;
         if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v16 + 72)) > 0x800 )
         {
-          LOWORD(j) = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v16 + 72));
+          LOWORD(j) = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v16 + 72));
           a1x->var_u16_29829_34 = j;
           return;
         }
@@ -24593,7 +24597,7 @@ void sub_1FF60(Type_AE400_29795* a1x)
         if ( v12 <= v14 && (*(_BYTE *)(j + 16) & 0x20) == 0 )
         {
           v15 = a1x->var_u32_29951_156->v_30;
-          v13 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(j + 72));
+          v13 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(j + 72));
           if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v13) < v15 && v12 < v9 )
           {
             v16 = j;
@@ -24678,7 +24682,7 @@ void sub_201D0(Type_AE400_29795* a1x)
   }
   v8 = v1 + 29795 + 164 * a1x->var_u16_29941_146;
   if ( (a1x->var_u8_29858_63 & 3) == 0 )
-    a1x->var_u16_29829_34 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v8 + 72));
+    a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v8 + 72));
   if ( *(int *)(v8 + 12) < 0 || (*(_BYTE *)(v8 + 17) & 4) != 0 )
     goto LABEL_22;
   //v9 = *(_DWORD *)(a1 + 156);
@@ -24698,8 +24702,8 @@ LABEL_22:
     if ( v10 )
     {
       *(_WORD *)(v10 + 24) = a1x->id_29819_24;
-      *(_WORD *)(v10 + 30) = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v13);
-      *(_WORD *)(v11 + 32) = sub_42180_424C0(&a1x->var_u32_29867_72, (axis_3d*)v13);
+      *(_WORD *)(v10 + 30) = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v13);
+      *(_WORD *)(v11 + 32) = PitchTo_42180_424C0(&a1x->var_u32_29867_72, (axis_3d*)v13);
       *(_WORD *)(v11 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
       *(_WORD *)(v11 + 146) = a1x->var_u16_29941_146;
       *(_BYTE *)(v11 + 67) = a1x->sModel_29862_67;
@@ -24842,7 +24846,7 @@ void sub_20480(Type_AE400_29795* a1x)
         v8 = (__int16)a1x->var_u32_29867_72.y - *(__int16 *)(i + 74);
         if ( (int)((HIDWORD(v8) ^ v8) - HIDWORD(v8)) < 256 )
         {
-            a1x->var_u16_29829_34 = sub_42150_42490((axis_3d*)(_WORD *)(i + 72), &a1x->var_u32_29867_72);
+            a1x->var_u16_29829_34 = HeadingTo_42150_42490((axis_3d*)(_WORD *)(i + 72), &a1x->var_u32_29867_72);
           break;
         }
       }
@@ -24998,7 +25002,7 @@ void sub_207E0(Type_AE400_29795* a1x)
   if ( (a1x->var_u8_29858_63 & 7) == 0
     && (*(_BYTE *)(v11 + 64) == 3 || Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v11 + 72)) >= 0x200) )
   {
-    a1x->var_u16_29829_34 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v11 + 72));
+    a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v11 + 72));
   }
   if ( *(int *)(v11 + 12) < 0 || (*(_BYTE *)(v11 + 17) & 4) != 0 )
     return sub_424F0_42830(a1x, 0x61u);
@@ -25017,8 +25021,8 @@ void sub_207E0(Type_AE400_29795* a1x)
       *(_BYTE *)(v13 + 67) = a1x->sModel_29862_67;
       *(_BYTE *)(v13 + 66) = a1x->sClass_29861_66;
       *(_WORD *)(v13 + 24) = a1x->id_29819_24;
-      *(_WORD *)(v13 + 30) = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v11 + 72));
-      *(_WORD *)(v14 + 32) = sub_42180_424C0(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v11 + 72));
+      *(_WORD *)(v13 + 30) = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v11 + 72));
+      *(_WORD *)(v14 + 32) = PitchTo_42180_424C0(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v11 + 72));
       *(_WORD *)(v14 + 76) += 4 * a1x->collisionBox_29873_78.radiusZ_29879_84;
       v15 = a1x->var_u16_29941_146;
       *(_WORD *)(v14 + 44) = 3000;
@@ -25035,7 +25039,7 @@ void sub_207E0(Type_AE400_29795* a1x)
       return sub_424F0_42830(a1x, 0x61u);
     if ( !(a1x->var_u8_29858_63 % (2 * a1x->var_u32_29951_156->v_26)) )
       sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 39);
-    v17 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v11 + 72));
+    v17 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v11 + 72));
     result = sub_42210_42550(a1x->var_u16_29825_30, v17);
     if ( result < 0xE3u )
       a1x->var_u16_29821_26 = 15;
@@ -28104,7 +28108,7 @@ void sub_26A60(int a1)
       v4 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)(v3 + 10);
       if ( EntitiesCollide_11950((Type_AE400_29795*)a1, (Type_AE400_29795*)v4) )
       {
-        v5 = sub_42150_42490((axis_3d*)(_WORD *)(v4 + 72), (axis_3d*)(uint16*)v8);
+        v5 = HeadingTo_42150_42490((axis_3d*)(_WORD *)(v4 + 72), (axis_3d*)(uint16*)v8);
         if ( (unsigned __int16)sub_42210_42550(*(_WORD *)(v4 + 30), v5) < 0xAAu )
         {
           v7 = *(_DWORD *)(a1 + 156);
@@ -28349,7 +28353,7 @@ void sub_27030(Type_AE400_29795* event)//1F8030_
   //v2 = event->str_29885_90.var_u16_29913_118;
   if (event->str_29885_90.var_u16_29913_118)
   {
-    event->var_u16_29825_30 = sub_42150_42490(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->str_29885_90.var_u16_29913_118].var_u32_29867_72);
+    event->var_u16_29825_30 = HeadingTo_42150_42490(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->str_29885_90.var_u16_29913_118].var_u32_29867_72);
     //v18 = event->var_u16_29825_30;
     word_AE454_AE444.x = 0;
     word_AE454_AE444.y = 0;
@@ -28369,8 +28373,8 @@ void sub_27030(Type_AE400_29795* event)//1F8030_
     {
       //v19 = str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72;
       event->var_u16_29841_46 = 128;
-      //v5 = sub_42150_42490(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72);
-      event->var_u16_29825_30 = sub_42150_42490(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72);
+      //v5 = HeadingTo_42150_42490(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72);
+      event->var_u16_29825_30 = HeadingTo_42150_42490(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72);
       //v6 = event->var_u16_29941_146;
       int tempV7 = sub_423D0_42710(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72);
       if (tempV7 <= 1024 )
@@ -41668,7 +41672,7 @@ int sub_35D30_360F0(unsigned __int16 a1, unsigned __int16 a2, __int16 a3, __int1
   v7[2] = 32 * (unsigned __int8)mapHeightmap_DC1E0_DC1D0[256 * a2 + a1];
   v8[0] = a3 << 8;
   v8[1] = a4 << 8;
-  v4 = sub_42150_42490((axis_3d*)(uint16*)v7, (axis_3d*)(uint16*)v8);
+  v4 = HeadingTo_42150_42490((axis_3d*)(uint16*)v7, (axis_3d*)(uint16*)v8);
   v5 = sub_423D0_42710((axis_3d*)(uint16*)v7, (axis_3d*)(uint16*)v8);
   result = (int)CreateEntity_373F0_377B0((axis_3d*)v7, 10, 32);
   if ( result )
@@ -41695,7 +41699,7 @@ int sub_35DE0_361A0(unsigned __int16 a1, unsigned __int16 a2, __int16 a3, __int1
   v9[2] = 16 * (unsigned __int8)mapHeightmap_DC1E0_DC1D0[256 * a2 + a1];
   v10[0] = a3 << 8;
   v10[1] = a4 << 8;
-  v4 = sub_42150_42490((axis_3d*)(uint16*)v9, (axis_3d*)(uint16*)v10);
+  v4 = HeadingTo_42150_42490((axis_3d*)(uint16*)v9, (axis_3d*)(uint16*)v10);
   v5 = sub_423D0_42710((axis_3d*)(uint16*)v9, (axis_3d*)(uint16*)v10);
   result = (int)CreateEntity_373F0_377B0((axis_3d*)v9, 10, 51);
   v7 = result;
@@ -51672,13 +51676,13 @@ int sub_42090_423D0(axis_3d* a1x, int a2, int a3, int a4, int a5)
 }
 
 //SYNCHRONIZED WITH REMC1
-__int16 sub_42150_42490(axis_3d* a1x, axis_3d* a2x)
+__int16 HeadingTo_42150_42490(axis_3d* a1x, axis_3d* a2x)
 {
   return sub_40F87_412C7(a2x->x - a1x->x, a2x->y - a1x->y);
 }
 
 //SYNCHRONIZED WITH REMC1
-__int16 sub_42180_424C0(axis_3d* a1x, axis_3d* a2x)
+__int16 PitchTo_42180_424C0(axis_3d* a1x, axis_3d* a2x)
 {
   __int16 v3; // [esp-4h] [ebp-8h]
   v3 = -(__int16)sub_423D0_42710(a1x, a2x);
@@ -54140,8 +54144,8 @@ int sub_45410_45750(Type_AE400_29795* a1x)//216410_
   v10 = 1;
   if ( sub_11810(&word_AE454_AE444) == 256 )
   {
-    v1 = sub_42150_42490(&a1x->var_u32_29867_72, &word_AE454_AE444);
-    v8 = sub_42180_424C0(&a1x->var_u32_29867_72, &word_AE454_AE444);
+    v1 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, &word_AE454_AE444);
+    v8 = PitchTo_42180_424C0(&a1x->var_u32_29867_72, &word_AE454_AE444);
     v7 = Distance3D_42340_42680(&a1x->var_u32_29867_72, &word_AE454_AE444);
     word_AE454_AE444 = a1x->var_u32_29867_72;
     v9 = ((((int)v1 >> 9) + 1) << 9) & 0x7FF;
@@ -54303,7 +54307,7 @@ void sub_455D0_45910(Type_AE400_29795* a1x)//2165D0_
       v23 = 3 * a1x->actSpeed_29923_128 / -2;
     if ( (__int16)v23 > (__int16)v22 )
       LOWORD(v23) = 3 * a1x->actSpeed_29923_128 / 2;
-    v24 = sub_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v20 + 72));
+    v24 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v20 + 72));
     v25 = a1x->var_u16_29825_30 + sub_422A0_425E0(a1x->var_u16_29825_30, v24, 5, 0x82u);
     HIBYTE(v25) &= 7u;
     a1x->var_u16_29825_30 = v25;
@@ -54641,8 +54645,8 @@ void sub_463B0_466F0(int a1)
   int result; // eax
 
   v1 = (_WORD *)(dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)(a1 + 38) + 72);
-  *(_WORD *)(a1 + 34) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)v1);
-  *(_WORD *)(a1 + 36) = sub_42180_424C0((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)v1);
+  *(_WORD *)(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)v1);
+  *(_WORD *)(a1 + 36) = PitchTo_42180_424C0((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)v1);
   *(_WORD *)(a1 + 30) += sub_422A0_425E0(*(_WORD *)(a1 + 30), *(_WORD *)(a1 + 34), 5, 0x16u);
   *(_BYTE *)(a1 + 31) &= 7u;
   *(_WORD *)(a1 + 32) += sub_422A0_425E0(*(_WORD *)(a1 + 32), *(_WORD *)(a1 + 36), 5, 0x16u);
@@ -54774,8 +54778,8 @@ int sub_46540_46880(Type_AE400_29795* a1x)
     if ( v13x > v12x )
     {
       v14x = &v13x->var_u32_29867_72;
-      *(_WORD *)((uint8_t*)a1x->var_u32_29955_160 + 24) = sub_42150_42490(v14x, &a1x->var_u32_29867_72);
-      *(_WORD *)((uint8_t*)a1x->var_u32_29955_160 + 26) = sub_42180_424C0(v14x, &a1x->var_u32_29867_72);
+      *(_WORD *)((uint8_t*)a1x->var_u32_29955_160 + 24) = HeadingTo_42150_42490(v14x, &a1x->var_u32_29867_72);
+      *(_WORD *)((uint8_t*)a1x->var_u32_29955_160 + 26) = PitchTo_42180_424C0(v14x, &a1x->var_u32_29867_72);
       *(_WORD *)((uint8_t*)a1x->var_u32_29955_160 + 22) = a1x->str_29885_90.var_u16_29885_90 / 10;
       if ( *(__int16 *)((uint8_t*)a1x->var_u32_29955_160 + 22) < 0 )
         *(_WORD *)((uint8_t*)a1x->var_u32_29955_160 + 22) = 0;
@@ -55806,7 +55810,7 @@ int sub_47F90_482D0(int a1)
   {
     *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)(a1 + 72);
     word_AE454_AE444.z = *(_WORD *)(a1 + 76);
-    *(_WORD *)(a1 + 30) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v1 + 72));
+    *(_WORD *)(a1 + 30) = HeadingTo_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(v1 + 72));
     v2 = *(_BYTE *)(v1 + 64);
     if ( v2 == 10 )
     {
@@ -61615,8 +61619,8 @@ int sub_524E0_52820(int a1)
 int AimAtEntity_52500_52840(_WORD *a1, int a2)
 {
   sub_524C0_52800(a2);
-  a1[17] = sub_42150_42490((axis_3d*)(a1 + 36), (axis_3d*)(_WORD *)(a2 + 72));
-  a1[18] = sub_42180_424C0((axis_3d*)(a1 + 36), (axis_3d*)(_WORD *)(a2 + 72));
+  a1[17] = HeadingTo_42150_42490((axis_3d*)(a1 + 36), (axis_3d*)(_WORD *)(a2 + 72));
+  a1[18] = PitchTo_42180_424C0((axis_3d*)(a1 + 36), (axis_3d*)(_WORD *)(a2 + 72));
   return sub_524E0_52820(a2);
 }
 
@@ -61630,8 +61634,8 @@ int sub_52550_52890(int a1, int a2)
   __int16 v7; // ax
 
   sub_524C0_52800(a2);
-  *(_WORD *)(a1 + 34) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(a2 + 72));
-  v3 = sub_42180_424C0((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(a2 + 72));
+  *(_WORD *)(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(a2 + 72));
+  v3 = PitchTo_42180_424C0((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(a2 + 72));
   v4 = *(_DWORD *)(a1 + 156);
   *(_WORD *)(a1 + 36) = v3;
   v5 = *(_WORD *)(a1 + 30)
@@ -61655,8 +61659,8 @@ __int16 sub_52610_52950(int a1, int a2)
   int v6; // esi
   __int16 result; // ax
 
-  *(_WORD *)(a1 + 34) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(a2 + 72));
-  v3 = sub_42180_424C0((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(a2 + 72));
+  *(_WORD *)(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(a2 + 72));
+  v3 = PitchTo_42180_424C0((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(a2 + 72));
   v4 = *(_DWORD *)(a1 + 156);
   *(_WORD *)(a1 + 36) = v3;
   v5 = *(_WORD *)(a1 + 30)
@@ -62659,8 +62663,8 @@ char UpdateSpawningMissile_53B50_53E90(int a1)
   v16 = 0;
   if ( (v1 & 2) != 0 )
   {
-    *(_WORD *)(a1 + 34) = sub_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(a1 + 150));
-    *(_WORD *)(a1 + 36) = sub_42180_424C0((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(a1 + 150));
+    *(_WORD *)(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(a1 + 150));
+    *(_WORD *)(a1 + 36) = PitchTo_42180_424C0((axis_3d*)(_WORD *)(a1 + 72), (axis_3d*)(_WORD *)(a1 + 150));
     v3 = *(_WORD *)(a1 + 30)
        + sub_422A0_425E0(
            *(_WORD *)(a1 + 30),
@@ -63322,9 +63326,9 @@ int ScoreAimTarget_54A90_54FC0(__int16 *a1, int a2, unsigned __int16 a3, unsigne
   unsigned __int16 v13; // [esp+4h] [ebp-14h]
 
   sub_524C0_52800(a2);
-  v4 = sub_42150_42490((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)(a2 + 72));
+  v4 = HeadingTo_42150_42490((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)(a2 + 72));
   v12 = sub_42210_42550(a1[15], v4);
-  if ( v12 <= a3 && (v5 = sub_42180_424C0((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)(a2 + 72)), v13 = sub_42210_42550(a1[16], v5), v13 <= a4) )
+  if ( v12 <= a3 && (v5 = PitchTo_42180_424C0((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)(a2 + 72)), v13 = sub_42210_42550(a1[16], v5), v13 <= a4) )
   {
     v7 = sub_423D0_42710((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)(a2 + 72));
     sub_524E0_52820(a2);
@@ -63365,11 +63369,11 @@ int sub_54BD0_55100(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a
 
   v4 = (_WORD *)(a2 + 72);
   v5 = (uint16*)(a1 + 36);
-  v6 = sub_42150_42490((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)(a2 + 72));
+  v6 = HeadingTo_42150_42490((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)(a2 + 72));
   v15 = sub_42210_42550(a1[15], v6);
   if ( v15 > a3 )
     return -1;
-  v8 = sub_42180_424C0((axis_3d*)v5, (axis_3d*)v4);
+  v8 = PitchTo_42180_424C0((axis_3d*)v5, (axis_3d*)v4);
   v9 = sub_42210_42550(a1[16], v8);
   if ( v9 > a4 )
     return -1;
@@ -63608,7 +63612,7 @@ void sub_55370_558A0(__int16 a1, __int16 a2, __int16 a3)
           + 29795;
       v15 = *(_WORD *)(v3 + 24);
       v14 = sub_423D0_42710((axis_3d*)(_WORD *)(v12 + 72), (axis_3d*)(_WORD *)(v3 + 72));
-      v13 = sub_42150_42490((axis_3d*)(_WORD *)(v12 + 72), (axis_3d*)(_WORD *)(v3 + 72));
+      v13 = HeadingTo_42150_42490((axis_3d*)(_WORD *)(v12 + 72), (axis_3d*)(_WORD *)(v3 + 72));
       v4 = sub_42210_42550(*(_WORD *)(v12 + 30), v13);
       v5 = (12288 * (512 - v4 / 2 + 512)
           - (__CFSHL__((12288 * (512 - v4 / 2 + 512)) >> 31, 10)
