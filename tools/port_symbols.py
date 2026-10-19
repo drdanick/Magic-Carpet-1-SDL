@@ -59,8 +59,12 @@ class PortSymbols:
         nsec = struct.unpack_from('<H', pe, e_lfanew + 6)[0]
         optsize = struct.unpack_from('<H', pe, e_lfanew + 20)[0]
         opt = e_lfanew + 24
-        self.image_base = struct.unpack_from('<I', pe, opt + 28)[0]
-        dd = opt + 96
+        # PE32 (32-bit build) or PE32+ (64-bit build: 8-byte image base, data directories 16 bytes later)
+        self.is64 = struct.unpack_from('<H', pe, opt)[0] == 0x20B
+        self.pointer_size = 8 if self.is64 else 4
+        self.image_base = struct.unpack_from('<Q', pe, opt + 24)[0] if self.is64 else struct.unpack_from('<I', pe, opt + 28)[0]
+        dd = opt + (112 if self.is64 else 96)
+        self.data_dirs = dd
         reloc_rva, reloc_size = struct.unpack_from('<II', pe, dd + 5 * 8)
         self.sections = []
         so = opt + optsize
@@ -69,7 +73,8 @@ class PortSymbols:
             vsize, va, rawsize, rawptr = struct.unpack_from('<IIII', pe, so + 8)
             self.sections.append((name, va, vsize, rawptr, rawsize))
             so += 40
-        self.reloc_sites = set()
+        self.reloc_sites = set()    # 4-byte absolute addresses (32-bit build)
+        self.reloc64_sites = set()  # 8-byte absolute addresses (64-bit build)
         if reloc_rva:
             p = self.rva_to_off(reloc_rva)
             end = p + reloc_size
@@ -81,6 +86,8 @@ class PortSymbols:
                     e = struct.unpack_from('<H', pe, p + 8 + 2 * k)[0]
                     if e >> 12 == 3:  # HIGHLOW
                         self.reloc_sites.add(page + (e & 0xFFF))
+                    elif e >> 12 == 10:  # DIR64
+                        self.reloc64_sites.add(page + (e & 0xFFF))
                 p += blk
 
     def rva_to_off(self, rva):
@@ -188,6 +195,57 @@ class PortSymbols:
                         offs += [mo + o for o in self.pointer_offsets(mt)]
                     out = tuple(sorted(set(offs)))
         self._ptr_cache[ti] = out
+        return out
+
+    def pointer_fields(self, ti):
+        """Pointer fields inside an object of type ti: [(offset, width, real)]. real=True: a machine pointer
+        (4 bytes on 32-bit, 8 on 64-bit builds); real=False: a ptr32<T> field of a 64-bit build, which holds a
+        4-byte offset (engine/ptr32.h). On 32-bit builds ptr32<T> is T*, so everything is real and 4 bytes."""
+        if not hasattr(self, '_pf_cache'):
+            self._pf_cache = {}
+        if ti in self._pf_cache:
+            return self._pf_cache[ti]
+        self._pf_cache[ti] = ()  # recursion guard
+        TI_GET_SYMTAG, TI_GET_SYMNAME, TI_GET_TYPEID, TI_FINDCHILDREN, TI_GET_OFFSET, TI_GET_COUNT, TI_GET_CHILDRENCOUNT =             0, 1, 4, 7, 10, 12, 13
+        tag = self._ti(ti, TI_GET_SYMTAG)
+        out = ()
+        if tag == 14:  # pointer
+            out = ((0, self.pointer_size, True),)
+        elif tag in (17, 7):  # typedef / data member -> underlying type
+            sub = self._ti(ti, TI_GET_TYPEID)
+            out = self.pointer_fields(sub) if sub else ()
+        elif tag == 15:  # array
+            elem = self._ti(ti, TI_GET_TYPEID)
+            count = self._ti(ti, TI_GET_COUNT) or 0
+            eo = self.pointer_fields(elem) if elem else ()
+            if eo:
+                ln = ctypes.c_uint64(0)
+                self.dbg.SymGetTypeInfo(self.h, self.BASE, elem, TI_GET_LENGTH, ctypes.byref(ln))
+                out = tuple((k * ln.value + o, w, r) for k in range(count) for o, w, r in eo)
+        elif tag == 11:  # struct / union / class
+            p = ctypes.c_wchar_p()
+            name = p.value if self.dbg.SymGetTypeInfo(self.h, self.BASE, ti, TI_GET_SYMNAME, ctypes.byref(p)) else ''
+            if name and name.startswith('ptr32<'):
+                out = ((0, 4, False),)
+            elif name and name.startswith('extptr32<'):
+                out = ()  # a handle, not an address
+            else:
+                n = self._ti(ti, TI_GET_CHILDRENCOUNT) or 0
+                if n:
+                    class FC(ctypes.Structure):
+                        _fields_ = [('Count', ctypes.c_uint32), ('Start', ctypes.c_uint32), ('ChildId', ctypes.c_uint32 * n)]
+                    fc = FC(n, 0)
+                    if self.dbg.SymGetTypeInfo(self.h, self.BASE, ti, TI_FINDCHILDREN, ctypes.byref(fc)):
+                        fields = set()
+                        for c in fc.ChildId:
+                            if self._ti(c, TI_GET_SYMTAG) != 7:
+                                continue
+                            mo, mt = self._ti(c, TI_GET_OFFSET), self._ti(c, TI_GET_TYPEID)
+                            if mo is None or mt is None:
+                                continue
+                            fields.update((mo + o, w, r) for o, w, r in self.pointer_fields(mt))
+                        out = tuple(sorted(fields))
+        self._pf_cache[ti] = out
         return out
 
     def members(self, ti):

@@ -4,7 +4,7 @@
 // The decompiled game code keeps addresses in 32-bit ints and in 4-byte slots of packed DOS-layout
 // structs (entity +156/+160, lists, tables). On 64-bit builds those ints are offsets into windows of
 // 512 MB, each with its own base (g_ptrBases[offset >> 29]):
-//   0 .. 512 MB      from g_ptrBase (the executable): its statics
+//   0 .. 512 MB      from g_ptrBase: the executable's statics, at 4 MB + RVA (as a 32-bit exe at 0x400000)
 //   512 MB .. 1 GB   the game memory arena (Port_ArenaAlloc), wherever the OS put it
 //   1 GB .. 2 GB     the game thread's stack (the code passes addresses of locals around as ints)
 // So the offsets are the same numbers in every build: statics from the image start, the arena at 512 MB
@@ -26,6 +26,8 @@ int32_t Port_PtrOutOfRange(const void* p);  // the stack window (registered on f
 // Port_ArenaFree passes pointers from elsewhere on to free().
 void* Port_ArenaAlloc(size_t size);
 void Port_ArenaFree(void* p);
+void Port_ArenaRange(uint8_t** lo, uint8_t** top);  // the arena and the end of its used part
+bool Port_TryOff(const void* p, uint32_t* off);    // OFF() without the abort: false outside the windows
 
 #if INTPTR_MAX == INT32_MAX
 inline uint8_t* PTR(uint32_t off) { return (uint8_t*)(uintptr_t)off; }

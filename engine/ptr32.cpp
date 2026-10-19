@@ -27,14 +27,21 @@ extern "C" char _mh_execute_header;
 extern "C" char __executable_start;
 #define IMAGE_START ((uint8_t*)&__executable_start)
 #endif
-uint8_t* const g_ptrBase = IMAGE_START;
+#if INTPTR_MAX == INT32_MAX
+#define STATICS_BASE IMAGE_START
+#else
+// statics at offset 4 MB + RVA, the numbers a 32-bit exe at 0x400000 would have: clear of the original's
+// addresses 0x10000..0x150000, so harness snapshots in offset space can hold both (MemSnapshot.cpp)
+#define STATICS_BASE (IMAGE_START - 0x400000)
+#endif
+uint8_t* const g_ptrBase = STATICS_BASE;
 #if INTPTR_MAX == INT32_MAX
 #define NO_WINDOW nullptr
 #else
 #define NO_WINDOW ((uint8_t*)(uintptr_t)0xFFFF800000000000ull)  // matches no user-space address (OFF)
 #endif
 // [1]: the arena (set by ArenaInit), [2][3]: the game stack (Port_PtrOutOfRange), the rest unused
-uint8_t* g_ptrBases[8] = { IMAGE_START, NO_WINDOW, NO_WINDOW, NO_WINDOW, NO_WINDOW, NO_WINDOW, NO_WINDOW, NO_WINDOW };
+uint8_t* g_ptrBases[8] = { STATICS_BASE, NO_WINDOW, NO_WINDOW, NO_WINDOW, NO_WINDOW, NO_WINDOW, NO_WINDOW, NO_WINDOW };
 
 static const intptr_t kStackOffset = 0x40000000;  // the stack window: 1 GB .. 2 GB
 static uint8_t* s_stackLo;
@@ -144,6 +151,31 @@ static void ArenaInit()
 			"regression traces (tools/regress.py) may differ from other builds\n", (void*)s_arena, (void*)want);
 	g_ptrBases[1] = s_arena - kArenaOffset;
 	s_top = s_arena;
+}
+
+void Port_ArenaRange(uint8_t** lo, uint8_t** top)
+{
+	*lo = s_arena;
+	*top = s_top;
+}
+
+bool Port_TryOff(const void* p, uint32_t* off)
+{
+#if INTPTR_MAX == INT32_MAX
+	*off = (uint32_t)(uintptr_t)p;
+	return true;
+#else
+	uintptr_t a = (uintptr_t)p;
+	if (a - (uintptr_t)g_ptrBase < 0x20000000)
+		*off = (uint32_t)(a - (uintptr_t)g_ptrBase);
+	else if (a - (uintptr_t)g_ptrBases[1] - 0x20000000 < 0x20000000)
+		*off = (uint32_t)(a - (uintptr_t)g_ptrBases[1]);
+	else if (s_stackLo && (const uint8_t*)p >= s_stackLo && (const uint8_t*)p < s_stackHi)
+		*off = (uint32_t)(a - (uintptr_t)g_ptrBases[2]);
+	else
+		return false;
+	return true;
+#endif
 }
 
 static bool InArena(const void* p)

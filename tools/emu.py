@@ -97,6 +97,10 @@ class Machine:
         port = port or os.environ.get('REMC1_PORT_EXE') or remc1_paths.find_port_exe()
         self.meta = read_meta(os.path.join(snapdir, 'meta.txt'))
         self.image_base = self.meta['image_base'][0]
+        # 64-bit builds write snapshots in the game's 32-bit offset space (portability/MemSnapshot.cpp); real
+        # pointers in their statics become offsets through these window bases (statics, arena, stack)
+        self.ptr64 = self.meta.get('pointer_size', [4])[0] == 8
+        self.bases = self.meta.get('bases', [0, 0, 0])
         self.state_addr, self.state_size = self.meta['state']
         self.before = read_dump(os.path.join(snapdir, 'before.bin'))
         self.bdump = Dump(self.before)
@@ -246,6 +250,7 @@ class Machine:
         """Port globals named after original addresses -> original addresses (pointers translated)."""
         mu = self.mu
         self.global_map = []  # (ida, size, port_addr, name)
+        self.gsegs = {}  # name -> projection segments (64-bit builds, see project())
         # bigger globals first: port arrays that were enlarged (or IDA "tables" that are really several
         # variables) cover other globals; the more specific (smaller) global must win
         owner = {}  # ida byte -> (static match, global) of the global currently owning it
@@ -287,13 +292,16 @@ class Machine:
             ida = cands[0]
             obase = self.img.object_at(ida)
             oend = obase + [o for o in self.img.objects if o[0] == obase][0][1]
-            size = min(s.size, oend - ida, CLIP_GLOBALS.get(s.name, s.size), self.clip_end.get(ida, ida + s.size) - ida)
-            data = self.bdump.read(self.image_base + s.rva, size)
+            data = self.bdump.read(self.image_base + s.rva, s.size)
             if data is None:
                 continue
+            data, segs = self.project(s, data, self.real_to_off)
+            size = min(len(data), oend - ida, CLIP_GLOBALS.get(s.name, s.size), self.clip_end.get(ida, ida + s.size) - ida)
+            data = data[:size]
             # does the port's static image agree with the original data at that address? A global whose
             # name carries a wrong address (other build) disagrees with the bytes it would cover.
-            pinit = self.ps.initial_bytes(s.rva, size)
+            pinit = self.project(s, self.ps.initial_bytes(s.rva, s.size),
+                                 lambda v: v - self.ps.image_base + self.image_base)[0][:size]
             oinit = bytes(self.omem[obase][ida - obase:ida - obase + size])
             nz = [i for i in range(size) if oinit[i] or pinit[i]]
             match = 1.0 if not nz else sum(1 for i in nz if oinit[i] == pinit[i]) / len(nz)
@@ -303,8 +311,10 @@ class Machine:
                 continue
             for i in range(size):
                 owner[ida + i] = (match, s.name)
-            mu.mem_write(ida, self.translate_block(data, s.rva, s))
+            mu.mem_write(ida, self.translate_block(data, s.rva, s, segs))
             self.global_map.append((ida, size, self.image_base + s.rva, s.name))
+            if segs:
+                self.gsegs[s.name] = segs
         self.global_map.sort()
         # skipped globals (scratch buffers, platform state): writes to them are no differences
         self.skip_ida, self.skip_port = list(LAYOUT_IGNORE_IDA), []
@@ -330,6 +340,51 @@ class Machine:
                 if pa is not None:
                     self.skip_port.append((pa, pa + 1))
 
+    # ---- 64-bit builds: statics holding real (8-byte) pointers, seen in the 32-bit layout ------------------
+    def real_to_off(self, v):
+        """real pointer of the snapshotted process -> game offset (None outside the windows)."""
+        b0, b1, b2 = self.bases
+        if 0 <= v - b0 < 0x20000000:
+            return v - b0
+        if 0x20000000 <= v - b1 < 0x40000000:
+            return v - b1
+        if 0x40000000 <= v - b2 < 0x80000000:
+            return v - b2
+        return None
+
+    def project(self, sym, data, conv):
+        """The bytes of a 64-bit build's global in the 32-bit layout the original expects: every real 8-byte
+        pointer becomes a 4-byte offset (conv(value); 0 if unknown), everything else is kept (the game's structs
+        are packed). Returns (bytes, segments [(projected offset, port offset, length)]) - segments None if the
+        layout is unchanged (32-bit builds, globals without real pointers)."""
+        if not self.ptr64 or not sym.type_index:
+            return data, None
+        fields = [o for o, w, real in self.ps.pointer_fields(sym.type_index) if real and w == 8]
+        if not fields:
+            return data, None
+        out, segs, pos = bytearray(), [], 0
+        for o in fields:
+            if o < pos or o + 8 > len(data):
+                continue
+            segs.append((len(out), pos, o - pos))
+            out += data[pos:o]
+            v = struct.unpack_from('<Q', data, o)[0]
+            t = conv(v) if v else 0
+            segs.append((len(out), o, 4))
+            out += struct.pack('<I', (t or 0) & 0xFFFFFFFF)
+            pos = o + 8
+        segs.append((len(out), pos, len(data) - pos))
+        out += data[pos:]
+        return bytes(out), segs
+
+    @staticmethod
+    def seg_port_offset(segs, rel):
+        """projected offset -> offset in the port global (see project())."""
+        for po, so, n in segs:
+            if po <= rel < po + n:
+                return so + rel - po
+        return None
+
     def translate_value(self, v):
         """port pointer -> original address (or None)."""
         if self.image_lo <= v < self.image_hi:
@@ -338,12 +393,23 @@ class Machine:
                 return tida
         return None
 
-    def translate_block(self, data, rva=None, sym=None):
+    def translate_block(self, data, rva=None, sym=None, segs=None):
         """Translate port pointers inside a global's bytes to original addresses - only at the pointer
         fields the PDB type of the global declares (guessing by value turned packed table words and
-        entity-index pairs into fake pointers). Falls back to relocation sites without a type."""
+        entity-index pairs into fake pointers). Falls back to relocation sites without a type.
+        64-bit builds: data is in the 32-bit layout (project(), segs) and every pointer field 4 bytes."""
         buf = bytearray(data)
-        if sym is not None and sym.type_index:
+        if self.ptr64 and sym is not None and sym.type_index:
+            offs = []
+            for o, w, real in self.ps.pointer_fields(sym.type_index):
+                if not segs:
+                    offs.append(o)
+                else:
+                    for po, so, n in segs:
+                        if so <= o < so + max(n, 1) and (n == 4 or not real):
+                            offs.append(po + o - so)
+                            break
+        elif sym is not None and sym.type_index:
             offs = self.ps.pointer_offsets(sym.type_index)
         elif rva is not None:
             offs = [r - rva for r in self.ps.reloc_sites if rva <= r < rva + len(buf)]
@@ -366,6 +432,10 @@ class Machine:
                 best = g
         if best:
             ida, size, paddr, name = best
+            segs = self.gsegs.get(name)
+            if segs:
+                o = self.seg_port_offset(segs, a - ida)
+                return (None, None) if o is None else (paddr + o, name)
             return paddr + (a - ida), name
         return None, None
 

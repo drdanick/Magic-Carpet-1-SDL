@@ -71,7 +71,9 @@ class PortAddrMap:
         if s.tag == SymTagFunction:
             if off:
                 return s, None
-            a = addr_from_name(s.name)
+            # 64-bit builds: PORT_FN thunks (engine/ptr32.h) stand in for the function they convert for
+            tname = re.search(r',&(\w+)>::call$', s.name) if s.name.startswith('PortThunkImpl<') else None
+            a = addr_from_name(tname.group(1) if tname else s.name)
             if a is None or not (self.img.objects[0][0] <= a < self.img.objects[0][0] + self.img.objects[0][1]):
                 return s, None
             return s, a
