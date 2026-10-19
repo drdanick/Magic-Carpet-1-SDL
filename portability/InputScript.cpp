@@ -32,6 +32,8 @@ FILE* recordFile = nullptr;
 std::map<uint64_t, uint32_t> tickLog;
 std::map<uint32_t, uint64_t> checksums; // frame -> expected game-state hash ("C" lines)
 bool desyncReported = false;
+bool scriptLoaded = false;
+std::string scriptMusic = "none"; // "music <card>" line; recordings without one ran with music off
 
 const uint32_t kAutoRelease = 3;
 
@@ -63,6 +65,12 @@ bool InputScript_Load(const std::string& path)
 			std::string hex;
 			if (ss >> c >> f >> hex)
 				checksums[f] = std::stoull(hex, nullptr, 16);
+			continue;
+		}
+		if (line.compare(0, 6, "music ") == 0) { // music card the session ran with: "music <card>"
+			std::string word, card;
+			if (ss >> word >> card)
+				scriptMusic = card;
 			continue;
 		}
 		if (!line.empty() && line[0] == 'T') { // timer log: "T <syncIndex> <ticks>"
@@ -111,6 +119,7 @@ bool InputScript_Load(const std::string& path)
 	std::stable_sort(events.begin(), events.end(),
 		[](const ScriptEvent& l, const ScriptEvent& r) { return l.frame < r.frame; });
 	nextEvent = 0;
+	scriptLoaded = true;
 	if (!tickLog.empty()) {
 		// a recording with timer log: replay ticks exactly (bit-exact replay of a live session)
 		PortTimer_SetReplayLog(std::move(tickLog));
@@ -142,6 +151,20 @@ void InputScript_OnFrame(uint32_t frame)
 bool InputScript_Exhausted(uint32_t frame, uint32_t graceFrames)
 {
 	return !events.empty() && nextEvent >= events.size() && frame >= events.back().frame + graceFrames;
+}
+
+bool InputScript_ScriptMusic(std::string& card)
+{
+	if (!scriptLoaded)
+		return false;
+	card = scriptMusic;
+	return true;
+}
+
+void InputScript_RecordMusic(const std::string& card)
+{
+	if (recordFile)
+		fprintf(recordFile, "music %s\n", card.c_str());
 }
 
 bool InputScript_StartRecording(const std::string& path)

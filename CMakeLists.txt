@@ -23,6 +23,27 @@ if(NOT SDL2_mixer_FOUND)
     add_library(SDL2_mixer::SDL2_mixer ALIAS PkgConfig::SDL2_MIXER)
 endif()
 
+# Music: libADLMIDI (OPL3 emulation for the AdLib music) and its MIDI sequencer (BW_MidiSequencer, MIT,
+# reads HMI's HMP songs), built from a pinned release. Offline builds: -DFETCHCONTENT_SOURCE_DIR_LIBADLMIDI=<dir>.
+option(REMC1_MUSIC "Build music support (libADLMIDI)" ON)
+if(REMC1_MUSIC)
+    include(FetchContent)
+    set(libADLMIDI_STATIC ON)
+    set(libADLMIDI_SHARED OFF)
+    set(WITH_MIDI_SEQUENCER OFF) # port_music compiles the sequencer itself, for every synth
+    set(WITH_EMBEDDED_BANKS ON)  # General MIDI fallback bank
+    set(USE_DOSBOX_EMULATOR ON)
+    set(USE_NUKED_EMULATOR ON)
+    foreach(emu OPAL JAVA ESFMU MAME YMFM NUKED_OPL2_LLE NUKED_OPL3_LLE)
+        set(USE_${emu}_EMULATOR OFF)
+    endforeach()
+    set(USE_HW_SERIAL OFF)
+    FetchContent_Declare(libadlmidi
+        URL https://github.com/Wohlstand/libADLMIDI/archive/refs/tags/v1.6.2.1.tar.gz
+        URL_HASH SHA256=e01aec7b2bc284476eedab77a8b6e177c5beda2bc2f4545166339badfc0464c5)
+    FetchContent_MakeAvailable(libadlmidi)
+endif()
+
 # ---------------------------------------------------------------------------
 # Compiler settings shared by every target
 # ---------------------------------------------------------------------------
@@ -84,6 +105,7 @@ set(REMC1_ENGINE_SOURCES
     portability/port_watchdog.cpp
     portability/SdlPresenter.cpp
     portability/port_sound.cpp
+    portability/port_music.cpp
     portability/MemSnapshot.cpp
     utilities/Compare.cpp
     utilities/DataFileIO.cpp
@@ -98,6 +120,12 @@ target_link_libraries(remc1_engine PUBLIC remc1_options
     $<IF:$<TARGET_EXISTS:SDL2_mixer::SDL2_mixer>,SDL2_mixer::SDL2_mixer,SDL2_mixer::SDL2_mixer-static>
     nlohmann_json::nlohmann_json)
 target_compile_definitions(remc1_engine PUBLIC SDL_MAIN_HANDLED)
+if(REMC1_MUSIC)
+    target_sources(remc1_engine PRIVATE portability/midi_sequencer.cpp)
+    target_include_directories(remc1_engine PRIVATE ${libadlmidi_SOURCE_DIR}/src/midiseq)
+    target_link_libraries(remc1_engine PRIVATE ADLMIDI_static)
+    target_compile_definitions(remc1_engine PRIVATE REMC1_MUSIC=1)
+endif()
 
 # ---------------------------------------------------------------------------
 # Game executable

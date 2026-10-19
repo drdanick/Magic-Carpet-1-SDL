@@ -118,6 +118,9 @@ static void LoadConfigFile(const fs::path& path)
 	if (j.contains("audio")) {
 		s.sound = j["audio"].value("sound", s.sound);
 		s.music = j["audio"].value("music", s.music);
+		s.musicDevice = j["audio"].value("musicDevice", s.musicDevice);
+		s.musicVolume = j["audio"].value("musicVolume", s.musicVolume);
+		s.oplEmulator = j["audio"].value("oplEmulator", s.oplEmulator);
 	}
 	if (j.contains("input")) {
 		s.grabMouse = j["input"].value("grabMouse", s.grabMouse);
@@ -145,6 +148,9 @@ static void PrintUsage()
 		"  --no-tab-enter     don't map Tab to Enter\n"
 		"  --fps N            in-game frame cap (default 30, 0 = uncapped; game speed follows it)\n"
 		"  --no-sound / --no-music   disable sound effects / music\n"
+		"  --music-device <d>        auto (the game's sound setup), adlib, gm, mt32 or none\n"
+		"  --music-volume <0-100>    music volume in percent\n"
+		"  --opl-emulator <e>        AdLib music emulator: dosbox (default) or nuked\n"
 		"  --debug-log        write debug.txt next to the executable\n"
 		"  --dump-frames <dir> [--dump-every N]  save every Nth presented frame (default 30) as BMP\n"
 		"  --exit-after-frames N                  quit after N presented frames\n"
@@ -194,6 +200,9 @@ std::vector<std::string> InitSettings(int argc, char* argv[])
 		else if (a == "--fps") g_settings.maxGameFps = atoi(next("frames per second").c_str());
 		else if (a == "--no-sound") g_settings.sound = false;
 		else if (a == "--no-music") g_settings.music = false;
+		else if (a == "--music-device") g_settings.musicDevice = next("auto, adlib, gm, mt32 or none");
+		else if (a == "--music-volume") g_settings.musicVolume = (std::min)(100, (std::max)(0, atoi(next("a percentage").c_str())));
+		else if (a == "--opl-emulator") g_settings.oplEmulator = next("dosbox or nuked");
 		else if (a == "--debug-log") cliDebugLog = true;
 		else if (a == "--dump-frames") g_settings.dumpFramesDir = next("a directory");
 		else if (a == "--dump-every") g_settings.dumpEvery = (std::max)(1, atoi(next("a number").c_str()));

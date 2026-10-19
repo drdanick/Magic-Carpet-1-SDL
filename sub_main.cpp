@@ -3,6 +3,8 @@
 #include "portability/Settings.h"
 #include "portability/port_timer.h"
 #include "portability/port_sound.h"
+#include "portability/port_music.h"
+#include "portability/InputScript.h"
 #include "portability/MemSnapshot.h"
 
 // Debug switches inherited from the DOSBox-comparison workflow.
@@ -25093,6 +25095,20 @@ void sub_20B80(Type_AE400_29795* a1x)
 }
 
 //----- (00020BD0) --------------------------------------------------------
+// PORT: sub_20BD0 sends the three CC 7 (volume) messages it builds in byte_ACFF0..2 to the MIDI driver; the
+// three bytes are separate variables here, so they are copied into one message.
+static void SendMidi_ACFF0()
+{
+  const uint8_t msg[3] = { (uint8_t)byte_ACFF0, (uint8_t)byte_ACFF1, (uint8_t)byte_ACFF2 };
+  PortMusic_SendMidi(msg, 3);
+}
+
+// PORT: sub_20BD0 is an HMI timer event (sosTIMERRegisterEvent); the HMI timer service is port_timer's
+static void sub_20BD0_event()
+{
+  sub_20BD0();
+}
+
 int sub_20BD0()
 {
   int v1; // eax
@@ -25104,24 +25120,24 @@ int sub_20BD0()
     byte_ACFF0 = -77;
     byte_ACFF2 = byte_9008C;
     byte_ACFF1 = 7;
-    //fix sub_5EDA0(dword_CBFDC, (int)&byte_ACFF0, __DS__, 3);
+    SendMidi_ACFF0(); // PORT: was sub_5EDA0(dword_CBFDC, &byte_ACFF0, 3)
     byte_ACFF0 = -76;
     byte_ACFF1 = 7;
     byte_ACFF2 = byte_9008C;
-    //fix sub_5EDA0(dword_CBFDC, (int)&byte_ACFF0, __DS__, 3);
+    SendMidi_ACFF0(); // PORT: was sub_5EDA0(dword_CBFDC, &byte_ACFF0, 3)
     byte_ACFF0 = -75;
     byte_ACFF1 = 7;
     byte_ACFF2 = byte_9008C;
-    //fix v1 = sub_5EDA0(dword_CBFDC, (int)&byte_ACFF0, __DS__, 3);
+    SendMidi_ACFF0(); // PORT: was v1 = sub_5EDA0(dword_CBFDC, &byte_ACFF0, 3)
     BYTE1(v1) = byte_9008C;
     if ( byte_9008C == 126 && byte_9008D == 2 )
     {
-      v1 = sub_5DC91(dword_80000);
+      PortTimer_RemoveEvent(dword_80000); // PORT: was v1 = sub_5DC91(dword_80000)
       byte_9008E = 0;
     }
     if ( !byte_9008C && byte_9008D == 1 )
     {
-      v1 = sub_5DC91(dword_80000);
+      PortTimer_RemoveEvent(dword_80000); // PORT: was v1 = sub_5DC91(dword_80000)
       byte_9008C = 0;
       byte_9008E = 0;
     }
@@ -25129,7 +25145,7 @@ int sub_20BD0()
   }
   else
   {
-    sub_5DC91(dword_80000);
+    PortTimer_RemoveEvent(dword_80000); // PORT: was sub_5DC91(dword_80000)
     byte_9008E = 0;
     return 0;//fix return MK_FP(retaddr[0], retaddr[0])();
   }
@@ -25157,7 +25173,7 @@ void sub_20D00(char a1)
         if ( sub_5D7F0_5DD00(dword_CBFD8_CBFC8) )
         {
           if ( byte_9008E )
-            sub_5DC91(dword_80000);
+            PortTimer_RemoveEvent(dword_80000); // PORT: was sub_5DC91(dword_80000)
           byte_9008C = 0;
           byte_9008F = -2;
           byte_9008D = 1;
@@ -25169,24 +25185,24 @@ void sub_20D00(char a1)
         else if ( a1 != byte_9008D )
         {
           if ( byte_9008E )
-            sub_5DC91(dword_80000);
+            PortTimer_RemoveEvent(dword_80000); // PORT: was sub_5DC91(dword_80000)
           byte_9008D = a1;
           byte_9008E = 1;
           byte_9008F = -byte_9008F;
           if ( a1 == 1 )
           {
-              //fix sub_5D97B(0x14u, (int)sub_20BD0, __CS__, (unsigned int)&dword_80000);
+              dword_80000 = PortTimer_AddEvent(0x14u, sub_20BD0_event); // PORT: was sub_5D97B(0x14, sub_20BD0, &dword_80000)
           }
           else if ( a1 == 2 )
           {
-              //fix sub_5D97B(0x3Cu, (int)sub_20BD0, __CS__, (unsigned int)&dword_80000);
+              dword_80000 = PortTimer_AddEvent(0x3Cu, sub_20BD0_event); // PORT: was sub_5D97B(0x3C, sub_20BD0, &dword_80000)
           }
         }
       }
     }
     else
     {
-      sub_5DC91(dword_80000);
+      PortTimer_RemoveEvent(dword_80000); // PORT: was sub_5DC91(dword_80000)
       byte_9008E = 0;
     }
   }
@@ -47286,8 +47302,24 @@ void sub_3C570()
   varBfMusic = getenv("BF_MUSIC");
   if (varBfMusic)
     sscanf(varBfMusic, "%s %x", unk_CBF74, &dword_CBF70);
-  // PORT: the HMI drivers talk to sound-card I/O ports; never initialise them (audio is Phase 4 / platform backend)
-  strcpy(unk_CBF74, "none");
+  // PORT: the HMI MIDI driver is replaced by portability/port_music. The card from sndsetup.inf / BF_MUSIC still
+  // picks the music variant (AdLib, General MIDI); --no-music / --music-device override it. Only the setup and
+  // the settings decide this, never the audio device: "music on" changes the game (track choice uses pseudoRand).
+  // Replays use the card their recording was made with.
+  std::string scriptMusic;
+  if (InputScript_ScriptMusic(scriptMusic))
+    snprintf(unk_CBF74, sizeof(unk_CBF74), "%s", scriptMusic.c_str());
+  else
+  {
+    switch (PortMusic_SelectDevice(unk_CBF74))
+    {
+      case PortMusicDevice::AdLib: strcpy(unk_CBF74, "ADLIB"); break;
+      case PortMusicDevice::GeneralMidi: strcpy(unk_CBF74, "GENERAL"); break;
+      case PortMusicDevice::MT32: strcpy(unk_CBF74, "GENERAL"); break; // PORT: no MT-32 synth yet: the General MIDI songs
+      default: strcpy(unk_CBF74, "none"); break;
+    }
+    InputScript_RecordMusic(unk_CBF74);
+  }
   if ( !stricmp(unk_CBF74, "none"))
   {
     byte_939CC = 0;
@@ -53188,14 +53220,8 @@ void sub_43B20_sub_43E60(unsigned int a2)
   word_CBF48 = 0;
   dword_CBF6C = dword_CBF70;
   dword_CBF44 = 0;
-  //fix
-  /*v2 = sub_6035F(
-         a2,
-         (unsigned int)&dword_CBF6C,
-         (unsigned __int16)__DS__,
-         (int)&unk_CBF40,
-         (unsigned __int16)__DS__,
-         (unsigned int)&dword_CBFDC);*/
+  // PORT: was sub_6035F (sosMIDIInitDriver for card a2); music goes to portability/port_music
+  PortMusic_Init(a2 == 0xA002u ? PortMusicDevice::AdLib : a2 == 0xA004u ? PortMusicDevice::MT32 : PortMusicDevice::GeneralMidi);
   if ( v2 )
   {
     v3 = sub_6378C(v2);
@@ -53239,6 +53265,9 @@ void sub_43B20_sub_43E60(unsigned int a2)
           if ( v9 )
           {
             v4 = sub_637D1(dword_CBFDC, (int)OFF(v9), v6, 1);
+            // PORT: sub_637D1 (sosMIDISetInsData) is a stub; the AdLib synth takes the game's banks here
+            PortMusic_LoadBanks((uint8_t*)v5, GetRNCFilesize_63910_63E20((Pathstruct*)"data\\inst.bnk"),
+                                (uint8_t*)v9, GetRNCFilesize_63910_63E20((Pathstruct*)"data\\drum.bnk"));
             if ( v4 )
             {
               v10 = sub_6378C(v4);
@@ -69012,14 +69041,9 @@ void sub_5D290_5D7A0(__int16 a1)
     dword_12F030 = v1;
     word_12F03C = 0;
     dword_12F038 = 0;
-    //fix
-    /*
-    v4 = sub_5EE22(
-           (unsigned int)&dword_12F030,
-           (unsigned __int16)__DS__,
-           (int)&unk_9AF18,
-           __DS__,
-           (unsigned int)&dword_CBFD8_CBFC8);*/
+    // PORT: was sub_5EE22 (sosMIDIInitSong with the song at dword_12F030); the song (TAB entry: +18 data,
+    // +26 length) goes to portability/port_music
+    PortMusic_Load(PTR(v1), *(uint32_t*)PTR(dword_CBF60 + 32 * a1 + 26));
     if ( v4 )
     {
       v2 = sub_6378C(v4);
@@ -69215,7 +69239,8 @@ void sub_5D7DF()
 //----- (0005D7F0) --------------------------------------------------------
 bool sub_5D7F0_5DD00(int a1)
 {
-  return dword_9C136[a1] == 0;
+  // PORT: the HMI MIDI driver (hmimdrv.386) is replaced by portability/port_music (sosMIDISongDone)
+  return !PortMusic_IsPlaying();
 }
 // 9C136: using guessed type int dword_9C136[8];
 
@@ -69918,7 +69943,8 @@ int sub_5E9C1(int a1)
 //----- (0005EDA0) --------------------------------------------------------
 int sub_5EDA0(int a1, int a2, unsigned __int16 a3, int a4)
 {
-  //fix MK_FP(*(_WORD *)&byte_9C062[36 * a1 + 4], *(_DWORD *)&byte_9C062[36 * a1])(a2, a3, a4, a1);
+  // PORT: the HMI MIDI driver (hmimdrv.386) is replaced by portability/port_music (sosMIDISendMIDIData)
+  PortMusic_SendMidi(PTR(a2), a4);
   return 0;
 }
 
@@ -70086,36 +70112,16 @@ LABEL_38:
 //----- (0005F355) --------------------------------------------------------
 int sub_5F355(unsigned int a1)
 {
-  int v1; // eax
-
-  if ( a1 >= 8 )
-    return 10;
-  v1 = 6 * a1;
-  *(_WORD *)&byte_9C176[v1 + 4] = 0;
-  *(_DWORD *)&byte_9C176[v1] = 0;
+  // PORT: the HMI MIDI driver (hmimdrv.386) is replaced by portability/port_music (sosMIDIUnInitSong)
+  PortMusic_Stop();
   return 0;
 }
 
 //----- (0005F398) --------------------------------------------------------
 int sub_5F398(int a1)
 {
-  int v3; // [esp+4h] [ebp-4h]
-
-  //fix
-  v3 = 0;
-  //fix
-
-  //fix
-  /*
-  v3 = sub_5D97B(
-         port_readgsdword(*(_DWORD *)&byte_9C176[6 * a1] + 56),
-         (int)sub_66F3C,
-         __CS__,
-         (unsigned int)&dword_9C1A6[a1]);*/
-  if ( v3 )
-    return v3;
-  byte_A04C1[dword_9C1A6[a1]] = a1;
-  dword_9C136[a1] = 1;
+  // PORT: the HMI MIDI driver (hmimdrv.386) is replaced by portability/port_music (sosMIDIStartSong)
+  PortMusic_Start();
   return 0;
 }
 // 9C136: using guessed type int dword_9C136[8];
@@ -70124,33 +70130,8 @@ int sub_5F398(int a1)
 //----- (0005F420) --------------------------------------------------------
 int sub_5F420(unsigned int a1)
 {
-  int v1; // edx
-  int v2; // eax
-  int v4; // [esp+0h] [ebp-14h] BYREF
-  __int16 v5; // [esp+4h] [ebp-10h]
-  unsigned int v6; // [esp+8h] [ebp-Ch]
-  unsigned __int16 v7; // [esp+Ch] [ebp-8h]
-
-  if ( a1 >= 8 )
-    return 10;
-  if ( dword_9C1A6[a1] != -1 )
-    sub_5DC91(dword_9C1A6[a1]);
-  byte_A04C1[dword_9C1A6[a1]] = -1;
-  dword_9C1A6[a1] = -1;
-  if ( dword_9C136[a1] )
-  {
-    v5 = *(_WORD *)&byte_9C176[6 * a1 + 4];
-    v4 = *(_DWORD *)&byte_9C176[6 * a1];
-    v1 = *(_DWORD *)&byte_9C176[6 * a1];
-    v7 = port_readgsword(v1 + 772);
-    v6 = port_readgsdword(v1 + 768);
-    sub_5E9C1(a1);
-    dword_9C136[a1] = 0;
-    v2 = 6 * a1;
-    *(_WORD *)&byte_9C176[v2 + 4] = 0;
-    *(_DWORD *)&byte_9C176[v2] = 0;
-    sub_5F529(a1, (unsigned int)OFF(&v4));
-  }
+  // PORT: the HMI MIDI driver (hmimdrv.386) is replaced by portability/port_music (sosMIDIStopSong)
+  PortMusic_Stop();
   return 0;
 }
 // 9C136: using guessed type int dword_9C136[8];
@@ -70159,69 +70140,8 @@ int sub_5F420(unsigned int a1)
 //----- (0005F529) --------------------------------------------------------
 int sub_5F529(int a1, unsigned int a2)
 {
-  unsigned __int64 v2; // rax
-  int v3; // ebx
-  unsigned int v4; // ebx
-  unsigned __int64 v5; // rax
-  int v6; // ebx
-  unsigned __int64 v7; // rax
-  int v8; // ebx
-  int v9; // ebx
-  int v10; // eax
-  int v12; // [esp+8h] [ebp-20h]
-  int v13; // [esp+10h] [ebp-18h]
-  __int16 v14; // [esp+14h] [ebp-14h]
-  int v15; // [esp+20h] [ebp-8h]
-  unsigned int i; // [esp+24h] [ebp-4h]
-  unsigned int j; // [esp+24h] [ebp-4h]
-
-  v15 = 0;
-  v2 = sub_66EF6(port_readgsdword(a2), port_readgsword(a2 + 4));
-  v3 = v2;
-  LODWORD(v2) = 6 * a1;
-  *(_WORD *)&byte_9C176[v2 + 4] = WORD2(v2);
-  *(_DWORD *)&byte_9C176[v2] = v3;
-  v14 = *(_WORD *)&byte_9C176[6 * a1 + 4];
-  v13 = *(_DWORD *)&byte_9C176[6 * a1] + 776;
-  dword_9C022[a1] = port_readgsdword(*(_DWORD *)&byte_9C176[6 * a1] + 48);
-  dword_9C042[a1] = dword_9C022[a1];
-  LODWORD(v2) = *(_DWORD *)&byte_9C176[6 * a1];
-  v4 = port_readgsdword(a2 + 8);
-  port_writegsword(v2 + 772, port_readgsword(a2 + 12));
-  port_writegsdword(v2 + 768, v4);
-  for ( i = 0; i < dword_9C022[a1]; ++i )
-  {
-    dword_9BBF2[32 * a1 + i] = 0;
-    v5 = sub_66EF6(v15 + v13, v14);
-    v6 = v5;
-    LODWORD(v5) = 6 * i + 192 * a1;
-    *(__int16 *)((char *)&word_9D993 + (int)v5) = WORD2(v5); // PORT: low dword only (as 32-bit pointer arithmetic)
-    *(int *)((char *)dword_9D98F + (int)v5) = v6;
-    v7 = sub_66EF6(v13 + v15 + 12, v14);
-    v8 = v7;
-    LODWORD(v7) = 192 * a1 + 6 * i;
-    *(_WORD *)&byte_9B1F2[v7 + 4] = WORD2(v7);
-    *(_DWORD *)&byte_9B1F2[v7] = v8;
-    v9 = v7;
-    v12 = sub_5F7C7(
-            *(_DWORD *)&byte_9B1F2[v7],
-            *(unsigned __int16 *)&byte_9B1F2[v7 + 4],
-            (unsigned int)OFF(&dword_9B7F2[32 * a1 + i]))
-        + *(_DWORD *)&byte_9B1F2[v9];
-    *(_WORD *)&byte_9B1F2[v9 + 4] = *(_WORD *)&byte_9B1F2[v9 + 4];
-    *(_DWORD *)&byte_9B1F2[v9] = v12;
-    v15 += port_readgsdword(sub_66EF6(v15 + v13, v14) + 4);
-  }
-  for ( j = 0; j < dword_9C042[a1]; ++j )
-  {
-    if ( port_readgsdword(*(int *)((char *)&dword_9BFF2 + 6 * a1) + 4 * j) == 255 )
-    {
-      v10 = 192 * a1 + 6 * j;
-      *(_WORD *)&byte_9B1F2[v10 + 4] = 0;
-      *(_DWORD *)&byte_9B1F2[v10] = 0;
-      --dword_9C022[a1];
-    }
-  }
+  // PORT: the HMI MIDI driver (hmimdrv.386) is replaced by portability/port_music (sosMIDIResetSong)
+  PortMusic_Rewind();
   return 0;
 }
 // 9B7F2: using guessed type int dword_9B7F2[256];
@@ -70803,6 +70723,7 @@ int sub_6091D(int a1)
       3,
       a1);*/
   }
+  PortMusic_ResetChannels(); // PORT: the driver calls above, done by portability/port_music
   //fix
   /*
   MK_FP(*(_WORD *)&byte_9C074[36 * a1 + 4], *(_DWORD *)&byte_9C074[36 * a1])(

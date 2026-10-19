@@ -8,6 +8,8 @@
 //   <frame> lclick [x y] / rclick [x y]     press (optionally moving first), auto-release 3 frames later
 //   <frame> ldown / lup / rdown / rup
 //   <frame> quit                            exit the process
+//   music <card>                            music card the session ran with (written at music init);
+//                                           replays use it, recordings without one ran with music off
 // Scancode names are SDL_GetScancodeFromName() names ("Return", "Escape", "Space", "Up", "A", "F1", ...).
 //
 // Recording (--record-input <file>) writes the same format from live SDL input, so a play session
@@ -27,6 +29,10 @@ bool InputScript_Playing();
 // Called once per presented frame with a hash of the game state: recordings store it every 30 frames
 // ("C" lines); replays compare and report the first frame that differs ("DESYNC at frame N").
 void InputScript_CheckState(uint32_t frame, uint64_t hash);
+// Music on/off and the card change the game (the track choice uses its random numbers), so recordings store
+// the card: false if no script is loaded, else the card the script was recorded with ("none" if unknown).
+bool InputScript_ScriptMusic(std::string& card);
+void InputScript_RecordMusic(const std::string& card);
 
 // Recording hooks (called from the SDL event pump)
 void InputScript_RecordKey(uint32_t frame, bool down, int sdlScancode);

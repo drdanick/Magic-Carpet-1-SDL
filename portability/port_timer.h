@@ -32,6 +32,11 @@ void PortTimer_SetReplayLog(std::map<uint64_t, uint32_t> log);
 // Writes "T <syncIndex> <ticks>" lines for every sync point that applied ticks.
 void PortTimer_SetRecordFile(FILE* f);
 
+// HMI timer service (sosTIMERRegisterEvent / sosTIMERRemoveEvent): callbacks at their own rate, run on the
+// game thread while ticks are applied, so they are as deterministic as the ticks. Returns a handle (-1: full).
+int PortTimer_AddEvent(uint32_t hz, PortTimerCallback callback);
+void PortTimer_RemoveEvent(int handle);
+
 // Total ticks applied so far, and the tick rate (for deterministic durations, e.g. sound channels).
 uint64_t PortTimer_TickCount();
 double PortTimer_TickHz();

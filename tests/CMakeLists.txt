@@ -7,6 +7,7 @@ add_executable(remc1-tests
     test_platform.cpp
     test_render.cpp
     test_data.cpp
+    test_music.cpp
     support/test_support.cpp
 )
 target_include_directories(remc1-tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

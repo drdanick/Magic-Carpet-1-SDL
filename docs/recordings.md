@@ -26,6 +26,11 @@ Playback runs on a temporary copy of the install with the bundle's saves (your o
 touched) and ignores live input. If the game drifts from what was recorded, it prints
 `DESYNC at frame N`.
 
+Whether music is on changes the game (the track it picks uses the game's random numbers), so the
+recording stores the music card the session ran with (a `music <card>` line in `input.txt`) and
+playback uses it, whatever your sound setup or `--music-device` say now. Recordings made before
+music support have no such line and play back with music off. `-- --no-music` only silences playback.
+
 For frame dumps and contact sheets use `tools/run_recording.py <bundle> --out <dir>`; it uses the
 bundle's saves the same way. Older recordings that are a plain `.txt` still work (`--keep-saves`
 uses your install's current saves).

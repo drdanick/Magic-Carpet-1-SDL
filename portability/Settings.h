@@ -32,6 +32,10 @@ struct Remc1Settings {
 	// Audio
 	bool sound = true; // sound effects (SDL_mixer)
 	bool music = true;
+	// "auto" = the card chosen in the game's sound setup (sndsetup.inf); or adlib, gm, mt32, none
+	std::string musicDevice = "auto";
+	int musicVolume = 100;            // percent
+	std::string oplEmulator = "dosbox"; // AdLib music: dosbox or nuked (more accurate, slower)
 
 	// Diagnostics
 	bool debugLog = false; // write debug.txt next to the executable
