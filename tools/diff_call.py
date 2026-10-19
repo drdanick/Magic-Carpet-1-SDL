@@ -19,9 +19,14 @@ from port_index import addr_from_name
 from diff_funcs import compare, port_name_for
 
 
-def screen_png(m, path, w, h, pitch, base, palette):
+def screen_png(m, path, w, h, pitch, base, palette, written):
+    """The screen as the call left it: memory before the call plus its writes (on 64-bit builds the port's
+    writes happen in the harness' 64-bit machine, so they are taken from the write log, not from m.mu)."""
     from PIL import Image
-    data = bytes(m.mu.mem_read(base, pitch * h))
+    data = bytearray(m.mu.mem_read(base, pitch * h))
+    for addr, v in written.items():
+        if base <= addr < base + pitch * h:
+            data[addr - base] = v
     img = Image.frombytes('P', (w, h), b''.join(data[y * pitch:y * pitch + w] for y in range(h)))
     img.putpalette(palette)
     img.save(path)
@@ -59,7 +64,7 @@ def main():
             wv, hv = g('widthViewPort_93AD8', '<H'), g('heightViewPort_93ADC', '<H')
             pal = bytes(m.mu.mem_read(m.port_addr('m_currentPalletColours') if 'm_currentPalletColours' in m.sym_by_name else 0, 0)) or None
             gray = [v for i in range(256) for v in (i, i, i)]
-            screen_png(m, os.path.join(a.png, f'{label}.png'), wv, hv, pitch, base, gray)
+            screen_png(m, os.path.join(a.png, f'{label}.png'), wv, hv, pitch, base, gray, w)
         m.undo()
         res[label] = (r, err, w)
         print(f'{label}: {"ERROR " + err if err else "ok"}, {len(w)} bytes written')

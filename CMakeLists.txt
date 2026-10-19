@@ -6,19 +6,22 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-option(REMC1_EXPERIMENTAL_64BIT "Allow building for 64-bit targets (game code is not 64-bit clean yet)" OFF)
 option(REMC1_ASAN "Build with AddressSanitizer" OFF)
 option(REMC1_BUILD_TESTS "Build the remc1-tests GoogleTest target" ON)
 
-if(CMAKE_SIZEOF_VOID_P EQUAL 8 AND NOT REMC1_EXPERIMENTAL_64BIT)
-    message(FATAL_ERROR
-        "REMC1 currently only works as a 32-bit build (the decompiled code stores pointers in 32-bit ints).\n"
-        "On Windows use the 'win-x86' preset (-A Win32). Pass -DREMC1_EXPERIMENTAL_64BIT=ON to override.")
+if(NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
+    message(FATAL_ERROR "REMC1 builds for 64-bit targets only (x64, arm64); see the presets in CMakePresets.json.")
 endif()
 
 find_package(SDL2 CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
-find_package(SDL2_mixer CONFIG REQUIRED)
+find_package(SDL2_mixer CONFIG QUIET)
+if(NOT SDL2_mixer_FOUND)
+    # packages without the CMake config files: pkg-config
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(SDL2_MIXER REQUIRED IMPORTED_TARGET GLOBAL SDL2_mixer)
+    add_library(SDL2_mixer::SDL2_mixer ALIAS PkgConfig::SDL2_MIXER)
+endif()
 
 # ---------------------------------------------------------------------------
 # Compiler settings shared by every target
@@ -26,9 +29,6 @@ find_package(SDL2_mixer CONFIG REQUIRED)
 add_library(remc1_options INTERFACE)
 target_include_directories(remc1_options INTERFACE ${CMAKE_SOURCE_DIR})
 target_compile_definitions(remc1_options INTERFACE _CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_DEPRECATE)
-if(REMC1_EXPERIMENTAL_64BIT)
-    target_compile_definitions(remc1_options INTERFACE REMC1_EXPERIMENTAL_64BIT)
-endif()
 if(MSVC)
     # /bigobj: sub_main.cpp is ~110k lines. /wd4996: POSIX/CRT names. /permissive-: off, decompiled code relies on MSVC leniency.
     target_compile_options(remc1_options INTERFACE /utf-8 /bigobj /Zc:__cplusplus /wd4996 /MP)
@@ -48,15 +48,14 @@ if(MSVC)
         target_compile_options(remc1_options INTERFACE /fsanitize=address /Zi)
         target_link_options(remc1_options INTERFACE /INCREMENTAL:NO /DEBUG)
         get_filename_component(REMC1_MSVC_BIN "${CMAKE_CXX_COMPILER}" DIRECTORY)
-        if(CMAKE_SIZEOF_VOID_P EQUAL 4)
-            set(REMC1_ASAN_DLL "${REMC1_MSVC_BIN}/clang_rt.asan_dynamic-i386.dll")
-        else()
-            set(REMC1_ASAN_DLL "${REMC1_MSVC_BIN}/clang_rt.asan_dynamic-x86_64.dll")
-        endif()
+        set(REMC1_ASAN_DLL "${REMC1_MSVC_BIN}/clang_rt.asan_dynamic-x86_64.dll")
     endif()
 else()
+    # -U_FORTIFY_SOURCE: Ubuntu's GCC enables it by default; the decompiled code writes across field
+    # boundaries of the packed DOS structs on purpose (e.g. a 12-character name plus its 0 into a 12-byte
+    # field, the 0 landing in the next field, as in the original), which fortify aborts on.
     target_compile_options(remc1_options INTERFACE
-        $<$<COMPILE_LANGUAGE:CXX>:-fpermissive> -Wno-narrowing -fno-strict-aliasing -fwrapv)
+        $<$<COMPILE_LANGUAGE:CXX>:-fpermissive> -Wno-narrowing -fno-strict-aliasing -fwrapv -U_FORTIFY_SOURCE)
     if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm|aarch64")
         target_compile_options(remc1_options INTERFACE -fsigned-char)
     endif()
@@ -72,6 +71,7 @@ endif()
 set(REMC1_ENGINE_SOURCES
     sub_main.cpp
     engine/Basic.cpp
+    engine/ptr32.cpp
     engine/CommandLineParser.cpp
     portability/fcaseopen.cpp
     portability/port_filesystem.cpp

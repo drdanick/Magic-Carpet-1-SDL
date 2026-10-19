@@ -4,6 +4,7 @@
 // Original DOS game options ("-level 3", "-cheat 1", ...) are passed through untouched to
 // ProcessCommandLine_34DD0_35190.
 
+#include <cstdint>
 #include <string>
 #include <vector>
 
@@ -38,6 +39,10 @@ struct Remc1Settings {
 	int dumpEvery = 30;
 	int exitAfterFrames = 0;   // >0: quit after this many presented frames (automation)
 	std::string frameHashFile; // if set, "<frame> <hash>" of framebuffer+palette is logged per frame
+	std::string stateTraceFile; // if set, "<frame> <state hash> <frame hash>" per frame (tools/regress.py)
+	uint32_t stateDumpFrame = 0; // --state-dump <frame>:<file>: normalised game state of that frame
+	int traceHandlersFrame = -1; // --trace-handlers <frame>: state hash after every entity handler of that tick
+	std::string stateDumpFile;
 	bool frameStats = false;   // --frame-stats: print frame-interval percentiles every 5 s (pacing work)
 	bool headless = false;     // SDL dummy video driver; live keyboard/mouse input is ignored
 	int watchdogSeconds = -1;  // freeze watchdog; -1 = default (20 s for automated runs, off otherwise), 0 = off

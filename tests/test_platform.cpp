@@ -26,26 +26,38 @@ std::string Fix(const char* p)
 	return FixPath(buf);
 }
 
+// On POSIX FixPath also normalises separators and fixes the case of existing components (none exist under
+// the test root), on Windows it keeps the DOS separators.
+std::string Native(std::string p)
+{
+#ifndef _WIN32
+	for (auto& c : p)
+		if (c == '\\')
+			c = '/';
+#endif
+	return p;
+}
+
 } // namespace
 
 // --- DOS path mapping (sub_main.cpp FixPath) -------------------------------------------------
 
 TEST(FixPath, CdRelativePathsGoToCdFolder)
 {
-	gameDataPath = "/data/CD";
-	gameDataPath2 = "/data";
-	EXPECT_EQ(Fix("data/build0-0.dat"), "/data/CD/data/build0-0.dat");
-	EXPECT_EQ(Fix("data\\screens\\language.pal"), "/data/CD/data\\screens\\language.pal");
+	gameDataPath = "/remc1-test-root/CD";
+	gameDataPath2 = "/remc1-test-root";
+	EXPECT_EQ(Fix("data/build0-0.dat"), Native("/remc1-test-root/CD/data/build0-0.dat"));
+	EXPECT_EQ(Fix("data\\screens\\language.pal"), Native("/remc1-test-root/CD/data\\screens\\language.pal"));
 }
 
 TEST(FixPath, InstallFolderAnyCaseAnySeparator)
 {
-	gameDataPath = "/data/CD";
-	gameDataPath2 = "/data";
-	EXPECT_EQ(Fix("C:\\carpet.cd\\language.inf"), "/data/carpet.cd\\language.inf");
-	EXPECT_EQ(Fix("c:/CARPET.CD/save/carpdd00.gam"), "/data/CARPET.CD/save/carpdd00.gam");
+	gameDataPath = "/remc1-test-root/CD";
+	gameDataPath2 = "/remc1-test-root";
+	EXPECT_EQ(Fix("C:\\carpet.cd\\language.inf"), Native("/remc1-test-root/carpet.cd\\language.inf"));
+	EXPECT_EQ(Fix("c:/CARPET.CD/save/carpdd00.gam"), Native("/remc1-test-root/CARPET.CD/save/carpdd00.gam"));
 	// lowercase form used by the save-scan code; was mapped into the CD folder before the port fix
-	EXPECT_EQ(Fix("c:/carpet.cd/save/scanned.rmd"), "/data/carpet.cd/save/scanned.rmd");
+	EXPECT_EQ(Fix("c:/carpet.cd/save/scanned.rmd"), Native("/remc1-test-root/carpet.cd/save/scanned.rmd"));
 }
 
 // --- Keyboard: SDL scancode -> BIOS scan/ASCII (port_sdl_vga_mouse.cpp fixchar) -------------

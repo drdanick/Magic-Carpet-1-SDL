@@ -64,14 +64,14 @@ TEST(GameData, RncDecodersAgreeAndMatchGoldens)
 			packed++;
 			uint32_t unpackedLen = BigEndian32(&raw[4]);
 			// the game decodes in place and needs head room past the unpacked size
-			std::vector<uint8_t> a(std::max<size_t>(unpackedLen, raw.size()) + 4096);
+			GameBytes a(std::max<size_t>(unpackedLen, raw.size()) + 4096);
 			memcpy(a.data(), raw.data(), raw.size());
 			int lenA = RncUnpack_62B60_63070_orig(a.data(), a.data());
 			ASSERT_EQ((uint32_t)lenA, unpackedLen) << key;
 
 			// what the game calls: decode into an exactly-sized buffer (no head room needed any more)
-			std::vector<uint8_t> c(unpackedLen);
-			std::vector<uint8_t> in(raw);
+			GameBytes c(unpackedLen);
+			GameBytes in(raw.begin(), raw.end());
 			int lenC = RncUnpack_62B60_63070(in.data(), c.data());
 			ASSERT_EQ((uint32_t)lenC, unpackedLen) << key << " (port decoder)";
 			ASSERT_EQ(0, memcmp(a.data(), c.data(), unpackedLen)) << key << ": port decoder differs from original";

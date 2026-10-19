@@ -33,6 +33,28 @@
 #else
   #error "unknown compiler"
 #endif
+// PORT: MSVC names used by the decompiled code, for GCC/Clang
+#if !defined(_MSC_VER)
+  #include <errno.h>
+  #include <stdio.h>
+  #include <string.h>
+  #include <strings.h>
+  #define __cdecl
+  #define __stdcall
+  #define __fastcall
+  #define stricmp strcasecmp
+  #define strnicmp strncasecmp
+  #define _set_errno(e) (errno = (e), 0)
+  #define gets_s(buf) fgets((buf), sizeof(buf), stdin)
+  static inline unsigned char _BitScanReverse(unsigned long* index, unsigned long mask)
+  {
+    if (!mask)
+      return 0;
+    *index = 31 - __builtin_clz((unsigned int)mask);
+    return 1;
+  }
+#endif
+
 typedef unsigned int uint;
 typedef unsigned char uchar;
 typedef unsigned short ushort;

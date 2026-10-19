@@ -1,4 +1,5 @@
 #pragma once
+#include "ptr32.h" // ptr32<T>: 4-byte pointer slots in the packed DOS-layout structs below
 
 #include "portability/port_filesystem.h"
 #include "portability/port_sdl_vga_mouse.h"
@@ -92,23 +93,23 @@ typedef struct {//size ?
 Type_sub168_2_2;
 
 typedef struct {//size 14
-	Type_sub168_2_2* var_u32_0;
+	ptr32<Type_sub168_2_2> var_u32_0;
 	uint32 var_u32_4;
 	uint16 var_u16_8[3];
 }
 Type_sub168_2;
 
 typedef struct {//size 4
-	Type_sub168_2* var_u32_0;
+	ptr32<Type_sub168_2> var_u32_0;
 }
 Type_sub168_3;
 
 typedef struct {//size 26
 	uint32 var_0;
 	int32 var_4x;
-	Type_sub168_2* var_8;
-	Type_sub168_3* var_12;
-	uint8* var_16;
+	ptr32<Type_sub168_2> var_8;
+	ptr32<Type_sub168_3> var_12;
+	ptr32<uint8> var_16;
 	uint16 var_20;
 	uint16 var_22;
 	uint16 var_24;
@@ -126,7 +127,7 @@ Type_168;
 
 typedef struct {//size 28
 	uint32 var_0;
-	Type_sub168_2* var_4; //size 6?
+	ptr32<Type_sub168_2> var_4; //size 6?
 	uint32 var_8;
 	uint16 var_12;
 	uint16 var_14;
@@ -140,7 +141,7 @@ typedef struct {//size 28
 
 typedef struct {//size 6
 	uint16_t var_0;//count
-	Type_sub_AE3E0* var_2;
+	ptr32<Type_sub_AE3E0> var_2;
 }Type_AE3E0;
 
 
@@ -157,7 +158,7 @@ typedef struct {//size 48
 
 typedef union {
 	uint32 dw;
-	uint8* p;
+	ptr32<uint8> p;
 }Type_IntPointer;
 
 typedef union {
@@ -368,7 +369,7 @@ uint8_t stub3axx3[6];
 Type_29885_90;
 
 typedef struct _Type_AE400_29795 {// len 164
-	_Type_AE400_29795* next;
+	ptr32<_Type_AE400_29795> next;
 	uint32 rand_29799_4;//4
 	uint32 maxLife_29803_8;//8
 	int32 actLife_29807_12;//12 //act live?
@@ -440,8 +441,8 @@ typedef struct _Type_AE400_29795 {// len 164
 	uint8_t stub4[2];
 	axis_3du var_u32_150;
 	//uint16 var_u16_154;
-	Type_156* var_u32_29951_156;//156
-	Type_160* var_u32_29955_160;//160
+	ptr32<Type_156> var_u32_29951_156;//156
+	ptr32<Type_160> var_u32_29955_160;//160
 }
 Type_AE400_29795;
 typedef struct {// len 106
@@ -551,9 +552,9 @@ typedef struct {//size 232713
 	uint8 var_u8_580;
 	uint32 var_u32_581;
 	uint8 stub4b[8];
-	Type_AE400_29795* var_u32_593[1000];
+	ptr32<Type_AE400_29795> var_u32_593[1000];
 	int32 var_u32_4593;
-	Type_AE400_29795* var_u32_4597[1000];
+	ptr32<Type_AE400_29795> var_u32_4597[1000];
 
 	Type_settings set;
 
@@ -592,7 +593,7 @@ typedef struct {//size 36478
 	uint8 var_u8_3;
 	Type_29811 var_u32_4;
 	uint8 var_u8_8;
-	FILE* var_u32_9;
+	extptr32<FILE> var_u32_9;
 	uint16 var_u16_13;
 	uint16 var_u16_15;
 	uint16 var_u16_17;
@@ -615,7 +616,7 @@ typedef struct {//size 36478
 	uint8 var_u8_161;
 	int32 var_u32_162;
 	uint16 var_u16_166;
-	Type_168* var_u32_168;
+	ptr32<Type_168> var_u32_168;
 	uint32 var_u32_172;
 	uint8 stubd[8];
 	Type_AE408_184 str_184;// len 14
@@ -624,8 +625,8 @@ typedef struct {//size 36478
 	uint32 var_u32_210;
 	uint8 stubf[36164];
 	uint32 var_u32_36378;
-	Type_AE400_29795* str_36382x[20];// len 80  creature (class 5) lists, one per model, rebuilt each tick by sub_41780_41AC0
-	Type_AE400_29795* var_u32_36462[4];// 0 wizards/castles (class 3), 1 effects 10/39-40, 2 effects 10/45, 3 missiles (class 9). DOS: struct ends here (size 36478)
+	ptr32<Type_AE400_29795> str_36382x[20];// len 80  creature (class 5) lists, one per model, rebuilt each tick by sub_41780_41AC0
+	ptr32<Type_AE400_29795> var_u32_36462[4];// 0 wizards/castles (class 3), 1 effects 10/39-40, 2 effects 10/45, 3 missiles (class 9). DOS: struct ends here (size 36478)
 	//uint32 var_u32_36466;
 	//uint32 var_u32_36470;
 	//uint32 var_u32_36474;
@@ -641,7 +642,7 @@ Type_str_9398C;
 */
 
 typedef union {
-	uint8_t* p;
+	ptr32<uint8_t> p;
 	uint32_t align;
 } p64align;
 
@@ -662,7 +663,7 @@ myNCB;
 
 typedef struct {//44 lenght
 	char path[28];
-	uint8_t** colorPalette_var28;//1C // Palette
+	uint8_t** colorPalette_var28;//1C // Palette (port-side table, accessed by name: real pointers)
 	uint8_t** var32_end_buffer;//20 // maybe buffer
 	int32_t var36_size_buffer;//24 //maybe file size
 	uint32_t var40_alloc_type;//28
@@ -693,19 +694,19 @@ typedef struct {
 } TypeTabDimm;
 
 typedef struct {
-	uint8_t* Tab_0;//0
+	ptr32<uint8_t> Tab_0;//0
 	TypeTabDimm dim;//4	
 } TypeTab;
 
 typedef struct {
-	TypeTab* bTab;
+	TypeTab* bTab; // PORT: real pointers - loader targets in the path tables (Pathstruct), accessed by name
 	TypeTab* eTab;
 	uint8_t* Dat;
 } TypeStrFont;
 
 typedef struct _Type_dword_96884 {
 	//Type_sub_96884* var32_0;
-	TypeTab* next;
+	ptr32<TypeTab> next;
 	uint8_t var8_4;
 	uint8_t var8_5;
 	uint8_t var8_6;
@@ -747,7 +748,7 @@ typedef struct {//size 4*5
 } Type_RenderPoint2;
 
 typedef struct {//size 6
-	uint8* pointer_0;
+	ptr32<uint8> pointer_0;
 	uint16 pos_4;
 }
 Type_AD008_ACFF8;
@@ -757,8 +758,8 @@ typedef struct {//size 6*4 - ring iterator (BeginRingIter_11410 / NextRingOffset
 	int32 lastRing_4;
 	int32 ring_8; // current ring, -1 = iterator free
 	int32 indexInRing_12;
-	Type_AD008_ACFF8* ringDesc_16; // current ring: offsets + count
-	uint8* offsets_20; // next (dx, dy) signed byte pair, 4 bytes per entry
+	ptr32<Type_AD008_ACFF8> ringDesc_16; // current ring: offsets + count
+	ptr32<uint8> offsets_20; // next (dx, dy) signed byte pair, 4 bytes per entry
 }
 Type_AC5F0;
 

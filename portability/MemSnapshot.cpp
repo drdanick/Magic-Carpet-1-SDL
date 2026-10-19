@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include "Settings.h"
+#include "../engine/ptr32.h"
 #include "port_sdl_vga_mouse.h"
 
 #ifdef _WIN32
@@ -19,7 +20,10 @@ bool g_inTick = false;
 #ifdef _WIN32
 // File format: "MC1SNAP1", then records { uint32 base, uint32 size, bytes }, terminated by {0, 0}.
 // Only committed, readable+writable memory that belongs to the process heap/allocations (MEM_PRIVATE)
-// or to remc1.exe's own image (its .data/.bss) is written.
+// or to remc1.exe's own image (its .data/.bss) is written; of the game arena only the used part.
+// 64-bit builds write the game's 32-bit offset space instead of addresses (engine/ptr32.h): the statics
+// (at 4 MB + RVA), the arena (at 512 MB) and the game stack (at 1 GB); memory outside them is left out.
+// To the harness (tools/emu.py) that looks like a 32-bit process with its image at 0x400000.
 bool WriteDump(const std::string& path)
 {
 	FILE* f = fopen(path.c_str(), "wb");
@@ -35,11 +39,18 @@ bool WriteDump(const std::string& path)
 		bool rw = (mbi.Protect & (PAGE_READWRITE | PAGE_WRITECOPY | PAGE_EXECUTE_READWRITE | PAGE_EXECUTE_WRITECOPY)) != 0;
 		bool keep = mbi.State == MEM_COMMIT && rw && !(mbi.Protect & PAGE_GUARD) &&
 			(mbi.Type == MEM_PRIVATE || (mbi.Type == MEM_IMAGE && mbi.AllocationBase == (void*)exe));
-		if (keep)
+		uint8_t* lo = (uint8_t*)mbi.BaseAddress;
+		size_t size = mbi.RegionSize;
+		uint8_t *arena, *arenaTop;
+		Port_ArenaRange(&arena, &arenaTop);
+		if (keep && arena && lo <= arena && arena < lo + size)
+			size = ((arenaTop - lo) + 0xFFF) & ~(size_t)0xFFF;  // whole pages (the harness maps pages)
+		uint32_t off;
+		if (keep && size && Port_TryOff(lo, &off))
 		{
-			uint32_t hdr[2] = { (uint32_t)(uintptr_t)mbi.BaseAddress, (uint32_t)mbi.RegionSize };
+			uint32_t hdr[2] = { off, (uint32_t)size };
 			fwrite(hdr, 4, 2, f);
-			fwrite(mbi.BaseAddress, 1, mbi.RegionSize, f);
+			fwrite(lo, 1, size, f);
 		}
 		if (next <= p)
 			break;
@@ -85,7 +96,12 @@ std::string Begin(const char* extra)
 	if (m)
 	{
 #ifdef _WIN32
-		fprintf(m, "image_base %#x\n", (unsigned)(uintptr_t)GetModuleHandleA(nullptr));
+		uint32_t image;
+		Port_TryOff(GetModuleHandleA(nullptr), &image);
+		fprintf(m, "image_base %#x\npointer_size %u\n", (unsigned)image, (unsigned)sizeof(void*));
+		// statics, arena, stack window bases: turn real pointers held in statics into offsets
+		fprintf(m, "bases %#llx %#llx %#llx\n", (unsigned long long)(uintptr_t)g_ptrBases[0],
+			(unsigned long long)(uintptr_t)g_ptrBases[1], (unsigned long long)(uintptr_t)g_ptrBases[2]);
 #endif
 		fprintf(m, "frame %u\n%s", VGA_PresentedFrames(), extra);
 		fclose(m);
@@ -121,7 +137,7 @@ void MemSnapshot_Call(const char* what, bool before, unsigned idaAddress, const 
 			return;
 		inCall = true;
 		char extra[512];
-		int n = snprintf(extra, sizeof(extra), "state %#x %u\ncall %#x", (unsigned)(uintptr_t)MemSnapshot_State,
+		int n = snprintf(extra, sizeof(extra), "state %#x %u\ncall %#x", (unsigned)OFF(MemSnapshot_State),
 			(unsigned)MemSnapshot_StateSize, idaAddress);
 		for (int i = 0; i < nargs && n < (int)sizeof(extra) - 16; i++)
 			n += snprintf(extra + n, sizeof(extra) - n, " %d", args[i]);
@@ -150,8 +166,8 @@ void MemSnapshot_Tick(bool before, const void* state, size_t stateSize, const vo
 			return;
 		g_inTick = true;
 		char extra[128];
-		snprintf(extra, sizeof(extra), "state %#x %u\nsettings %#x %u\n", (unsigned)(uintptr_t)state,
-			(unsigned)stateSize, (unsigned)(uintptr_t)settings, (unsigned)settingsSize);
+		snprintf(extra, sizeof(extra), "state %#x %u\nsettings %#x %u\n", (unsigned)OFF(state),
+			(unsigned)stateSize, (unsigned)OFF(settings), (unsigned)settingsSize);
 		Begin(extra);
 	}
 	else if (g_inTick)

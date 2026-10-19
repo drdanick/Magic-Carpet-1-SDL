@@ -60,32 +60,6 @@ std::string get_exe_path() {
 #endif
 };
 
-long my_findfirst(char* path, _finddata_t* c_file){
-	#ifdef DEBUG_START
-		debug_printf("my_findfirst:%s\n", path);
-	#endif //DEBUG_START
-	#ifdef DEBUG_START
-		debug_printf("my_findfirst:fixed:%s\n", path);
-	#endif //DEBUG_START
-	long result= _findfirst(path, c_file);
-	#ifdef DEBUG_START
-			debug_printf("my_findfirst:end:%d\n", result);
-	#endif //DEBUG_START
-	return result;
-}
-
-long my_findnext(long hFile, _finddata_t* c_file){
-	long result = _findnext(hFile, c_file);
-	#ifdef DEBUG_START
-		debug_printf("my_findnext:end:%d\n", result);
-	#endif //DEBUG_START
-	return result;
-}
-
-void my_findclose(long hFile){
-	_findclose(hFile);
-};
-
 bool file_exists(const char * filename) {
 	/*if (FILE * file = fcaseopen(filename, "r")) {
 		fclose(file);
@@ -218,7 +192,7 @@ FILE* myopen(const char* path, int pmode, uint32_t flags) {
 	//bool localDrive::FileOpen(DOS_File * * file, const char * name, uint32_t flags) {
 	const char * type;
 	if ((pmode == 0x222) && (flags == 0x40))type = "rb+";
-	else if ((pmode == 0x200) && (flags == 0x40))type = "rb+";
+	else if ((pmode == 0x200) && (flags == 0x40))type = "rb"; // O_BINARY|O_RDONLY: data may be read-only
 	else if (pmode == 0x202) type = "rb+";
 	else
 		exit(1);//error - DOSSetError(DOSERR_ACCESS_CODE_INVALID);
@@ -341,91 +315,11 @@ int dos_getdrive(int* a) {
 	return *a;
 };
 
-#ifdef _MSC_VER
-struct space_info
-{
-	// all values are byte counts
-	unsigned long capacity;
-	unsigned long free;      // <= capacity
-	unsigned long available; // <= free
-};
-//BOOST_FILESYSTEM_DECL
-space_info space(char* path, int* ec)
-{
-#   ifdef BOOST_POSIX_API
-	struct BOOST_STATVFS vfs;
-	space_info info;
-	if (!error(::BOOST_STATVFS(path, &vfs) ? BOOST_ERRNO : 0,
-		p, ec, "boost::filesystem::space"))
-	{
-		info.capacity
-			= static_cast<boost::uintmax_t>(vfs.f_blocks)* BOOST_STATVFS_F_FRSIZE;
-		info.free
-			= static_cast<boost::uintmax_t>(vfs.f_bfree)* BOOST_STATVFS_F_FRSIZE;
-		info.available
-			= static_cast<boost::uintmax_t>(vfs.f_bavail)* BOOST_STATVFS_F_FRSIZE;
-	}
-
-#   else
-	ULARGE_INTEGER avail, total, free;
-	space_info info;
-
-	//std::string charstring = "hello, world";
-
-	std::wstring widestring;
-
-	for (uint32_t i = 0; i < strlen(path); i++)
-		widestring += (wchar_t)path[i];
-
-	LPCWSTR lpcwpath = widestring.c_str();
-
-
-	if (GetDiskFreeSpaceExW(lpcwpath, &avail, &total, &free) != 0)
-	{
-		info.capacity
-			= ((total.HighPart) << 32)
-			+ total.LowPart;
-		info.free
-			= ((free.HighPart) << 32)
-			+ free.LowPart;
-		info.available
-			= ((avail.HighPart) << 32)
-			+ avail.LowPart;
-	}
-
-#   endif
-
-	else
-	{
-		info.capacity = info.free = info.available = 0;
-	}
-	return info;
-}
-
+// DOS _dos_getdiskfree: 0 = success. The game's drives are folders on the host, assumed to have room
+// (the old Windows-only version decided on an uninitialised error code).
 uint64_t dos_getdiskfree(uint8_t a, int16_t a2) {
-	return dos_getdiskfree(0,0,a,0);
-};
-
-unsigned __int64 dos_getdiskfree(__int16 a1, __int16 a2, uint8_t a, short* b) {
-	unsigned long wanted_size = 0;//fix it
-	char drivename[10];
-	sprintf(drivename, "%c:", (uint8_t)(a + 64));
-	int ec;
-	space_info myspaceinfo = space(drivename, &ec);
-	if (ec)
-		if (myspaceinfo.free > wanted_size)return 0;
-		else return 1;
-	else return 1;
-	/*
-	if ( (_WORD)b == -1 )
-	return _set_EINVAL(b, a3);
-	a4[0] = a;
-	a4[1] = a2;
-	a4[2] = b;
-	a4[3] = a1;
-	*/
-};
-#endif
+	return 0;
+}
 
 void AdvReadfile(const char* path, uint8_t* buffer) {
 	std::string pathexe = get_exe_path();

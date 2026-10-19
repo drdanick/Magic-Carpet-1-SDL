@@ -31,7 +31,8 @@ std::vector<std::string> GetTokensFromPath(const std::string &path) {
 
 std::string casepath(const std::string &inPath)
 {
-    // returns either a path that has upper/lower case fixed and points to an existing file or returns the input path
+    // the path with the case of every existing leading component fixed; the components after the first
+    // missing one are kept as written (a file or folder about to be created)
     // DOS code uses '\' separators; normalise first
     std::string path = inPath;
     for (auto& c : path)
@@ -62,20 +63,14 @@ std::string casepath(const std::string &inPath)
             else if (dir.size() > 1 && dir.back() == '/')
                 dir.pop_back();
 
-            if (!std::filesystem::exists(dir))
-                return path;
-
-            bool found = false;
-            for (const auto &entry : std::filesystem::directory_iterator(dir)) {
+            std::error_code ec;
+            for (const auto &entry : std::filesystem::directory_iterator(dir, ec)) {
                 std::string test = entry.path().filename().string();
                 if (our_iequals(token, test)) {
                     current = result + test;
-                    found = true;
                     break;
                 }
             }
-            if (!found)
-                return path;
         }
 
         result = current + ((i != tokens.size()-1) ? "/" : "");

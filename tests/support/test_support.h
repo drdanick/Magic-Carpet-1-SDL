@@ -8,7 +8,22 @@
 #include <string>
 #include <vector>
 
+#include "engine/ptr32.h"
+
 namespace remc1test {
+
+// Allocator for buffers handed to game code: on 64-bit the game keeps addresses as 32-bit offsets, which
+// only reach its statics, its stack and the game arena (engine/ptr32.h), not the C++ heap.
+template <class T> struct GameAlloc {
+	using value_type = T;
+	GameAlloc() = default;
+	template <class U> GameAlloc(const GameAlloc<U>&) {}
+	T* allocate(size_t n) { return static_cast<T*>(Port_ArenaAlloc(n * sizeof(T))); }
+	void deallocate(T* p, size_t) { Port_ArenaFree(p); }
+	template <class U> bool operator==(const GameAlloc<U>&) const { return true; }
+	template <class U> bool operator!=(const GameAlloc<U>&) const { return false; }
+};
+using GameBytes = std::vector<uint8_t, GameAlloc<uint8_t>>;
 
 // 64-bit FNV-1a: cheap, stable, good enough to detect regressions (not cryptographic).
 inline uint64_t Fnv1a64(const void* data, size_t size, uint64_t h = 0xcbf29ce484222325ull)
