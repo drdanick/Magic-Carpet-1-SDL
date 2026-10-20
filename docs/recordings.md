@@ -37,9 +37,4 @@ uses your install's current saves).
 
 Both tools take `--data <dir>` (default `$REMC1_DATA_DIR`, else `C:/mc1data` on Windows and
 `~/mc1data` elsewhere) and `--exe <path>` (default `$REMC1_EXE`, else the newest build under
-`build/`, release builds first). Everything after the first `--` goes to remc1 unchanged, even options
-the tool has too (`remc1 --help` lists them):
-```bash
-python tools/rec.py play recordings/castle_bug -- --fullscreen --music-volume 50
-python tools/rec.py record recordings/castle_bug -- --music-device gm --soundfont C:/sf2/FluidR3_GM.sf2
-```
+`build/`, release builds first); arguments after `--` go to remc1.

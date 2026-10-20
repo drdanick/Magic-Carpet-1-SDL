@@ -4,7 +4,6 @@
   python tools/rec.py record recordings/castle_bug            # play normally; quit the game to stop
   python tools/rec.py play   recordings/castle_bug.recording  # watch it at normal speed
   python tools/rec.py play   old_recording.txt --keep-saves      # legacy .txt: use the install's saves
-  python tools/rec.py play   recordings/castle_bug -- --fullscreen --music-volume 50   # options for remc1
 
 record: copies <data>/CARPET.CD/SAVE into the bundle first (the saves the session starts from), then
         runs remc1 on the real install with --record-input. Saving/loading during the session works
@@ -15,8 +14,8 @@ play:   builds a temporary C: drive (install without saves + the bundle's saves)
 
 Options: --data DIR (default $REMC1_DATA_DIR, else C:/mc1data on Windows, ~/mc1data elsewhere), --exe
 PATH (default $REMC1_EXE, else the newest build under build/, see remc1_paths.py), --headless (play
-only). Everything after the first "--" goes to remc1 unchanged (remc1 --help lists its options),
-even options rec.py has too, such as --data.
+only). Arguments after
+"--" go to remc1.
 """
 import argparse
 import os
@@ -84,8 +83,8 @@ def main():
     ap.add_argument("--force", action="store_true", help="record: replace an existing bundle")
     ap.add_argument("--headless", action="store_true", help="play: no window")
     ap.add_argument("--keep-saves", action="store_true", help="play a legacy .txt with the install's current saves")
-    own, extra = recording.split_args(sys.argv[1:])
-    a = ap.parse_args(own)
+    a, extra = ap.parse_known_args()
+    extra = [x for x in extra if x != "--"]
     a.exe = a.exe or remc1_paths.find_port_exe()
     return record(a, extra) if a.command == "record" else play(a, extra)
 

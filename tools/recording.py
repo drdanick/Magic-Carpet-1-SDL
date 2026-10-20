@@ -21,16 +21,6 @@ INPUT = "input.txt"
 SAVES = "saves"
 
 
-def split_args(argv):
-    """Split a tool's command line at the first "--": (the tool's own arguments, arguments for remc1).
-    Everything after the "--" goes to remc1 as given, including further "--" and options the tool
-    itself also has (--data, --headless, ...)."""
-    if "--" in argv:
-        i = argv.index("--")
-        return argv[:i], argv[i + 1:]
-    return argv, []
-
-
 def bundle_path(name):
     """<name> or <name>.recording -> <name>.recording"""
     name = name.rstrip("/\\")
