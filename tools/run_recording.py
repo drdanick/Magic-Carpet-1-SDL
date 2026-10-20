@@ -40,8 +40,9 @@ def main():
     ap.add_argument("--keep-saves", action="store_true", help="legacy .txt: copy <data>/CARPET.CD/SAVE into the fresh C: drive")
     ap.add_argument("--saves", help="use this folder as the C: drive's saves (overrides the bundle's)")
     ap.add_argument("--real-audio", action="store_true", help="use the real audio device (recordings made with sound on can depend on it)")
-    a, extra = ap.parse_known_args()
-    a.extra = [x for x in extra if x != "--"]  # everything unknown goes to remc1
+    own, extra = recording.split_args(sys.argv[1:])  # everything after "--" goes to remc1
+    a = ap.parse_args(own)
+    a.extra = extra
     a.exe = a.exe or remc1_paths.find_port_exe()
 
     shutil.rmtree(a.out, ignore_errors=True)
