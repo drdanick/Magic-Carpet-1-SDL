@@ -1,13 +1,15 @@
 # Building on Windows
 
 REMC1 builds as a 64-bit program (x64; ARM64 with the ARM64 build tools). The build uses CMake (3.21+)
-and vcpkg, which fetches and builds SDL2, SDL2_mixer, FluidSynth, nlohmann-json and GoogleTest the first
-time (FluidSynth brings GLib, so the first configure takes a while). The music library libADLMIDI is
-downloaded by CMake.
+and vcpkg, which fetches and builds SDL2, SDL2_mixer, nlohmann-json and GoogleTest the first time. The
+music library libADLMIDI is downloaded by CMake.
 
-The General MIDI music (chosen in the game's sound setup or with `--music-device gm`) needs a General MIDI
-SoundFont, e.g. FluidR3_GM or GeneralUser GS: pass it with `--soundfont <file.sf2>` or `audio.soundfont`
-in `config.json`. The default AdLib music needs nothing extra.
+The General MIDI music (chosen in the game's sound setup or with `--music-device gm`) plays on the Windows
+MIDI synth (Microsoft GS Wavetable Synth) and needs nothing extra. For SoundFonts instead, configure with
+`-DREMC1_FLUIDSYNTH=ON`: vcpkg then also builds FluidSynth and GLib, which makes the first configure take
+about half an hour. Then pass a General MIDI SoundFont (e.g. FluidR3_GM or GeneralUser GS) with
+`--soundfont <file.sf2>` or `audio.soundfont` in `config.json`. `--midi-synth fluidsynth|system|opl`
+picks the synth explicitly.
 
 ## Requirements
 

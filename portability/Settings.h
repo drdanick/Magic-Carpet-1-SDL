@@ -37,6 +37,7 @@ struct Remc1Settings {
 	int musicVolume = 100;            // percent
 	std::string oplEmulator = "dosbox"; // AdLib music: dosbox or nuked (more accurate, slower)
 	std::string soundfont;            // General MIDI music (FluidSynth); "" = look in the system locations
+	std::string midiSynth = "auto";   // General MIDI music: auto, fluidsynth, system (Windows MIDI) or opl
 
 	// Diagnostics
 	bool debugLog = false; // write debug.txt next to the executable

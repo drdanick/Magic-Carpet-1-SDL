@@ -5,10 +5,15 @@
   "dependencies": [
     "sdl2",
     "sdl2-mixer",
-    "fluidsynth",
     "nlohmann-json",
     "gtest"
   ],
+  "features": {
+    "fluidsynth": {
+      "description": "General MIDI music on SoundFonts (-DREMC1_FLUIDSYNTH=ON; builds GLib, slow first configure)",
+      "dependencies": [ "fluidsynth" ]
+    }
+  },
   "builtin-baseline": "ef7dbf94b9198bc58f45951adcf1f041fcbc5ea0",
   "overrides": [
     { "name": "sdl2", "version": "2.32.8" }

@@ -1,5 +1,19 @@
 cmake_minimum_required(VERSION 3.21)
 
+option(REMC1_MUSIC "Build music support (libADLMIDI)" ON)
+# General MIDI songs on a SoundFont synth. Off by default on Windows, where vcpkg would have to build
+# FluidSynth and GLib (a slow first configure) and the system MIDI synth plays them instead; set here,
+# before project(), because it selects vcpkg's "fluidsynth" manifest feature.
+if(CMAKE_HOST_WIN32)
+    set(REMC1_FLUIDSYNTH_DEFAULT OFF)
+else()
+    set(REMC1_FLUIDSYNTH_DEFAULT ON)
+endif()
+option(REMC1_FLUIDSYNTH "Use FluidSynth for the General MIDI music when it is found" ${REMC1_FLUIDSYNTH_DEFAULT})
+if(REMC1_MUSIC AND REMC1_FLUIDSYNTH)
+    list(APPEND VCPKG_MANIFEST_FEATURES fluidsynth)
+endif()
+
 project(remc1 VERSION 0.1.0 LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -25,7 +39,6 @@ endif()
 
 # Music: libADLMIDI (OPL3 emulation for the AdLib music) and its MIDI sequencer (BW_MidiSequencer, MIT,
 # reads HMI's HMP songs), built from a pinned release. Offline builds: -DFETCHCONTENT_SOURCE_DIR_LIBADLMIDI=<dir>.
-option(REMC1_MUSIC "Build music support (libADLMIDI)" ON)
 if(REMC1_MUSIC)
     include(FetchContent)
     set(libADLMIDI_STATIC ON)
@@ -43,8 +56,8 @@ if(REMC1_MUSIC)
         URL_HASH SHA256=e01aec7b2bc284476eedab77a8b6e177c5beda2bc2f4545166339badfc0464c5)
     FetchContent_MakeAvailable(libadlmidi)
 
-    # General MIDI songs on a SoundFont synth (optional; without it they play on OPL3 with a GM bank)
-    option(REMC1_FLUIDSYNTH "Use FluidSynth for the General MIDI music when it is found" ON)
+    # General MIDI songs on FluidSynth (optional; without it they play on the Windows MIDI synth or on
+    # OPL3 with a GM bank)
     if(REMC1_FLUIDSYNTH)
         # pkg-config first: Ubuntu's CMake package for FluidSynth fails unless the fluidsynth program is
         # installed too. vcpkg (Windows) provides the CMake package.
@@ -150,6 +163,9 @@ if(REMC1_MUSIC)
     target_include_directories(remc1_engine PRIVATE ${libadlmidi_SOURCE_DIR}/src/midiseq)
     target_link_libraries(remc1_engine PRIVATE ADLMIDI_static)
     target_compile_definitions(remc1_engine PRIVATE REMC1_MUSIC=1)
+    if(WIN32)
+        target_link_libraries(remc1_engine PRIVATE winmm) # system MIDI synth (midiOut)
+    endif()
     if(REMC1_FLUIDSYNTH_TARGET)
         target_link_libraries(remc1_engine PRIVATE ${REMC1_FLUIDSYNTH_TARGET})
         target_compile_definitions(remc1_engine PRIVATE REMC1_FLUIDSYNTH=1)

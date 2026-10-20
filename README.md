@@ -13,7 +13,7 @@ You need your own copy of the game - no game data is included.
 - keyboard and mouse, sound effects (SDL2_mixer)
 - music: the AdLib soundtrack with the game's own instruments (OPL3 emulation by
   [libADLMIDI](https://github.com/Wohlstand/libADLMIDI)) or the General MIDI soundtrack on a SoundFont
-  ([FluidSynth](https://www.fluidsynth.org)), including the danger music that fades in when enemies are
+  ([FluidSynth](https://www.fluidsynth.org)) or the Windows MIDI synth, including the danger music that fades in when enemies are
   near; the card chosen in the game's sound setup decides, or `--music-device adlib|gm|none`
 - settings in `config.json` and on the command line (`remc1 --help`)
 - input recording and deterministic replay, used by the test suite and for bug reports

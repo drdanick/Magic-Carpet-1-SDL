@@ -11,13 +11,17 @@
 #include "SDL2/SDL_mixer.h"
 #endif
 
+#include <atomic>
 #include <cctype>
+#include <chrono>
 #include <cstdlib>
 #include <cstdio>
 #include <cstring>
 #include <memory>
 #include <mutex>
 #include <string>
+#include <thread>
+#include <vector>
 
 #if REMC1_MUSIC
 #include <adlmidi.h>
@@ -25,6 +29,12 @@
 #endif
 #if REMC1_FLUIDSYNTH
 #include <fluidsynth.h>
+#endif
+#if REMC1_MUSIC && defined(_WIN32)
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+#include <windows.h>
+#include <mmsystem.h>
 #endif
 
 namespace {
@@ -75,6 +85,9 @@ public:
 	virtual void Reset() = 0;
 	// Interleaved stereo S16.
 	virtual void Render(int16_t* out, int frames) = 0;
+	// Plays on its own device (nothing to render): the sequencer runs on a thread of its own instead of
+	// the SDL_mixer music hook.
+	virtual bool Realtime() const { return false; }
 };
 
 class AdlSynth : public Synth {
@@ -240,6 +253,68 @@ std::string FindSoundFont()
 }
 #endif // REMC1_FLUIDSYNTH
 
+#ifdef _WIN32
+// General MIDI songs on the Windows MIDI synth (the default MIDI output, normally the Microsoft GS
+// Wavetable Synth). The music volume scales the channel volumes (CC7): the device has no volume of its own.
+class WinMidiSynth : public Synth {
+public:
+	WinMidiSynth()
+	{
+		if (midiOutOpen(&out_, MIDI_MAPPER, 0, 0, CALLBACK_NULL) != MMSYSERR_NOERROR)
+			out_ = nullptr;
+	}
+	~WinMidiSynth() override
+	{
+		if (out_) {
+			midiOutReset(out_);
+			midiOutClose(out_);
+		}
+	}
+	bool Ok() const { return out_ != nullptr; }
+
+	void NoteOn(uint8_t c, uint8_t n, uint8_t v) override { Send(0x90 | c, n, v); }
+	void NoteOff(uint8_t c, uint8_t n) override { Send(0x80 | c, n, 0); }
+	void NoteAfterTouch(uint8_t c, uint8_t n, uint8_t v) override { Send(0xA0 | c, n, v); }
+	void ChannelAfterTouch(uint8_t c, uint8_t v) override { Send(0xD0 | c, v, 0); }
+	void ControllerChange(uint8_t c, uint8_t t, uint8_t v) override { Send(0xB0 | c, t, t == 7 ? Scaled(v) : v); }
+	void PatchChange(uint8_t c, uint8_t p) override { Send(0xC0 | c, p, 0); }
+	void PitchBend(uint8_t c, uint8_t msb, uint8_t lsb) override { Send(0xE0 | c, lsb, msb); }
+	void SysEx(const uint8_t* msg, size_t size) override
+	{
+		std::vector<char> buf;
+		if (!size || msg[0] != 0xF0)
+			buf.push_back((char)0xF0);
+		buf.insert(buf.end(), (const char*)msg, (const char*)msg + size);
+		if ((uint8_t)buf.back() != 0xF7)
+			buf.push_back((char)0xF7);
+		MIDIHDR h;
+		memset(&h, 0, sizeof(h));
+		h.lpData = buf.data();
+		h.dwBufferLength = h.dwBytesRecorded = (DWORD)buf.size();
+		if (midiOutPrepareHeader(out_, &h, sizeof(h)) != MMSYSERR_NOERROR)
+			return;
+		midiOutLongMsg(out_, &h, sizeof(h));
+		while (midiOutUnprepareHeader(out_, &h, sizeof(h)) == MIDIERR_STILLPLAYING)
+			Sleep(1);
+	}
+	void Reset() override
+	{
+		midiOutReset(out_);
+		static const uint8_t gmOn[] = { 0xF0, 0x7E, 0x7F, 0x09, 0x01, 0xF7 };
+		SysEx(gmOn, sizeof(gmOn));
+		for (uint8_t c = 0; c < 16; c++)
+			ControllerChange(c, 7, 100); // the GM default volume, scaled
+	}
+	void Render(int16_t* out, int frames) override { memset(out, 0, (size_t)frames * 4); }
+	bool Realtime() const override { return true; }
+
+private:
+	void Send(int status, uint8_t a, uint8_t b) { midiOutShortMsg(out_, (DWORD)(status | (a << 8) | (b << 16))); }
+	static uint8_t Scaled(uint8_t v) { return (uint8_t)(v * g_settings.musicVolume / 100); }
+	HMIDIOUT out_ = nullptr;
+};
+#endif // _WIN32
+
 // --- Player: sequencer + synth, driven by the SDL_mixer music hook ------------------------------------
 std::mutex audioMutex; // guards everything below against the audio callback
 std::unique_ptr<Synth> synth;
@@ -248,6 +323,8 @@ BW_MidiRtInterface rtInterface;
 bool sequencerPlaying = false;
 int deviceRate = 44100;
 FILE* wavDump = nullptr;
+std::thread sequencerThread; // realtime synths
+std::atomic<bool> sequencerThreadQuit{ false };
 
 void InitInterface()
 {
@@ -288,6 +365,48 @@ void SDLCALL MusicHook(void*, Uint8* stream, int len)
 	}
 	if (wavDump)
 		fwrite(stream, 1, (size_t)len, wavDump);
+}
+
+// The sequencer for realtime synths: plays the events due since the last round, then sleeps until the
+// next one is due (at most 5 ms, so a song started meanwhile begins promptly).
+void SequencerThread()
+{
+#ifdef _WIN32
+	timeBeginPeriod(1);
+#endif
+	auto last = std::chrono::steady_clock::now();
+	while (!sequencerThreadQuit) {
+		double wait = 0.005;
+		{
+			std::lock_guard<std::mutex> lock(audioMutex);
+			const auto now = std::chrono::steady_clock::now();
+			const double elapsed = std::chrono::duration<double>(now - last).count();
+			last = now;
+			if (sequencer && sequencerPlaying) {
+				wait = sequencer->Tick(elapsed, 0.001);
+				if (sequencer->positionAtEnd())
+					sequencerPlaying = false; // song end: the game restarts it (tick driven) if it wants to
+			}
+		}
+		std::this_thread::sleep_for(std::chrono::duration<double>(wait < 0.001 ? 0.001 : wait > 0.005 ? 0.005 : wait));
+	}
+#ifdef _WIN32
+	timeEndPeriod(1);
+#endif
+}
+
+// Also runs at exit (the game exits without shutting the music down): stops the sequencer thread before
+// the objects it uses are destroyed, and silences the device.
+void StopPlayer()
+{
+	Mix_HookMusic(nullptr, nullptr);
+	if (sequencerThread.joinable()) {
+		sequencerThreadQuit = true;
+		sequencerThread.join();
+	}
+	std::lock_guard<std::mutex> lock(audioMutex);
+	sequencer.reset();
+	synth.reset();
 }
 
 // REMC1_MUSIC_WAV=<file>: also write the music output to a WAV file (debugging without listening).
@@ -367,26 +486,47 @@ void PortMusic_Init(PortMusicDevice device)
 		fprintf(stderr, "music: unsupported output format, music disabled\n");
 		return;
 	}
+	StopPlayer(); // a second init replaces the player
 	std::unique_ptr<Synth> s;
+	// General MIDI songs (also chosen for Roland), --midi-synth: by default FluidSynth on a SoundFont,
+	// else the Windows MIDI synth, else OPL3 with libADLMIDI's GM bank
+	const char* midiSynth = g_settings.midiSynth.c_str();
+	const bool anySynth = EqualsNoCase(midiSynth, "auto");
+	if (device != PortMusicDevice::AdLib && !EqualsNoCase(midiSynth, "opl")) {
 #if REMC1_FLUIDSYNTH
-	// General MIDI songs (also chosen for Roland): FluidSynth on a SoundFont
-	if (device != PortMusicDevice::AdLib) {
-		const std::string soundfont = FindSoundFont();
-		if (soundfont.empty())
-			fprintf(stderr, "music: no SoundFont found (set --soundfont or audio.soundfont in config.json); "
-				"General MIDI plays on the OPL3 emulator\n");
-		else {
-			auto fluid = std::make_unique<FluidSynth>(rate, soundfont);
-			if (fluid->Ok()) {
-				printf("music: FluidSynth, %s\n", soundfont.c_str());
-				s = std::move(fluid);
+		if (anySynth || EqualsNoCase(midiSynth, "fluidsynth")) {
+			const std::string soundfont = FindSoundFont();
+			if (soundfont.empty())
+				fprintf(stderr, "music: no SoundFont for FluidSynth (set --soundfont or audio.soundfont in config.json)\n");
+			else {
+				auto fluid = std::make_unique<FluidSynth>(rate, soundfont);
+				if (fluid->Ok()) {
+					printf("music: FluidSynth, %s\n", soundfont.c_str());
+					s = std::move(fluid);
+				}
+				else
+					fprintf(stderr, "music: cannot load the SoundFont %s\n", soundfont.c_str());
+			}
+		}
+#endif
+#ifdef _WIN32
+		// not in headless runs or on SDL's dummy audio driver, which must stay silent
+		const char* driver = SDL_GetCurrentAudioDriver();
+		const bool silentRun = g_settings.headless || (driver && (!strcmp(driver, "dummy") || !strcmp(driver, "disk")));
+		if (!s && !silentRun && (anySynth || EqualsNoCase(midiSynth, "system"))) {
+			auto win = std::make_unique<WinMidiSynth>();
+			if (win->Ok()) {
+				printf("music: Windows MIDI synth\n");
+				s = std::move(win);
 			}
 			else
-				fprintf(stderr, "music: cannot load the SoundFont %s; General MIDI plays on the OPL3 emulator\n", soundfont.c_str());
+				fprintf(stderr, "music: cannot open the Windows MIDI synth\n");
 		}
-	}
 #endif
-	// AdLib songs, and General MIDI without a SoundFont: OPL3 emulation
+		if (!s)
+			printf("music: General MIDI on the OPL3 emulator\n");
+	}
+	// AdLib songs, and General MIDI without another synth: OPL3 emulation
 	if (!s) {
 		auto adl = std::make_unique<AdlSynth>(rate, device == PortMusicDevice::AdLib);
 		if (adl->Ok())
@@ -396,24 +536,32 @@ void PortMusic_Init(PortMusicDevice device)
 		fprintf(stderr, "music: cannot create the synthesizer, music is silent\n");
 		return;
 	}
+	const bool realtime = s->Realtime();
 	{
 		std::lock_guard<std::mutex> lock(audioMutex);
 		deviceRate = rate;
 		synth = std::move(s);
 		InitInterface();
-		OpenWavDump();
+		if (realtime)
+			synth->Reset(); // a device keeps the state an earlier program left
+		else
+			OpenWavDump();
 	}
-	Mix_HookMusic(MusicHook, nullptr);
+	if (realtime) {
+		sequencerThreadQuit = false;
+		sequencerThread = std::thread(SequencerThread);
+		static const bool atExit = (atexit(StopPlayer), true);
+		(void)atExit;
+	}
+	else
+		Mix_HookMusic(MusicHook, nullptr);
 #endif
 }
 
 void PortMusic_Shutdown()
 {
 #if REMC1_MUSIC
-	Mix_HookMusic(nullptr, nullptr);
-	std::lock_guard<std::mutex> lock(audioMutex);
-	sequencer.reset();
-	synth.reset();
+	StopPlayer();
 #endif
 	songPlaying = false;
 	songLoaded = false;
