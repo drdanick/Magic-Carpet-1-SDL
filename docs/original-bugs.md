@@ -91,7 +91,13 @@ valid.)
 **Symptom:** on level 12 the purple wizard's castle stands in the maze in the north-west of the map,
 between impassable walls, and never grows.
 
-**Cause:** the castle spell's missile stops at the first point of its path where
+**Cause:** an AI wizard does not look at the terrain when it picks a castle site. `sub_13F00` takes
+points from a fixed grid of 64x64-tile blocks: each block's corner or the point 31 tiles in, starting
+with the block the wizard is in. It picks the first point with no castle within 12288 units. On
+level 12 the grid point (192, 64) lies in the maze. The AI castles in the recording stand on such
+points: (0, 64), (0, 0) and (192, 64).
+
+The castle spell's missile then stops at the first point of its path where
 `IsCastleSiteFree_12F70` fails and builds one step back. That check tests only the 8x8 tiles from
 (x-8, y-8) to (x-1, y-1), i.e. the quarter of the site north-west of the castle point, for walls
 (`mapAngle` bit 0x80). The missile also builds without any check where it hits the ground, hits its
@@ -101,3 +107,5 @@ target or runs out of time. A castle can therefore stand right next to walls, an
 **Confirmed:** `possible_enemy_castle_bug.recording` (a user recording): every tick from frame 3060 to
 3120 matches the original byte for byte, including frame 3116, where the castle is created at tile
 (192, 64). The 8x8 window is the original's own loop (`sar`, `sub al, 8` at 0x1302D).
+`tools/diff_funcs.py --func sub_13F00` gives identical results for wizards 105 and 109 on eight
+snapshots between frames 1300 and 6000, including frame 3100, where wizard 109 picks (192, 64).
