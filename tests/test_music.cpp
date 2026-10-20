@@ -5,6 +5,10 @@
 #include "support/test_support.h"
 #include "portability/port_music.h"
 #include "portability/port_timer.h"
+#include "portability/Settings.h"
+
+#include <cstdlib>
+#include <fstream>
 
 #include <algorithm>
 #include <cmath>
@@ -180,4 +184,32 @@ TEST(GameData, MusicSongsParse)
 		}
 	}
 	EXPECT_GE(songs, 20);
+}
+
+// The Roland card needs a complete MT-32 / CM-32L ROM set: none without a folder or with other files in it;
+// with REMC1_MT32_ROMS (a folder with the ROMs) in an MT-32 build, the set is found.
+TEST(Music, Mt32NeedsRoms)
+{
+	const std::string savedRoms = g_settings.mt32Roms, savedModel = g_settings.mt32Model;
+	g_settings.mt32Model = "auto";
+	g_settings.mt32Roms = "";
+	EXPECT_FALSE(PortMusic_Mt32Available());
+	const fs::path dir = fs::temp_directory_path() / "remc1_test_mt32_roms";
+	fs::create_directories(dir);
+	std::ofstream(dir / "MT32_CONTROL.ROM", std::ios::binary) << std::string(65536, 'x');
+	g_settings.mt32Roms = dir.string();
+	EXPECT_FALSE(PortMusic_Mt32Available()); // the right size and name, but not a ROM Munt knows
+	fs::remove(dir / "MT32_CONTROL.ROM");
+	fs::remove(dir);
+	const char* roms = getenv("REMC1_MT32_ROMS");
+	if (roms && *roms) {
+		g_settings.mt32Roms = roms;
+#if REMC1_MT32
+		EXPECT_TRUE(PortMusic_Mt32Available()) << roms;
+#else
+		EXPECT_FALSE(PortMusic_Mt32Available()); // built without Munt
+#endif
+	}
+	g_settings.mt32Roms = savedRoms;
+	g_settings.mt32Model = savedModel;
 }

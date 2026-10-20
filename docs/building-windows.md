@@ -2,7 +2,7 @@
 
 REMC1 builds as a 64-bit program (x64; ARM64 with the ARM64 build tools). The build uses CMake (3.21+)
 and vcpkg, which fetches and builds SDL2, SDL2_mixer, nlohmann-json and GoogleTest the first time. The
-music library libADLMIDI is downloaded by CMake.
+music libraries libADLMIDI and Munt (MT-32) are downloaded by CMake.
 
 The General MIDI music (chosen in the game's sound setup or with `--music-device gm`) plays on the Windows
 MIDI synth (Microsoft GS Wavetable Synth) and needs nothing extra. For SoundFonts instead, configure with

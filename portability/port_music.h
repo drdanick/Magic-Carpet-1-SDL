@@ -4,7 +4,8 @@
 // The game's songs are HMI HMP files (DATA/MUSIC<set>-<variant>.DAT, one variant per card type). They are
 // sequenced by BW_MidiSequencer (from libADLMIDI) and played by a synth chosen from the sound setup:
 //   AdLib family -> libADLMIDI (OPL3 emulation) with the game's own INST.BNK / DRUM.BNK instruments;
-//   General MIDI (and Roland, which plays the General MIDI songs) -> libADLMIDI with its General MIDI bank.
+//   General MIDI -> FluidSynth on a SoundFont, the Windows MIDI synth, or libADLMIDI with its General MIDI bank;
+//   Roland -> Munt (MT-32 emulation) with the user's MT-32 / CM-32L ROMs; without them the General MIDI songs.
 // The output is mixed into the SDL_mixer device opened by port_sound.
 //
 // Game-visible state (whether a song is still playing) is driven by timer ticks against the song length,
@@ -19,6 +20,8 @@ enum class PortMusicDevice { None, AdLib, GeneralMidi, MT32 };
 // Card name from sndsetup.inf / BF_MUSIC ("ADLIB", "SB16FM", "GENERAL", "ROLAND", ...), overridden by the
 // music settings (--no-music, --music-device). The result only depends on the setup and the settings.
 PortMusicDevice PortMusic_SelectDevice(const char* card);
+// A complete MT-32 / CM-32L ROM set is in --mt32-roms (and the build has Munt): the Roland songs can play.
+bool PortMusic_Mt32Available();
 const char* PortMusic_DeviceName(PortMusicDevice device);
 
 // Opens the audio output for the device (shared with port_sound). Without an audio device the songs are

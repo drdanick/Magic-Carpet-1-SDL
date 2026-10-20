@@ -1,8 +1,8 @@
 # Building on macOS
 
 REMC1 builds with Apple Clang on macOS (Apple Silicon and Intel) against Homebrew packages: CMake
-(3.21+), Ninja, SDL2, SDL2_mixer, nlohmann-json, GoogleTest and (optional) FluidSynth. The music library
-libADLMIDI is downloaded by CMake when the build is configured.
+(3.21+), Ninja, SDL2, SDL2_mixer, nlohmann-json, GoogleTest and (optional) FluidSynth. The music libraries
+libADLMIDI and Munt (MT-32) are downloaded by CMake when the build is configured.
 
 ## Install the dependencies
 

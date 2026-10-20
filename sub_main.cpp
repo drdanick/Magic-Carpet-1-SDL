@@ -47328,7 +47328,8 @@ void sub_3C570()
     {
       case PortMusicDevice::AdLib: strcpy(unk_CBF74, "ADLIB"); break;
       case PortMusicDevice::GeneralMidi: strcpy(unk_CBF74, "GENERAL"); break;
-      case PortMusicDevice::MT32: strcpy(unk_CBF74, "GENERAL"); break; // PORT: no MT-32 synth yet: the General MIDI songs
+      // PORT: the Roland songs need MT-32 ROMs (Munt); without them the General MIDI songs
+      case PortMusicDevice::MT32: strcpy(unk_CBF74, PortMusic_Mt32Available() ? "ROLAND" : "GENERAL"); break;
       default: strcpy(unk_CBF74, "none"); break;
     }
     InputScript_RecordMusic(unk_CBF74);

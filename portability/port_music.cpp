@@ -13,6 +13,7 @@
 
 #include <atomic>
 #include <cctype>
+#include <cstdarg>
 #include <chrono>
 #include <cstdlib>
 #include <cstdio>
@@ -29,6 +30,12 @@
 #endif
 #if REMC1_FLUIDSYNTH
 #include <fluidsynth.h>
+#endif
+#if REMC1_MT32
+#define MT32EMU_API_TYPE 1 // Munt's C interface
+#include <mt32emu/mt32emu.h>
+#include <algorithm>
+#include <filesystem>
 #endif
 #if REMC1_MUSIC && defined(_WIN32)
 #define WIN32_LEAN_AND_MEAN
@@ -315,6 +322,139 @@ private:
 };
 #endif // _WIN32
 
+#if REMC1_MT32
+// Roland MT-32 songs on Munt with the user's ROMs (--mt32-roms). Munt identifies ROM files by their SHA1, so
+// any file names work, and it merges split ROMs (MAME's *_a / *_b, *_h / *_l halves).
+mt32emu_report_handler_i Mt32ReportHandler()
+{
+	static mt32emu_report_handler_i_v0 handler;
+	static bool init = false;
+	if (!init) {
+		memset(&handler, 0, sizeof(handler)); // unset callbacks: Munt's defaults
+		handler.getVersionID = [](mt32emu_report_handler_i) { return MT32EMU_REPORT_HANDLER_VERSION_0; };
+		handler.printDebug = [](void*, const char* fmt, va_list list) { // Munt's default prints everything
+			if (debugMusic) { vfprintf(stderr, fmt, list); fputc('\n', stderr); }
+		};
+		init = true;
+	}
+	mt32emu_report_handler_i i;
+	i.v0 = &handler;
+	return i;
+}
+
+struct Mt32RomSet {
+	std::string machine;            // Munt machine id, e.g. mt32_1_07
+	std::vector<std::string> files; // the ROM files of that machine in the folder
+};
+
+// The ROM set in --mt32-roms: --mt32-model, or the first complete set, the original MT-32 (the card the
+// game names ROLAND) before the CM-32L and the later MT-32s. Empty machine if there is none.
+Mt32RomSet FindMt32Roms()
+{
+	Mt32RomSet result;
+	if (g_settings.mt32Roms.empty())
+		return result;
+	// identify every file once: (path, ROM id)
+	std::vector<std::pair<std::string, std::string>> roms;
+	std::error_code ec;
+	for (const auto& e : std::filesystem::directory_iterator(g_settings.mt32Roms, ec)) {
+		if (!e.is_regular_file(ec) || e.file_size(ec) > (2u << 20))
+			continue;
+		const std::string path = e.path().string();
+		mt32emu_rom_info info;
+		if (mt32emu_identify_rom_file(&info, path.c_str(), nullptr) != MT32EMU_RC_OK)
+			continue;
+		const char* id = info.control_rom_id ? info.control_rom_id : info.pcm_rom_id;
+		if (id)
+			roms.emplace_back(path, id);
+	}
+	std::sort(roms.begin(), roms.end());
+	std::vector<std::string> machines;
+	if (!EqualsNoCase(g_settings.mt32Model.c_str(), "auto"))
+		machines.push_back(g_settings.mt32Model);
+	else {
+		machines = { "mt32_1_07", "mt32_1_06", "mt32_1_05", "mt32_1_04", "mt32_bluer", "cm32l_1_02", "cm32l_1_00" };
+		std::vector<const char*> all(mt32emu_get_machine_ids(nullptr, 0));
+		mt32emu_get_machine_ids(all.data(), all.size());
+		for (const char* m : all)
+			if (std::find(machines.begin(), machines.end(), m) == machines.end())
+				machines.push_back(m);
+	}
+	for (const std::string& machine : machines) {
+		std::vector<const char*> ids(mt32emu_get_rom_ids(nullptr, 0, machine.c_str()));
+		mt32emu_get_rom_ids(ids.data(), ids.size(), machine.c_str());
+		std::vector<std::string> files;
+		for (const auto& rom : roms)
+			for (const char* id : ids)
+				if (rom.second == id)
+					files.push_back(rom.first);
+		if (files.empty())
+			continue;
+		// complete = a full (or merged) control and PCM ROM
+		mt32emu_context ctx = mt32emu_create_context(Mt32ReportHandler(), nullptr);
+		for (const std::string& f : files)
+			mt32emu_add_machine_rom_file(ctx, machine.c_str(), f.c_str());
+		mt32emu_rom_info info;
+		mt32emu_get_rom_info(ctx, &info);
+		const bool complete = info.control_rom_id && info.pcm_rom_id;
+		mt32emu_free_context(ctx);
+		if (complete) {
+			result.machine = machine;
+			result.files = files;
+			break;
+		}
+	}
+	return result;
+}
+
+class Mt32Synth : public Synth {
+public:
+	Mt32Synth(int rate, const Mt32RomSet& roms)
+	{
+		ctx_ = mt32emu_create_context(Mt32ReportHandler(), nullptr);
+		for (const std::string& f : roms.files)
+			mt32emu_add_machine_rom_file(ctx_, roms.machine.c_str(), f.c_str());
+		mt32emu_set_stereo_output_samplerate(ctx_, rate);
+		mt32emu_set_samplerate_conversion_quality(ctx_, MT32EMU_SRCQ_GOOD);
+		mt32emu_set_analog_output_mode(ctx_, mt32emu_get_best_analog_output_mode(rate));
+		if (mt32emu_open_synth(ctx_) != MT32EMU_RC_OK) {
+			mt32emu_free_context(ctx_);
+			ctx_ = nullptr;
+		}
+	}
+	~Mt32Synth() override
+	{
+		if (ctx_) {
+			mt32emu_close_synth(ctx_);
+			mt32emu_free_context(ctx_);
+		}
+	}
+	bool Ok() const { return ctx_ != nullptr; }
+
+	void NoteOn(uint8_t c, uint8_t n, uint8_t v) override { Send(0x90 | c, n, v); }
+	void NoteOff(uint8_t c, uint8_t n) override { Send(0x80 | c, n, 0); }
+	void NoteAfterTouch(uint8_t c, uint8_t n, uint8_t v) override { Send(0xA0 | c, n, v); }
+	void ChannelAfterTouch(uint8_t c, uint8_t v) override { Send(0xD0 | c, v, 0); }
+	void ControllerChange(uint8_t c, uint8_t t, uint8_t v) override { Send(0xB0 | c, t, v); }
+	void PatchChange(uint8_t c, uint8_t p) override { Send(0xC0 | c, p, 0); }
+	void PitchBend(uint8_t c, uint8_t msb, uint8_t lsb) override { Send(0xE0 | c, lsb, msb); }
+	void SysEx(const uint8_t* msg, size_t size) override { mt32emu_play_sysex(ctx_, msg, (mt32emu_bit32u)size); }
+	void Reset() override
+	{
+		// the MT-32 has no GM reset: silence the parts and reset their controllers
+		for (uint8_t c = 0; c < 16; c++) {
+			Send(0xB0 | c, 123, 0);
+			Send(0xB0 | c, 121, 0);
+		}
+	}
+	void Render(int16_t* out, int frames) override { mt32emu_render_bit16s(ctx_, out, (mt32emu_bit32u)frames); }
+
+private:
+	void Send(int status, uint8_t a, uint8_t b) { mt32emu_play_msg(ctx_, (mt32emu_bit32u)(status | (a << 8) | (b << 16))); }
+	mt32emu_context ctx_ = nullptr;
+};
+#endif // REMC1_MT32
+
 // --- Player: sequencer + synth, driven by the SDL_mixer music hook ------------------------------------
 std::mutex audioMutex; // guards everything below against the audio callback
 std::unique_ptr<Synth> synth;
@@ -461,6 +601,15 @@ PortMusicDevice PortMusic_SelectDevice(const char* card)
 	return PortMusicDevice::None;
 }
 
+bool PortMusic_Mt32Available()
+{
+#if REMC1_MT32
+	return !FindMt32Roms().machine.empty();
+#else
+	return false;
+#endif
+}
+
 const char* PortMusic_DeviceName(PortMusicDevice device)
 {
 	switch (device) {
@@ -488,11 +637,27 @@ void PortMusic_Init(PortMusicDevice device)
 	}
 	StopPlayer(); // a second init replaces the player
 	std::unique_ptr<Synth> s;
-	// General MIDI songs (also chosen for Roland), --midi-synth: by default FluidSynth on a SoundFont,
-	// else the Windows MIDI synth, else OPL3 with libADLMIDI's GM bank
+	// Roland songs: Munt with the user's MT-32 ROMs. The game only gets the Roland card when they are there
+	// (sub_3C570); a replay recorded with it may still run without them: General MIDI synths, wrong sounds.
+	if (device == PortMusicDevice::MT32) {
+#if REMC1_MT32
+		const Mt32RomSet roms = FindMt32Roms();
+		if (!roms.machine.empty()) {
+			auto mt32 = std::make_unique<Mt32Synth>(rate, roms);
+			if (mt32->Ok()) {
+				printf("music: Munt, %s\n", roms.machine.c_str());
+				s = std::move(mt32);
+			}
+		}
+#endif
+		if (!s)
+			fprintf(stderr, "music: no MT-32 ROMs (--mt32-roms); the Roland songs play on the General MIDI synth\n");
+	}
+	// General MIDI songs, --midi-synth: by default FluidSynth on a SoundFont, else the Windows MIDI synth,
+	// else OPL3 with libADLMIDI's GM bank
 	const char* midiSynth = g_settings.midiSynth.c_str();
 	const bool anySynth = EqualsNoCase(midiSynth, "auto");
-	if (device != PortMusicDevice::AdLib && !EqualsNoCase(midiSynth, "opl")) {
+	if (!s && device != PortMusicDevice::AdLib && !EqualsNoCase(midiSynth, "opl")) {
 #if REMC1_FLUIDSYNTH
 		if (anySynth || EqualsNoCase(midiSynth, "fluidsynth")) {
 			const std::string soundfont = FindSoundFont();

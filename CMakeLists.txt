@@ -56,6 +56,20 @@ if(REMC1_MUSIC)
         URL_HASH SHA256=e01aec7b2bc284476eedab77a8b6e177c5beda2bc2f4545166339badfc0464c5)
     FetchContent_MakeAvailable(libadlmidi)
 
+    # Roland MT-32 songs: Munt's libmt32emu (LGPL 2.1+), a static build of its mt32emu subproject; it plays
+    # them with the user's MT-32 / CM-32L ROMs (--mt32-roms). Offline: -DFETCHCONTENT_SOURCE_DIR_MUNT=<dir>.
+    option(REMC1_MT32 "Build MT-32 music support (Munt)" ON)
+    if(REMC1_MT32)
+        set(libmt32emu_SHARED OFF CACHE BOOL "" FORCE)
+        set(libmt32emu_C_INTERFACE ON CACHE BOOL "" FORCE)
+        set(libmt32emu_BUILD_TESTING OFF CACHE BOOL "" FORCE)
+        FetchContent_Declare(munt
+            URL https://github.com/munt/munt/archive/refs/tags/munt_2_8_2.tar.gz
+            URL_HASH SHA256=ca0a2b881207a88d10c511c441bcf4f7a9fd591bea630032662f02bcb51b1b5d
+            SOURCE_SUBDIR mt32emu)
+        FetchContent_MakeAvailable(munt)
+    endif()
+
     # General MIDI songs on FluidSynth (optional; without it they play on the Windows MIDI synth or on
     # OPL3 with a GM bank)
     if(REMC1_FLUIDSYNTH)
@@ -165,6 +179,10 @@ if(REMC1_MUSIC)
     target_compile_definitions(remc1_engine PRIVATE REMC1_MUSIC=1)
     if(WIN32)
         target_link_libraries(remc1_engine PRIVATE winmm) # system MIDI synth (midiOut)
+    endif()
+    if(REMC1_MT32)
+        target_link_libraries(remc1_engine PRIVATE MT32Emu::mt32emu)
+        target_compile_definitions(remc1_engine PRIVATE REMC1_MT32=1)
     endif()
     if(REMC1_FLUIDSYNTH_TARGET)
         target_link_libraries(remc1_engine PRIVATE ${REMC1_FLUIDSYNTH_TARGET})

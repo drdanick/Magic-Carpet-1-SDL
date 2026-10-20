@@ -2,7 +2,7 @@
 
 REMC1 builds with GCC or Clang on 64-bit Linux (x86-64 and arm64) against the distribution's own
 packages: CMake (3.21+), Ninja, SDL2, SDL2_mixer, nlohmann-json, GoogleTest and (optional) FluidSynth.
-The music library libADLMIDI is downloaded by CMake when the build is configured.
+The music libraries libADLMIDI and Munt (MT-32) are downloaded by CMake when the build is configured.
 
 ## Install the dependencies
 
