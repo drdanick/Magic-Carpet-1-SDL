@@ -346,7 +346,7 @@ bool sub_13BA0(int a1);
 bool sub_13CA0(int a1);
 bool sub_13DC0(int a1);
 bool sub_13DD0(int a1);
-int sub_13F00(int a1);
+int AiChooseCastleSite_13F00(int a1);
 int sub_14120(int a1);
 unsigned int sub_14230(int a1);
 int sub_14310(int a1);
@@ -363,10 +363,10 @@ int sub_14D40(int a1);
 int sub_14D60(int a1);
 int sub_14DA0(int a1);
 int sub_14DC0(int a1);
-unsigned int sub_14E60(int a1, unsigned __int8 a2);
+unsigned int GetWizardSpell_14E60(int a1, unsigned __int8 a2);
 int sub_14EB0(int a1);
 unsigned int sub_15080(int a1);
-unsigned int sub_15260(int a1, unsigned __int8 a2);
+unsigned int FindNearestRival_15260(int a1, unsigned __int8 a2);
 unsigned int sub_15340(int a1, int a2);
 unsigned int sub_153B0(int a1, int a2);
 __int16 sub_15420(int a1);
@@ -16891,7 +16891,7 @@ int sub_136C0(int a1)
 {
   int v2; // eax
 
-  if ( sub_13F00(a1) )
+  if ( AiChooseCastleSite_13F00(a1) )
   {
     sub_14C80(a1);
     return 1;
@@ -17185,7 +17185,14 @@ bool sub_13DD0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00013F00) --------------------------------------------------------
-int sub_13F00(int a1)
+/// AI wizard a1 picks a site for its castle spell (0x10) and stores it at a1+150 (returns 1); 0 if it
+/// has a castle already (owner record +50, inferred), lacks the spell or the mana, or finds no site.
+/// The sites are a fixed grid, no terrain check: the map is 4x4 blocks of 64x64 tiles; starting at the
+/// wizard's block it tries each block's corner (tile 64*bx, 64*by), then the point 31 tiles in, and takes
+/// the first one with no other wizard's castle within 12288 units (FindNearestRival_15260). Entity 0
+/// serves as the probe. This is how castles end up in walls (original-bugs.md #7); verified against the
+/// original with tools/diff_funcs.py.
+int AiChooseCastleSite_13F00(int a1)
 {
   _WORD *v1; // esi
   __int16 v2; // bx
@@ -17199,7 +17206,7 @@ int sub_13F00(int a1)
   int v10; // [esp+8h] [ebp-20h]
 
   v1 = (_WORD *)PTR(dword_AE400_AE3F0() + 29795);
-  if ( !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && sub_14E60(a1, 0x10u) && sub_15E90(a1, 0x10u) )
+  if ( !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && GetWizardSpell_14E60(a1, 0x10u) && sub_15E90(a1, 0x10u) )
   {
     v1[12] = *(_WORD *)PTR(a1 + 24);
     v8 = (int)(*(__int16 *)PTR(a1 + 72)
@@ -17216,7 +17223,7 @@ int sub_13F00(int a1)
       {
         v1[36] = (v2 & 3) << 14;
         v1[37] = (v10 & 3) << 14;
-        v3 = sub_15260((int)OFF(v1), 2u);
+        v3 = FindNearestRival_15260((int)OFF(v1), 2u);
         if ( !v3 || sub_42300_42640((_WORD *)PTR(v3 + 72), v1 + 36) > 12288 )
         {
           v4 = v1 + 36;
@@ -17227,7 +17234,7 @@ int sub_13F00(int a1)
         }
         v1[36] = (((v2 & 3) << 6) + 31) << 8;
         v1[37] = (((v10 & 3) << 6) + 31) << 8;
-        v6 = sub_15260((int)OFF(v1), 2u);
+        v6 = FindNearestRival_15260((int)OFF(v1), 2u);
         if ( !v6 || sub_42300_42640((_WORD *)PTR(v6 + 72), v1 + 36) > 12288 )
         {
           v7 = v1 + 36;
@@ -17258,7 +17265,7 @@ int sub_14120(int a1)
   v1 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 50);
   if ( v1 <= dword_AE400_AE3F0() + 29795 )
     return 0;
-  v2 = sub_14E60(a1, 0x10u);
+  v2 = GetWizardSpell_14E60(a1, 0x10u);
   v3 = v2;
   if ( !v2 )
     return 0;
@@ -17286,10 +17293,10 @@ unsigned int sub_14230(int a1)
   unsigned int v3; // eax
   int v4; // ecx
 
-  result = sub_14E60(a1, 3u);
+  result = GetWizardSpell_14E60(a1, 3u);
   if ( result )
   {
-    v2 = sub_14E60(a1, 0x10u);
+    v2 = GetWizardSpell_14E60(a1, 0x10u);
     if ( v2 )
     {
       if ( *(_DWORD *)PTR(a1 + 136) <= *(_DWORD *)PTR(v2 + 136) )
@@ -17346,7 +17353,7 @@ int sub_143A0(int a1)
   unsigned int v7; // [esp+Ch] [ebp-18h]
 
   v7 = -1;
-  if ( !sub_16920(a1) || !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && sub_14E60(a1, 0x10u) )
+  if ( !sub_16920(a1) || !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && GetWizardSpell_14E60(a1, 0x10u) )
     return 0;
   v6 = 0;
   for ( i = *(_DWORD *)PTR(dword_AE408_AE3F8() + 36462); i > dword_AE400_AE3F0() + 29795; i = *(_DWORD *)PTR(i) )
@@ -17393,7 +17400,7 @@ int sub_145B0(int a1)
   int v9; // [esp+8h] [ebp-18h]
 
   v1 = -1;
-  if ( !sub_16920(a1) || !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && sub_14E60(a1, 0x10u) )
+  if ( !sub_16920(a1) || !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && GetWizardSpell_14E60(a1, 0x10u) )
     return 0;
   v9 = 0;
   for ( i = *(_DWORD *)PTR(dword_AE408_AE3F8() + 36462); i > dword_AE400_AE3F0() + 29795; i = *(_DWORD *)PTR(i) )
@@ -17411,7 +17418,7 @@ int sub_145B0(int a1)
       }
       if ( 50000 - *(__int16 *)PTR(v4 + 522) * (*(_DWORD *)PTR(i + 136) / 10) / 255 <= *(unsigned __int16 *)PTR(v5 + 460)
         || !*(_WORD *)PTR(v3 + 50)
-        && sub_14E60(i, 0x10u)
+        && GetWizardSpell_14E60(i, 0x10u)
         && *(_DWORD *)PTR(i + 140) + 32 * (255 - *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522)) < *(_DWORD *)PTR(a1 + 140) )
       {
         v7 = sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
@@ -17609,7 +17616,9 @@ int sub_14DC0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00014E60) --------------------------------------------------------
-unsigned int sub_14E60(int a1, unsigned __int8 a2)
+/// The spell entity wizard a1 holds for spell id a2 (castle 0x10, speed 2, ...): the entity index table at
+/// owner record +676; 0 if the wizard does not have the spell.
+unsigned int GetWizardSpell_14E60(int a1, unsigned __int8 a2)
 {
   unsigned int result; // eax
 
@@ -17748,7 +17757,7 @@ LABEL_18:
     v11 = sub_15340(v2, a1);
     if ( v11 )
     {
-      v6 = dword_AE400_AE3F0() + 29795 >= v9 ? sub_15260(v2, 2u) : sub_153B0(v2, v9);
+      v6 = dword_AE400_AE3F0() + 29795 >= v9 ? FindNearestRival_15260(v2, 2u) : sub_153B0(v2, v9);
       v7 = v6;
       if ( (*(_WORD *)PTR(a1 + 24) == *(_WORD *)PTR(v11 + 24) || sub_42410_42750((_WORD *)PTR(v2 + 72), (_WORD *)PTR(v11 + 72)) > 26214400)
         && (!v7 || !EntitiesCollide_11950((Type_AE400_29795*)PTR(v2), (Type_AE400_29795*)PTR(v7))) )
@@ -17768,7 +17777,9 @@ LABEL_19:
 // AE408: using guessed type int dword_AE408_AE3F8();
 
 //----- (00015260) --------------------------------------------------------
-unsigned int sub_15260(int a1, unsigned __int8 a2)
+/// The entity of list 0 (wizards, castles) nearest to a1 whose owner (+24) differs from a1's, of model a2
+/// (0 wizard, 2 castle, 3 ...; 0xFF any model; 1 always 0); 0 if there is none.
+unsigned int FindNearestRival_15260(int a1, unsigned __int8 a2)
 {
   unsigned int v2; // esi
   unsigned int v3; // edi
@@ -17961,7 +17972,7 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
   {
     case 0u:
     case 0xFu:
-      v2 = sub_14E60(a1, a2);
+      v2 = GetWizardSpell_14E60(a1, a2);
       if ( !v2
         || *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 404) < 0
         || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v2 + 136)
@@ -17988,7 +17999,7 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
     case 4u:
     case 5u:
     case 0xEu:
-      v9 = sub_14E60(a1, a2);
+      v9 = GetWizardSpell_14E60(a1, a2);
       if ( !v9 || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v9 + 136) )
         return 0;
       *(_WORD *)PTR(v9 + 48) = *(_WORD *)PTR(v9 + 50);
@@ -17996,7 +18007,7 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
       result = 1;
       break;
     case 2u:
-      v8 = sub_14E60(a1, a2);
+      v8 = GetWizardSpell_14E60(a1, a2);
       if ( !v8 || *(_WORD *)PTR(v8 + 48) || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v8 + 136) )
         return 0;
       *(_WORD *)PTR(v8 + 48) = *(_WORD *)PTR(v8 + 50);
@@ -18010,7 +18021,7 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
     case 0xDu:
     case 0x11u:
     case 0x14u:
-      v5 = sub_14E60(a1, a2);
+      v5 = GetWizardSpell_14E60(a1, a2);
       if ( !v5
         || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v5 + 136)
         || (unsigned __int16)sub_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= 0xE3u )
@@ -18028,7 +18039,7 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
     case 9u:
     case 0xAu:
     case 0xCu:
-      v10 = sub_14E60(a1, a2);
+      v10 = GetWizardSpell_14E60(a1, a2);
       if ( !v10 || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v10 + 136) )
         return 0;
       *(_WORD *)PTR(v10 + 48) = *(_WORD *)PTR(v10 + 50);
@@ -18036,7 +18047,7 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
       result = 1;
       break;
     case 0x10u:
-      v6 = sub_14E60(a1, a2);
+      v6 = GetWizardSpell_14E60(a1, a2);
       if ( !v6 || *(_WORD *)PTR(v6 + 48) || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v6 + 136) )
         return 0;
       if ( *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) )
@@ -18088,7 +18099,7 @@ int sub_15A00(int a1, unsigned __int8 a2)
     case 0xBu:
     case 0xDu:
     case 0xFu:
-      v12 = sub_14E60(a1, a2);
+      v12 = GetWizardSpell_14E60(a1, a2);
       if ( !v12 )
         goto LABEL_37;
       v13 = *(_DWORD *)PTR(a1 + 160);
@@ -18106,7 +18117,7 @@ int sub_15A00(int a1, unsigned __int8 a2)
       result = 1;
       break;
     case 2u:
-      v2 = sub_14E60(a1, a2);
+      v2 = GetWizardSpell_14E60(a1, a2);
       if ( !v2 || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v2 + 136) )
         goto LABEL_37;
       result = 1;
@@ -18116,7 +18127,7 @@ int sub_15A00(int a1, unsigned __int8 a2)
     case 8u:
     case 0x11u:
     case 0x14u:
-      v5 = sub_14E60(a1, a2);
+      v5 = GetWizardSpell_14E60(a1, a2);
       if ( !v5 )
         goto LABEL_37;
       if ( *(_WORD *)PTR(v5 + 48) )
@@ -18138,7 +18149,7 @@ int sub_15A00(int a1, unsigned __int8 a2)
     case 4u:
     case 0xCu:
     case 0xEu:
-      v4 = sub_14E60(a1, a2);
+      v4 = GetWizardSpell_14E60(a1, a2);
       if ( !v4
         || *(_WORD *)PTR(v4 + 48)
         || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 2 * a2 + 724)
@@ -18149,7 +18160,7 @@ int sub_15A00(int a1, unsigned __int8 a2)
       result = 1;
       break;
     case 0x10u:
-      v8 = sub_14E60(a1, a2);
+      v8 = GetWizardSpell_14E60(a1, a2);
       if ( !v8 )
         goto LABEL_37;
       v9 = *(_DWORD *)PTR(a1 + 160);
@@ -18184,7 +18195,7 @@ int sub_15A00(int a1, unsigned __int8 a2)
       break;
     default:
       if ( a2 >= 0x18u
-        || (v15 = sub_14E60(a1, a2)) == 0
+        || (v15 = GetWizardSpell_14E60(a1, a2)) == 0
         || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 2 * a2 + 724)
         || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v15 + 136) )
       {
@@ -18210,7 +18221,7 @@ bool sub_15E60(int a1, unsigned __int8 a2)
   result = 0;
   if ( a2 < 0x18u )
   {
-    v2 = sub_14E60(a1, a2);
+    v2 = GetWizardSpell_14E60(a1, a2);
     if ( v2 )
     {
       if ( *(__int16 *)PTR(v2 + 48) > 0 )
@@ -18221,9 +18232,11 @@ bool sub_15E60(int a1, unsigned __int8 a2)
 }
 
 //----- (00015E90) --------------------------------------------------------
+/// 1 if spell a2's entity +136 is at most wizard a1's +136 - probably the spell's mana cost against the
+/// wizard's mana (inferred, not verified).
 bool sub_15E90(int a1, unsigned __int8 a2)
 {
-  return *(_DWORD *)PTR(sub_14E60(a1, a2) + 136) <= *(_DWORD *)PTR(a1 + 136);
+  return *(_DWORD *)PTR(GetWizardSpell_14E60(a1, a2) + 136) <= *(_DWORD *)PTR(a1 + 136);
 }
 
 //----- (00015EC0) --------------------------------------------------------
@@ -18298,7 +18311,7 @@ unsigned int sub_16000(int a1, unsigned __int8 a2)
 {
   unsigned int result; // eax
 
-  result = sub_14E60(a1, a2);
+  result = GetWizardSpell_14E60(a1, a2);
   if ( !result || *(__int16 *)PTR(result + 48) <= 0 )
     return 0;
   return result;
@@ -18338,14 +18351,14 @@ char sub_16030(int a1)
 LABEL_9:
   if ( !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 406) )
   {
-    if ( !sub_14E60(a1, 0x11u) )
+    if ( !GetWizardSpell_14E60(a1, 0x11u) )
       goto LABEL_50;
     if ( sub_15A00(a1, 0x11u) )
       return 17;
     if ( !sub_15E90(a1, 0x11u) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 758) )
     {
 LABEL_50:
-      if ( !sub_14E60(a1, 8u) )
+      if ( !GetWizardSpell_14E60(a1, 8u) )
         goto LABEL_49;
       if ( sub_15A00(a1, 8u) )
         return 8;
@@ -18355,7 +18368,7 @@ LABEL_49:
         if ( sub_16000(dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(a1 + 146), 0xEu)
           && (v6 = *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 524), rand() % 255 < v6) )
         {
-          if ( sub_14E60(a1, 0xFu) )
+          if ( GetWizardSpell_14E60(a1, 0xFu) )
           {
             if ( sub_15A00(a1, 0xFu) )
               return 15;
@@ -18365,28 +18378,28 @@ LABEL_49:
         }
         else
         {
-          if ( !sub_14E60(a1, 7u) )
+          if ( !GetWizardSpell_14E60(a1, 7u) )
             goto LABEL_52;
           if ( sub_15A00(a1, 7u) )
             return 7;
           if ( !sub_15E90(a1, 7u) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 738) )
           {
 LABEL_52:
-            if ( !sub_14E60(a1, 0x14u) )
+            if ( !GetWizardSpell_14E60(a1, 0x14u) )
               goto LABEL_53;
             if ( sub_15A00(a1, 0x14u) )
               return 20;
             if ( !sub_15E90(a1, 0x14u) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 764) )
             {
 LABEL_53:
-              if ( !sub_14E60(a1, 0) )
+              if ( !GetWizardSpell_14E60(a1, 0) )
                 goto LABEL_51;
               if ( sub_15A00(a1, 0) )
                 return 0;
               if ( !sub_15E90(a1, 0) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 724) )
               {
 LABEL_51:
-                if ( sub_14E60(a1, 0xFu) )
+                if ( GetWizardSpell_14E60(a1, 0xFu) )
                 {
                   if ( sub_15A00(a1, 0xFu) )
                     return 15;
@@ -18437,42 +18450,42 @@ char sub_16310(_DWORD *a1)
 LABEL_9:
   if ( !*(_WORD *)PTR(a1[40] + 406) )
   {
-    if ( !sub_14E60((int)OFF(a1), 0x11u) )
+    if ( !GetWizardSpell_14E60((int)OFF(a1), 0x11u) )
       goto LABEL_46;
     if ( sub_15A00((int)OFF(a1), 0x11u) )
       return 17;
     if ( !sub_15E90((int)OFF(a1), 0x11u) || *(_WORD *)PTR(a1[40] + 758) )
     {
 LABEL_46:
-      if ( !sub_14E60((int)OFF(a1), 8u) )
+      if ( !GetWizardSpell_14E60((int)OFF(a1), 8u) )
         goto LABEL_45;
       if ( sub_15A00((int)OFF(a1), 8u) )
         return 8;
       if ( !sub_15E90((int)OFF(a1), 8u) || *(_WORD *)PTR(a1[40] + 740) )
       {
 LABEL_45:
-        if ( !sub_14E60((int)OFF(a1), 7u) )
+        if ( !GetWizardSpell_14E60((int)OFF(a1), 7u) )
           goto LABEL_44;
         if ( sub_15A00((int)OFF(a1), 7u) )
           return 7;
         if ( !sub_15E90((int)OFF(a1), 7u) || *(_WORD *)PTR(a1[40] + 738) )
         {
 LABEL_44:
-          if ( !sub_14E60((int)OFF(a1), 0x14u) )
+          if ( !GetWizardSpell_14E60((int)OFF(a1), 0x14u) )
             goto LABEL_43;
           if ( sub_15A00((int)OFF(a1), 0x14u) )
             return 20;
           if ( !sub_15E90((int)OFF(a1), 0x14u) || *(_WORD *)PTR(a1[40] + 764) )
           {
 LABEL_43:
-            if ( !sub_14E60((int)OFF(a1), 0) )
+            if ( !GetWizardSpell_14E60((int)OFF(a1), 0) )
               goto LABEL_42;
             if ( sub_15A00((int)OFF(a1), 0) )
               return 0;
             if ( !sub_15E90((int)OFF(a1), 0) || *(_WORD *)PTR(a1[40] + 724) )
             {
 LABEL_42:
-              if ( sub_14E60((int)OFF(a1), 0xFu) )
+              if ( GetWizardSpell_14E60((int)OFF(a1), 0xFu) )
               {
                 if ( sub_15A00((int)OFF(a1), 0xFu) )
                   return 15;
@@ -18712,12 +18725,12 @@ LABEL_14:
 //----- (00016920) --------------------------------------------------------
 _BOOL1 sub_16920(int a1)
 {
-  return sub_14E60(a1, 0)
-      || sub_14E60(a1, 0xFu)
-      || sub_14E60(a1, 8u)
-      || sub_14E60(a1, 0x11u)
-      || sub_14E60(a1, 0x14u)
-      || sub_14E60(a1, 7u);
+  return GetWizardSpell_14E60(a1, 0)
+      || GetWizardSpell_14E60(a1, 0xFu)
+      || GetWizardSpell_14E60(a1, 8u)
+      || GetWizardSpell_14E60(a1, 0x11u)
+      || GetWizardSpell_14E60(a1, 0x14u)
+      || GetWizardSpell_14E60(a1, 7u);
 }
 
 //----- (00016990) --------------------------------------------------------
