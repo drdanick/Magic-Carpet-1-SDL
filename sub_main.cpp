@@ -41291,34 +41291,36 @@ int ProcessCommandLine_34DD0_35190(int argc, char** argv)//205DD0_
 			str_AE400_AE3F0->set.shadowsOn_8598 = 0;
 			str_AE400_AE3F0->set.var_u8_8600 = 40;
 		}
+		// PORT: the demo / custom / network flags go to str_AE408_AE3F8 +1, as in the original (or [AE408h]+1, ...
+		// at 0x35506-0x355CD); the decompilation set them in str_AE400_AE3F0 +1, which nothing reads
 		if (varDemo)
 		{
 			switch (varDemo)
 			{
 			case 1:
-				str_AE400_AE3F0->var_0.var_u8_1 |= 2u;
+				str_AE408_AE3F8->var_u8_1 |= 2u;
 				break;
 			case 2:
-				str_AE400_AE3F0->var_0.var_u8_1 |= 4u;
+				str_AE408_AE3F8->var_u8_1 |= 4u;
 				break;
 			case 3:
-				str_AE400_AE3F0->var_0.var_u8_1 |= 8u;
+				str_AE408_AE3F8->var_u8_1 |= 8u;
 				break;
 			case 4:
-				str_AE400_AE3F0->var_0.var_u8_1 |= 0x10u;
+				str_AE408_AE3F8->var_u8_1 |= 0x10u;
 				break;
 			case 5:
-				str_AE400_AE3F0->var_0.var_u8_1 |= 0x20u;
+				str_AE408_AE3F8->var_u8_1 |= 0x20u;
 				break;
 			default:
 				break;
 			}
-			str_AE400_AE3F0->var_0.var_u8_1 |= 1u;
+			str_AE408_AE3F8->var_u8_1 |= 1u;
 		}
 		if (varTime)
 			str_AE408_AE3F8->var_u8_0 |= 0x40u;
 		if (varCustom)
-			str_AE400_AE3F0->var_0.var_u8_1 |= 1u;
+			str_AE408_AE3F8->var_u8_1 |= 1u;
 		if (varHelp)
 			result = -1;
 		if (varNetwork)
@@ -41331,7 +41333,7 @@ int ProcessCommandLine_34DD0_35190(int argc, char** argv)//205DD0_
 				else
 					str_AE400_AE3F0->var_u16_8 = 0;
 			}
-			str_AE400_AE3F0->var_0.var_u8_1 |= 1u;
+			str_AE408_AE3F8->var_u8_1 |= 1u;
 		}
 		if (neverRun2)
 		{
@@ -51433,7 +51435,9 @@ void UpdateEntities_41780_41AC0()//212780_
 #endif debug1
 //debug
   str_AE400_AE3F0->rand_4 = 9377 * str_AE400_AE3F0->rand_4 + 9439;
-  if ( (str_AE400_AE3F0->var_0.var_u8_2 & 1) != 0 )
+  // PORT: the pause flag (P) is bit 0 of str_AE408_AE3F8 +2, as in the original (mov eax, [AE408h];
+  // test byte [eax+2], 1 at 0x417A4); the decompilation read str_AE400_AE3F0 +2, so the world never paused
+  if ( (str_AE408_AE3F8->var_u8_2 & 1) != 0 )
     goto LABEL_52;
   for(int ix = 1; ix < 1000 ; ix++)
   {
