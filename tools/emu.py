@@ -42,8 +42,8 @@ LAYOUT_IGNORE_PORT = ['dword_AE3B8_2']  # whole port symbols on the port side (1
 SKIP_FUNCS = ['sub_55370_558A0', 'sub_55890_55DC0',
               # music: the HMI MIDI driver entry points (song init/start/stop/rewind/done, raw MIDI, driver
               # timer events) and the port_music / port_timer calls that replaced them inside game functions
-              'sub_5EE22', 'sub_5F398', 'sub_5F355', 'sub_5F420', 'sub_5F529', 'sub_5D7F0_5DD00', 'sub_5EDA0',
-              'sub_5D97B', 'sub_5DC91', 'PortMusic_Load', 'PortTimer_AddEvent', 'PortTimer_RemoveEvent',
+              'MidiLoadSong_5EE22', 'MidiStartSong_5F398', 'MidiUnloadSong_5F355', 'MidiStopSong_5F420', 'MidiRewindSong_5F529', 'MidiSongDone_5D7F0_5DD00', 'MidiSendData_5EDA0',
+              'RegisterTimerEvent_5D97B', 'RemoveTimerEvent_5DC91', 'PortMusic_Load', 'PortTimer_AddEvent', 'PortTimer_RemoveEvent',
               # port-only diagnostics called from game functions (the snapshot hooks themselves)
               'MemSnapshot_Call', 'MemSnapshot_Tick']
 

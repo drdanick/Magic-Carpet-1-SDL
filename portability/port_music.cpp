@@ -589,7 +589,7 @@ PortMusicDevice PortMusic_SelectDevice(const char* card)
 		return PortMusicDevice::GeneralMidi;
 	if (EqualsNoCase(force, "mt32"))
 		return PortMusicDevice::MT32;
-	// "auto": the card chosen in the game's sound setup (sub_3C570's card list)
+	// "auto": the card chosen in the game's sound setup (InitMusicFromSetup_3C570's card list)
 	static const char* const fm[] = { "ADLIB", "SBLAST", "SBPRO", "ADLIBG", "SB16FM", "GRAVIS", "PASFM", "COMPATIBLE" };
 	for (const char* c : fm)
 		if (EqualsNoCase(card, c))
@@ -638,7 +638,7 @@ void PortMusic_Init(PortMusicDevice device)
 	StopPlayer(); // a second init replaces the player
 	std::unique_ptr<Synth> s;
 	// Roland songs: Munt with the user's MT-32 ROMs. The game only gets the Roland card when they are there
-	// (sub_3C570); a replay recorded with it may still run without them: General MIDI synths, wrong sounds.
+	// (InitMusicFromSetup_3C570); a replay recorded with it may still run without them: General MIDI synths, wrong sounds.
 	if (device == PortMusicDevice::MT32) {
 #if REMC1_MT32
 		const Mt32RomSet roms = FindMt32Roms();
