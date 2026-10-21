@@ -3,6 +3,8 @@
 #include "portability/Settings.h"
 #include "portability/port_timer.h"
 #include "portability/port_sound.h"
+#include "portability/port_music.h"
+#include "portability/InputScript.h"
 #include "portability/MemSnapshot.h"
 
 // Debug switches inherited from the DOSBox-comparison workflow.
@@ -344,7 +346,7 @@ bool sub_13BA0(int a1);
 bool sub_13CA0(int a1);
 bool sub_13DC0(int a1);
 bool sub_13DD0(int a1);
-int sub_13F00(int a1);
+int AiChooseCastleSite_13F00(int a1);
 int sub_14120(int a1);
 unsigned int sub_14230(int a1);
 int sub_14310(int a1);
@@ -361,10 +363,10 @@ int sub_14D40(int a1);
 int sub_14D60(int a1);
 int sub_14DA0(int a1);
 int sub_14DC0(int a1);
-unsigned int sub_14E60(int a1, unsigned __int8 a2);
+unsigned int GetWizardSpell_14E60(int a1, unsigned __int8 a2);
 int sub_14EB0(int a1);
 unsigned int sub_15080(int a1);
-unsigned int sub_15260(int a1, unsigned __int8 a2);
+unsigned int FindNearestRival_15260(int a1, unsigned __int8 a2);
 unsigned int sub_15340(int a1, int a2);
 unsigned int sub_153B0(int a1, int a2);
 __int16 sub_15420(int a1);
@@ -521,9 +523,9 @@ void sub_207E0(Type_AE400_29795* a1);
 void sub_20B60(Type_AE400_29795* a1);
 void sub_20B70(Type_AE400_29795* a1);
 void sub_20B80(Type_AE400_29795* a1);
-int sub_20BD0();
-void sub_20D00(char a1);
-void sub_20E60_20E60();
+int DangerMusicFadeStep_20BD0();
+void UpdateDangerMusic_20D00(char a1);
+void StopMusic_20E60_20E60();
 int nullsub_1(_DWORD, _DWORD); // weak
 void DrawGameFrame_20FB0();
 void sub_22810(int a1, int a2, int a3, int a4, int a5, unsigned __int8 a6);
@@ -887,7 +889,7 @@ int sub_3C4B0(int a1);
 int sub_3C4E0(int a1);
 int sub_3C510(int a1);
 int sub_3C540(int a1);
-void sub_3C570();
+void InitMusicFromSetup_3C570();
 void sub_3C800_sub_3CB40();
 void sub_3C9D0_3CD10();
 void sub_3DC90_3DFD0(TypeStrAE400_13323* a1, char a2);
@@ -1000,8 +1002,8 @@ int sub_43760_43AA0(__int16 a1);
 void sub_43870_43BB0(unsigned __int16 a1, char *a2, unsigned int a3);
 void sub_438D0_43C10(unsigned __int16 a1, char *a2, unsigned int a3);
 void sub_43930_43C70(uint8* a1[8], unsigned int size);
-void sub_43B20_sub_43E60(unsigned int a2);
-char *sub_43E50(const char *a1);
+void InitMusicDriver_43B20_43E60(unsigned int a2);
+char *LoadFileAlloc_43E50(const char *a1);
 void sub_43EC0_44200();
 void sub_44470_447B0();
 void sub_44700_44A40(char* a1, char** a2, int a3);
@@ -1311,27 +1313,27 @@ int sub_5CD70_5D280();
 void Blit_5CDA0_5D2B0();
 // _DWORD dos_getdrive(_DWORD); weak
 // _DWORD dos_getdiskfree(_DWORD, _DWORD); weak
-int sub_5CEF0_5D400(unsigned __int16 a1);
-unsigned int sub_5CFA4();
+int LoadMusicSet_5CEF0_5D400(unsigned __int16 a1);
+unsigned int FixMusicTabOffsets_5CFA4();
 void sub_5D010_5D520();
 int sub_5D070_5D580(unsigned __int8 a1);
 unsigned int sub_5D138();
 int sub_5D1A0(int a1, int a2, unsigned int a3);
 int sub_5D230_5D740(int a1, int a2, int a3);
-void sub_5D290_5D7A0(__int16 a1);
+void PlayMusicTrack_5D290_5D7A0(__int16 a1);
 void sub_5D460_5D970(__int16 a1, __int16 a2, __int16 a3);
 void sub_5D610_5DB20(__int16 a1, __int16 a2);
 void sub_5D750_5DC60(__int16 a1, __int16 a2);
 void sub_5D7DF();
-bool sub_5D7F0_5DD00(int a1);
+bool MidiSongDone_5D7F0_5DD00(int a1);
 void sub_5D829();
 // int rand(void); weak
 void sub_5D872();
 int sub_5D883_5DD93(unsigned int a2, char a3);
 int sub_5D948();
-int sub_5D97B(unsigned int a1, int a2, __int16 a3, unsigned int a4);
+int RegisterTimerEvent_5D97B(unsigned int a1, int a2, __int16 a3, unsigned int a4);
 int sub_5DB1D(unsigned int a1, unsigned int a2);
-int sub_5DC91(int a1);
+int RemoveTimerEvent_5DC91(int a1);
 int sub_5DE40(int a1);
 int sub_5DE63(int a1);
 int sub_5DE91(int a1, int a2, int a3);
@@ -1340,15 +1342,15 @@ void sub_5DF61();
 void sub_5DF72();
 int sub_5DF83(int a1, unsigned int a2, unsigned __int16 a3, int a4, int a5);
 int sub_5E9C1(int a1);
-int sub_5EDA0(int a1, int a2, unsigned __int16 a3, int a4);
+int MidiSendData_5EDA0(int a1, int a2, unsigned __int16 a3, int a4);
 int sub_5EDD6(int a1);
 void sub_5EE00();
 void sub_5EE11();
-int sub_5EE22(unsigned int a1, int a2, int a3, __int16 a4, unsigned int a5);
-int sub_5F355(unsigned int a1);
-int sub_5F398(int a1);
-int sub_5F420(unsigned int a1);
-int sub_5F529(int a1, unsigned int a2);
+int MidiLoadSong_5EE22(unsigned int a1, int a2, int a3, __int16 a4, unsigned int a5);
+int MidiUnloadSong_5F355(unsigned int a1);
+int MidiStartSong_5F398(int a1);
+int MidiStopSong_5F420(unsigned int a1);
+int MidiRewindSong_5F529(int a1, unsigned int a2);
 int sub_5F7C7(unsigned int a1, int a2, unsigned int a3);
 int sub_5F83E(char a1);
 void sub_5F913();
@@ -1357,9 +1359,9 @@ void sub_5F935();
 void sub_5FD67();
 int sub_60199(int a1, unsigned __int16 a2);
 int sub_60335();
-int sub_6035F(unsigned int a1, unsigned int a2, int a3, int a4, int a5, unsigned int a6);
+int MidiInitDriver_6035F(unsigned int a1, unsigned int a2, int a3, int a4, int a5, unsigned int a6);
 int sub_6080C(unsigned int a1, int a2);
-int sub_6091D(int a1);
+int MidiResetChannels_6091D(int a1);
 void sub_609F4();
 unsigned __int64 sub_60BDC(int a1);
 // _DWORD sprintf(_DWORD, _DWORD, ...); weak
@@ -1427,7 +1429,7 @@ void sub_6377B();
 char *sub_6378C(int a1);
 void sub_637AF();
 void sub_637C0();
-int sub_637D1(int a1, int a2, unsigned __int16 a3, int a4);
+int MidiSetInstruments_637D1(int a1, int a2, unsigned __int16 a3, int a4);
 int sub_638E0(int a1, int a2, int a3);
 void sub_638F8();
 int GetRNCFilesize_63910_63E20(Pathstruct* pathstruct);
@@ -1456,7 +1458,7 @@ int sub_65965(int a1, int a2);
 void sub_65D57();
 void sub_65D70_66280(TypeTab* a1, TypeTab* a2, uint8_t* a3);
 void sub_65DC0_662D0(TypeTab* a1, TypeTab* a2, uint8_t* a3);
-void sub_65E00_66310();
+void RestartMusicIfDone_65E00_66310();
 // _DWORD strncmp(_DWORD, _DWORD, _DWORD); weak
 void ViewportResize_65EB0_663C0(__int16 a1, __int16 a2, __int16 a3, __int16 a4);
 void sub_65F10_66420(__int16 a1, __int16 a2);
@@ -2228,7 +2230,7 @@ _UNKNOWN loc_4E200; // weak
 _UNKNOWN sub_5BE6C; // weak
 // extern _UNKNOWN _GETDS; weak
 int dword_74F95_754A5[] = { 0, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1 };
-int dword_80000; // weak
+int dangerFadeEvent_80000; // timer event slot of the running danger-music fade
 int dword_80010; // weak
 int dword_80120; // weak
 char byte_90000[4] = { '\x01', '\x01', '\x01', '\0' }; // weak
@@ -2286,10 +2288,10 @@ char cpuVar_90086 = '\0'; // weak
 char cpuVar_90087 = '\0'; // weak
 char byte_90088 = '\0'; // weak
 char byte_90089 = '\0'; // weak
-char byte_9008C = '\0'; // weak
-char byte_9008D = '\x01'; // weak
-char byte_9008E = '\0'; // weak
-char byte_9008F = '\xFE'; // weak
+char dangerMusicVolume_9008C = '\0'; // CC 7 of the danger channels 3-5 (0..126)
+char dangerMusicMode_9008D = '\x01'; // 1 calm, 2 enemies near (UpdateDangerMusic_20D00)
+char dangerFadeActive_9008E = '\0'; // the fade timer event is registered
+char dangerFadeStep_9008F = '\xFE'; // volume step per fade event: +2 in, -2 out
 char byte_90090 = '\0'; // weak
 char byte_90091 = '\0'; // weak
 char byte_90094 = 'c'; // weak
@@ -3281,12 +3283,12 @@ myNCB* connection_93990[8] = { 0, 0, 0, 0, 0, 0, 0, 0 }; // weak
 char byte_939AF[] = { '\0' }; // weak
 char byte_939B0[] = { '\0' }; // weak
 //char aTester[7] = "TESTER"; // weak
-char byte_939CC = '\x01'; // weak
-char byte_939CD = '\x01'; // weak
+char musicAvailable_939CC = '\x01'; // a music card is set up (cleared without one, without sound, in network games)
+char musicOn_939CD = '\x01'; // music switched on (F2)
 __int16 word_939D0 = 0; // weak
-__int16 word_939D2 = 0; // weak
+__int16 musicTrack_939D2 = 0; // song playing (TAB entry), 0 = none
 char byte_939D4 = '\0'; // weak
-__int16 word_939D6 = 0; // weak
+__int16 musicTrackCount_939D6 = 0; // songs in the loaded music set
 char byte_939E4 = '\x01'; // weak
 char byte_939E5 = '\x01'; // weak
 char byte_939E6 = '\x01'; // weak
@@ -13707,19 +13709,19 @@ _UNKNOWN unk_CBF34_CBF24; // weak
 _UNKNOWN unk_CBF40; // weak
 int dword_CBF44; // weak
 __int16 word_CBF48; // weak
-#define dword_CBF60 ((int)OFF(music00Tab_289F60.bTab)) // PORT: same DOS memory as the path-table target
-#define dword_CBF64 ((int)OFF(music00Tab_289F60.eTab)) // PORT: same DOS memory as the path-table target
-#define dword_CBF68 ((int)OFF(music00Tab_289F60.Dat)) // PORT: same DOS memory as the path-table target
+#define musicTab_CBF60 ((int)OFF(music00Tab_289F60.bTab)) // PORT: same DOS memory as the path-table target
+#define musicTabEnd_CBF64 ((int)OFF(music00Tab_289F60.eTab)) // PORT: same DOS memory as the path-table target
+#define musicData_CBF68 ((int)OFF(music00Tab_289F60.Dat)) // PORT: same DOS memory as the path-table target
 int dword_CBF6C; // weak
-int dword_CBF70; // weak
-char unk_CBF74[64]; // PORT: was 1-byte _UNKNOWN but used as a buffer
+int musicPort_CBF70; // I/O port of the music card (SNDSETUP.INF, e.g. 388 for AdLib)
+char musicCard_CBF74[64]; // music card name (ADLIB, GENERAL, ROLAND, ...). PORT: was 1-byte _UNKNOWN but used as a buffer
 int dword_CBFD8_CBFC8; // weak
 int dword_CBFDC; // weak
 int dword_CBFE2; // weak
 __int16 word_CBFE6; // weak
 int dword_CBFE8; // weak
 __int16 word_CBFEC; // weak
-char byte_CBFEE; // weak
+char musicVariant_CBFEE; // song variant: 0 AdLib, 1 Roland, 2 General MIDI (MUSIC<set>-<variant>.DAT)
 char byte_CBFEF; // weak
 // PORT: per-channel (owner, sample) pairs for the 32 sound channels; IDA split the interleaved
 // table, so the "already playing" dword compare never matched and loops piled up on every channel.
@@ -14148,7 +14150,7 @@ _DWORD settextposition(_DWORD a, _DWORD b) { return 0; };// weak
 //char InitAnojoy_3F820_sub_3FB60(__int16 a1, __int16 a2, int a3, int a4, int a5, char a6) { return 0; };
 //char sub_3FCA0_3FFE0(int a1, __int16 a2, __int16 a3, __int16 a4, char a5, __int16 a6, __int16 a7, __int16 a8, __int16 a9, __int16 a10, __int16 a11) { return 0; };
 //__int16 sub_41DD0_42110(__int16 result, int a2) { return 0; };
-//char sub_43B20_sub_43E60(int a1, unsigned int a2) { return 0; };
+//char InitMusicDriver_43B20_43E60(int a1, unsigned int a2) { return 0; };
 //void sub_4AB20_4AE60(__int16 a1, const char *a2, const char *a3, __int16 a4, __int16 a5) {};
 //void sub_4AC70_4AFB0(const char *a1, const char *a2) {};
 //int sub_4CC00_4CF40() { return 0; };// weak	
@@ -15395,8 +15397,8 @@ void sub_111B0(int a1, int a2)
         continue;
       case 1:
       case 33:
-        sub_20E60_20E60();
-        sub_5CEF0_5D400(v3);
+        StopMusic_20E60_20E60();
+        LoadMusicSet_5CEF0_5D400(v3);
         LOWORD(a1) = word_90030;
         ++a1;
         continue;
@@ -15420,7 +15422,7 @@ void sub_111B0(int a1, int a2)
       case 12:
       case 44:
 LABEL_9:
-        sub_5D290_5D7A0(v3);
+        PlayMusicTrack_5D290_5D7A0(v3);
         word_AC5DA_AC5CA = 0;
         LOWORD(a1) = word_90030;
         ++a1;
@@ -15480,12 +15482,12 @@ LABEL_21:
         break;
       case 23:
       case 55:
-        sub_20E60_20E60();
+        StopMusic_20E60_20E60();
         word_AC5DA_AC5CA = 0;
         goto LABEL_26;
       case 25:
       case 57:
-        sub_5D290_5D7A0(v3);
+        PlayMusicTrack_5D290_5D7A0(v3);
         word_AC5DA_AC5CA = v3 + 1;
         LOWORD(a1) = word_90030;
         ++a1;
@@ -15498,10 +15500,10 @@ LABEL_26:
     }
   }
   word_90030 = a1;
-  if ( word_AC5DA_AC5CA && sub_5D7F0_5DD00(dword_CBFD8_CBFC8) )
+  if ( word_AC5DA_AC5CA && MidiSongDone_5D7F0_5DD00(dword_CBFD8_CBFC8) )
   {
-    sub_20E60_20E60();
-    sub_5D290_5D7A0(word_AC5DA_AC5CA - 1);
+    StopMusic_20E60_20E60();
+    PlayMusicTrack_5D290_5D7A0(word_AC5DA_AC5CA - 1);
   }
 }
 
@@ -16889,7 +16891,7 @@ int sub_136C0(int a1)
 {
   int v2; // eax
 
-  if ( sub_13F00(a1) )
+  if ( AiChooseCastleSite_13F00(a1) )
   {
     sub_14C80(a1);
     return 1;
@@ -17183,7 +17185,14 @@ bool sub_13DD0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00013F00) --------------------------------------------------------
-int sub_13F00(int a1)
+/// AI wizard a1 picks a site for its castle spell (0x10) and stores it at a1+150 (returns 1); 0 if it
+/// has a castle already (owner record +50, inferred), lacks the spell or the mana, or finds no site.
+/// The sites are a fixed grid, no terrain check: the map is 4x4 blocks of 64x64 tiles; starting at the
+/// wizard's block it tries each block's corner (tile 64*bx, 64*by), then the point 31 tiles in, and takes
+/// the first one with no other wizard's castle within 12288 units (FindNearestRival_15260). Entity 0
+/// serves as the probe. This is how castles end up in walls (original-bugs.md #7); verified against the
+/// original with tools/diff_funcs.py.
+int AiChooseCastleSite_13F00(int a1)
 {
   _WORD *v1; // esi
   __int16 v2; // bx
@@ -17197,7 +17206,7 @@ int sub_13F00(int a1)
   int v10; // [esp+8h] [ebp-20h]
 
   v1 = (_WORD *)PTR(dword_AE400_AE3F0() + 29795);
-  if ( !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && sub_14E60(a1, 0x10u) && sub_15E90(a1, 0x10u) )
+  if ( !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && GetWizardSpell_14E60(a1, 0x10u) && sub_15E90(a1, 0x10u) )
   {
     v1[12] = *(_WORD *)PTR(a1 + 24);
     v8 = (int)(*(__int16 *)PTR(a1 + 72)
@@ -17214,7 +17223,7 @@ int sub_13F00(int a1)
       {
         v1[36] = (v2 & 3) << 14;
         v1[37] = (v10 & 3) << 14;
-        v3 = sub_15260((int)OFF(v1), 2u);
+        v3 = FindNearestRival_15260((int)OFF(v1), 2u);
         if ( !v3 || sub_42300_42640((_WORD *)PTR(v3 + 72), v1 + 36) > 12288 )
         {
           v4 = v1 + 36;
@@ -17225,7 +17234,7 @@ int sub_13F00(int a1)
         }
         v1[36] = (((v2 & 3) << 6) + 31) << 8;
         v1[37] = (((v10 & 3) << 6) + 31) << 8;
-        v6 = sub_15260((int)OFF(v1), 2u);
+        v6 = FindNearestRival_15260((int)OFF(v1), 2u);
         if ( !v6 || sub_42300_42640((_WORD *)PTR(v6 + 72), v1 + 36) > 12288 )
         {
           v7 = v1 + 36;
@@ -17256,7 +17265,7 @@ int sub_14120(int a1)
   v1 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 50);
   if ( v1 <= dword_AE400_AE3F0() + 29795 )
     return 0;
-  v2 = sub_14E60(a1, 0x10u);
+  v2 = GetWizardSpell_14E60(a1, 0x10u);
   v3 = v2;
   if ( !v2 )
     return 0;
@@ -17284,10 +17293,10 @@ unsigned int sub_14230(int a1)
   unsigned int v3; // eax
   int v4; // ecx
 
-  result = sub_14E60(a1, 3u);
+  result = GetWizardSpell_14E60(a1, 3u);
   if ( result )
   {
-    v2 = sub_14E60(a1, 0x10u);
+    v2 = GetWizardSpell_14E60(a1, 0x10u);
     if ( v2 )
     {
       if ( *(_DWORD *)PTR(a1 + 136) <= *(_DWORD *)PTR(v2 + 136) )
@@ -17344,7 +17353,7 @@ int sub_143A0(int a1)
   unsigned int v7; // [esp+Ch] [ebp-18h]
 
   v7 = -1;
-  if ( !sub_16920(a1) || !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && sub_14E60(a1, 0x10u) )
+  if ( !sub_16920(a1) || !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && GetWizardSpell_14E60(a1, 0x10u) )
     return 0;
   v6 = 0;
   for ( i = *(_DWORD *)PTR(dword_AE408_AE3F8() + 36462); i > dword_AE400_AE3F0() + 29795; i = *(_DWORD *)PTR(i) )
@@ -17391,7 +17400,7 @@ int sub_145B0(int a1)
   int v9; // [esp+8h] [ebp-18h]
 
   v1 = -1;
-  if ( !sub_16920(a1) || !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && sub_14E60(a1, 0x10u) )
+  if ( !sub_16920(a1) || !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && GetWizardSpell_14E60(a1, 0x10u) )
     return 0;
   v9 = 0;
   for ( i = *(_DWORD *)PTR(dword_AE408_AE3F8() + 36462); i > dword_AE400_AE3F0() + 29795; i = *(_DWORD *)PTR(i) )
@@ -17409,7 +17418,7 @@ int sub_145B0(int a1)
       }
       if ( 50000 - *(__int16 *)PTR(v4 + 522) * (*(_DWORD *)PTR(i + 136) / 10) / 255 <= *(unsigned __int16 *)PTR(v5 + 460)
         || !*(_WORD *)PTR(v3 + 50)
-        && sub_14E60(i, 0x10u)
+        && GetWizardSpell_14E60(i, 0x10u)
         && *(_DWORD *)PTR(i + 140) + 32 * (255 - *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522)) < *(_DWORD *)PTR(a1 + 140) )
       {
         v7 = sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
@@ -17607,7 +17616,9 @@ int sub_14DC0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00014E60) --------------------------------------------------------
-unsigned int sub_14E60(int a1, unsigned __int8 a2)
+/// The spell entity wizard a1 holds for spell id a2 (castle 0x10, speed 2, ...): the entity index table at
+/// owner record +676; 0 if the wizard does not have the spell.
+unsigned int GetWizardSpell_14E60(int a1, unsigned __int8 a2)
 {
   unsigned int result; // eax
 
@@ -17746,7 +17757,7 @@ LABEL_18:
     v11 = sub_15340(v2, a1);
     if ( v11 )
     {
-      v6 = dword_AE400_AE3F0() + 29795 >= v9 ? sub_15260(v2, 2u) : sub_153B0(v2, v9);
+      v6 = dword_AE400_AE3F0() + 29795 >= v9 ? FindNearestRival_15260(v2, 2u) : sub_153B0(v2, v9);
       v7 = v6;
       if ( (*(_WORD *)PTR(a1 + 24) == *(_WORD *)PTR(v11 + 24) || sub_42410_42750((_WORD *)PTR(v2 + 72), (_WORD *)PTR(v11 + 72)) > 26214400)
         && (!v7 || !EntitiesCollide_11950((Type_AE400_29795*)PTR(v2), (Type_AE400_29795*)PTR(v7))) )
@@ -17766,7 +17777,9 @@ LABEL_19:
 // AE408: using guessed type int dword_AE408_AE3F8();
 
 //----- (00015260) --------------------------------------------------------
-unsigned int sub_15260(int a1, unsigned __int8 a2)
+/// The entity of list 0 (wizards, castles) nearest to a1 whose owner (+24) differs from a1's, of model a2
+/// (0 wizard, 2 castle, 3 ...; 0xFF any model; 1 always 0); 0 if there is none.
+unsigned int FindNearestRival_15260(int a1, unsigned __int8 a2)
 {
   unsigned int v2; // esi
   unsigned int v3; // edi
@@ -17959,7 +17972,7 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
   {
     case 0u:
     case 0xFu:
-      v2 = sub_14E60(a1, a2);
+      v2 = GetWizardSpell_14E60(a1, a2);
       if ( !v2
         || *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 404) < 0
         || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v2 + 136)
@@ -17986,7 +17999,7 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
     case 4u:
     case 5u:
     case 0xEu:
-      v9 = sub_14E60(a1, a2);
+      v9 = GetWizardSpell_14E60(a1, a2);
       if ( !v9 || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v9 + 136) )
         return 0;
       *(_WORD *)PTR(v9 + 48) = *(_WORD *)PTR(v9 + 50);
@@ -17994,7 +18007,7 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
       result = 1;
       break;
     case 2u:
-      v8 = sub_14E60(a1, a2);
+      v8 = GetWizardSpell_14E60(a1, a2);
       if ( !v8 || *(_WORD *)PTR(v8 + 48) || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v8 + 136) )
         return 0;
       *(_WORD *)PTR(v8 + 48) = *(_WORD *)PTR(v8 + 50);
@@ -18008,7 +18021,7 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
     case 0xDu:
     case 0x11u:
     case 0x14u:
-      v5 = sub_14E60(a1, a2);
+      v5 = GetWizardSpell_14E60(a1, a2);
       if ( !v5
         || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v5 + 136)
         || (unsigned __int16)sub_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= 0xE3u )
@@ -18026,7 +18039,7 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
     case 9u:
     case 0xAu:
     case 0xCu:
-      v10 = sub_14E60(a1, a2);
+      v10 = GetWizardSpell_14E60(a1, a2);
       if ( !v10 || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v10 + 136) )
         return 0;
       *(_WORD *)PTR(v10 + 48) = *(_WORD *)PTR(v10 + 50);
@@ -18034,7 +18047,7 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
       result = 1;
       break;
     case 0x10u:
-      v6 = sub_14E60(a1, a2);
+      v6 = GetWizardSpell_14E60(a1, a2);
       if ( !v6 || *(_WORD *)PTR(v6 + 48) || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v6 + 136) )
         return 0;
       if ( *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) )
@@ -18086,7 +18099,7 @@ int sub_15A00(int a1, unsigned __int8 a2)
     case 0xBu:
     case 0xDu:
     case 0xFu:
-      v12 = sub_14E60(a1, a2);
+      v12 = GetWizardSpell_14E60(a1, a2);
       if ( !v12 )
         goto LABEL_37;
       v13 = *(_DWORD *)PTR(a1 + 160);
@@ -18104,7 +18117,7 @@ int sub_15A00(int a1, unsigned __int8 a2)
       result = 1;
       break;
     case 2u:
-      v2 = sub_14E60(a1, a2);
+      v2 = GetWizardSpell_14E60(a1, a2);
       if ( !v2 || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v2 + 136) )
         goto LABEL_37;
       result = 1;
@@ -18114,7 +18127,7 @@ int sub_15A00(int a1, unsigned __int8 a2)
     case 8u:
     case 0x11u:
     case 0x14u:
-      v5 = sub_14E60(a1, a2);
+      v5 = GetWizardSpell_14E60(a1, a2);
       if ( !v5 )
         goto LABEL_37;
       if ( *(_WORD *)PTR(v5 + 48) )
@@ -18136,7 +18149,7 @@ int sub_15A00(int a1, unsigned __int8 a2)
     case 4u:
     case 0xCu:
     case 0xEu:
-      v4 = sub_14E60(a1, a2);
+      v4 = GetWizardSpell_14E60(a1, a2);
       if ( !v4
         || *(_WORD *)PTR(v4 + 48)
         || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 2 * a2 + 724)
@@ -18147,7 +18160,7 @@ int sub_15A00(int a1, unsigned __int8 a2)
       result = 1;
       break;
     case 0x10u:
-      v8 = sub_14E60(a1, a2);
+      v8 = GetWizardSpell_14E60(a1, a2);
       if ( !v8 )
         goto LABEL_37;
       v9 = *(_DWORD *)PTR(a1 + 160);
@@ -18182,7 +18195,7 @@ int sub_15A00(int a1, unsigned __int8 a2)
       break;
     default:
       if ( a2 >= 0x18u
-        || (v15 = sub_14E60(a1, a2)) == 0
+        || (v15 = GetWizardSpell_14E60(a1, a2)) == 0
         || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 2 * a2 + 724)
         || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v15 + 136) )
       {
@@ -18208,7 +18221,7 @@ bool sub_15E60(int a1, unsigned __int8 a2)
   result = 0;
   if ( a2 < 0x18u )
   {
-    v2 = sub_14E60(a1, a2);
+    v2 = GetWizardSpell_14E60(a1, a2);
     if ( v2 )
     {
       if ( *(__int16 *)PTR(v2 + 48) > 0 )
@@ -18219,9 +18232,11 @@ bool sub_15E60(int a1, unsigned __int8 a2)
 }
 
 //----- (00015E90) --------------------------------------------------------
+/// 1 if spell a2's entity +136 is at most wizard a1's +136 - probably the spell's mana cost against the
+/// wizard's mana (inferred, not verified).
 bool sub_15E90(int a1, unsigned __int8 a2)
 {
-  return *(_DWORD *)PTR(sub_14E60(a1, a2) + 136) <= *(_DWORD *)PTR(a1 + 136);
+  return *(_DWORD *)PTR(GetWizardSpell_14E60(a1, a2) + 136) <= *(_DWORD *)PTR(a1 + 136);
 }
 
 //----- (00015EC0) --------------------------------------------------------
@@ -18296,7 +18311,7 @@ unsigned int sub_16000(int a1, unsigned __int8 a2)
 {
   unsigned int result; // eax
 
-  result = sub_14E60(a1, a2);
+  result = GetWizardSpell_14E60(a1, a2);
   if ( !result || *(__int16 *)PTR(result + 48) <= 0 )
     return 0;
   return result;
@@ -18336,14 +18351,14 @@ char sub_16030(int a1)
 LABEL_9:
   if ( !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 406) )
   {
-    if ( !sub_14E60(a1, 0x11u) )
+    if ( !GetWizardSpell_14E60(a1, 0x11u) )
       goto LABEL_50;
     if ( sub_15A00(a1, 0x11u) )
       return 17;
     if ( !sub_15E90(a1, 0x11u) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 758) )
     {
 LABEL_50:
-      if ( !sub_14E60(a1, 8u) )
+      if ( !GetWizardSpell_14E60(a1, 8u) )
         goto LABEL_49;
       if ( sub_15A00(a1, 8u) )
         return 8;
@@ -18353,7 +18368,7 @@ LABEL_49:
         if ( sub_16000(dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(a1 + 146), 0xEu)
           && (v6 = *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 524), rand() % 255 < v6) )
         {
-          if ( sub_14E60(a1, 0xFu) )
+          if ( GetWizardSpell_14E60(a1, 0xFu) )
           {
             if ( sub_15A00(a1, 0xFu) )
               return 15;
@@ -18363,28 +18378,28 @@ LABEL_49:
         }
         else
         {
-          if ( !sub_14E60(a1, 7u) )
+          if ( !GetWizardSpell_14E60(a1, 7u) )
             goto LABEL_52;
           if ( sub_15A00(a1, 7u) )
             return 7;
           if ( !sub_15E90(a1, 7u) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 738) )
           {
 LABEL_52:
-            if ( !sub_14E60(a1, 0x14u) )
+            if ( !GetWizardSpell_14E60(a1, 0x14u) )
               goto LABEL_53;
             if ( sub_15A00(a1, 0x14u) )
               return 20;
             if ( !sub_15E90(a1, 0x14u) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 764) )
             {
 LABEL_53:
-              if ( !sub_14E60(a1, 0) )
+              if ( !GetWizardSpell_14E60(a1, 0) )
                 goto LABEL_51;
               if ( sub_15A00(a1, 0) )
                 return 0;
               if ( !sub_15E90(a1, 0) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 724) )
               {
 LABEL_51:
-                if ( sub_14E60(a1, 0xFu) )
+                if ( GetWizardSpell_14E60(a1, 0xFu) )
                 {
                   if ( sub_15A00(a1, 0xFu) )
                     return 15;
@@ -18435,42 +18450,42 @@ char sub_16310(_DWORD *a1)
 LABEL_9:
   if ( !*(_WORD *)PTR(a1[40] + 406) )
   {
-    if ( !sub_14E60((int)OFF(a1), 0x11u) )
+    if ( !GetWizardSpell_14E60((int)OFF(a1), 0x11u) )
       goto LABEL_46;
     if ( sub_15A00((int)OFF(a1), 0x11u) )
       return 17;
     if ( !sub_15E90((int)OFF(a1), 0x11u) || *(_WORD *)PTR(a1[40] + 758) )
     {
 LABEL_46:
-      if ( !sub_14E60((int)OFF(a1), 8u) )
+      if ( !GetWizardSpell_14E60((int)OFF(a1), 8u) )
         goto LABEL_45;
       if ( sub_15A00((int)OFF(a1), 8u) )
         return 8;
       if ( !sub_15E90((int)OFF(a1), 8u) || *(_WORD *)PTR(a1[40] + 740) )
       {
 LABEL_45:
-        if ( !sub_14E60((int)OFF(a1), 7u) )
+        if ( !GetWizardSpell_14E60((int)OFF(a1), 7u) )
           goto LABEL_44;
         if ( sub_15A00((int)OFF(a1), 7u) )
           return 7;
         if ( !sub_15E90((int)OFF(a1), 7u) || *(_WORD *)PTR(a1[40] + 738) )
         {
 LABEL_44:
-          if ( !sub_14E60((int)OFF(a1), 0x14u) )
+          if ( !GetWizardSpell_14E60((int)OFF(a1), 0x14u) )
             goto LABEL_43;
           if ( sub_15A00((int)OFF(a1), 0x14u) )
             return 20;
           if ( !sub_15E90((int)OFF(a1), 0x14u) || *(_WORD *)PTR(a1[40] + 764) )
           {
 LABEL_43:
-            if ( !sub_14E60((int)OFF(a1), 0) )
+            if ( !GetWizardSpell_14E60((int)OFF(a1), 0) )
               goto LABEL_42;
             if ( sub_15A00((int)OFF(a1), 0) )
               return 0;
             if ( !sub_15E90((int)OFF(a1), 0) || *(_WORD *)PTR(a1[40] + 724) )
             {
 LABEL_42:
-              if ( sub_14E60((int)OFF(a1), 0xFu) )
+              if ( GetWizardSpell_14E60((int)OFF(a1), 0xFu) )
               {
                 if ( sub_15A00((int)OFF(a1), 0xFu) )
                   return 15;
@@ -18710,12 +18725,12 @@ LABEL_14:
 //----- (00016920) --------------------------------------------------------
 _BOOL1 sub_16920(int a1)
 {
-  return sub_14E60(a1, 0)
-      || sub_14E60(a1, 0xFu)
-      || sub_14E60(a1, 8u)
-      || sub_14E60(a1, 0x11u)
-      || sub_14E60(a1, 0x14u)
-      || sub_14E60(a1, 7u);
+  return GetWizardSpell_14E60(a1, 0)
+      || GetWizardSpell_14E60(a1, 0xFu)
+      || GetWizardSpell_14E60(a1, 8u)
+      || GetWizardSpell_14E60(a1, 0x11u)
+      || GetWizardSpell_14E60(a1, 0x14u)
+      || GetWizardSpell_14E60(a1, 7u);
 }
 
 //----- (00016990) --------------------------------------------------------
@@ -18916,12 +18931,12 @@ void ProcessKeys_16B00()//1E7B00_
 					{
 						if (byte_939E5)
 							sub_5D010_5D520();
-						if (byte_939CD)
-							sub_20E60_20E60();
+						if (musicOn_939CD)
+							StopMusic_20E60_20E60();
 					}
-					else if (byte_939CD)
+					else if (musicOn_939CD)
 					{
-						sub_5D290_5D7A0(str_AE400_AE3F0->var_u32_576.a16[0]);
+						PlayMusicTrack_5D290_5D7A0(str_AE400_AE3F0->var_u32_576.a16[0]);
 					}
 					lastPressedKey_12EF70_12EF60 = 0;
 				}
@@ -18951,18 +18966,18 @@ void ProcessKeys_16B00()//1E7B00_
 				lastPressedKey_12EF70_12EF60 = 0;
 				return;
 			case 0x3C://F2
-				if (byte_939CC)
+				if (musicAvailable_939CC)
 				{
-					if (byte_939CD)
+					if (musicOn_939CD)
 					{
-                        byte_939CD = 0;
-						sub_20E60_20E60();
+                        musicOn_939CD = 0;
+						StopMusic_20E60_20E60();
 						strcpy(str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].messages_13351_28[str_AE400_AE3F0->var_u16_8].messageText_13351_28, dword_AE238_AE228[78]);
 					}
 					else
 					{
-						byte_939CD = 1;
-						sub_5D290_5D7A0(str_AE400_AE3F0->var_u32_576.a16[0]);
+						musicOn_939CD = 1;
+						PlayMusicTrack_5D290_5D7A0(str_AE400_AE3F0->var_u32_576.a16[0]);
 						strcpy(str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].messages_13351_28[str_AE400_AE3F0->var_u16_8].messageText_13351_28, dword_AE238_AE228[77]);
 					}
 					str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].messages_13351_28[str_AE400_AE3F0->var_u16_8].periods_13415 = 50;
@@ -25093,133 +25108,153 @@ void sub_20B80(Type_AE400_29795* a1x)
 }
 
 //----- (00020BD0) --------------------------------------------------------
-int sub_20BD0()
+// PORT: DangerMusicFadeStep_20BD0 sends the three CC 7 (volume) messages it builds in byte_ACFF0..2 to the MIDI driver; the
+// three bytes are separate variables here, so they are copied into one message.
+static void SendMidi_ACFF0()
+{
+  const uint8_t msg[3] = { (uint8_t)byte_ACFF0, (uint8_t)byte_ACFF1, (uint8_t)byte_ACFF2 };
+  PortMusic_SendMidi(msg, 3);
+}
+
+// PORT: DangerMusicFadeStep_20BD0 is an HMI timer event (sosTIMERRegisterEvent); the HMI timer service is port_timer's
+static void DangerMusicFadeEvent()
+{
+  DangerMusicFadeStep_20BD0();
+}
+
+/// Timer event of the danger-music fade: steps dangerMusicVolume_9008C by dangerFadeStep_9008F, sends it as
+/// CC 7 to channels 3-5 and removes itself at full volume (126) or silence.
+int DangerMusicFadeStep_20BD0()
 {
   int v1; // eax
   void *retaddr[2]; // [esp+10h] [ebp+0h]
 
-  if ( word_939D2 || !byte_9008E )
+  if ( musicTrack_939D2 || !dangerFadeActive_9008E )
   {
-    byte_9008C += byte_9008F;
+    dangerMusicVolume_9008C += dangerFadeStep_9008F;
     byte_ACFF0 = -77;
-    byte_ACFF2 = byte_9008C;
+    byte_ACFF2 = dangerMusicVolume_9008C;
     byte_ACFF1 = 7;
-    //fix sub_5EDA0(dword_CBFDC, (int)&byte_ACFF0, __DS__, 3);
+    SendMidi_ACFF0(); // PORT: was MidiSendData_5EDA0(dword_CBFDC, &byte_ACFF0, 3)
     byte_ACFF0 = -76;
     byte_ACFF1 = 7;
-    byte_ACFF2 = byte_9008C;
-    //fix sub_5EDA0(dword_CBFDC, (int)&byte_ACFF0, __DS__, 3);
+    byte_ACFF2 = dangerMusicVolume_9008C;
+    SendMidi_ACFF0(); // PORT: was MidiSendData_5EDA0(dword_CBFDC, &byte_ACFF0, 3)
     byte_ACFF0 = -75;
     byte_ACFF1 = 7;
-    byte_ACFF2 = byte_9008C;
-    //fix v1 = sub_5EDA0(dword_CBFDC, (int)&byte_ACFF0, __DS__, 3);
-    BYTE1(v1) = byte_9008C;
-    if ( byte_9008C == 126 && byte_9008D == 2 )
+    byte_ACFF2 = dangerMusicVolume_9008C;
+    SendMidi_ACFF0(); // PORT: was v1 = MidiSendData_5EDA0(dword_CBFDC, &byte_ACFF0, 3)
+    BYTE1(v1) = dangerMusicVolume_9008C;
+    if ( dangerMusicVolume_9008C == 126 && dangerMusicMode_9008D == 2 )
     {
-      v1 = sub_5DC91(dword_80000);
-      byte_9008E = 0;
+      PortTimer_RemoveEvent(dangerFadeEvent_80000); // PORT: was v1 = RemoveTimerEvent_5DC91(dangerFadeEvent_80000)
+      dangerFadeActive_9008E = 0;
     }
-    if ( !byte_9008C && byte_9008D == 1 )
+    if ( !dangerMusicVolume_9008C && dangerMusicMode_9008D == 1 )
     {
-      v1 = sub_5DC91(dword_80000);
-      byte_9008C = 0;
-      byte_9008E = 0;
+      PortTimer_RemoveEvent(dangerFadeEvent_80000); // PORT: was v1 = RemoveTimerEvent_5DC91(dangerFadeEvent_80000)
+      dangerMusicVolume_9008C = 0;
+      dangerFadeActive_9008E = 0;
     }
     return 0;//fix return MK_FP(retaddr[0], retaddr[0])(v1);
   }
   else
   {
-    sub_5DC91(dword_80000);
-    byte_9008E = 0;
+    PortTimer_RemoveEvent(dangerFadeEvent_80000); // PORT: was RemoveTimerEvent_5DC91(dangerFadeEvent_80000)
+    dangerFadeActive_9008E = 0;
     return 0;//fix return MK_FP(retaddr[0], retaddr[0])();
   }
 }
-// 80000: using guessed type int dword_80000;
-// 9008C: using guessed type char byte_9008C;
-// 9008D: using guessed type char byte_9008D;
-// 9008E: using guessed type char byte_9008E;
-// 9008F: using guessed type char byte_9008F;
-// 939D2: using guessed type __int16 word_939D2;
+// 80000: using guessed type int dangerFadeEvent_80000;
+// 9008C: using guessed type char dangerMusicVolume_9008C;
+// 9008D: using guessed type char dangerMusicMode_9008D;
+// 9008E: using guessed type char dangerFadeActive_9008E;
+// 9008F: using guessed type char dangerFadeStep_9008F;
+// 939D2: using guessed type __int16 musicTrack_939D2;
 // ACFF0: using guessed type char byte_ACFF0;
 // ACFF1: using guessed type char byte_ACFF1;
 // ACFF2: using guessed type char byte_ACFF2;
 // CBFDC: using guessed type int dword_CBFDC;
 
 //----- (00020D00) --------------------------------------------------------
-void sub_20D00(char a1)
+/// Danger music: a1 = 2 when enemies are near, 1 when not. Restarts the song when it has ended (danger layer
+/// silent again); on a change of a1 it starts the fade of MIDI channels 3-5 (CC 7): in at 60 Hz, out at 20 Hz,
+/// DangerMusicFadeStep_20BD0 as a timer event.
+void UpdateDangerMusic_20D00(char a1)
 {
-  if ( byte_939CC )
+  if ( musicAvailable_939CC )
   {
-    if ( word_939D2 || !byte_9008E )
+    if ( musicTrack_939D2 || !dangerFadeActive_9008E )
     {
-      if ( byte_939CD && word_939D2 )
+      if ( musicOn_939CD && musicTrack_939D2 )
       {
-        if ( sub_5D7F0_5DD00(dword_CBFD8_CBFC8) )
+        if ( MidiSongDone_5D7F0_5DD00(dword_CBFD8_CBFC8) )
         {
-          if ( byte_9008E )
-            sub_5DC91(dword_80000);
-          byte_9008C = 0;
-          byte_9008F = -2;
-          byte_9008D = 1;
-          byte_9008E = 0;
-          sub_5F529(dword_CBFD8_CBFC8, (unsigned int)OFF(&dword_12F030));
-          sub_5F398(dword_CBFD8_CBFC8);
+          if ( dangerFadeActive_9008E )
+            PortTimer_RemoveEvent(dangerFadeEvent_80000); // PORT: was RemoveTimerEvent_5DC91(dangerFadeEvent_80000)
+          dangerMusicVolume_9008C = 0;
+          dangerFadeStep_9008F = -2;
+          dangerMusicMode_9008D = 1;
+          dangerFadeActive_9008E = 0;
+          MidiRewindSong_5F529(dword_CBFD8_CBFC8, (unsigned int)OFF(&dword_12F030));
+          MidiStartSong_5F398(dword_CBFD8_CBFC8);
           word_939D0 = 100;
         }
-        else if ( a1 != byte_9008D )
+        else if ( a1 != dangerMusicMode_9008D )
         {
-          if ( byte_9008E )
-            sub_5DC91(dword_80000);
-          byte_9008D = a1;
-          byte_9008E = 1;
-          byte_9008F = -byte_9008F;
+          if ( dangerFadeActive_9008E )
+            PortTimer_RemoveEvent(dangerFadeEvent_80000); // PORT: was RemoveTimerEvent_5DC91(dangerFadeEvent_80000)
+          dangerMusicMode_9008D = a1;
+          dangerFadeActive_9008E = 1;
+          dangerFadeStep_9008F = -dangerFadeStep_9008F;
           if ( a1 == 1 )
           {
-              //fix sub_5D97B(0x14u, (int)sub_20BD0, __CS__, (unsigned int)&dword_80000);
+              dangerFadeEvent_80000 = PortTimer_AddEvent(0x14u, DangerMusicFadeEvent); // PORT: was RegisterTimerEvent_5D97B(0x14, DangerMusicFadeStep_20BD0, &dangerFadeEvent_80000)
           }
           else if ( a1 == 2 )
           {
-              //fix sub_5D97B(0x3Cu, (int)sub_20BD0, __CS__, (unsigned int)&dword_80000);
+              dangerFadeEvent_80000 = PortTimer_AddEvent(0x3Cu, DangerMusicFadeEvent); // PORT: was RegisterTimerEvent_5D97B(0x3C, DangerMusicFadeStep_20BD0, &dangerFadeEvent_80000)
           }
         }
       }
     }
     else
     {
-      sub_5DC91(dword_80000);
-      byte_9008E = 0;
+      PortTimer_RemoveEvent(dangerFadeEvent_80000); // PORT: was RemoveTimerEvent_5DC91(dangerFadeEvent_80000)
+      dangerFadeActive_9008E = 0;
     }
   }
 }
-// 80000: using guessed type int dword_80000;
-// 9008C: using guessed type char byte_9008C;
-// 9008D: using guessed type char byte_9008D;
-// 9008E: using guessed type char byte_9008E;
-// 9008F: using guessed type char byte_9008F;
-// 939CC: using guessed type char byte_939CC;
-// 939CD: using guessed type char byte_939CD;
+// 80000: using guessed type int dangerFadeEvent_80000;
+// 9008C: using guessed type char dangerMusicVolume_9008C;
+// 9008D: using guessed type char dangerMusicMode_9008D;
+// 9008E: using guessed type char dangerFadeActive_9008E;
+// 9008F: using guessed type char dangerFadeStep_9008F;
+// 939CC: using guessed type char musicAvailable_939CC;
+// 939CD: using guessed type char musicOn_939CD;
 // 939D0: using guessed type __int16 word_939D0;
-// 939D2: using guessed type __int16 word_939D2;
+// 939D2: using guessed type __int16 musicTrack_939D2;
 // CBFD8: using guessed type int dword_CBFD8_CBFC8;
 // 12F030: using guessed type int dword_12F030;
 
 //----- (00020E60) --------------------------------------------------------
-void sub_20E60_20E60()
+/// Stops and unloads the current song and silences the channels (F2, level end).
+void StopMusic_20E60_20E60()
 {
-  if ( byte_939CC && byte_939CD && word_939D2 )
+  if ( musicAvailable_939CC && musicOn_939CD && musicTrack_939D2 )
   {
-    if ( !sub_5D7F0_5DD00(dword_CBFD8_CBFC8) )
-      sub_5F420(dword_CBFD8_CBFC8);
-    sub_5F355(dword_CBFD8_CBFC8);
-    sub_6091D(dword_CBFDC);
+    if ( !MidiSongDone_5D7F0_5DD00(dword_CBFD8_CBFC8) )
+      MidiStopSong_5F420(dword_CBFD8_CBFC8);
+    MidiUnloadSong_5F355(dword_CBFD8_CBFC8);
+    MidiResetChannels_6091D(dword_CBFDC);
     if ( byte_9AF9C )
-      sub_6091D(dword_12F074);
-    word_939D2 = 0;
+      MidiResetChannels_6091D(dword_12F074);
+    musicTrack_939D2 = 0;
   }
 }
-// 939CC: using guessed type char byte_939CC;
-// 939CD: using guessed type char byte_939CD;
-// 939D2: using guessed type __int16 word_939D2;
+// 939CC: using guessed type char musicAvailable_939CC;
+// 939CD: using guessed type char musicOn_939CD;
+// 939D2: using guessed type __int16 musicTrack_939D2;
 // 9AF9C: using guessed type char byte_9AF9C;
 // CBFD8: using guessed type int dword_CBFD8_CBFC8;
 // CBFDC: using guessed type int dword_CBFDC;
@@ -40482,9 +40517,9 @@ void TopProcedure_340B0_34470(int argc, const char** argv)//2050B0_205470
     sub_44730_44A70();
     if ( (str_AE408_AE3F8->var_u8_1 & 1) != 0 )
     {
-      byte_939CD = 0;
+      musicOn_939CD = 0;
       byte_939E5 = 0;
-      byte_939CC = 0;
+      musicAvailable_939CC = 0;
       byte_939E4 = 0;
       sub_40440_40780(&pathStrArray[PSdataftextdat]);
       sub_44700_44A40((char*)begTextDat_AE41C_AE40C_26C41C_26C40C, dword_AE238_AE228, 80);
@@ -40512,7 +40547,7 @@ void TopProcedure_340B0_34470(int argc, const char** argv)//2050B0_205470
         sub_42530_42870(2);
         byte_939E5 = byte_939E4;
         bool_12CA7C_12CA6C = true;
-        byte_939CD = byte_939CC;
+        musicOn_939CD = musicAvailable_939CC;
         bool_96880 = false;
         do
           sub_4AB20_4AE60();
@@ -40530,7 +40565,7 @@ void TopProcedure_340B0_34470(int argc, const char** argv)//2050B0_205470
         if ( !str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u8_13327 )
         {
           sub_5D070_5D580(0);
-          sub_5CEF0_5D400(0);
+          LoadMusicSet_5CEF0_5D400(0);
         }
         if ( (str_AE408_AE3F8->var_u8_0 & 4) == 0 )
         {
@@ -40552,11 +40587,11 @@ void TopProcedure_340B0_34470(int argc, const char** argv)//2050B0_205470
       {
         if (str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u8_13327)
           break;
-        if ( byte_939CC && byte_939CD && word_939D6 )
+        if ( musicAvailable_939CC && musicOn_939CD && musicTrackCount_939D6 )
         {
           pseudoRand = 9377 * pseudoRand + 9439;
           str_AE400_AE3F0->var_u32_576.a32 = pseudoRand % 3u + 1;
-          sub_5D290_5D7A0(str_AE400_AE3F0->var_u32_576.a16[0]);
+          PlayMusicTrack_5D290_5D7A0(str_AE400_AE3F0->var_u32_576.a16[0]);
         }
         sub_59720_59C30();
         //205367
@@ -40567,7 +40602,7 @@ void TopProcedure_340B0_34470(int argc, const char** argv)//2050B0_205470
         //debug
         GameLoop_34610_349D0();
         sub_5D010_5D520();
-        sub_20E60_20E60();
+        StopMusic_20E60_20E60();
         FadeInOut_61CC0_621D0(0, 0x10u, 0);
         if ( (str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u16_13325 & 6) != 4 )
         {
@@ -41387,21 +41422,21 @@ void sub_357C0_35B80()
     if ( (str_AE408_AE3F8->var_u8_0 & 0x48) != 0 )
     {
       DrawTextLine_5AD10_5B220((char*)"Sound Disabled");
-      byte_939CD = 0;
+      musicOn_939CD = 0;
       byte_939E5 = 0;
-      byte_939CC = 0;
+      musicAvailable_939CC = 0;
       byte_939E4 = 0;
     }
     else
     {
       DrawTextLine_5AD10_5B220((char*)"Initialise Music");
-      sub_3C570();
+      InitMusicFromSetup_3C570();
       DrawTextLine_5AD10_5B220((char*)"Initialise Sound");
       sub_3C800_sub_3CB40();
     }
-    if ( byte_939E4 || byte_939CC )
+    if ( byte_939E4 || musicAvailable_939CC )
     {
-        //fix sub_5D97B(0x78u, (int)sub_357A0, __CS__, (unsigned int)&dword_80010);
+        //fix RegisterTimerEvent_5D97B(0x78u, (int)sub_357A0, __CS__, (unsigned int)&dword_80010);
       // PORT: with a sound driver present the game registers its 120 Hz tick with the HMI timer
       // service instead of reprogramming the PIT. That registration was missing, so the game clock
       // (dword_AC5D4_AC5C4) never advanced with sound on and tick waits (info FMVs) hung forever.
@@ -41433,8 +41468,8 @@ void sub_357C0_35B80()
 // 90090: using guessed type char byte_90090;
 // 90AD4: using guessed type char byte_90AD4;
 // 90AD5: using guessed type char byte_90AD5;
-// 939CC: using guessed type char byte_939CC;
-// 939CD: using guessed type char byte_939CD;
+// 939CC: using guessed type char musicAvailable_939CC;
+// 939CD: using guessed type char musicOn_939CD;
 // 939E4: using guessed type char byte_939E4;
 // 939E5: using guessed type char byte_939E5;
 // AE408: using guessed type int dword_AE408_AE3F8();
@@ -41455,7 +41490,7 @@ void sub_358A0_35C60()
     else
     {
         PortTimer_Stop(); // PORT: counterpart of the HMI timer registration in sub_357C0_35B80
-        sub_5DC91(dword_80010);
+        RemoveTimerEvent_5DC91(dword_80010);
         sub_61F90();
         sub_62020();
     }
@@ -47261,7 +47296,9 @@ int sub_3C540(int a1)
 }
 
 //----- (0003C570) --------------------------------------------------------
-void sub_3C570()
+/// Reads the music card from C:/CARPET.CD/SNDSETUP.INF (or BF_MUSIC) - in the port overridden by the music
+/// settings and the recording - and opens the music driver for it (InitMusicDriver_43B20_43E60).
+void InitMusicFromSetup_3C570()
 {
   //int v0; // ebx
   //int v1; // ebx
@@ -47281,42 +47318,59 @@ void sub_3C570()
     file = fopen(FixPath(pathBuffer), "r");
   }
   fscanf(file, "%s = %s %x %d %d", &v5, &v5, &v7, &v7, &v7);
-  fscanf(file, "%s = %s %x", &v5, unk_CBF74, &dword_CBF70);
+  fscanf(file, "%s = %s %x", &v5, musicCard_CBF74, &musicPort_CBF70);
   fclose(file);
   varBfMusic = getenv("BF_MUSIC");
   if (varBfMusic)
-    sscanf(varBfMusic, "%s %x", unk_CBF74, &dword_CBF70);
-  // PORT: the HMI drivers talk to sound-card I/O ports; never initialise them (audio is Phase 4 / platform backend)
-  strcpy(unk_CBF74, "none");
-  if ( !stricmp(unk_CBF74, "none"))
+    sscanf(varBfMusic, "%s %x", musicCard_CBF74, &musicPort_CBF70);
+  // PORT: the HMI MIDI driver is replaced by portability/port_music. The card from sndsetup.inf / BF_MUSIC still
+  // picks the music variant (AdLib, General MIDI); --no-music / --music-device override it. Only the setup and
+  // the settings decide this, never the audio device: "music on" changes the game (track choice uses pseudoRand).
+  // Replays use the card their recording was made with.
+  std::string scriptMusic;
+  if (InputScript_ScriptMusic(scriptMusic))
+    snprintf(musicCard_CBF74, sizeof(musicCard_CBF74), "%s", scriptMusic.c_str());
+  else
   {
-    byte_939CC = 0;
-    byte_939CD = 0;
+    switch (PortMusic_SelectDevice(musicCard_CBF74))
+    {
+      case PortMusicDevice::AdLib: strcpy(musicCard_CBF74, "ADLIB"); break;
+      case PortMusicDevice::GeneralMidi: strcpy(musicCard_CBF74, "GENERAL"); break;
+      // PORT: the Roland songs need MT-32 ROMs (Munt); without them the General MIDI songs
+      case PortMusicDevice::MT32: strcpy(musicCard_CBF74, PortMusic_Mt32Available() ? "ROLAND" : "GENERAL"); break;
+      default: strcpy(musicCard_CBF74, "none"); break;
+    }
+    InputScript_RecordMusic(musicCard_CBF74);
   }
-  if ( byte_939CC )
+  if ( !stricmp(musicCard_CBF74, "none"))
   {
-    if ( !stricmp(unk_CBF74, "ADLIB")
-      || !stricmp(unk_CBF74, "SBLAST")
-      || !stricmp(unk_CBF74, "SBPRO")
-      || !stricmp(unk_CBF74, "ADLIBG")
-      || !stricmp(unk_CBF74, "SB16FM")
-      || !stricmp(unk_CBF74, "GRAVIS")
-      || !stricmp(unk_CBF74, "PASFM")
-      || !stricmp(unk_CBF74, "COMPATIBLE") )
+    musicAvailable_939CC = 0;
+    musicOn_939CD = 0;
+  }
+  if ( musicAvailable_939CC )
+  {
+    if ( !stricmp(musicCard_CBF74, "ADLIB")
+      || !stricmp(musicCard_CBF74, "SBLAST")
+      || !stricmp(musicCard_CBF74, "SBPRO")
+      || !stricmp(musicCard_CBF74, "ADLIBG")
+      || !stricmp(musicCard_CBF74, "SB16FM")
+      || !stricmp(musicCard_CBF74, "GRAVIS")
+      || !stricmp(musicCard_CBF74, "PASFM")
+      || !stricmp(musicCard_CBF74, "COMPATIBLE") )
     {
-      sub_43B20_sub_43E60(0xA002u);
+      InitMusicDriver_43B20_43E60(0xA002u);
     }
-    else if ( !stricmp(unk_CBF74, "ROLAND") )
+    else if ( !stricmp(musicCard_CBF74, "ROLAND") )
     {
-      sub_43B20_sub_43E60(0xA004u);
+      InitMusicDriver_43B20_43E60(0xA004u);
     }
-    else if ( !stricmp(unk_CBF74, "SBAWE32") )
+    else if ( !stricmp(musicCard_CBF74, "SBAWE32") )
     {
-      sub_43B20_sub_43E60(0xA008u);
+      InitMusicDriver_43B20_43E60(0xA008u);
     }
-    else if ( !stricmp(unk_CBF74, "GENERAL") || !stricmp(unk_CBF74, "WBLAST") )
+    else if ( !stricmp(musicCard_CBF74, "GENERAL") || !stricmp(musicCard_CBF74, "WBLAST") )
     {
-      sub_43B20_sub_43E60(0xA001u);
+      InitMusicDriver_43B20_43E60(0xA001u);
     }
   }
 }
@@ -47328,9 +47382,9 @@ void sub_3C570()
 // 629CF: using guessed type _DWORD fscanf(_DWORD, _DWORD, ...);
 // 629F4: using guessed type _DWORD getenv(_DWORD);
 // 62ABD: using guessed type _DWORD sscanf(_DWORD, _DWORD, ...);
-// 939CC: using guessed type char byte_939CC;
-// 939CD: using guessed type char byte_939CD;
-// CBF70: using guessed type int dword_CBF70;
+// 939CC: using guessed type char musicAvailable_939CC;
+// 939CD: using guessed type char musicOn_939CD;
+// CBF70: using guessed type int musicPort_CBF70;
 
 //----- (0003C800) --------------------------------------------------------
 void sub_3C800_sub_3CB40()
@@ -53145,7 +53199,9 @@ void sub_43930_43C70(uint8* a1[8], unsigned int size)
 }
 
 //----- (00043B20) --------------------------------------------------------
-void sub_43B20_sub_43E60(unsigned int a2)
+/// Opens the music driver for card type a2 (0xA001 General MIDI, 0xA002 AdLib + INST.BNK / DRUM.BNK,
+/// 0xA004 Roland, 0xA008 AWE32), sets musicVariant_CBFEE and loads music set 0.
+void InitMusicDriver_43B20_43E60(unsigned int a2)
 {
   int v2; // eax
   char *v3; // eax
@@ -53186,24 +53242,18 @@ void sub_43B20_sub_43E60(unsigned int a2)
   byte_939D4 = 1;
   //fix sub_60199((int)&unk_A9608, __DS__);
   word_CBF48 = 0;
-  dword_CBF6C = dword_CBF70;
+  dword_CBF6C = musicPort_CBF70;
   dword_CBF44 = 0;
-  //fix
-  /*v2 = sub_6035F(
-         a2,
-         (unsigned int)&dword_CBF6C,
-         (unsigned __int16)__DS__,
-         (int)&unk_CBF40,
-         (unsigned __int16)__DS__,
-         (unsigned int)&dword_CBFDC);*/
+  // PORT: was MidiInitDriver_6035F (sosMIDIInitDriver for card a2); music goes to portability/port_music
+  PortMusic_Init(a2 == 0xA002u ? PortMusicDevice::AdLib : a2 == 0xA004u ? PortMusicDevice::MT32 : PortMusicDevice::GeneralMidi);
   if ( v2 )
   {
     v3 = sub_6378C(v2);
     printf("\nError : %s\n", v3);
     sub_60335();
     LOBYTE(v4) = sub_5D948();
-    byte_939CC = 0;
-    byte_939CD = 0;
+    musicAvailable_939CC = 0;
+    musicOn_939CD = 0;
   }
   else
   {
@@ -53212,16 +53262,16 @@ void sub_43B20_sub_43E60(unsigned int a2)
     {
       case 0xA001u:
         byte_CBFEF = 0;
-        byte_CBFEE = 2;
+        musicVariant_CBFEE = 2;
         break;
       case 0xA002u:
-        v5 = sub_43E50("data\\inst.bnk");
+        v5 = LoadFileAlloc_43E50("data\\inst.bnk");
         word_CBFEC = 0;
         dword_CBFE8 = (int)OFF(v5);
         if ( v5 )
         {
           v6 = 0;
-          v7 = sub_637D1(dword_CBFDC, (int)OFF(v5), 0, 1);
+          v7 = MidiSetInstruments_637D1(dword_CBFDC, (int)OFF(v5), 0, 1);
           if ( v7 )
           {
             v8 = sub_6378C(v7);
@@ -53230,15 +53280,18 @@ void sub_43B20_sub_43E60(unsigned int a2)
             sub_60335();
             sub_5D948();
             HIBYTE(v6) = 0;
-            byte_939CC = 0;
-            byte_939CD = 0;
+            musicAvailable_939CC = 0;
+            musicOn_939CD = 0;
           }
-          v9 = sub_43E50("data\\drum.bnk");
+          v9 = LoadFileAlloc_43E50("data\\drum.bnk");
           word_CBFE6 = v6;
           dword_CBFE2 = (int)OFF(v9);
           if ( v9 )
           {
-            v4 = sub_637D1(dword_CBFDC, (int)OFF(v9), v6, 1);
+            v4 = MidiSetInstruments_637D1(dword_CBFDC, (int)OFF(v9), v6, 1);
+            // PORT: MidiSetInstruments_637D1 (sosMIDISetInsData) is a stub; the AdLib synth takes the game's banks here
+            PortMusic_LoadBanks((uint8_t*)v5, GetRNCFilesize_63910_63E20((Pathstruct*)"data\\inst.bnk"),
+                                (uint8_t*)v9, GetRNCFilesize_63910_63E20((Pathstruct*)"data\\drum.bnk"));
             if ( v4 )
             {
               v10 = sub_6378C(v4);
@@ -53246,60 +53299,60 @@ void sub_43B20_sub_43E60(unsigned int a2)
               sub_6080C(dword_CBFDC, 1);
               sub_60335();
               LOBYTE(v4) = sub_5D948();
-              byte_939CC = 0;
-              byte_939CD = 0;
+              musicAvailable_939CC = 0;
+              musicOn_939CD = 0;
             }
-            if ( byte_939CC )
+            if ( musicAvailable_939CC )
             {
               byte_CBFEF = 1;
-              byte_CBFEE = 0;
+              musicVariant_CBFEE = 0;
             }
           }
           else
           {
             LOBYTE(v4) = printf("\nError : Unable to load drum.bnk.\n");
-            byte_939CC = 0;
-            byte_939CD = 0;
+            musicAvailable_939CC = 0;
+            musicOn_939CD = 0;
           }
         }
         else
         {
           LOBYTE(v4) = printf("\nError : Unable to load inst.bnk.\n");
-          byte_939CC = 0;
-          byte_939CD = 0;
+          musicAvailable_939CC = 0;
+          musicOn_939CD = 0;
         }
         break;
       case 0xA004u:
         byte_CBFEF = 0;
-        byte_CBFEE = 1;
+        musicVariant_CBFEE = 1;
         break;
       case 0xA008u:
         LOBYTE(v4) = 2;
         byte_CBFEF = 0;
-        byte_CBFEE = 2;
+        musicVariant_CBFEE = 2;
         break;
       default:
         break;
     }
-    if ( byte_939CC )
+    if ( musicAvailable_939CC )
     {
-      v4 = sub_5CEF0_5D400(0);
+      v4 = LoadMusicSet_5CEF0_5D400(0);
       if ( v4 )
       {
         printf("\nError opening music files\n");
         sub_6080C(dword_CBFDC, 1);
         sub_60335();
         LOBYTE(v4) = sub_5D948();
-        byte_939CC = 0;
-        byte_939CD = 0;
+        musicAvailable_939CC = 0;
+        musicOn_939CD = 0;
       }
     }
   }
 }
 // 43D1D: conditional instruction was optimized away because dx.2==0
 // 5CC03: using guessed type _DWORD printf(const char *, ...);
-// 939CC: using guessed type char byte_939CC;
-// 939CD: using guessed type char byte_939CD;
+// 939CC: using guessed type char musicAvailable_939CC;
+// 939CD: using guessed type char musicOn_939CD;
 // 939D4: using guessed type char byte_939D4;
 // 9EBDD: using guessed type char byte_9EBDD;
 // 9EBE7: using guessed type char byte_9EBE7;
@@ -53325,17 +53378,18 @@ void sub_43B20_sub_43E60(unsigned int a2)
 // CBF44: using guessed type int dword_CBF44;
 // CBF48: using guessed type __int16 word_CBF48;
 // CBF6C: using guessed type int dword_CBF6C;
-// CBF70: using guessed type int dword_CBF70;
+// CBF70: using guessed type int musicPort_CBF70;
 // CBFDC: using guessed type int dword_CBFDC;
 // CBFE2: using guessed type int dword_CBFE2;
 // CBFE6: using guessed type __int16 word_CBFE6;
 // CBFE8: using guessed type int dword_CBFE8;
 // CBFEC: using guessed type __int16 word_CBFEC;
-// CBFEE: using guessed type char byte_CBFEE;
+// CBFEE: using guessed type char musicVariant_CBFEE;
 // CBFEF: using guessed type char byte_CBFEF;
 
 //----- (00043E50) --------------------------------------------------------
-char *sub_43E50(const char *a1)
+/// Allocates a buffer of the (unpacked) size of file a1 and loads the file into it; 0 on failure.
+char *LoadFileAlloc_43E50(const char *a1)
 {
   char *v1; // esi
   int v2; // ebp
@@ -53570,7 +53624,7 @@ LABEL_63:
           (unsigned int)&dword_CC140);*/
   if ( !v10 )
   {
-    result = sub_5D97B((unsigned __int16)word_CC1C4, dword_93A60, word_93A64, (unsigned int)OFF(&dword_CC148));
+    result = RegisterTimerEvent_5D97B((unsigned __int16)word_CC1C4, dword_93A60, word_93A64, (unsigned int)OFF(&dword_CC148));
     if ( !(_WORD)result )
       return;
     v12 = sub_6378C((unsigned __int16)result);
@@ -54468,12 +54522,12 @@ void sub_455D0_45910(Type_AE400_29795* a1x)//2165D0_
     v28 = a1x->var_u32_29955_160->v_46;
     if ( v28 <= 0 )
     {
-      sub_20D00(1);
+      UpdateDangerMusic_20D00(1);
     }
     else
     {
         a1x->var_u32_29955_160->v_46 = v28 - 1;
-      sub_20D00(2);
+      UpdateDangerMusic_20D00(2);
     }
   }
   if ( (a1x->var_u8_29858_63 & 0x3F) == 0 )
@@ -57102,7 +57156,7 @@ void sub_4AB20_4AE60()//21BB20_21BE60
       break;
   }
   ++dword_12CBB0_12CBA0;
-  sub_65E00_66310();
+  RestartMusicIfDone_65E00_66310();
   if (bool_96880)
   {
     sub_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreenssptrsdat]);
@@ -57111,7 +57165,7 @@ void sub_4AB20_4AE60()//21BB20_21BE60
     else
       sub_411FD_4153D((void *)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, 0x1E0u, 0);
     bool_12CA7C_12CA6C = true;
-    sub_20E60_20E60();
+    StopMusic_20E60_20E60();
   }
 }
 
@@ -57937,7 +57991,7 @@ LABEL_79:
         {
           mainMenuSelector_12CBCE_12CBBE = 8;
           byte_12CBD6_12CBC6 |= 2u;
-          sub_20E60_20E60();
+          StopMusic_20E60_20E60();
         }
         else if ( byte_12CBD4_12CBC4 == 2 )
         {
@@ -57958,7 +58012,7 @@ LABEL_79:
       {
         mainMenuSelector_12CBCE_12CBBE = 0;
         byte_12CBD6_12CBC6 |= 1u;
-        sub_20E60_20E60();
+        StopMusic_20E60_20E60();
       }
       v14 = (int)OFF(begWscreen_2ECFF4_2ECFE4);
       if ( ++byte_12CBD4_12CBC4 == 3 )
@@ -58135,7 +58189,7 @@ void sub_4C7E0_4CB20()
   sub_10010(320, 0);
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
   sub_5D070_5D580(0xDu);
-  sub_5CEF0_5D400(0);
+  LoadMusicSet_5CEF0_5D400(0);
   sub_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreensmmsprdat]);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     sub_65D70_66280(begMmSprTab_12CB04_2EAB04_2EAAF4, endMmSprTab_12CB08_2EAB08_2EAAF8, begMmSprDat_12CB0C_2EAB0C_2EAAFC);
@@ -58181,7 +58235,7 @@ void sub_4C7E0_4CB20()
   byte_12CAE4_12CAD4 &= 0xBEu;
   dword_12CBB4_12CBA4 = dword_AC5D4_AC5C4;
   FlvInitSet_356E0_35AA0();
-  sub_5D290_5D7A0(4);
+  PlayMusicTrack_5D290_5D7A0(4);
   if ( (byte_12CBD6_12CBC6 & 4) != 0 )
   {
     v3 = (void *)PTR(dword_AE400_AE3F0() + 15318);
@@ -58515,7 +58569,7 @@ void sub_4D3B0_4D6F0()//21E3B0_
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
   sub_24BB0();
   sub_5D010_5D520();
-  sub_20E60_20E60();
+  StopMusic_20E60_20E60();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
@@ -58562,7 +58616,7 @@ void sub_4D560_4D8A0()
   PlayInfoFmv_107C0_107C0(0, 1, (int)OFF(dword_4A638_4A978));
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
   sub_5D010_5D520();
-  sub_20E60_20E60();
+  StopMusic_20E60_20E60();
   v1 = str_AE400_AE3F0->var_u16_8;
   bool_96880 = true;
   *(_BYTE *)PTR(dword_AE400_AE3F0() + 2049 * v1 + 13327) = 1;
@@ -58948,7 +59002,7 @@ char sub_4E0E0_4E420()
   char result; // al
 
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
-  sub_20E60_20E60();
+  StopMusic_20E60_20E60();
   sub_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenspmultsprdat]);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     sub_65D70_66280(begPMultSprTab_12CB10_2EAB10_2EAB00, endPMultSprTab_12CB14_2EAB14_2EAB04, begPMultSprDat_12CB18_2EAB18_2EAB08);
@@ -58992,7 +59046,7 @@ void sub_4E270_4E5B0()
   sub_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreenspmultsprdat]);
   byte_12CBD5_12CBC5 &= ~1u;
   if ( mainMenuSelector_12CBCE_12CBBE == 2 )
-    sub_5D290_5D7A0(4);
+    PlayMusicTrack_5D290_5D7A0(4);
 }
 // 4E2AA: variable 'v0' is possibly undefined
 // 90B23: using guessed type char byte_90B23;
@@ -59185,7 +59239,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
       }
       FadeInOut_61CC0_621D0(0, 0x10u, 0);
       sub_5D010_5D520();
-      sub_20E60_20E60();
+      StopMusic_20E60_20E60();
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
         sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
       else
@@ -59196,8 +59250,8 @@ int ShowLevelPerformance_4E5B0_4E8F0()
         Blit_599B0_59EC0(480);
     }
     sub_5D070_5D580(0xDu);
-    sub_5CEF0_5D400(0);
-    sub_5D290_5D7A0(1);
+    LoadMusicSet_5CEF0_5D400(0);
+    PlayMusicTrack_5D290_5D7A0(1);
     word_12EFDA_12EFCA = 0;
     mouseRightButton_12EFDC_12EFCC = 0;
     mouseLeftButton_12EFDE_12EFCE = 0;
@@ -59336,7 +59390,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
     while ( !v0 );
     sub_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreenssfont2dat]);
     FadeInOut_61CC0_621D0(0, 0x10u, 0);
-    sub_20E60_20E60();
+    StopMusic_20E60_20E60();
     sub_5D010_5D520();
   }
   result = dword_AE408_AE3F8();
@@ -59377,7 +59431,7 @@ void sub_4EE70_4F1B0()//21FE70_
   sub_4B480_4B7C0(0, 8);
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
   sub_5D010_5D520();
-  sub_20E60_20E60();
+  StopMusic_20E60_20E60();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
@@ -59423,7 +59477,7 @@ void sub_4EFC0_4F300()
     sub_4B480_4B7C0(0, 1);
     FadeInOut_61CC0_621D0(0, 0x10u, 0);
     sub_5D010_5D520();
-    sub_20E60_20E60();
+    StopMusic_20E60_20E60();
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
     else
@@ -59522,7 +59576,7 @@ void sub_4F1E0_4F520()
   dword_12CBB0_12CBA0 = 0;
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
   sub_5D010_5D520();
-  sub_20E60_20E60();
+  StopMusic_20E60_20E60();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
@@ -63949,8 +64003,8 @@ int sub_55960()
 
   if ( byte_968E1 )
   {
-    sub_5DC91(dword_80120);
-    sub_20E60_20E60();
+    RemoveTimerEvent_5DC91(dword_80120);
+    StopMusic_20E60_20E60();
     result = sub_5F83E(127);
     byte_968E0 = 127;
     byte_968E1 = 0;
@@ -68833,12 +68887,13 @@ void Blit_5CDA0_5D2B0()
 // 12EFF4: using guessed type int dword_12EFF4;
 
 //----- (0005CEF0) --------------------------------------------------------
-int sub_5CEF0_5D400(unsigned __int16 a1)
+/// Loads DATA/MUSIC<a1>-<musicVariant_CBFEE>.DAT/.TAB (set 0: levels and menu, 1: intro); 0 on success.
+int LoadMusicSet_5CEF0_5D400(unsigned __int16 a1)
 {
-  if ( !byte_939CC )
+  if ( !musicAvailable_939CC )
     return 1;
-  sprintf(pathStrArray_258E00[PS25datamusic00dat].path, (char*)"data/music%d-%d.dat", a1, (unsigned __int8)byte_CBFEE);
-  sprintf(pathStrArray_258E00[PS25datamusic00tab].path, "data/music%d-%d.tab", a1, (unsigned __int8)byte_CBFEE);
+  sprintf(pathStrArray_258E00[PS25datamusic00dat].path, (char*)"data/music%d-%d.dat", a1, (unsigned __int8)musicVariant_CBFEE);
+  sprintf(pathStrArray_258E00[PS25datamusic00tab].path, "data/music%d-%d.tab", a1, (unsigned __int8)musicVariant_CBFEE);
   if ( sub_634E0_639F0(&pathStrArray_258E00[PS25datamusic00dat]) != 1 )
     return 1;
   if ( sub_634E0_639F0(&pathStrArray_258E00[PS25datamusic00tab]) != 1 )
@@ -68846,37 +68901,39 @@ int sub_5CEF0_5D400(unsigned __int16 a1)
     sub_634A0_639B0(&pathStrArray_258E00[PS25datamusic00dat]);
     return 1;
   }
-  sub_5CFA4();
+  FixMusicTabOffsets_5CFA4();
   return 0;
 }
 // 60CAC: using guessed type _DWORD sprintf(_DWORD, _DWORD, ...);
-// 939CC: using guessed type char byte_939CC;
-// CBFEE: using guessed type char byte_CBFEE;
+// 939CC: using guessed type char musicAvailable_939CC;
+// CBFEE: using guessed type char musicVariant_CBFEE;
 
 //----- (0005CFA4) --------------------------------------------------------
-unsigned int sub_5CFA4()
+/// Makes the song offsets (+18) of the 32-byte TAB entries absolute (+ musicData_CBF68) and counts the songs
+/// into musicTrackCount_939D6.
+unsigned int FixMusicTabOffsets_5CFA4()
 {
   unsigned int result; // eax
   unsigned int v1; // [esp+0h] [ebp-4h]
 
-  if ( dword_CBF60 && dword_CBF68 )
+  if ( musicTab_CBF60 && musicData_CBF68 )
   {
-    v1 = dword_CBF60 + 32;
-    for ( word_939D6 = 0; ; ++word_939D6 )
+    v1 = musicTab_CBF60 + 32;
+    for ( musicTrackCount_939D6 = 0; ; ++musicTrackCount_939D6 )
     {
       result = v1;
-      if ( v1 >= dword_CBF64 )
+      if ( v1 >= musicTabEnd_CBF64 )
         break;
-      *(_DWORD *)PTR(v1 + 18) += dword_CBF68;
+      *(_DWORD *)PTR(v1 + 18) += musicData_CBF68;
       v1 += 32;
     }
   }
   return result;
 }
-// 939D6: using guessed type __int16 word_939D6;
-// CBF60: using guessed type int dword_CBF60;
-// CBF64: using guessed type int dword_CBF64;
-// CBF68: using guessed type int dword_CBF68;
+// 939D6: using guessed type __int16 musicTrackCount_939D6;
+// CBF60: using guessed type int musicTab_CBF60;
+// CBF64: using guessed type int musicTabEnd_CBF64;
+// CBF68: using guessed type int musicData_CBF68;
 
 //----- (0005D010) --------------------------------------------------------
 void sub_5D010_5D520()
@@ -68983,7 +69040,9 @@ int sub_5D230_5D740(int a1, int a2, int a3)
 // 9AF14: using guessed type int dword_9AF14;
 
 //----- (0005D290) --------------------------------------------------------
-void sub_5D290_5D7A0(__int16 a1)
+/// Plays song a1 of the loaded music set (TAB entry a1: +18 data, +26 length) unless it is already playing;
+/// stops and unloads the current one first. Needs music available and on.
+void PlayMusicTrack_5D290_5D7A0(__int16 a1)
 {
   int v1; // edx
   char *v2; // eax
@@ -68995,42 +69054,37 @@ void sub_5D290_5D7A0(__int16 a1)
   v4 = 0;
   //fix
 
-  if ( byte_939CC && byte_939CD && a1 <= (int)(unsigned __int16)word_939D6 && (unsigned __int16)word_939D2 != a1 )
+  if ( musicAvailable_939CC && musicOn_939CD && a1 <= (int)(unsigned __int16)musicTrackCount_939D6 && (unsigned __int16)musicTrack_939D2 != a1 )
   {
-    if ( word_939D2 )
+    if ( musicTrack_939D2 )
     {
-      if ( !sub_5D7F0_5DD00(dword_CBFD8_CBFC8) )
-        sub_5F420(dword_CBFD8_CBFC8);
-      sub_5F355(dword_CBFD8_CBFC8);
-      sub_6091D(dword_CBFDC);
+      if ( !MidiSongDone_5D7F0_5DD00(dword_CBFD8_CBFC8) )
+        MidiStopSong_5F420(dword_CBFD8_CBFC8);
+      MidiUnloadSong_5F355(dword_CBFD8_CBFC8);
+      MidiResetChannels_6091D(dword_CBFDC);
       if ( byte_9AF9C )
-        sub_6091D(dword_12F074);
-      word_939D2 = 0;
+        MidiResetChannels_6091D(dword_12F074);
+      musicTrack_939D2 = 0;
     }
-    v1 = *(_DWORD *)PTR(dword_CBF60 + 32 * a1 + 18);
+    v1 = *(_DWORD *)PTR(musicTab_CBF60 + 32 * a1 + 18);
     //fix word_12F034 = __DS__;
     dword_12F030 = v1;
     word_12F03C = 0;
     dword_12F038 = 0;
-    //fix
-    /*
-    v4 = sub_5EE22(
-           (unsigned int)&dword_12F030,
-           (unsigned __int16)__DS__,
-           (int)&unk_9AF18,
-           __DS__,
-           (unsigned int)&dword_CBFD8_CBFC8);*/
+    // PORT: was MidiLoadSong_5EE22 (sosMIDIInitSong with the song at dword_12F030); the song (TAB entry: +18 data,
+    // +26 length) goes to portability/port_music
+    PortMusic_Load(PTR(v1), *(uint32_t*)PTR(musicTab_CBF60 + 32 * a1 + 26));
     if ( v4 )
     {
       v2 = sub_6378C(v4);
       printf("\nError : %s", v2);
       sub_6080C(dword_CBFDC, 1);
       sub_60335();
-      byte_939CC = 0;
+      musicAvailable_939CC = 0;
     }
     else
     {
-      v5 = sub_5F398(dword_CBFD8_CBFC8);
+      v5 = MidiStartSong_5F398(dword_CBFD8_CBFC8);
       if ( v5 )
       {
         v3 = sub_6378C(v5);
@@ -69042,19 +69096,19 @@ void sub_5D290_5D7A0(__int16 a1)
       {
         sub_5EDD6(0);
         word_939D0 = 100;
-        word_939D2 = a1;
+        musicTrack_939D2 = a1;
       }
     }
   }
 }
 // 5CC03: using guessed type _DWORD printf(const char *, ...);
-// 939CC: using guessed type char byte_939CC;
-// 939CD: using guessed type char byte_939CD;
+// 939CC: using guessed type char musicAvailable_939CC;
+// 939CD: using guessed type char musicOn_939CD;
 // 939D0: using guessed type __int16 word_939D0;
-// 939D2: using guessed type __int16 word_939D2;
-// 939D6: using guessed type __int16 word_939D6;
+// 939D2: using guessed type __int16 musicTrack_939D2;
+// 939D6: using guessed type __int16 musicTrackCount_939D6;
 // 9AF9C: using guessed type char byte_9AF9C;
-// CBF60: using guessed type int dword_CBF60;
+// CBF60: using guessed type int musicTab_CBF60;
 // CBFD8: using guessed type int dword_CBFD8_CBFC8;
 // CBFDC: using guessed type int dword_CBFDC;
 // 12F030: using guessed type int dword_12F030;
@@ -69213,9 +69267,11 @@ void sub_5D7DF()
 }
 
 //----- (0005D7F0) --------------------------------------------------------
-bool sub_5D7F0_5DD00(int a1)
+/// HMI MIDI driver: 1 when song a1 has played to its end. The port drives this from timer ticks.
+bool MidiSongDone_5D7F0_5DD00(int a1)
 {
-  return dword_9C136[a1] == 0;
+  // PORT: the HMI MIDI driver (hmimdrv.386) is replaced by portability/port_music (sosMIDISongDone)
+  return !PortMusic_IsPlaying();
 }
 // 9C136: using guessed type int dword_9C136[8];
 
@@ -69289,7 +69345,9 @@ int sub_5D948()
 // A01C4: using guessed type int dword_A01C4;
 
 //----- (0005D97B) --------------------------------------------------------
-int sub_5D97B(unsigned int a1, int a2, __int16 a3, unsigned int a4)
+/// HMI timer: registers callback a2 at a1 Hz in a free slot of the 16-entry table byte_A03A1 and returns the
+/// slot through a4; 11 if the table is full. The port uses PortTimer_AddEvent.
+int RegisterTimerEvent_5D97B(unsigned int a1, int a2, __int16 a3, unsigned int a4)
 {
   int v4; // edx
   unsigned int v7; // [esp+4h] [ebp-8h]
@@ -69383,7 +69441,8 @@ int sub_5DB1D(unsigned int a1, unsigned int a2)
 // A0481: using guessed type int dword_A0481[];
 
 //----- (0005DC91) --------------------------------------------------------
-int sub_5DC91(int a1)
+/// HMI timer: clears timer event slot a1 (port: PortTimer_RemoveEvent).
+int RemoveTimerEvent_5DC91(int a1)
 {
   int v1; // eax
   unsigned int v3; // [esp+4h] [ebp-8h]
@@ -69916,9 +69975,12 @@ int sub_5E9C1(int a1)
 // 9EBC9: using guessed type int dword_9EBC9;
 
 //----- (0005EDA0) --------------------------------------------------------
-int sub_5EDA0(int a1, int a2, unsigned __int16 a3, int a4)
+/// HMI MIDI driver: sends raw MIDI bytes (a2, a4 bytes) to driver a1 - the danger-music volume changes.
+/// The port forwards them to port_music.
+int MidiSendData_5EDA0(int a1, int a2, unsigned __int16 a3, int a4)
 {
-  //fix MK_FP(*(_WORD *)&byte_9C062[36 * a1 + 4], *(_DWORD *)&byte_9C062[36 * a1])(a2, a3, a4, a1);
+  // PORT: the HMI MIDI driver (hmimdrv.386) is replaced by portability/port_music (sosMIDISendMIDIData)
+  PortMusic_SendMidi(PTR(a2), a4);
   return 0;
 }
 
@@ -69946,7 +70008,8 @@ void sub_5EE11()
 }
 
 //----- (0005EE22) --------------------------------------------------------
-int sub_5EE22(unsigned int a1, int a2, int a3, __int16 a4, unsigned int a5)
+/// HMI MIDI driver: prepares an HMP song for playing (the port loads songs with PortMusic_Load instead).
+int MidiLoadSong_5EE22(unsigned int a1, int a2, int a3, __int16 a4, unsigned int a5)
 {
   unsigned __int64 v5; // rax
   int v6; // ebx
@@ -70084,144 +70147,42 @@ LABEL_38:
 // 5EE22: using guessed type unsigned int arg_0;
 
 //----- (0005F355) --------------------------------------------------------
-int sub_5F355(unsigned int a1)
+/// HMI MIDI driver: releases song a1 (always called after MidiStopSong_5F420 when the track changes).
+int MidiUnloadSong_5F355(unsigned int a1)
 {
-  int v1; // eax
-
-  if ( a1 >= 8 )
-    return 10;
-  v1 = 6 * a1;
-  *(_WORD *)&byte_9C176[v1 + 4] = 0;
-  *(_DWORD *)&byte_9C176[v1] = 0;
+  // PORT: the HMI MIDI driver (hmimdrv.386) is replaced by portability/port_music (sosMIDIUnInitSong)
+  PortMusic_Stop();
   return 0;
 }
 
 //----- (0005F398) --------------------------------------------------------
-int sub_5F398(int a1)
+/// HMI MIDI driver: starts (or resumes) song a1.
+int MidiStartSong_5F398(int a1)
 {
-  int v3; // [esp+4h] [ebp-4h]
-
-  //fix
-  v3 = 0;
-  //fix
-
-  //fix
-  /*
-  v3 = sub_5D97B(
-         port_readgsdword(*(_DWORD *)&byte_9C176[6 * a1] + 56),
-         (int)sub_66F3C,
-         __CS__,
-         (unsigned int)&dword_9C1A6[a1]);*/
-  if ( v3 )
-    return v3;
-  byte_A04C1[dword_9C1A6[a1]] = a1;
-  dword_9C136[a1] = 1;
+  // PORT: the HMI MIDI driver (hmimdrv.386) is replaced by portability/port_music (sosMIDIStartSong)
+  PortMusic_Start();
   return 0;
 }
 // 9C136: using guessed type int dword_9C136[8];
 // 9C1A6: using guessed type int dword_9C1A6[8];
 
 //----- (0005F420) --------------------------------------------------------
-int sub_5F420(unsigned int a1)
+/// HMI MIDI driver: stops song a1 (called only while it still plays).
+int MidiStopSong_5F420(unsigned int a1)
 {
-  int v1; // edx
-  int v2; // eax
-  int v4; // [esp+0h] [ebp-14h] BYREF
-  __int16 v5; // [esp+4h] [ebp-10h]
-  unsigned int v6; // [esp+8h] [ebp-Ch]
-  unsigned __int16 v7; // [esp+Ch] [ebp-8h]
-
-  if ( a1 >= 8 )
-    return 10;
-  if ( dword_9C1A6[a1] != -1 )
-    sub_5DC91(dword_9C1A6[a1]);
-  byte_A04C1[dword_9C1A6[a1]] = -1;
-  dword_9C1A6[a1] = -1;
-  if ( dword_9C136[a1] )
-  {
-    v5 = *(_WORD *)&byte_9C176[6 * a1 + 4];
-    v4 = *(_DWORD *)&byte_9C176[6 * a1];
-    v1 = *(_DWORD *)&byte_9C176[6 * a1];
-    v7 = port_readgsword(v1 + 772);
-    v6 = port_readgsdword(v1 + 768);
-    sub_5E9C1(a1);
-    dword_9C136[a1] = 0;
-    v2 = 6 * a1;
-    *(_WORD *)&byte_9C176[v2 + 4] = 0;
-    *(_DWORD *)&byte_9C176[v2] = 0;
-    sub_5F529(a1, (unsigned int)OFF(&v4));
-  }
+  // PORT: the HMI MIDI driver (hmimdrv.386) is replaced by portability/port_music (sosMIDIStopSong)
+  PortMusic_Stop();
   return 0;
 }
 // 9C136: using guessed type int dword_9C136[8];
 // 9C1A6: using guessed type int dword_9C1A6[8];
 
 //----- (0005F529) --------------------------------------------------------
-int sub_5F529(int a1, unsigned int a2)
+/// HMI MIDI driver: rewinds song a1 to its start (followed by MidiStartSong_5F398 to restart it).
+int MidiRewindSong_5F529(int a1, unsigned int a2)
 {
-  unsigned __int64 v2; // rax
-  int v3; // ebx
-  unsigned int v4; // ebx
-  unsigned __int64 v5; // rax
-  int v6; // ebx
-  unsigned __int64 v7; // rax
-  int v8; // ebx
-  int v9; // ebx
-  int v10; // eax
-  int v12; // [esp+8h] [ebp-20h]
-  int v13; // [esp+10h] [ebp-18h]
-  __int16 v14; // [esp+14h] [ebp-14h]
-  int v15; // [esp+20h] [ebp-8h]
-  unsigned int i; // [esp+24h] [ebp-4h]
-  unsigned int j; // [esp+24h] [ebp-4h]
-
-  v15 = 0;
-  v2 = sub_66EF6(port_readgsdword(a2), port_readgsword(a2 + 4));
-  v3 = v2;
-  LODWORD(v2) = 6 * a1;
-  *(_WORD *)&byte_9C176[v2 + 4] = WORD2(v2);
-  *(_DWORD *)&byte_9C176[v2] = v3;
-  v14 = *(_WORD *)&byte_9C176[6 * a1 + 4];
-  v13 = *(_DWORD *)&byte_9C176[6 * a1] + 776;
-  dword_9C022[a1] = port_readgsdword(*(_DWORD *)&byte_9C176[6 * a1] + 48);
-  dword_9C042[a1] = dword_9C022[a1];
-  LODWORD(v2) = *(_DWORD *)&byte_9C176[6 * a1];
-  v4 = port_readgsdword(a2 + 8);
-  port_writegsword(v2 + 772, port_readgsword(a2 + 12));
-  port_writegsdword(v2 + 768, v4);
-  for ( i = 0; i < dword_9C022[a1]; ++i )
-  {
-    dword_9BBF2[32 * a1 + i] = 0;
-    v5 = sub_66EF6(v15 + v13, v14);
-    v6 = v5;
-    LODWORD(v5) = 6 * i + 192 * a1;
-    *(__int16 *)((char *)&word_9D993 + (int)v5) = WORD2(v5); // PORT: low dword only (as 32-bit pointer arithmetic)
-    *(int *)((char *)dword_9D98F + (int)v5) = v6;
-    v7 = sub_66EF6(v13 + v15 + 12, v14);
-    v8 = v7;
-    LODWORD(v7) = 192 * a1 + 6 * i;
-    *(_WORD *)&byte_9B1F2[v7 + 4] = WORD2(v7);
-    *(_DWORD *)&byte_9B1F2[v7] = v8;
-    v9 = v7;
-    v12 = sub_5F7C7(
-            *(_DWORD *)&byte_9B1F2[v7],
-            *(unsigned __int16 *)&byte_9B1F2[v7 + 4],
-            (unsigned int)OFF(&dword_9B7F2[32 * a1 + i]))
-        + *(_DWORD *)&byte_9B1F2[v9];
-    *(_WORD *)&byte_9B1F2[v9 + 4] = *(_WORD *)&byte_9B1F2[v9 + 4];
-    *(_DWORD *)&byte_9B1F2[v9] = v12;
-    v15 += port_readgsdword(sub_66EF6(v15 + v13, v14) + 4);
-  }
-  for ( j = 0; j < dword_9C042[a1]; ++j )
-  {
-    if ( port_readgsdword(*(int *)((char *)&dword_9BFF2 + 6 * a1) + 4 * j) == 255 )
-    {
-      v10 = 192 * a1 + 6 * j;
-      *(_WORD *)&byte_9B1F2[v10 + 4] = 0;
-      *(_DWORD *)&byte_9B1F2[v10] = 0;
-      --dword_9C022[a1];
-    }
-  }
+  // PORT: the HMI MIDI driver (hmimdrv.386) is replaced by portability/port_music (sosMIDIResetSong)
+  PortMusic_Rewind();
   return 0;
 }
 // 9B7F2: using guessed type int dword_9B7F2[256];
@@ -70508,7 +70469,8 @@ int sub_60335()
 // 9C22A: using guessed type int dword_9C22A;
 
 //----- (0006035F) --------------------------------------------------------
-int sub_6035F(unsigned int a1, unsigned int a2, int a3, int a4, int a5, unsigned int a6)
+/// HMI MIDI driver: opens the driver for the music card (replaced by PortMusic_Init in InitMusicDriver_43B20_43E60).
+int MidiInitDriver_6035F(unsigned int a1, unsigned int a2, int a3, int a4, int a5, unsigned int a6)
 {
   int v6; // ecx
   unsigned int v7; // edx
@@ -70776,7 +70738,9 @@ LABEL_14:
 // 9EF0C: using guessed type int dword_9EF0C;
 
 //----- (0006091D) --------------------------------------------------------
-int sub_6091D(int a1)
+/// HMI MIDI driver: resets all controllers (CC 121) and silences all notes (CC 123) on the 16 channels of
+/// driver a1.
+int MidiResetChannels_6091D(int a1)
 {
   unsigned int i; // [esp+8h] [ebp-4h]
 
@@ -70803,6 +70767,7 @@ int sub_6091D(int a1)
       3,
       a1);*/
   }
+  PortMusic_ResetChannels(); // PORT: the driver calls above, done by portability/port_music
   //fix
   /*
   MK_FP(*(_WORD *)&byte_9C074[36 * a1 + 4], *(_DWORD *)&byte_9C074[36 * a1])(
@@ -72362,15 +72327,15 @@ void sub_61F90()
     while ( sub_559A0() )
       ;
     sub_661A4(dword_CC140, 0);
-    sub_5DC91(dword_CC148);
-    if ( !byte_939CC )
+    RemoveTimerEvent_5DC91(dword_CC148);
+    if ( !musicAvailable_939CC )
       sub_5D948();
     sub_64F78(dword_CC140, 1, 1);
     sub_6481C();
     sub_61610_61B20(&pathStrArray_258E00[PS25datasnds00dat]);
   }
 }
-// 939CC: using guessed type char byte_939CC;
+// 939CC: using guessed type char musicAvailable_939CC;
 // 939E4: using guessed type char byte_939E4;
 // CC140: using guessed type int dword_CC140;
 // CC148: using guessed type int dword_CC148;
@@ -72378,16 +72343,16 @@ void sub_61F90()
 //----- (00062020) --------------------------------------------------------
 void sub_62020()
 {
-  if ( byte_939CC )
+  if ( musicAvailable_939CC )
   {
-    if ( word_939D2 )
+    if ( musicTrack_939D2 )
     {
-      sub_5F420(dword_CBFD8_CBFC8);
-      sub_5F355(dword_CBFD8_CBFC8);
-      sub_6091D(dword_CBFDC);
+      MidiStopSong_5F420(dword_CBFD8_CBFC8);
+      MidiUnloadSong_5F355(dword_CBFD8_CBFC8);
+      MidiResetChannels_6091D(dword_CBFDC);
     }
     if ( byte_9AF9C )
-      sub_6091D(dword_12F074);
+      MidiResetChannels_6091D(dword_12F074);
     sub_6080C(dword_CBFDC, 1);
     if ( byte_9AF9C )
       sub_6080C(dword_12F074, 1);
@@ -72403,8 +72368,8 @@ void sub_62020()
     sub_61610_61B20(&pathStrArray_258E00[PS25datamusic00dat]);
   }
 }
-// 939CC: using guessed type char byte_939CC;
-// 939D2: using guessed type __int16 word_939D2;
+// 939CC: using guessed type char musicAvailable_939CC;
+// 939D2: using guessed type __int16 musicTrack_939D2;
 // 9AF9C: using guessed type char byte_9AF9C;
 // CBFD8: using guessed type int dword_CBFD8_CBFC8;
 // CBFDC: using guessed type int dword_CBFDC;
@@ -73928,7 +73893,9 @@ void sub_637C0()
 }
 
 //----- (000637D1) --------------------------------------------------------
-int sub_637D1(int a1, int a2, unsigned __int16 a3, int a4)
+/// HMI MIDI driver: hands an instrument bank (INST.BNK / DRUM.BNK) to the FM driver; a stub in the port, which
+/// passes the banks to PortMusic_LoadBanks.
+int MidiSetInstruments_637D1(int a1, int a2, unsigned __int16 a3, int a4)
 {
   //fix MK_FP(byte_9C07A[9 * a1 + 1], byte_9C07A[9 * a1])(a2, a3, a1, a4);
   return 0;
@@ -74653,17 +74620,18 @@ void sub_65DC0_662D0(TypeTab* a1, TypeTab* a2, uint8_t* a3)
 }
 
 //----- (00065E00) --------------------------------------------------------
-void sub_65E00_66310()
+/// Restarts the current song when it has played to its end (songs loop this way).
+void RestartMusicIfDone_65E00_66310()
 {
-  if ( byte_939CC && byte_939CD && word_939D2 && sub_5D7F0_5DD00(dword_CBFD8_CBFC8) )
+  if ( musicAvailable_939CC && musicOn_939CD && musicTrack_939D2 && MidiSongDone_5D7F0_5DD00(dword_CBFD8_CBFC8) )
   {
-    sub_5F529(dword_CBFD8_CBFC8, (unsigned int)OFF(&dword_12F030));
-    sub_5F398(dword_CBFD8_CBFC8);
+    MidiRewindSong_5F529(dword_CBFD8_CBFC8, (unsigned int)OFF(&dword_12F030));
+    MidiStartSong_5F398(dword_CBFD8_CBFC8);
   }
 }
-// 939CC: using guessed type char byte_939CC;
-// 939CD: using guessed type char byte_939CD;
-// 939D2: using guessed type __int16 word_939D2;
+// 939CC: using guessed type char musicAvailable_939CC;
+// 939CD: using guessed type char musicOn_939CD;
+// 939D2: using guessed type __int16 musicTrack_939D2;
 // CBFD8: using guessed type int dword_CBFD8_CBFC8;
 // 12F030: using guessed type int dword_12F030;
 
@@ -75295,7 +75263,7 @@ LABEL_28:
   dword_9C136[(unsigned __int8)byte_A04D1] = 0;
   sub_5E9C1((unsigned __int8)byte_A04D1);
   if ( dword_9C1A6[(unsigned __int8)byte_A04D1] != -1 )
-    sub_5DC91(dword_9C1A6[(unsigned __int8)byte_A04D1]);
+    RemoveTimerEvent_5DC91(dword_9C1A6[(unsigned __int8)byte_A04D1]);
   byte_A04C1[dword_9C1A6[(unsigned __int8)byte_A04D1]] = -1;
   dword_9C1A6[(unsigned __int8)byte_A04D1] = -1;
   v5 = *(_DWORD *)&byte_9C176[6 * (unsigned __int8)byte_A04D1];
@@ -75308,7 +75276,7 @@ LABEL_28:
   v16 = v18[0];
   *(_WORD *)&byte_9C176[v6 + 4] = 0;
   *(_DWORD *)&byte_9C176[v6] = 0;
-  sub_5F529((unsigned __int8)byte_A04D1, (unsigned int)OFF(&v14));
+  MidiRewindSong_5F529((unsigned __int8)byte_A04D1, (unsigned int)OFF(&v14));
   if (v18[0] || LOWORD(v18[1]))
       ;//fix MK_FP(v18[1], v18[0])((unsigned __int8)byte_A04D1);
   return 0;//fix MK_FP(retaddr[0], retaddr[0])();
@@ -75759,7 +75727,7 @@ int sub_67D9D(int a1, int a2, unsigned int a3, int a4, int a5)
         0;//fix return MK_FP(retaddr[0], retaddr[0])(v7);
     dword_9D922[a5] = v8;
     v6 = port_readgsdword(a3 + 20);
-    v7 = sub_5D97B(port_readgsdword(a3 + 4), port_readgsdword(v6 + 28), port_readgsword(v6 + 32), (unsigned int)OFF(&dword_9D94A[a5]));
+    v7 = RegisterTimerEvent_5D97B(port_readgsdword(a3 + 4), port_readgsdword(v6 + 28), port_readgsword(v6 + 32), (unsigned int)OFF(&dword_9D94A[a5]));
     if (v7)
         return 0;//fix MK_FP(retaddr[0], retaddr[0])(v7);
     dword_9D936[a5] = 1;
@@ -75790,7 +75758,7 @@ int sub_67F1C(int a1, int a2, int a3)
     if ( dword_9D95E[a3] )
     {
       sub_64F78(dword_9D922[a3], 1, 1);
-      sub_5DC91(dword_9D94A[a3]);
+      RemoveTimerEvent_5DC91(dword_9D94A[a3]);
     }
   }
   sub_681F6();

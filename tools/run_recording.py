@@ -43,6 +43,7 @@ def main():
     a, extra = ap.parse_known_args()
     a.extra = [x for x in extra if x != "--"]  # everything unknown goes to remc1
     a.exe = a.exe or remc1_paths.find_port_exe()
+    a.out = os.path.abspath(a.out)  # remc1 runs in the exe's folder: a relative --out would miss
 
     shutil.rmtree(a.out, ignore_errors=True)
     frames = os.path.join(a.out, "frames")

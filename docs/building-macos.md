@@ -1,7 +1,8 @@
 # Building on macOS
 
 REMC1 builds with Apple Clang on macOS (Apple Silicon and Intel) against Homebrew packages: CMake
-(3.21+), Ninja, SDL2, SDL2_mixer, nlohmann-json and GoogleTest.
+(3.21+), Ninja, SDL2, SDL2_mixer, nlohmann-json, GoogleTest and (optional) FluidSynth. The music libraries
+libADLMIDI and Munt (MT-32) are downloaded by CMake when the build is configured.
 
 ## Install the dependencies
 
@@ -11,8 +12,12 @@ REMC1 builds with Apple Clang on macOS (Apple Silicon and Intel) against Homebre
    ```
 2. [Homebrew](https://brew.sh), then:
    ```bash
-   brew install cmake ninja pkg-config python sdl2 sdl2_mixer nlohmann-json googletest
+   brew install cmake ninja pkg-config python sdl2 sdl2_mixer nlohmann-json googletest fluid-synth
    ```
+   `fluid-synth` is only needed for the General MIDI music (chosen in the game's sound setup or with
+   `--music-device gm`); the default AdLib music does not need it. Homebrew has no General MIDI
+   SoundFont: download one (e.g. FluidR3_GM or GeneralUser GS) and pass it with `--soundfont <file.sf2>`
+   or `audio.soundfont` in `config.json`. Without one the General MIDI songs play on the OPL3 emulator.
 
 ## Build
 

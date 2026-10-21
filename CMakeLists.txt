@@ -1,5 +1,19 @@
 cmake_minimum_required(VERSION 3.21)
 
+option(REMC1_MUSIC "Build music support (libADLMIDI)" ON)
+# General MIDI songs on a SoundFont synth. Off by default on Windows, where vcpkg would have to build
+# FluidSynth and GLib (a slow first configure) and the system MIDI synth plays them instead; set here,
+# before project(), because it selects vcpkg's "fluidsynth" manifest feature.
+if(CMAKE_HOST_WIN32)
+    set(REMC1_FLUIDSYNTH_DEFAULT OFF)
+else()
+    set(REMC1_FLUIDSYNTH_DEFAULT ON)
+endif()
+option(REMC1_FLUIDSYNTH "Use FluidSynth for the General MIDI music when it is found" ${REMC1_FLUIDSYNTH_DEFAULT})
+if(REMC1_MUSIC AND REMC1_FLUIDSYNTH)
+    list(APPEND VCPKG_MANIFEST_FEATURES fluidsynth)
+endif()
+
 project(remc1 VERSION 0.1.0 LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -21,6 +35,65 @@ if(NOT SDL2_mixer_FOUND)
     find_package(PkgConfig REQUIRED)
     pkg_check_modules(SDL2_MIXER REQUIRED IMPORTED_TARGET GLOBAL SDL2_mixer)
     add_library(SDL2_mixer::SDL2_mixer ALIAS PkgConfig::SDL2_MIXER)
+endif()
+
+# Music: libADLMIDI (OPL3 emulation for the AdLib music) and its MIDI sequencer (BW_MidiSequencer, MIT,
+# reads HMI's HMP songs), built from a pinned release. Offline builds: -DFETCHCONTENT_SOURCE_DIR_LIBADLMIDI=<dir>.
+if(REMC1_MUSIC)
+    include(FetchContent)
+    set(libADLMIDI_STATIC ON)
+    set(libADLMIDI_SHARED OFF)
+    set(WITH_MIDI_SEQUENCER OFF) # port_music compiles the sequencer itself, for every synth
+    set(WITH_EMBEDDED_BANKS ON)  # General MIDI fallback bank
+    set(USE_DOSBOX_EMULATOR ON)
+    set(USE_NUKED_EMULATOR ON)
+    foreach(emu OPAL JAVA ESFMU MAME YMFM NUKED_OPL2_LLE NUKED_OPL3_LLE)
+        set(USE_${emu}_EMULATOR OFF)
+    endforeach()
+    set(USE_HW_SERIAL OFF)
+    FetchContent_Declare(libadlmidi
+        URL https://github.com/Wohlstand/libADLMIDI/archive/refs/tags/v1.6.2.1.tar.gz
+        URL_HASH SHA256=e01aec7b2bc284476eedab77a8b6e177c5beda2bc2f4545166339badfc0464c5)
+    FetchContent_MakeAvailable(libadlmidi)
+
+    # Roland MT-32 songs: Munt's libmt32emu (LGPL 2.1+), a static build of its mt32emu subproject; it plays
+    # them with the user's MT-32 / CM-32L ROMs (--mt32-roms). Offline: -DFETCHCONTENT_SOURCE_DIR_MUNT=<dir>.
+    option(REMC1_MT32 "Build MT-32 music support (Munt)" ON)
+    if(REMC1_MT32)
+        set(libmt32emu_SHARED OFF CACHE BOOL "" FORCE)
+        set(libmt32emu_C_INTERFACE ON CACHE BOOL "" FORCE)
+        set(libmt32emu_BUILD_TESTING OFF CACHE BOOL "" FORCE)
+        FetchContent_Declare(munt
+            URL https://github.com/munt/munt/archive/refs/tags/munt_2_8_2.tar.gz
+            URL_HASH SHA256=ca0a2b881207a88d10c511c441bcf4f7a9fd591bea630032662f02bcb51b1b5d
+            SOURCE_SUBDIR mt32emu)
+        FetchContent_MakeAvailable(munt)
+    endif()
+
+    # General MIDI songs on FluidSynth (optional; without it they play on the Windows MIDI synth or on
+    # OPL3 with a GM bank)
+    if(REMC1_FLUIDSYNTH)
+        # pkg-config first: Ubuntu's CMake package for FluidSynth fails unless the fluidsynth program is
+        # installed too. vcpkg (Windows) provides the CMake package.
+        find_package(PkgConfig QUIET)
+        if(PkgConfig_FOUND)
+            pkg_check_modules(FLUIDSYNTH QUIET IMPORTED_TARGET GLOBAL fluidsynth)
+            if(FLUIDSYNTH_FOUND)
+                set(REMC1_FLUIDSYNTH_TARGET PkgConfig::FLUIDSYNTH)
+            endif()
+        endif()
+        if(NOT REMC1_FLUIDSYNTH_TARGET)
+            find_package(FluidSynth CONFIG QUIET)
+            if(TARGET FluidSynth::libfluidsynth)
+                set(REMC1_FLUIDSYNTH_TARGET FluidSynth::libfluidsynth)
+            endif()
+        endif()
+        if(REMC1_FLUIDSYNTH_TARGET)
+            message(STATUS "Music: FluidSynth found (General MIDI on SoundFonts)")
+        else()
+            message(STATUS "Music: FluidSynth not found - General MIDI songs play on the OPL3 emulator")
+        endif()
+    endif()
 endif()
 
 # ---------------------------------------------------------------------------
@@ -84,6 +157,7 @@ set(REMC1_ENGINE_SOURCES
     portability/port_watchdog.cpp
     portability/SdlPresenter.cpp
     portability/port_sound.cpp
+    portability/port_music.cpp
     portability/MemSnapshot.cpp
     utilities/Compare.cpp
     utilities/DataFileIO.cpp
@@ -98,6 +172,23 @@ target_link_libraries(remc1_engine PUBLIC remc1_options
     $<IF:$<TARGET_EXISTS:SDL2_mixer::SDL2_mixer>,SDL2_mixer::SDL2_mixer,SDL2_mixer::SDL2_mixer-static>
     nlohmann_json::nlohmann_json)
 target_compile_definitions(remc1_engine PUBLIC SDL_MAIN_HANDLED)
+if(REMC1_MUSIC)
+    target_sources(remc1_engine PRIVATE portability/midi_sequencer.cpp)
+    target_include_directories(remc1_engine PRIVATE ${libadlmidi_SOURCE_DIR}/src/midiseq)
+    target_link_libraries(remc1_engine PRIVATE ADLMIDI_static)
+    target_compile_definitions(remc1_engine PRIVATE REMC1_MUSIC=1)
+    if(WIN32)
+        target_link_libraries(remc1_engine PRIVATE winmm) # system MIDI synth (midiOut)
+    endif()
+    if(REMC1_MT32)
+        target_link_libraries(remc1_engine PRIVATE MT32Emu::mt32emu)
+        target_compile_definitions(remc1_engine PRIVATE REMC1_MT32=1)
+    endif()
+    if(REMC1_FLUIDSYNTH_TARGET)
+        target_link_libraries(remc1_engine PRIVATE ${REMC1_FLUIDSYNTH_TARGET})
+        target_compile_definitions(remc1_engine PRIVATE REMC1_FLUIDSYNTH=1)
+    endif()
+endif()
 
 # ---------------------------------------------------------------------------
 # Game executable

@@ -34,6 +34,23 @@ FILE* recordFile = nullptr;
 uint64_t syncIndex = 0;
 uint64_t totalTicks = 0;
 
+struct TimerEvent {
+	PortTimerCallback callback = nullptr;
+	double perTick = 0; // event calls per clock tick
+	double due = 0;
+};
+TimerEvent events[16];
+
+void RunEvents()
+{
+	for (TimerEvent& e : events) {
+		if (!e.callback)
+			continue;
+		for (e.due += e.perTick; e.due >= 1.0 && e.callback; e.due -= 1.0)
+			e.callback(); // may remove itself
+	}
+}
+
 void Worker()
 {
 	using clock = std::chrono::steady_clock;
@@ -90,9 +107,11 @@ void SyncPoint(bool isFrame)
 		appliedTicks = due;
 	}
 	totalTicks += n;
-	if (isrInstalled.load() && callback)
-		for (uint32_t i = 0; i < n; i++)
+	for (uint32_t i = 0; i < n; i++) {
+		if (isrInstalled.load() && callback)
 			callback();
+		RunEvents();
+	}
 	if (recordFile && n)
 		fprintf(recordFile, "T %llu %u\n", (unsigned long long)syncIndex, n);
 	syncIndex++;
@@ -159,6 +178,25 @@ void PortTimer_Yield()
 	SyncPoint(false);
 	if (!deterministic && !replaying)
 		std::this_thread::sleep_for(std::chrono::microseconds(500));
+}
+
+int PortTimer_AddEvent(uint32_t hz, PortTimerCallback cb)
+{
+	for (int i = 0; i < (int)(sizeof(events) / sizeof(events[0])); i++) {
+		if (!events[i].callback) {
+			events[i].callback = cb;
+			events[i].perTick = hz * tickSeconds.load();
+			events[i].due = 0;
+			return i;
+		}
+	}
+	return -1;
+}
+
+void PortTimer_RemoveEvent(int handle)
+{
+	if (handle >= 0 && handle < (int)(sizeof(events) / sizeof(events[0])))
+		events[handle].callback = nullptr;
 }
 
 uint64_t PortTimer_TickCount()

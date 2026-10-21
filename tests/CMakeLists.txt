@@ -7,10 +7,14 @@ add_executable(remc1-tests
     test_platform.cpp
     test_render.cpp
     test_data.cpp
+    test_music.cpp
     support/test_support.cpp
 )
 target_include_directories(remc1-tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_definitions(remc1-tests PRIVATE REMC1_GOLDENS_DIR="${CMAKE_CURRENT_SOURCE_DIR}/goldens")
+if(REMC1_MUSIC AND REMC1_MT32)
+    target_compile_definitions(remc1-tests PRIVATE REMC1_MT32=1)
+endif()
 target_link_libraries(remc1-tests PRIVATE remc1_engine GTest::gtest)
 if(MSVC)
     target_compile_options(remc1-tests PRIVATE /wd4200 /wd4103)

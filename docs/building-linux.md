@@ -1,7 +1,8 @@
 # Building on Linux
 
 REMC1 builds with GCC or Clang on 64-bit Linux (x86-64 and arm64) against the distribution's own
-packages: CMake (3.21+), Ninja, SDL2, SDL2_mixer, nlohmann-json and GoogleTest.
+packages: CMake (3.21+), Ninja, SDL2, SDL2_mixer, nlohmann-json, GoogleTest and (optional) FluidSynth.
+The music libraries libADLMIDI and Munt (MT-32) are downloaded by CMake when the build is configured.
 
 ## Install the dependencies
 
@@ -9,21 +10,29 @@ packages: CMake (3.21+), Ninja, SDL2, SDL2_mixer, nlohmann-json and GoogleTest.
 ```bash
 sudo apt update
 sudo apt install build-essential cmake ninja-build pkg-config git python3 \
-    libsdl2-dev libsdl2-mixer-dev nlohmann-json3-dev libgtest-dev
+    libsdl2-dev libsdl2-mixer-dev nlohmann-json3-dev libgtest-dev \
+    libfluidsynth-dev fluid-soundfont-gm
 ```
 
 **Fedora**:
 ```bash
 sudo dnf install gcc-c++ cmake ninja-build pkgconf-pkg-config git python3 \
-    SDL2-devel SDL2_mixer-devel json-devel gtest-devel
+    SDL2-devel SDL2_mixer-devel json-devel gtest-devel \
+    fluidsynth-devel fluid-soundfont-gm
 ```
 
 **Arch Linux**:
 ```bash
 sudo pacman -S --needed base-devel cmake ninja pkgconf git python \
-    sdl2 sdl2_mixer nlohmann-json gtest
+    sdl2 sdl2_mixer nlohmann-json gtest \
+    fluidsynth soundfont-fluid
 ```
 (On current Fedora and Arch, SDL2 is provided by `sdl2-compat` on top of SDL3; that works too.)
+
+FluidSynth and the SoundFont are only needed for the General MIDI music (chosen in the game's sound
+setup or with `--music-device gm`); the default AdLib music needs neither. Without FluidSynth the General
+MIDI songs play on the OPL3 emulator. The SoundFont installed above is found automatically; another one
+can be set with `--soundfont <file.sf2>` or `audio.soundfont` in `config.json`.
 
 Clang instead of GCC: install `clang` and configure with `CC=clang CXX=clang++ cmake --preset linux`.
 

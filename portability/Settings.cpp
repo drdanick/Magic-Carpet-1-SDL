@@ -118,6 +118,21 @@ static void LoadConfigFile(const fs::path& path)
 	if (j.contains("audio")) {
 		s.sound = j["audio"].value("sound", s.sound);
 		s.music = j["audio"].value("music", s.music);
+		s.musicDevice = j["audio"].value("musicDevice", s.musicDevice);
+		s.musicVolume = j["audio"].value("musicVolume", s.musicVolume);
+		s.oplEmulator = j["audio"].value("oplEmulator", s.oplEmulator);
+		s.midiSynth = j["audio"].value("midiSynth", s.midiSynth);
+		s.mt32Model = j["audio"].value("mt32Model", s.mt32Model);
+		std::string mt32Roms = j["audio"].value("mt32Roms", std::string());
+		if (!mt32Roms.empty()) {
+			fs::path roms = mt32Roms;
+			s.mt32Roms = (roms.is_relative() ? path.parent_path() / roms : roms).string();
+		}
+		std::string soundfont = j["audio"].value("soundfont", std::string());
+		if (!soundfont.empty()) {
+			fs::path sf = soundfont;
+			s.soundfont = (sf.is_relative() ? path.parent_path() / sf : sf).string();
+		}
 	}
 	if (j.contains("input")) {
 		s.grabMouse = j["input"].value("grabMouse", s.grabMouse);
@@ -145,6 +160,14 @@ static void PrintUsage()
 		"  --no-tab-enter     don't map Tab to Enter\n"
 		"  --fps N            in-game frame cap (default 30, 0 = uncapped; game speed follows it)\n"
 		"  --no-sound / --no-music   disable sound effects / music\n"
+		"  --music-device <d>        auto (the game's sound setup), adlib, gm, mt32 or none\n"
+		"  --music-volume <0-100>    music volume in percent\n"
+		"  --opl-emulator <e>        AdLib music emulator: dosbox (default) or nuked\n"
+		"  --soundfont <file.sf2>    SoundFont for the General MIDI music (FluidSynth builds)\n"
+		"  --midi-synth <s>          General MIDI music on: auto (FluidSynth with a SoundFont, else the\n"
+		"                            Windows MIDI synth, else OPL3), fluidsynth, system or opl\n"
+		"  --mt32-roms <dir>         folder with MT-32 / CM-32L ROMs: the Roland music plays on Munt\n"
+		"  --mt32-model <id>         ROM set to use: auto (MT-32 first), mt32_1_07, cm32l_1_02, ...\n"
 		"  --debug-log        write debug.txt next to the executable\n"
 		"  --dump-frames <dir> [--dump-every N]  save every Nth presented frame (default 30) as BMP\n"
 		"  --exit-after-frames N                  quit after N presented frames\n"
@@ -194,6 +217,13 @@ std::vector<std::string> InitSettings(int argc, char* argv[])
 		else if (a == "--fps") g_settings.maxGameFps = atoi(next("frames per second").c_str());
 		else if (a == "--no-sound") g_settings.sound = false;
 		else if (a == "--no-music") g_settings.music = false;
+		else if (a == "--music-device") g_settings.musicDevice = next("auto, adlib, gm, mt32 or none");
+		else if (a == "--music-volume") g_settings.musicVolume = (std::min)(100, (std::max)(0, atoi(next("a percentage").c_str())));
+		else if (a == "--opl-emulator") g_settings.oplEmulator = next("dosbox or nuked");
+		else if (a == "--soundfont") g_settings.soundfont = next("a SoundFont (.sf2) file");
+		else if (a == "--midi-synth") g_settings.midiSynth = next("auto, fluidsynth, system or opl");
+		else if (a == "--mt32-roms") g_settings.mt32Roms = next("a folder with MT-32 ROMs");
+		else if (a == "--mt32-model") g_settings.mt32Model = next("auto or a Munt machine id");
 		else if (a == "--debug-log") cliDebugLog = true;
 		else if (a == "--dump-frames") g_settings.dumpFramesDir = next("a directory");
 		else if (a == "--dump-every") g_settings.dumpEvery = (std::max)(1, atoi(next("a number").c_str()));

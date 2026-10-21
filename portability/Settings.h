@@ -32,6 +32,14 @@ struct Remc1Settings {
 	// Audio
 	bool sound = true; // sound effects (SDL_mixer)
 	bool music = true;
+	// "auto" = the card chosen in the game's sound setup (sndsetup.inf); or adlib, gm, mt32, none
+	std::string musicDevice = "auto";
+	int musicVolume = 100;            // percent
+	std::string oplEmulator = "dosbox"; // AdLib music: dosbox or nuked (more accurate, slower)
+	std::string soundfont;            // General MIDI music (FluidSynth); "" = look in the system locations
+	std::string midiSynth = "auto";   // General MIDI music: auto, fluidsynth, system (Windows MIDI) or opl
+	std::string mt32Roms;             // folder with MT-32 / CM-32L ROMs (Roland music); "" = no MT-32
+	std::string mt32Model = "auto";   // Munt machine id (mt32_1_07, cm32l_1_02, ...); auto = first complete set
 
 	// Diagnostics
 	bool debugLog = false; // write debug.txt next to the executable
