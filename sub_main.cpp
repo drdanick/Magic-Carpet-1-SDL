@@ -700,14 +700,14 @@ Type_AE400_29795* CreateEntity_373F0_377B0(axis_3d* a1, int a2, int a3);
 void sub_37440_37800(int a1, char a2);
 void sub_37560_37920(Type_1090* type1090);
 int sub_37710_37AD0();
-int sub_37720_37AE0(int a1);
-int sub_37740_37B00(int a1);
-int sub_37760_37B20(int a1);
-int sub_37780_37B40(int a1);
-int sub_377A0_37B60(int a1);
-int sub_377C0_37B80(int a1);
-int sub_377E0_37BA0(int a1);
-int sub_37800_37BC0(int a1);
+int SetPlayerStart0_37720_37AE0(int a1);
+int SetPlayerStart1_37740_37B00(int a1);
+int SetPlayerStart2_37760_37B20(int a1);
+int SetPlayerStart3_37780_37B40(int a1);
+int SetPlayerStart4_377A0_37B60(int a1);
+int SetPlayerStart5_377C0_37B80(int a1);
+int SetPlayerStart6_377E0_37BA0(int a1);
+int SetPlayerStart7_37800_37BC0(int a1);
 Type_AE400_29795* sub_37820_37BE0(axis_3d* position);
 int sub_378A0_37C60(int a1);
 int CreateCastle_37920_37CE0(int a1);
@@ -3478,14 +3478,14 @@ Type_254A34 str_254B84[] = {
 { 0x002548F4, 0x0001, PORT_FN(sub_378A0_37C60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0002, PORT_FN(CreateCastle_37920_37CE0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0003, PORT_FN(sub_37A00_37DC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(sub_37720_37AE0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(sub_37740_37B00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, PORT_FN(sub_37760_37B20, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, PORT_FN(sub_37780_37B40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0008, PORT_FN(sub_377A0_37B60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0009, PORT_FN(sub_377C0_37B80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, PORT_FN(sub_377E0_37BA0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000B, PORT_FN(sub_37800_37BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(SetPlayerStart0_37720_37AE0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(SetPlayerStart1_37740_37B00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, PORT_FN(SetPlayerStart2_37760_37B20, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, PORT_FN(SetPlayerStart3_37780_37B40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0008, PORT_FN(SetPlayerStart4_377A0_37B60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0009, PORT_FN(SetPlayerStart5_377C0_37B80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, PORT_FN(SetPlayerStart6_377E0_37BA0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000B, PORT_FN(SetPlayerStart7_37800_37BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_254DBC[] = {//broken data in original
@@ -43111,7 +43111,9 @@ int sub_37710_37AD0()
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00037720) --------------------------------------------------------
-int sub_37720_37AE0(int a1)
+/// Level record class 3 type 4: stores axis_3d a1 as player 0's wizard start position
+/// (playerStart_9177[0]).
+int SetPlayerStart0_37720_37AE0(int a1)
 {
   int v1; // edi
   int result; // eax
@@ -43125,7 +43127,9 @@ int sub_37720_37AE0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00037740) --------------------------------------------------------
-int sub_37740_37B00(int a1)
+/// Level record class 3 type 5: stores axis_3d a1 as player 1's wizard start position
+/// (playerStart_9177[1]).
+int SetPlayerStart1_37740_37B00(int a1)
 {
   int v1; // edi
   int result; // eax
@@ -43139,7 +43143,9 @@ int sub_37740_37B00(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00037760) --------------------------------------------------------
-int sub_37760_37B20(int a1)
+/// Level record class 3 type 6: stores axis_3d a1 as player 2's wizard start position
+/// (playerStart_9177[2]).
+int SetPlayerStart2_37760_37B20(int a1)
 {
   int v1; // edi
   int result; // eax
@@ -43153,7 +43159,9 @@ int sub_37760_37B20(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00037780) --------------------------------------------------------
-int sub_37780_37B40(int a1)
+/// Level record class 3 type 7: stores axis_3d a1 as player 3's wizard start position
+/// (playerStart_9177[3]).
+int SetPlayerStart3_37780_37B40(int a1)
 {
   int v1; // edi
   int result; // eax
@@ -43167,7 +43175,9 @@ int sub_37780_37B40(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (000377A0) --------------------------------------------------------
-int sub_377A0_37B60(int a1)
+/// Level record class 3 type 8: stores axis_3d a1 as player 4's wizard start position
+/// (playerStart_9177[4]).
+int SetPlayerStart4_377A0_37B60(int a1)
 {
   int v1; // edi
   int result; // eax
@@ -43181,7 +43191,9 @@ int sub_377A0_37B60(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (000377C0) --------------------------------------------------------
-int sub_377C0_37B80(int a1)
+/// Level record class 3 type 9: stores axis_3d a1 as player 5's wizard start position
+/// (playerStart_9177[5]).
+int SetPlayerStart5_377C0_37B80(int a1)
 {
   int v1; // edi
   int result; // eax
@@ -43195,7 +43207,9 @@ int sub_377C0_37B80(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (000377E0) --------------------------------------------------------
-int sub_377E0_37BA0(int a1)
+/// Level record class 3 type 10: stores axis_3d a1 as player 6's wizard start position
+/// (playerStart_9177[6]).
+int SetPlayerStart6_377E0_37BA0(int a1)
 {
   int v1; // edi
   int result; // eax
@@ -43209,7 +43223,9 @@ int sub_377E0_37BA0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00037800) --------------------------------------------------------
-int sub_37800_37BC0(int a1)
+/// Level record class 3 type 11: stores axis_3d a1 as player 7's wizard start position
+/// (playerStart_9177[7]).
+int SetPlayerStart7_37800_37BC0(int a1)
 {
   int v1; // edi
   int result; // eax
@@ -50582,7 +50598,7 @@ void sub_40550_40890()//211550_
   memset((void*)(&str_AE400_AE3F0->var_u32_40), 0, 4);
   memset((void*)(&str_AE400_AE3F0->var_u8_580), 0, 1);
   memset((void*)(&str_AE400_AE3F0->str_232607), 0, 106);
-  memset((void*)(&str_AE400_AE3F0->str_9177), 0, 48);
+  memset((void*)(&str_AE400_AE3F0->playerStart_9177), 0, 48);
   memset((void*)(&str_AE400_AE3F0->str_29795), 0, 164000);
   memset((void*)(&str_AE408_AE3F8->var_u8_23), 0, 1);
   memset((void*)(&str_AE408_AE3F8->str_93), 0, 16);
@@ -54085,7 +54101,7 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
   sub_37220_375E0();
   //v3 = (a1 - (dword_AE400_AE3F0() + 13323)) / 2049;
   v3 = a1x - str_AE400_AE3F0->str_13323;
-  v32x = str_AE400_AE3F0->str_9177[v3].v_9177;
+  v32x = str_AE400_AE3F0->playerStart_9177[v3]; // PORT: 6-byte entries as in the original (was an 8-byte struct)
   uaxis_2d tempZ;
   tempZ.word= GetTerrainHeight_11F50(&v32x);
   tempZ._axis_2d.y++;
