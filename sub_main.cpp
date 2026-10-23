@@ -27619,7 +27619,7 @@ void sub_25CE0(Type_AE400_29795* a1x)
   {
       if ((a1x->var_29811_16.byte[0] & 2) == 0)
       {
-          a1x->var_29811_16.byte[0] |= 0x10002u;
+          a1x->var_29811_16.dword |= 0x10002u; // PORT: dword as in the original (byte[0] dropped the 0x10000 flag)
           sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 30);
       }
       v3 = 768 * a1x->var_u16_29821_26;
@@ -30164,7 +30164,7 @@ void sub_29780(Type_AE400_29795* a1x)
       {
           if ((a1x->var_29811_16.byte[0] & 2) == 0)
           {
-              a1x->var_29811_16.byte[0] |= 0x10002u;
+              a1x->var_29811_16.dword |= 0x10002u; // PORT: dword as in the original (byte[0] dropped the 0x10000 flag)
               sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 30);
           }
           __int64 v3 = 768 * a1x->var_u16_29821_26;
@@ -41917,7 +41917,7 @@ void sub_36080_36440(unsigned __int8 a1, char a2, int a3, int a4)
     }
     v5 = __PAIR16__(HIBYTE(v5), a1) + 256;
   }
-  JUMPOUT(0x36079);
+  // PORT: was JUMPOUT(0x36079) - the original ends by jumping to the previous function's epilogue (pop edi/esi/ebx; ret)
   //fix sub_35F30_362F0(int a1, char a2, char a3, int a4, int a5, unsigned __int8 a6);
 }
 // 36094: control flows out of bounds to 36079
@@ -42926,6 +42926,13 @@ Type_AE400_29795* NewEvent_372C0_37680()//2082C0_
 		str_AE400_AE3F0->var_u32_593[str_AE400_AE3F0->var_u32_40]->var_u8_29858_63 = str_AE400_AE3F0->var_u32_593[str_AE400_AE3F0->var_u32_40] - str_AE400_AE3F0->str_29795;
 		return str_AE400_AE3F0->var_u32_593[str_AE400_AE3F0->var_u32_40--];
 	}
+	// PORT: deliberate deviation (docs/original-bugs.md #8). The recycle list is only rebuilt now and then
+	// (sub_37220_375E0); in between its slots can be freed and reused by entities that must not be recycled
+	// (castle balloons, mana balls). The original recycled them anyway; the HUD then divided by the new
+	// entity's zero max mana (crash, level 19 with the entity table full). Skip such stale entries.
+	while (str_AE400_AE3F0->var_u32_4593 >= 0 && str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593]->var_u8_29859_64
+		&& (str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593]->var_29811_16.dword & 0x20400) == 0)
+		str_AE400_AE3F0->var_u32_4593--;
 	if (str_AE400_AE3F0->var_u32_4593 >= 0)
 	{
 		memset(&str_AE408_AE3F8->str_36382x, 0, sizeof(str_AE408_AE3F8->str_36382x)); // PORT: 4-byte slots (ptr32)
