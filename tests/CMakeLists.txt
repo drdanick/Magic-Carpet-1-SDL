@@ -25,7 +25,14 @@ include(GoogleTest)
 gtest_discover_tests(remc1-tests DISCOVERY_MODE PRE_TEST
     PROPERTIES ENVIRONMENT "SDL_VIDEODRIVER=dummy;SDL_AUDIODRIVER=dummy")
 
-# Tier 3: replay tests (need REMC1_DATA_DIR; otherwise reported as skipped)
+# Tier 3: replay tests (need REMC1_DATA_DIR; otherwise reported as skipped). The repo's virtual environment
+# (.venv, docs/DEVELOPER_GUIDE.md "Python tools") when there is one, else the system Python.
+foreach(venv_python "${CMAKE_SOURCE_DIR}/.venv/Scripts/python.exe" "${CMAKE_SOURCE_DIR}/.venv/bin/python")
+    if(EXISTS "${venv_python}" AND NOT DEFINED Python3_EXECUTABLE)
+        set(Python3_EXECUTABLE "${venv_python}")
+        unset(_Python3_EXECUTABLE CACHE) # an interpreter cached before the venv existed (or since uninstalled)
+    endif()
+endforeach()
 find_package(Python3 COMPONENTS Interpreter)
 if(Python3_FOUND)
     file(GLOB REMC1_REPLAYS CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/replays/*.txt)

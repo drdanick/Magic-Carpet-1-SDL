@@ -45,6 +45,14 @@ You need your own copy of the game - no game data is included.
    `build/linux/RelWithDebInfo/remc1`), or set `paths.data` in `config.json` (looked up next to the
    executable).
 
+The scripts in `tools/` need Python 3.9 or newer. `extract_data.py` and the recording tools use only the
+standard library; the debugging tools need a few packages, which go into a virtual environment in the
+repo folder:
+```bash
+python -m venv .venv                                         # Windows: py -3 -m venv .venv
+.venv/Scripts/python -m pip install -r tools/requirements.txt # Linux / macOS: .venv/bin/python
+```
+
 Port controls that differ from the original (all configurable in `config.json`, section `input`):
 W/A/S/D act as the arrow keys, Tab acts as Enter (opens the spell map), and pressing both mouse
 buttons does *not* open the spell map (`bothButtonsSpellMenu`, off by default). `R` switches between
