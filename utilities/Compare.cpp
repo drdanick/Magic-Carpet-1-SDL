@@ -3,9 +3,6 @@
 #include <cstdio>
 #include <cstdlib>
 #include <set>
-#ifndef _WIN32
-#include <sys/types.h>
-#endif
 #if defined(_MSC_VER)
 #include <intrin.h>
 #define REMC1_DEBUG_BREAK() __debugbreak()
@@ -135,10 +132,10 @@ uint32_t compare_with_sequence(const char* filename, const uint8_t* adress, uint
 		fptestepc = fopen(findname.c_str(), "rb");
 	}
 
-#ifdef _WIN32
-	_fseeki64(fptestepc, (long long)count * (long long)size1 + offset, SEEK_SET);
+#ifdef __linux__
+	fseek(fptestepc, (long long)count * (long long)size1 + offset, SEEK_SET);
 #else
-	fseeko(fptestepc, (off_t)count * (off_t)size1 + offset, SEEK_SET); // PORT: _fseeki64 is MSVC-only (macOS has no __linux__)
+	_fseeki64(fptestepc, (long long)count * (long long)size1 + offset, SEEK_SET);
 #endif
 
 	uint32_t i;
