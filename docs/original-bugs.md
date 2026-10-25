@@ -20,6 +20,7 @@ Status:
 | 6 | Terrain smoothing reads in front of the map on its first row | `sub_360C0_36480` | fixed |
 | 7 | Castles built among walls: the site check looks at one quarter of the site | `IsCastleSiteFree_12F70` | kept |
 | 8 | Full entity table recycles live entities (balloons vanish, HUD divides by zero) | `NewEvent_372C0_37680` | fixed |
+| 9 | A creature dying while the entity table is full drops no mana | `sub_1A800`, `sub_27690` | kept |
 
 ## 1. Stuck explosion after a worm segment dies (kept)
 
@@ -133,3 +134,21 @@ stale.
 
 **Fix:** `NewEvent_372C0_37680` skips recycle entries whose slot now holds a live entity without the
 recyclable flags (`// PORT:`). This only changes the game when the entity table is full.
+
+## 9. A creature dying while the entity table is full drops no mana (kept)
+
+**Symptom:** at the end of level 22 a big crab that was shooting lightning dies without leaving a mana
+ball; the small crabs killed right after it drop theirs.
+
+**Cause:** a dying creature (`sub_1A800`) turns its mana into a mana ball (`sub_27690`, class 10
+type 39) and leaves a class 10 type 1 entity, both through `CreateEntity_373F0_377B0`. When the
+entity table is full, `NewEvent_372C0_37680` returns null and both are silently skipped; the mana is
+lost. Lightning bolts fill the table: each bolt is drawn with many class 9 type 9 pieces
+(`LightningBoltTick_535E0_53920`). On level 22 the big crab's own lightning held 277 slots, and in the
+tick it died the bolts took the last 30 free slots (66 new pieces) before the crab's death ran. The
+recycle list was empty. The small crabs died a few ticks later, after pieces had been freed.
+
+**Confirmed:** `level22.recording` (a user recording): the big crab (entity 995, max life 10000,
+3572 mana) is fatally hit at frame 12270 and freed by `sub_1A800` (0x1A84B) in the tick of frame
+12272. Ticks 12269-12274 match the original byte for byte; run on that state, the original's
+`CreateEntity` calls from 0x276E5 (mana ball) and 0x1A836 return 0 with the free list at -1.
