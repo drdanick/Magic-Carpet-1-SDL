@@ -416,7 +416,8 @@ utilities/
   rnc_1fm.*               (not compiled; a copy lives in sub_main.cpp)
 tools/                    Python + shell tools (§4): data extraction, recordings, regression, diff harness, audits
 tests/                    GoogleTest target remc1-tests + replay tests (ctest, §8)
-docs/                     this guide, building-{windows,linux,macos}.md, recordings.md, original-bugs.md
+AGENT_DEV_GUIDE.md        this guide
+docs/                     building-{windows,linux,macos}.md, recordings.md, original-bugs.md
 build.sh, CMakePresets.json, vcpkg.json   build entry points (§2)
 config.json               example port settings
 assets/font/              debug font required by VGA_Init (copied next to the exe)

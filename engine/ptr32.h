@@ -14,7 +14,7 @@
 // OFF() aborts with a message for anything outside the windows.
 //
 // TODO (before the code split/organisation phase): replace this with real typed pointers
-// (remc2 style) - see docs/AGENT_DEV_GUIDE.md section 7.
+// (remc2 style) - see AGENT_DEV_GUIDE.md section 7.
 #include <cstddef>
 #include <cstdint>
 
