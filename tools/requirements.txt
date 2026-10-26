@@ -1,0 +1,8 @@
+# Python packages for the debugging tools (differential harness, disassembly, contact sheets). The
+# everyday tools (extract_data, rec, regress, replay_test, run_recording) need only the standard library.
+# Install into the repo's virtual environment (AGENT_DEV_GUIDE.md, "Python tools"):
+#   python -m venv .venv && .venv/Scripts/python -m pip install -r tools/requirements.txt   (Windows)
+#   python3 -m venv .venv && .venv/bin/python -m pip install -r tools/requirements.txt      (Linux, macOS)
+unicorn==2.1.4
+capstone==5.0.9
+pillow==13.0.0
