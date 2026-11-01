@@ -1168,8 +1168,8 @@ int sub_558F0();
 int sub_55960();
 int sub_559A0();
 int sub_55A40_55F70(Type_AE400_29795* a1x, char a2, char a3);
-void sub_55D30_56260(Type_AE400_29795* a1x);
-int sub_55DB0_562E0(Type_AE400_29795* a1x);
+void SpellJarSpawnTick_55D30_56260(Type_AE400_29795* a1x);
+int SpellJarTick_55DB0_562E0(Type_AE400_29795* a1x);
 int sub_55DD0_56300(int a1, int *a2);
 int sub_55E80_563B0(int a1, int a2);
 // int sub_55EF0_56420(__int16 a1, int a2, int a3);
@@ -3732,10 +3732,10 @@ int sub_31A90() { return 0; };
 int sub_5B5D0() { return 0; };
 int sub_48650() { return 0; };
 void sub_56250(Type_AE400_29795* a1x) {
-    sub_55DB0_562E0(a1x);
+    SpellJarTick_55DB0_562E0(a1x);
 };
 void sub_56260(Type_AE400_29795* a1x) {
-    sub_55D30_56260(a1x);
+    SpellJarSpawnTick_55D30_56260(a1x);
 };
 int sub_43AF0() { return 0; };
 /// Empty entity state handler (original 0x262C0 is a bare ret); class 10 states 20-22 never change on their own.
@@ -64201,7 +64201,9 @@ LABEL_39:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_55D30_56260(Type_AE400_29795* a1x)//226D30_
+/// Class 12 state 3t+2 (t = spell): a spell jar that, when picked up (sub_55A40, state -> 3t), spawns the
+/// spell's off_987DE entity (spell 7: class 10 type 6) and puts that one 2 states on.
+void SpellJarSpawnTick_55D30_56260(Type_AE400_29795* a1x)//226D30_
 {
   Type_AE400_29795* result; // eax
   int v2; // ebx
@@ -64213,15 +64215,14 @@ void sub_55D30_56260(Type_AE400_29795* a1x)//226D30_
     result = off_987DE[a1x->var_u8_29860_65].adress(&a1x->var_u32_29867_72);
     if ( result )
     {
-      a1x->var_u8_29865_70 += 2;
+      // PORT: the original adds 2 to the new entity's state (add [eax+46h], 2), not the jar's: the jar's
+      // own state +2 left a picked-up spell in its jar state (23 for spell 7), so dying sent it to 3t+3
+      result->var_u8_29865_70 += 2;
       if ( byte_968E4 )
       {
-        v2 = a1x->var_29811_16.byte[0] & 0x40000;
-        if(!IsHiddenWord)
-        	LOBYTE(v2) = 1;
-        else
-        	LOBYTE(v2) = v2 | 1;
-        result->var_29811_16.byte[0] |= v2;
+        // PORT: dword flags as in the original (byte[0] & 0x40000 was always 0)
+        v2 = (a1x->var_29811_16.dword & 0x40000) | 1;
+        result->var_29811_16.dword |= v2;
       }
       if ( (result->var_29811_16.byte[2] & 4) != 0 )
           result->var_u16_29881_86 = 280;
@@ -64230,7 +64231,8 @@ void sub_55D30_56260(Type_AE400_29795* a1x)//226D30_
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_55DB0_562E0(Type_AE400_29795* a1x)
+/// Class 12 state 3t+1 (t = spell): a spell jar on the ground; sub_55A40 picks it up (state -> 3t, owned).
+int SpellJarTick_55DB0_562E0(Type_AE400_29795* a1x)
 {
   return sub_55A40_55F70(a1x, a1x->var_u8_29860_65, a1x->var_u8_29865_70 - 1);
 }

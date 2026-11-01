@@ -452,6 +452,44 @@ dev-info*.txt             upstream author's scratch notes (Czech/English) — ad
   binary mode (`open(p,'rb').read().decode('latin-1')`) or the line endings get rewritten. The Edit
   tool is the safest way to change it.
 
+### 6.1b Entities: fields, classes and types
+Add every class/type you identify here (and say how sure it is).
+
+Entity record (`str_29795[i]`, game state + 29795 + 164*i; entity 0 unused): +8 max life, +12 life,
++16 flags dword (`var_29811_16`), +24 id, +42 owner entity (spells: the wizard holding them), +52/+54
+leader/follower (worm segments), +64 class, +65 type (called model in places), +70 state, +72 position
+(`axis_3d`, x/y in 1/256 tile, z), +132 mana delta, +136/+140 mana max/current, +160 wizard data
+(`Type_1103`). Free list top: game state +40 (`var_u32_40`); recycle list top `var_u32_4593`.
+
+Tables: `dword_96902[class]` holds the state handlers (`.str_0[state].data6`, called every tick by
+`UpdateEntities_41780`) and the constructors (`.str_4[type].data6`, `CreateEntity_373F0_377B0(pos,
+class, type)`). The state index is global within a class, not per type.
+
+| Class | Type | What | Notes |
+|---|---|---|---|
+| 3 | 0 | wizard on a carpet (player 0 = local human) | model 0 human, 1 computer in the wizard list; `Type_1103` at +160 |
+| 3 | 2 | castle | inferred (level 26: life 40000, owner = wizard) |
+| 3 | 3 | balloon | original-bugs #8 |
+| 3 | 4..11 | wizard start positions only | `sub_44D30_45070` |
+| 5 | 3 | worm segment | chain via +52/+54, original-bugs #1 |
+| 5 | 5 | crab (big ones shoot lightning) | seeks mana balls, raises more through 10/52 |
+| 5 | 16 | wyvern | life 100000, mana 50000 (level 26) |
+| 9 | 9 | lightning bolt piece | `LightningBoltTick_535E0_53920` |
+| 10 | 0 | explosion | `sub_24F60` |
+| 10 | 1 | created with the mana ball when a creature dies | `sub_1A800` |
+| 10 | 6 | spawned when a spell-7 jar in state 3t+2 is picked up | `SpellJarSpawnTick_55D30_56260` |
+| 10 | 27 | terrain-raising level-build step | `RaiseTerrainStrip*` |
+| 10 | 39 | mana ball | mana at +140 |
+| 10 | 52 | crab spawn timer (state 0x38) | |
+| 12 | 0..23 | spell, type = spell number (0 fireball, 2 speed, 16 castle) | states below |
+
+Spells (class 12), spell t: state 3t = owned, handler = the spell's cast routine (`CastFireball_56090`,
+`SpeedSpellTick_56380`, `CastCastle_57610`, ...); 3t+1 = jar on the ground (`SpellJarTick_55DB0_562E0`);
+3t+2 = jar that also spawns the spell's `off_987DE` entity when picked up (`SpellJarSpawnTick_55D30_56260`).
+Picking a jar up (`sub_55A40_55F70`) sets the owner and state 3t; when the owner dies every owned spell goes
+3t -> 3t+1 and scatters around them (in `level26_spell_bug.recording` they were back at their start
+positions, unowned, 45 frames after a death; the code that does that is not identified yet).
+
 ### 6.2 Recurring decompilation bug patterns (check for these first)
 1. **Byte offset added to a typed pointer.** IDA's `*(_BYTE *)(ptr + 392)` assumed `ptr` was an
    int; once the variable/field was given a struct type the addition is scaled by `sizeof(*ptr)`.
@@ -744,6 +782,13 @@ dev-info*.txt             upstream author's scratch notes (Czech/English) — ad
     went on (`level23.recording`). The original clears it after the call (0x17260); the line came from an
     upstream commit (`317b7c1`), not from the decompiler. Lines with odd indentation (spaces among tabs)
     are often such edits: check them against `tools/orig_disasm.py`.
+67. **Write through the wrong object after a call.** `SpellJarSpawnTick_55D30_56260` did
+    `a1x->state += 2` where the original does `add byte ptr [eax+46h], 2` with `eax` = the entity the
+    constructor just returned. Picked-up spells 7 and 10 stayed in their jar state, and when the player
+    died they moved to 3t+3 (the next spell's owned state): red jars on the map that could not be picked
+    up (`level26_spell_bug.recording`). The same function ORed `byte[0] & 0x40000` (always 0) into one
+    flag byte instead of the dword (pattern #65). Found with `diff_tick` at the pickup frame
+    (`+70: before 23 orig 21 port 23`).
 
 The MC2 renderer in remc2 (`GameRenderOriginal.cpp`, e.g. `DrawSprite_41BD3`) is structurally the
 same code as MC1's `sub_2C410_2C450`/`DrawSprite_*` and uses the same scratch offsets in the BScreen
@@ -1077,6 +1122,9 @@ Known open issues:
   entity's max mana 0. The port now skips stale entries (first triggers at tick 9127 of the recording,
   so the recording replays exactly only up to there). Also pattern #65 (flag OR truncated to a byte)
   and the harmless `JUMPOUT(0x36079)` in `sub_36080_36440` (a shared epilogue) removed.
+- Fixed 2026-11-01: red spell jars that could not be picked up after the player died (pattern #67;
+  `level26_spell_bug.recording`, spells 7 and 10). Pickup and death ticks (frames 2179, 2655, 2871, 13969)
+  now match CARPET.EXE; the recording desyncs from frame 2190 on, as expected.
 - Fixed 2026-11-01: F2 did not stop the music (pattern #66; `level23.recording`, frame 22453).
 - Fixed 2026-10-22: computer wizards (players 1-7) started in the wrong place in every level (pattern
   #64; `level15.recording`: red wizard and castle at tile (186,16) instead of (42,186)).
