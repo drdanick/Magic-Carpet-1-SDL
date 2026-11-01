@@ -18970,9 +18970,9 @@ void ProcessKeys_16B00()//1E7B00_
 				{
 					if (musicOn_939CD)
 					{
-                        musicOn_939CD = 0;
 						StopMusic_20E60_20E60();
 						strcpy(str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].messages_13351_28[str_AE400_AE3F0->var_u16_8].messageText_13351_28, dword_AE238_AE228[78]);
+						musicOn_939CD = 0; // PORT: after StopMusic as in the original (0x17260); cleared first, StopMusic did nothing
 					}
 					else
 					{

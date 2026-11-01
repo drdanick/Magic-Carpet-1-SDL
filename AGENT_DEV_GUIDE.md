@@ -739,6 +739,11 @@ dev-info*.txt             upstream author's scratch notes (Czech/English) — ad
     the byte store kept the 0x2 and dropped the 0x10000 (+18 bit 0). Found as a lone one-byte
     `diff_tick` difference (`entity N +18: orig 1 port 0`). Grep for `byte[k] |= 0x` / `&= ~0x` with
     constants wider than 0xFF.
+66. **Upstream hand edits that reorder a guarded call.** F2 (music off, `ProcessKeys_16B00`) cleared
+    `musicOn_939CD` before `StopMusic_20E60_20E60()`, which returns at once when it is 0, so the music
+    went on (`level23.recording`). The original clears it after the call (0x17260); the line came from an
+    upstream commit (`317b7c1`), not from the decompiler. Lines with odd indentation (spaces among tabs)
+    are often such edits: check them against `tools/orig_disasm.py`.
 
 The MC2 renderer in remc2 (`GameRenderOriginal.cpp`, e.g. `DrawSprite_41BD3`) is structurally the
 same code as MC1's `sub_2C410_2C450`/`DrawSprite_*` and uses the same scratch offsets in the BScreen
@@ -1072,6 +1077,7 @@ Known open issues:
   entity's max mana 0. The port now skips stale entries (first triggers at tick 9127 of the recording,
   so the recording replays exactly only up to there). Also pattern #65 (flag OR truncated to a byte)
   and the harmless `JUMPOUT(0x36079)` in `sub_36080_36440` (a shared epilogue) removed.
+- Fixed 2026-11-01: F2 did not stop the music (pattern #66; `level23.recording`, frame 22453).
 - Fixed 2026-10-22: computer wizards (players 1-7) started in the wrong place in every level (pattern
   #64; `level15.recording`: red wizard and castle at tile (186,16) instead of (42,186)).
 - Fixed 2026-10-21: P paused only the input; the world went on (pattern #63).
