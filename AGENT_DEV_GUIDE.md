@@ -467,6 +467,9 @@ class, type)`). The state index is global within a class, not per type.
 
 | Class | Type | What | Notes |
 |---|---|---|---|
+| 2 | 0 | tree (palm) | scenery, on the recycle list (original-bugs #10); state 2 = burnt (inferred) |
+| 2 | 1 | stone (kind not checked) | scenery, recyclable |
+| 2 | 3 | standing stone (the stone rings that mark triggers) | scenery, recyclable |
 | 3 | 0 | wizard on a carpet (player 0 = local human) | model 0 human, 1 computer in the wizard list; `Type_1103` at +160 |
 | 3 | 2 | castle | inferred (level 26: life 40000, owner = wizard) |
 | 3 | 3 | balloon | original-bugs #8 |
@@ -474,13 +477,16 @@ class, type)`). The state index is global within a class, not per type.
 | 5 | 3 | worm segment | chain via +52/+54, original-bugs #1 |
 | 5 | 5 | crab (big ones shoot lightning) | seeks mana balls, raises more through 10/52 |
 | 5 | 16 | wyvern | life 100000, mana 50000 (level 26) |
+| 9 | 3 | missile that starts an explosion ring (10/17) when it lands | `sub_3AC70` called from 0x52AAA |
 | 9 | 9 | lightning bolt piece | `LightningBoltTick_535E0_53920` |
 | 10 | 0 | explosion | `sub_24F60` |
 | 10 | 1 | created with the mana ball when a creature dies | `sub_1A800` |
 | 10 | 6 | spawned when a spell-7 jar in state 3t+2 is picked up | `SpellJarSpawnTick_55D30_56260` |
+| 10 | 17 | expanding explosion ring: one 10/0 explosion per ring point per tick | `sub_25CE0` |
 | 10 | 27 | terrain-raising level-build step | `RaiseTerrainStrip*` |
 | 10 | 39 | mana ball | mana at +140 |
 | 10 | 52 | crab spawn timer (state 0x38) | |
+| 11 | 2 | trigger (marked by standing stones on level 26; not recyclable) | life 300 |
 | 12 | 0..23 | spell, type = spell number (0 fireball, 2 speed, 16 castle) | states below |
 
 Spells (class 12), spell t: state 3t = owned, handler = the spell's cast routine (`CastFireball_56090`,

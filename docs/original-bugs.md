@@ -21,6 +21,7 @@ Status:
 | 7 | Castles built among walls: the site check looks at one quarter of the site | `IsCastleSiteFree_12F70` | kept |
 | 8 | Full entity table recycles live entities (balloons vanish, HUD divides by zero) | `NewEvent_372C0_37680` | fixed |
 | 9 | A creature dying while the entity table is full drops no mana | `sub_1A800`, `sub_27690` | kept |
+| 10 | Big explosions recycle all trees and standing stones; their triggers stay | `NewEvent_372C0_37680` | kept |
 
 ## 1. Stuck explosion after a worm segment dies (kept)
 
@@ -152,3 +153,23 @@ recycle list was empty. The small crabs died a few ticks later, after pieces had
 3572 mana) is fatally hit at frame 12270 and freed by `sub_1A800` (0x1A84B) in the tick of frame
 12272. Ticks 12269-12274 match the original byte for byte; run on that state, the original's
 `CreateEntity` calls from 0x276E5 (mana ball) and 0x1A836 return 0 with the free list at -1.
+
+## 10. Big explosions recycle all trees and standing stones; their triggers stay (kept)
+
+**Symptom:** on level 26 a large ring of standing stones with spell jars inside, surrounded by trees,
+disappears together with every other tree and stone on the map. The triggers the stones marked
+(class 11 type 2) are still there.
+
+**Cause:** scenery (class 2: trees, stones) is on the recycle list. When the entity table is full,
+`NewEvent_372C0_37680` takes new slots from that list (see #8) and overwrites them for good. An expanding
+explosion ring (class 10 type 17, `sub_25CE0`, started by a class 9 type 3 missile) creates one explosion
+(10/0) per point of a growing ring every tick. Three of them at once, all from the player's wizard,
+made 120-130 explosions per tick. With the table full, those took the scenery slots: 359 trees
+(class 2 type 0), 93 standing stones (type 3) and 56 type 1 stones were all gone within five ticks.
+Triggers are not recyclable, so they stay where their stones were.
+
+**Confirmed:** `level26_possible_marker_stone_bug.recording` (a user recording): the table is full
+(999 entities) around frame 23880; by frame 23887 no class 2 type 0/1/3 entity is left. Ticks
+23882-23887 match the original byte for byte. In ticks 23883 and 23885 the original makes 129 and 134
+`NewEvent` calls, 120 and 128 of them from 10/17 ring explosions (via 0x25E31), and overwrites 64 type 3
+and 48 type 1 stones, then 127 trees.
