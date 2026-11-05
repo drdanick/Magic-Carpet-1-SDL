@@ -13,9 +13,10 @@
 #  * Breakpoints on exit/_exit show who terminated the game (it calls exit() on many errors).
 #  * The full debugger log path is printed at the end.
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
-# first Python that really runs (on Windows "python3" may be the Microsoft Store stub)
+# $PYTHON, else the repo's virtual environment, else the first Python that really runs (on Windows "python3"
+# may be the Microsoft Store stub)
 PY="$PYTHON"
-if [ -z "$PY" ]; then for p in python3 python; do "$p" -c "" 2> /dev/null && { PY="$p"; break; }; done; fi
+if [ -z "$PY" ]; then for p in "$REPO/.venv/Scripts/python" "$REPO/.venv/bin/python" python3 python; do "$p" -c "" 2> /dev/null && { PY="$p"; break; }; done; fi
 EXE=""
 if [ "$1" == "--build" ]; then
   for n in remc1.exe remc1; do [ -f "$2/$n" ] && EXE="$(cd "$2" && pwd)/$n"; done

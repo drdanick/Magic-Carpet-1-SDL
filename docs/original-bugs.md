@@ -19,6 +19,8 @@ Status:
 | 5 | Level performance screen draws with a freed font | `ShowLevelPerformance_4E5B0_4E8F0` | worked around |
 | 6 | Terrain smoothing reads in front of the map on its first row | `sub_360C0_36480` | fixed |
 | 7 | Castles built among walls: the site check looks at one quarter of the site | `IsCastleSiteFree_12F70` | kept |
+| 8 | Full entity table recycles live entities (balloons vanish, HUD divides by zero) | `NewEvent_372C0_37680` | fixed |
+| 9 | A creature dying while the entity table is full drops no mana | `sub_1A800`, `sub_27690` | kept |
 
 ## 1. Stuck explosion after a worm segment dies (kept)
 
@@ -109,3 +111,44 @@ target or runs out of time. A castle can therefore stand right next to walls, an
 (192, 64). The 8x8 window is the original's own loop (`sar`, `sub al, 8` at 0x1302D).
 `tools/diff_funcs.py --func AiChooseCastleSite_13F00` gives identical results for wizards 105 and 109 on eight
 snapshots between frames 1300 and 6000, including frame 3100, where wizard 109 picks (192, 64).
+
+## 8. Full entity table recycles live entities: castle balloons vanish, HUD divides by zero (fixed)
+
+**Symptom:** on level 19 the game crashes (integer divide by zero) while lightning bolts are flying
+around; just before, two of the player's castle balloons have disappeared.
+
+**Cause:** the game has 999 entity slots. When the free list is empty, `NewEvent_372C0_37680` takes a
+slot from a second list of "recyclable" entities (flags `0x20400`) and overwrites it. That list is
+only rebuilt now and then (`sub_37220_375E0`: level start, wizard rebirth, castle code). In between,
+listed entities die and their slots get reused by entities that must not be recycled. The original
+recycles them anyway. On level 19 the list held both slots of the player's balloons (class 3
+model 3), a mana ball (class 10 model 39) and other live entities. A lightning bolt
+(`LightningBoltTick_535E0_53920`) needed so many new entities that it reached those entries and
+turned the balloons into its own pieces. The castle's balloon slots (`Type_160::var_52`) still named
+them. The HUD (`sub_22E50`, 0x23531) then divided by the new entity's max mana, which is 0.
+
+**Confirmed:** `level19.recording` (a user recording): ticks 12400-12598 match the original byte for
+byte. Run on the port's state after tick 12598, the original's `DrawGameFrame_20FB0` faults on the
+same `idiv` (`tools/diff_call.py`). The free list is empty and 9 of the 155 recycle entries are
+stale.
+
+**Fix:** `NewEvent_372C0_37680` skips recycle entries whose slot now holds a live entity without the
+recyclable flags (`// PORT:`). This only changes the game when the entity table is full.
+
+## 9. A creature dying while the entity table is full drops no mana (kept)
+
+**Symptom:** at the end of level 22 a big crab that was shooting lightning dies without leaving a mana
+ball; the small crabs killed right after it drop theirs.
+
+**Cause:** a dying creature (`sub_1A800`) turns its mana into a mana ball (`sub_27690`, class 10
+type 39) and leaves a class 10 type 1 entity, both through `CreateEntity_373F0_377B0`. When the
+entity table is full, `NewEvent_372C0_37680` returns null and both are silently skipped; the mana is
+lost. Lightning bolts fill the table: each bolt is drawn with many class 9 type 9 pieces
+(`LightningBoltTick_535E0_53920`). On level 22 the big crab's own lightning held 277 slots, and in the
+tick it died the bolts took the last 30 free slots (66 new pieces) before the crab's death ran. The
+recycle list was empty. The small crabs died a few ticks later, after pieces had been freed.
+
+**Confirmed:** `level22.recording` (a user recording): the big crab (entity 995, max life 10000,
+3572 mana) is fatally hit at frame 12270 and freed by `sub_1A800` (0x1A84B) in the tick of frame
+12272. Ticks 12269-12274 match the original byte for byte; run on that state, the original's
+`CreateEntity` calls from 0x276E5 (mana ball) and 0x1A836 return 0 with the free list at -1.

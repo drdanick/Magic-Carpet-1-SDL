@@ -321,11 +321,6 @@ typedef struct {// len 20
 	uint8_t stub[20];
 }
 Type_AE400_20;
-typedef struct {// 8 bytes; str_9177[8] spans 64 (offset 9177..9241)
-	axis_3d v_9177;
-	uint16 v_9181;
-}
-Type_AE400_9177;
 
 typedef union {
 	uint8_t byte[4];
@@ -559,8 +554,11 @@ typedef struct {//size 232713
 	Type_settings set;
 
 	uint8 stub11[544];
-	Type_AE400_9177 str_9177[8];// len 48
-	uint8 stub12[2033];
+	// Start position of each player's wizard (level records class 3 types 4..11, sub_37720_37AE0 & co.),
+	// 6 bytes each as in the original (AE400 + 0x23D9 + 6 * player). Was an 8-byte struct: every computer
+	// wizard started in the wrong place.
+	axis_3d playerStart_9177[8];// len 48
+	uint8 stub12[2049];
 	TypeStrAE400_13323 str_11274;
 	TypeStrAE400_13323 str_13323[8];//fix
 	char var_29715[8][10];// 5 - arrows

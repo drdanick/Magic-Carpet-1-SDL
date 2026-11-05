@@ -354,6 +354,7 @@ debug.txt
 *.bak
 /build/
 /out/
+/.venv/
 /vcpkg_installed/
 CMakeUserPresets.json
 

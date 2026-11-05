@@ -1,0 +1,12 @@
+# Level 1: fly forward, pause with P for 200 frames, unpause, fly on. While paused the world must stand
+# still (the entity tick and two other per-frame calls are skipped, as in the original); verified with
+# tools/diff_tick.py against CARPET.EXE.
+#! --exit-after-frames 900
+60 lclick 580 266
+150 key Escape
+250 lclick 55 125
+380 mouse 320 200
+400 keydown Up
+500 key P
+700 key P
+800 keyup Up

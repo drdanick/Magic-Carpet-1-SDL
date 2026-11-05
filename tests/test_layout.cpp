@@ -31,13 +31,36 @@ TEST(Layout, GameStateStructOffsets)
 	EXPECT_EQ(offsetof(T, var_u32_593), 593u);
 	EXPECT_EQ(offsetof(T, var_u32_4593), 4593u);
 	EXPECT_EQ(offsetof(T, var_u32_4597), 4597u);
-	EXPECT_EQ(offsetof(T, str_9177), 9177u);
+	EXPECT_EQ(offsetof(T, playerStart_9177), 9177u);
+	EXPECT_EQ(sizeof(T::playerStart_9177), 48u); // 8 players x 6 bytes, as in the original
+	EXPECT_EQ(offsetof(T, str_11274), 11274u);
 	EXPECT_EQ(offsetof(T, str_13323), 13323u);
 	EXPECT_EQ(offsetof(T, var_29715), 29715u);
 	EXPECT_EQ(offsetof(T, str_29795), 29795u);
 	EXPECT_EQ(offsetof(T, str_193795), 193795u);
 	EXPECT_EQ(offsetof(T, str_232607), 232607u);
 	EXPECT_EQ(sizeof(T), 232713u);
+}
+
+// The level-start reset (sub_3FB30_3FE70) clears these fields with the original's byte counts: the port's
+// field must be exactly that wide (an 8-byte element where the original has 6 moved every computer wizard's
+// start position).
+TEST(Layout, ResetFieldSizes)
+{
+	using A = Type_str_AE400_AE3F0;
+	using B = Type_str_AE408_AE3F8;
+	EXPECT_EQ(sizeof(A::str_12), 20u);
+	EXPECT_EQ(sizeof(A::var_u32_32), 4u);
+	EXPECT_EQ(sizeof(A::var_u16_36), 2u);
+	EXPECT_EQ(sizeof(A::var_u16_38), 2u);
+	EXPECT_EQ(sizeof(A::var_u32_40), 4u);
+	EXPECT_EQ(sizeof(A::str_232607), 106u);
+	EXPECT_EQ(sizeof(A::playerStart_9177), 48u);
+	EXPECT_EQ(sizeof(A::str_29795), 164000u);
+	EXPECT_EQ(sizeof(B::str_93), 16u);
+	EXPECT_EQ(sizeof(B::str_184), 14u);
+	EXPECT_EQ(sizeof(B::var_u32_36378), 4u);
+	EXPECT_EQ(sizeof(B::str_36382x), 80u);
 }
 
 TEST(Layout, Type160KnownOffsets)
