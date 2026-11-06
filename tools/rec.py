@@ -14,8 +14,8 @@ play:   builds a temporary C: drive (install without saves + the bundle's saves)
 
 Options: --data DIR (default $REMC1_DATA_DIR, else C:/mc1data on Windows, ~/mc1data elsewhere), --exe
 PATH (default $REMC1_EXE, else the newest build under build/, see remc1_paths.py), --headless (play
-only). Arguments after
-"--" go to remc1.
+only; passes --no-render, which skips the 3D view and is about 8x faster; --render keeps it). Arguments
+after "--" go to remc1.
 """
 import argparse
 import os
@@ -69,6 +69,8 @@ def play(a, extra):
                "--input-script", os.path.abspath(script)]
         if a.headless:
             cmd.append("--headless")
+            if not a.render:
+                cmd.append("--no-render")   # the game state does not depend on the 3D view
         rc, desync = run_game(cmd + extra, a.exe)
     print(f"exit code {rc}; " + (desync or "no desync reported"))
     return rc
@@ -81,7 +83,8 @@ def main():
     ap.add_argument("--data", default=recording.DEFAULT_DATA)
     ap.add_argument("--exe")
     ap.add_argument("--force", action="store_true", help="record: replace an existing bundle")
-    ap.add_argument("--headless", action="store_true", help="play: no window")
+    ap.add_argument("--headless", action="store_true", help="play: no window (and no 3D view, see --render)")
+    ap.add_argument("--render", action="store_true", help="play --headless: draw the 3D view anyway")
     ap.add_argument("--keep-saves", action="store_true", help="play a legacy .txt with the install's current saves")
     a, extra = ap.parse_known_args()
     extra = [x for x in extra if x != "--"]

@@ -21,6 +21,8 @@ Status:
 | 7 | Castles built among walls: the site check looks at one quarter of the site | `IsCastleSiteFree_12F70` | kept |
 | 8 | Full entity table recycles live entities (balloons vanish, HUD divides by zero) | `NewEvent_372C0_37680` | fixed |
 | 9 | A creature dying while the entity table is full drops no mana | `sub_1A800`, `sub_27690` | kept |
+| 10 | Big explosions recycle all trees and standing stones; their triggers stay | `NewEvent_372C0_37680` | kept |
+| 11 | A volcano eruption removes whatever now holds its old 10/19 slot (castle balloon: HUD divides by zero) | `sub_25EC0` | fixed |
 
 ## 1. Stuck explosion after a worm segment dies (kept)
 
@@ -152,3 +154,48 @@ recycle list was empty. The small crabs died a few ticks later, after pieces had
 3572 mana) is fatally hit at frame 12270 and freed by `sub_1A800` (0x1A84B) in the tick of frame
 12272. Ticks 12269-12274 match the original byte for byte; run on that state, the original's
 `CreateEntity` calls from 0x276E5 (mana ball) and 0x1A836 return 0 with the free list at -1.
+
+## 10. Big explosions recycle all trees and standing stones; their triggers stay (kept)
+
+**Symptom:** on level 26 a large ring of standing stones with spell jars inside, surrounded by trees,
+disappears together with every other tree and stone on the map. The triggers the stones marked
+(class 11 type 2) are still there.
+
+**Cause:** scenery (class 2: trees, stones) is on the recycle list. When the entity table is full,
+`NewEvent_372C0_37680` takes new slots from that list (see #8) and overwrites them for good. An expanding
+explosion ring (class 10 type 17, `sub_25CE0`, started by a class 9 type 3 missile) creates one explosion
+(10/0) per point of a growing ring every tick. Three of them at once, all from the player's wizard,
+made 120-130 explosions per tick. With the table full, those took the scenery slots: 359 trees
+(class 2 type 0), 93 standing stones (type 3) and 56 type 1 stones were all gone within five ticks.
+Triggers are not recyclable, so they stay where their stones were.
+
+**Confirmed:** `level26_possible_marker_stone_bug.recording` (a user recording): the table is full
+(999 entities) around frame 23880; by frame 23887 no class 2 type 0/1/3 entity is left. Ticks
+23882-23887 match the original byte for byte. In ticks 23883 and 23885 the original makes 129 and 134
+`NewEvent` calls, 120 and 128 of them from 10/17 ring explosions (via 0x25E31), and overwrites 64 type 3
+and 48 type 1 stones, then 127 trees.
+
+## 11. A volcano eruption removes whatever now holds its old 10/19 slot (fixed)
+
+**Symptom:** at the end of level 30 the game crashes (integer divide by zero) in the HUD.
+
+**Cause:** the eruption emitter (class 10 type 18, `sub_25EC0`) keeps the index of the class 10 type 19
+entity it creates in game state +38. When the next eruption starts, it removes that entity
+(`sub_41E80_421C0`, 0x26035) without checking that the slot still holds it. The 10/19 entity ends on
+its own, and in `level30.recording` most eruption starts find the slot already free; in between, anything
+can take it. At the crash it held the third balloon of the player's castle. The eruption removed the
+balloon, an explosion ring (10/17) took the slot in the next tick, and the castle's balloon slot
+(`Type_160::var_52`) still named it. The HUD (`sub_22E50`) then divided by the new entity's max mana, which is 0, as in #8. Earlier in the
+same recording (frame 29760) the stale index removed a live mana ball. Game state +36 (the active
+emitter) goes stale the same way: a new eruption writes +26 = 250 into whatever entity holds that slot
+(a class 5 creature in the crash tick). That write is kept.
+
+**Confirmed:** `level30.recording` (a user recording): game state +38 is 620 (a class 3 type 3 balloon)
+at the start of tick 46884; in that tick the original removes entity 620 from the eruption (0x26035,
+entity 988, class 10 type 18), and in tick 46885 an explosion ring takes the slot. Both ticks match the
+original byte for byte.
+
+**Fix:** `sub_25EC0` only removes a live entity named by +38 if it is still class 10 type 19; free slots
+are passed on as in the original (`// PORT:`). The recording now replays exactly up to frame 29760 (the
+mana ball) and no longer crashes (since the heal spell fix of 2026-11-04 it desyncs from frame 5640, the
+first heal; the recording was made with a port that healed for free).

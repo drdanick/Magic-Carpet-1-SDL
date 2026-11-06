@@ -180,6 +180,7 @@ are stripped first (`portability/Settings.cpp`).
 | `--record-input <file>` | record live input in the same format, **including timer ticks** (`T idx n` lines) so a real-time session replays exactly |
 | `--deterministic [N]` | game timer advances N ticks per frame (no wall clock) |
 | `--headless` | SDL dummy video driver, live input ignored (replays, CI) |
+| `--no-render` | skip the 3D world view (`DrawWorld_30D90`), about 8x faster replays; ignored when frames are dumped, hashed or snapshotted. `rec.py play --headless` passes it (`--render` turns it off) |
 | `--frame-hashes <file>` | log `frame WxH fnv1a64(framebuffer+palette)` per presented frame |
 | `--state-trace <file>` | log `<frame> <state hash> <image hash>` per frame (`tools/regress.py`) |
 | `--state-dump <frame>:<file>` | write the normalised game state of one frame (`tools/diff_state.py`) |
@@ -257,6 +258,13 @@ Fresh C: drive (as the replay tests), headless run, frame dumps, log tail (crash
 Recordings made with `--record-input` contain `C <frame> <hash>` lines every 30 frames (hash of the
 simulation state: random seed + live entities, `Port_GameStateHash`). A replay compares them and logs
 `DESYNC at frame N` at the first mismatch - check for it before trusting what a replay shows.
+Headless replays skip the 3D view (`--no-render`): the game state never depends on `DrawWorld_30D90`.
+The rest of the frame draw does run and can matter: the spell menu works out which spell is under the
+mouse while it draws (`var_u8_22` of `str_AE408_AE3F8`), as in the original, so skipping all of
+`DrawGameFrame_20FB0` desyncs at the first spell pick.
+Frame dumps still draw every frame: the renderer keeps animation/texture state across frames, so drawing
+only from N frames before a dump does not give the same image (tested up to 300 frames of warm-up), and
+`/Ob2` instead of `/Ob1` gained nothing (2026-11-04). A fully drawn replay runs at ~220 frames/s.
 While an input script plays, live SDL input is ignored (also windowed). `run_recording.py --real-audio`
 uses the real audio device (recordings made with sound on can depend on it). Old recordings (no `C` lines) cannot be verified.
 Key names are SDL's (`SDL_GetScancodeName`) and may contain spaces (`keydown Left Shift`) - the parser
@@ -460,6 +468,8 @@ Entity record (`str_29795[i]`, game state + 29795 + 164*i; entity 0 unused): +8 
 leader/follower (worm segments), +64 class, +65 type (called model in places), +70 state, +72 position
 (`axis_3d`, x/y in 1/256 tile, z), +132 mana delta, +136/+140 mana max/current, +160 wizard data
 (`Type_1103`). Free list top: game state +40 (`var_u32_40`); recycle list top `var_u32_4593`.
+Game state +36 / +38: the active volcano eruption (10/18) and its 10/19 entity (both can be stale,
+original-bugs #11).
 
 Tables: `dword_96902[class]` holds the state handlers (`.str_0[state].data6`, called every tick by
 `UpdateEntities_41780`) and the constructors (`.str_4[type].data6`, `CreateEntity_373F0_377B0(pos,
@@ -467,6 +477,9 @@ class, type)`). The state index is global within a class, not per type.
 
 | Class | Type | What | Notes |
 |---|---|---|---|
+| 2 | 0 | tree (palm) | scenery, on the recycle list (original-bugs #10); state 2 = burnt (inferred) |
+| 2 | 1 | stone (kind not checked) | scenery, recyclable |
+| 2 | 3 | standing stone (the stone rings that mark triggers) | scenery, recyclable |
 | 3 | 0 | wizard on a carpet (player 0 = local human) | model 0 human, 1 computer in the wizard list; `Type_1103` at +160 |
 | 3 | 2 | castle | inferred (level 26: life 40000, owner = wizard) |
 | 3 | 3 | balloon | original-bugs #8 |
@@ -474,13 +487,19 @@ class, type)`). The state index is global within a class, not per type.
 | 5 | 3 | worm segment | chain via +52/+54, original-bugs #1 |
 | 5 | 5 | crab (big ones shoot lightning) | seeks mana balls, raises more through 10/52 |
 | 5 | 16 | wyvern | life 100000, mana 50000 (level 26) |
+| 9 | 3 | missile that starts an explosion ring (10/17) when it lands | `sub_3AC70` called from 0x52AAA |
 | 9 | 9 | lightning bolt piece | `LightningBoltTick_535E0_53920` |
 | 10 | 0 | explosion | `sub_24F60` |
 | 10 | 1 | created with the mana ball when a creature dies | `sub_1A800` |
 | 10 | 6 | spawned when a spell-7 jar in state 3t+2 is picked up | `SpellJarSpawnTick_55D30_56260` |
+| 10 | 16 | lava from a volcano eruption | created by 10/18 |
+| 10 | 17 | expanding explosion ring: one 10/0 explosion per ring point per tick | `sub_25CE0` |
+| 10 | 18 | volcano eruption emitter (128 ticks, then removes itself) | `sub_25EC0` |
+| 10 | 19 | created by each eruption start, index in game state +38 | |
 | 10 | 27 | terrain-raising level-build step | `RaiseTerrainStrip*` |
 | 10 | 39 | mana ball | mana at +140 |
 | 10 | 52 | crab spawn timer (state 0x38) | |
+| 11 | 2 | trigger (marked by standing stones on level 26; not recyclable) | life 300 |
 | 12 | 0..23 | spell, type = spell number (0 fireball, 2 speed, 16 castle) | states below |
 
 Spells (class 12), spell t: state 3t = owned, handler = the spell's cast routine (`CastFireball_56090`,
@@ -789,6 +808,11 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     up (`level26_spell_bug.recording`). The same function ORed `byte[0] & 0x40000` (always 0) into one
     flag byte instead of the dword (pattern #65). Found with `diff_tick` at the pickup frame
     (`+70: before 23 orig 21 port 23`).
+68. **Statements commented out upstream.** `HealSpellTick_56270_567A0` had `//fix v1[33] = -cost;` where
+    the original sets the caster's mana delta (0x56359), so healing cost no mana while the delta was not
+    already negative. Found by `diff_funcs` (`entity 720 +132: original 24 port 15`) after a 2-byte
+    `diff_tick` difference in the player's mana. Grep for `//fix` / commented-out assignments and check
+    them against `tools/orig_disasm.py`.
 
 The MC2 renderer in remc2 (`GameRenderOriginal.cpp`, e.g. `DrawSprite_41BD3`) is structurally the
 same code as MC1's `sub_2C410_2C450`/`DrawSprite_*` and uses the same scratch offsets in the BScreen
@@ -1122,6 +1146,13 @@ Known open issues:
   entity's max mana 0. The port now skips stale entries (first triggers at tick 9127 of the recording,
   so the recording replays exactly only up to there). Also pattern #65 (flag OR truncated to a byte)
   and the harmless `JUMPOUT(0x36079)` in `sub_36080_36440` (a shared epilogue) removed.
+- Fixed 2026-11-04: the heal spell cost no mana while the caster's mana delta was not negative (pattern
+  #68; `level30.recording`, frame 46500).
+- Fixed 2026-11-04: flaky access violations when a replay or game ended with AdLib music: only realtime
+  synths registered `StopPlayer` at exit, so the static destructors freed the libADLMIDI player while
+  SDL's audio thread was still in `MusicHook`. Seen as 3 crashes in 66 parallel replays.
+- Fixed 2026-11-04: crash (HUD divide by zero) at the end of `level30.recording`: a volcano eruption
+  removed a castle balloon through a stale index (original-bugs #11).
 - Fixed 2026-11-01: red spell jars that could not be picked up after the player died (pattern #67;
   `level26_spell_bug.recording`, spells 7 and 10). Pickup and death ticks (frames 2179, 2655, 2871, 13969)
   now match CARPET.EXE; the recording desyncs from frame 2190 on, as expected.

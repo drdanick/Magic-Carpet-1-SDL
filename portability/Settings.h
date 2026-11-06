@@ -53,6 +53,7 @@ struct Remc1Settings {
 	std::string stateDumpFile;
 	bool frameStats = false;   // --frame-stats: print frame-interval percentiles every 5 s (pacing work)
 	bool headless = false;     // SDL dummy video driver; live keyboard/mouse input is ignored
+	bool noRender = false;     // --no-render: skip the 3D world view (fast replays; ignored when frames are dumped/hashed)
 	int watchdogSeconds = -1;  // freeze watchdog; -1 = default (20 s for automated runs, off otherwise), 0 = off
 	int snapshotFrame = -1;    // --snapshot-frame N: dump process memory before/after the entity tick of frame N (diff harness)
 	std::vector<int> snapshotFrames; // --snapshot-frame N1,N2,...: all requested frames (snapshotFrame = the next one)

@@ -712,11 +712,13 @@ void PortMusic_Init(PortMusicDevice device)
 		else
 			OpenWavDump();
 	}
+	// Both kinds need StopPlayer at exit: without it the static destructors free the synth while SDL's audio
+	// thread can still be in MusicHook (AdLib: flaky access violations when a replay ends).
+	static const bool atExit = (atexit(StopPlayer), true);
+	(void)atExit;
 	if (realtime) {
 		sequencerThreadQuit = false;
 		sequencerThread = std::thread(SequencerThread);
-		static const bool atExit = (atexit(StopPlayer), true);
-		(void)atExit;
 	}
 	else
 		Mix_HookMusic(MusicHook, nullptr);
