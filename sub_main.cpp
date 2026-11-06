@@ -27731,7 +27731,12 @@ LABEL_5:
       {
         *(_WORD *)PTR(v8 + 24) = *(_WORD *)PTR(a1 + 24);
         v10 = 164 * *(unsigned __int16 *)PTR(dword_AE400_AE3F0() + 38);
-        if ( dword_AE400_AE3F0() + 29795 + v10 > (unsigned int)(dword_AE400_AE3F0() + 29795) )
+        // PORT: deliberate deviation (docs/original-bugs.md #11): +38 can be stale, its 10/19 gone and the slot
+        // reused by a live entity (a castle balloon on level 30, then the HUD divided by zero). Free slots are
+        // still passed on as in the original; a live entity is only removed if it is a 10/19.
+        Type_AE400_29795* old38x = (Type_AE400_29795*)PTR(dword_AE400_AE3F0() + 29795 + v10);
+        if ( dword_AE400_AE3F0() + 29795 + v10 > (unsigned int)(dword_AE400_AE3F0() + 29795)
+          && (!old38x->var_u8_29859_64 || (old38x->var_u8_29859_64 == 10 && old38x->var_u8_29860_65 == 19)) )
           sub_41E80_421C0((Type_AE400_29795*)PTR(dword_AE400_AE3F0() + 29795 + v10)); // PORT: was cast before the + (offsets counted in 164-byte entities: wild write, level 8 crash)
         *(_WORD *)PTR(dword_AE400_AE3F0() + 38) = (v9 - (dword_AE400_AE3F0() + 29795)) / 164;
       }

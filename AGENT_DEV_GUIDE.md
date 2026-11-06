@@ -460,6 +460,8 @@ Entity record (`str_29795[i]`, game state + 29795 + 164*i; entity 0 unused): +8 
 leader/follower (worm segments), +64 class, +65 type (called model in places), +70 state, +72 position
 (`axis_3d`, x/y in 1/256 tile, z), +132 mana delta, +136/+140 mana max/current, +160 wizard data
 (`Type_1103`). Free list top: game state +40 (`var_u32_40`); recycle list top `var_u32_4593`.
+Game state +36 / +38: the active volcano eruption (10/18) and its 10/19 entity (both can be stale,
+original-bugs #11).
 
 Tables: `dword_96902[class]` holds the state handlers (`.str_0[state].data6`, called every tick by
 `UpdateEntities_41780`) and the constructors (`.str_4[type].data6`, `CreateEntity_373F0_377B0(pos,
@@ -482,7 +484,10 @@ class, type)`). The state index is global within a class, not per type.
 | 10 | 0 | explosion | `sub_24F60` |
 | 10 | 1 | created with the mana ball when a creature dies | `sub_1A800` |
 | 10 | 6 | spawned when a spell-7 jar in state 3t+2 is picked up | `SpellJarSpawnTick_55D30_56260` |
+| 10 | 16 | lava from a volcano eruption | created by 10/18 |
 | 10 | 17 | expanding explosion ring: one 10/0 explosion per ring point per tick | `sub_25CE0` |
+| 10 | 18 | volcano eruption emitter (128 ticks, then removes itself) | `sub_25EC0` |
+| 10 | 19 | created by each eruption start, index in game state +38 | |
 | 10 | 27 | terrain-raising level-build step | `RaiseTerrainStrip*` |
 | 10 | 39 | mana ball | mana at +140 |
 | 10 | 52 | crab spawn timer (state 0x38) | |
@@ -1128,6 +1133,8 @@ Known open issues:
   entity's max mana 0. The port now skips stale entries (first triggers at tick 9127 of the recording,
   so the recording replays exactly only up to there). Also pattern #65 (flag OR truncated to a byte)
   and the harmless `JUMPOUT(0x36079)` in `sub_36080_36440` (a shared epilogue) removed.
+- Fixed 2026-11-04: crash (HUD divide by zero) at the end of `level30.recording`: a volcano eruption
+  removed a castle balloon through a stale index (original-bugs #11).
 - Fixed 2026-11-01: red spell jars that could not be picked up after the player died (pattern #67;
   `level26_spell_bug.recording`, spells 7 and 10). Pickup and death ticks (frames 2179, 2655, 2871, 13969)
   now match CARPET.EXE; the recording desyncs from frame 2190 on, as expected.

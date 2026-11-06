@@ -22,6 +22,7 @@ Status:
 | 8 | Full entity table recycles live entities (balloons vanish, HUD divides by zero) | `NewEvent_372C0_37680` | fixed |
 | 9 | A creature dying while the entity table is full drops no mana | `sub_1A800`, `sub_27690` | kept |
 | 10 | Big explosions recycle all trees and standing stones; their triggers stay | `NewEvent_372C0_37680` | kept |
+| 11 | A volcano eruption removes whatever now holds its old 10/19 slot (castle balloon: HUD divides by zero) | `sub_25EC0` | fixed |
 
 ## 1. Stuck explosion after a worm segment dies (kept)
 
@@ -173,3 +174,27 @@ Triggers are not recyclable, so they stay where their stones were.
 23882-23887 match the original byte for byte. In ticks 23883 and 23885 the original makes 129 and 134
 `NewEvent` calls, 120 and 128 of them from 10/17 ring explosions (via 0x25E31), and overwrites 64 type 3
 and 48 type 1 stones, then 127 trees.
+
+## 11. A volcano eruption removes whatever now holds its old 10/19 slot (fixed)
+
+**Symptom:** at the end of level 30 the game crashes (integer divide by zero) in the HUD.
+
+**Cause:** the eruption emitter (class 10 type 18, `sub_25EC0`) keeps the index of the class 10 type 19
+entity it creates in game state +38. When the next eruption starts, it removes that entity
+(`sub_41E80_421C0`, 0x26035) without checking that the slot still holds it. The 10/19 entity ends on
+its own, and in `level30.recording` most eruption starts find the slot already free; in between, anything
+can take it. At the crash it held the third balloon of the player's castle. The eruption removed the
+balloon, an explosion ring (10/17) took the slot in the next tick, and the castle's balloon slot
+(`Type_160::var_52`) still named it. The HUD (`sub_22E50`) then divided by the new entity's max mana, which is 0, as in #8. Earlier in the
+same recording (frame 29760) the stale index removed a live mana ball. Game state +36 (the active
+emitter) goes stale the same way: a new eruption writes +26 = 250 into whatever entity holds that slot
+(a class 5 creature in the crash tick). That write is kept.
+
+**Confirmed:** `level30.recording` (a user recording): game state +38 is 620 (a class 3 type 3 balloon)
+at the start of tick 46884; in that tick the original removes entity 620 from the eruption (0x26035,
+entity 988, class 10 type 18), and in tick 46885 an explosion ring takes the slot. Both ticks match the
+original byte for byte.
+
+**Fix:** `sub_25EC0` only removes a live entity named by +38 if it is still class 10 type 19; free slots
+are passed on as in the original (`// PORT:`). The recording now replays exactly up to frame 29760 (the
+mana ball) and no longer crashes.
