@@ -1140,6 +1140,9 @@ Known open issues:
   and the harmless `JUMPOUT(0x36079)` in `sub_36080_36440` (a shared epilogue) removed.
 - Fixed 2026-11-04: the heal spell cost no mana while the caster's mana delta was not negative (pattern
   #68; `level30.recording`, frame 46500).
+- Fixed 2026-11-04: flaky access violations when a replay or game ended with AdLib music: only realtime
+  synths registered `StopPlayer` at exit, so the static destructors freed the libADLMIDI player while
+  SDL's audio thread was still in `MusicHook`. Seen as 3 crashes in 66 parallel replays.
 - Fixed 2026-11-04: crash (HUD divide by zero) at the end of `level30.recording`: a volcano eruption
   removed a castle balloon through a stale index (original-bugs #11).
 - Fixed 2026-11-01: red spell jars that could not be picked up after the player died (pattern #67;
