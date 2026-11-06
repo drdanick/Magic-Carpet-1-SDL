@@ -942,6 +942,16 @@ SDL_Scancode Port_RemapKey(SDL_Scancode sc)
 	return sc;
 }
 
+// --no-render: DrawWorld_30D90 (the 3D view) changes no game state, so replays can skip it (about 8x faster;
+// checked against the recordings' state hashes). The rest of DrawGameFrame_20FB0 still runs: the spell menu
+// finds the spell under the mouse while drawing, as in the original. The renderer keeps animation/texture
+// state from frame to frame, so runs that dump, hash or snapshot frames draw every frame.
+bool Port_DrawWorldThisFrame()
+{
+	return !g_settings.noRender || !g_settings.dumpFramesDir.empty() || !g_settings.frameHashFile.empty()
+		|| !g_settings.stateTraceFile.empty() || g_settings.snapshotWhat != "tick";
+}
+
 static void DebugFrameHooks()
 {
 	presentedFrames++;

@@ -180,6 +180,7 @@ are stripped first (`portability/Settings.cpp`).
 | `--record-input <file>` | record live input in the same format, **including timer ticks** (`T idx n` lines) so a real-time session replays exactly |
 | `--deterministic [N]` | game timer advances N ticks per frame (no wall clock) |
 | `--headless` | SDL dummy video driver, live input ignored (replays, CI) |
+| `--no-render` | skip the 3D world view (`DrawWorld_30D90`), about 8x faster replays; ignored when frames are dumped, hashed or snapshotted. `rec.py play --headless` passes it (`--render` turns it off) |
 | `--frame-hashes <file>` | log `frame WxH fnv1a64(framebuffer+palette)` per presented frame |
 | `--state-trace <file>` | log `<frame> <state hash> <image hash>` per frame (`tools/regress.py`) |
 | `--state-dump <frame>:<file>` | write the normalised game state of one frame (`tools/diff_state.py`) |
@@ -257,6 +258,13 @@ Fresh C: drive (as the replay tests), headless run, frame dumps, log tail (crash
 Recordings made with `--record-input` contain `C <frame> <hash>` lines every 30 frames (hash of the
 simulation state: random seed + live entities, `Port_GameStateHash`). A replay compares them and logs
 `DESYNC at frame N` at the first mismatch - check for it before trusting what a replay shows.
+Headless replays skip the 3D view (`--no-render`): the game state never depends on `DrawWorld_30D90`.
+The rest of the frame draw does run and can matter: the spell menu works out which spell is under the
+mouse while it draws (`var_u8_22` of `str_AE408_AE3F8`), as in the original, so skipping all of
+`DrawGameFrame_20FB0` desyncs at the first spell pick.
+Frame dumps still draw every frame: the renderer keeps animation/texture state across frames, so drawing
+only from N frames before a dump does not give the same image (tested up to 300 frames of warm-up), and
+`/Ob2` instead of `/Ob1` gained nothing (2026-11-04). A fully drawn replay runs at ~220 frames/s.
 While an input script plays, live SDL input is ignored (also windowed). `run_recording.py --real-audio`
 uses the real audio device (recordings made with sound on can depend on it). Old recordings (no `C` lines) cannot be verified.
 Key names are SDL's (`SDL_GetScancodeName`) and may contain spaces (`keydown Left Shift`) - the parser

@@ -176,6 +176,9 @@ static void PrintUsage()
 		"  --watchdog N                           abort with a stack trace if no frame is shown for N s\n"
 		"                                         (default 20 for scripted/headless runs, 0 = off)\n"
 		"  --headless                           no visible window (SDL dummy driver), live input ignored\n"
+		"  --no-render                          skip drawing the 3D world view (about 8x faster replays; the\n"
+		"                                         game state does not depend on it); ignored when frames are\n"
+		"                                         dumped, hashed or snapshotted\n"
 		"  --frame-hashes <file>                  log a hash of every presented frame (replay tests)\n"
 		"  --state-trace <file>                   log game-state + frame hashes of every frame (tools/regress.py)\n"
 		"  --state-dump <frame>:<file>            write the normalised game state of one frame (tools/diff_state.py)\n"
@@ -257,6 +260,7 @@ std::vector<std::string> InitSettings(int argc, char* argv[])
 		}
 		else if (a == "--frame-stats") g_settings.frameStats = true;
 		else if (a == "--headless") g_settings.headless = true;
+		else if (a == "--no-render") g_settings.noRender = true;
 		else if (a == "--watchdog") g_settings.watchdogSeconds = atoi(next("seconds").c_str());
 		else if (a == "--c-drive") g_settings.cDrivePath = fs::path(next("a directory")).generic_string();
 		else if (a == "--deterministic") {

@@ -25326,6 +25326,8 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
             DrawGameFrame_20FB0_index++;
             DrawGameFrame_20FB0_index--;
         }
+        extern bool Port_DrawWorldThisFrame();
+        if (Port_DrawWorldThisFrame()) // PORT: --no-render skips the world view (no game state depends on it)
         DrawWorld_30D90_30DD0(//draw screen without minimap
 			str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].str_13895_572[v4x + 1].axis.x,
 			str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].str_13895_572[v4x + 1].axis.y,
