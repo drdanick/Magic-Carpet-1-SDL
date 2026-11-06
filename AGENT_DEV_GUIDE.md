@@ -800,6 +800,11 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     up (`level26_spell_bug.recording`). The same function ORed `byte[0] & 0x40000` (always 0) into one
     flag byte instead of the dword (pattern #65). Found with `diff_tick` at the pickup frame
     (`+70: before 23 orig 21 port 23`).
+68. **Statements commented out upstream.** `HealSpellTick_56270_567A0` had `//fix v1[33] = -cost;` where
+    the original sets the caster's mana delta (0x56359), so healing cost no mana while the delta was not
+    already negative. Found by `diff_funcs` (`entity 720 +132: original 24 port 15`) after a 2-byte
+    `diff_tick` difference in the player's mana. Grep for `//fix` / commented-out assignments and check
+    them against `tools/orig_disasm.py`.
 
 The MC2 renderer in remc2 (`GameRenderOriginal.cpp`, e.g. `DrawSprite_41BD3`) is structurally the
 same code as MC1's `sub_2C410_2C450`/`DrawSprite_*` and uses the same scratch offsets in the BScreen
@@ -1133,6 +1138,8 @@ Known open issues:
   entity's max mana 0. The port now skips stale entries (first triggers at tick 9127 of the recording,
   so the recording replays exactly only up to there). Also pattern #65 (flag OR truncated to a byte)
   and the harmless `JUMPOUT(0x36079)` in `sub_36080_36440` (a shared epilogue) removed.
+- Fixed 2026-11-04: the heal spell cost no mana while the caster's mana delta was not negative (pattern
+  #68; `level30.recording`, frame 46500).
 - Fixed 2026-11-04: crash (HUD divide by zero) at the end of `level30.recording`: a volcano eruption
   removed a castle balloon through a stale index (original-bugs #11).
 - Fixed 2026-11-01: red spell jars that could not be picked up after the player died (pattern #67;

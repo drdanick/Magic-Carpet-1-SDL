@@ -197,4 +197,5 @@ original byte for byte.
 
 **Fix:** `sub_25EC0` only removes a live entity named by +38 if it is still class 10 type 19; free slots
 are passed on as in the original (`// PORT:`). The recording now replays exactly up to frame 29760 (the
-mana ball) and no longer crashes.
+mana ball) and no longer crashes (since the heal spell fix of 2026-11-04 it desyncs from frame 5640, the
+first heal; the recording was made with a port that healed for free).

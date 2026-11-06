@@ -1174,7 +1174,7 @@ int sub_55DD0_56300(int a1, int *a2);
 int sub_55E80_563B0(int a1, int a2);
 // int sub_55EF0_56420(__int16 a1, int a2, int a3);
 int CastFireball_56090_565C0(int a1);
-void sub_56270_567A0(int a1);
+void HealSpellTick_56270_567A0(int a1);
 void SpeedSpellTick_56380_568B0(int a1);
 int sub_56510_56A40(int a1);
 int sub_566C0(int a1);
@@ -4079,7 +4079,7 @@ Type_254A34x str_2563D8[] = {//2563D8
 { 0x002548F4,0x0000,PORT_FN(CastFireball_56090_565C0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))sub_56250,0x0001,0x0000 },
 { 0x002548F4,0x0002,sub_56260,0x0001,0x0000 },
-{ 0x002548F4,0x0003,PORT_FN(sub_56270_567A0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0003,PORT_FN(HealSpellTick_56270_567A0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))sub_56250,0x0001,0x0000 },
 { 0x002548F4,0x0005,sub_56260,0x0001,0x0000 },
 { 0x002548F4,0x0006,PORT_FN(SpeedSpellTick_56380_568B0, void(Type_AE400_29795*)),0x0001,0x0000 },
@@ -64428,7 +64428,10 @@ LABEL_5:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_56270_567A0(int a1)
+/// Per-tick handler of an active heal spell (class 12 type 1, state 3): while +48 ticks remain and the
+/// caster can pay, heals it by 5% of its max life and charges the spell's +136 mana through its mana
+/// delta (+132).
+void HealSpellTick_56270_567A0(int a1)
 {
   _DWORD *v1; // ebx
   int v2; // edi
@@ -64452,7 +64455,7 @@ void sub_56270_567A0(int a1)
           v1[3] = v3;
         if ( (int)v1[33] >= 0 )
         {
-          //fix v1[33] = -*(_DWORD *)(a1 + 136);
+          v1[33] = -*(_DWORD *)PTR(a1 + 136); // PORT: was commented out (upstream), so healing cost no mana (0x56359)
           --*(_WORD *)PTR(a1 + 48);
           return;
         }
