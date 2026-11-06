@@ -15,10 +15,11 @@ You need your own copy of the game - no game data is included.
   [libADLMIDI](https://github.com/Wohlstand/libADLMIDI)) or the General MIDI soundtrack on a SoundFont
   ([FluidSynth](https://www.fluidsynth.org)) or the Windows MIDI synth, or the Roland MT-32 soundtrack
   ([Munt](https://github.com/munt/munt), with your own MT-32 or CM-32L ROMs: `--mt32-roms <dir>`), including the danger music that fades in when enemies are
-  near; the card chosen in the game's sound setup decides, or `--music-device adlib|gm|none`
+  near; the card chosen in the game's sound setup decides, or `--music-device adlib|gm|mt32|none`
 - settings in `config.json` and on the command line (`remc1 --help`)
 - input recording and deterministic replay, used by the test suite and for bug reports
-  ([docs/recordings.md](docs/recordings.md))
+  ([docs/recordings.md](docs/recordings.md)); headless replays skip drawing the 3D view and run about
+  8x faster
 - tests: unit, game-data and replay tests (GoogleTest / CTest)
 
 ## Getting started
@@ -29,7 +30,7 @@ You need your own copy of the game - no game data is included.
    |----------|-------|
    | Windows (Visual Studio 2022) | [docs/building-windows.md](docs/building-windows.md) |
    | Linux (Ubuntu, Debian, Fedora, Arch) | [docs/building-linux.md](docs/building-linux.md) |
-   | macOS (Homebrew) | [docs/building-macos.md](docs/building-macos.md) |
+   | macOS (Homebrew) - does not build yet | [docs/building-macos.md](docs/building-macos.md) |
 
 2. **Extract the game data** from a GOG install (Python 3, no other dependencies):
    ```bash
@@ -60,9 +61,10 @@ buttons does *not* open the spell map (`bothButtonsSpellMenu`, off by default). 
 
 ## Status
 
-The game is playable on Windows. It has been tested **from the start through level 13**; later levels
-have not been played through yet. Recordings of levels 1-11 replay identically, frame by frame (whole
-game state and every image), on Windows x64 and on Linux with GCC and Clang (`tools/regress.py`);
+The game is playable on Windows and Linux. It has been played **from the start through level 31**;
+later levels have not been played yet. Replays are exact: a recording replays identically, frame by frame (whole
+game state and every image), on Windows x64 and on Linux with GCC and Clang (`tools/regress.py`), as
+long as no gameplay fix changes what it covers;
 interactive play on Linux has had little testing so far. Fixes are verified against the original executable with a differential harness
 in `tools/` (the original machine code is run under Unicorn on a memory dump of the port and the
 results compared; Windows only).
@@ -72,11 +74,12 @@ Bugs found in the original game itself, and how the port handles them, are liste
 
 ### Remaining work
 
-- **Testing:** levels 14 onwards; multiplayer/network play is untested.
+- **Testing:** levels 32 onwards; multiplayer/network play is untested.
 - **Known bugs:**
   - 640x480: the sprite blitter draws occasional horizontal streaks the original does not;
   - the main-menu attract demo (after about 2 minutes idle) is unverified and may crash.
-- **Platforms:** Windows on ARM builds but has not been run yet; macOS is untested; no CI yet.
+- **Platforms:** Windows on ARM builds but has not been run yet; macOS does not build yet (Apple's arm64
+  linker rejects the unaligned pointers in the game's packed tables); no CI yet.
 - **Code structure:** the game code is still one large decompiled file (`sub_main.cpp`); splitting it
   into modules and naming the remaining `sub_*` routines is ongoing.
 - An OpenGL renderer (the presenter interface is in place, only SDL2 exists today).
