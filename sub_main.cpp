@@ -309,7 +309,7 @@ void DynAnimBankAnimatePage_10EB0(Type_sub_AE3E0* a1);
 void DynAnimBankDeletePage_10F10(Type_sub_AE3E0* a1);
 Type_sub_AE3E0* FindTmapAnim_10FD0(Type_AE3E0* a1, __int16 a2);
 void FreeAnimSequences_11010(Type_AE3E0** a1);
-bool sub_11050();
+bool RunningFromCdrom_11050();
 void CheckArray_111B0(int a1, int a2);
 int StartSearch_11410(int a1, int a2);
 void StopSearch_11490(int a1);
@@ -971,13 +971,13 @@ unsigned int GetDistanceXy_423D0_42710(axis_3d* a1, axis_3d* a2);
 int GetDistanceXySquared_42410_42750(_WORD *a1, _WORD *a2);
 void SetState_424F0_42830(Type_AE400_29795* a1, unsigned __int8 a2);
 int Animate_42510_42850(Type_AE400_29795* a1);
-void sub_42530_42870(char a1);
-void* malloc_42540_42880(size_t size);
-void* malloc_425C0_42900(size_t size);
+void SetMemoryNumber_42530_42870(char a1);
+void* MyAlloc_42540_42880(size_t size);
+void* MyLowAlloc_425C0_42900(size_t size);
 char sub_42650(int a1, int a2);
-void free_426E0_42A20(void* buffer);
-int sub_42730_42A70(int a1, int a2);
-int sub_427A0(int a1, int a2);
+void MyFree_426E0_42A20(void* buffer);
+int MyShrink_42730_42A70(int a1, int a2);
+int MyGrow_427A0(int a1, int a2);
 int sub_42860(int a1);
 void NETAbort_428B0_42BF0();
 int NETAdd_42930(_BYTE *a1, char *a2, unsigned __int8 a3);
@@ -15259,10 +15259,10 @@ Type_AE3E0* DynAnimBankInit_10CB0(unsigned __int16 a1)
   //int v5; // eax
 
   //v1 = a1;
-  sub_42530_42870(9);
-  v2 = (Type_AE3E0*)malloc_42540_42880(sizeof(Type_AE3E0));
+  SetMemoryNumber_42530_42870(9);
+  v2 = (Type_AE3E0*)MyAlloc_42540_42880(sizeof(Type_AE3E0));
   //v3 = v2;
-  if ( v2 && ((v2->var_2 = (Type_sub_AE3E0*)malloc_42540_42880(sizeof(Type_sub_AE3E0) * a1)) != 0) )
+  if ( v2 && ((v2->var_2 = (Type_sub_AE3E0*)MyAlloc_42540_42880(sizeof(Type_sub_AE3E0) * a1)) != 0) )
   {
     v2->var_0 = a1;
     for (int i = 0; i < a1; i++)
@@ -15275,10 +15275,10 @@ Type_AE3E0* DynAnimBankInit_10CB0(unsigned __int16 a1)
   }
   else if ( v2 )
   {
-    free_426E0_42A20(v2);
+    MyFree_426E0_42A20(v2);
     v2 = nullptr;
   }
-  sub_42530_42870(10);
+  SetMemoryNumber_42530_42870(10);
   return v2;
 }
 
@@ -15405,15 +15405,16 @@ void FreeAnimSequences_11010(Type_AE3E0** a1x)
 {
   if ( *a1x )
   {
-    free_426E0_42A20((*a1x)->var_2);
+    MyFree_426E0_42A20((*a1x)->var_2);
     (*a1x)->var_2 = nullptr;
-    free_426E0_42A20((void*)*a1x);
+    MyFree_426E0_42A20((void*)*a1x);
     *a1x = nullptr;
   }
 }
 
 //----- (00011050) --------------------------------------------------------
-bool sub_11050()
+/// Original name: running_from_cdrom (CDROM.C), Hidden Worlds linker map (the only function of CDROM.C, placed just before CHECK_AR.C's CheckArray as in the map; checks whether the current drive looks like a CD-ROM).
+bool RunningFromCdrom_11050()
 {
   bool v0; // bx
   __int16 v2[2]; // [esp+0h] [ebp-14h] BYREF
@@ -41149,7 +41150,7 @@ void Game_340B0_34470(int argc, const char** argv)//2050B0_205470
           someVar = 8;
         }
         CreateMemory_41490_417D0();
-        sub_42530_42870(2);
+        SetMemoryNumber_42530_42870(2);
         byte_939E5 = byte_939E4;
         bool_12CA7C_12CA6C = true;
         musicOn_939CD = musicAvailable_939CC;
@@ -41179,14 +41180,14 @@ void Game_340B0_34470(int argc, const char** argv)//2050B0_205470
             ChangeResolution_34C80_35040();
           RestorePossibleStereoMode_31A60_31AA0();
         }
-        sub_42530_42870(3);
+        SetMemoryNumber_42530_42870(3);
       }
       if ( !str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u8_13327 )
       {
         pseudoRand = str_AE408_AE3F8->var_u16_17;
         SetupMap_407A0_40AE0();
         if ( typeResolution_12F02E_12F01E == 1 && !blurBuffer_AE404_AE3F4 )
-          blurBuffer_AE404_AE3F4 = (uint8*)malloc_42540_42880(64000);
+          blurBuffer_AE404_AE3F4 = (uint8*)MyAlloc_42540_42880(64000);
       }
       while ( 1 )
       {
@@ -41630,7 +41631,7 @@ void ChangeResolution_34C80_35040()//205C80_
 {
   FadePalette256_61CC0_621D0(0, 0x10u, 0);
   StereoModeOff_315C0_31600();
-  free_426E0_42A20((void*)blurBuffer_AE404_AE3F4);
+  MyFree_426E0_42A20((void*)blurBuffer_AE404_AE3F4);
   blurBuffer_AE404_AE3F4 = 0;
   ResetMouse_3F370_3F6B0();
   sub_59560_59A70(off_99974);
@@ -41639,14 +41640,14 @@ void ChangeResolution_34C80_35040()//205C80_
     FreeAllData_61610_61B20(&pathStrArray[PSWScreen]);
     typeResolution_12F02E_12F01E = 8;
     LoadPathFiles_40440_40780(&pathStrArray[PSWScreen2]);
-    blurBuffer_AE404_AE3F4 = (uint8*)malloc_42540_42880(307200);
+    blurBuffer_AE404_AE3F4 = (uint8*)MyAlloc_42540_42880(307200);
   }
   else
   {
     FreeAllData_61610_61B20(&pathStrArray[PSWScreen2]);//735a98 clean begWscreen_2ECFF4_2ECFE4
     typeResolution_12F02E_12F01E = 1;
     LoadPathFiles_40440_40780(&pathStrArray[PSWScreen]);//735a98 set begWscreen_2ECFF4_2ECFE4
-    blurBuffer_AE404_AE3F4 = (uint8*)malloc_42540_42880(64000);
+    blurBuffer_AE404_AE3F4 = (uint8*)MyAlloc_42540_42880(64000);
   }
   sub_59500_59A10(off_99974);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -41871,9 +41872,9 @@ int CommandLineInterupter_34DD0_35190(int argc, char** argv)//205DD0_
 				byte_90B23 |= 0x20u;
 			}
 		}
-        dword_12F080_12F070x = (vesa_str*)malloc_425C0_42900(sizeof(vesa_str));
-		str_AE400_AE3F0 = (Type_str_AE400_AE3F0*)malloc_42540_42880(sizeof(Type_str_AE400_AE3F0));
-		str_AE408_AE3F8 = (Type_str_AE408_AE3F8*)malloc_42540_42880(sizeof(Type_str_AE408_AE3F8));
+        dword_12F080_12F070x = (vesa_str*)MyLowAlloc_425C0_42900(sizeof(vesa_str));
+		str_AE400_AE3F0 = (Type_str_AE400_AE3F0*)MyAlloc_42540_42880(sizeof(Type_str_AE400_AE3F0));
+		str_AE408_AE3F8 = (Type_str_AE408_AE3F8*)MyAlloc_42540_42880(sizeof(Type_str_AE408_AE3F8));
 		str_AE400_AE3F0->set.var_u8_8621 = 1;
 		str_AE400_AE3F0->set.var_u8_8622 = 1;
 		str_AE400_AE3F0->set.var_u8_8623 = 1;
@@ -43076,12 +43077,12 @@ Type_sub168* sub_36700_36AC0(int a1, unsigned __int16 a2, Type_168* a3x)//207700
 	}
 	else
 	{
-		v8 = (Type_sub168*)malloc_42540_42880(sizeof(Type_sub168));
+		v8 = (Type_sub168*)MyAlloc_42540_42880(sizeof(Type_sub168));
 		v6 = v8;
 		if (!v8
-			|| (v9 = (uint8*)malloc_42540_42880(a1), (v8->var_16 = v9) == 0)
-			|| (v10 = (Type_sub168_2*)malloc_42540_42880(sizeof(Type_sub168_2) * a2), (v8->var_8 = v10) == 0)
-			|| (v11 = (Type_sub168_3*)malloc_42540_42880(sizeof(Type_sub168_3) * a2), (v8->var_12 = v11) == 0))
+			|| (v9 = (uint8*)MyAlloc_42540_42880(a1), (v8->var_16 = v9) == 0)
+			|| (v10 = (Type_sub168_2*)MyAlloc_42540_42880(sizeof(Type_sub168_2) * a2), (v8->var_8 = v10) == 0)
+			|| (v11 = (Type_sub168_3*)MyAlloc_42540_42880(sizeof(Type_sub168_3) * a2), (v8->var_12 = v11) == 0))
 		{
 			if (v8)
 			{
@@ -43089,15 +43090,15 @@ Type_sub168* sub_36700_36AC0(int a1, unsigned __int16 a2, Type_168* a3x)//207700
 				{
 					if (v8->var_8)
 					{
-						free_426E0_42A20((void*)v8->var_8);
+						MyFree_426E0_42A20((void*)v8->var_8);
 						//fixed
 						if (v8->var_12)
-							free_426E0_42A20((void*)v8->var_12);
+							MyFree_426E0_42A20((void*)v8->var_12);
 						//fixed
 					}
-					free_426E0_42A20((void*)v8->var_16);
+					MyFree_426E0_42A20((void*)v8->var_16);
 				}
-				free_426E0_42A20((void*)v8);
+				MyFree_426E0_42A20((void*)v8);
 			}
 			exit(1);
 		}
@@ -43279,10 +43280,10 @@ void HeapDone_36C10_36FD0(Type_sub168** a1)
   {
     if ((*a1)->var_24 == 1 )
     {
-      free_426E0_42A20((*a1)->var_16);
-      free_426E0_42A20((*a1)->var_8);
-      free_426E0_42A20((*a1)->var_12);
-      free_426E0_42A20(*a1);
+      MyFree_426E0_42A20((*a1)->var_16);
+      MyFree_426E0_42A20((*a1)->var_8);
+      MyFree_426E0_42A20((*a1)->var_12);
+      MyFree_426E0_42A20(*a1);
     }
     *a1 = nullptr;
   }
@@ -49248,7 +49249,7 @@ void CheckCd_3DD10_3E050()
   {
     if ( (str_AE408_AE3F8->var_u8_24 & 3) == 1 )
     {
-      if ( !sub_11050())
+      if ( !RunningFromCdrom_11050())
       {
           str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u8_13327 = 2;
       }
@@ -52175,7 +52176,7 @@ void ExamineMemory_41230_41570()//212230_
 {
 	if (!str_AE408_AE3F8->var_u32_168)
 	{
-		void* testAlloc = malloc_42540_42880(60000);
+		void* testAlloc = MyAlloc_42540_42880(60000);
 		byte_968F0 = 1;
 		str_AE400_AE3F0->set.var_u8_8608 = 32;
 
@@ -52256,7 +52257,7 @@ void ExamineMemory_41230_41570()//212230_
 			byte_939EC = 1;
 			str_AE408_AE3F8->var_u32_172 = 0x400000;
 		}
-		str_AE408_AE3F8->var_u32_168 = (Type_168*)malloc_42540_42880(str_AE408_AE3F8->var_u32_172);
+		str_AE408_AE3F8->var_u32_168 = (Type_168*)MyAlloc_42540_42880(str_AE408_AE3F8->var_u32_172);
 		if (str_AE408_AE3F8->var_u32_172 <= 0x96000)
 		{
 			printf("ERROR : NOT ENOUGH MEMORY.\n");
@@ -52274,7 +52275,7 @@ void ExamineMemory_41230_41570()//212230_
 			}
 		}
 		Orgdata_44470_447B0();
-		free_426E0_42A20(testAlloc);
+		MyFree_426E0_42A20(testAlloc);
 	}
 }
 
@@ -52308,7 +52309,7 @@ void CreateMemory_41490_417D0()
       }
       v0 = (uint32)HeapFreeSpace_369D0_36D90(dword_AE3EC_AE3DC);
     }
-    sub_42730_42A70(*(_DWORD *)PTR(dword_AE408_AE3F8() + 168), *(_DWORD *)PTR(dword_AE408_AE3F8() + 172) - ((_DWORD)v0 + 256));
+    MyShrink_42730_42A70(*(_DWORD *)PTR(dword_AE408_AE3F8() + 168), *(_DWORD *)PTR(dword_AE408_AE3F8() + 172) - ((_DWORD)v0 + 256));
   }
   else
   {
@@ -52325,7 +52326,7 @@ void CreateMemory_41490_417D0()
 /// Original name: restore_memory (MEMORY.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
 void RestoreMemory_41540_41880()
 {
-  if ( !byte_93950 && !sub_427A0(*(_DWORD *)PTR(dword_AE408_AE3F8() + 168), *(_DWORD *)PTR(dword_AE408_AE3F8() + 172)) )
+  if ( !byte_93950 && !MyGrow_427A0(*(_DWORD *)PTR(dword_AE408_AE3F8() + 168), *(_DWORD *)PTR(dword_AE408_AE3F8() + 172)) )
   {
     ResetHost_44840_44B80();
     printf("ERROR : UNABLE TO GROW MEMORY.\n");
@@ -53176,19 +53177,20 @@ int Animate_42510_42850(Type_AE400_29795* a1x)
   return result;
 }
 
-void sub_42530_42870(char a1)
+/// Original name: set_memory_number (MYALLOC.C), Hidden Worlds linker map (placed by size: MYALLOC.C's set_memory_number 0x10, MyAlloc 0x80, MyLowAlloc 0x120, MyFree 0x50, MyShrink 0x70 match our functions one for one).
+void SetMemoryNumber_42530_42870(char a1)
 {
   byte_93954 = a1;
 }
 
 // PORT: game memory comes from the arena (engine/ptr32.h): fixed offsets, deterministic layout
-/// Name is a guess (not in the Hidden Worlds linker map).
-void* malloc_42540_42880(size_t size) {
+/// Original name: MyAlloc (MYALLOC.C), Hidden Worlds linker map (placed by size: MYALLOC.C's set_memory_number 0x10, MyAlloc 0x80, MyLowAlloc 0x120, MyFree 0x50, MyShrink 0x70 match our functions one for one).
+void* MyAlloc_42540_42880(size_t size) {
     return Port_ArenaAlloc(size);
 }
 
 //----- (00042540) --------------------------------------------------------
-void* malloc_42540_42880_orig(size_t size)
+void* MyAlloc_42540_42880_orig(size_t size)
 {
   unsigned int v1; // edi
   int result; // eax
@@ -53200,7 +53202,7 @@ void* malloc_42540_42880_orig(size_t size)
   v1 = size + 3;
   LOWORD(v1) = (size + 3) & 0xFFFC;
   sub_63010_63520();
-  result = (int)OFF(malloc_425C0_42900(v1));
+  result = (int)OFF(MyLowAlloc_425C0_42900(v1));
   if ( !result )
   {
     v3 = &dword_1302A0_130290;
@@ -53231,13 +53233,13 @@ void* malloc_42540_42880_orig(size_t size)
 // 1302A0: using guessed type int dword_1302A0_130290;
 
 //----- (000425C0) --------------------------------------------------------
-/// Name is a guess (not in the Hidden Worlds linker map).
-void* malloc_425C0_42900(size_t size)
+/// Original name: MyLowAlloc (MYALLOC.C), Hidden Worlds linker map (placed by size: MYALLOC.C's set_memory_number 0x10, MyAlloc 0x80, MyLowAlloc 0x120, MyFree 0x50, MyShrink 0x70 match our functions one for one).
+void* MyLowAlloc_425C0_42900(size_t size)
 {
-    return Port_ArenaAlloc(size);  // PORT: game arena, see malloc_42540_42880
+    return Port_ArenaAlloc(size);  // PORT: game arena, see MyAlloc_42540_42880
 }
 
-int malloc_425C0_42900_orig(int a1)
+int MyLowAlloc_425C0_42900_orig(int a1)
 {
   int *v1; // edx
   unsigned int v2; // ebx
@@ -53331,8 +53333,8 @@ void* MallocGuarded(size_t size)
     return base + kScreenGuard;
 }
 
-/// Name is a guess (not in the Hidden Worlds linker map).
-void free_426E0_42A20(void* buffer)
+/// Original name: MyFree (MYALLOC.C), Hidden Worlds linker map (placed by size: MYALLOC.C's set_memory_number 0x10, MyAlloc 0x80, MyLowAlloc 0x120, MyFree 0x50, MyShrink 0x70 match our functions one for one).
+void MyFree_426E0_42A20(void* buffer)
 {
     auto it = guardedBlocks.find(buffer);
     if (it != guardedBlocks.end())
@@ -53345,7 +53347,7 @@ void free_426E0_42A20(void* buffer)
 }
 
 //----- (000426E0) --------------------------------------------------------
-void free_426E0_42A20_orig(int a1)
+void MyFree_426E0_42A20_orig(int a1)
 {
   int *v1; // ebx
   char v2; // cl
@@ -53378,7 +53380,8 @@ LABEL_5:
 // 1302A0: using guessed type int dword_1302A0_130290;
 
 //----- (00042730) --------------------------------------------------------
-int sub_42730_42A70(int a1, int a2)
+/// Original name: MyShrink (MYALLOC.C), Hidden Worlds linker map (placed by size: MYALLOC.C's set_memory_number 0x10, MyAlloc 0x80, MyLowAlloc 0x120, MyFree 0x50, MyShrink 0x70 match our functions one for one).
+int MyShrink_42730_42A70(int a1, int a2)
 {
   int v2; // eax
   int *v3; // ebx
@@ -53416,7 +53419,8 @@ LABEL_5:
 // 1302A0: using guessed type int dword_1302A0_130290;
 
 //----- (000427A0) --------------------------------------------------------
-int sub_427A0(int a1, int a2)
+/// Original name: MyGrow (MYALLOC.C), Hidden Worlds linker map (placed by size: MYALLOC.C's set_memory_number 0x10, MyAlloc 0x80, MyLowAlloc 0x120, MyFree 0x50, MyShrink 0x70 match our functions one for one).
+int MyGrow_427A0(int a1, int a2)
 {
   int *v2; // ebx
   unsigned int v3; // ecx
@@ -54053,22 +54057,22 @@ void SetupNetwork_43270_435B0()
 	if (!byte_93958 && !mainconnection_9398C)
 	{
 		system(aNetbios);
-		mainconnection_9398C = (myNCB*)malloc_425C0_42900(66);
+		mainconnection_9398C = (myNCB*)MyLowAlloc_425C0_42900(66);
 		if (!mainconnection_9398C)
 			networkInited = -1;
 		else
 		{
 			if (NETCheckBios_42CF0_43030() == -1)
 				return;
-			packet_93960 = (uint8_t*)malloc_425C0_42900(2048);
-			if (packet_93960 && (packet_93964 = (uint8_t*)malloc_425C0_42900(2048)) != 0)
+			packet_93960 = (uint8_t*)MyLowAlloc_425C0_42900(2048);
+			if (packet_93960 && (packet_93964 = (uint8_t*)MyLowAlloc_425C0_42900(2048)) != 0)
 			{
 				for (int i = 0; i != 8; i++)
 				{
-					packet_93968[i] = (uint8_t*)malloc_425C0_42900(2048);
+					packet_93968[i] = (uint8_t*)MyLowAlloc_425C0_42900(2048);
 					if (!packet_93968[i])
 						networkInited = -1;
-					connection_93990[i] = (myNCB*)malloc_425C0_42900(66);
+					connection_93990[i] = (myNCB*)MyLowAlloc_425C0_42900(66);
 					if (!connection_93990[i])
 						networkInited = -1;
 				}
@@ -54083,17 +54087,17 @@ void SetupNetwork_43270_435B0()
 	if (networkInited == -1)
 	{
 		if (mainconnection_9398C)
-			free_426E0_42A20((void*)mainconnection_9398C);
+			MyFree_426E0_42A20((void*)mainconnection_9398C);
 		if (packet_93960)
-			free_426E0_42A20((void*)packet_93960);
+			MyFree_426E0_42A20((void*)packet_93960);
 		if (packet_93964)
-			free_426E0_42A20((void*)packet_93964);
+			MyFree_426E0_42A20((void*)packet_93964);
 		for (int j = 0; j != 8; j++)
 		{
 			if (connection_93990[j])
-				free_426E0_42A20((void*)connection_93990[j]);
+				MyFree_426E0_42A20((void*)connection_93990[j]);
 			if (packet_93968[j])
-				free_426E0_42A20((void*)packet_93968[j]);
+				MyFree_426E0_42A20((void*)packet_93968[j]);
 		}
 	}
 }
@@ -54108,16 +54112,16 @@ void ResetNetwork_433C0_43700()
   if ( byte_93958 )
   {
     v0 = 0;
-    free_426E0_42A20((void*)mainconnection_9398C);
+    MyFree_426E0_42A20((void*)mainconnection_9398C);
     do
     {
-      free_426E0_42A20((void*)connection_93990[v0]);
+      MyFree_426E0_42A20((void*)connection_93990[v0]);
       v2 = (int)OFF(packet_93968[v0++]);
-      free_426E0_42A20((void*)PTR(v2));
+      MyFree_426E0_42A20((void*)PTR(v2));
     }
     while ( v0 != 8 );
-    free_426E0_42A20((void*)packet_93960);
-    free_426E0_42A20((void*)packet_93964);
+    MyFree_426E0_42A20((void*)packet_93960);
+    MyFree_426E0_42A20((void*)packet_93964);
     byte_93958 = 0;
   }
 }
@@ -54618,14 +54622,14 @@ char *LoadFileAlloc_43E50(const char *a1)
   v4 = v3;
   if ( v3 > 0 )
   {
-    v5 = (char *)malloc_42540_42880(v3);
+    v5 = (char *)MyAlloc_42540_42880(v3);
     v6 = (int)OFF(v5);
     v1 = v5;
     if ( v5 )
     {
       if ( LoadFileAt_3EEA0_3F1E0((char*)a1, (uint8_t*)v5) != v4 )
       {
-        free_426E0_42A20((void*)PTR(v6));
+        MyFree_426E0_42A20((void*)PTR(v6));
         v1 = (char *)PTR(v6 ^ (unsigned int)OFF(v1));
       }
     }
@@ -69849,11 +69853,11 @@ int SetupMouse_5C214_5C724()
   int386x(51, v2, v1, v5);//Set Mouse User Defined Subroutine and Input Mask
   SetMouseLimits_5C468_5C978();
   if ( !dword_12EFC8_12EFB8 )
-    dword_12EFC8_12EFB8 = (uint8_t*)malloc_42540_42880(4096);
+    dword_12EFC8_12EFB8 = (uint8_t*)MyAlloc_42540_42880(4096);
   if ( !dword_12EF98_12EF88 )
-    dword_12EF98_12EF88 = (int)OFF(malloc_42540_42880(4096));
+    dword_12EF98_12EF88 = (int)OFF(MyAlloc_42540_42880(4096));
   if ( !dword_12EF88_12EF78 )
-    dword_12EF88_12EF78 = (int)OFF(malloc_42540_42880(4096));
+    dword_12EF88_12EF78 = (int)OFF(MyAlloc_42540_42880(4096));
   if ( !dword_12EFC8_12EFB8 || !dword_12EF98_12EF88 || !dword_12EF88_12EF78 )
     return 0;
   word_12EFC4_12EFB4 = 0;
@@ -72534,7 +72538,7 @@ unsigned __int64 sub_60BDC(int a1)
     v7 = DataFileIO::CreateOrOpenFile((char*)PTR(a1), 514);
     if ( v7 != nullptr )
     {
-      v5 = (int)OFF(malloc_42540_42880(v6));
+      v5 = (int)OFF(MyAlloc_42540_42880(v6));
       if ( v5 )
       {
         if ( DataFileIO::Read(v7, (uint8_t*)PTR(v5), v6) != v6 )
@@ -74132,13 +74136,13 @@ void FreeMusic_62020()
 /// Name is a guess (not in the Hidden Worlds linker map).
 void free_62128_62638(void* buffer)
 {
-    free_426E0_42A20(buffer);
+    MyFree_426E0_42A20(buffer);
 }
 
 //----- (00062128) --------------------------------------------------------
 void free_62128_62638_orig(int a1)
 {
-  free_426E0_42A20((void*)PTR(a1));
+  MyFree_426E0_42A20((void*)PTR(a1));
 }
 
 //-----------------
@@ -75570,7 +75574,7 @@ void FreePathFile_634A0_639B0(Pathstruct* pathstruct)
 {
 	if (*pathstruct->colorPalette_var28)
 	{
-		free_426E0_42A20((void*)*pathstruct->colorPalette_var28);
+		MyFree_426E0_42A20((void*)*pathstruct->colorPalette_var28);
 		*pathstruct->colorPalette_var28 = 0;
 	}
 }
@@ -75593,9 +75597,9 @@ int LoadPathFile_634E0_639F0(Pathstruct* pathstruct)//2344e0_
 	void* (*mallocVar)(size_t);
 	sub_63010_63520();
 	if ((pathstruct->var40_alloc_type & 1) != 0)
-		mallocVar = malloc_425C0_42900;
+		mallocVar = MyLowAlloc_425C0_42900;
 	else
-		mallocVar = malloc_42540_42880;
+		mallocVar = MyAlloc_42540_42880;
 	FreePathFile_634A0_639B0(pathstruct);
 	if (pathstruct->path[0] == '*')
 	{

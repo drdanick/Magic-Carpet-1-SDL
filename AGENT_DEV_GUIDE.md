@@ -761,7 +761,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     rows up to a view width above/below the screen and clips them with tables in the BScreen scratch
     area (36960/45920/59360). A sprite right in front of the camera in 640x480 overruns those tables,
     so rows are drawn outside the screen; in DOS that hit neighbouring pool blocks. The port gives
-    `*WScreen`/`*BScreen` a guard band (`MallocGuarded`, freed through `free_426E0_42A20`); remc2
+    `*WScreen`/`*BScreen` a guard band (`MallocGuarded`, freed through `MyFree_426E0_42A20`); remc2
     keeps the same tables. Symptom: intermittent crash (heap-layout dependent) - use `tools/asan_run.sh`.
     Related: `ShowLevelPerformance_4E5B0_4E8F0` freed its font and then drew one more pass with it.
 46. **Half-converted typed offsets (again).** `ActionCollectMana_13BA0` (AI wizard, mode 6: chase target) computed its
@@ -1042,7 +1042,7 @@ entries relocated in place). The 64-bit port (branch `port/64bit`, merged as PR 
   it, 1..2 GB the game thread's stack (registered on first use). `OFF()` aborts with a message for anything
   outside them. (The arena can't sit at a fixed distance from the
   executable: Linux randomises the brk heap start over the first GB after it, already mapped before main.)
-- **Game memory comes from the arena** (`Port_ArenaAlloc/Free`: `malloc_42540_42880`, `malloc_425C0_42900`,
+- **Game memory comes from the arena** (`Port_ArenaAlloc/Free`: `MyAlloc_42540_42880`, `MyLowAlloc_425C0_42900`,
   `MallocGuarded`, the `(int)malloc` sites). It sits at offset 0x20000000 (where the old 32-bit build had it)
   with a deterministic best-fit allocator, so game objects get the same "addresses" in every build.
   That matters: the code turns addresses into numbers that end up in the game state (e.g.
