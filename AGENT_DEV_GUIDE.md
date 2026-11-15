@@ -502,6 +502,7 @@ class, type)`). The state index is global within a class, not per type.
 | 10 | 39 | mana ball | mana at +140; +144 = owner (adds its mana to the owner's +136 every tick) |
 | 10 | 40 | death marker of a wizard: holds its mana balls until it respawns (state 42) | `DeathMarkerTick_275C0`, original-bugs #12 |
 | 10 | 52 | crab spawn timer (state 0x38) | |
+| 11 | 0..31 | switches/triggers: `CreateSwitch_3BB20(pos, type, state)`, wrappers `CreateSwitchNN_*` (state = type); MC2 calls this class switches | |
 | 11 | 2 | trigger (marked by standing stones on level 26; not recyclable) | life 300 |
 | 12 | 0..23 | spell, type = spell number (0 fireball, 2 speed, 16 castle) | states below |
 
@@ -827,7 +828,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     `while ( 1 ) ;`, so the game hung after the outro. Port tick waits call `PortTimer_Yield()` in the
     loop. No other `while ( 1 ) ;` is left (2026-11-15).
 71. **A `return 0` stub standing in for a real function.** The state tables reference about 20 one-line
-    stubs (`int sub_49B70() { return 0; };`). They are bare `ret`s in the original, except `sub_1FF50`
+    stubs (`int sub_49B70() { return 0; };`, now `EmptyStateHandler_*`). They are bare `ret`s in the original, except `sub_1FF50`
     (class 5 state 90). IDA decoded the code-segment table at 0x1FF40 (the turn weights, see
     `turnWeights_1FF40`) as code (`sub_1FF40`, junk), lost the function at 0x1FF50 behind it
     (`push 5Ah; push a1; call sub_19B10`), and the port stubbed it out. Check every stub with
@@ -1084,7 +1085,7 @@ How the level's actors work (useful for "X never spawns" reports):
 - Class 3 types 4..11 only store wizard start positions; wizards are created per player
   (`sub_44D30_45070`): model 0 = human, model 1 = computer (state 1, `ComputerWizardTick_13170` AI, mode byte at
   player+415).
-- Class 10 type 39 = mana ball (mana at +140); class 5 type 5 creatures (state 31, `sub_1BD20`) seek mana
+- Class 10 type 39 = mana ball (mana at +140); class 5 type 5 creatures (state 31, `CrabTick_1BD20`) seek mana
   balls and turn mana into class 10 type 52 spawn timers (state 0x38) that raise another type 5.
 - `level_2_bugs.txt` (user recording) desynchronises at frame 1590 in level 1 with every build tried
   (deterministic, independent of audio and of the 6.2.36-38 fixes; the only input around it is fast
@@ -1118,7 +1119,7 @@ Known open issues:
   the explosion into class-10 state 20 = handler 0x262C0, a bare `ret` (port: `sub_262C0`). The sprite
   never changes again. `diff_tick` (ticks 36216-36218, 36480-36650) and `diff_call` (draw at 36600) match
   CARPET.EXE exactly; `diff_tick --watch 58401` (entity 174 +70) shows the original writing 0x14 at
-  eip 0x424F8 via 0x1A52B (UpdateFollower) <- 0x19614 (`sub_19550`) <- 0x1B57C (`sub_1B570`).
+  eip 0x424F8 via 0x1A52B (UpdateFollower) <- 0x19614 (`SegmentFollowTick_19550`) <- 0x1B57C (`sub_1B570`).
   Replay needs a build *without* the `CreatureShootAt_1AA40` fix (that fix changes level 15 from frame
   660): check out `sub_main.cpp` from before commit "Fix skeletons shooting into empty space", build,
   copy `build/win-x64/RelWithDebInfo` elsewhere and pass `--exe` / `REMC1_PORT_EXE`.
@@ -1212,7 +1213,7 @@ Known open issues:
 - `int386(0x33, …)` mouse calls are stubbed (return 0); mouse range/visibility calls do nothing.
 - Areas the upstream author listed as unfinished (`dev-info.txt`): terrain/sky/particle drawing
   (`DrawSkyTerrainParticles_2A700`, `sub_2C410`, `sub_2FC50`, `DrawWorld_30D90`), entity movement
-  (`sub_455D0`, `sub_41C70`), `sub_1BD20`.
+  (`sub_455D0`, `sub_41C70`), `CrabTick_1BD20`.
 
 ---
 

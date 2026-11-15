@@ -395,7 +395,7 @@ int sub_192F3();
 void sub_193EE(__int16 a1);
 // int sub_19470(__int16 a1);
 int sub_194F0_194F0();
-__int16 sub_19550(int a1);
+__int16 SegmentFollowTick_19550(int a1);
 signed int TerrainSlope_19650(axis_3d* a1);
 void MoveCreature_196E0(Type_AE400_29795* a1);
 void sub_19B10(Type_AE400_29795* a1, char a2);
@@ -431,13 +431,13 @@ void sub_1B4C0(Type_AE400_29795* a1);
 void sub_1B4E0(Type_AE400_29795* a1);
 void sub_1B4F0(Type_AE400_29795* a1);
 void sub_1B500(Type_AE400_29795* a1);
-void sub_1B510(Type_AE400_29795* a1);
+void WormTick_1B510(Type_AE400_29795* a1);
 void sub_1B520(Type_AE400_29795* a1);
 void sub_1B570(Type_AE400_29795* a1);
 void sub_1B580(Type_AE400_29795* a1);
 void sub_1B590(Type_AE400_29795* a1);
 void sub_1B5A0(Type_AE400_29795* a1);
-void sub_1B5D0(Type_AE400_29795* a1);
+void GuardTick_1B5D0(Type_AE400_29795* a1);
 void sub_1BB20(Type_AE400_29795* a1);
 void sub_1BBE0(Type_AE400_29795* a1);
 void sub_1BC10(Type_AE400_29795* a1);
@@ -445,7 +445,7 @@ void sub_1BC40(Type_AE400_29795* a1);
 void sub_1BC50(Type_AE400_29795* a1);
 void sub_1BCE0(Type_AE400_29795* a1);
 void sub_1BD10(Type_AE400_29795* a1);
-void sub_1BD20(Type_AE400_29795* a1);
+void CrabTick_1BD20(Type_AE400_29795* a1);
 void sub_1C110(Type_AE400_29795* a1);
 void sub_1C170(Type_AE400_29795* a1);
 void sub_1C3C0(Type_AE400_29795* a1);
@@ -518,7 +518,7 @@ void sub_20410(Type_AE400_29795* a1);
 void sub_20450(Type_AE400_29795* a1);
 void sub_20480(Type_AE400_29795* a1);
 void sub_20700(Type_AE400_29795* a1);
-void sub_20710(Type_AE400_29795* a1);
+void WyvernTick_20710(Type_AE400_29795* a1);
 void sub_207E0(Type_AE400_29795* a1);
 void sub_20B60(Type_AE400_29795* a1);
 void sub_20B70(Type_AE400_29795* a1);
@@ -548,10 +548,10 @@ void sub_24D20(int a1, int a2, int a3, int a4, unsigned __int16 a5);
 void sub_24DA0(int a1, int a2, int a3, int a4, unsigned __int16 a5);
 int nullsub_2(void); // weak
 void ExplosionTick_24F60(Type_AE400_29795* a1x);
-void sub_25130(int a1);
+void Class10Type1Tick_25130(int a1);
 void sub_252B0(int a1);
-int sub_252D0(int a1);
-void sub_253E0(int a1);
+int Class10Type6Tick_252D0(int a1);
+void RemoveSelfTick_253E0(int a1);
 void sub_253F0(int a1);
 void sub_25410(Type_AE400_29795* a1);
 void sub_25470(Type_AE400_29795* a1);
@@ -566,7 +566,7 @@ void sub_25990(Type_AE400_29795* a1);
 void LavaTick_25A60(int a1);
 void ExplosionRingTick_25CE0(Type_AE400_29795* a1);
 void VolcanoEruptionTick_25EC0(int a1);
-void sub_26140(Type_AE400_29795* a1);
+void Class10Type19Tick_26140(Type_AE400_29795* a1);
 void sub_262D0(Type_AE400_29795* a1);
 void sub_26360(Type_AE400_29795* a1);
 void sub_263C0(Type_AE400_29795* a1);
@@ -691,7 +691,7 @@ void sub_36FA0_37360(Type_AE400_29795* event, __int16 a2);
 void sub_37030_373F0(Type_AE400_29795* a1, __int16 a2);
 void sub_370A0_37460(Type_AE400_29795* a1, __int16 a2);
 void sub_370E0_374A0(Type_AE400_29795* a1, __int16 a2);
-void sub_37130_374F0(Type_AE400_29795* a1, __int16 a2, __int16 a3);
+void SetCollisionBox_37130_374F0(Type_AE400_29795* a1, __int16 a2, __int16 a3);
 void sub_37150_37510(Type_AE400_29795* event, __int16 a2);
 void sub_371C0_37580();
 void sub_37220_375E0();
@@ -708,10 +708,10 @@ int SetPlayerStart4_377A0_37B60(int a1);
 int SetPlayerStart5_377C0_37B80(int a1);
 int SetPlayerStart6_377E0_37BA0(int a1);
 int SetPlayerStart7_37800_37BC0(int a1);
-Type_AE400_29795* sub_37820_37BE0(axis_3d* position);
-int sub_378A0_37C60(int a1);
+Type_AE400_29795* CreatePlayerWizard_37820_37BE0(axis_3d* position);
+int CreateComputerWizard_378A0_37C60(int a1);
 int CreateCastle_37920_37CE0(int a1);
-int sub_37A00_37DC0(int a1);
+int CreateBalloon_37A00_37DC0(int a1);
 int sub_37A80(int a1);
 int sub_37AA0(int a1);
 int sub_37AC0(int a1);
@@ -722,17 +722,17 @@ int sub_37B40(int a1);
 int sub_37B60(int a1);
 int sub_37B80(int a1);
 int sub_37BA0(int a1);
-int sub_37BC0(int a1);
-int sub_37CF0(int a1);
+int CreateTree_37BC0(int a1);
+int CreateStone_37CF0(int a1);
 int sub_37D70(int a1);
-int sub_37E00(int a1);
+int CreateStandingStone_37E00(int a1);
 int sub_37E80(int a1);
 int sub_37EF0(int a1);
 int sub_38030(int a1);
 int sub_38270(int a1);
 int sub_38370(int a1);
 void sub_38820_38BA0(Type_AE400_29795* a1);
-int sub_38890(int a1);
+int CreateCrab_38890(int a1);
 int sub_389E0(int a1);
 int sub_38C00_38F80(int a1);
 int sub_38D09(); // weak
@@ -743,7 +743,7 @@ int sub_390D0(int a1);
 int sub_39200(int a1);
 int sub_39490(int a1);
 int sub_395B0(int a1);
-int sub_396E0(int a1);
+int CreateWyvern_396E0(int a1);
 int sub_39800(int a1);
 int sub_39820(int a1);
 int sub_39840(int a1);
@@ -757,17 +757,17 @@ int sub_39980(int a1);
 int sub_399A0(int a1);
 int sub_399C0(int a1);
 int sub_399E0(int a1);
-int sub_39A10(int a1);
+int CreateFireball_39A10(int a1);
 int sub_39A90(int a1);
 int sub_39B40(int a1);
-int sub_39BC0(int a1);
+int CreateClass9Type3_39BC0(int a1);
 int sub_39C40(int a1);
 int sub_39CC0(int a1);
 int sub_39D40(int a1);
 int sub_39DC0(int a1);
 int sub_39E40(int a1);
-int sub_39EC0(int a1);
-int sub_39F40(int a1);
+int CreateLightningBolt_39EC0(int a1);
+int CreateHomingSpawnMissile_39F40(int a1);
 int sub_39FC0(int a1);
 int sub_3A040(int a1);
 int sub_3A0C0(int a1);
@@ -778,12 +778,12 @@ int sub_3A2F0(int a1);
 int sub_3A390(int a1);
 int sub_3A410(int a1);
 int CreateExplosion_3A490(uint16_t* a1);
-int sub_3A510(uint16_t* a1);
+int CreateClass10Type1_3A510(uint16_t* a1);
 int sub_3A570(uint16_t* a1);
 int sub_3A5D0(uint16_t* a1);
 int sub_3A640(uint16_t* a1);
 int sub_3A6B0(uint16_t* a1);
-int sub_3A730(uint16_t* a1);
+int CreateClass10Type6_3A730(uint16_t* a1);
 int sub_3A7D0(uint16_t* a1);
 int sub_3A870(uint16_t* a1);
 int sub_3A8D0(uint16_t* a1);
@@ -796,11 +796,11 @@ int sub_3ABE0(uint16_t* a1);
 int CreateExplosionRing_3AC70(uint16_t* a1);
 int CreateLava_3ACC0(uint16_t* a1);
 int CreateVolcanoEruption_3ADB0(uint16_t* a1);
-int sub_3AE00(uint16_t* a1);
+int CreateClass10Type19_3AE00(uint16_t* a1);
 int sub_3AE80(uint16_t* a1);
 int sub_3AF00(uint16_t* a1);
 int sub_3AF80(uint16_t* a1);
-int sub_3B000(uint16_t* a1);
+int CreateTerrainRaiseStep_3B000(uint16_t* a1);
 int sub_3B060(uint16_t* a1);
 Type_AE400_29795* sub_3B0C0(axis_3d* position);
 int sub_3B120(uint16_t* a1);
@@ -825,47 +825,47 @@ int sub_3B8E0(uint16_t* a1);
 int sub_3B970(uint16_t* a1);
 int sub_3BA00(uint16_t* a1);
 int sub_3BA90(uint16_t* a1);
-Type_AE400_29795* sub_3BB20(axis_3d* position, char a2, char a3);
+Type_AE400_29795* CreateSwitch_3BB20(axis_3d* position, char a2, char a3);
 
-Type_AE400_29795* sub_3BB70(axis_3d* position);
-Type_AE400_29795* sub_3BB90(axis_3d* position);
-Type_AE400_29795* sub_3BBB0(axis_3d* position);
-Type_AE400_29795* sub_3BBD0(axis_3d* position);
-Type_AE400_29795* sub_3BBF0(axis_3d* position);
-Type_AE400_29795* sub_3BC10(axis_3d* position);
-Type_AE400_29795* sub_3BC30(axis_3d* position);
-Type_AE400_29795* sub_3BC50(axis_3d* position);
-Type_AE400_29795* sub_3BC70(axis_3d* position);
-Type_AE400_29795* sub_3BC90(axis_3d* position);
-Type_AE400_29795* sub_3BCB0(axis_3d* position);
-Type_AE400_29795* sub_3BCD0(axis_3d* position);
-Type_AE400_29795* sub_3BCF0(axis_3d* position);
-Type_AE400_29795* sub_3BD10(axis_3d* position);
-Type_AE400_29795* sub_3BD30(axis_3d* position);
-Type_AE400_29795* sub_3BD50(axis_3d* position);
-Type_AE400_29795* sub_3BD70(axis_3d* position);
-Type_AE400_29795* sub_3BD90(axis_3d* position);
-Type_AE400_29795* sub_3BDB0(axis_3d* position);
-Type_AE400_29795* sub_3BDD0(axis_3d* position);
-Type_AE400_29795* sub_3BDF0(axis_3d* position);
-Type_AE400_29795* sub_3BE10(axis_3d* position);
-Type_AE400_29795* sub_3BE30(axis_3d* position);
-Type_AE400_29795* sub_3BE50(axis_3d* position);
-Type_AE400_29795* sub_3BE70(axis_3d* position);
-Type_AE400_29795* sub_3BE90(axis_3d* position);
-Type_AE400_29795* sub_3BEB0(axis_3d* position);
-Type_AE400_29795* sub_3BED0(axis_3d* position);
-Type_AE400_29795* sub_3BEF0(axis_3d* position);
-Type_AE400_29795* sub_3BF10(axis_3d* position);
-Type_AE400_29795* sub_3BF30(axis_3d* position);
-Type_AE400_29795* sub_3BF50(axis_3d* position);
+Type_AE400_29795* CreateSwitch00_3BB70(axis_3d* position);
+Type_AE400_29795* CreateSwitch01_3BB90(axis_3d* position);
+Type_AE400_29795* CreateSwitch02_3BBB0(axis_3d* position);
+Type_AE400_29795* CreateSwitch03_3BBD0(axis_3d* position);
+Type_AE400_29795* CreateSwitch04_3BBF0(axis_3d* position);
+Type_AE400_29795* CreateSwitch05_3BC10(axis_3d* position);
+Type_AE400_29795* CreateSwitch06_3BC30(axis_3d* position);
+Type_AE400_29795* CreateSwitch07_3BC50(axis_3d* position);
+Type_AE400_29795* CreateSwitch08_3BC70(axis_3d* position);
+Type_AE400_29795* CreateSwitch09_3BC90(axis_3d* position);
+Type_AE400_29795* CreateSwitch10_3BCB0(axis_3d* position);
+Type_AE400_29795* CreateSwitch11_3BCD0(axis_3d* position);
+Type_AE400_29795* CreateSwitch12_3BCF0(axis_3d* position);
+Type_AE400_29795* CreateSwitch13_3BD10(axis_3d* position);
+Type_AE400_29795* CreateSwitch14_3BD30(axis_3d* position);
+Type_AE400_29795* CreateSwitch15_3BD50(axis_3d* position);
+Type_AE400_29795* CreateSwitch16_3BD70(axis_3d* position);
+Type_AE400_29795* CreateSwitch17_3BD90(axis_3d* position);
+Type_AE400_29795* CreateSwitch18_3BDB0(axis_3d* position);
+Type_AE400_29795* CreateSwitch19_3BDD0(axis_3d* position);
+Type_AE400_29795* CreateSwitch20_3BDF0(axis_3d* position);
+Type_AE400_29795* CreateSwitch21_3BE10(axis_3d* position);
+Type_AE400_29795* CreateSwitch22_3BE30(axis_3d* position);
+Type_AE400_29795* CreateSwitch23_3BE50(axis_3d* position);
+Type_AE400_29795* CreateSwitch24_3BE70(axis_3d* position);
+Type_AE400_29795* CreateSwitch25_3BE90(axis_3d* position);
+Type_AE400_29795* CreateSwitch26_3BEB0(axis_3d* position);
+Type_AE400_29795* CreateSwitch27_3BED0(axis_3d* position);
+Type_AE400_29795* CreateSwitch28_3BEF0(axis_3d* position);
+Type_AE400_29795* CreateSwitch29_3BF10(axis_3d* position);
+Type_AE400_29795* CreateSwitch30_3BF30(axis_3d* position);
+Type_AE400_29795* CreateSwitch31_3BF50(axis_3d* position);
 
-int sub_3BF70(int a1, char a2, char a3, int a4, __int16 a5, char a6, char a7, int a8, __int16 a9);
-int sub_3C040(int a1);
-int sub_3C060(int a1);
-int sub_3C090(int a1);
-int sub_3C0C0(int a1);
-int sub_3C0F0(int a1);
+int CreateSpell_3BF70(int a1, char a2, char a3, int a4, __int16 a5, char a6, char a7, int a8, __int16 a9);
+int CreatePossessionSpell_3C040(int a1);
+int CreateCastleSpell_3C060(int a1);
+int CreateFireballSpell_3C090(int a1);
+int CreateSpeedSpell_3C0C0(int a1);
+int CreateHealSpell_3C0F0(int a1);
 int sub_3C120(int a1);
 int sub_3C150(int a1);
 int sub_3C180(int a1);
@@ -1017,7 +1017,7 @@ void sub_44D30_45070(TypeStrAE400_13323* a1, Type_AE400_29795* event);
 int sub_45410_45750(Type_AE400_29795* a1);
 void sub_455D0_45910(Type_AE400_29795* a1);
 void sub_45C10_45F50(Type_AE400_29795* a1);
-void sub_45C90_45FD0(Type_AE400_29795* a1);
+void PlayerWizardTick_45C90_45FD0(Type_AE400_29795* a1);
 int sub_45FC0_46300(int a1);
 void sub_463B0_466F0(int a1);
 void sub_46480_467C0(int a1);
@@ -1028,7 +1028,7 @@ void sub_46B00_46E40(Type_AE400_29795* a1, Type_AE400_29795* a2, int a3, int a4)
 unsigned int sub_46CA0_46FE0(int a1, int a2, int a3);
 int sub_46D20_47060(Type_AE400_29795* a1, __int16 a2);
 __int16 sub_46DB0_470F0(int a1);
-char sub_46F10_47250(int a1);
+char CastleTick_46F10_47250(int a1);
 int sub_47020_47360(int a1);
 int sub_47080_473C0(int a1);
 int sub_470E0(int a1);
@@ -1050,12 +1050,12 @@ int sub_48520(__int16 a1, __int16 a2, __int16 a3, __int16 a4);
 bool sub_48570(__int16 a1, __int16 a2, __int16 a3, __int16 a4);
 char sub_48710_48A50(int a1, int a2, __int16 a3, __int16 a4, int a5, int a6, __int16 a7, int a8);
 int DrawMinimap_49300_49640(int a1, int a2, int a3, int a4, int a5, int a6, __int16 a7, int a8, int a9, int a10);
-void sub_49890_49BD0(int a1);
+void TreeTick_49890_49BD0(int a1);
 int sub_499C0_49D00(int a1);
 void sub_49A50_49D90(_WORD* a1);
-int sub_49AA0_49DE0(int a1);
+int StoneTick_49AA0_49DE0(int a1);
 int sub_49AD0_49E10(int a1);
-int sub_49B50_49E90(int a1);
+int StandingStoneTick_49B50_49E90(int a1);
 void sub_4A980_4ACC0();
 void MainMenuStep_4AB20_4AE60();
 void sub_4AC70_4AFB0();
@@ -1143,7 +1143,7 @@ char sub_52770_52AB0(int a1);
 void UpdateFireball_52B30_52E70(int a1);
 char sub_52ED0_53210(int a1);
 char sub_53060(int a1);
-char sub_53070_533B0(int a1);
+char Class9Type3Tick_53070_533B0(int a1);
 char sub_530B0(int a1);
 char sub_530C0_53400(int a1);
 char sub_534C0_53800(int a1);
@@ -3444,11 +3444,11 @@ Type_96902;
 
 #pragma pack (16)
 
-int sub_39A00(uint16_t* a1);
+int NullConstructor_39A00(uint16_t* a1);
 int sub_39340(uint16_t* a1);
 int sub_38C60(uint16_t* a1);
 int CreateGuard_386E0(uint16_t* a1);
-int sub_384B0(uint16_t* a1);
+int CreateWorm_384B0(uint16_t* a1);
 
 Type_254A34 str_254A34[] = {
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
@@ -3465,19 +3465,19 @@ Type_254A34 str_254A34[] = {
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_254D48[] = {
-{ 0x002548F4, 0x0000, PORT_FN(sub_37BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_37CF0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(CreateTree_37BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(CreateStone_37CF0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0002, PORT_FN(sub_37D70, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_37E00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(CreateStandingStone_37E00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0004, PORT_FN(sub_37E80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0005, PORT_FN(sub_37EF0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_254B84[] = {
-{ 0x002548F4, 0x0000, sub_37820_37BE0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_378A0_37C60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, CreatePlayerWizard_37820_37BE0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(CreateComputerWizard_378A0_37C60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0002, PORT_FN(CreateCastle_37920_37CE0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_37A00_37DC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(CreateBalloon_37A00_37DC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0004, PORT_FN(SetPlayerStart0_37720_37AE0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0005, PORT_FN(SetPlayerStart1_37740_37B00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0006, PORT_FN(SetPlayerStart2_37760_37B20, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
@@ -3531,9 +3531,9 @@ Type_254A34 str_255478[] = {
 { 0x002548F4, 0x0000, PORT_FN(sub_38030, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0001, PORT_FN(sub_38270, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0002, PORT_FN(sub_38370, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_384B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(CreateWorm_384B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0004, PORT_FN(CreateGuard_386E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000},
-{ 0x002548F4, 0x0005, PORT_FN(sub_38890, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(CreateCrab_38890, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0006, PORT_FN(sub_389E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0007, PORT_FN(sub_38C60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0008, PORT_FN(sub_38D60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
@@ -3544,7 +3544,7 @@ Type_254A34 str_255478[] = {
 { 0x002548F4, 0x000D, PORT_FN(sub_39340, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000E, PORT_FN(sub_39490, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000F, PORT_FN(sub_395B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0010, PORT_FN(sub_396E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0010, PORT_FN(CreateWyvern_396E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_2555A0[] = {
@@ -3570,17 +3570,17 @@ Type_254A34 str_2556D8[] = {
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_255870[] = {
-{ 0x002548F4, 0x0000, PORT_FN(sub_39A10, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(CreateFireball_39A10, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0001, PORT_FN(sub_39A90, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0002, PORT_FN(sub_39B40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_39BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(CreateClass9Type3_39BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0004, PORT_FN(sub_39C40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0005, PORT_FN(sub_39CC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0006, PORT_FN(sub_39D40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0007, PORT_FN(sub_39DC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0008, PORT_FN(sub_39E40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0009, PORT_FN(sub_39EC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, PORT_FN(sub_39F40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0009, PORT_FN(CreateLightningBolt_39EC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, PORT_FN(CreateHomingSpawnMissile_39F40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000B, PORT_FN(sub_39FC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000C, PORT_FN(sub_3A040, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000D, PORT_FN(sub_3A0C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
@@ -3594,12 +3594,12 @@ Type_254A34 str_255870[] = {
 
 Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x0000, PORT_FN(CreateExplosion_3A490, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_3A510, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(CreateClass10Type1_3A510, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0002, PORT_FN(sub_3A570, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0003, PORT_FN(sub_3A5D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0004, PORT_FN(sub_3A640, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0005, PORT_FN(sub_3A6B0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, PORT_FN(sub_3A730, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, PORT_FN(CreateClass10Type6_3A730, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0007, PORT_FN(sub_3A7D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0008, PORT_FN(sub_3A870, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0009, PORT_FN(sub_3A8D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
@@ -3612,15 +3612,15 @@ Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x0010, PORT_FN(CreateLava_3ACC0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0011, PORT_FN(CreateExplosionRing_3AC70, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0012, PORT_FN(CreateVolcanoEruption_3ADB0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0013, PORT_FN(sub_3AE00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0014, PORT_FN(sub_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0015, PORT_FN(sub_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0016, PORT_FN(sub_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0013, PORT_FN(CreateClass10Type19_3AE00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0014, PORT_FN(NullConstructor_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0015, PORT_FN(NullConstructor_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0016, PORT_FN(NullConstructor_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0017, PORT_FN(sub_3AE80, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0018, PORT_FN(sub_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0018, PORT_FN(NullConstructor_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0019, PORT_FN(sub_3AF00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x001A, PORT_FN(sub_3AF80, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x001B, PORT_FN(sub_3B000, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001B, PORT_FN(CreateTerrainRaiseStep_3B000, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x001C, PORT_FN(sub_3B060, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x001D, PORT_FN(sub_3B120, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x001E, (Type_AE400_29795 * (*)(axis_3d*))sub_3B0C0, 0x0001, 0x0000 },
@@ -3654,45 +3654,45 @@ Type_254A34 str_255D0C[] = {
 
 
 Type_254A34 str_256208[] = {
-{ 0x002548F4, 0x0000, sub_3BB70, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, sub_3BB90, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, sub_3BBB0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, sub_3BBD0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, sub_3BBF0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, sub_3BC10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, sub_3BC30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, sub_3BC50, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0008, sub_3BC70, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0009, sub_3BC90, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, sub_3BCB0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000B, sub_3BCD0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000C, sub_3BCF0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000D, sub_3BD10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000E, sub_3BD30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000F, sub_3BD50, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0010, sub_3BD70, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0011, sub_3BD90, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0012, sub_3BDB0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0013, sub_3BDD0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0014, sub_3BDF0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0015, sub_3BE10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0016, sub_3BE30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0017, sub_3BE50, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0018, sub_3BE70, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0019, sub_3BE90, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001A, sub_3BEB0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001B, sub_3BED0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001C, sub_3BEF0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001D, sub_3BF10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001E, sub_3BF30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001F, sub_3BF50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, CreateSwitch00_3BB70, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, CreateSwitch01_3BB90, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, CreateSwitch02_3BBB0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, CreateSwitch03_3BBD0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, CreateSwitch04_3BBF0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, CreateSwitch05_3BC10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, CreateSwitch06_3BC30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, CreateSwitch07_3BC50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0008, CreateSwitch08_3BC70, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0009, CreateSwitch09_3BC90, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, CreateSwitch10_3BCB0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000B, CreateSwitch11_3BCD0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000C, CreateSwitch12_3BCF0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000D, CreateSwitch13_3BD10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000E, CreateSwitch14_3BD30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000F, CreateSwitch15_3BD50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0010, CreateSwitch16_3BD70, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0011, CreateSwitch17_3BD90, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0012, CreateSwitch18_3BDB0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0013, CreateSwitch19_3BDD0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0014, CreateSwitch20_3BDF0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0015, CreateSwitch21_3BE10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0016, CreateSwitch22_3BE30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0017, CreateSwitch23_3BE50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0018, CreateSwitch24_3BE70, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0019, CreateSwitch25_3BE90, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001A, CreateSwitch26_3BEB0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001B, CreateSwitch27_3BED0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001C, CreateSwitch28_3BEF0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001D, CreateSwitch29_3BF10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001E, CreateSwitch30_3BF30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001F, CreateSwitch31_3BF50, 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_2567D8[] = {
-{ 0x002548F4, 0x0000, PORT_FN(sub_3C090, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_3C0F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(sub_3C0C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_3C040, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(CreateFireballSpell_3C090, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(CreateHealSpell_3C0F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(CreateSpeedSpell_3C0C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(CreatePossessionSpell_3C040, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0004, PORT_FN(sub_3C1B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0005, PORT_FN(sub_3C330, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0006, PORT_FN(sub_3C150, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
@@ -3705,7 +3705,7 @@ Type_254A34 str_2567D8[] = {
 { 0x002548F4, 0x000D, PORT_FN(sub_3C2A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000E, PORT_FN(sub_3C210, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000F, PORT_FN(sub_3C240, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0010, PORT_FN(sub_3C060, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0010, PORT_FN(CreateCastleSpell_3C060, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0011, PORT_FN(sub_3C3C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0012, PORT_FN(sub_3C360, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0013, PORT_FN(sub_3C180, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
@@ -3722,37 +3722,56 @@ Type_254A34 str_256980[] = {
 { 0x002548F4, 0x0003, PORT_FN(sub_3C540, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
-int sub_25980() { return 0; };
-int sub_49AC0() { return 0; };
-int sub_49B40() { return 0; };
-int sub_49B70() { return 0; };
-int sub_47F80() { return 0; };
-int sub_481C0() { return 0; };
-int sub_31A90() { return 0; };
-int sub_5B5D0() { return 0; };
-int sub_48650() { return 0; };
+/// Empty entity state handler (original 0x25980 is a bare ret).
+int EmptyStateHandler_25980() { return 0; };
+/// Empty entity state handler (original 0x49AC0 is a bare ret).
+int EmptyStateHandler_49AC0() { return 0; };
+/// Empty entity state handler (original 0x49B40 is a bare ret).
+int EmptyStateHandler_49B40() { return 0; };
+/// Empty entity state handler (original 0x49B70 is a bare ret).
+int EmptyStateHandler_49B70() { return 0; };
+/// Empty entity state handler (original 0x47F80 is a bare ret).
+int EmptyStateHandler_47F80() { return 0; };
+/// Empty entity state handler (original 0x481C0 is a bare ret).
+int EmptyStateHandler_481C0() { return 0; };
+/// Empty entity state handler (original 0x31A90 is a bare ret).
+int EmptyStateHandler_31A90() { return 0; };
+/// Empty entity state handler (original 0x5B5D0 is a bare ret).
+int EmptyStateHandler_5B5D0() { return 0; };
+/// Empty entity state handler (original 0x48650 is a bare ret).
+int EmptyStateHandler_48650() { return 0; };
 void sub_56250(Type_AE400_29795* a1x) {
     SpellJarTick_55DB0_562E0(a1x);
 };
 void sub_56260(Type_AE400_29795* a1x) {
     SpellJarSpawnTick_55D30_56260(a1x);
 };
-int sub_43AF0() { return 0; };
+/// Empty entity state handler (original 0x43AF0 is a bare ret).
+int EmptyStateHandler_43AF0() { return 0; };
 /// Empty entity state handler (original 0x262C0 is a bare ret); class 10 states 20-22 never change on their own.
 int EmptyStateHandler_262C0() { return 0; };
-int sub_26350() { return 0; };
-int sub_29B70() { return 0; };
+/// Empty entity state handler (original 0x26350 is a bare ret).
+int EmptyStateHandler_26350() { return 0; };
+/// Empty entity state handler (original 0x29B70 is a bare ret).
+int EmptyStateHandler_29B70() { return 0; };
 
-int sub_1F630() { return 0; };
-int sub_1F9F0() { return 0; };
-int sub_1FAB0() { return 0; };
-int sub_1FE80() { return 0; };
+/// Empty entity state handler (original 0x1F630 is a bare ret).
+int EmptyStateHandler_1F630() { return 0; };
+/// Empty entity state handler (original 0x1F9F0 is a bare ret).
+int EmptyStateHandler_1F9F0() { return 0; };
+/// Empty entity state handler (original 0x1FAB0 is a bare ret).
+int EmptyStateHandler_1FAB0() { return 0; };
+/// Empty entity state handler (original 0x1FE80 is a bare ret).
+int EmptyStateHandler_1FE80() { return 0; };
 // PORT: was "int sub_1FF50() { return 0; };//?" - IDA took the code-segment table at 0x1FF40 for code and lost this
 // function; the original (0x1FF50) is "push 5Ah; push a1; call sub_19B10", like the other 6t state handlers.
 void sub_1FF50(Type_AE400_29795* a1x) { sub_19B10(a1x, 90); }
-int sub_20B90() { return 0; };
-int sub_20BA0() { return 0; };
-int sub_20BB0() { return 0; };
+/// Empty entity state handler (original 0x20B90 is a bare ret).
+int EmptyStateHandler_20B90() { return 0; };
+/// Empty entity state handler (original 0x20BA0 is a bare ret).
+int EmptyStateHandler_20BA0() { return 0; };
+/// Empty entity state handler (original 0x20BB0 is a bare ret).
+int EmptyStateHandler_20BB0() { return 0; };
 
 
 Type_254A34x str_254A08[] = {
@@ -3760,39 +3779,39 @@ Type_254A34x str_254A08[] = {
 };
 
 Type_254A34x str_254C3C[] = {
-{ 0x002548F4,0x0000,PORT_FN(sub_49890_49BD0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4,0x0000,PORT_FN(TreeTick_49890_49BD0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4,0x0001,PORT_FN(sub_499C0_49D00, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))sub_49A50_49D90,0x0001,0x0000 },
-{ 0x002548F4,0x0003,PORT_FN(sub_49AA0_49DE0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))sub_49AC0,0x0001,0x0000 },
-{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))sub_49AC0,0x0001,0x0000 },
+{ 0x002548F4,0x0003,PORT_FN(StoneTick_49AA0_49DE0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))EmptyStateHandler_49AC0,0x0001,0x0000 },
+{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))EmptyStateHandler_49AC0,0x0001,0x0000 },
 { 0x002548F4,0x0006,PORT_FN(sub_49AD0_49E10, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))sub_49B40,0x0001,0x0000 },
-{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))sub_49B40,0x0001,0x0000 },
-{ 0x002548F4,0x0009,PORT_FN(sub_49B50_49E90, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))sub_49B70,0x0001,0x0000 },
-{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))sub_49B70,0x0001,0x0000 },
-{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))sub_49B70,0x0001,0x0000 },
-{ 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))sub_49B70,0x0001,0x0000 },
-{ 0x002548F4,0x000E,(void (*)(Type_AE400_29795*))sub_49B70,0x0001,0x0000 }, // PORT: see below
-{ 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))sub_49B70,0x0001,0x0000 },
-{ 0x002548F4,0x0010,(void (*)(Type_AE400_29795*))sub_49B70,0x0001,0x0000 },
-{ 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))sub_49B70,0x0001,0x0000 }, // PORT: entries 14-17 were missing
+{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B40,0x0001,0x0000 },
+{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B40,0x0001,0x0000 },
+{ 0x002548F4,0x0009,PORT_FN(StandingStoneTick_49B50_49E90, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B70,0x0001,0x0000 },
+{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B70,0x0001,0x0000 },
+{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B70,0x0001,0x0000 },
+{ 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B70,0x0001,0x0000 },
+{ 0x002548F4,0x000E,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B70,0x0001,0x0000 }, // PORT: see below
+{ 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B70,0x0001,0x0000 },
+{ 0x002548F4,0x0010,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B70,0x0001,0x0000 },
+{ 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B70,0x0001,0x0000 }, // PORT: entries 14-17 were missing
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 }
 };
 
 Type_254A34x str_254ADC[] = {
-{ 0x002548F4,0x0000,sub_45C90_45FD0, 0x0001, 0x0000 },
+{ 0x002548F4,0x0000,PlayerWizardTick_45C90_45FD0, 0x0001, 0x0000 },
 { 0x002548F4,0x0001,PORT_FN(ComputerWizardTick_13170, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0002,PORT_FN(sub_45FC0_46300, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0003,PORT_FN(sub_46480_467C0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0004,PORT_FN(sub_46DB0_470F0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0005,PORT_FN(sub_46F10_47250, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0005,PORT_FN(CastleTick_46F10_47250, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0006,PORT_FN(sub_470E0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))sub_47F80,0x0001,0x0000 },
-{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))sub_47F80,0x0001,0x0000 },
+{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))EmptyStateHandler_47F80,0x0001,0x0000 },
+{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))EmptyStateHandler_47F80,0x0001,0x0000 },
 { 0x002548F4,0x0009,PORT_FN(sub_47F90_482D0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))sub_481C0,0x0001,0x0000 },
+{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))EmptyStateHandler_481C0,0x0001,0x0000 },
 { 0x00000000,0x0000,(void (*)(Type_AE400_29795*))nullptr,0x0000,0x0000 }
 };
 
@@ -3820,19 +3839,19 @@ Type_254A34x str_254DCC[] = {//254DCC
 { 0x002548F4, 0x0010, (void (*)(Type_AE400_29795*))sub_1B4E0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0011, (void (*)(Type_AE400_29795*))sub_1B4F0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0012, (void (*)(Type_AE400_29795*))sub_1B500, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0013, (void (*)(Type_AE400_29795*))sub_1B510, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0013, (void (*)(Type_AE400_29795*))WormTick_1B510, 0x0001, 0x0000 },
 { 0x002548F4, 0x0014, (void (*)(Type_AE400_29795*))sub_1B520, 0x0001, 0x0000 },
 { 0x002548F4, 0x0015, (void (*)(Type_AE400_29795*))sub_1B570, 0x0001, 0x0000 },
 { 0x002548F4, 0x0016, (void (*)(Type_AE400_29795*))sub_1B580, 0x0001, 0x0000 },
 { 0x002548F4, 0x0017, (void (*)(Type_AE400_29795*))sub_1B590, 0x0001, 0x0000 },
 { 0x002548F4, 0x0018, (void (*)(Type_AE400_29795*))sub_1B5A0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0019, (void (*)(Type_AE400_29795*))sub_1B5D0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0019, (void (*)(Type_AE400_29795*))GuardTick_1B5D0, 0x0001, 0x0000 },
 { 0x002548F4, 0x001A, (void (*)(Type_AE400_29795*))sub_1BB20, 0x0001, 0x0000 },
 { 0x002548F4, 0x001B, (void (*)(Type_AE400_29795*))sub_1BBE0, 0x0001, 0x0000 },
 { 0x002548F4, 0x001C, (void (*)(Type_AE400_29795*))sub_1BC10, 0x0001, 0x0000 },
 { 0x002548F4, 0x001D, (void (*)(Type_AE400_29795*))sub_1BC40, 0x0001, 0x0000 },
 { 0x002548F4, 0x001E, (void (*)(Type_AE400_29795*))sub_1BD10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001F, (void (*)(Type_AE400_29795*))sub_1BD20, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001F, (void (*)(Type_AE400_29795*))CrabTick_1BD20, 0x0001, 0x0000 },
 { 0x002548F4, 0x0020, (void (*)(Type_AE400_29795*))sub_1C110, 0x0001, 0x0000 },
 { 0x002548F4, 0x0021, (void (*)(Type_AE400_29795*))sub_1C170, 0x0001, 0x0000 },
 { 0x002548F4, 0x0022, (void (*)(Type_AE400_29795*))sub_1C3C0, 0x0001, 0x0000 },
@@ -3879,16 +3898,16 @@ Type_254A34x str_254DCC[] = {//254DCC
 { 0x002548F4, 0x004B, (void (*)(Type_AE400_29795*))sub_1F390, 0x0001, 0x0000 },
 { 0x002548F4, 0x004C, (void (*)(Type_AE400_29795*))sub_1F5A0, 0x0001, 0x0000 },
 { 0x002548F4, 0x004D, (void (*)(Type_AE400_29795*))sub_1F5B0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x004E, (void (*)(Type_AE400_29795*))sub_1F630, 0x0001, 0x0000 },
+{ 0x002548F4, 0x004E, (void (*)(Type_AE400_29795*))EmptyStateHandler_1F630, 0x0001, 0x0000 },
 { 0x002548F4, 0x004F, (void (*)(Type_AE400_29795*))sub_1F640, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0050, (void (*)(Type_AE400_29795*))sub_1F9F0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0051, (void (*)(Type_AE400_29795*))sub_1F9F0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0050, (void (*)(Type_AE400_29795*))EmptyStateHandler_1F9F0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0051, (void (*)(Type_AE400_29795*))EmptyStateHandler_1F9F0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0052, (void (*)(Type_AE400_29795*))sub_1FA00, 0x0001, 0x0000 },
 { 0x002548F4, 0x0053, (void (*)(Type_AE400_29795*))sub_1FAA0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0054, (void (*)(Type_AE400_29795*))sub_1FAB0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0054, (void (*)(Type_AE400_29795*))EmptyStateHandler_1FAB0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0055, (void (*)(Type_AE400_29795*))sub_1FAC0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0056, (void (*)(Type_AE400_29795*))sub_1FE80, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0057, (void (*)(Type_AE400_29795*))sub_1FE80, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0056, (void (*)(Type_AE400_29795*))EmptyStateHandler_1FE80, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0057, (void (*)(Type_AE400_29795*))EmptyStateHandler_1FE80, 0x0001, 0x0000 },
 { 0x002548F4, 0x0058, (void (*)(Type_AE400_29795*))sub_1FE90, 0x0001, 0x0000 },
 { 0x002548F4, 0x0059, (void (*)(Type_AE400_29795*))sub_1FEC0, 0x0001, 0x0000 },
 { 0x002548F4, 0x005A, (void (*)(Type_AE400_29795*))sub_1FF50, 0x0001, 0x0000 },
@@ -3898,56 +3917,56 @@ Type_254A34x str_254DCC[] = {//254DCC
 { 0x002548F4, 0x005E, (void (*)(Type_AE400_29795*))sub_203F0, 0x0001, 0x0000 },
 { 0x002548F4, 0x005F, (void (*)(Type_AE400_29795*))sub_20400, 0x0001, 0x0000 },
 { 0x002548F4, 0x0060, (void (*)(Type_AE400_29795*))sub_20700, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0061, (void (*)(Type_AE400_29795*))sub_20710, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0061, (void (*)(Type_AE400_29795*))WyvernTick_20710, 0x0001, 0x0000 },
 { 0x002548F4, 0x0062, (void (*)(Type_AE400_29795*))sub_207E0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0063, (void (*)(Type_AE400_29795*))sub_20B60, 0x0001, 0x0000 },
 { 0x002548F4, 0x0064, (void (*)(Type_AE400_29795*))sub_20B70, 0x0001, 0x0000 },
 { 0x002548F4, 0x0065, (void (*)(Type_AE400_29795*))sub_20B80, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0066, (void (*)(Type_AE400_29795*))sub_20B90, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0067, (void (*)(Type_AE400_29795*))sub_20B90, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0068, (void (*)(Type_AE400_29795*))sub_20B90, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0069, (void (*)(Type_AE400_29795*))sub_20B90, 0x0000, 0x0000 },
-{ 0x002548F4, 0x006A, (void (*)(Type_AE400_29795*))sub_20B90, 0x0000, 0x0000 },
-{ 0x002548F4, 0x006B, (void (*)(Type_AE400_29795*))sub_20B90, 0x0000, 0x0000 },
-{ 0x002548F4, 0x006C, (void (*)(Type_AE400_29795*))sub_20BA0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x006D, (void (*)(Type_AE400_29795*))sub_20BA0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x006E, (void (*)(Type_AE400_29795*))sub_20BA0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x006F, (void (*)(Type_AE400_29795*))sub_20BA0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0070, (void (*)(Type_AE400_29795*))sub_20BA0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0071, (void (*)(Type_AE400_29795*))sub_20BA0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0072, (void (*)(Type_AE400_29795*))sub_20BB0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0073, (void (*)(Type_AE400_29795*))sub_20BB0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0074, (void (*)(Type_AE400_29795*))sub_20BB0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0075, (void (*)(Type_AE400_29795*))sub_20BB0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0076, (void (*)(Type_AE400_29795*))sub_20BB0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0077, (void (*)(Type_AE400_29795*))sub_20BB0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0078, PORT_FN(sub_19550, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0066, (void (*)(Type_AE400_29795*))EmptyStateHandler_20B90, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0067, (void (*)(Type_AE400_29795*))EmptyStateHandler_20B90, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0068, (void (*)(Type_AE400_29795*))EmptyStateHandler_20B90, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0069, (void (*)(Type_AE400_29795*))EmptyStateHandler_20B90, 0x0000, 0x0000 },
+{ 0x002548F4, 0x006A, (void (*)(Type_AE400_29795*))EmptyStateHandler_20B90, 0x0000, 0x0000 },
+{ 0x002548F4, 0x006B, (void (*)(Type_AE400_29795*))EmptyStateHandler_20B90, 0x0000, 0x0000 },
+{ 0x002548F4, 0x006C, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BA0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x006D, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BA0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x006E, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BA0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x006F, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BA0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0070, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BA0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0071, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BA0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0072, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BB0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0073, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BB0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0074, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BB0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0075, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BB0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0076, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BB0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0077, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BB0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0078, PORT_FN(SegmentFollowTick_19550, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 }
 
 };
 
 Type_254A34x str_255574[] = {
-{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))sub_31A90, 0x0001, 0x0000 },
-{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))sub_31A90,0x0001,0x0000 },
+{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))EmptyStateHandler_31A90, 0x0001, 0x0000 },
+{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))EmptyStateHandler_31A90,0x0001,0x0000 },
 { 0x00000000,0x0000,nullptr,0x0000,0x0000 }
 };
 
 Type_254A34x str_2555CC[] = {
-{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))sub_5B5D0, 0x0001, 0x0000 },
-{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))sub_5B5D0,0x0001,0x0000 },
-{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))sub_5B5D0,0x0001,0x0000 },
-{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))sub_5B5D0,0x0001,0x0000 },
-{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))sub_5B5D0,0x0001,0x0000 },
+{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))EmptyStateHandler_5B5D0, 0x0001, 0x0000 },
+{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))EmptyStateHandler_5B5D0,0x0001,0x0000 },
+{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))EmptyStateHandler_5B5D0,0x0001,0x0000 },
+{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))EmptyStateHandler_5B5D0,0x0001,0x0000 },
+{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))EmptyStateHandler_5B5D0,0x0001,0x0000 },
 { 0x00000000,0x0000,nullptr,0x0000,0x0000 }
 };
 
 Type_254A34x str_255674[] = {
-{ 0x002548F4, 0x0000, (void (*)(Type_AE400_29795*))sub_48650, 0x0001, 0x0000 },
-{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))sub_48650,0x0001,0x0000 },
-{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))sub_48650,0x0001,0x0000 },
-{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))sub_48650,0x0001,0x0000 },
-{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))sub_48650,0x0001,0x0000 },
-{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))sub_48650,0x0001,0x0000 },
+{ 0x002548F4, 0x0000, (void (*)(Type_AE400_29795*))EmptyStateHandler_48650, 0x0001, 0x0000 },
+{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))EmptyStateHandler_48650,0x0001,0x0000 },
+{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))EmptyStateHandler_48650,0x0001,0x0000 },
+{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))EmptyStateHandler_48650,0x0001,0x0000 },
+{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))EmptyStateHandler_48650,0x0001,0x0000 },
+{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))EmptyStateHandler_48650,0x0001,0x0000 },
 { 0x00000000,0x0000,(void (*)(Type_AE400_29795*))nullptr,0x0000,0x0000 }
 };
 
@@ -3955,7 +3974,7 @@ Type_254A34x str_25573C[] = {
 { 0x002548F4,0x0000,PORT_FN(UpdateFireball_52B30_52E70, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4,0x0001,PORT_FN(sub_52ED0_53210, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0002,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0003,PORT_FN(sub_53070_533B0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0003,PORT_FN(Class9Type3Tick_53070_533B0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0004,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0005,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0006,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
@@ -3978,14 +3997,14 @@ Type_254A34x str_25573C[] = {
 
 Type_254A34x str_255998[] = {
 { 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))ExplosionTick_24F60,0x0001,0x0000 },
-{ 0x002548F4,0x0001,PORT_FN(sub_25130, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0001,PORT_FN(Class10Type1Tick_25130, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0002,PORT_FN(sub_252B0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0003,PORT_FN(sub_253F0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))sub_25980,0x0001,0x0000 },
+{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))EmptyStateHandler_25980,0x0001,0x0000 },
 { 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))sub_25410,0x0001,0x0000 },
-{ 0x002548F4,0x0006,PORT_FN(sub_252D0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0007,PORT_FN(sub_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0008,PORT_FN(sub_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0006,PORT_FN(Class10Type6Tick_252D0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0007,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0008,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))sub_25470,0x0001,0x0000 },
 { 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))sub_25570,0x0001,0x0000 },
 { 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))sub_25670,0x0001,0x0000 },
@@ -3996,21 +4015,21 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x0010,PORT_FN(LavaTick_25A60, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))ExplosionRingTick_25CE0,0x0001,0x0000 },
 { 0x002548F4,0x0012,PORT_FN(VolcanoEruptionTick_25EC0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0013,(void (*)(Type_AE400_29795*))sub_26140,0x0001,0x0000 },
+{ 0x002548F4,0x0013,(void (*)(Type_AE400_29795*))Class10Type19Tick_26140,0x0001,0x0000 },
 { 0x002548F4,0x0014,(void (*)(Type_AE400_29795*))EmptyStateHandler_262C0,0x0001,0x0000 },
 { 0x002548F4,0x0015,(void (*)(Type_AE400_29795*))EmptyStateHandler_262C0,0x0001,0x0000 },
 { 0x002548F4,0x0016,(void (*)(Type_AE400_29795*))EmptyStateHandler_262C0,0x0001,0x0000 },
 { 0x002548F4,0x0017,(void (*)(Type_AE400_29795*))sub_262D0,0x0001,0x0000 },
-{ 0x002548F4,0x0018,(void (*)(Type_AE400_29795*))sub_26350,0x0001,0x0000 },
+{ 0x002548F4,0x0018,(void (*)(Type_AE400_29795*))EmptyStateHandler_26350,0x0001,0x0000 },
 { 0x002548F4,0x0019,(void (*)(Type_AE400_29795*))sub_26360,0x0001,0x0000 },
 { 0x002548F4,0x001A,(void (*)(Type_AE400_29795*))sub_263C0,0x0001,0x0000 },
 { 0x002548F4,0x001B,(void (*)(Type_AE400_29795*))RaiseTerrainStripYDown_26670,0x0001,0x0000 },
 { 0x002548F4,0x001C,PORT_FN(RaiseTerrainStripYUp_26560, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x001D,(void (*)(Type_AE400_29795*))RaiseTerrainStripX_26760,0x0001,0x0000 },
-{ 0x002548F4,0x001E,PORT_FN(sub_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x001F,PORT_FN(sub_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x001E,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x001F,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0020,(void (*)(Type_AE400_29795*))sub_26890,0x0001,0x0000 },
-{ 0x002548F4,0x0021,PORT_FN(sub_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0021,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0022,(void (*)(Type_AE400_29795*))sub_26920,0x0001,0x0000 },
 { 0x002548F4,0x0023,PORT_FN(sub_26CE0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0024,PORT_FN(sub_26A60, void(Type_AE400_29795*)),0x0001,0x0000 },
@@ -4031,14 +4050,14 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x0033,(void (*)(Type_AE400_29795*))sub_27D30,0x0001,0x0000 },
 { 0x002548F4,0x0034,sub_28DC0,0x0001,0x0000 },
 { 0x002548F4,0x0035,PORT_FN(sub_28FE0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0036,PORT_FN(sub_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0036,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0037,(void (*)(Type_AE400_29795*))sub_269A0,0x0001,0x0000 },
 { 0x002548F4,0x0038,(void (*)(Type_AE400_29795*))CrabSpawnTimerTick_296A0,0x0001,0x0000 },
 { 0x002548F4,0x0039,PORT_FN(sub_29700, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x003A,(void (*)(Type_AE400_29795*))sub_29780,0x0001,0x0000 },
 { 0x002548F4,0x003B,PORT_FN(sub_29920_29960, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x003C,(void (*)(Type_AE400_29795*))sub_299D0_29A10,0x0001,0x0000 },
-{ 0x002548F4,0x003D,(void (*)(Type_AE400_29795*))sub_29B70,0x0001,0x0000 },
+{ 0x002548F4,0x003D,(void (*)(Type_AE400_29795*))EmptyStateHandler_29B70,0x0001,0x0000 },
 { 0x00000000,0x0000,nullptr,0x0000,0x0000 }
 };
 Type_254A34x str_256038[] = {
@@ -4154,10 +4173,10 @@ Type_254A34x str_2563D8[] = {//2563D8
 };
 
 Type_254A34x str_256938[] = {
-{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))sub_43AF0, 0x0001, 0x0000 },
-{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))sub_43AF0,0x0001,0x0000 },
-{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))sub_43AF0,0x0001,0x0000 },
-{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))sub_43AF0,0x0001,0x0000 },
+{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))EmptyStateHandler_43AF0, 0x0001, 0x0000 },
+{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))EmptyStateHandler_43AF0,0x0001,0x0000 },
+{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))EmptyStateHandler_43AF0,0x0001,0x0000 },
+{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))EmptyStateHandler_43AF0,0x0001,0x0000 },
 { 0x00000000,0x0000,nullptr,0x0000,0x0000 }
 };
 
@@ -4178,12 +4197,13 @@ Type_96902 dword_96902[] = {//254902
 { str_256938, str_256980, 0x00000000, 0x0000, 0x00000000}//d
 };
 //int (*off_97D12)(int) = PORT_FN(CreateExplosion_3A490, int(int)); // weak
-int sub_39A00(uint16_t* a1) { return 0; };
+/// Constructor that creates nothing (original 0x39A00 is "xor eax,eax; ret"); class 10 types 20-22 and 24.
+int NullConstructor_39A00(uint16_t* a1) { return 0; };
 /*int (*off_97D12[])(int) = {
-CreateExplosion_3A490, sub_3A510, sub_3A570, sub_3A5D0, sub_3A640, sub_3A6B0, sub_3A730, sub_3A7D0,
+CreateExplosion_3A490, CreateClass10Type1_3A510, sub_3A570, sub_3A5D0, sub_3A640, sub_3A6B0, CreateClass10Type6_3A730, sub_3A7D0,
 sub_3A870, sub_3A8D0, sub_3A930, sub_3A9A0, sub_3AA10, sub_3AAA0, sub_3AB40, sub_3ABE0,
-CreateLava_3ACC0, CreateExplosionRing_3AC70, CreateVolcanoEruption_3ADB0, sub_3AE00, loc_39A00, loc_39A00, loc_39A00, sub_3AE80,
-loc_39A00, sub_3AF00, sub_3AF80, sub_3B000, sub_3B060, sub_3B120, sub_3B0C0, sub_3B1D0,
+CreateLava_3ACC0, CreateExplosionRing_3AC70, CreateVolcanoEruption_3ADB0, CreateClass10Type19_3AE00, loc_39A00, loc_39A00, loc_39A00, sub_3AE80,
+loc_39A00, sub_3AF00, sub_3AF80, CreateTerrainRaiseStep_3B000, sub_3B060, sub_3B120, sub_3B0C0, sub_3B1D0,
 sub_3B180, sub_3B4D0, sub_3B300, sub_3B3D0, sub_3B3E0 };*/
 #pragma pack (1)
 typedef struct {
@@ -4197,12 +4217,12 @@ Type_97D12;
 
 Type_97D12 off_97D12[] = {
 { PORT_FN(CreateExplosion_3A490, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 1 },
-{ PORT_FN(sub_3A510, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 2 },
+{ PORT_FN(CreateClass10Type1_3A510, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 2 },
 { PORT_FN(sub_3A570, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 3 },
 { PORT_FN(sub_3A5D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 4 },
 { PORT_FN(sub_3A640, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
 { PORT_FN(sub_3A6B0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 6 },
-{ PORT_FN(sub_3A730, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
+{ PORT_FN(CreateClass10Type6_3A730, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
 { PORT_FN(sub_3A7D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 8 },
 { PORT_FN(sub_3A870, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 9 },
 { PORT_FN(sub_3A8D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 10 },
@@ -4215,15 +4235,15 @@ Type_97D12 off_97D12[] = {
 { PORT_FN(CreateLava_3ACC0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 17 },
 { PORT_FN(CreateExplosionRing_3AC70, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 18 },
 { PORT_FN(CreateVolcanoEruption_3ADB0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 19 },
-{ PORT_FN(sub_3AE00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 20 },
-{ PORT_FN(sub_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 21 },
-{ PORT_FN(sub_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 22 },
-{ PORT_FN(sub_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 23 },
+{ PORT_FN(CreateClass10Type19_3AE00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 20 },
+{ PORT_FN(NullConstructor_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 21 },
+{ PORT_FN(NullConstructor_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 22 },
+{ PORT_FN(NullConstructor_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 23 },
 { PORT_FN(sub_3AE80, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 24 },
-{ PORT_FN(sub_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 25 },
+{ PORT_FN(NullConstructor_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 25 },
 { PORT_FN(sub_3AF00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 26 },
 { PORT_FN(sub_3AF80, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 27 },
-{ PORT_FN(sub_3B000, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 28 },
+{ PORT_FN(CreateTerrainRaiseStep_3B000, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 28 },
 { PORT_FN(sub_3B060, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 29 },
 { PORT_FN(sub_3B120, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 30 },
 { (Type_AE400_29795* (*)(axis_3d*))&sub_3B0C0, 1, 0x002548F4, 31 },
@@ -4288,10 +4308,10 @@ Type_97D12 off_97D12[] = {
 { PORT_FN(sub_5A080, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 } };
 
 Type_97D12 off_987DE[] = {
-{ PORT_FN(sub_3C090, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 1 },
-{ PORT_FN(sub_3C0F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 2 },
-{ PORT_FN(sub_3C0C0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 3 },
-{ PORT_FN(sub_3C040, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 4 },
+{ PORT_FN(CreateFireballSpell_3C090, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 1 },
+{ PORT_FN(CreateHealSpell_3C0F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 2 },
+{ PORT_FN(CreateSpeedSpell_3C0C0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 3 },
+{ PORT_FN(CreatePossessionSpell_3C040, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 4 },
 { PORT_FN(sub_3C1B0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
 { PORT_FN(sub_3C330, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 6 },
 { PORT_FN(sub_3C150, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
@@ -4304,7 +4324,7 @@ Type_97D12 off_987DE[] = {
 { PORT_FN(sub_3C2A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 14 },
 { PORT_FN(sub_3C210, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 15 },
 { PORT_FN(sub_3C240, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 16 },
-{ PORT_FN(sub_3C060, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 17 },
+{ PORT_FN(CreateCastleSpell_3C060, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 17 },
 { PORT_FN(sub_3C3C0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 18 },
 { PORT_FN(sub_3C360, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 19 },
 { PORT_FN(sub_3C180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 20 },
@@ -19998,7 +20018,8 @@ int sub_194F0_194F0()
 }
 
 //SYNCHRONIZED WITH REMC1
-__int16 sub_19550(int a1)
+/// Per-tick handler of a body segment (class 5 state 120, created by the type 0, 3 and 6 constructors): follows its leader (+52) and is removed when the leader is no longer a class 5 entity.
+__int16 SegmentFollowTick_19550(int a1)
 {
   __int16 result; // ax
   int v2; // esi
@@ -21305,7 +21326,8 @@ void sub_1B500(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B510(Type_AE400_29795* a1x)
+/// Per-tick handler of a worm head (class 5 state 19, set by CreateWorm_384B0).
+void WormTick_1B510(Type_AE400_29795* a1x)
 {
   sub_19D70(a1x, 18);
 }
@@ -21344,7 +21366,8 @@ void sub_1B5A0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B5D0(Type_AE400_29795* a1x)
+/// Per-tick handler of a guard (class 5 state 25, set by CreateGuard_386E0).
+void GuardTick_1B5D0(Type_AE400_29795* a1x)
 {
   unsigned int v1; // edx
   __int16 v2; // ax
@@ -21689,7 +21712,8 @@ void sub_1BD10(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1BD20(Type_AE400_29795* a1x)
+/// Per-tick handler of a crab (class 5 state 31, set by CreateCrab_38890).
+void CrabTick_1BD20(Type_AE400_29795* a1x)
 {
   unsigned int v1; // edi
   __int16 v2; // ax
@@ -24552,6 +24576,7 @@ void sub_1FEC0(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 // positive sp value has been detected, the output may be wrong!
+/// Unreachable: 0x1FF40 is a data table (turnWeights_1FF40) that IDA decoded as code; nothing calls this and it is in no dispatch table.
 void sub_1FF40(char a1, Type_AE400_29795* a2x, char a3, int a4, int a5)
 {
   int v5; // ebx
@@ -24932,7 +24957,8 @@ void sub_20700(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_20710(Type_AE400_29795* a1x)
+/// Per-tick handler of a wyvern (class 5 state 97, set by CreateWyvern_396E0).
+void WyvernTick_20710(Type_AE400_29795* a1x)
 {
   //int v1; // esi
   unsigned int v2; // ecx
@@ -27076,7 +27102,9 @@ void ExplosionTick_24F60(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_25130(int a1)
+/// TODO: rename when the entity is identified (class 10 type 1).
+/// Per-tick handler of class 10 state 1 (set by CreateClass10Type1_3A510).
+void Class10Type1Tick_25130(int a1)
 {
   int v1; // eax
   int result; // eax
@@ -27148,7 +27176,9 @@ void sub_252B0(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_252D0(int a1)
+/// TODO: rename when the entity is identified (class 10 type 6).
+/// Per-tick handler of class 10 state 6 (set by CreateClass10Type6_3A730).
+int Class10Type6Tick_252D0(int a1)
 {
   int v1; // eax
   __int16 v2; // cx
@@ -27210,7 +27240,8 @@ LABEL_11:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_253E0(int a1)
+/// State handler that removes its entity on the next tick (class 10 states 7, 8, 30, 31, 33, 54).
+void RemoveSelfTick_253E0(int a1)
 {
   MarkEntityForRemoval_41E80_421C0((Type_AE400_29795*)PTR(a1));
 }
@@ -27650,7 +27681,7 @@ void ExplosionRingTick_25CE0(Type_AE400_29795* a1x)
           sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 30);
       }
       v3 = 768 * a1x->var_u16_29821_26;
-      sub_37130_374F0(a1x, (int)(v3 - (__CFSHL__(HIDWORD(v3), 2) + 4 * HIDWORD(v3))) >> 2, 512);
+      SetCollisionBox_37130_374F0(a1x, (int)(v3 - (__CFSHL__(HIDWORD(v3), 2) + 4 * HIDWORD(v3))) >> 2, 512);
       sub_120B0(a1x, 0, a1x->var_u16_29839_44 / a1x->maxLife_29803_8);
       v4 = BeginRingIter_11410(a1x->var_u16_29821_26, a1x->var_u16_29821_26);
       if (v4)
@@ -27672,7 +27703,7 @@ void ExplosionRingTick_25CE0(Type_AE400_29795* a1x)
                   v7x->id_29819_24 = a1x->id_29819_24;
                   v7x->var_u16_29825_30 = a1x->var_u16_29825_30;
                   v7x->var_29811_16.dword |= 0x10080;
-                  sub_37130_374F0(v7x, 512, 512);
+                  SetCollisionBox_37130_374F0(v7x, 512, 512);
                   v7x->var_u16_29821_26 = 0;
               }
           }
@@ -27808,7 +27839,9 @@ LABEL_5:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_26140(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 10 type 19).
+/// Per-tick handler of class 10 state 19 (set by CreateClass10Type19_3AE00).
+void Class10Type19Tick_26140(Type_AE400_29795* a1x)
 {
   int v1; // eax
   int v2; // edi
@@ -30159,7 +30192,7 @@ void sub_29780(Type_AE400_29795* a1x)
           MarkEntityForRemoval_41E80_421C0(a1x);
       else
       {
-          sub_37130_374F0(a1x, 512, 2048);
+          SetCollisionBox_37130_374F0(a1x, 512, 2048);
           sub_120B0(a1x, 0, a1x->var_u16_29839_44 / a1x->maxLife_29803_8);
           v3_v4 = BeginRingIter_11410(0, 1);
           if (v3_v4)
@@ -30207,7 +30240,7 @@ void sub_29780(Type_AE400_29795* a1x)
               sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 30);
           }
           __int64 v3 = 768 * a1x->var_u16_29821_26;
-          sub_37130_374F0(a1x, (int)(v3 - (__CFSHL__(HIDWORD(v3), 2) + 4 * HIDWORD(v3))) >> 2, 512);
+          SetCollisionBox_37130_374F0(a1x, (int)(v3 - (__CFSHL__(HIDWORD(v3), 2) + 4 * HIDWORD(v3))) >> 2, 512);
           sub_120B0(a1x, 0, a1x->var_u16_29839_44 / a1x->maxLife_29803_8);
           v3_v4 = BeginRingIter_11410(a1x->var_u16_29821_26, a1x->var_u16_29821_26);
           if (v3_v4)
@@ -30226,7 +30259,7 @@ void sub_29780(Type_AE400_29795* a1x)
                       v6_v7->id_29819_24 = a1x->id_29819_24;
                       v6_v7->var_u16_29825_30 = a1x->var_u16_29825_30;
                       v6_v7->var_29811_16.dword |= 0x10080;
-                      sub_37130_374F0(v6_v7, 512, 512);
+                      SetCollisionBox_37130_374F0(v6_v7, 512, 512);
                       v6_v7->var_u16_29821_26 = 0;
                   }
               }
@@ -42872,7 +42905,8 @@ void sub_370E0_374A0(Type_AE400_29795* a1x, __int16 a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_37130_374F0(Type_AE400_29795* a1x, __int16 a2, __int16 a3)
+/// Sets the entity's collision box radii: x and y = a2, z = a3.
+void SetCollisionBox_37130_374F0(Type_AE400_29795* a1x, __int16 a2, __int16 a3)
 {
     a1x->collisionBox_29873_78.radiusX_29875_80 = a2;
     a1x->collisionBox_29873_78.radiusY_29877_82 = a2;
@@ -43111,7 +43145,7 @@ void sub_37560_37920(Type_1090* type1090)
             if (v2z == 4 )
             {
               *(_WORD *)(((uint8_t*)v2) + 24) = type1090->data_12;
-              sub_37130_374F0(v2, type1090->data_10 << 8, type1090->data_10 << 8);
+              SetCollisionBox_37130_374F0(v2, type1090->data_10 << 8, type1090->data_10 << 8);
               RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
             }
           }
@@ -43130,7 +43164,7 @@ void sub_37560_37920(Type_1090* type1090)
       else if (v2z <= 0xBu )
       {
         *(_WORD *)(((uint8_t*)v2) + 24) = type1090->data_12;
-        sub_37130_374F0(v2, type1090->data_10 << 8, 4096);
+        SetCollisionBox_37130_374F0(v2, type1090->data_10 << 8, 4096);
         RefillLife_36DE0_371A0(v2);
         *(_BYTE *)(((uint8_t*)v2) + 16) |= 1u;
       }
@@ -43287,7 +43321,8 @@ int SetPlayerStart7_37800_37BC0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //SYNCHRONIZED WITH REMC1
-Type_AE400_29795* sub_37820_37BE0(axis_3d* position)//208820_
+/// Constructor of a player-controlled wizard on a carpet (class 3 type 0, state 0; creature type 7).
+Type_AE400_29795* CreatePlayerWizard_37820_37BE0(axis_3d* position)//208820_
 {
 	Type_AE400_29795* event = NewEvent_372C0_37680();
 	if (event)
@@ -43308,7 +43343,8 @@ Type_AE400_29795* sub_37820_37BE0(axis_3d* position)//208820_
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_378A0_37C60(int a1)
+/// Constructor of a computer-controlled wizard (class 3 type 1, state 1 = ComputerWizardTick_13170; creature type 8).
+int CreateComputerWizard_378A0_37C60(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -43380,7 +43416,8 @@ int CreateCastle_37920_37CE0(int a1)
 #undef v4
 
 //SYNCHRONIZED WITH REMC1
-int sub_37A00_37DC0(int a1)
+/// Constructor of a castle balloon (class 3 type 3, state 7; states 7 and 8 have empty handlers).
+int CreateBalloon_37A00_37DC0(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -43516,7 +43553,8 @@ int sub_37BA0(int a1)
 }
 
 //----- (00037BC0) --------------------------------------------------------
-int sub_37BC0(int a1)
+/// Constructor of a tree (class 2 type 0, state 0).
+int CreateTree_37BC0(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -43564,7 +43602,8 @@ int sub_37BC0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00037CF0) --------------------------------------------------------
-int sub_37CF0(int a1)
+/// Constructor of a stone (class 2 type 1, state 3).
+int CreateStone_37CF0(int a1)
 {
   int result; // eax
   _WORD *v2; // ebx
@@ -43605,7 +43644,7 @@ int sub_37D70(int a1)
     sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     sub_37030_373F0((Type_AE400_29795*)v2, 39);
-    sub_37130_374F0((Type_AE400_29795*)v2, 1024, 1024);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 1024, 1024);
     return (int)OFF(v2);
   }
   return result;
@@ -43613,7 +43652,8 @@ int sub_37D70(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00037E00) --------------------------------------------------------
-int sub_37E00(int a1)
+/// Constructor of a standing stone (class 2 type 3, state 9): the stone rings that mark triggers.
+int CreateStandingStone_37E00(int a1)
 {
   int result; // eax
   _WORD *v2; // ebx
@@ -43873,7 +43913,7 @@ int sub_38370(int a1)
   sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
   RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 3);
-  sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+  SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
   return v2;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -43912,7 +43952,8 @@ uint16_t unk_99118[] = {
 0x0014,0x0200,0xFFFF,0xFFFF,0x0900,0x0028,0x0C00,0x0200,
 0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000
 };*/
-int sub_384B0(uint16_t* a1)//2094B0_
+/// Constructor of a worm (class 5 type 3): the head in state 19, the body segments in state 120 (SegmentFollowTick_19550), chained via +52/+54.
+int CreateWorm_384B0(uint16_t* a1)//2094B0_
 {
     int result; // eax
     int v2; // ebx
@@ -44051,7 +44092,7 @@ int CreateGuard_386E0(uint16_t* a1)
     sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 0);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
 }
 
@@ -44072,7 +44113,8 @@ void sub_38820_38BA0(Type_AE400_29795* a1x)
 }
 
 //----- (00038890) --------------------------------------------------------
-int sub_38890(int a1)
+/// Constructor of a crab (class 5 type 5, state 31).
+int CreateCrab_38890(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -44121,7 +44163,7 @@ int sub_38890(int a1)
   sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1));
   RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 185);
-  sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+  SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
   *(_DWORD *)PTR(v2 + 12) = 5000;
   return v2;
 }
@@ -44279,7 +44321,7 @@ int sub_38C60(uint16_t* a1)
         *(_BYTE*)PTR(v2 + 63) = v6;
         sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
         sub_38C00_38F80(v2);
-        sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+        SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
         return v2;
     }
     return result;
@@ -44303,7 +44345,7 @@ int sub_38D09(/*int a1@<eax>, __int16 a2@<dx>, int a3@<ecx>, int a4@<ebx>, int a
     *(_BYTE*)PTR(a4 + 63) = a2;
     sub_41CF0_42030((Type_AE400_29795*)PTR(a4), (axis_3d*)PTR(a5));
     sub_38C00_38F80(a4);
-    sub_37130_374F0((Type_AE400_29795*)PTR(a4), 128, 128);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(a4), 128, 128);
     return a4;
 }
 
@@ -44353,7 +44395,7 @@ int sub_38D60(int a1)
     sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 47);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
   }
   return result;
@@ -44406,7 +44448,7 @@ int sub_38E70(int a1)
   *(_WORD *)PTR(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)PTR(v2 + 72));
   RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 220);
-  sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+  SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
   return v2;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -44457,7 +44499,7 @@ int sub_38FC0(int a1)
     sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 208);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
   }
   return result;
@@ -44514,7 +44556,7 @@ int sub_390D0(int a1)
     sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 200);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
   }
   return result;
@@ -44568,7 +44610,7 @@ int sub_39200(int a1)
     sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 221);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
   }
   return result;
@@ -44643,7 +44685,7 @@ int sub_39340(uint16_t* a1)
         default:
             break;
         }
-        sub_37130_374F0((Type_AE400_29795*)PTR(v3), 128, 128);
+        SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v3), 128, 128);
         return v3;
     }
     return result;
@@ -44696,7 +44738,7 @@ int sub_39490(int a1)
     sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 219);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
   }
   return result;
@@ -44748,13 +44790,14 @@ int sub_395B0(int a1)
   sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
   RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 0);
-  sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+  SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
   return v2;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (000396E0) --------------------------------------------------------
-int sub_396E0(int a1)
+/// Constructor of a wyvern (class 5 type 16, state 97).
+int CreateWyvern_396E0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -44800,7 +44843,7 @@ int sub_396E0(int a1)
     sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 207);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
   }
   return result;
@@ -44975,7 +45018,8 @@ int sub_399E0(int a1)
 }
 
 //----- (00039A10) --------------------------------------------------------
-int sub_39A10(int a1)
+/// Constructor of a fireball missile (class 9 type 0, state 0 = UpdateFireball_52B30_52E70).
+int CreateFireball_39A10(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45031,7 +45075,7 @@ int sub_39A90(int a1)
     sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 209);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 2 * *(_WORD *)PTR(v2 + 80), 2 * *(_WORD *)PTR(v2 + 84));
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 2 * *(_WORD *)PTR(v2 + 80), 2 * *(_WORD *)PTR(v2 + 84));
     return v2;
   }
   return result;
@@ -45068,7 +45112,9 @@ int sub_39B40(int a1)
 }
 
 //----- (00039BC0) --------------------------------------------------------
-int sub_39BC0(int a1)
+/// TODO: rename when the entity is identified (class 9 type 3).
+/// Constructor of class 9 type 3 (state 3): a missile that starts an explosion ring (10/17) when it lands.
+int CreateClass9Type3_39BC0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45249,7 +45295,8 @@ int sub_39E40(int a1)
 // 98FB8: using guessed type void *off_98FB8;
 
 //----- (00039EC0) --------------------------------------------------------
-int sub_39EC0(int a1)
+/// Constructor of a lightning bolt piece (class 9 type 9, state 9 = LightningBoltTick_535E0_53920).
+int CreateLightningBolt_39EC0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45280,7 +45327,8 @@ int sub_39EC0(int a1)
 // 98FB8: using guessed type void *off_98FB8;
 
 //----- (00039F40) --------------------------------------------------------
-int sub_39F40(int a1)
+/// Constructor of a homing spawn missile (class 9 type 10, state 10 = UpdateHomingSpawnMissile_53980_53CC0).
+int CreateHomingSpawnMissile_39F40(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45499,7 +45547,7 @@ int sub_3A2F0(int a1)
     sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 209);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 2 * *(_WORD *)PTR(v2 + 80), 2 * *(_WORD *)PTR(v2 + 84));
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 2 * *(_WORD *)PTR(v2 + 80), 2 * *(_WORD *)PTR(v2 + 84));
     return v2;
   }
   return result;
@@ -45591,13 +45639,15 @@ int CreateExplosion_3A490(uint16_t* a1)
     sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     sub_36FA0_37360((Type_AE400_29795*)v2, 7);
-    sub_37130_374F0((Type_AE400_29795*)v2, 128, 128);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 128, 128);
   }
   return (int)OFF(v2);
 }
 
 //----- (0003A510) --------------------------------------------------------
-int sub_3A510(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 1).
+/// Constructor of class 10 type 1 (state 1); created together with the mana ball when a creature dies (sub_1A800).
+int CreateClass10Type1_3A510(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -45735,7 +45785,9 @@ int sub_3A6B0(uint16_t* a1)
 }
 
 //----- (0003A730) --------------------------------------------------------
-int sub_3A730(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 6).
+/// Constructor of class 10 type 6 (state 6); spawned when a spell-7 jar in state 3t+2 is picked up.
+int CreateClass10Type6_3A730(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -45758,7 +45810,7 @@ int sub_3A730(uint16_t* a1)
     v2[38] = GetTerrainHeight_11F50((axis_3d*)(short*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     sub_36FA0_37360((Type_AE400_29795*)v2, 228);
-    sub_37130_374F0((Type_AE400_29795*)v2, 272, 1536);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 272, 1536);
     v2[13] = 0;
   }
   return (int)OFF(v2);
@@ -45821,7 +45873,7 @@ int sub_3A870(uint16_t* a1)
     *(_WORD *)PTR(v2 + 44) = 100;
     *(_BYTE *)PTR(v2 + 16) = v3;
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 512, 512);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 512, 512);
   }
   return v2;
 }
@@ -45845,7 +45897,7 @@ int sub_3A8D0(uint16_t* a1)
     *(_WORD *)PTR(v1 + 44) = 2000;
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v1));
-    sub_37130_374F0((Type_AE400_29795*)v2, 768, 0x2000);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 768, 0x2000);
   }
   return (int)OFF(v2);
 }
@@ -45872,7 +45924,7 @@ int sub_3A930(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 16) = v3 & 0xFFFDFFF7;
     *(_BYTE *)PTR(v1 + 18) |= 2u;
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v1));
-    sub_37130_374F0((Type_AE400_29795*)v2, 128, 128);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 128, 128);
   }
   return (int)OFF(v2);
 }
@@ -45899,7 +45951,7 @@ int sub_3A9A0(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 16) = v3 & 0xFFFDFFF7;
     *(_BYTE *)PTR(v1 + 18) |= 2u;
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v1));
-    sub_37130_374F0((Type_AE400_29795*)v2, 2304, 0x2000);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 2304, 0x2000);
   }
   return (int)OFF(v2);
 }
@@ -45926,7 +45978,7 @@ int sub_3AA10(uint16_t* a1)
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 41);
     *(_BYTE *)PTR(v2 + 16) |= 1u;
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 512, 512);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 512, 512);
   }
   return v2;
 }
@@ -46044,7 +46096,7 @@ int sub_3ABE0(uint16_t* a1)
     *(_DWORD *)PTR(v2 + 72) = *(_DWORD *)a1;
     *(_WORD *)PTR(v2 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
   }
   return v2;
 }
@@ -46152,7 +46204,9 @@ int CreateVolcanoEruption_3ADB0(uint16_t* a1)
 }
 
 //----- (0003AE00) --------------------------------------------------------
-int sub_3AE00(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 19).
+/// Constructor of class 10 type 19 (state 19); created by each volcano eruption start, index kept in game state +38.
+int CreateClass10Type19_3AE00(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46174,7 +46228,7 @@ int sub_3AE00(uint16_t* a1)
     *(_BYTE *)PTR(v2 + 16) |= 1u;
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 228);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 512, 512);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 512, 512);
   }
   return v2;
 }
@@ -46201,7 +46255,7 @@ int sub_3AE80(uint16_t* a1)
     sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 7);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 200, 200);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 200, 200);
     *(_BYTE *)PTR(v2 + 16) |= 1u;
   }
   return v2;
@@ -46228,7 +46282,7 @@ int sub_3AF00(uint16_t* a1)
     sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     sub_36FA0_37360((Type_AE400_29795*)v2, 283);
-    sub_37130_374F0((Type_AE400_29795*)v2, 512, 512);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 512, 512);
   }
   return (int)OFF(v2);
 }
@@ -46254,13 +46308,14 @@ int sub_3AF80(uint16_t* a1)
     sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     sub_36FA0_37360((Type_AE400_29795*)v2, 284);
-    sub_37130_374F0((Type_AE400_29795*)v2, 512, 512);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 512, 512);
   }
   return (int)OFF(v2);
 }
 
 //----- (0003B000) --------------------------------------------------------
-int sub_3B000(uint16_t* a1)
+/// Constructor of a terrain-raising level-build step (class 10 type 27, state 27 = RaiseTerrainStripYDown_26670; states 28/29 continue it).
+int CreateTerrainRaiseStep_3B000(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46417,7 +46472,7 @@ int sub_3B230(uint16_t* a1)
     *(_WORD *)PTR(v2 + 26) = 256;
     *(_WORD *)PTR(v2 + 126) = 1024;
     *(_BYTE *)PTR(v2 + 16) = v3 & 0xF7;
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 768, 768);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 768, 768);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   }
   return v2;
@@ -46467,7 +46522,7 @@ int sub_3B300(uint16_t* a1)
     *(_DWORD *)PTR(result + 72) = *(_DWORD *)a1;
     *(_WORD *)PTR(result + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     sub_36FA0_37360((Type_AE400_29795*)PTR(result), 223);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 256, 256);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 256, 256);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     *(_WORD *)PTR(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v2 + 72)) + 640;
@@ -46508,7 +46563,7 @@ int sub_3B3E0(uint16_t* a1)
     sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     sub_36FA0_37360((Type_AE400_29795*)v2, 41);
-    sub_37130_374F0((Type_AE400_29795*)v2, 512, 512);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 512, 512);
   }
   return (int)OFF(v2);
 }
@@ -46533,7 +46588,7 @@ int sub_3B460(uint16_t* a1)
     sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 272);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 512, 512);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 512, 512);
   }
   return v2;
 }
@@ -46555,7 +46610,7 @@ int sub_3B4D0(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 72) = *(_DWORD *)a1;
     *(_WORD *)PTR(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v1));
-    sub_37130_374F0((Type_AE400_29795*)v2, 512, 512);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 512, 512);
   }
   return (int)OFF(v2);
 }
@@ -46659,7 +46714,7 @@ int sub_3B6F0(uint16_t* a1)
     sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     sub_36FA0_37360((Type_AE400_29795*)v2, 41);
-    sub_37130_374F0((Type_AE400_29795*)v2, 512, 512);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 512, 512);
   }
   return (int)OFF(v2);
 }
@@ -46787,7 +46842,7 @@ int sub_3B8E0(uint16_t* a1)
     *(_WORD *)PTR(v2 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_BYTE *)PTR(v2 + 16) |= 1u;
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
   }
   return v2;
 }
@@ -46820,7 +46875,7 @@ int sub_3B970(uint16_t* a1)
     *(_WORD *)PTR(v2 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_BYTE *)PTR(v2 + 16) |= 1u;
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
   }
   return v2;
 }
@@ -46853,7 +46908,7 @@ int sub_3BA00(uint16_t* a1)
     *(_WORD *)PTR(v2 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_BYTE *)PTR(v2 + 16) |= 1u;
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
   }
   return v2;
 }
@@ -46886,13 +46941,14 @@ int sub_3BA90(uint16_t* a1)
     *(_WORD *)PTR(v2 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_BYTE *)PTR(v2 + 16) |= 1u;
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
   }
   return v2;
 }
 
 //----- (0003BB20) --------------------------------------------------------
-Type_AE400_29795* sub_3BB20(axis_3d* position, char a2, char a3)
+/// Creates a switch/trigger entity (class 11) at position with type a2 and state a3 (same structure as MC2's AddSwitchXX_50A90). The 11/* constructors are one-line wrappers passing (t, t).
+Type_AE400_29795* CreateSwitch_3BB20(axis_3d* position, char a2, char a3)
 {
 	Type_AE400_29795* event = NewEvent_372C0_37680();
 	if (event)
@@ -46910,199 +46966,232 @@ Type_AE400_29795* sub_3BB20(axis_3d* position, char a2, char a3)
 }
 
 //----- (0003BB70) --------------------------------------------------------
-Type_AE400_29795* sub_3BB70(axis_3d* position)
+/// Constructor of switch type 0 (class 11 type 0, state 0) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch00_3BB70(axis_3d* position)
 {
-  return sub_3BB20(position, 0, 0);
+  return CreateSwitch_3BB20(position, 0, 0);
 }
 
 //----- (0003BB90) --------------------------------------------------------
-Type_AE400_29795* sub_3BB90(axis_3d* position)
+/// Constructor of switch type 1 (class 11 type 1, state 1) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch01_3BB90(axis_3d* position)
 {
-  return sub_3BB20(position, 1, 1);
+  return CreateSwitch_3BB20(position, 1, 1);
 }
 
 //----- (0003BBB0) --------------------------------------------------------
-Type_AE400_29795* sub_3BBB0(axis_3d* position)
+/// Constructor of switch type 2 (class 11 type 2, state 2) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch02_3BBB0(axis_3d* position)
 {
-  return sub_3BB20(position, 2, 2);
+  return CreateSwitch_3BB20(position, 2, 2);
 }
 
 //----- (0003BBD0) --------------------------------------------------------
-Type_AE400_29795* sub_3BBD0(axis_3d* position)
+/// Constructor of switch type 3 (class 11 type 3, state 3) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch03_3BBD0(axis_3d* position)
 {
-  return sub_3BB20(position, 3, 3);
+  return CreateSwitch_3BB20(position, 3, 3);
 }
 
 //----- (0003BBF0) --------------------------------------------------------
-Type_AE400_29795* sub_3BBF0(axis_3d* position)
+/// Constructor of switch type 4 (class 11 type 4, state 4) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch04_3BBF0(axis_3d* position)
 {
-  return sub_3BB20(position, 4, 4);
+  return CreateSwitch_3BB20(position, 4, 4);
 }
 
 //----- (0003BC10) --------------------------------------------------------
-Type_AE400_29795* sub_3BC10(axis_3d* position)
+/// Constructor of switch type 5 (class 11 type 5, state 5) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch05_3BC10(axis_3d* position)
 {
-  return sub_3BB20(position, 5, 5);
+  return CreateSwitch_3BB20(position, 5, 5);
 }
 
 //----- (0003BC30) --------------------------------------------------------
-Type_AE400_29795* sub_3BC30(axis_3d* position)
+/// Constructor of switch type 6 (class 11 type 6, state 6) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch06_3BC30(axis_3d* position)
 {
-  return sub_3BB20(position, 6, 6);
+  return CreateSwitch_3BB20(position, 6, 6);
 }
 
 //----- (0003BC50) --------------------------------------------------------
-Type_AE400_29795* sub_3BC50(axis_3d* position)
+/// Constructor of switch type 7 (class 11 type 7, state 7) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch07_3BC50(axis_3d* position)
 {
-  return sub_3BB20(position, 7, 7);
+  return CreateSwitch_3BB20(position, 7, 7);
 }
 
 //----- (0003BC70) --------------------------------------------------------
-Type_AE400_29795* sub_3BC70(axis_3d* position)
+/// Constructor of switch type 8 (class 11 type 8, state 8) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch08_3BC70(axis_3d* position)
 {
-  return sub_3BB20(position, 8, 8);
+  return CreateSwitch_3BB20(position, 8, 8);
 }
 
 //----- (0003BC90) --------------------------------------------------------
-Type_AE400_29795* sub_3BC90(axis_3d* position)
+/// Constructor of switch type 9 (class 11 type 9, state 9) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch09_3BC90(axis_3d* position)
 {
-  return sub_3BB20(position, 9, 9);
+  return CreateSwitch_3BB20(position, 9, 9);
 }
 
 //----- (0003BCB0) --------------------------------------------------------
-Type_AE400_29795* sub_3BCB0(axis_3d* position)
+/// Constructor of switch type 10 (class 11 type 10, state 10) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch10_3BCB0(axis_3d* position)
 {
-  return sub_3BB20(position, 10, 10);
+  return CreateSwitch_3BB20(position, 10, 10);
 }
 
 //----- (0003BCD0) --------------------------------------------------------
-Type_AE400_29795* sub_3BCD0(axis_3d* position)
+/// Constructor of switch type 11 (class 11 type 11, state 11) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch11_3BCD0(axis_3d* position)
 {
-  return sub_3BB20(position, 11, 11);
+  return CreateSwitch_3BB20(position, 11, 11);
 }
 
 //----- (0003BCF0) --------------------------------------------------------
-Type_AE400_29795* sub_3BCF0(axis_3d* position)
+/// Constructor of switch type 12 (class 11 type 12, state 12) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch12_3BCF0(axis_3d* position)
 {
-  return sub_3BB20(position, 12, 12);
+  return CreateSwitch_3BB20(position, 12, 12);
 }
 
 //----- (0003BD10) --------------------------------------------------------
-Type_AE400_29795* sub_3BD10(axis_3d* position)
+/// Constructor of switch type 13 (class 11 type 13, state 13) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch13_3BD10(axis_3d* position)
 {
-  return sub_3BB20(position, 13, 13);
+  return CreateSwitch_3BB20(position, 13, 13);
 }
 
 //----- (0003BD30) --------------------------------------------------------
-Type_AE400_29795* sub_3BD30(axis_3d* position)
+/// Constructor of switch type 14 (class 11 type 14, state 14) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch14_3BD30(axis_3d* position)
 {
-  return sub_3BB20(position, 14, 14);
+  return CreateSwitch_3BB20(position, 14, 14);
 }
 
 //----- (0003BD50) --------------------------------------------------------
-Type_AE400_29795* sub_3BD50(axis_3d* position)
+/// Constructor of switch type 15 (class 11 type 15, state 15) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch15_3BD50(axis_3d* position)
 {
-  return sub_3BB20(position, 15, 15);
+  return CreateSwitch_3BB20(position, 15, 15);
 }
 
 //----- (0003BD70) --------------------------------------------------------
-Type_AE400_29795* sub_3BD70(axis_3d* position)
+/// Constructor of switch type 16 (class 11 type 16, state 16) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch16_3BD70(axis_3d* position)
 {
-  return sub_3BB20(position, 16, 16);
+  return CreateSwitch_3BB20(position, 16, 16);
 }
 
 //----- (0003BD90) --------------------------------------------------------
-Type_AE400_29795* sub_3BD90(axis_3d* position)
+/// Constructor of switch type 17 (class 11 type 17, state 17) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch17_3BD90(axis_3d* position)
 {
-  return sub_3BB20(position, 17, 17);
+  return CreateSwitch_3BB20(position, 17, 17);
 }
 
 //----- (0003BDB0) --------------------------------------------------------
-Type_AE400_29795* sub_3BDB0(axis_3d* position)
+/// Constructor of switch type 18 (class 11 type 18, state 18) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch18_3BDB0(axis_3d* position)
 {
-  return sub_3BB20(position, 18, 18);
+  return CreateSwitch_3BB20(position, 18, 18);
 }
 
 //----- (0003BDD0) --------------------------------------------------------
-Type_AE400_29795* sub_3BDD0(axis_3d* position)
+/// Constructor of switch type 19 (class 11 type 19, state 19) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch19_3BDD0(axis_3d* position)
 {
-  return sub_3BB20(position, 19, 19);
+  return CreateSwitch_3BB20(position, 19, 19);
 }
 
 //----- (0003BDF0) --------------------------------------------------------
-Type_AE400_29795* sub_3BDF0(axis_3d* position)
+/// Constructor of switch type 20 (class 11 type 20, state 20) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch20_3BDF0(axis_3d* position)
 {
-  return sub_3BB20(position, 20, 20);
+  return CreateSwitch_3BB20(position, 20, 20);
 }
 
 //----- (0003BE10) --------------------------------------------------------
-Type_AE400_29795* sub_3BE10(axis_3d* position)
+/// Constructor of switch type 21 (class 11 type 21, state 21) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch21_3BE10(axis_3d* position)
 {
-  return sub_3BB20(position, 21, 21);
+  return CreateSwitch_3BB20(position, 21, 21);
 }
 
 //----- (0003BE30) --------------------------------------------------------
-Type_AE400_29795* sub_3BE30(axis_3d* position)
+/// Constructor of switch type 22 (class 11 type 22, state 22) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch22_3BE30(axis_3d* position)
 {
-  return sub_3BB20(position, 22, 22);
+  return CreateSwitch_3BB20(position, 22, 22);
 }
 
 //----- (0003BE50) --------------------------------------------------------
-Type_AE400_29795* sub_3BE50(axis_3d* position)
+/// Constructor of switch type 23 (class 11 type 23, state 23) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch23_3BE50(axis_3d* position)
 {
-  return sub_3BB20(position, 23, 23);
+  return CreateSwitch_3BB20(position, 23, 23);
 }
 
 //----- (0003BE70) --------------------------------------------------------
-Type_AE400_29795* sub_3BE70(axis_3d* position)
+/// Constructor of switch type 24 (class 11 type 24, state 24) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch24_3BE70(axis_3d* position)
 {
-  return sub_3BB20(position, 24, 24);
+  return CreateSwitch_3BB20(position, 24, 24);
 }
 
 //----- (0003BE90) --------------------------------------------------------
-Type_AE400_29795* sub_3BE90(axis_3d* position)
+/// Constructor of switch type 25 (class 11 type 25, state 25) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch25_3BE90(axis_3d* position)
 {
-  return sub_3BB20(position, 25, 25);
+  return CreateSwitch_3BB20(position, 25, 25);
 }
 
 //----- (0003BEB0) --------------------------------------------------------
-Type_AE400_29795* sub_3BEB0(axis_3d* position)
+/// Constructor of switch type 26 (class 11 type 26, state 26) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch26_3BEB0(axis_3d* position)
 {
-  return sub_3BB20(position, 26, 26);
+  return CreateSwitch_3BB20(position, 26, 26);
 }
 
 //----- (0003BED0) --------------------------------------------------------
-Type_AE400_29795* sub_3BED0(axis_3d* position)
+/// Constructor of switch type 27 (class 11 type 27, state 27) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch27_3BED0(axis_3d* position)
 {
-  return sub_3BB20(position, 27, 27);
+  return CreateSwitch_3BB20(position, 27, 27);
 }
 
 //----- (0003BEF0) --------------------------------------------------------
-Type_AE400_29795* sub_3BEF0(axis_3d* position)
+/// Constructor of switch type 28 (class 11 type 28, state 28) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch28_3BEF0(axis_3d* position)
 {
-  return sub_3BB20(position, 28, 28);
+  return CreateSwitch_3BB20(position, 28, 28);
 }
 
 //----- (0003BF10) --------------------------------------------------------
-Type_AE400_29795* sub_3BF10(axis_3d* position)
+/// Constructor of switch type 29 (class 11 type 29, state 29) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch29_3BF10(axis_3d* position)
 {
-  return sub_3BB20(position, 29, 29);
+  return CreateSwitch_3BB20(position, 29, 29);
 }
 
 //----- (0003BF30) --------------------------------------------------------
-Type_AE400_29795* sub_3BF30(axis_3d* position)
+/// Constructor of switch type 30 (class 11 type 30, state 30) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch30_3BF30(axis_3d* position)
 {
-  return sub_3BB20(position, 30, 30);
+  return CreateSwitch_3BB20(position, 30, 30);
 }
 
 //----- (0003BF50) --------------------------------------------------------
-Type_AE400_29795* sub_3BF50(axis_3d* position)
+/// Constructor of switch type 31 (class 11 type 31, state 31) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch31_3BF50(axis_3d* position)
 {
-  return sub_3BB20(position, 31, 31);
+  return CreateSwitch_3BB20(position, 31, 31);
 }
 
 //----- (0003BF70) --------------------------------------------------------
-int sub_3BF70(int a1, char a2, char a3, int a4, __int16 a5, char a6, char a7, int a8, __int16 a9)
+/// Creates a spell entity (class 12) at a1: a2 = spell type, a3 = state (3*type = owned), a4 = mana max (+136; +140 = a4/a5), a5 = +50, a6/a7 = +60/+62 flags, a8 = mana delta (+132), a9 = +44. The 12/* constructors are one-line wrappers around it.
+int CreateSpell_3BF70(int a1, char a2, char a3, int a4, __int16 a5, char a6, char a7, int a8, __int16 a9)
 {
   int result; // eax
   int v10; // ebx
@@ -47133,7 +47222,7 @@ int sub_3BF70(int a1, char a2, char a3, int a4, __int16 a5, char a6, char a7, in
     *(_BYTE *)PTR(v10 + 16) = v12 & 0xF7;
     sub_41CF0_42030((Type_AE400_29795*)PTR(v10), (axis_3d*)PTR(a1));
     sub_36FA0_37360((Type_AE400_29795*)PTR(v10), 77);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v10), 4 * *(_WORD *)PTR(v10 + 80), 4 * *(_WORD *)PTR(v10 + 84));
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v10), 4 * *(_WORD *)PTR(v10 + 80), 4 * *(_WORD *)PTR(v10 + 84));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v10));
     return v10;
   }
@@ -47141,147 +47230,152 @@ int sub_3BF70(int a1, char a2, char a3, int a4, __int16 a5, char a6, char a7, in
 }
 
 //----- (0003C040) --------------------------------------------------------
-int sub_3C040(int a1)
+/// Constructor of the possession spell (class 12 type 3, state 9) via CreateSpell_3BF70.
+int CreatePossessionSpell_3C040(int a1)
 {
-  return sub_3BF70(a1, 3, 9, 50, 3, 1, 0, 0, 100);
+  return CreateSpell_3BF70(a1, 3, 9, 50, 3, 1, 0, 0, 100);
 }
 
 //----- (0003C060) --------------------------------------------------------
-int sub_3C060(int a1)
+/// Constructor of the castle spell (class 12 type 16, state 48) via CreateSpell_3BF70.
+int CreateCastleSpell_3C060(int a1)
 {
-  return sub_3BF70(a1, 16, 48, 1000, 101, 1, 0, 0, 10000);
+  return CreateSpell_3BF70(a1, 16, 48, 1000, 101, 1, 0, 0, 10000);
 }
 
 //----- (0003C090) --------------------------------------------------------
-int sub_3C090(int a1)
+/// Constructor of the fireball spell (class 12 type 0, state 0) via CreateSpell_3BF70.
+int CreateFireballSpell_3C090(int a1)
 {
-  return sub_3BF70(a1, 0, 0, 200, 5, 1, 0, 0, 125);
+  return CreateSpell_3BF70(a1, 0, 0, 200, 5, 1, 0, 0, 125);
 }
 
 //----- (0003C0C0) --------------------------------------------------------
-int sub_3C0C0(int a1)
+/// Constructor of the speed spell (class 12 type 2, state 6) via CreateSpell_3BF70.
+int CreateSpeedSpell_3C0C0(int a1)
 {
-  return sub_3BF70(a1, 2, 6, 1000, 251, 0, 0, 0, 100);
+  return CreateSpell_3BF70(a1, 2, 6, 1000, 251, 0, 0, 0, 100);
 }
 
 //----- (0003C0F0) --------------------------------------------------------
-int sub_3C0F0(int a1)
+/// Constructor of the heal spell (class 12 type 1, state 3) via CreateSpell_3BF70.
+int CreateHealSpell_3C0F0(int a1)
 {
-  return sub_3BF70(a1, 1, 3, 1000, 21, 1, 0, 0, 100);
+  return CreateSpell_3BF70(a1, 1, 3, 1000, 21, 1, 0, 0, 100);
 }
 
 //----- (0003C120) --------------------------------------------------------
 int sub_3C120(int a1)
 {
-  return sub_3BF70(a1, 10, 30, 5000, 51, 1, 0, 10000, 100);
+  return CreateSpell_3BF70(a1, 10, 30, 5000, 51, 1, 0, 10000, 100);
 }
 
 //----- (0003C150) --------------------------------------------------------
 int sub_3C150(int a1)
 {
-  return sub_3BF70(a1, 6, 18, 6000, 51, 1, 0, 120000, 6000);
+  return CreateSpell_3BF70(a1, 6, 18, 6000, 51, 1, 0, 120000, 6000);
 }
 
 //----- (0003C180) --------------------------------------------------------
 int sub_3C180(int a1)
 {
-  return sub_3BF70(a1, 19, 57, 4000, 17, 1, 0, 10000, 100);
+  return CreateSpell_3BF70(a1, 19, 57, 4000, 17, 1, 0, 10000, 100);
 }
 
 //----- (0003C1B0) --------------------------------------------------------
 int sub_3C1B0(int a1)
 {
-  return sub_3BF70(a1, 4, 12, 2000, 251, 1, 0, 0, 100);
+  return CreateSpell_3BF70(a1, 4, 12, 2000, 251, 1, 0, 0, 100);
 }
 
 //----- (0003C1E0) --------------------------------------------------------
 int sub_3C1E0(int a1)
 {
-  return sub_3BF70(a1, 7, 21, 10000, 11, 1, 0, 100000, 10000);
+  return CreateSpell_3BF70(a1, 7, 21, 10000, 11, 1, 0, 100000, 10000);
 }
 
 //----- (0003C210) --------------------------------------------------------
 int sub_3C210(int a1)
 {
-  return sub_3BF70(a1, 14, 42, 1000, 101, 1, 0, 8000, 100);
+  return CreateSpell_3BF70(a1, 14, 42, 1000, 101, 1, 0, 8000, 100);
 }
 
 //----- (0003C240) --------------------------------------------------------
 int sub_3C240(int a1)
 {
-  return sub_3BF70(a1, 15, 45, 1000, 2, 0, 0, 25000, 500);
+  return CreateSpell_3BF70(a1, 15, 45, 1000, 2, 0, 0, 25000, 500);
 }
 
 //----- (0003C270) --------------------------------------------------------
 int sub_3C270(int a1)
 {
-  return sub_3BF70(a1, 11, 33, 2500, 17, 1, 0, 16000, 100);
+  return CreateSpell_3BF70(a1, 11, 33, 2500, 17, 1, 0, 16000, 100);
 }
 
 //----- (0003C2A0) --------------------------------------------------------
 int sub_3C2A0(int a1)
 {
-  return sub_3BF70(a1, 13, 39, 500, 11, 1, 0, 20000, 100);
+  return CreateSpell_3BF70(a1, 13, 39, 500, 11, 1, 0, 20000, 100);
 }
 
 //----- (0003C2D0) --------------------------------------------------------
 int sub_3C2D0(int a1)
 {
-  return sub_3BF70(a1, 12, 36, 5000, 251, 1, 0, 50000, 100);
+  return CreateSpell_3BF70(a1, 12, 36, 5000, 251, 1, 0, 50000, 100);
 }
 
 //----- (0003C300) --------------------------------------------------------
 int sub_3C300(int a1)
 {
-  return sub_3BF70(a1, 9, 27, 12000, 31, 1, 0, 100000, 6000);
+  return CreateSpell_3BF70(a1, 9, 27, 12000, 31, 1, 0, 100000, 6000);
 }
 
 //----- (0003C330) --------------------------------------------------------
 int sub_3C330(int a1)
 {
-  return sub_3BF70(a1, 5, 15, 3000, 101, 1, 0, 0, 100);
+  return CreateSpell_3BF70(a1, 5, 15, 3000, 101, 1, 0, 0, 100);
 }
 
 //----- (0003C360) --------------------------------------------------------
 int sub_3C360(int a1)
 {
-  return sub_3BF70(a1, 18, 54, 20000, 33, 1, 0, 90000, 2000);
+  return CreateSpell_3BF70(a1, 18, 54, 20000, 33, 1, 0, 90000, 2000);
 }
 
 //----- (0003C390) --------------------------------------------------------
 int sub_3C390(int a1)
 {
-  return sub_3BF70(a1, 8, 24, 30000, 65, 1, 0, 180000, 1000);
+  return CreateSpell_3BF70(a1, 8, 24, 30000, 65, 1, 0, 180000, 1000);
 }
 
 //----- (0003C3C0) --------------------------------------------------------
 int sub_3C3C0(int a1)
 {
-  return sub_3BF70(a1, 17, 51, 13000, 13, 1, 0, 150000, 100);
+  return CreateSpell_3BF70(a1, 17, 51, 13000, 13, 1, 0, 150000, 100);
 }
 
 //----- (0003C3F0) --------------------------------------------------------
 int sub_3C3F0(int a1)
 {
-  return sub_3BF70(a1, 20, 60, 5000, 51, 1, 0, 12000, 24464);
+  return CreateSpell_3BF70(a1, 20, 60, 5000, 51, 1, 0, 12000, 24464);
 }
 
 //----- (0003C420) --------------------------------------------------------
 int sub_3C420(int a1)
 {
-  return sub_3BF70(a1, 21, 63, 1000, 251, 0, 0, 0, 100);
+  return CreateSpell_3BF70(a1, 21, 63, 1000, 251, 0, 0, 0, 100);
 }
 
 //----- (0003C450) --------------------------------------------------------
 int sub_3C450(int a1)
 {
-  return sub_3BF70(a1, 22, 66, 75000, 101, 1, 0, 200000, 7000);
+  return CreateSpell_3BF70(a1, 22, 66, 75000, 101, 1, 0, 200000, 7000);
 }
 
 //----- (0003C480) --------------------------------------------------------
 int sub_3C480(int a1)
 {
-  return sub_3BF70(a1, 23, 69, 600, 3, 0, 0, 50000, 50);
+  return CreateSpell_3BF70(a1, 23, 69, 600, 3, 0, 0, 50000, 50);
 }
 
 //----- (0003C4B0) --------------------------------------------------------
@@ -54637,7 +54731,8 @@ void sub_45C10_45F50(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_45C90_45FD0(Type_AE400_29795* a1x)
+/// Per-tick handler of a player-controlled wizard (class 3 state 0, set by CreatePlayerWizard_37820_37BE0).
+void PlayerWizardTick_45C90_45FD0(Type_AE400_29795* a1x)
 {
   //int v1; // eax
   //int v2; // eax
@@ -55357,7 +55452,8 @@ __int16 sub_46DB0_470F0(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-char sub_46F10_47250(int a1)
+/// Per-tick handler of a castle (class 3 state 5, set by CreateCastle_37920_37CE0).
+char CastleTick_46F10_47250(int a1)
 {
   __int16 v1; // ax
   char v2; // dh
@@ -56988,7 +57084,8 @@ int DrawMinimap_49300_49640(int a1, int a2, int a3, int a4, int a5, int a6, __in
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //SYNCHRONIZED WITH REMC1
-void sub_49890_49BD0(int a1)
+/// Per-tick handler of a tree (class 2 state 0, set by CreateTree_37BC0).
+void TreeTick_49890_49BD0(int a1)
 {
   __int16 v1; // dx
   int v2; // edx
@@ -57096,7 +57193,8 @@ void sub_49A50_49D90(_WORD* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_49AA0_49DE0(int a1)
+/// Per-tick handler of a stone (class 2 state 3, set by CreateStone_37CF0).
+int StoneTick_49AA0_49DE0(int a1)
 {
   int result; // eax
 
@@ -57131,7 +57229,8 @@ int sub_49AD0_49E10(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //SYNCHRONIZED WITH REMC1
-int sub_49B50_49E90(int a1)
+/// Per-tick handler of a standing stone (class 2 state 9, set by CreateStandingStone_37E00).
+int StandingStoneTick_49B50_49E90(int a1)
 {
   int result; // eax
 
@@ -62381,7 +62480,9 @@ char sub_53060(int a1)
 }
 
 //SYNCHRONIZE WITH REMC1
-char sub_53070_533B0(int a1)
+/// TODO: rename when the entity is identified (class 9 type 3).
+/// Per-tick handler of class 9 state 3 (set by CreateClass9Type3_39BC0); creates the explosion ring when it lands.
+char Class9Type3Tick_53070_533B0(int a1)
 {
   int result; // eax
   char v2; // dh

@@ -85,7 +85,7 @@ template <class T> struct extptr32
 static_assert(sizeof(ptr32<int>) == 4 && sizeof(extptr32<int>) == 4, "pointer slots must stay 4 bytes");
 
 // Function-pointer tables of the decompiled code cast functions that take or return int "addresses" to
-// typed signatures, e.g. (void (*)(Type_AE400_29795*))sub_253E0 where sub_253E0(int a1). The call would
+// typed signatures, e.g. (void (*)(Type_AE400_29795*))RemoveSelfTick_253E0 where RemoveSelfTick_253E0(int a1). The call would
 // pass a 64-bit pointer into a 32-bit int, so PORT_FN(F, Sig) puts a thunk in the table that converts every
 // argument and the result (int <-> pointer through PTR/OFF). The harness maps a thunk to the function it
 // wraps (tools/audit_data.py, PortAddrMap).
