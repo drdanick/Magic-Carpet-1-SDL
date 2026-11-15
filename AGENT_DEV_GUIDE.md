@@ -535,7 +535,7 @@ list at `str_AE408_AE3F8` +36462.
 Sprites: an entity's +86 indexes `unk_99BA0x`; its `var_0` is the first texture map in data/tmaps0-0 (TAB: 10-byte
 entries, offset at +4, frame group at +8; each DAT entry RNC-packed: 6-byte header flag/?/width/height, raw
 width*height pixels; flag bit 0 = FLC deltas follow (frame count u16, then 0xF1FA frames with SS2/BRUN chunks,
-`sub_10D40`/`sub_10EB0`/`sub_1002D`)). Palette data/pal0-0.dat (6-bit).
+`RegisterTmapAnim_10D40`/`AdvanceTmapAnim_10EB0`/`ApplyFlcFrame_1002D`)). Palette data/pal0-0.dat (6-bit).
 
 Spell numbers (from the spell-menu icons `begSprTab[6 + t]` of `hspr0-0`/`mspr0-0`, names confirmed by the
 user): 0 Fireball, 1 Heal, 2 Speed, 3 Possession, 4 Shield, 5 Beyond Sight, 6 Earthquake, 7 Meteor, 8 Volcano,

@@ -287,13 +287,13 @@ char* FixPath(char* inPath)
 //!!!!!!!!!!!!!! all arrays with 9999 size is stub !!!!!!!!!!!!!!!!
 
 //void sub_10000(); // weak
-void sub_10010(__int16 a1, __int16 a2);
-uint8_t* sub_1002D(uint8_t* a1, uint8_t* a2);
-__int16 sub_100B8();
-__int16 sub_10166();
-int sub_10190();
-__int16 sub_101A1();
-int sub_10254();
+void SetFlcSize_10010(__int16 a1, __int16 a2);
+uint8_t* ApplyFlcFrame_1002D(uint8_t* a1, uint8_t* a2);
+__int16 DecodeFlcChunks_100B8();
+__int16 ReadFlcPrefixChunk_10166();
+int SkipFlcChunk_10190();
+__int16 DecodeFlcSs2_101A1();
+int DecodeFlcBrun_10254();
 void sub_10300();
 void ReadFliData_103C0(void *a1, unsigned int a2);
 int ReadFliFrame_103F0();
@@ -304,10 +304,10 @@ void sub_10960();
 void sub_10AB0();
 __int16 sub_10BD0();
 Type_AE3E0* sub_10CB0(unsigned __int16 a1);
-void sub_10D40(Type_AE3E0* a1, Type_sub168_2* a2, __int16 a3);
-void sub_10EB0(Type_sub_AE3E0* a1);
-void sub_10F10(Type_sub_AE3E0* a1);
-Type_sub_AE3E0* sub_10FD0(Type_AE3E0* a1, __int16 a2);
+void RegisterTmapAnim_10D40(Type_AE3E0* a1, Type_sub168_2* a2, __int16 a3);
+void AdvanceTmapAnim_10EB0(Type_sub_AE3E0* a1);
+void ClearTmapAnim_10F10(Type_sub_AE3E0* a1);
+Type_sub_AE3E0* FindTmapAnim_10FD0(Type_AE3E0* a1, __int16 a2);
 void FreeAnimSequences_11010(Type_AE3E0** a1);
 bool sub_11050();
 void RunFmvCommands_111B0(int a1, int a2);
@@ -329,7 +329,7 @@ int GetTerrainHeight_11F50(axis_3d* position);
 void sub_120B0(Type_AE400_29795* a1x, unsigned __int8 a2, unsigned __int16 a3);
 int sub_124F0(int a1, char a2, unsigned __int16 a3);
 int sub_127E0(Type_AE400_29795* a1, char a2, unsigned __int16 a3);
-int sub_12B50(Type_AE400_29795* a1, int a2, unsigned __int8 a3, unsigned __int16 a4);
+int DealDamage_12B50(Type_AE400_29795* a1, int a2, unsigned __int8 a3, unsigned __int16 a4);
 void sub_12C50(_WORD *a1);
 char CanCastleGrow_12D10(_WORD *a1);
 _BOOL1 IsCastleSiteFree_12F70(_WORD *a1);
@@ -337,7 +337,7 @@ int ComputerWizardTick_13170(int a1);
 int sub_132B0(int a1);
 int AiChooseAction_136C0(int a1);
 bool AiCastleUpgradeMode_13800(int a1);
-int sub_138E0();
+int AiNoopMode_138E0();
 int AiBuildCastle_138F0(int a1);
 bool sub_13990(_WORD *a1);
 int sub_13A10(int a1);
@@ -390,10 +390,10 @@ void ReadMouseSteering_169E0();
 void ProcessKeys_16B00();
 // char sub_17C20(__int16 a1, __int16 a2, __int16 a3);
 void MakeControlCommand_188A0(char a1, char a2);
-// void sub_192D8(char a1, _BOOL1 a2, char a3, char a4, __int16 a5);
-int sub_192F3();
+// void RunCpuid_192D8(char a1, _BOOL1 a2, char a3, char a4, __int16 a5);
+int CpuidProbe_192F3();
 void sub_193EE(__int16 a1);
-// int sub_19470(__int16 a1);
+// int DetectCpu_19470(__int16 a1);
 int sub_194F0_194F0();
 __int16 SegmentFollowTick_19550(int a1);
 signed int TerrainSlope_19650(axis_3d* a1);
@@ -407,7 +407,7 @@ void KillCreature_1A800(Type_AE400_29795* a1);
 int sub_1A8E0(Type_AE400_29795* a1, Type_AE400_29795* a2);
 int sub_1A990(Type_AE400_29795* a1, Type_AE400_29795* a2);
 void CreatureShootAt_1AA40(Type_AE400_29795* a1, int a2);
-int sub_1AB10(Type_AE400_29795* a1, int a2);
+int CreatureMeleeHit_1AB10(Type_AE400_29795* a1, int a2);
 int sub_1AB70(Type_AE400_29795* a1, Type_AE400_29795* a2);
 int sub_1AE30(Type_AE400_29795* a1, Type_AE400_29795* a2);
 int sub_1AEE0(Type_AE400_29795* a1, Type_AE400_29795* a2);
@@ -417,7 +417,7 @@ void DragonAttackTick_1B090(Type_AE400_29795* a1);
 void DragonFollowTick_1B0E0(Type_AE400_29795* a1);
 void DragonDyingTick_1B100(Type_AE400_29795* a1);
 void DragonDeadTick_1B110(Type_AE400_29795* a1);
-void sub_1B120(Type_AE400_29795* a1);
+void BobAboveGround_1B120(Type_AE400_29795* a1);
 void VultureIdleTick_1B160(Type_AE400_29795* a1);
 void VultureTick_1B200(Type_AE400_29795* a1);
 void VultureAttackTick_1B2D0(Type_AE400_29795* a1);
@@ -444,7 +444,7 @@ void GuardDyingTick_1BC10(Type_AE400_29795* a1);
 void GuardDeadTick_1BC40(Type_AE400_29795* a1);
 void sub_1BC50(Type_AE400_29795* a1);
 void sub_1BCE0(Type_AE400_29795* a1);
-void sub_1BD10(Type_AE400_29795* a1);
+void CrabIdleTick_1BD10(Type_AE400_29795* a1);
 void CrabTick_1BD20(Type_AE400_29795* a1);
 void CrabAttackTick_1C110(Type_AE400_29795* a1);
 void sub_1C170(Type_AE400_29795* a1);
@@ -472,9 +472,9 @@ void SkeletonTick_1CFF0(Type_AE400_29795* a1);
 void sub_1D060(Type_AE400_29795* a1);
 void sub_1D6D0(Type_AE400_29795* a1);
 void sub_1DA60(Type_AE400_29795* a1);
-void sub_1DC80(Type_AE400_29795* a1);
-void sub_1DCB0(Type_AE400_29795* a1);
-void sub_1DCC0(Type_AE400_29795* a1);
+void SkeletonFollowTick_1DC80(Type_AE400_29795* a1);
+void SkeletonDyingTick_1DCB0(Type_AE400_29795* a1);
+void SkeletonDeadTick_1DCC0(Type_AE400_29795* a1);
 void sub_1DCD0(Type_AE400_29795* a1);
 void sub_1DD50(Type_AE400_29795* a1);
 void sub_1DD90(Type_AE400_29795* a1);
@@ -488,9 +488,9 @@ void EmuRiderDeadTick_1DE30(Type_AE400_29795* a1);
 void GenieTick_1DE40(Type_AE400_29795* a1);
 void sub_1DFE0(Type_AE400_29795* a1);
 void sub_1E380(Type_AE400_29795* a1);
-void sub_1E6F0(Type_AE400_29795* a1);
-void sub_1E700(Type_AE400_29795* a1);
-void sub_1E710(Type_AE400_29795* a1);
+void GenieFollowTick_1E6F0(Type_AE400_29795* a1);
+void GenieDyingTick_1E700(Type_AE400_29795* a1);
+void GenieDeadTick_1E710(Type_AE400_29795* a1);
 void sub_1E720(Type_AE400_29795* a1);
 void sub_1E770(Type_AE400_29795* a1);
 void sub_1E810(Type_AE400_29795* a1);
@@ -3854,7 +3854,7 @@ Type_254A34x str_254DCC[] = {//254DCC
 { 0x002548F4, 0x001B, (void (*)(Type_AE400_29795*))GuardFollowTick_1BBE0, 0x0001, 0x0000 },
 { 0x002548F4, 0x001C, (void (*)(Type_AE400_29795*))GuardDyingTick_1BC10, 0x0001, 0x0000 },
 { 0x002548F4, 0x001D, (void (*)(Type_AE400_29795*))GuardDeadTick_1BC40, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001E, (void (*)(Type_AE400_29795*))sub_1BD10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001E, (void (*)(Type_AE400_29795*))CrabIdleTick_1BD10, 0x0001, 0x0000 },
 { 0x002548F4, 0x001F, (void (*)(Type_AE400_29795*))CrabTick_1BD20, 0x0001, 0x0000 },
 { 0x002548F4, 0x0020, (void (*)(Type_AE400_29795*))CrabAttackTick_1C110, 0x0001, 0x0000 },
 { 0x002548F4, 0x0021, (void (*)(Type_AE400_29795*))sub_1C170, 0x0001, 0x0000 },
@@ -3881,9 +3881,9 @@ Type_254A34x str_254DCC[] = {//254DCC
 { 0x002548F4, 0x0036, (void (*)(Type_AE400_29795*))SkeletonTick_1CFF0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0037, (void (*)(Type_AE400_29795*))sub_1D060, 0x0001, 0x0000 },
 { 0x002548F4, 0x0038, (void (*)(Type_AE400_29795*))sub_1DA60, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0039, (void (*)(Type_AE400_29795*))sub_1DC80, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003A, (void (*)(Type_AE400_29795*))sub_1DCB0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003B, (void (*)(Type_AE400_29795*))sub_1DCC0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0039, (void (*)(Type_AE400_29795*))SkeletonFollowTick_1DC80, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003A, (void (*)(Type_AE400_29795*))SkeletonDyingTick_1DCB0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003B, (void (*)(Type_AE400_29795*))SkeletonDeadTick_1DCC0, 0x0001, 0x0000 },
 { 0x002548F4, 0x003C, (void (*)(Type_AE400_29795*))EmuRiderIdleTick_1DDD0, 0x0001, 0x0000 },
 { 0x002548F4, 0x003D, (void (*)(Type_AE400_29795*))EmuRiderTick_1DDE0, 0x0001, 0x0000 },
 { 0x002548F4, 0x003E, (void (*)(Type_AE400_29795*))EmuRiderAttackTick_1DDF0, 0x0001, 0x0000 },
@@ -3893,9 +3893,9 @@ Type_254A34x str_254DCC[] = {//254DCC
 { 0x002548F4, 0x0042, (void (*)(Type_AE400_29795*))GenieTick_1DE40, 0x0001, 0x0000 },
 { 0x002548F4, 0x0043, (void (*)(Type_AE400_29795*))sub_1DFE0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0044, (void (*)(Type_AE400_29795*))sub_1E380, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0045, (void (*)(Type_AE400_29795*))sub_1E6F0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0046, (void (*)(Type_AE400_29795*))sub_1E700, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0047, (void (*)(Type_AE400_29795*))sub_1E710, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0045, (void (*)(Type_AE400_29795*))GenieFollowTick_1E6F0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0046, (void (*)(Type_AE400_29795*))GenieDyingTick_1E700, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0047, (void (*)(Type_AE400_29795*))GenieDeadTick_1E710, 0x0001, 0x0000 },
 { 0x002548F4, 0x0048, (void (*)(Type_AE400_29795*))sub_1EA40, 0x0001, 0x0000 },
 { 0x002548F4, 0x0049, (void (*)(Type_AE400_29795*))VillagerType12Tick_1EED0, 0x0001, 0x0000 },
 { 0x002548F4, 0x004A, (void (*)(Type_AE400_29795*))sub_1F120, 0x0001, 0x0000 },
@@ -14468,7 +14468,8 @@ void dword_AE408_AE3F8(int input) {
 //------------------------------------
 
 //----- (00010010) --------------------------------------------------------
-void sub_10010(__int16 a1, __int16 a2)
+/// Sets the line width (a1) and height (a2) the FLC chunk decoders use.
+void SetFlcSize_10010(__int16 a1, __int16 a2)
 {
   word_9000E = a1;
   word_90010 = a2;
@@ -14477,7 +14478,8 @@ void sub_10010(__int16 a1, __int16 a2)
 // 90010: using guessed type __int16 word_90010;
 
 //SYNCHRONIZED WITH REMC1
-uint8_t* sub_1002D(uint8_t* a1, uint8_t* a2)//1E102D_
+/// Applies one FLC frame (0xF1FA, after optional 0xAF12 prefix chunks) from a1 to the pixels a2; returns the next frame, or nullptr if a1 is not a frame.
+uint8_t* ApplyFlcFrame_1002D(uint8_t* a1, uint8_t* a2)//1E102D_
 {
   dword_90008 = a1;
   dword_90004 = a2;//fix dword_90004
@@ -14489,16 +14491,17 @@ uint8_t* sub_1002D(uint8_t* a1, uint8_t* a2)//1E102D_
     dword_90008 += 2;
     if ( word_9000C != -20718 )
       break;
-    sub_10166();
+    ReadFlcPrefixChunk_10166();
   }
   if ( word_9000C != -3590 )
     return 0;
-  sub_100B8();
+  DecodeFlcChunks_100B8();
   return dword_90008;
 }
 
 //SYNCHRONIZED WITH REMC1
-__int16 sub_100B8()
+/// Decodes the chunks of the current FLC frame: 7 = SS2 delta, 15 = BRUN, others skipped.
+__int16 DecodeFlcChunks_100B8()
 {
   __int16 result; // ax
 
@@ -14514,22 +14517,23 @@ __int16 sub_100B8()
     dword_90008 += 2;
     if ( word_9000C == 7 )
     {
-      result = sub_101A1();
+      result = DecodeFlcSs2_101A1();
     }
     else if ( word_9000C == 15 )
     {
-      result = sub_10254();
+      result = DecodeFlcBrun_10254();
     }
     else
     {
-      result = sub_10190();
+      result = SkipFlcChunk_10190();
     }
   }
   return result;
 }
 
 //----- (00010166) --------------------------------------------------------
-__int16 sub_10166()
+/// Reads an FLC prefix chunk (0xAF12): width and height for the decoders.
+__int16 ReadFlcPrefixChunk_10166()
 {
   __int16 result; // ax
 
@@ -14544,7 +14548,8 @@ __int16 sub_10166()
 // 90010: using guessed type __int16 word_90010;
 
 //----- (00010190) --------------------------------------------------------
-int sub_10190()
+/// Skips an FLC chunk of an unhandled type.
+int SkipFlcChunk_10190()
 {
   int result; // eax
 
@@ -14556,7 +14561,8 @@ int sub_10190()
 // 90012: using guessed type __int16 word_90012;
 
 //SYNCHRONIZED WITH REMC1
-__int16 sub_101A1()
+/// Decodes an FLC SS2 (word delta, chunk type 7) chunk into the frame.
+__int16 DecodeFlcSs2_101A1()
 {
   _WORD *v0; // edi
   __int16 *v1; // esi
@@ -14638,7 +14644,8 @@ LABEL_18:
 }
 
 //----- (00010254) --------------------------------------------------------
-int sub_10254()
+/// Decodes an FLC BRUN (byte run, chunk type 15) chunk into the frame.
+int DecodeFlcBrun_10254()
 {
   _BYTE *v0; // edi
   char *v1; // esi
@@ -15251,7 +15258,8 @@ Type_AE3E0* sub_10CB0(unsigned __int16 a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_10D40(Type_AE3E0* a1x, Type_sub168_2* a2x, __int16 a3)//1E1D40_
+/// Registers animated texture map a3 (flag bit 0) in the animation table a1x: frame data after the raw first frame, frame count, size.
+void RegisterTmapAnim_10D40(Type_AE3E0* a1x, Type_sub168_2* a2x, __int16 a3)//1E1D40_
 {
   __int16 v3; // si
   __int16 v4; // di
@@ -15303,7 +15311,8 @@ void sub_10D40(Type_AE3E0* a1x, Type_sub168_2* a2x, __int16 a3)//1E1D40_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_10EB0(Type_sub_AE3E0* a1x)//1E1EB0_
+/// Applies the next FLC frame of an animated texture map to its pixels (ApplyFlcFrame_1002D), wrapping after the last frame.
+void AdvanceTmapAnim_10EB0(Type_sub_AE3E0* a1x)//1E1EB0_
 {
   Type_sub168_2_2* v1; // esi
   int v2; // edi
@@ -15321,9 +15330,9 @@ void sub_10EB0(Type_sub_AE3E0* a1x)//1E1EB0_
   //v1 = (uint8_t*)**(_DWORD **)(a1 + 4);
   v1 = a1x->var_4->var_u32_0;
   v2 = a1x->var_8;
-  sub_10010(a1x->var_18, 0);
+  SetFlcSize_10010(a1x->var_18, 0);
   //v1 += 6;
-  v3 = sub_1002D(&v1->datax[v2], v1->datax);
+  v3 = ApplyFlcFrame_1002D(&v1->datax[v2], v1->datax);
   v4 = a1x->var_22;
   result = v3 - v1->datax;
   a1x->var_8 = result;
@@ -15331,7 +15340,8 @@ void sub_10EB0(Type_sub_AE3E0* a1x)//1E1EB0_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_10F10(Type_sub_AE3E0* a1x)
+/// Frees an animation table entry.
+void ClearTmapAnim_10F10(Type_sub_AE3E0* a1x)
 {
   if ( a1x )
   {
@@ -15341,7 +15351,8 @@ void sub_10F10(Type_sub_AE3E0* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-Type_sub_AE3E0* sub_10FD0(Type_AE3E0* a1x, __int16 a2)//1E1FD0_
+/// Returns the animation table entry of texture map a2, or nullptr.
+Type_sub_AE3E0* FindTmapAnim_10FD0(Type_AE3E0* a1x, __int16 a2)//1E1FD0_
 {
   Type_sub_AE3E0* result = a1x->var_2;
   int v3 = a1x->var_0;
@@ -16459,7 +16470,8 @@ int sub_127E0(Type_AE400_29795* a1x, char a2, unsigned __int16 a3)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_12B50(Type_AE400_29795* a1x, int a2, unsigned __int8 a3, unsigned __int16 a4)
+/// Records damage a4 from attacker a1x on entity a2 in damage slot a3 (+90 + 6*a3 amount, +94 attacker id; a pending slot is overwritten, else added to); the target's state handler applies it.
+int DealDamage_12B50(Type_AE400_29795* a1x, int a2, unsigned __int8 a3, unsigned __int16 a4)
 {
   int v4; // eax
   int result; // eax
@@ -16731,7 +16743,7 @@ int ComputerWizardTick_13170(int a1)
       break;
     case 2:
     case 5:
-      sub_138E0();
+      AiNoopMode_138E0();
       result = AiChooseAction_136C0(a1);
       break;
     case 3:
@@ -17011,7 +17023,8 @@ bool AiCastleUpgradeMode_13800(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (000138E0) --------------------------------------------------------
-int sub_138E0()
+/// AI modes 2 and 5: does nothing (returns 0).
+int AiNoopMode_138E0()
 {
   return 0;
 }
@@ -19883,15 +19896,17 @@ void MakeControlCommand_188A0(char setting1, char setting2)
   }
 }
 
-void sub_192D8()
+/// CPU detection: runs the cpuid probe (sub_192F3/sub_193EE) with the flags saved and restored.
+void RunCpuid_192D8()
 {
 	unsigned int tempFlag = __readeflags();
-	sub_193EE(sub_192F3());
+	sub_193EE(CpuidProbe_192F3());
 	port_writeeflags(tempFlag);
 }
 
 //----- (000192F3) --------------------------------------------------------
-int sub_192F3()
+/// cpuid probe; the port reports a Pentium (family 5, model 1) instead of executing cpuid.
+int CpuidProbe_192F3()
 {
     FixPerifery((char*)"cpuid");
     cpuVar_90084 = 5;
@@ -20011,9 +20026,10 @@ void sub_193EE(__int16 a1)
 // 90089: using guessed type char byte_90089;
 
 //SYNCHRONIZED WITH REMC1
-void sub_19470()//1EA470_
+/// Runs the CPU detection (cpuid) and sets str_AE408_AE3F8 +8 when the CPU is a Pentium (family 5, model 1).
+void DetectCpu_19470()//1EA470_
 {
-	sub_192D8();
+	RunCpuid_192D8();
 	if (cpuVar_90084 == 5 && cpuVar_90085 == 1)
 		str_AE408_AE3F8->var_u8_8 = 1;
 	else
@@ -20920,7 +20936,8 @@ void CreatureShootAt_1AA40(Type_AE400_29795* a1x, int a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_1AB10(Type_AE400_29795* a1x, int a2)
+/// Attack routine for CreatureAttackTick_1A120: when target a2 is closer than 1024, deals the creature's damage (+44) to it (DealDamage_12B50) and returns 1.
+int CreatureMeleeHit_1AB10(Type_AE400_29795* a1x, int a2)
 {
   int v2; // ebx
 
@@ -20928,7 +20945,7 @@ int sub_1AB10(Type_AE400_29795* a1x, int a2)
   if ( (int)Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(a2 + 72)) < 1024 )
   {
     v2 = 1;
-    sub_12B50(a1x, a2, 0, a1x->var_u16_29839_44);
+    DealDamage_12B50(a1x, a2, 0, a1x->var_u16_29839_44);
   }
   return v2;
 }
@@ -21135,7 +21152,7 @@ void DragonIdleTick_1B060(Type_AE400_29795* a1x)
 void DragonTick_1B070(Type_AE400_29795* a1x)
 {
   sub_19D70(a1x, 0);
-  sub_1B120(a1x);
+  BobAboveGround_1B120(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21144,7 +21161,7 @@ void DragonAttackTick_1B090(Type_AE400_29795* a1x)
 {
   if ( (unsigned __int16)CreatureAttackTick_1A120(a1x, 0, PORT_FN(sub_1A8E0, unsigned __int16(Type_AE400_29795*, int))) )
     PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 8);
-  sub_1B120(a1x);
+  BobAboveGround_1B120(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21152,7 +21169,7 @@ void DragonAttackTick_1B090(Type_AE400_29795* a1x)
 void DragonFollowTick_1B0E0(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0);
-  sub_1B120(a1x);
+  BobAboveGround_1B120(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21170,7 +21187,8 @@ void DragonDeadTick_1B110(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B120(Type_AE400_29795* a1x)
+/// Vertical bobbing: z += vertical speed (+26), speed -= 5 per tick, kicked back to 150 when within 256 of the ground (dragon states).
+void BobAboveGround_1B120(Type_AE400_29795* a1x)
 {
   __int16 v1; // ax
   int v2; // edx
@@ -21260,7 +21278,7 @@ void VultureTick_1B200(Type_AE400_29795* a1x)
 /// Vulture (class 5 type 1) attack state: CreatureAttackTick_1A120(a1x, 6, ...) (state 8). Identified from its decoded sprite (confirmed by the user).
 void VultureAttackTick_1B2D0(Type_AE400_29795* a1x)
 {
-  if ( (unsigned __int16)CreatureAttackTick_1A120(a1x, 6, (unsigned __int16 (*)(Type_AE400_29795*, int))sub_1AB10) )
+  if ( (unsigned __int16)CreatureAttackTick_1A120(a1x, 6, (unsigned __int16 (*)(Type_AE400_29795*, int))CreatureMeleeHit_1AB10) )
     PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 7);
 }
 
@@ -21328,7 +21346,7 @@ void BeeAttackTick_1B3C0(Type_AE400_29795* a1x)
   else
     LOWORD(v3) = 0;
   a1x->var_u32_29867_72.z += v3 * a1x->var_u32_29951_156->vertSpeed_14;
-  result = CreatureAttackTick_1A120(a1x, 12, (unsigned __int16 (*)(Type_AE400_29795*, int))sub_1AB10);
+  result = CreatureAttackTick_1A120(a1x, 12, (unsigned __int16 (*)(Type_AE400_29795*, int))CreatureMeleeHit_1AB10);
   if ( result )
   {
     PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 13);
@@ -21763,7 +21781,8 @@ void sub_1BCE0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1BD10(Type_AE400_29795* a1x)
+/// Crab idle state (class 5 state 30): switches straight to the main state 31 (CrabTick_1BD20).
+void CrabIdleTick_1BD10(Type_AE400_29795* a1x)
 {
   SetEntityState_424F0_42830(a1x, 0x1Fu);
 }
@@ -23226,7 +23245,8 @@ LABEL_31:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DC80(Type_AE400_29795* a1x)
+/// Skeleton (class 5 type 9) follow state: UpdateFollower_1A390(a1x, 54) (state 57).
+void SkeletonFollowTick_1DC80(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0x36u);
   if ( a1x->var_u8_29865_70 == 56 )
@@ -23234,13 +23254,15 @@ void sub_1DC80(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DCB0(Type_AE400_29795* a1x)
+/// Skeleton (class 5 type 9) dying state: CreatureDying_1A6C0(a1x, 54) (state 58).
+void SkeletonDyingTick_1DCB0(Type_AE400_29795* a1x)
 {
   CreatureDying_1A6C0(a1x, 54);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DCC0(Type_AE400_29795* a1x)
+/// Skeleton (class 5 type 9) dead state: KillCreature_1A800 (state 59).
+void SkeletonDeadTick_1DCC0(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
@@ -23723,19 +23745,22 @@ LABEL_38:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1E6F0(Type_AE400_29795* a1x)
+/// Genie (class 5 type 11) follow state: UpdateFollower_1A390(a1x, 66) (state 69).
+void GenieFollowTick_1E6F0(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0x42u);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1E700(Type_AE400_29795* a1x)
+/// Genie (class 5 type 11) dying state: CreatureDying_1A6C0(a1x, 66) (state 70).
+void GenieDyingTick_1E700(Type_AE400_29795* a1x)
 {
   CreatureDying_1A6C0(a1x, 66);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1E710(Type_AE400_29795* a1x)
+/// Genie (class 5 type 11) dead state: KillCreature_1A800 (state 71).
+void GenieDeadTick_1E710(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
@@ -30481,7 +30506,7 @@ void GlobalDeathEffectTick_299D0_29A10(Type_AE400_29795* a1x)
               break;
             case 3:
               if ( Distance2D_423D0_42710(&a1x->var_u32_29867_72, (axis_3d*)v2) < 0xA00 )
-                sub_12B50(a1x, i, 0, a1x->var_u16_29839_44);
+                DealDamage_12B50(a1x, i, 0, a1x->var_u16_29839_44);
               break;
             case 9:
             case 0xA:
@@ -41492,7 +41517,7 @@ int ProcessCommandLine_34DD0_35190(int argc, char** argv)//205DD0_
 		str_AE400_AE3F0->set.var_u8_8629 = 1;
 		str_AE400_AE3F0->set.var_u8_8630 = 1;
 		str_AE400_AE3F0->set.var_u8_8631 = 1;
-		sub_19470();
+		DetectCpu_19470();
 		if (str_AE408_AE3F8->var_u8_8)
 		{
 			str_AE400_AE3F0->set.reflections_8597 = 1;
@@ -58677,9 +58702,9 @@ void sub_4C6F0_4CA30()//21D6F0_
   result = dword_12CBB0_12CBA0 & 1;
   if ( result == 1 && mainMenuSelector_12CBCE_12CBBE == 2 )
   {
-    //result = sub_1002D(dword_12CB7A_12CB6A, begScreenBackup2_12CBA8_2EABA8_2EAB98);
+    //result = ApplyFlcFrame_1002D(dword_12CB7A_12CB6A, begScreenBackup2_12CBA8_2EABA8_2EAB98);
     v1 = word_12CB7E_12CB6E + 1;
-    dword_12CB7A_12CB6A = sub_1002D(dword_12CB7A_12CB6A, begScreenBackup2_12CBA8_2EABA8_2EAB98);
+    dword_12CB7A_12CB6A = ApplyFlcFrame_1002D(dword_12CB7A_12CB6A, begScreenBackup2_12CBA8_2EABA8_2EAB98);
     word_12CB7E_12CB6E = v1;
     if ( v1 == 31 )
     {
@@ -58694,9 +58719,9 @@ void sub_4C6F0_4CA30()//21D6F0_
     }
     if ( !byte_9687C )
     {
-      //result = sub_1002D(dword_12CB88_12CB78, begScreenBackup2_12CBA8_2EABA8_2EAB98);
+      //result = ApplyFlcFrame_1002D(dword_12CB88_12CB78, begScreenBackup2_12CBA8_2EABA8_2EAB98);
       v2 = word_12CB8C_12CB7C + 1;
-      dword_12CB88_12CB78 = sub_1002D(dword_12CB88_12CB78, begScreenBackup2_12CBA8_2EABA8_2EAB98);
+      dword_12CB88_12CB78 = ApplyFlcFrame_1002D(dword_12CB88_12CB78, begScreenBackup2_12CBA8_2EABA8_2EAB98);
       word_12CB8C_12CB7C = v2;
       if ( v2 == 4 )
       {
@@ -58722,7 +58747,7 @@ void InitMainMenuScreen_4C7E0_4CB20()
   //void *v2; // ebp
   void *v3; // edi
 
-  sub_10010(320, 0);
+  SetFlcSize_10010(320, 0);
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
   LoadSoundBank_5D070_5D580(0xDu);
   LoadMusicSet_5CEF0_5D400(0);
@@ -59995,7 +60020,7 @@ void PlayIntelAnim_4EFC0_4F300()
   v2 = 0;
   //fix
 
-  sub_19470();
+  DetectCpu_19470();
   if (str_AE408_AE3F8->var_u8_8)
   {
     if ( !byte_90B23 )
@@ -60040,7 +60065,7 @@ void sub_4F120_4F460()
 	__int16 v2; // dx
 
 	v0 = timerTicks_AC5D4_AC5C4;
-	v1 = sub_1002D(dword_12CB6C_12CB5C, begWscreen_2ECFF4_2ECFE4);
+	v1 = ApplyFlcFrame_1002D(dword_12CB6C_12CB5C, begWscreen_2ECFF4_2ECFE4);
 	v2 = word_12CB70_12CB60 + 1;
 	dword_12CB6C_12CB5C = v1;
 	word_12CB70_12CB60 = v2;
@@ -66346,8 +66371,8 @@ char sub_58910_58E20(unsigned __int16 a1)
         // PORT: was (**v4 & 1) - the first field is a 4-byte ptr32 slot (64-bit); same test as sub_58A00_58F10
         if ( (dword_12DF8C_12DF7C[v3]->var_u32_0->var_0 & 1) != 0 )
         {
-          v5 = sub_10FD0(dword_AE3E0_AE3D0, v3);
-          sub_10F10(v5);
+          v5 = FindTmapAnim_10FD0(dword_AE3E0_AE3D0, v3);
+          ClearTmapAnim_10F10(v5);
         }
         FreeSpriteCacheBlock_36A90_36E50(dword_AE3EC_AE3DC, dword_12D748_12D738[v3]);
         dword_12DF8C_12DF7C[v3] = 0;
@@ -66377,7 +66402,7 @@ char sub_58A00_58F10(unsigned __int16 a1)
       {
         if ( (dword_12DF8C_12DF7C[i]->var_u32_0->var_0 & 1) != 0 )
         {
-          sub_10F10(sub_10FD0(dword_AE3E0_AE3D0, i));
+          ClearTmapAnim_10F10(FindTmapAnim_10FD0(dword_AE3E0_AE3D0, i));
         }
         FreeSpriteCacheBlock_36A90_36E50(dword_AE3EC_AE3DC, dword_12D748_12D738[i]);
         dword_12DF8C_12DF7C[i] = 0;
@@ -66407,7 +66432,7 @@ int counter_sub_58B30_59040 = 0;
 int counter_sub_58B30_59040_2 = 0;
 
 //SYNCHRONIZED WITH REMC1
-/// Loads every texture map of a1's frame group (TAB +8) that is not cached yet into the sprite cache, registering animated ones (sub_10D40).
+/// Loads every texture map of a1's frame group (TAB +8) that is not cached yet into the sprite cache, registering animated ones (RegisterTmapAnim_10D40).
 void LoadTmapGroup_58B30_59040(unsigned __int16 a1)//229B30_
 {
 	Type_sub168_2* v3x; // esi
@@ -66450,7 +66475,7 @@ void LoadTmapGroup_58B30_59040(unsigned __int16 a1)//229B30_
 					dword_12DF8C_12DF7C[i] = v3x;
 					dword_12CF00_12CEF0[i] = str_AE408_AE3F8->var_u32_4.dword;
 					if ((v3x->var_u32_0->var_0 & 1) != 0)
-						sub_10D40(dword_AE3E0_AE3D0, v3x, i);
+						RegisterTmapAnim_10D40(dword_AE3E0_AE3D0, v3x, i);
 				}
 			}
 		}
@@ -66674,15 +66699,15 @@ void sub_590D0_595E0()//22A0D0_
       if ( (dword_12DF8C_12DF7C[i]->var_u32_0->var_0 & 8) != 0 )
       {
         // PORT: restored "flags &= ~8" (asm 0x59101). The sprite drawers set 8 when they draw a sprite;
-        // without the reset every sprite drawn once kept its animation advancing (sub_10EB0) forever.
+        // without the reset every sprite drawn once kept its animation advancing (AdvanceTmapAnim_10EB0) forever.
         dword_12DF8C_12DF7C[i]->var_u32_0->var_0 &= 0xF7;
         if ( (dword_12DF8C_12DF7C[i]->var_u32_0->var_0 & 1) != 0 )
         {
-          //v4 = sub_10FD0(dword_AE3E0_AE3D0, i);
+          //v4 = FindTmapAnim_10FD0(dword_AE3E0_AE3D0, i);
           // PORT: the lookup can return null at the end of a level (the animation set is released
           // while entries still carry flags 8|1); DOS read/wrote low memory harmlessly, here it crashed.
-          if (Type_sub_AE3E0* anim = sub_10FD0(dword_AE3E0_AE3D0, i))
-            sub_10EB0(anim);
+          if (Type_sub_AE3E0* anim = FindTmapAnim_10FD0(dword_AE3E0_AE3D0, i))
+            AdvanceTmapAnim_10EB0(anim);
         }
       }
     }
