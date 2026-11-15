@@ -69,7 +69,7 @@ begSFont0Tab_12CB28_2EAB28_2EAB18 0x9baaa
 
 dword_4A620_4A960
 
-void sub_50350_50690()
+void DrawEnterNamePrompt_50350_50690()
 
 begBscreen_AE3FC_AE3EC_26C3FC_26C3EC
 
@@ -1079,9 +1079,9 @@ void sub_4CAC0_4CE00();
 void sub_4CB70_4CEB0();
 void sub_4CC00_4CF40(); // weak
 int sub_4CCA0_4CFE0(int a1);
-bool sub_4D0F0_4D430();
+bool ClearMenuInput_4D0F0_4D430();
 void sub_4D190_4D4D0();
-void sub_4D300_4D640();
+void DrawSaveGameNames_4D300_4D640();
 void PlayIntroAnim_4D3B0_4D6F0();
 void PlayOutroAndQuit_4D560_4D8A0();
 void sub_4D680_4D9C0();
@@ -1098,18 +1098,18 @@ void PlayIntelAnim_4EFC0_4F300();
 void sub_4F120_4F460();
 void PlayTitleAnim_4F1E0_4F520();
 void SelectLanguage_4F3F0_4F730();
-int sub_4F8D0_4FC10(int a1, void (*a2)());
-void sub_4FD20_50060();
+int RunScrollDialog_4F8D0_4FC10(int a1, void (*a2)());
+void MenuQuitGame_4FD20_50060();
 void sub_4FE00_50140();
 void MenuNewGame_4FF30_50270();
-void sub_4FFE0_50320();
+void DrawNewGamePrompt_4FFE0_50320();
 void sub_50030_50370();
-void sub_50350_50690();
-void sub_503E0_50720();
-_BYTE *sub_50470_507B0();
+void DrawEnterNamePrompt_50350_50690();
+void DrawEnterCallNamePrompt_503E0_50720();
+_BYTE *FillTransparentFromBackup_50470_507B0();
 int sub_504A0_507E0();
 bool ReadSoundSetup_505A0_508E0();
-void sub_50770_50AB0();
+void HandleMenuInput_50770_50AB0();
 bool sub_50D40_51080(int a1, __int16 a2, __int16 a3, char *a4, char *a5, char a6, int a7, void (*a8)(void), char a9, int a10);
 char *StrInsert_512D0_51610(char *a1, const char *a2);
 int StrDelete_51330_51670(int a1, __int16 a2);
@@ -1846,7 +1846,7 @@ TypeVoidF dword_4A12C_4A46C[] = {
 {MenuNewGame_4FF30_50270,0},
 {sub_50030_50370,0},
 {sub_4FEB0,0},
-{sub_4FD20_50060,0},
+{MenuQuitGame_4FD20_50060,0},
 {nullptr,1},
 {nullptr,2},
 {nullptr,3},
@@ -14188,7 +14188,7 @@ _DWORD settextposition(_DWORD a, _DWORD b) { return 0; };// weak
 //int sub_4CC00_4CF40() { return 0; };// weak	
 //void PlayIntelAnim_4EFC0_4F300(__int16 a1) {};
 //void SelectLanguage_4F3F0_4F730(__int16 a1) {};
-//char sub_50770_50AB0(__int16 a1, __int16 a2, __int16 a3, __int16 a4) { return 0; };
+//char HandleMenuInput_50770_50AB0(__int16 a1, __int16 a2, __int16 a3, __int16 a4) { return 0; };
 //void DrawSpriteMCGA_60D50_61260(__int16 a1, int a2, int a3, char *a4, unsigned __int8 a5, char a6) {};
 //void sub_60D65_61275(__int16 a1, int a2, int a3, char *a4, unsigned __int8 a5, char a6) {};
 //char ReadLong_62CF4_63204(int *a1) { return 0; };
@@ -58412,7 +58412,7 @@ void ScreensHandle_4AB20_4AE60()//21BB20_21BE60
     }
     bool_12CA7C_12CA6C = false;
   }
-  sub_50770_50AB0();
+  HandleMenuInput_50770_50AB0();
   switch ( mainMenuSelector_12CBCE_12CBBE )
   {
     case 0:
@@ -59155,27 +59155,27 @@ void GameMenuPage_4BD60_4C0A0()//21CD60_
         switch ( v7 )
         {
           case 1:
-            if ( sub_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
+            if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
               LoadGame_51AF0_51E30(1);
             break;
           case 2:
-            if ( sub_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
+            if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
               LoadGame_51AF0_51E30(2);
             break;
           case 3:
-            if ( sub_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
+            if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
               LoadGame_51AF0_51E30(3);
             break;
           case 4:
-            if ( sub_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
+            if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
               LoadGame_51AF0_51E30(4);
             break;
           case 5:
-            if ( sub_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
+            if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
               LoadGame_51AF0_51E30(5);
             break;
           case 6:
-            if ( sub_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
+            if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
               LoadGame_51AF0_51E30(6);
             break;
           default:
@@ -59605,7 +59605,7 @@ void sub_4CB70_4CEB0()
   if ( byte_12CBCD_12CBBD )
   {
     if ( (unsigned __int8)byte_12CBCD_12CBBD <= 1u || byte_12CBCD_12CBBD == 2 )
-      sub_4D300_4D640();
+      DrawSaveGameNames_4D300_4D640();
   }
   else
   {
@@ -59664,7 +59664,7 @@ int sub_4CCA0_4CFE0(int a1)
   else
     SwapScreensVres256_599B0_59EC0(480);
   sprintf(pathBuffer_9ADC8, "intro\\scroll.dat");
-  dword_AC5C4_AC5B4 = (int (*)(_DWORD))sub_50470_507B0;
+  dword_AC5C4_AC5B4 = (int (*)(_DWORD))FillTransparentFromBackup_50470_507B0;
   word_90026 = 0;
   AniPlay_107C0_107C0(0, 0, (int)OFF(dword_4A17C_4A4BC));
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -59679,12 +59679,12 @@ int sub_4CCA0_4CFE0(int a1)
   SetTextWindow_51360_516A0(80, 73, 159, 48);
   v4 = strcmp((char*)off_96864[dword_4A12C_4A46C[byte_12CBC6_12CBB6].var-1], "--");
   if ( !v4 )
-    LOWORD(v4) = sub_4D0F0_4D430();
+    LOWORD(v4) = ClearMenuInput_4D0F0_4D430();
   while ( !v1 )
   {
     LOBYTE(v3) = byte_90B23;
     if ( !byte_90B23 || (byte_90B23 & 0x23) != 0 && (v2 & 3) == 0 )
-      sub_50770_50AB0();
+      HandleMenuInput_50770_50AB0();
     if (pressedKeys_12EEF0_12EEE0[28])//byte_12EF0C Enter
     {
       v1 = 1;
@@ -59733,7 +59733,7 @@ int sub_4CCA0_4CFE0(int a1)
         v10 = mouseY_12CAE2_12CAD2 >> 1;
         if ( v10 >= 85 && v10 <= 95 )
         {
-          sub_4D0F0_4D430();
+          ClearMenuInput_4D0F0_4D430();
           pressedKeys_12EEF0_12EEE0[28] = 0;//byte_12EF0C Enter
           pressedKeys_12EEF0_12EEE0[1] = 0;//byte_12EEF1_12EEE1 ESC
         }
@@ -59780,7 +59780,9 @@ int sub_4CCA0_4CFE0(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-bool sub_4D0F0_4D430()
+/// Clears the menu input: Enter, Escape, mouse buttons; sets flag 0x40 of byte_12CBD5.
+/// Name is a guess (not in the Hidden Worlds linker map).
+bool ClearMenuInput_4D0F0_4D430()
 {
   bool result; // eax
 
@@ -59837,7 +59839,9 @@ void sub_4D190_4D4D0()
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4D300_4D640()//21E300_
+/// Draws the six save-game names (off_96864) in their menu boxes (dword_4A7EC text windows), in yellow.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void DrawSaveGameNames_4D300_4D640()//21E300_
 {
   //int v0; // ebx
   __int64 v1; // rax
@@ -60984,7 +60988,7 @@ void SelectLanguage_4F3F0_4F730()//2203F0_
 		byte_12CBD5_12CBC5 |= 1u;
 		do
 		{
-			sub_50770_50AB0();
+			HandleMenuInput_50770_50AB0();
 			if ((byte_12CAE4_12CAD4 & 1) != 0)
 			{
 				if (mouseX_12CAE0_12CAD0 >> 1 < 64 || mouseX_12CAE0_12CAD0 >> 1 > 139 || mouseY_12CAE2_12CAD2 >> 1 < 43 || mouseY_12CAE2_12CAD2 >> 1 > 82)
@@ -61082,7 +61086,9 @@ void SelectLanguage_4F3F0_4F730()//2203F0_
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_4F8D0_4FC10(int a1, void (*a2)())
+/// Runs a yes/no dialog over the scroll animation (intro/scroll.dat), drawing it with callback a2 (returns a1).
+/// Name is a guess (not in the Hidden Worlds linker map).
+int RunScrollDialog_4F8D0_4FC10(int a1, void (*a2)())
 {
   int v2; // ebx
   __int16 v3; // si
@@ -61111,7 +61117,7 @@ int sub_4F8D0_4FC10(int a1, void (*a2)())
   else
     SwapScreensVres256_599B0_59EC0(480);
   sprintf(pathBuffer_9ADC8, "intro\\scroll.dat");
-  dword_AC5C4_AC5B4 = (int (*)(_DWORD))sub_50470_507B0;
+  dword_AC5C4_AC5B4 = (int (*)(_DWORD))FillTransparentFromBackup_50470_507B0;
   word_90026 = 0;
   AniPlay_107C0_107C0(0, 0, (int)OFF(dword_4A17C_4A4BC));
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -61137,7 +61143,7 @@ int sub_4F8D0_4FC10(int a1, void (*a2)())
     }
     LOBYTE(v4) = byte_90B23;
     if ( !byte_90B23 || (byte_90B23 & 0x23) != 0 && (v3 & 3) == 0 )
-      sub_50770_50AB0();
+      HandleMenuInput_50770_50AB0();
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       DrawASpriteMCGA_60CE0_611F0(136, 210, &begMmSprTab_12CB04_2EAB04_2EAAF4[5]);
     else
@@ -61205,7 +61211,9 @@ int sub_4F8D0_4FC10(int a1, void (*a2)())
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4FD20_50060()
+/// Main-menu action "quit": asks through the scroll dialog (RunScrollDialog_4F8D0_4FC10) and on yes sets the player's quit flag (+13327) and leaveMenu_96880.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void MenuQuitGame_4FD20_50060()
 {
     //fix
     int a1 = 0;
@@ -61214,7 +61222,7 @@ void sub_4FD20_50060()
   int v2; // esi
   int v3; // esi
 
-  if ( sub_4F8D0_4FC10(a1, (void (*)())sub_4FE00_50140) )
+  if ( RunScrollDialog_4F8D0_4FC10(a1, (void (*)())sub_4FE00_50140) )
   {
     sub_4CAC0_4CE00();
     str_AE400_AE3F0[str_AE400_AE3F0->var_u16_8].str_13323[0].var_u8_13327 = 1;
@@ -61299,7 +61307,7 @@ void MenuNewGame_4FF30_50270()
     mainMenuSelector_12CBCE_12CBBE = 5;//play game
     leaveMenu_96880 = true;
   }
-  else if ( sub_4F8D0_4FC10(a1, (void (*)())sub_4FFE0_50320) )
+  else if ( RunScrollDialog_4F8D0_4FC10(a1, (void (*)())DrawNewGamePrompt_4FFE0_50320) )
   {
     str_AE408_AE3F8->var_u16_17 = 0;
     mainMenuSelector_12CBCE_12CBBE = 5;
@@ -61310,7 +61318,9 @@ void MenuNewGame_4FF30_50270()
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4FFE0_50320()
+/// Draws game text 36 ("New Game? Yes/No") centred in the text window.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void DrawNewGamePrompt_4FFE0_50320()
 {
   int v0; // eax
   char* v1; // [esp-4h] [ebp-1Ch]
@@ -61330,7 +61340,7 @@ void sub_50030_50370()//221030_
   else
     CopyScreen_62FC4_634D4(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begScreenBackup_12CBA4_2EABA4_2EAB94, 0x1E0u);
   sprintf(pathBuffer_9ADC8, "intro\\scroll.dat");
-  dword_AC5C4_AC5B4 = (int (*)(_DWORD))sub_50470_507B0;
+  dword_AC5C4_AC5B4 = (int (*)(_DWORD))FillTransparentFromBackup_50470_507B0;
   if ( !byte_90B23 )
     SetPointer_5C05C_5C56C(0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -61348,11 +61358,11 @@ void sub_50030_50370()//221030_
   dword_AC5C4_AC5B4 = 0;
   SaveTextWindow_513E0_51720();
   SetTextWindow_51360_516A0(70, 73, 179, 48);
-  sub_50D40_51080(8, 25, 30, 0, str_AE408_AE3F8->var_u8_29, 255, 0, sub_50350_50690, 1, (int)OFF(&str_9688C));
+  sub_50D40_51080(8, 25, 30, 0, str_AE408_AE3F8->var_u8_29, 255, 0, DrawEnterNamePrompt_50350_50690, 1, (int)OFF(&str_9688C));
   byte_12CBD5_12CBC5 |= 0x20u;
   pressedKeys_12EEF0_12EEE0[28] = 0;//byte_12EF0C Enter
   byte_12CAE4_12CAD4 &= ~1u;
-  sub_50D40_51080(8, 25, 8, 0, str_AE408_AE3F8->var_u8_61, 255, 0, sub_503E0_50720, 1, (int)OFF(&str_9688C));
+  sub_50D40_51080(8, 25, 8, 0, str_AE408_AE3F8->var_u8_61, 255, 0, DrawEnterCallNamePrompt_503E0_50720, 1, (int)OFF(&str_9688C));
   pressedKeys_12EEF0_12EEE0[28] = 0;//byte_12EF0C Enter
   byte_12CBD5_12CBC5 &= ~0x20u;
   byte_12CAE4_12CAD4 &= ~1u;
@@ -61384,7 +61394,9 @@ void sub_50030_50370()//221030_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_50350_50690()
+/// Restores the screen from the BScreen and draws game text 34 ("Enter your name:") centred.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void DrawEnterNamePrompt_50350_50690()
 {
   int v0; // eax
   char* v1; // [esp-4h] [ebp-28h]
@@ -61401,7 +61413,9 @@ void sub_50350_50690()
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_503E0_50720()
+/// Restores the screen from the BScreen and draws game text 35 ("Enter your call-name:") centred.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void DrawEnterCallNamePrompt_503E0_50720()
 {
   int v0; // eax
   char* v1; // [esp-4h] [ebp-28h]
@@ -61418,7 +61432,9 @@ void sub_503E0_50720()
 }
 
 //SYNCHRONIZED WITH REMC1
-_BYTE *sub_50470_507B0()
+/// Copies begScreenBackup pixels into the screen buffer wherever it is 0 (frame callback of the scroll animation).
+/// Name is a guess (not in the Hidden Worlds linker map).
+_BYTE *FillTransparentFromBackup_50470_507B0()
 {
   _BYTE *v0; // ebx
   _BYTE *result; // eax
@@ -61532,7 +61548,9 @@ bool ReadSoundSetup_505A0_508E0()
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_50770_50AB0()
+/// Keyboard and mouse handling of the menus, called at the start of every ScreensHandle_4AB20_4AE60 step.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void HandleMenuInput_50770_50AB0()
 {
   if ( byte_12CBCF_12CBBF )
   {
