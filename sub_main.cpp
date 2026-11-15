@@ -17396,10 +17396,10 @@ int sub_143A0(int a1)
     if ( *(_WORD *)PTR(i + 24) != *(_WORD *)PTR(a1 + 24) && *(_BYTE *)PTR(i + 65) == 2 )
     {
       if ( (v2 = 164 * *(__int16 *)PTR(i + 24),
-            50000 - *(_DWORD *)PTR(dword_AE400_AE3F0() + v2 + 29931) / 10 * *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522) / 255 < *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 8 * *(__int16 *)PTR(*(_DWORD *)PTR(dword_AE400_AE3F0() + v2 + 29955) + 48) + 460))
+            50000 - *(int *)PTR(dword_AE400_AE3F0() + v2 + 29931) / 10 * *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522) / 255 < (int)*(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 8 * *(__int16 *)PTR(*(_DWORD *)PTR(dword_AE400_AE3F0() + v2 + 29955) + 48) + 460)) // PORT: signed (idiv/jge at 0x14458-0x1447C); _DWORD made it unsigned
         && DistanceSquared2D_42410_42750((_WORD *)PTR(dword_AE400_AE3F0() + 29795 + v2 + 72), (_WORD *)PTR(i + 72)) > 58982400
         && !EntitiesCollide_11950((Type_AE400_29795*)PTR(dword_AE400_AE3F0() + 29795 + 164 * *(__int16 *)PTR(i + 24)), (Type_AE400_29795*)PTR(i))
-        || *(_DWORD *)PTR(i + 140) + 640 * (255 - *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522)) < *(_DWORD *)PTR(164 * *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) + dword_AE400_AE3F0() + 29935) )
+        || *(int *)PTR(i + 140) + 640 * (255 - *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522)) < *(int *)PTR(164 * *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) + dword_AE400_AE3F0() + 29935) ) // PORT: signed (jge at 0x144FF)
       {
         v3 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
         if ( v3 < v7 )
@@ -17508,8 +17508,8 @@ int sub_147E0(int a1)
       v4 = *(_DWORD *)PTR(a1 + 160);
       v11 = *(unsigned __int16 *)PTR(v4 + 8 * *(__int16 *)PTR(v3 + 48) + 460);
       v5 = *(__int16 *)PTR(v4 + 522);
-      if ( 50000 - v5 * (*(_DWORD *)PTR(v2 + 29931) / 10) / 255 < v11
-        && 10 * (275 - v5) < *(_DWORD *)PTR(i + 140)
+      if ( 50000 - v5 * (*(int *)PTR(v2 + 29931) / 10) / 255 < v11 // PORT: signed (idiv/jge at 0x1487A-0x148A6); _DWORD made it unsigned
+        && 10 * (275 - v5) < *(int *)PTR(i + 140) // PORT: signed (jge at 0x148B8)
         && !EntitiesCollide_11950((Type_AE400_29795*)PTR(i), (Type_AE400_29795*)PTR(dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(v3 + 50))) )
       {
         v6 = DistanceSquared2D_42410_42750(v9, (_WORD *)PTR(i + 72));

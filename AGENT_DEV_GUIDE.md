@@ -1191,6 +1191,9 @@ Known open issues:
   `AiChooseManaToPossess_15080` and `AiFindRivalWizard_145B0` compare `50000 - maxMana/10*k/255` signed (`idiv`, `jge`/`jle`), the
   port unsigned via `_DWORD`, so targets owned by a wizard with a lot of mana took the other branch.
   Found in `possession_spell_bug.recording` (frames 56995, 59853), which now desyncs from frame 18360.
+  Fixed again 2026-11-15 in the two sibling checks of `AiChooseAction_136C0` (`sub_143A0`, `sub_147E0`): the
+  same `50000 - ...` comparison plus a mana comparison each (`idiv`/`jge` in the original). `grep "50000 -"`
+  finds every copy.
 - Fixed 2026-11-04: the heal spell cost no mana while the caster's mana delta was not negative (pattern
   #68; `level30.recording`, frame 46500).
 - Fixed 2026-11-04: flaky access violations when a replay or game ended with AdLib music: only realtime
