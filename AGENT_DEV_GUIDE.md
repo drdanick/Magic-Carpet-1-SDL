@@ -574,8 +574,9 @@ user): 0 Fireball, 1 Heal, 2 Speed, 3 Possession, 4 Shield, 5 Beyond Sight, 6 Ea
 18 Lightning Storm, 19 Mana Magnet, 20 Wall of Fire, 21 Reverse Speed, 22 Global Death, 23 Rapid Fireball. Original (linker map) names differ for some: 11 rubber_band (Duel), 20-23 extra1-4 (Wall of Fire, Reverse Speed, Global Death, Rapid Fireball), 12 invisable,
 17 skeleton, 2 speed_up; the init_spell_* order in the map equals our constructor order. The map's names for
 spells 18 (alliance) and 19 (teleport_castle) do not fit the retail spells (Mana Magnet and Teleport Castle are
-different retail spells; user), so those functions keep behaviour names; spell 10's map name `teleport` is unverified
-(its cast handler moves the owner to its castle). The
+different retail spells; user), so those functions keep behaviour names; spell 10 is the retail Teleport Castle (user;
+its cast handler moves the owner to its castle), named `InitSpellTeleportCastle`/`FnSpellTeleportCastle` by the map's
+convention although the map has `teleport` at that position. The
 game text (`data/etext.dat`) has no spell names. Most cast handlers (`Cast<Spell>_*`) create a class 9 missile
 (`Create<Spell>Missile_*`) and store the class/type of its payload in the missile's +68/+69. `FnShotGeneric_52770_52AB0`
 creates that entity on impact (`Create<Spell>Effect_*`, class 10). Example: Volcano -> 9/4 -> 10/9 -> 10/18 eruption.

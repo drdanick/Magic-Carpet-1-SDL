@@ -866,7 +866,7 @@ int InitSpellCastle_3C060(int a1);
 int InitSpellFireball_3C090(int a1);
 int InitSpellSpeedUp_3C0C0(int a1);
 int InitSpellHeal_3C0F0(int a1);
-int InitSpellTeleport_3C120(int a1);
+int InitSpellTeleportCastle_3C120(int a1);
 int InitSpellEarthquake_3C150(int a1);
 int CreateManaMagnetSpell_3C180(int a1);
 int InitSpellShield_3C1B0(int a1);
@@ -1183,7 +1183,7 @@ int FnSpellEarthquake_567A0_56CD0(int a1);
 int FnSpellMeteor_56950_56E80(int a1);
 int FnSpellVolcano_56AF0_57020(int a1);
 int FnSpellCrater_56CA0_571D0(int a1);
-void FnSpellTeleport_56E50_57380(int a1);
+void FnSpellTeleportCastle_56E50_57380(int a1);
 int FnSpellRubberBand_57040_57570(int a1);
 void FnSpellInvisable_571B0_576E0(int a1);
 int FnSpellStealMana_57250_57780(int a1);
@@ -3699,7 +3699,7 @@ Type_254A34 str_2567D8[] = {
 { 0x002548F4, 0x0007, PORT_FN(InitSpellMeteor_3C1E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0008, PORT_FN(InitSpellVolcano_3C390, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0009, PORT_FN(InitSpellCrater_3C300, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, PORT_FN(InitSpellTeleport_3C120, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, PORT_FN(InitSpellTeleportCastle_3C120, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000B, PORT_FN(InitSpellRubberBand_3C270, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000C, PORT_FN(InitSpellInvisable_3C2D0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000D, PORT_FN(InitSpellStealMana_3C2A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
@@ -4135,7 +4135,7 @@ Type_254A34x str_2563D8[] = {//2563D8
 { 0x002548F4, 0x001B, PORT_FN(FnSpellCrater_56CA0_571D0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x001C, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x001D, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001E, PORT_FN(FnSpellTeleport_56E50_57380, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001E, PORT_FN(FnSpellTeleportCastle_56E50_57380, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x001F, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0020, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
 { 0x002548F4, 0x0021, PORT_FN(FnSpellRubberBand_57040_57570, void(Type_AE400_29795*)), 0x0001, 0x0000 },
@@ -4326,7 +4326,7 @@ Type_97D12 off_987DE[] = {
 { PORT_FN(InitSpellMeteor_3C1E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 8 },
 { PORT_FN(InitSpellVolcano_3C390, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 9 },
 { PORT_FN(InitSpellCrater_3C300, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 10 },
-{ PORT_FN(InitSpellTeleport_3C120, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
+{ PORT_FN(InitSpellTeleportCastle_3C120, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
 { PORT_FN(InitSpellRubberBand_3C270, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 12 },
 { PORT_FN(InitSpellInvisable_3C2D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 13 },
 { PORT_FN(InitSpellStealMana_3C2A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 14 },
@@ -48089,8 +48089,8 @@ int InitSpellHeal_3C0F0(int a1)
 
 //----- (0003C120) --------------------------------------------------------
 /// Constructor of the Teleport spell (class 12 type 10, state 30) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Original name: init_spell_teleport (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_teleport of the same type 10).
-int InitSpellTeleport_3C120(int a1)
+/// Name by the linker map's convention: spell 10 is the retail Teleport Castle (icon: castle <-> wizard; moves the caster to its castle), which the map calls teleport_castle -> init_spell_teleport_castle (user, 2026-11-15). The map's name at this position is init_spell_teleport; the spell slots changed after the map was made.
+int InitSpellTeleportCastle_3C120(int a1)
 {
   return InitSpell_3BF70(a1, 10, 30, 5000, 51, 1, 0, 10000, 100);
 }
@@ -66244,8 +66244,8 @@ LABEL_9:
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Teleport spell (class 12 state 30 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Original name: fn_spell_teleport (SPELL.C), Hidden Worlds linker map.
-void FnSpellTeleport_56E50_57380(int a1)
+/// Name by the linker map's convention: spell 10 is the retail Teleport Castle (icon: castle <-> wizard; moves the caster to its castle), which the map calls teleport_castle -> fn_spell_teleport_castle (user, 2026-11-15). The map's name at this position is fn_spell_teleport; the spell slots changed after the map was made.
+void FnSpellTeleportCastle_56E50_57380(int a1)
 {
   unsigned int v1; // ebp
   __int16 v2; // ax
