@@ -868,7 +868,7 @@ int InitSpellSpeedUp_3C0C0(int a1);
 int InitSpellHeal_3C0F0(int a1);
 int InitSpellTeleport_3C120(int a1);
 int InitSpellEarthquake_3C150(int a1);
-int InitSpellTeleportCastle_3C180(int a1);
+int CreateManaMagnetSpell_3C180(int a1);
 int InitSpellShield_3C1B0(int a1);
 int InitSpellMeteor_3C1E0(int a1);
 int InitSpellRebound_3C210(int a1);
@@ -878,7 +878,7 @@ int InitSpellStealMana_3C2A0(int a1);
 int InitSpellInvisable_3C2D0(int a1);
 int InitSpellCrater_3C300(int a1);
 int InitSpellBeyondSight_3C330(int a1);
-int InitSpellAlliance_3C360(int a1);
+int CreateLightningStormSpell_3C360(int a1);
 int InitSpellVolcano_3C390(int a1);
 int InitSpellSkeleton_3C3C0(int a1);
 int InitSpellExtra1_3C3F0(int a1);
@@ -1150,7 +1150,7 @@ char FnShotPreGeneric_534C0_53800(int a1);
 __int16 FnShotLightning_535E0_53920(unsigned int a1);
 void FnShotCastle_53980_53CC0(int a1);
 char FnFirstStageShot_53B50_53E90(int a1);
-char FnShotAlliance_53DC0_54100(int a1);
+char LightningStormMissileTick_53DC0_54100(int a1);
 void FnShotArrow_54180_544D0(int a1);
 void FnShotFollow_54290_545E0(int a1);
 char FnShotExtra2_542B0_54640(int a1);
@@ -1191,8 +1191,8 @@ int FnSpellRebound_573F0_57920(int a1);
 int FnSpellLightning_57470_579A0(int a1);
 void FnSpellCastle_57610_57B40(int a1);
 void FnSpellSkeleton_57800_57D30(int a1);
-int FnSpellAlliance_579D0_57F00(int a1);
-int FnSpellTeleportCastle_57B80_580B0(int a1);
+int CastLightningStorm_579D0_57F00(int a1);
+int CastManaMagnet_57B80_580B0(int a1);
 int FnSpellExtra1_57D40_58270(int a1);
 void FnSpellExtra2_57F00_58410(int a1);
 int FnSpellExtra3_580A0_585B0(int a1);
@@ -3707,8 +3707,8 @@ Type_254A34 str_2567D8[] = {
 { 0x002548F4, 0x000F, PORT_FN(InitSpellLightning_3C240, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0010, PORT_FN(InitSpellCastle_3C060, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0011, PORT_FN(InitSpellSkeleton_3C3C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0012, PORT_FN(InitSpellAlliance_3C360, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0013, PORT_FN(InitSpellTeleportCastle_3C180, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0012, PORT_FN(CreateLightningStormSpell_3C360, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0013, PORT_FN(CreateManaMagnetSpell_3C180, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0014, PORT_FN(InitSpellExtra1_3C3F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0015, PORT_FN(InitSpellExtra2_3C420, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0016, PORT_FN(InitSpellExtra3_3C450, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
@@ -3991,7 +3991,7 @@ Type_254A34x str_25573C[] = {
 { 0x002548F4,0x0009,PORT_FN(FnShotLightning_535E0_53920, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000A,PORT_FN(FnShotCastle_53980_53CC0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000B,PORT_FN(FnShotEarthquake_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000C,PORT_FN(FnShotAlliance_53DC0_54100, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000C,PORT_FN(LightningStormMissileTick_53DC0_54100, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000D,PORT_FN(FnShotArrow_54180_544D0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000E,PORT_FN(FnShotFollow_54290_545E0, void(Type_AE400_29795*)),0x0001,0x0000 }, // PORT: see below
 { 0x002548F4,0x000F,PORT_FN(FnShotEarthquake_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
@@ -4159,10 +4159,10 @@ Type_254A34x str_2563D8[] = {//2563D8
 { 0x002548F4, 0x0033, PORT_FN(FnSpellSkeleton_57800_57D30, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0034, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0035, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0036, PORT_FN(FnSpellAlliance_579D0_57F00, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0036, PORT_FN(CastLightningStorm_579D0_57F00, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0037, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0038, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0039, PORT_FN(FnSpellTeleportCastle_57B80_580B0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0039, PORT_FN(CastManaMagnet_57B80_580B0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x003A, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x003B, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
 { 0x002548F4, 0x003C, PORT_FN(FnSpellExtra1_57D40_58270, void(Type_AE400_29795*)), 0x0001, 0x0000 },
@@ -4334,8 +4334,8 @@ Type_97D12 off_987DE[] = {
 { PORT_FN(InitSpellLightning_3C240, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 16 },
 { PORT_FN(InitSpellCastle_3C060, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 17 },
 { PORT_FN(InitSpellSkeleton_3C3C0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 18 },
-{ PORT_FN(InitSpellAlliance_3C360, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 19 },
-{ PORT_FN(InitSpellTeleportCastle_3C180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 20 },
+{ PORT_FN(CreateLightningStormSpell_3C360, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 19 },
+{ PORT_FN(CreateManaMagnetSpell_3C180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 20 },
 { PORT_FN(InitSpellExtra1_3C3F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 21 },
 { PORT_FN(InitSpellExtra2_3C420, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 22 },
 { PORT_FN(InitSpellExtra3_3C450, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 23 },
@@ -28740,6 +28740,7 @@ void FnEffectBlindness_26CE0(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Original name: fn_effect_alliance (EFFECT.C), Hidden Worlds linker map.
+/// Note: "alliance" is doubtful for the retail game (may be cut or reassigned; user, 2026-11-15).
 void FnEffectAlliance_26D20(int a1)
 {
   __int16 v1; // bx
@@ -46076,7 +46077,7 @@ int CreateUndeadArmyMissile_39FC0(int a1)
 }
 
 //----- (0003A040) --------------------------------------------------------
-/// Constructor of the Lightning Storm spell's missile (class 9 type 12, state 12), fired by FnSpellAlliance_579D0_57F00.
+/// Constructor of the Lightning Storm spell's missile (class 9 type 12, state 12), fired by CastLightningStorm_579D0_57F00.
 /// Name is a guess (not in the Hidden Worlds linker map).
 int CreateLightningStormMissile_3A040(int a1)
 {
@@ -46221,7 +46222,7 @@ int InitShotExtra1_3A270(int a1)
 // 98FD8: using guessed type void *off_98FD8;
 
 //----- (0003A2F0) --------------------------------------------------------
-/// Constructor of the Mana Magnet spell's missile (class 9 type 17, state 18), fired by FnSpellTeleportCastle_57B80_580B0.
+/// Constructor of the Mana Magnet spell's missile (class 9 type 17, state 18), fired by CastManaMagnet_57B80_580B0.
 /// Original name: init_shot_extra2 (INIT.C), Hidden Worlds linker map.
 int InitShotExtra2_3A2F0(int a1)
 {
@@ -48104,8 +48105,8 @@ int InitSpellEarthquake_3C150(int a1)
 
 //----- (0003C180) --------------------------------------------------------
 /// Constructor of the Mana Magnet spell (class 12 type 19, state 57) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Original name: init_spell_teleport_castle (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_teleport_castle of the same type 19).
-int InitSpellTeleportCastle_3C180(int a1)
+/// Name is a guess (not in the Hidden Worlds linker map). The map name at this position, init_spell_teleport_castle, does not fit the behaviour or the retail spell (user, 2026-11-15): the spell slots probably changed after the map was made.
+int CreateManaMagnetSpell_3C180(int a1)
 {
   return InitSpell_3BF70(a1, 19, 57, 4000, 17, 1, 0, 10000, 100);
 }
@@ -48184,8 +48185,8 @@ int InitSpellBeyondSight_3C330(int a1)
 
 //----- (0003C360) --------------------------------------------------------
 /// Constructor of the Lightning Storm spell (class 12 type 18, state 54) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Original name: init_spell_alliance (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_alliance of the same type 18).
-int InitSpellAlliance_3C360(int a1)
+/// Name is a guess (not in the Hidden Worlds linker map). The map name at this position, init_spell_alliance, does not fit the behaviour or the retail spell (user, 2026-11-15): the spell slots probably changed after the map was made.
+int CreateLightningStormSpell_3C360(int a1)
 {
   return InitSpell_3BF70(a1, 18, 54, 20000, 33, 1, 0, 90000, 2000);
 }
@@ -64245,8 +64246,8 @@ char FnFirstStageShot_53B50_53E90(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of the Lightning Storm spell's missile (class 9 state 12).
-/// Original name: fn_shot_alliance (SHOT.C), Hidden Worlds linker map (placed by function order between two matches).
-char FnShotAlliance_53DC0_54100(int a1)
+/// Name is a guess (not in the Hidden Worlds linker map). The map name at this position, fn_shot_alliance, does not fit the behaviour or the retail spell (user, 2026-11-15): the spell slots probably changed after the map was made.
+char LightningStormMissileTick_53DC0_54100(int a1)
 {
   int v1; // edx
   char v2; // dl
@@ -66695,8 +66696,8 @@ LABEL_12:
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Lightning Storm spell (class 12 state 54 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Original name: fn_spell_alliance (SPELL.C), Hidden Worlds linker map (placed by function order between two matches).
-int FnSpellAlliance_579D0_57F00(int a1)
+/// Name is a guess (not in the Hidden Worlds linker map). The map name at this position, fn_spell_alliance, does not fit the behaviour or the retail spell (user, 2026-11-15): the spell slots probably changed after the map was made.
+int CastLightningStorm_579D0_57F00(int a1)
 {
   int result; // eax
   unsigned __int16 v2; // dx
@@ -66758,8 +66759,8 @@ LABEL_9:
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Mana Magnet spell (class 12 state 57 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Original name: fn_spell_teleport_castle (SPELL.C), Hidden Worlds linker map (placed by function order between two matches).
-int FnSpellTeleportCastle_57B80_580B0(int a1)
+/// Name is a guess (not in the Hidden Worlds linker map). The map name at this position, fn_spell_teleport_castle, does not fit the behaviour or the retail spell (user, 2026-11-15): the spell slots probably changed after the map was made.
+int CastManaMagnet_57B80_580B0(int a1)
 {
   int result; // eax
   unsigned __int16 v2; // dx
