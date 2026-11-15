@@ -1729,12 +1729,12 @@ void sub_726E7_72BF7(__int16 a1, uint16_t* a2, uint8_t* a3, uint16_t* a4);
 char sub_72807_72D17(unsigned __int8 *a1, _BYTE *a2);
 void DrawTriangle_729A3_72EB3_old(_DWORD* a1, _DWORD* a2, _DWORD* a3);
 void DrawTriangle_729A3_72EB3(Type_RenderPoint* pnt1, Type_RenderPoint* pnt2, Type_RenderPoint* pnt3);
-void SetViewPort2_79495_799A5(uint8* a1, uint8* a2, int a3, int a4, int a5);
-void sub_79906(uint16 a1[2][256]);
-void sub_79A1B(uint16 a1[2][256]);
-void sub_79A70_79F80(uint8* a2, uint8* a3, uint16 a6[2][256], int scrSize);//24AA70
-int sub_79A70_79F80(int result, _BYTE *a2, _BYTE *a3, /*int a4, int a5,*/ uint16 a6[2][256]);
-void sub_79B2D();
+void SetupVecs_79495_799A5(uint8* a1, uint8* a2, int a3, int a4, int a5);
+void Superstereohirescopy_79906(uint16 a1[2][256]);
+void Superstereolorescopy_79A1B(uint16 a1[2][256]);
+void DoA64kWad_79A70_79F80(uint8* a2, uint8* a3, uint16 a6[2][256], int scrSize);//24AA70
+int DoA64kWad_79A70_79F80(int result, _BYTE *a2, _BYTE *a3, /*int a4, int a5,*/ uint16 a6[2][256]);
+void SwapScreensVres256el_79B2D();
 // int gettextposition(_DWORD); weak
 // _DWORD settextposition(_DWORD, _DWORD); weak
 // _DWORD outtext(_DWORD); weak
@@ -37998,13 +37998,13 @@ void EngineSetupTlscreen_309D0_30A10(int a1)
   {
     dword_B5CA0_B5C90 = scrWidth_12EFF0_12EFE0 - 8 * a1;
     result = scrWidth_12EFF0_12EFE0 - 8 * a1 + begWscreen_2ECFF4_2ECFE4;
-    SetViewPort2_79495_799A5(result, 0, scrWidth_12EFF0_12EFE0, (unsigned __int16)(8 * a1), (unsigned __int16)(5 * a1));
+    SetupVecs_79495_799A5(result, 0, scrWidth_12EFF0_12EFE0, (unsigned __int16)(8 * a1), (unsigned __int16)(5 * a1));
   }
   else
   {
     dword_B5CA0_B5C90 = scrWidth_12EFF0_12EFE0 - 16 * a1;
     result = scrWidth_12EFF0_12EFE0 - 16 * a1 + begWscreen_2ECFF4_2ECFE4;
-    SetViewPort2_79495_799A5(result, 0, scrWidth_12EFF0_12EFE0, (unsigned __int16)(16 * a1), (unsigned __int16)(12 * a1));
+    SetupVecs_79495_799A5(result, 0, scrWidth_12EFF0_12EFE0, (unsigned __int16)(16 * a1), (unsigned __int16)(12 * a1));
   }
 }
 // B5CA0: using guessed type int dword_B5CA0_B5C90;
@@ -38035,7 +38035,7 @@ void EngineSetupScreen_30A70_30AB0(int viewPortSize)//201A70_
 		viewPortWidth = 16 * viewPortSize;
 	}
 	dword_B5CA0_B5C90 = frameShift;
-	SetViewPort2_79495_799A5(frameShift + begWscreen_2ECFF4_2ECFE4, 0, scrWidth_12EFF0_12EFE0, viewPortWidth, viewPortHeight);
+	SetupVecs_79495_799A5(frameShift + begWscreen_2ECFF4_2ECFE4, 0, scrWidth_12EFF0_12EFE0, viewPortWidth, viewPortHeight);
 }
 
 //----- (00030B30) --------------------------------------------------------
@@ -38132,7 +38132,7 @@ void EngineShowScreen_30B30_30B70()
   {
     if ( byte_90708 )
     {
-      sub_79A1B(unk_B3AA0_B3A90x);
+      Superstereolorescopy_79A1B(unk_B3AA0_B3A90x);
       return;
     }
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -38146,12 +38146,12 @@ LABEL_20:
   {
     if ( str_AE400_AE3F0->set.var_u8_8606 && str_AE400_AE3F0->set.mod3D_8603 )
     {
-      sub_79B2D();
+      SwapScreensVres256el_79B2D();
       return;
     }
     if ( byte_90708 )
     {
-      sub_79906(unk_B3AA0_B3A90x);
+      Superstereohirescopy_79906(unk_B3AA0_B3A90x);
       return;
     }
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -38327,17 +38327,17 @@ void Engine_30D90_30DD0(int posX, int posY, __int16 yaw, int posZ, int pitch, in
 	int tempYaw = yaw & 0x7FF;
 	if (str_AE400_AE3F0->set.var_u8_8606 && str_AE400_AE3F0->set.mod3D_8603 && scrWidth_12EFF0_12EFE0 == 640)
 	{
-		SetViewPort2_79495_799A5(begWscreen_2ECFF4_2ECFE4, 0, 2 * scrWidth_12EFF0_12EFE0, scrWidth_12EFF0_12EFE0 / 2 - 8, scrHeight_12EFF8_12EFE8 / 2 - 40);
+		SetupVecs_79495_799A5(begWscreen_2ECFF4_2ECFE4, 0, 2 * scrWidth_12EFF0_12EFE0, scrWidth_12EFF0_12EFE0 / 2 - 8, scrHeight_12EFF8_12EFE8 / 2 - 40);
 		dword_9070C = 20;
 		dword_902B0 = -5;
 		int tempSin = (5 * cos_9134C[tempYaw]) >> 14;
 		int tempCos = (5 * sin_90B4C[tempYaw]) >> 14;
 		DrawLandscape_2A700_2A740(tempFixPosX - tempSin, tempFixPosY - tempCos, tempYaw, posZ, pitch, roll, fow);
-		SetViewPort2_79495_799A5(begWscreen_2ECFF4_2ECFE4 + scrWidth_12EFF0_12EFE0 / 2, 0, 0, 0, 0);
+		SetupVecs_79495_799A5(begWscreen_2ECFF4_2ECFE4 + scrWidth_12EFF0_12EFE0 / 2, 0, 0, 0, 0);
 		dword_902B0 = 5;
 		DrawLandscape_2A700_2A740(tempFixPosX + tempSin, tempFixPosY + tempCos, tempYaw, posZ, pitch, roll, fow);
 		dword_902B0 = 0;
-		SetViewPort2_79495_799A5(begWscreen_2ECFF4_2ECFE4, 0, scrWidth_12EFF0_12EFE0, scrWidth_12EFF0_12EFE0, scrHeight_12EFF8_12EFE8);
+		SetupVecs_79495_799A5(begWscreen_2ECFF4_2ECFE4, 0, scrWidth_12EFF0_12EFE0, scrWidth_12EFF0_12EFE0, scrHeight_12EFF8_12EFE8);
 	}
 	else if (str_AE400_AE3F0->set.mod3D_8603 != 2 || str_AE400_AE3F0->set.var_u8_8606)
 	{
@@ -38366,9 +38366,9 @@ void Engine_30D90_30DD0(int posX, int posY, __int16 yaw, int posZ, int pitch, in
 			{
 				//v73 = beginFrame_93ACC;
 				uint8* tempBeginFrame = beginFrame_93ACC;
-				SetViewPort2_79495_799A5(blurBuffer_AE404_AE3F4, 0, 0, 0, 0);
+				SetupVecs_79495_799A5(blurBuffer_AE404_AE3F4, 0, 0, 0, 0);
 				DrawLandscape_2A700_2A740(tempFixPosX, tempFixPosY, tempYaw, posZ, pitch, roll, fow);
-				SetViewPort2_79495_799A5(tempBeginFrame, 0, 0, 0, 0);
+				SetupVecs_79495_799A5(tempBeginFrame, 0, 0, 0, 0);
 				halfViewpX = widthViewPort_93AD8 >> 2;
 				frameViewp = pitchViewPort_93AD4 - widthViewPort_93AD8;
 				//indexY = heightViewPort_93ADC;
@@ -38528,10 +38528,10 @@ void Engine_30D90_30DD0(int posX, int posY, __int16 yaw, int posZ, int pitch, in
 			//LOWORD(v46) = v46 >> 14;
 			DrawLandscape_2A700_2A740(tempSin + tempFixPosX, tempCos + tempFixPosY, tempYaw, posZ, pitch, roll, fow);
 			//v71 = beginFrame_93ACC;
-			SetViewPort2_79495_799A5(blurBuffer_AE404_AE3F4, 0, 0, 0, 0);
+			SetupVecs_79495_799A5(blurBuffer_AE404_AE3F4, 0, 0, 0, 0);
 			dword_902B0 = 0 - (pitchViewPort_93AD4 / 0x28u);
 			DrawLandscape_2A700_2A740(tempFixPosX - tempSin, tempFixPosY - tempCos, tempYaw, posZ, pitch, roll, fow);
-			SetViewPort2_79495_799A5(beginFrame_93ACC, 0, 0, 0, 0);
+			SetupVecs_79495_799A5(beginFrame_93ACC, 0, 0, 0, 0);
 			dword_902B0 = 0;
 		}
 	}
@@ -38539,9 +38539,9 @@ void Engine_30D90_30DD0(int posX, int posY, __int16 yaw, int posZ, int pitch, in
 	{
 		//adress 0x202022
         uint8* tempBeginFrame = beginFrame_93ACC;
-		SetViewPort2_79495_799A5(blurBuffer_AE404_AE3F4, 0, 0, 0, 0);
+		SetupVecs_79495_799A5(blurBuffer_AE404_AE3F4, 0, 0, 0, 0);
 		DrawLandscape_2A700_2A740(tempFixPosX, tempFixPosY, tempYaw, posZ, pitch, roll, fow);
-		SetViewPort2_79495_799A5(tempBeginFrame, 0, 0, 0, 0);
+		SetupVecs_79495_799A5(tempBeginFrame, 0, 0, 0, 0);
         //adress 0x20206F
         //debug
         uint8_t origbyte20 = 0;
@@ -113870,8 +113870,8 @@ if (((sortPnt2->x_0 - sortPnt1->x_0) << 16) / (sortPnt2->y_1 - sortPnt1->y_1) > 
 }
 
 //SYNCHRONIZED WITH REMC2
-/// Name is a guess (not in the Hidden Worlds linker map).
-void SetViewPort2_79495_799A5(uint8* beginFrame, uint8* beginPointer, int pitch, int viewPortWidth, int viewPortHeight)
+/// Original name: setup_vecs (graph_text), Hidden Worlds linker map (placed by distances: setup_vecs, superstereohirescopy, superstereolorescopy, do_a_64k_wad and SwapScreensVres256el are 0x471, 0x115, 0x55, 0xBD apart in the map and in our code).
+void SetupVecs_79495_799A5(uint8* beginFrame, uint8* beginPointer, int pitch, int viewPortWidth, int viewPortHeight)
 {
 	if (pitch)
 		pitchViewPort_93AD4 = pitch;
@@ -113889,7 +113889,8 @@ void SetViewPort2_79495_799A5(uint8* beginFrame, uint8* beginPointer, int pitch,
 }
 
 //----- (00079906) --------------------------------------------------------
-void sub_79906(uint16 a1[2][256])
+/// Original name: superstereohirescopy (graph_text), Hidden Worlds linker map (placed by distances: setup_vecs, superstereohirescopy, superstereolorescopy, do_a_64k_wad and SwapScreensVres256el are 0x471, 0x115, 0x55, 0xBD apart in the map and in our code).
+void Superstereohirescopy_79906(uint16 a1[2][256])
 {
   _BYTE *v1; // ecx
   _BYTE *v2; // edx
@@ -113907,45 +113908,47 @@ void sub_79906(uint16 a1[2][256])
   VesaSetPage_61A1C_61F2C(0);
   v1 = (_BYTE *)blurBuffer_AE404_AE3F4;
   v2 = (_BYTE *)begWscreen_2ECFF4_2ECFE4;
-  v3 = sub_79A70_79F80(0, begWscreen_2ECFF4_2ECFE4, blurBuffer_AE404_AE3F4, a1);
+  v3 = DoA64kWad_79A70_79F80(0, begWscreen_2ECFF4_2ECFE4, blurBuffer_AE404_AE3F4, a1);
   VesaSetPage_61A1C_61F2C(1);
-  v4 = sub_79A70_79F80(v3, v2, v1, a1);
+  v4 = DoA64kWad_79A70_79F80(v3, v2, v1, a1);
   VesaSetPage_61A1C_61F2C(2);
-  v5 = sub_79A70_79F80(v4, v2, v1, a1);
+  v5 = DoA64kWad_79A70_79F80(v4, v2, v1, a1);
   VesaSetPage_61A1C_61F2C(3);
-  v6 = sub_79A70_79F80(v5, v2, v1, a1);
+  v6 = DoA64kWad_79A70_79F80(v5, v2, v1, a1);
   VesaSetPage_61A1C_61F2C(4);
-  v7 = sub_79A70_79F80(v6, v2, v1, a1);
+  v7 = DoA64kWad_79A70_79F80(v6, v2, v1, a1);
   VesaSetPage_61A1C_61F2C(5);
-  v8 = sub_79A70_79F80(v7, v2, v1, a1);
+  v8 = DoA64kWad_79A70_79F80(v7, v2, v1, a1);
   VesaSetPage_61A1C_61F2C(6);
-  v9 = sub_79A70_79F80(v8, v2, v1, a1);
+  v9 = DoA64kWad_79A70_79F80(v8, v2, v1, a1);
   VesaSetPage_61A1C_61F2C(7);
-  v10 = sub_79A70_79F80(v9, v2, v1, a1);
+  v10 = DoA64kWad_79A70_79F80(v9, v2, v1, a1);
   VesaSetPage_61A1C_61F2C(8);
-  v11 = sub_79A70_79F80(v10, v2, v1, a1);
+  v11 = DoA64kWad_79A70_79F80(v10, v2, v1, a1);
   VesaSetPage_61A1C_61F2C(9);
-  sub_79A70_79F80(v11, v2, v1, a1);
+  DoA64kWad_79A70_79F80(v11, v2, v1, a1);
 }
 // AE404: using guessed type int blurBuffer_AE404_AE3F4;
 // 12EFF4: using guessed type int dword_12EFF4;
 
 //----- (00079A1B) --------------------------------------------------------
-void sub_79A1B(uint16 a1[2][256])//24AA1B
+/// Original name: superstereolorescopy (graph_text), Hidden Worlds linker map (placed by distances: setup_vecs, superstereohirescopy, superstereolorescopy, do_a_64k_wad and SwapScreensVres256el are 0x471, 0x115, 0x55, 0xBD apart in the map and in our code).
+void Superstereolorescopy_79A1B(uint16 a1[2][256])//24AA1B
 {
   /*VesaSetPage_61A1C_61F2C(0);
-  int v3 = sub_79A70_79F80(0, begWscreen_2ECFF4_2ECFE4, blurBuffer_AE404_AE3F4, a1);
+  int v3 = DoA64kWad_79A70_79F80(0, begWscreen_2ECFF4_2ECFE4, blurBuffer_AE404_AE3F4, a1);
   VesaSetPage_61A1C_61F2C(1);
-  sub_79A70_79F80(v3, begWscreen_2ECFF4_2ECFE4, blurBuffer_AE404_AE3F4, a1);
+  DoA64kWad_79A70_79F80(v3, begWscreen_2ECFF4_2ECFE4, blurBuffer_AE404_AE3F4, a1);
   */
-  sub_79A70_79F80(begWscreen_2ECFF4_2ECFE4, blurBuffer_AE404_AE3F4, a1,320*200);
+  DoA64kWad_79A70_79F80(begWscreen_2ECFF4_2ECFE4, blurBuffer_AE404_AE3F4, a1,320*200);
 
   VGA_Blit(tempScreenBuffer_A0000);
 }
 // AE404: using guessed type int blurBuffer_AE404_AE3F4;
 // 12EFF4: using guessed type int dword_12EFF4;
 
-void sub_79A70_79F80(uint8* a2, uint8* a3, uint16 a6[2][256], int scrSize)//24AA70
+/// Original name: do_a_64k_wad (graph_text), Hidden Worlds linker map (placed by distances: setup_vecs, superstereohirescopy, superstereolorescopy, do_a_64k_wad and SwapScreensVres256el are 0x471, 0x115, 0x55, 0xBD apart in the map and in our code).
+void DoA64kWad_79A70_79F80(uint8* a2, uint8* a3, uint16 a6[2][256], int scrSize)//24AA70
 {
 	for (int i = 0; i < scrSize * 2; i += 2)
 	{
@@ -113957,7 +113960,8 @@ void sub_79A70_79F80(uint8* a2, uint8* a3, uint16 a6[2][256], int scrSize)//24AA
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_79A70_79F80(int result,_BYTE *a2,_BYTE *a3,uint16 a6[2][256])//24AA70
+/// Original name: do_a_64k_wad (graph_text), Hidden Worlds linker map (placed by distances: setup_vecs, superstereohirescopy, superstereolorescopy, do_a_64k_wad and SwapScreensVres256el are 0x471, 0x115, 0x55, 0xBD apart in the map and in our code).
+int DoA64kWad_79A70_79F80(int result,_BYTE *a2,_BYTE *a3,uint16 a6[2][256])//24AA70
 {
   //int *v6; // edi
   int v7; // eax
@@ -114019,7 +114023,8 @@ int sub_79A70_79F80(int result,_BYTE *a2,_BYTE *a3,uint16 a6[2][256])//24AA70
 }
 
 //----- (00079B2D) --------------------------------------------------------
-void sub_79B2D()
+/// Original name: SwapScreensVres256el (graph_text), Hidden Worlds linker map (placed by distances: setup_vecs, superstereohirescopy, superstereolorescopy, do_a_64k_wad and SwapScreensVres256el are 0x471, 0x115, 0x55, 0xBD apart in the map and in our code).
+void SwapScreensVres256el_79B2D()
 {
   char *v0; // edi
   char *v1; // esi

@@ -46,8 +46,8 @@ red/blue (anaglyph) mode, toggled with F10 (`set.mod3D_8603` cycles 0 off -> 1 -
 red/blue mode does not work in the port yet. Pieces found so far: `InitStereoMode_31600_31640` (`init_stereo_mode`),
 `StereoModeOff_315C0_31600` (`stereo_mode_off`), `EnsureMonoMode_31A00_31A40` (`ensure_mono_mode`; turns stereo off
 around menus), `RestorePossibleStereoMode_31A60_31AA0` (`restore_possible_stereo_mode`, confirmed by the map; restores `byte_90754` = `stereo_mode_was`),
-the map's `superstereolorescopy`/`superstereohirescopy` (graph_text; likely among `sub_79906`, `sub_79A1B`,
-`sub_79B2D`, which `EngineShowScreen_30B30_30B70` calls when a mode is on), the mode-1 column blend in
+`Superstereohirescopy_79906` / `Superstereolorescopy_79A1B` (the map's graph_text `superstereo*copy`, placed by exact
+distances) and `SwapScreensVres256el_79B2D`, which `EngineShowScreen_30B30_30B70` calls when a mode is on, the mode-1 column blend in
 `EngineShowScreen_30B30_30B70`, the mode-2 branch in `Engine_30D90_30DD0`, and VFX.C: `headset_stereo_on`/`off`
 (`HeadsetStereoOn_5B500_5BA10`/`HeadsetStereoOff_5B560`, confirmed by the map; called by `InitStereoMode`/`EnsureMonoMode`), `PutVFX1Palette_5B310_5B820`, `SetupVFX1_5AF50_5B460`. With a headset
 (`set.var_u8_8606`) `Engine` draws the landscape twice, offset left/right, side by side.
