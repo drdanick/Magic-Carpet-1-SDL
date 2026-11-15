@@ -474,6 +474,8 @@ were skipped). Matched functions carry the original name in CamelCase plus the a
 (`init_effect_*` class 10, `init_shot_*` class 9, `init_spell_*` class 12, `init_switch_*` class 11, `init_scenery_*`
 class 2); "mapwho" is the per-tile entity list. The map is a hint, not ground truth: some things changed after it
 (2/3 `init_scenery_hut` shows a totem sprite).
+Every named function without an original name has the doc line `Name is a guess (not in the Hidden Worlds linker
+map).` (user rule): keep adding it to new names that do not come from the map.
 
 ### 6.1b Entities: fields, classes and types
 Add every class/type you identify here (and say how sure it is).

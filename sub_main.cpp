@@ -3741,10 +3741,12 @@ int EmptyStateHandler_5B5D0() { return 0; };
 /// Empty entity state handler (original 0x48650 is a bare ret).
 int EmptyStateHandler_48650() { return 0; };
 /// State handler wrapper around PickupSpellOne_55DB0_562E0 (a separate function in the original: push edx; call 0x55DB0).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void SpellJarTickWrapper_56250(Type_AE400_29795* a1x) {
     PickupSpellOne_55DB0_562E0(a1x);
 };
 /// State handler wrapper around PickupSpellToAll_55D30_56260 (a separate function in the original: push edx; call 0x55D30).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void SpellJarSpawnTickWrapper_56260(Type_AE400_29795* a1x) {
     PickupSpellToAll_55D30_56260(a1x);
 };
@@ -14255,6 +14257,7 @@ int SubtrackUntilZero(int x, int y)
     return result;
 }
 //void UpdateMouseEventData_8CB3A(uint32_t mouse_states, int32_t mouse_posx, int32_t mouse_posy)//26db3a
+/// Name is a guess (not in the Hidden Worlds linker map).
 void UpdateMouseEventData_5BE72_5C382(uint32_t mouse_states, int32_t mouse_posx, int32_t mouse_posy)
 {
     if (mouseInstalled_9AD98)
@@ -14331,6 +14334,7 @@ void UpdateMouseEventData_5BE72_5C382(uint32_t mouse_states, int32_t mouse_posx,
     //return MK_FP(retaddr[0], retaddr[0])(a1, a2);
 }
 /*
+/// Name is a guess (not in the Hidden Worlds linker map).
 void UpdateMouseEventData_8CB3A(uint32_t mouse_states, int32_t mouse_posx, int32_t mouse_posy)//26db3a
 {
     //((void (*)(x_DWORD))_GETDS)((unsigned __int16)__DS__);
@@ -14653,6 +14657,7 @@ LABEL_18:
 
 //----- (00010254) --------------------------------------------------------
 /// Decodes an FLC BRUN (byte run, chunk type 15) chunk into the frame.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int DecodeFlcBrun_10254()
 {
   _BYTE *v0; // edi
@@ -15361,6 +15366,7 @@ void DynAnimBankAnimatePage_10EB0(Type_sub_AE3E0* a1x)//1E1EB0_
 
 //SYNCHRONIZED WITH REMC1
 /// Frees an animation table entry.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void ClearTmapAnim_10F10(Type_sub_AE3E0* a1x)
 {
   if ( a1x )
@@ -15372,6 +15378,7 @@ void ClearTmapAnim_10F10(Type_sub_AE3E0* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Returns the animation table entry of texture map a2, or nullptr.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_sub_AE3E0* FindTmapAnim_10FD0(Type_AE3E0* a1x, __int16 a2)//1E1FD0_
 {
   Type_sub_AE3E0* result = a1x->var_2;
@@ -15391,6 +15398,7 @@ Type_sub_AE3E0* FindTmapAnim_10FD0(Type_AE3E0* a1x, __int16 a2)//1E1FD0_
 //SYNCHRONIZED WITH REMC1
 /// Frees the animation sequence set *a1x and nulls the caller's pointer (original takes the address of
 /// dword_AE3E0_AE3D0). PORT: was by value - the global dangled after a level ended.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void FreeAnimSequences_11010(Type_AE3E0** a1x)
 {
   if ( *a1x )
@@ -16125,6 +16133,7 @@ LABEL_13:
 
 //----- (00011F50) --------------------------------------------------------
 /// Terrain (ground) height at position->x/y (fixed point, 256 units per map tile).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int GetTerrainHeight_11F50(axis_3d* position)
 {
   return sub_724C0_729D0(position->x, position->y);
@@ -16502,6 +16511,7 @@ int sub_127E0(Type_AE400_29795* a1x, char a2, unsigned __int16 a3)
 
 //SYNCHRONIZED WITH REMC1
 /// Records damage a4 from attacker a1x on entity a2 in damage slot a3 (+90 + 6*a3 amount, +94 attacker id; a pending slot is overwritten, else added to); the target's state handler applies it.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int DealDamage_12B50(Type_AE400_29795* a1x, int a2, unsigned __int8 a3, unsigned __int16 a4)
 {
   int v4; // eax
@@ -16699,6 +16709,7 @@ LABEL_30:
 /// Castle spell site check at a1 (axis_3d*): 1 if no castle (class 3/2) is within its box + 2048 and no
 /// impassable tile (mapAngle bit 0x80) lies in the 8x8 tiles from tile (x-8, y-8). The castle missile
 /// builds at the last point of its path where this holds (FnFirstStageShot_53B50_53E90).
+/// Name is a guess (not in the Hidden Worlds linker map).
 _BOOL1 IsCastleSiteFree_12F70(_WORD *a1)
 {
   _BOOL1 v1; // bl
@@ -17060,6 +17071,7 @@ bool ActionUpgradeMyCastle_13800(int a1)
 
 //----- (000138E0) --------------------------------------------------------
 /// AI modes 2 and 5: does nothing (returns 0).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int AiNoopMode_138E0()
 {
   return 0;
@@ -17286,6 +17298,7 @@ bool ActionAttackTarget_13DD0(int a1)
 /// the first one with no other wizard's castle within 12288 units (ClosestPlayer_15260). Entity 0
 /// serves as the probe. This is how castles end up in walls (original-bugs.md #7); verified against the
 /// original with tools/diff_funcs.py.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int AiChooseCastleSite_13F00(int a1)
 {
   _WORD *v1; // esi
@@ -17550,6 +17563,7 @@ int IShouldAttackOpponentsFlyer_145B0(int a1)
 
 //----- (000147E0) --------------------------------------------------------
 /// AI check: the nearest rival balloon (class 3 type 3 in the class-3 list) carrying enough mana; targets it (+146/+148).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int AiFindRivalBalloon_147E0(int a1)
 {
   unsigned int i; // ebx
@@ -17648,6 +17662,7 @@ int sub_14B10(int a1)
 
 //----- (00014C40) --------------------------------------------------------
 /// sets the AI mode (wizard data +415) to 1, castle upgrade (after IShouldUpgradeMyCastle_14120).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int AiStartCastleUpgrade_14C40(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 1;
@@ -17656,6 +17671,7 @@ int AiStartCastleUpgrade_14C40(int a1)
 
 //----- (00014C80) --------------------------------------------------------
 /// sets the AI mode (wizard data +415) to 3, build a castle (after AiChooseCastleSite_13F00; mode handler ActionBuildMyCastle_138F0).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int AiStartBuildCastle_14C80(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 3;
@@ -17664,6 +17680,7 @@ int AiStartBuildCastle_14C80(int a1)
 
 //----- (00014CE0) --------------------------------------------------------
 /// AI: switches the wizard to AI mode 6 (possession; FnPlayerComputerFlyer_13170 then runs ActionCollectMana_13BA0).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int AiStartPossession_14CE0(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 6;
@@ -17672,6 +17689,7 @@ int AiStartPossession_14CE0(int a1)
 
 //----- (00014D00) --------------------------------------------------------
 /// sets the AI mode (wizard data +415) to 7, attack a castle (after IShouldAttackOpponentsCastle_143A0).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int AiStartAttackCastle_14D00(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 7;
@@ -17687,6 +17705,7 @@ int sub_14D20(int a1)
 
 //----- (00014D40) --------------------------------------------------------
 /// sets the AI mode (wizard data +415) to 9, attack a balloon (after AiFindRivalBalloon_147E0).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int AiStartAttackBalloon_14D40(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 9;
@@ -17695,6 +17714,7 @@ int AiStartAttackBalloon_14D40(int a1)
 
 //----- (00014D60) --------------------------------------------------------
 /// sets the AI mode (wizard data +415) to 8, attack a wizard (after IShouldAttackOpponentsFlyer_145B0).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int AiStartAttackWizard_14D60(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 8;
@@ -18208,6 +18228,7 @@ int UseSpell_155F0(int a1, unsigned __int8 a2)
 
 //----- (00015A00) --------------------------------------------------------
 /// AI: returns whether the wizard can cast spell a2 now: it owns the spell, has the mana, the spell is not active/blocked and, for aimed spells, it faces the target (+30 vs +34) within an angle that depends on its skill (wizard data +524).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int AiSpellReady_15A00(int a1, unsigned __int8 a2)
 {
   unsigned int v2; // eax
@@ -20226,6 +20247,7 @@ signed int SlopeAt_19650(axis_3d* a1x)
 /// Moves a creature one step along its heading (+30) at its speed (+126), keeping it between the
 /// type's min/max height above ground (Gravity_42000_42340). If the step is blocked
 /// (Colide_11640 or too steep), tries turning +-120 and 180 degrees; if all fail it dies.
+/// Original name: move_creature (CREATURE.C), Hidden Worlds linker map.
 void MoveCreature_196E0(Type_AE400_29795* a1x)
 {
   //__int16 *v1; // eax
@@ -20880,6 +20902,7 @@ LABEL_24:
 
 //SYNCHRONIZED WITH REMC1
 /// Dying state (a2 + 4) of a class 5 creature: puts its followers (+54 chain) and itself into a2 + 5 (dead) and, when the killer (+38) is the player's wizard (class 3 type 0), counts the kill (wizard data +359; not for types 9 and 12-15).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void CreatureDying_1A6C0(Type_AE400_29795* a1x, char a2)
 {
   Type_AE400_29795* ix; // ebx
@@ -20916,6 +20939,7 @@ void CreatureDying_1A6C0(Type_AE400_29795* a1x, char a2)
 
 //SYNCHRONIZED WITH REMC1
 /// Creature death: drops its mana ball (CreateManaBalls_27690), creates the 10/1 entity and removes the creature.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void KillCreature_1A800(Type_AE400_29795* a1x)
 {
   _WORD *v1; // eax
@@ -20998,6 +21022,7 @@ int sub_1A990(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 //SYNCHRONIZED WITH REMC1
 /// Creature a1x fires a projectile (9/13, sprite 203) at entity a2: aimed at a2's position, speed
 /// +44 = 600 when a1x has +144 set, else 400.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void CreatureShootAt_1AA40(Type_AE400_29795* a1x, int a2)
 {
   axis_3d* v2x; // edi
@@ -21028,6 +21053,7 @@ void CreatureShootAt_1AA40(Type_AE400_29795* a1x, int a2)
 
 //SYNCHRONIZED WITH REMC1
 /// Attack routine for FnCreatureAttack_1A120: when target a2 is closer than 1024, deals the creature's damage (+44) to it (DealDamage_12B50) and returns 1.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreatureMeleeHit_1AB10(Type_AE400_29795* a1x, int a2)
 {
   int v2; // ebx
@@ -21285,6 +21311,7 @@ void FnCreature00Dead_1B110(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Vertical bobbing: z += vertical speed (+26), speed -= 5 per tick, kicked back to 150 when within 256 of the ground (dragon states).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void BobAboveGround_1B120(Type_AE400_29795* a1x)
 {
   __int16 v1; // ax
@@ -25477,6 +25504,7 @@ void FnCreature16Dead_20B80(Type_AE400_29795* a1x)
 //----- (00020BD0) --------------------------------------------------------
 // PORT: Cbfadedangermusic_20BD0 sends the three CC 7 (volume) messages it builds in byte_ACFF0..2 to the MIDI driver; the
 // three bytes are separate variables here, so they are copied into one message.
+/// Name is a guess (not in the Hidden Worlds linker map).
 static void SendMidi_ACFF0()
 {
   const uint8_t msg[3] = { (uint8_t)byte_ACFF0, (uint8_t)byte_ACFF1, (uint8_t)byte_ACFF2 };
@@ -25608,6 +25636,7 @@ void Fadedangermusic_20D00(char a1)
 
 //----- (00020E60) --------------------------------------------------------
 /// Stops and unloads the current song and silences the channels (F2, level end).
+/// Original name: StopMusic (DANGER.C), Hidden Worlds linker map.
 void StopMusic_20E60_20E60()
 {
   if ( musicAvailable_939CC && musicOn_939CD && musicTrack_939D2 )
@@ -27092,6 +27121,7 @@ LABEL_48:
 //SYNCHRONIZED WITH REMC1
 /// Draws a spell icon in the spell-menu grid (no charges): frame, picture, hotkey number and the "cannot
 /// afford" overlay; a4 selects how the frame is drawn.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void DrawSpellMenuIcon_24230(__int16 a1, __int16 a2, unsigned int a3, char a4)
 {
   TypeTab* v4; // eax
@@ -27332,6 +27362,7 @@ void sub_24CA0(int a1, int a2, int a3, int a4, unsigned __int16 a5)
 
 //----- (00024D20) --------------------------------------------------------
 /// DrawRectLowRes_61740 if the rectangle is at least 2x2 and inside 640x400.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void DrawRectCheckedLowRes_24D20(int a1, int a2, int a3, int a4, unsigned __int16 a5)
 {
   if ( a3 >= 2
@@ -27349,6 +27380,7 @@ void DrawRectCheckedLowRes_24D20(int a1, int a2, int a3, int a4, unsigned __int1
 
 //----- (00024DA0) --------------------------------------------------------
 /// DrawRectHighRes_61810 if the rectangle is at least 2x2 and inside 640x480.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void DrawRectCheckedHighRes_24DA0(int a1, int a2, int a3, int a4, unsigned __int16 a5)
 {
   if ( a3 >= 2
@@ -27511,6 +27543,7 @@ void FnEffectBigExplosion_25130(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of the speed effect (class 10 state 2), created by the Speed and Reverse Speed spells.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void SpeedEffectTick_252B0(int a1)
 {
   int result; // eax
@@ -27587,6 +27620,7 @@ LABEL_11:
 
 //SYNCHRONIZED WITH REMC1
 /// State handler that removes its entity on the next tick (class 10 states 7, 8, 30, 31, 33, 54).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void RemoveSelfTick_253E0(int a1)
 {
   DeleteThing_41E80_421C0((Type_AE400_29795*)PTR(a1));
@@ -27784,6 +27818,7 @@ void FnEffectPocession_25760(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Smoke cloud: Per-tick handler of class 10 state 13, the initial state of type 13. Identified from its decoded sprite (named by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void SmokeTick_257B0(int a1)
 {
   int v1; // eax
@@ -27832,6 +27867,7 @@ void SmokeTick_257B0(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Dark smoke cloud: Per-tick handler of class 10 state 14, the initial state of type 14. Identified from its decoded sprite (named by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void DarkSmokeTick_258A0(int a1)
 {
 	int v1; // eax
@@ -28019,6 +28055,7 @@ void FnEffectSummonFire_25A60(int a1)
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of an expanding explosion ring (class 10 type 17): one 10/0 explosion per ring point per
 /// tick (docs/original-bugs.md #10).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void ExplosionRingTick_25CE0(Type_AE400_29795* a1x)
 {
   int v1; // eax
@@ -28325,6 +28362,7 @@ void FnEffectStealMana_26360(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of the Duel spell's effect (class 10 state 26).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void DuelEffectTick_263C0(Type_AE400_29795* a1x)
 {
   int v1; // eax
@@ -30588,6 +30626,7 @@ void FnEffectCrabEggHatch_29700(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of the Wall of Fire spell's effect (class 10 state 58).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void WallOfFireEffectTick_29780(Type_AE400_29795* a1x)
 {
   int v3_v4;
@@ -37047,6 +37086,7 @@ void DoMapWho_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 }
 
 //SYNCHRONIZED WITH REMC1
+/// Name is a guess (not in the Hidden Worlds linker map).
 void DrawSprite3D_2F170_2F1B0(/*int a1,*/ Type_BegBscreen* a2x)//200170_
 {
 	//fix
@@ -37328,6 +37368,7 @@ void DrawSprite3D_2F170_2F1B0(/*int a1,*/ Type_BegBscreen* a2x)//200170_
 int counter_2FC50_2FC90 = 0;
 int counter_2FC50_2FC90_2 = 0;
 //SYNCHRONIZED WITH REMC1
+/// Name is a guess (not in the Hidden Worlds linker map).
 void DrawSprite_2FC50_2FC90(Type_BegBscreen* a2x)//200C50_
 {
 	//fix
@@ -37792,6 +37833,7 @@ void SimpleSky_30730_30770(int16_t roll)
 
 //SYNCHRONIZED WITH REMC1
 /*
+/// Name is a guess (not in the Hidden Worlds linker map).
 void SimpleSky_30730_30770(int16_t roll)//201730_
 {
     int skyTextSize = 256;
@@ -37848,6 +37890,7 @@ void SimpleSky_30730_30770(int16_t roll)//201730_
 
 //SYNCHRONIZED WITH REMC1
 /*
+/// Name is a guess (not in the Hidden Worlds linker map).
 void SimpleSky_30730_30770(int16_t roll)//201730_
 {
   int skyTextSize = 256;
@@ -41194,6 +41237,7 @@ int counter_34530 = 0;
 //SYNCHRONIZED WITH REMC1
 // PORT: differential harness hooks: --snapshot-what <hex address> dumps memory around that call
 #define SNAP_CALL(addr, call) { MemSnapshot_Call(#addr + 2, true, addr, nullptr, 0); call; MemSnapshot_Call(#addr + 2, false, addr, nullptr, 0); }
+/// Name is a guess (not in the Hidden Worlds linker map).
 void DrawAndEventsInGame_34530_348F0()//205530_
 {
 	//debug
@@ -42019,6 +42063,7 @@ void SetupSound_357C0_35B80()
 //----- (000357A0) --------------------------------------------------------
 /// Game clock tick used when a sound driver is active: registered with the HMI timer service at
 /// 120 Hz (SetupSound_357C0_35B80) in place of the PIT ISR SystemCBfn_5A3E3. Original: `inc dword_AC5D4; retf`.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void HmiTimerTick_357A0()
 {
   timerTicks_AC5D4_AC5C4++;
@@ -43146,6 +43191,7 @@ __int16 __cdecl sub_36A90_36E50_old(int a1, int a2)
 //SYNChRONIZED WITH REMC1
 /// Frees sprite cache block a2x in cache a1x: returns its bytes to the free pool, then slides every
 /// later block down over the gap (re-pointing each descriptor) so the cache stays contiguous.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void FreeSpriteCacheBlock_36A90_36E50(Type_sub168* a1x, Type_sub168_2* a2x)//207A90_
 {
 	Type_sub168_2_2* v7x; // ebp
@@ -43707,6 +43753,7 @@ int NumberOfFreeThings_37710_37AD0()
 //----- (00037720) --------------------------------------------------------
 /// Level record class 3 type 4: stores axis_3d a1 as player 0's wizard start position
 /// (playerStart_9177[0]).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int SetPlayerStart0_37720_37AE0(int a1)
 {
   int v1; // edi
@@ -43723,6 +43770,7 @@ int SetPlayerStart0_37720_37AE0(int a1)
 //----- (00037740) --------------------------------------------------------
 /// Level record class 3 type 5: stores axis_3d a1 as player 1's wizard start position
 /// (playerStart_9177[1]).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int SetPlayerStart1_37740_37B00(int a1)
 {
   int v1; // edi
@@ -43739,6 +43787,7 @@ int SetPlayerStart1_37740_37B00(int a1)
 //----- (00037760) --------------------------------------------------------
 /// Level record class 3 type 6: stores axis_3d a1 as player 2's wizard start position
 /// (playerStart_9177[2]).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int SetPlayerStart2_37760_37B20(int a1)
 {
   int v1; // edi
@@ -43755,6 +43804,7 @@ int SetPlayerStart2_37760_37B20(int a1)
 //----- (00037780) --------------------------------------------------------
 /// Level record class 3 type 7: stores axis_3d a1 as player 3's wizard start position
 /// (playerStart_9177[3]).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int SetPlayerStart3_37780_37B40(int a1)
 {
   int v1; // edi
@@ -43771,6 +43821,7 @@ int SetPlayerStart3_37780_37B40(int a1)
 //----- (000377A0) --------------------------------------------------------
 /// Level record class 3 type 8: stores axis_3d a1 as player 4's wizard start position
 /// (playerStart_9177[4]).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int SetPlayerStart4_377A0_37B60(int a1)
 {
   int v1; // edi
@@ -43787,6 +43838,7 @@ int SetPlayerStart4_377A0_37B60(int a1)
 //----- (000377C0) --------------------------------------------------------
 /// Level record class 3 type 9: stores axis_3d a1 as player 5's wizard start position
 /// (playerStart_9177[5]).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int SetPlayerStart5_377C0_37B80(int a1)
 {
   int v1; // edi
@@ -43803,6 +43855,7 @@ int SetPlayerStart5_377C0_37B80(int a1)
 //----- (000377E0) --------------------------------------------------------
 /// Level record class 3 type 10: stores axis_3d a1 as player 6's wizard start position
 /// (playerStart_9177[6]).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int SetPlayerStart6_377E0_37BA0(int a1)
 {
   int v1; // edi
@@ -43819,6 +43872,7 @@ int SetPlayerStart6_377E0_37BA0(int a1)
 //----- (00037800) --------------------------------------------------------
 /// Level record class 3 type 11: stores axis_3d a1 as player 7's wizard start position
 /// (playerStart_9177[7]).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int SetPlayerStart7_37800_37BC0(int a1)
 {
   int v1; // edi
@@ -43960,6 +44014,7 @@ int InitPlayerBalloon_37A00_37DC0(int a1)
 
 //----- (00037A80) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 1): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder1_1_37A80(int a1)
 {
   int v0; // eax
@@ -43972,6 +44027,7 @@ int Placeholder1_1_37A80(int a1)
 
 //----- (00037AA0) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 2): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder1_2_37AA0(int a1)
 {
   int v0; // eax
@@ -43984,6 +44040,7 @@ int Placeholder1_2_37AA0(int a1)
 
 //----- (00037AC0) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 3): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder1_3_37AC0(int a1)
 {
   int v0; // eax
@@ -43996,6 +44053,7 @@ int Placeholder1_3_37AC0(int a1)
 
 //----- (00037AE0) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 4): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder1_4_37AE0(int a1)
 {
   int v0; // eax
@@ -44008,6 +44066,7 @@ int Placeholder1_4_37AE0(int a1)
 
 //----- (00037B00) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 5): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder1_5_37B00(int a1)
 {
   int v0; // eax
@@ -44020,6 +44079,7 @@ int Placeholder1_5_37B00(int a1)
 
 //----- (00037B20) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 6): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder1_6_37B20(int a1)
 {
   int v0; // eax
@@ -44032,6 +44092,7 @@ int Placeholder1_6_37B20(int a1)
 
 //----- (00037B40) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 7): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder1_7_37B40(int a1)
 {
   int v0; // eax
@@ -44044,6 +44105,7 @@ int Placeholder1_7_37B40(int a1)
 
 //----- (00037B60) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 8): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder1_8_37B60(int a1)
 {
   int v0; // eax
@@ -44056,6 +44118,7 @@ int Placeholder1_8_37B60(int a1)
 
 //----- (00037B80) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 9): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder1_9_37B80(int a1)
 {
   int v0; // eax
@@ -44068,6 +44131,7 @@ int Placeholder1_9_37B80(int a1)
 
 //----- (00037BA0) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 10): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder1_10_37BA0(int a1)
 {
   int v0; // eax
@@ -44080,6 +44144,7 @@ int Placeholder1_10_37BA0(int a1)
 
 //----- (00037BC0) --------------------------------------------------------
 /// Constructor of a tree (class 2 type 0, state 0).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateTree_37BC0(int a1)
 {
   int v1; // eax
@@ -44828,6 +44893,7 @@ int ConfigureATroll_38C00_38F80(int a1)
 
 //int unk_99198;//fix
 /// Constructor of the troll or ape (ConfigureATroll_38C00_38F80) (class 5 type 7) (initial state 43). Identified from its decoded sprite (confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateTrollOrApe_38C60(uint16_t* a1)
 {
     int result; // eax
@@ -45419,6 +45485,7 @@ int InitCreature16_396E0(int a1)
 
 //----- (00039800) --------------------------------------------------------
 /// Placeholder constructor (class 6 type 0): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder6_0_39800(int a1)
 {
   int v0; // eax
@@ -45431,6 +45498,7 @@ int Placeholder6_0_39800(int a1)
 
 //----- (00039820) --------------------------------------------------------
 /// Placeholder constructor (class 6 type 1): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder6_1_39820(int a1)
 {
   int v0; // eax
@@ -45443,6 +45511,7 @@ int Placeholder6_1_39820(int a1)
 
 //----- (00039840) --------------------------------------------------------
 /// Placeholder constructor (class 7 type 0): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder7_0_39840(int a1)
 {
   int v0; // eax
@@ -45455,6 +45524,7 @@ int Placeholder7_0_39840(int a1)
 
 //----- (00039860) --------------------------------------------------------
 /// Placeholder constructor (class 7 type 1): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder7_1_39860(int a1)
 {
   int v0; // eax
@@ -45467,6 +45537,7 @@ int Placeholder7_1_39860(int a1)
 
 //----- (00039880) --------------------------------------------------------
 /// Placeholder constructor (class 7 type 2): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder7_2_39880(int a1)
 {
   int v0; // eax
@@ -45479,6 +45550,7 @@ int Placeholder7_2_39880(int a1)
 
 //----- (000398A0) --------------------------------------------------------
 /// Placeholder constructor (class 7 type 3): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder7_3_398A0(int a1)
 {
   int v0; // eax
@@ -45528,6 +45600,7 @@ int InitWeatherWind_398C0(int a1)
 
 //----- (00039940) --------------------------------------------------------
 /// Placeholder constructor (class 8 type 0): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder8_0_39940(int a1)
 {
   int v0; // eax
@@ -45540,6 +45613,7 @@ int Placeholder8_0_39940(int a1)
 
 //----- (00039960) --------------------------------------------------------
 /// Placeholder constructor (class 8 type 1): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder8_1_39960(int a1)
 {
   int v0; // eax
@@ -45552,6 +45626,7 @@ int Placeholder8_1_39960(int a1)
 
 //----- (00039980) --------------------------------------------------------
 /// Placeholder constructor (class 8 type 2): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder8_2_39980(int a1)
 {
   int v0; // eax
@@ -45564,6 +45639,7 @@ int Placeholder8_2_39980(int a1)
 
 //----- (000399A0) --------------------------------------------------------
 /// Placeholder constructor (class 8 type 3): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder8_3_399A0(int a1)
 {
   int v0; // eax
@@ -45576,6 +45652,7 @@ int Placeholder8_3_399A0(int a1)
 
 //----- (000399C0) --------------------------------------------------------
 /// Placeholder constructor (class 8 type 4): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder8_4_399C0(int a1)
 {
   int v0; // eax
@@ -45588,6 +45665,7 @@ int Placeholder8_4_399C0(int a1)
 
 //----- (000399E0) --------------------------------------------------------
 /// Placeholder constructor (class 8 type 5): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Placeholder8_5_399E0(int a1)
 {
   int v0; // eax
@@ -45699,6 +45777,7 @@ int InitShotEarthquake_39B40(int a1)
 
 //----- (00039BC0) --------------------------------------------------------
 /// Constructor of the Meteor spell's missile (class 9 type 3, state 3), fired by CastMeteor_56950_56E80.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateMeteorMissile_39BC0(int a1)
 {
   int result; // eax
@@ -45730,6 +45809,7 @@ int CreateMeteorMissile_39BC0(int a1)
 
 //----- (00039C40) --------------------------------------------------------
 /// Constructor of the Volcano spell's missile (class 9 type 4, state 4), fired by CastVolcano_56AF0_57020.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateVolcanoMissile_39C40(int a1)
 {
   int result; // eax
@@ -45761,6 +45841,7 @@ int CreateVolcanoMissile_39C40(int a1)
 
 //----- (00039CC0) --------------------------------------------------------
 /// Constructor of the Crater spell's missile (class 9 type 5, state 5), fired by CastCrater_56CA0_571D0.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateCraterMissile_39CC0(int a1)
 {
   int result; // eax
@@ -45824,6 +45905,7 @@ int CreateClass9Type6_39D40(int a1)
 
 //----- (00039DC0) --------------------------------------------------------
 /// Constructor of the Duel spell's missile (class 9 type 7, state 7), fired by CastDuel_57040_57570.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateDuelMissile_39DC0(int a1)
 {
   int result; // eax
@@ -45855,6 +45937,7 @@ int CreateDuelMissile_39DC0(int a1)
 
 //----- (00039E40) --------------------------------------------------------
 /// Constructor of the Steal Mana spell's missile (class 9 type 8, state 8), fired by CastStealMana_57250_57780.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateStealManaMissile_39E40(int a1)
 {
   int result; // eax
@@ -45887,6 +45970,7 @@ int CreateStealManaMissile_39E40(int a1)
 
 //----- (00039EC0) --------------------------------------------------------
 /// Constructor of a lightning bolt piece (class 9 type 9, state 9 = FnShotLightning_535E0_53920).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateLightningBolt_39EC0(int a1)
 {
   int result; // eax
@@ -45919,6 +46003,7 @@ int CreateLightningBolt_39EC0(int a1)
 
 //----- (00039F40) --------------------------------------------------------
 /// Constructor of a homing spawn missile (class 9 type 10, state 10 = FnShotCastle_53980_53CC0).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateHomingSpawnMissile_39F40(int a1)
 {
   int result; // eax
@@ -45950,6 +46035,7 @@ int CreateHomingSpawnMissile_39F40(int a1)
 
 //----- (00039FC0) --------------------------------------------------------
 /// Constructor of the Undead Army spell's missile (class 9 type 11, state 11), fired by FnSpellSkeleton_57800_57D30.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateUndeadArmyMissile_39FC0(int a1)
 {
   int result; // eax
@@ -45981,6 +46067,7 @@ int CreateUndeadArmyMissile_39FC0(int a1)
 
 //----- (0003A040) --------------------------------------------------------
 /// Constructor of the Lightning Storm spell's missile (class 9 type 12, state 12), fired by CastLightningStorm_579D0_57F00.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateLightningStormMissile_3A040(int a1)
 {
   int result; // eax
@@ -46158,6 +46245,7 @@ int InitShotExtra2_3A2F0(int a1)
 
 //----- (0003A390) --------------------------------------------------------
 /// Constructor of the Global Death spell's missile (class 9 type 18, state 19), fired by FnSpellExtra3_580A0_585B0.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateGlobalDeathMissile_3A390(int a1)
 {
   int result; // eax
@@ -46223,6 +46311,7 @@ int CreateClass9Type19_3A410(int a1)
 
 //----- (0003A490) --------------------------------------------------------
 /// Constructor of an explosion (class 10 type 0, state 0) at a1 (dispatch table dword_96902[10].str_4[0]).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateExplosion_3A490(uint16_t* a1)
 {
   int v1; // eax
@@ -46280,6 +46369,7 @@ int CreateClass10Type1_3A510(uint16_t* a1)
 
 //----- (0003A570) --------------------------------------------------------
 /// Constructor of the speed effect (class 10 type 2, state 2), created by FnSpellSpeedUp_56380_568B0 and CastReverseSpeed_57F00_58410.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateSpeedEffect_3A570(uint16_t* a1)
 {
   int v1; // eax
@@ -46367,6 +46457,7 @@ int CreateClass10Type4_3A640(uint16_t* a1)
 
 //----- (0003A6B0) --------------------------------------------------------
 /// Constructor of the water splash (class 10 type 5) (initial state 5). Identified from its decoded sprite (named by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateWaterSplash_3A6B0(uint16_t* a1)
 {
   int v1; // eax
@@ -46398,6 +46489,7 @@ int CreateWaterSplash_3A6B0(uint16_t* a1)
 
 //----- (0003A730) --------------------------------------------------------
 /// Constructor of the fire (class 10 type 6) (state 6); spawned when a spell-7 jar in state 3t+2 is picked up. Identified from its decoded sprite (named by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateFire_3A730(uint16_t* a1)
 {
   int v1; // eax
@@ -46495,6 +46587,7 @@ int CreateClass10Type8_3A870(uint16_t* a1)
 
 //----- (0003A8D0) --------------------------------------------------------
 /// Constructor of the Volcano spell's effect (class 10 type 9, state 9), created where CastVolcano's missile lands (missile +68/+69).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateVolcanoEffect_3A8D0(uint16_t* a1)
 {
   int v1; // eax
@@ -46549,6 +46642,7 @@ int CreateClass10Type10_3A930(uint16_t* a1)
 
 //----- (0003A9A0) --------------------------------------------------------
 /// Constructor of the Crater spell's effect (class 10 type 11, state 11), created where CastCrater's missile lands (missile +68/+69). Starts a volcano eruption (10/18).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateCraterEffect_3A9A0(uint16_t* a1)
 {
   int v1; // eax
@@ -46577,6 +46671,7 @@ int CreateCraterEffect_3A9A0(uint16_t* a1)
 
 //----- (0003AA10) --------------------------------------------------------
 /// Constructor of the Possession spell's effect (class 10 type 12, state 12), created where CastPossession's missile lands (missile +68/+69).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreatePossessionEffect_3AA10(uint16_t* a1)
 {
   int v1; // eax
@@ -46834,6 +46929,7 @@ int InitEffectVolcanoAfterMath_3ADB0(uint16_t* a1)
 
 //----- (0003AE00) --------------------------------------------------------
 /// Constructor of the volcano fire (class 10 type 19) (state 19); created by each volcano eruption start, index kept in game state +38. Identified from its decoded sprite (named by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateVolcanoFire_3AE00(uint16_t* a1)
 {
   int v1; // eax
@@ -46863,6 +46959,7 @@ int CreateVolcanoFire_3AE00(uint16_t* a1)
 
 //----- (0003AE80) --------------------------------------------------------
 /// Constructor of the Lightning spell's effect (class 10 type 23, state 23), created where CastLightning's missile lands (missile +68/+69).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateLightningEffect_3AE80(uint16_t* a1)
 {
   int v1; // eax
@@ -46892,6 +46989,7 @@ int CreateLightningEffect_3AE80(uint16_t* a1)
 
 //----- (0003AF00) --------------------------------------------------------
 /// Constructor of the Steal Mana spell's effect (class 10 type 25, state 25), created where CastStealMana's missile lands (missile +68/+69).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateStealManaEffect_3AF00(uint16_t* a1)
 {
   int v1; // eax
@@ -46919,6 +47017,7 @@ int CreateStealManaEffect_3AF00(uint16_t* a1)
 
 //----- (0003AF80) --------------------------------------------------------
 /// Constructor of the Duel spell's effect (class 10 type 26, state 26), created where CastDuel's missile lands (missile +68/+69).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateDuelEffect_3AF80(uint16_t* a1)
 {
   int v1; // eax
@@ -46946,6 +47045,7 @@ int CreateDuelEffect_3AF80(uint16_t* a1)
 
 //----- (0003B000) --------------------------------------------------------
 /// Constructor of a terrain-raising level-build step (class 10 type 27, state 27 = FnEffectWallSectionN_26670; states 28/29 continue it).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateTerrainRaiseStep_3B000(uint16_t* a1)
 {
   int v1; // eax
@@ -47269,6 +47369,7 @@ int CreateClass10Type33_3B4D0(uint16_t* a1)
 
 //----- (0003B5A0) --------------------------------------------------------
 /// Constructor of a mana ball (class 10 type 39, state 41) at a1.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateManaBall_3B5A0(uint16_t* a1)//20C5A0_
 {
   int result; // eax
@@ -47304,6 +47405,7 @@ int CreateManaBall_3B5A0(uint16_t* a1)//20C5A0_
 
 //----- (0003B620) --------------------------------------------------------
 /// Constructor of a wizard's death marker (class 10 type 40, state 42) at a1.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateDeathMarker_3B620(uint16_t* a1)
 {
   int result; // eax
@@ -47329,6 +47431,7 @@ int CreateDeathMarker_3B620(uint16_t* a1)
 
 //----- (0003B690) --------------------------------------------------------
 /// Constructor of the player's flag (class 10 type 45) (initial state 51). Identified from its decoded sprite (named by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreatePlayerFlag_3B690(axis_3d* position)//20C690_
 {
   Type_AE400_29795* event = InitAThing_372C0_37680();
@@ -47425,6 +47528,7 @@ int CreateClass10Type42_3B7B0_3BB30(uint16_t* a1)
 
 //----- (0003B800) --------------------------------------------------------
 /// Constructor of the boulder (class 10 type 44) (initial state 46). Identified from its decoded sprite (named by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateBoulder_3B800(uint16_t* a1)
 {
   int v1; // eax
@@ -47449,6 +47553,7 @@ int CreateBoulder_3B800(uint16_t* a1)
 
 //----- (0003B860) --------------------------------------------------------
 /// Constructor of a crab spawn timer (class 10 type 52, state 56) at a1.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateCrabSpawnTimer_3B860(uint16_t* a1)
 {
   int v1; // eax
@@ -47476,6 +47581,7 @@ int CreateCrabSpawnTimer_3B860(uint16_t* a1)
 
 //----- (0003B8E0) --------------------------------------------------------
 /// Constructor of the Wall of Fire spell's effect (class 10 type 53, state 58), created where CastWallOfFire's missile lands (missile +68/+69).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateWallOfFireEffect_3B8E0(uint16_t* a1)
 {
   int v1; // eax
@@ -47635,6 +47741,7 @@ Type_AE400_29795* InitSwitch_3BB20(axis_3d* position, char a2, char a3)
 
 //----- (0003BB70) --------------------------------------------------------
 /// Constructor of switch type 0 (class 11 type 0, state 0) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch00_3BB70(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 0, 0);
@@ -47642,6 +47749,7 @@ Type_AE400_29795* CreateSwitch00_3BB70(axis_3d* position)
 
 //----- (0003BB90) --------------------------------------------------------
 /// Constructor of switch type 1 (class 11 type 1, state 1) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch01_3BB90(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 1, 1);
@@ -47649,6 +47757,7 @@ Type_AE400_29795* CreateSwitch01_3BB90(axis_3d* position)
 
 //----- (0003BBB0) --------------------------------------------------------
 /// Constructor of switch type 2 (class 11 type 2, state 2) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch02_3BBB0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 2, 2);
@@ -47656,6 +47765,7 @@ Type_AE400_29795* CreateSwitch02_3BBB0(axis_3d* position)
 
 //----- (0003BBD0) --------------------------------------------------------
 /// Constructor of switch type 3 (class 11 type 3, state 3) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch03_3BBD0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 3, 3);
@@ -47663,6 +47773,7 @@ Type_AE400_29795* CreateSwitch03_3BBD0(axis_3d* position)
 
 //----- (0003BBF0) --------------------------------------------------------
 /// Constructor of switch type 4 (class 11 type 4, state 4) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch04_3BBF0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 4, 4);
@@ -47670,6 +47781,7 @@ Type_AE400_29795* CreateSwitch04_3BBF0(axis_3d* position)
 
 //----- (0003BC10) --------------------------------------------------------
 /// Constructor of switch type 5 (class 11 type 5, state 5) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch05_3BC10(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 5, 5);
@@ -47677,6 +47789,7 @@ Type_AE400_29795* CreateSwitch05_3BC10(axis_3d* position)
 
 //----- (0003BC30) --------------------------------------------------------
 /// Constructor of switch type 6 (class 11 type 6, state 6) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch06_3BC30(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 6, 6);
@@ -47684,6 +47797,7 @@ Type_AE400_29795* CreateSwitch06_3BC30(axis_3d* position)
 
 //----- (0003BC50) --------------------------------------------------------
 /// Constructor of switch type 7 (class 11 type 7, state 7) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch07_3BC50(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 7, 7);
@@ -47691,6 +47805,7 @@ Type_AE400_29795* CreateSwitch07_3BC50(axis_3d* position)
 
 //----- (0003BC70) --------------------------------------------------------
 /// Constructor of switch type 8 (class 11 type 8, state 8) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch08_3BC70(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 8, 8);
@@ -47698,6 +47813,7 @@ Type_AE400_29795* CreateSwitch08_3BC70(axis_3d* position)
 
 //----- (0003BC90) --------------------------------------------------------
 /// Constructor of switch type 9 (class 11 type 9, state 9) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch09_3BC90(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 9, 9);
@@ -47705,6 +47821,7 @@ Type_AE400_29795* CreateSwitch09_3BC90(axis_3d* position)
 
 //----- (0003BCB0) --------------------------------------------------------
 /// Constructor of switch type 10 (class 11 type 10, state 10) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch10_3BCB0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 10, 10);
@@ -47712,6 +47829,7 @@ Type_AE400_29795* CreateSwitch10_3BCB0(axis_3d* position)
 
 //----- (0003BCD0) --------------------------------------------------------
 /// Constructor of switch type 11 (class 11 type 11, state 11) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch11_3BCD0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 11, 11);
@@ -47719,6 +47837,7 @@ Type_AE400_29795* CreateSwitch11_3BCD0(axis_3d* position)
 
 //----- (0003BCF0) --------------------------------------------------------
 /// Constructor of switch type 12 (class 11 type 12, state 12) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch12_3BCF0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 12, 12);
@@ -47726,6 +47845,7 @@ Type_AE400_29795* CreateSwitch12_3BCF0(axis_3d* position)
 
 //----- (0003BD10) --------------------------------------------------------
 /// Constructor of switch type 13 (class 11 type 13, state 13) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch13_3BD10(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 13, 13);
@@ -47733,6 +47853,7 @@ Type_AE400_29795* CreateSwitch13_3BD10(axis_3d* position)
 
 //----- (0003BD30) --------------------------------------------------------
 /// Constructor of switch type 14 (class 11 type 14, state 14) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch14_3BD30(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 14, 14);
@@ -47740,6 +47861,7 @@ Type_AE400_29795* CreateSwitch14_3BD30(axis_3d* position)
 
 //----- (0003BD50) --------------------------------------------------------
 /// Constructor of switch type 15 (class 11 type 15, state 15) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch15_3BD50(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 15, 15);
@@ -47747,6 +47869,7 @@ Type_AE400_29795* CreateSwitch15_3BD50(axis_3d* position)
 
 //----- (0003BD70) --------------------------------------------------------
 /// Constructor of switch type 16 (class 11 type 16, state 16) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch16_3BD70(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 16, 16);
@@ -47754,6 +47877,7 @@ Type_AE400_29795* CreateSwitch16_3BD70(axis_3d* position)
 
 //----- (0003BD90) --------------------------------------------------------
 /// Constructor of switch type 17 (class 11 type 17, state 17) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch17_3BD90(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 17, 17);
@@ -47761,6 +47885,7 @@ Type_AE400_29795* CreateSwitch17_3BD90(axis_3d* position)
 
 //----- (0003BDB0) --------------------------------------------------------
 /// Constructor of switch type 18 (class 11 type 18, state 18) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch18_3BDB0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 18, 18);
@@ -47768,6 +47893,7 @@ Type_AE400_29795* CreateSwitch18_3BDB0(axis_3d* position)
 
 //----- (0003BDD0) --------------------------------------------------------
 /// Constructor of switch type 19 (class 11 type 19, state 19) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch19_3BDD0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 19, 19);
@@ -47775,6 +47901,7 @@ Type_AE400_29795* CreateSwitch19_3BDD0(axis_3d* position)
 
 //----- (0003BDF0) --------------------------------------------------------
 /// Constructor of switch type 20 (class 11 type 20, state 20) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch20_3BDF0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 20, 20);
@@ -47782,6 +47909,7 @@ Type_AE400_29795* CreateSwitch20_3BDF0(axis_3d* position)
 
 //----- (0003BE10) --------------------------------------------------------
 /// Constructor of switch type 21 (class 11 type 21, state 21) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch21_3BE10(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 21, 21);
@@ -47789,6 +47917,7 @@ Type_AE400_29795* CreateSwitch21_3BE10(axis_3d* position)
 
 //----- (0003BE30) --------------------------------------------------------
 /// Constructor of switch type 22 (class 11 type 22, state 22) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch22_3BE30(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 22, 22);
@@ -47796,6 +47925,7 @@ Type_AE400_29795* CreateSwitch22_3BE30(axis_3d* position)
 
 //----- (0003BE50) --------------------------------------------------------
 /// Constructor of switch type 23 (class 11 type 23, state 23) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch23_3BE50(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 23, 23);
@@ -47803,6 +47933,7 @@ Type_AE400_29795* CreateSwitch23_3BE50(axis_3d* position)
 
 //----- (0003BE70) --------------------------------------------------------
 /// Constructor of switch type 24 (class 11 type 24, state 24) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch24_3BE70(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 24, 24);
@@ -47810,6 +47941,7 @@ Type_AE400_29795* CreateSwitch24_3BE70(axis_3d* position)
 
 //----- (0003BE90) --------------------------------------------------------
 /// Constructor of switch type 25 (class 11 type 25, state 25) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch25_3BE90(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 25, 25);
@@ -47817,6 +47949,7 @@ Type_AE400_29795* CreateSwitch25_3BE90(axis_3d* position)
 
 //----- (0003BEB0) --------------------------------------------------------
 /// Constructor of switch type 26 (class 11 type 26, state 26) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch26_3BEB0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 26, 26);
@@ -47824,6 +47957,7 @@ Type_AE400_29795* CreateSwitch26_3BEB0(axis_3d* position)
 
 //----- (0003BED0) --------------------------------------------------------
 /// Constructor of switch type 27 (class 11 type 27, state 27) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch27_3BED0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 27, 27);
@@ -47831,6 +47965,7 @@ Type_AE400_29795* CreateSwitch27_3BED0(axis_3d* position)
 
 //----- (0003BEF0) --------------------------------------------------------
 /// Constructor of switch type 28 (class 11 type 28, state 28) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch28_3BEF0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 28, 28);
@@ -47838,6 +47973,7 @@ Type_AE400_29795* CreateSwitch28_3BEF0(axis_3d* position)
 
 //----- (0003BF10) --------------------------------------------------------
 /// Constructor of switch type 29 (class 11 type 29, state 29) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch29_3BF10(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 29, 29);
@@ -47845,6 +47981,7 @@ Type_AE400_29795* CreateSwitch29_3BF10(axis_3d* position)
 
 //----- (0003BF30) --------------------------------------------------------
 /// Constructor of switch type 30 (class 11 type 30, state 30) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch30_3BF30(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 30, 30);
@@ -47852,6 +47989,7 @@ Type_AE400_29795* CreateSwitch30_3BF30(axis_3d* position)
 
 //----- (0003BF50) --------------------------------------------------------
 /// Constructor of switch type 31 (class 11 type 31, state 31) via InitSwitch_3BB20.
+/// Name is a guess (not in the Hidden Worlds linker map).
 Type_AE400_29795* CreateSwitch31_3BF50(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 31, 31);
@@ -47908,6 +48046,7 @@ int InitSpellPocession_3C040(int a1)
 
 //----- (0003C060) --------------------------------------------------------
 /// Constructor of the castle spell (class 12 type 16, state 48) via InitSpell_3BF70.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateCastleSpell_3C060(int a1)
 {
   return InitSpell_3BF70(a1, 16, 48, 1000, 101, 1, 0, 0, 10000);
@@ -47915,6 +48054,7 @@ int CreateCastleSpell_3C060(int a1)
 
 //----- (0003C090) --------------------------------------------------------
 /// Constructor of the fireball spell (class 12 type 0, state 0) via InitSpell_3BF70.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateFireballSpell_3C090(int a1)
 {
   return InitSpell_3BF70(a1, 0, 0, 200, 5, 1, 0, 0, 125);
@@ -47922,6 +48062,7 @@ int CreateFireballSpell_3C090(int a1)
 
 //----- (0003C0C0) --------------------------------------------------------
 /// Constructor of the speed spell (class 12 type 2, state 6) via InitSpell_3BF70.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateSpeedSpell_3C0C0(int a1)
 {
   return InitSpell_3BF70(a1, 2, 6, 1000, 251, 0, 0, 0, 100);
@@ -47929,6 +48070,7 @@ int CreateSpeedSpell_3C0C0(int a1)
 
 //----- (0003C0F0) --------------------------------------------------------
 /// Constructor of the heal spell (class 12 type 1, state 3) via InitSpell_3BF70.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateHealSpell_3C0F0(int a1)
 {
   return InitSpell_3BF70(a1, 1, 3, 1000, 21, 1, 0, 0, 100);
@@ -47936,6 +48078,7 @@ int CreateHealSpell_3C0F0(int a1)
 
 //----- (0003C120) --------------------------------------------------------
 /// Constructor of the Teleport spell (class 12 type 10, state 30) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateTeleportSpell_3C120(int a1)
 {
   return InitSpell_3BF70(a1, 10, 30, 5000, 51, 1, 0, 10000, 100);
@@ -47943,6 +48086,7 @@ int CreateTeleportSpell_3C120(int a1)
 
 //----- (0003C150) --------------------------------------------------------
 /// Constructor of the Earthquake spell (class 12 type 6, state 18) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateEarthquakeSpell_3C150(int a1)
 {
   return InitSpell_3BF70(a1, 6, 18, 6000, 51, 1, 0, 120000, 6000);
@@ -47950,6 +48094,7 @@ int CreateEarthquakeSpell_3C150(int a1)
 
 //----- (0003C180) --------------------------------------------------------
 /// Constructor of the Mana Magnet spell (class 12 type 19, state 57) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateManaMagnetSpell_3C180(int a1)
 {
   return InitSpell_3BF70(a1, 19, 57, 4000, 17, 1, 0, 10000, 100);
@@ -47957,6 +48102,7 @@ int CreateManaMagnetSpell_3C180(int a1)
 
 //----- (0003C1B0) --------------------------------------------------------
 /// Constructor of the Shield spell (class 12 type 4, state 12) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateShieldSpell_3C1B0(int a1)
 {
   return InitSpell_3BF70(a1, 4, 12, 2000, 251, 1, 0, 0, 100);
@@ -47964,6 +48110,7 @@ int CreateShieldSpell_3C1B0(int a1)
 
 //----- (0003C1E0) --------------------------------------------------------
 /// Constructor of the Meteor spell (class 12 type 7, state 21) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateMeteorSpell_3C1E0(int a1)
 {
   return InitSpell_3BF70(a1, 7, 21, 10000, 11, 1, 0, 100000, 10000);
@@ -47971,6 +48118,7 @@ int CreateMeteorSpell_3C1E0(int a1)
 
 //----- (0003C210) --------------------------------------------------------
 /// Constructor of the Rebound spell (class 12 type 14, state 42) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateReboundSpell_3C210(int a1)
 {
   return InitSpell_3BF70(a1, 14, 42, 1000, 101, 1, 0, 8000, 100);
@@ -47978,6 +48126,7 @@ int CreateReboundSpell_3C210(int a1)
 
 //----- (0003C240) --------------------------------------------------------
 /// Constructor of the Lightning spell (class 12 type 15, state 45) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateLightningSpell_3C240(int a1)
 {
   return InitSpell_3BF70(a1, 15, 45, 1000, 2, 0, 0, 25000, 500);
@@ -47985,6 +48134,7 @@ int CreateLightningSpell_3C240(int a1)
 
 //----- (0003C270) --------------------------------------------------------
 /// Constructor of the Duel spell (class 12 type 11, state 33) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateDuelSpell_3C270(int a1)
 {
   return InitSpell_3BF70(a1, 11, 33, 2500, 17, 1, 0, 16000, 100);
@@ -47992,6 +48142,7 @@ int CreateDuelSpell_3C270(int a1)
 
 //----- (0003C2A0) --------------------------------------------------------
 /// Constructor of the Steal Mana spell (class 12 type 13, state 39) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateStealManaSpell_3C2A0(int a1)
 {
   return InitSpell_3BF70(a1, 13, 39, 500, 11, 1, 0, 20000, 100);
@@ -47999,6 +48150,7 @@ int CreateStealManaSpell_3C2A0(int a1)
 
 //----- (0003C2D0) --------------------------------------------------------
 /// Constructor of the Invisible spell (class 12 type 12, state 36) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateInvisibleSpell_3C2D0(int a1)
 {
   return InitSpell_3BF70(a1, 12, 36, 5000, 251, 1, 0, 50000, 100);
@@ -48006,6 +48158,7 @@ int CreateInvisibleSpell_3C2D0(int a1)
 
 //----- (0003C300) --------------------------------------------------------
 /// Constructor of the Crater spell (class 12 type 9, state 27) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateCraterSpell_3C300(int a1)
 {
   return InitSpell_3BF70(a1, 9, 27, 12000, 31, 1, 0, 100000, 6000);
@@ -48013,6 +48166,7 @@ int CreateCraterSpell_3C300(int a1)
 
 //----- (0003C330) --------------------------------------------------------
 /// Constructor of the Beyond Sight spell (class 12 type 5, state 15) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateBeyondSightSpell_3C330(int a1)
 {
   return InitSpell_3BF70(a1, 5, 15, 3000, 101, 1, 0, 0, 100);
@@ -48020,6 +48174,7 @@ int CreateBeyondSightSpell_3C330(int a1)
 
 //----- (0003C360) --------------------------------------------------------
 /// Constructor of the Lightning Storm spell (class 12 type 18, state 54) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateLightningStormSpell_3C360(int a1)
 {
   return InitSpell_3BF70(a1, 18, 54, 20000, 33, 1, 0, 90000, 2000);
@@ -48027,6 +48182,7 @@ int CreateLightningStormSpell_3C360(int a1)
 
 //----- (0003C390) --------------------------------------------------------
 /// Constructor of the Volcano spell (class 12 type 8, state 24) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateVolcanoSpell_3C390(int a1)
 {
   return InitSpell_3BF70(a1, 8, 24, 30000, 65, 1, 0, 180000, 1000);
@@ -48034,6 +48190,7 @@ int CreateVolcanoSpell_3C390(int a1)
 
 //----- (0003C3C0) --------------------------------------------------------
 /// Constructor of the Undead Army spell (class 12 type 17, state 51) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateUndeadArmySpell_3C3C0(int a1)
 {
   return InitSpell_3BF70(a1, 17, 51, 13000, 13, 1, 0, 150000, 100);
@@ -48041,6 +48198,7 @@ int CreateUndeadArmySpell_3C3C0(int a1)
 
 //----- (0003C3F0) --------------------------------------------------------
 /// Constructor of the Wall of Fire spell (class 12 type 20, state 60) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateWallOfFireSpell_3C3F0(int a1)
 {
   return InitSpell_3BF70(a1, 20, 60, 5000, 51, 1, 0, 12000, 24464);
@@ -48048,6 +48206,7 @@ int CreateWallOfFireSpell_3C3F0(int a1)
 
 //----- (0003C420) --------------------------------------------------------
 /// Constructor of the Reverse Speed spell (class 12 type 21, state 63) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateReverseSpeedSpell_3C420(int a1)
 {
   return InitSpell_3BF70(a1, 21, 63, 1000, 251, 0, 0, 0, 100);
@@ -48055,6 +48214,7 @@ int CreateReverseSpeedSpell_3C420(int a1)
 
 //----- (0003C450) --------------------------------------------------------
 /// Constructor of the Global Death spell (class 12 type 22, state 66) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateGlobalDeathSpell_3C450(int a1)
 {
   return InitSpell_3BF70(a1, 22, 66, 75000, 101, 1, 0, 200000, 7000);
@@ -48062,6 +48222,7 @@ int CreateGlobalDeathSpell_3C450(int a1)
 
 //----- (0003C480) --------------------------------------------------------
 /// Constructor of the Rapid Fireball spell (class 12 type 23, state 69) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CreateRapidFireballSpell_3C480(int a1)
 {
   return InitSpell_3BF70(a1, 23, 69, 600, 3, 0, 0, 50000, 50);
@@ -48162,6 +48323,7 @@ int CreateClass13Type3_3C540(int a1)
 //----- (0003C570) --------------------------------------------------------
 /// Reads the music card from C:/CARPET.CD/SNDSETUP.INF (or BF_MUSIC) - in the port overridden by the music
 /// settings and the recording - and opens the music driver for it (OpenMusic_43B20_43E60).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void InitMusicFromSetup_3C570()
 {
   //int v0; // ebx
@@ -48320,6 +48482,7 @@ void sub_3C800_sub_3CB40()
 
 //SYNCHRONIZED WITH REMC1
 /// Per frame, for every player: records/plays back its 10-byte input packet (TapePackets_3E9D0_3ED10) and executes the packet's commands (bytes 0 and 1: player state, spell selection, cheats, ...).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void ExecutePlayerInputs_3C9D0_3CD10()//20D9D0_
 {
 	//int v0; // ebx
@@ -49244,6 +49407,7 @@ LABEL_28:
 // AE400: using guessed type int dword_AE400_AE3F0();
 // AE408: using guessed type int dword_AE408_AE3F8();
 
+/// Name is a guess (not in the Hidden Worlds linker map).
 void LoadLevel_3E100_3E440(int level, void* buffer)
 {
   char pathBuffer[80];
@@ -49289,6 +49453,7 @@ void LoadLevel_3E100_3E440(int level, void* buffer)
 
 //----- (0003E350) --------------------------------------------------------
 /// Loads a movie's start state from movie/gam<slot>.dat (the game's own demo recorder).
+/// Name is a guess (not in the Hidden Worlds linker map).
 char LoadMovieGameState_3E350_3E690(__int16 saveSlot)//20F350_
 {
   char result; // al
@@ -49351,6 +49516,7 @@ char LoadMovieGameState_3E350_3E690(__int16 saveSlot)//20F350_
 
 //----- (0003E410) --------------------------------------------------------
 /// Saves a movie's start state to movie/gam<slot>.dat.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void SaveMovieGameState_3E410_3E750(__int16 saveSlot)
 {
   char pathBuffer[512];
@@ -49360,6 +49526,7 @@ void SaveMovieGameState_3E410_3E750(__int16 saveSlot)
 
 //----- (0003E460) --------------------------------------------------------
 /// Returns 1 if movie/gam<slot>.dat exists.
+/// Name is a guess (not in the Hidden Worlds linker map).
 char MovieGameStateExists_3E460(__int16 saveSlot)
 {
   char pathBuffer[512];
@@ -49373,6 +49540,7 @@ char MovieGameStateExists_3E460(__int16 saveSlot)
 
 //----- (0003E4B0) --------------------------------------------------------
 /// Loads a movie's map arrays from movie/map<slot>.dat.
+/// Name is a guess (not in the Hidden Worlds linker map).
 char LoadMovieMapState_3E4B0_3E7F0(__int16 saveSlot)
 {
   char result;
@@ -49396,6 +49564,7 @@ char LoadMovieMapState_3E4B0_3E7F0(__int16 saveSlot)
 
 //----- (0003E580) --------------------------------------------------------
 /// Saves a movie's map arrays to movie/map<slot>.dat.
+/// Name is a guess (not in the Hidden Worlds linker map).
 char SaveMovieMapState_3E580_3E8C0(__int16 saveSlot)
 {
   char pathBuffer[512];
@@ -49413,6 +49582,7 @@ char SaveMovieMapState_3E580_3E8C0(__int16 saveSlot)
 
 //----- (0003E640) --------------------------------------------------------
 /// Returns 1 if movie/map<slot>.dat exists.
+/// Name is a guess (not in the Hidden Worlds linker map).
 char MovieMapStateExists_3E640(__int16 saveSlot)
 {
   char pathBuffer[512];
@@ -49426,6 +49596,7 @@ char MovieMapStateExists_3E640(__int16 saveSlot)
 
 //----- (0003E690) --------------------------------------------------------
 /// Loads the game state from save/gam<slot>.dat (Alt+L quick load uses slot 199).
+/// Name is a guess (not in the Hidden Worlds linker map).
 char LoadGameState_3E690_3E9D0(__int16 saveSlot)//20F690_
 {
   char result; // al
@@ -49493,6 +49664,7 @@ char LoadGameState_3E690_3E9D0(__int16 saveSlot)//20F690_
 
 //----- (0003E750) --------------------------------------------------------
 /// Saves the game state to save/gam<slot>.dat (Alt+S quick save uses slot 199).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void SaveGameState_3E750_3EA90(__int16 saveSlot)
 {
   char pathBuffer[512];
@@ -49502,6 +49674,7 @@ void SaveGameState_3E750_3EA90(__int16 saveSlot)
 
 //----- (0003E7A0) --------------------------------------------------------
 /// Returns 1 if save/gam<slot>.dat exists.
+/// Name is a guess (not in the Hidden Worlds linker map).
 char GameStateFileExists_3E7A0(__int16 saveSlot)
 {
   char pathBuffer[512];
@@ -49515,6 +49688,7 @@ char GameStateFileExists_3E7A0(__int16 saveSlot)
 
 //----- (0003E7F0) --------------------------------------------------------
 /// Loads the map arrays from save/map<slot>.dat (quick load).
+/// Name is a guess (not in the Hidden Worlds linker map).
 char LoadMapState_3E7F0_3EB30(__int16 saveSlot)
 {
   char pathBuffer[512];
@@ -49537,6 +49711,7 @@ char LoadMapState_3E7F0_3EB30(__int16 saveSlot)
 
 //----- (0003E8C0) --------------------------------------------------------
 /// Saves the map arrays to save/map<slot>.dat (quick save).
+/// Name is a guess (not in the Hidden Worlds linker map).
 char SaveMapState_3E8C0_3EC00(__int16 saveSlot)
 {
   char pathBuffer[512];
@@ -49554,6 +49729,7 @@ char SaveMapState_3E8C0_3EC00(__int16 saveSlot)
 
 //----- (0003E980) --------------------------------------------------------
 /// Returns 1 if save/map<slot>.dat exists.
+/// Name is a guess (not in the Hidden Worlds linker map).
 char MapStateFileExists_3E980(__int16 saveSlot)
 {
   char pathBuffer[512];
@@ -49664,6 +49840,7 @@ _BYTE *CloseTape_3EC50_3EF90()
 // AE408: using guessed type int dword_AE408_AE3F8();
 
 //----- (0003EC80) --------------------------------------------------------
+/// Name is a guess (not in the Hidden Worlds linker map).
 int access_3EC80_3EFC0(char* a1)
 {
   return access(a1, 0);
@@ -50240,6 +50417,7 @@ unsigned __int8 DoAnosticks_3F76D_3FAAD(uint8_t* a1)
 // B7700: using guessed type char byte_B7700_B76F0;
 // B7701: using guessed type char byte_B7701;
 
+/// Name is a guess (not in the Hidden Worlds linker map).
 void InitDigijoy_3F7D0_3FB10(char* textBuffer)
 {
 	memset(&byte_B7700_B76F0, 0, 43);
@@ -50253,6 +50431,7 @@ void InitDigijoy_3F7D0_3FB10(char* textBuffer)
 	}
 }
 
+/// Name is a guess (not in the Hidden Worlds linker map).
 void InitAnojoy_3F820_sub_3FB60(__int16 a2, int a3, int a4, int a5, char a6)
 {
 	char result; // al
@@ -50802,6 +50981,7 @@ char sub_3FCA0_3FFE0(
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 /// Loads every entry of a Pathstruct list (LoadPathFile_634E0_639F0); prints "ERROR: File/Allocation" and waits for return on failure.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void LoadPathFiles_40440_40780(Pathstruct* pathstruct)//211440_211780
 {
 	char input[20];
@@ -51620,6 +51800,7 @@ _BOOL1 CheckPoint_409E0_40D20(unsigned __int16 a1)
 //SYNCHRONIZED WITH REMC1
 /// Adds a3 to the height of tile (a1, a2) (clamped to 0..200) and updates its flags. With a4 set,
 /// impassable tiles (mapAngle bit 0x80) are left alone and 1 is returned.
+/// Name is a guess (not in the Hidden Worlds linker map).
 char AddTileHeight_40A10_40D50(__int16 a1, __int16 a2, __int16 a3, char a4)
 {
   __int16 v4; // bx
@@ -51879,6 +52060,7 @@ __int16 Arctan_40F87_412C7(__int16 a1, __int16 a2)
 }
 // 9374C: using guessed type __int16 word_9374C[258];
 
+/// Name is a guess (not in the Hidden Worlds linker map).
 unsigned int Distance_410CE_4140E(unsigned int square)//2120CE_
 {
   unsigned long bitcount; // PORT: was unsigned int, written through unsigned long* (8 bytes on LP64)
@@ -51925,6 +52107,7 @@ int ClearScreenMCGA_411D7_41517(void *a2, unsigned __int16 a3, char a4)
 
 //----- (000411FD) --------------------------------------------------------
 /// Fills a2 whole rows of a 640-wide screen buffer with colour a4.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int ClearScreen640_411FD_4153D(void *a2, unsigned __int16 a3, char a4)
 {
   int v4; // eax
@@ -52791,12 +52974,14 @@ int sub_42090_423D0(axis_3d* a1x, int a2, int a3, int a4, int a5)
 }
 
 //SYNCHRONIZED WITH REMC1
+/// Name is a guess (not in the Hidden Worlds linker map).
 __int16 HeadingTo_42150_42490(axis_3d* a1x, axis_3d* a2x)
 {
   return Arctan_40F87_412C7(a2x->x - a1x->x, a2x->y - a1x->y);
 }
 
 //SYNCHRONIZED WITH REMC1
+/// Name is a guess (not in the Hidden Worlds linker map).
 __int16 PitchTo_42180_424C0(axis_3d* a1x, axis_3d* a2x)
 {
   __int16 v3; // [esp-4h] [ebp-8h]
@@ -52915,6 +53100,7 @@ unsigned int GetDistanceXy_423D0_42710(axis_3d* a1x, axis_3d* a2x)
 
 //SYNCHRONIZED WITH REMC1
 /// Squared x/y distance between two positions.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int DistanceSquared2D_42410_42750(_WORD *a1, _WORD *a2)
 {
   int v2; // edx
@@ -52933,6 +53119,7 @@ void SetState_424F0_42830(Type_AE400_29795* a1x, unsigned __int8 a2)
 
 //SYNCHRONIZED WITH REMC1
 /// Advances the animation frame (+88); returns 1 once the last frame (+89) has been reached.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int AdvanceAnimFrame_42510_42850(Type_AE400_29795* a1x)
 {
   int result; // eax
@@ -52950,6 +53137,7 @@ void sub_42530_42870(char a1)
 }
 
 // PORT: game memory comes from the arena (engine/ptr32.h): fixed offsets, deterministic layout
+/// Name is a guess (not in the Hidden Worlds linker map).
 void* malloc_42540_42880(size_t size) {
     return Port_ArenaAlloc(size);
 }
@@ -52998,6 +53186,7 @@ void* malloc_42540_42880_orig(size_t size)
 // 1302A0: using guessed type int dword_1302A0_130290;
 
 //----- (000425C0) --------------------------------------------------------
+/// Name is a guess (not in the Hidden Worlds linker map).
 void* malloc_425C0_42900(size_t size)
 {
     return Port_ArenaAlloc(size);  // PORT: game arena, see malloc_42540_42880
@@ -53097,6 +53286,7 @@ void* MallocGuarded(size_t size)
     return base + kScreenGuard;
 }
 
+/// Name is a guess (not in the Hidden Worlds linker map).
 void free_426E0_42A20(void* buffer)
 {
     auto it = guardedBlocks.find(buffer);
@@ -54361,6 +54551,7 @@ void OpenMusic_43B20_43E60(unsigned int a2)
 
 //----- (00043E50) --------------------------------------------------------
 /// Allocates a buffer of the (unpacked) size of file a1 and loads the file into it; 0 on failure.
+/// Name is a guess (not in the Hidden Worlds linker map).
 char *LoadFileAlloc_43E50(const char *a1)
 {
   char *v1; // esi
@@ -57763,6 +57954,7 @@ LABEL_97:
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //----- (00049300) --------------------------------------------------------
+/// Name is a guess (not in the Hidden Worlds linker map).
 int DrawMinimap_49300_49640(int a1, int a2, int a3, int a4, int a5, int a6, __int16 a7, int a8, int a9, int a10)//21A300_
 {
   int v10; // ebx
@@ -58047,6 +58239,7 @@ void FnSceneryTreeDead_49A50_49D90(_WORD* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of a stone (class 2 state 3, set by InitSceneryStandingStone_37CF0).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int StoneTick_49AA0_49DE0(int a1)
 {
   int result; // eax
@@ -58085,6 +58278,7 @@ int FnSceneryDolmen_49AD0_49E10(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of a standing stone (class 2 state 9, set by InitSceneryHut_37E00).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int StandingStoneTick_49B50_49E90(int a1)
 {
   int result; // eax
@@ -58146,6 +58340,7 @@ void sub_4A980_4ACC0()
 /// One step of the main menu: loads its graphics when needed, runs the page selected by
 /// mainMenuSelector_12CBCE and restarts the music when a song ends; once a page sets leaveMenu_96880, loads the
 /// game's data screens.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void MainMenuStep_4AB20_4AE60()//21BB20_21BE60
 {
   if (bool_12CA7C_12CA6C)
@@ -58212,6 +58407,7 @@ void MainMenuStep_4AB20_4AE60()//21BB20_21BE60
 
 //SYNCHRONIZE WITH REMC1
 /// Main menu page 1: the sound/joystick setup screen (InitConfigScreen_4BB20_4BE60); writes sndsetup.inf.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void SetupMenuPage_4AC70_4AFB0()//21BC70_
 {
 	char textBuffer[40];
@@ -58718,6 +58914,7 @@ void sub_4B8D0_4BC10(__int16 a1)//21C8D0_
 
 //SYNCHRONIZED WITH REMC1
 /// Loads the setup/config screen: data/screens/gconfig.dat/.pal, its sprites and font.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void InitConfigScreen_4BB20_4BE60()
 {
   FadePalette256_61CC0_621D0(0, 0x10u, 0);
@@ -58771,6 +58968,7 @@ void sub_4BC90_4BFD0()
 
 //SYNCHRONIZED WITH REMC1
 /// Main menu page 2: the main game menu (InitMainMenuScreen_4C7E0_4CB20).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void GameMenuPage_4BD60_4C0A0()//21CD60_
 {
   int v0; // esi
@@ -59224,6 +59422,7 @@ void sub_4C6F0_4CA30()//21D6F0_
 
 //SYNCHRONIZED WITH REMC1
 /// Loads the main menu screen: data/screens/mainmenu.dat/.pal, its sprites, sounds and music.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void InitMainMenuScreen_4C7E0_4CB20()
 {
   //int v0; // ecx
@@ -59577,6 +59776,7 @@ void sub_4D300_4D640()//21E300_
 
 //SYNCHRONIZED WITH REMC1
 /// Plays intro/intro.dat.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void PlayIntroAnim_4D3B0_4D6F0()//21E3B0_
 {
   int v1; // eax
@@ -59640,6 +59840,7 @@ void PlayIntroAnim_4D3B0_4D6F0()//21E3B0_
 //SYNCHRONIZED WITH REMC1
 /// Main-menu page 10, after the last level: plays intro\outro.dat, stops the music, sets leaveMenu_96880
 /// and the player's quit flag (str_13323[player].var_u8_13327), and waits 480 ticks; the game then exits.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void PlayOutroAndQuit_4D560_4D8A0()
 {
   int v1; // ebx
@@ -60202,6 +60403,7 @@ void sub_4E510(unsigned __int8 a1)
 //SYNCHRONIZED WITH REMC1
 /// Level performance screen shown after a level (pperf.dat background, sfont2 text): level name, creatures
 /// killed, ... percentages revealed one by one; any key/click or a timeout ends it.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int ShowLevelPerformance_4E5B0_4E8F0()
 {
   int v0; // edi
@@ -60455,6 +60657,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
 
 //SYNCHRONIZED WITH REMC1
 /// Plays intro/logo.dat.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void PlayLogoAnim_4EE70_4F1B0()//21FE70_
 {
   int v1; // eax
@@ -60498,6 +60701,7 @@ void PlayLogoAnim_4EE70_4F1B0()//21FE70_
 
 //SYNCHRONIZED WITH REMC1
 /// Plays intro/intel.dat.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void PlayIntelAnim_4EFC0_4F300()
 {
   //int v1; // eax
@@ -60578,6 +60782,7 @@ void sub_4F120_4F460()
 
 //SYNCHRONIZED WITH REMC1
 /// Plays the title animations intro/title-01..04.dat.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void PlayTitleAnim_4F1E0_4F520()
 {
   int v1; // eax
@@ -60647,6 +60852,7 @@ void PlayTitleAnim_4F1E0_4F520()
 }
 
 /// Language selection: uses language.inf if present, otherwise shows the language screen (data/screens/language.dat) and writes it.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void SelectLanguage_4F3F0_4F730()//2203F0_
 {
 	char filename[56];
@@ -60989,6 +61195,7 @@ void sub_4FEB0()
 //SYNCHRONIZED WITH REMC1
 //----- (0004FF00) --------------------------------------------------------
 /// Main-menu 'continue': starts the next level after one was completed (menu action 11).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void MenuContinueGame_4FF00()
 {
   byte_12CBD5_12CBC5 |= 8u;
@@ -60998,6 +61205,7 @@ void MenuContinueGame_4FF00()
 }
 
 /// Main-menu "new game": asks "New Game? Yes/No" (unless forced) and resets level and player state.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void MenuNewGame_4FF30_50270()
 {
     //fix
@@ -61191,6 +61399,7 @@ int sub_504A0_507E0()
 
 //SYNCHRONIZED WITH REMC1
 /// Reads the sound/music card settings from sndsetup.inf.
+/// Name is a guess (not in the Hidden Worlds linker map).
 bool ReadSoundSetup_505A0_508E0()
 {
   char pathBuffer[48];
@@ -61741,6 +61950,7 @@ LABEL_73:
 
 //----- (000512D0) --------------------------------------------------------
 /// Inserts string a2 at the start of string a1; returns a1.
+/// Name is a guess (not in the Hidden Worlds linker map).
 char *StrInsert_512D0_51610(char *a1, const char *a2)
 {
   __int16 v2; // si
@@ -61754,6 +61964,7 @@ char *StrInsert_512D0_51610(char *a1, const char *a2)
 
 //----- (00051330) --------------------------------------------------------
 /// Removes the first a2 characters of string a1.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int StrDelete_51330_51670(int a1, __int16 a2)
 {
   return (int)OFF(memmove((void*)PTR(a1), (void*)PTR(a1 + a2), strlen((const char *)PTR(a1 + a2)) + 1));
@@ -61762,6 +61973,7 @@ int StrDelete_51330_51670(int a1, __int16 a2)
 
 //----- (00051360) --------------------------------------------------------
 /// Sets the text window (array_12C970: x0, x1, y0, y1, width, height) to x a1, y a2, width a3, height a4; DrawText_51560_518A0 draws relative to it and clips to it.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void SetTextWindow_51360_516A0(int a1, int a2, int a3, int a4)
 {
   array_12C970[0] = a1;
@@ -61780,6 +61992,7 @@ void SetTextWindow_51360_516A0(int a1, int a2, int a3, int a4)
 
 //----- (000513A0) --------------------------------------------------------
 /// Copies the text window (array_12C970, 6 ints) to a1; returns a1.
+/// Name is a guess (not in the Hidden Worlds linker map).
 _DWORD *GetTextWindow_513A0_516E0(_DWORD *a1)
 {
   _DWORD *result; // eax
@@ -61802,6 +62015,7 @@ _DWORD *GetTextWindow_513A0_516E0(_DWORD *a1)
 
 //----- (000513E0) --------------------------------------------------------
 /// Saves the text window (array_12C970) to string_12C988.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void SaveTextWindow_513E0_51720()//2223E0_
 {
   dword_12CA78 = 0;
@@ -61812,6 +62026,7 @@ void SaveTextWindow_513E0_51720()//2223E0_
 
 //----- (00051400) --------------------------------------------------------
 /// Restores the text window saved by SaveTextWindow_513E0_51720.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void RestoreTextWindow_51400_51740()
 {
   dword_12CA78 = 0;
@@ -61822,6 +62037,7 @@ void RestoreTextWindow_51400_51740()
 
 //----- (00051420) --------------------------------------------------------
 /// Width in pixels of the widest line of text a2 in font a1 (glyph width - 1 per character, lines end at "\n").
+/// Name is a guess (not in the Hidden Worlds linker map).
 int GetTextWidth_51420_51760(_DWORD *a1, char *a2)
 {
   char *v2; // eax
@@ -61870,6 +62086,7 @@ void sub_51480_517C0(Type_dword_96884* a1x, TypeStrFont* a2x, TColor* colorBuffe
 }
 
 //SYNCHRONIZED WITH REMC1
+/// Name is a guess (not in the Hidden Worlds linker map).
 void DrawText_51560_518A0(_BYTE *a1, int a2, __int16 a3, char* text)//222560_
 {
   int v4; // edi
@@ -62285,6 +62502,7 @@ LABEL_56:
 
 //SYNCHRONIZED WITH REMC1
 /// Relocates a loaded font's glyph table: turns each glyph's file offset into a pointer into a1x->Dat.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void RelocateFontGlyphs_519E0_51D20(TypeStrFont* a1x)//2229E0_
 {
   //TypeTab* result; // eax
@@ -62307,6 +62525,7 @@ void RelocateFontGlyphs_519E0_51D20(TypeStrFont* a1x)//2229E0_
 }
 
 /// Reads the names of the 6 save games (save/carpdd00..05.gam) into off_96864; "--" for empty slots.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void ReadSaveGameNames_51A10_51D50()
 {
 	char pathBuffer[40];
@@ -62334,6 +62553,7 @@ void ReadSaveGameNames_51A10_51D50()
 //----- (00051AF0) --------------------------------------------------------
 /// Loads save slot a1 (1-based) from C:\carpet.cd\save\carpddNN.gam: progress only - slot name,
 /// settings blocks, level index (stored as 4 * (level + b0 + b1)), spell slots (+15318).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int LoadGame_51AF0_51E30(char a1)
 {
   int v1; // esi
@@ -62380,6 +62600,7 @@ int LoadGame_51AF0_51E30(char a1)
 
 //----- (00051C90) --------------------------------------------------------
 /// Writes save slot a1 (1-based) in the layout LoadGame_51AF0_51E30 reads.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int SaveGame_51C90_51FD0(char a1)
 {
   int v1; // esi
@@ -62958,6 +63179,7 @@ char sub_526C0_52A00(int a1, unsigned int a2, unsigned int a3)
 
 //SYNCHRONIZE WITH REMC1
 /// Moves a spell missile along its heading (+30/+32, speed +126); on impact creates the entity whose class/type the caster stored in +68/+69 (the spell's effect).
+/// Name is a guess (not in the Hidden Worlds linker map).
 char UpdateMissile_52770_52AB0(int a1)
 {
   int v1; // edx
@@ -63285,6 +63507,7 @@ LABEL_24:
 
 //SYNCHRONIZE WITH REMC1
 /// Per-tick handler of the Possession spell's missile (class 9 state 1).
+/// Name is a guess (not in the Hidden Worlds linker map).
 char PossessionMissileTick_52ED0_53210(int a1)
 {
   unsigned __int16 v1; // si
@@ -63364,6 +63587,7 @@ char PossessionMissileTick_52ED0_53210(int a1)
 
 //----- (00053060) --------------------------------------------------------
 /// Generic per-tick handler of a spell missile (class 9 states 2, 4-6, 11, 15-17, 20): UpdateMissile_52770_52AB0.
+/// Name is a guess (not in the Hidden Worlds linker map).
 char MissileTick_53060(int a1)
 {
   return UpdateMissile_52770_52AB0(a1);
@@ -63394,6 +63618,7 @@ char FnShotMeteor_53070_533B0(int a1)
 
 //----- (000530B0) --------------------------------------------------------
 /// Per-tick handler of the Duel spell's missile (class 9 state 7).
+/// Name is a guess (not in the Hidden Worlds linker map).
 char DuelMissileTick_530B0(int a1)
 {
   return StealManaMissileTick_530C0_53400(a1);
@@ -63401,6 +63626,7 @@ char DuelMissileTick_530B0(int a1)
 
 //SYNCHRONIZE WITH REMC1
 /// Per-tick handler of the Steal Mana spell's missile (class 9 state 8).
+/// Name is a guess (not in the Hidden Worlds linker map).
 char StealManaMissileTick_530C0_53400(int a1)
 {
   int v1; // edx
@@ -64004,6 +64230,7 @@ char FnFirstStageShot_53B50_53E90(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of the Lightning Storm spell's missile (class 9 state 12).
+/// Name is a guess (not in the Hidden Worlds linker map).
 char LightningStormMissileTick_53DC0_54100(int a1)
 {
   int v1; // edx
@@ -64220,6 +64447,7 @@ void sub_54290_545E0(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of the Mana Magnet spell's missile (class 9 state 18).
+/// Name is a guess (not in the Hidden Worlds linker map).
 char ManaMagnetMissileTick_542B0_54640(int a1)
 {
   unsigned __int16 v1; // si
@@ -64328,6 +64556,7 @@ void FnShotExtra3_54480_54810(int a1)
 /// wizard list (var_u32_36462[0], within the caster's range) and the per-model creature lists
 /// (str_36382x[], entities with +58 set), scored by ShotTargetNumber_54A90_54FC0. On success stores the
 /// target in +146, the wanted heading/pitch in +34/+36 and returns 1.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int FindMissileTarget_54520_548B0(int a1)
 {
   unsigned int v1; // edi
@@ -65447,6 +65676,7 @@ int HandTheSpell_55EF0_56420(__int16 a1, int a2, int a3)
 //SYNCHRONIZED WITH REMC1
 /// Fireball spell for spell slot a1 (+42 caster): fires missile 9/0 from the caster's hand along its
 /// heading/pitch; on impact it spawns explosion 10/0.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CastFireball_56090_565C0(int a1)
 {
   int result; // eax
@@ -65632,6 +65862,7 @@ void FnSpellSpeedUp_56380_568B0(int a1)
 /// Per-tick handler of an owned possession spell (class 12 type 3, state 9) while it is cast (+48 ticks
 /// left of +50): checks and charges the caster (EnoughMana_55DD0_56300, AdjustMana_55E80_563B0)
 /// and launches the possession missile (class 9 type 1) on the first tick.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int PossessionSpellTick_56510_56A40(int a1)
 {
   int result; // eax
@@ -65748,6 +65979,7 @@ void FnSpellBeyondSight_56730(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Earthquake spell (class 12 state 18 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CastEarthquake_567A0_56CD0(int a1)
 {
   int result; // eax
@@ -65809,6 +66041,7 @@ LABEL_9:
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Meteor spell (class 12 state 21 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CastMeteor_56950_56E80(int a1)
 {
   int result; // eax
@@ -65868,6 +66101,7 @@ LABEL_9:
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Volcano spell (class 12 state 24 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CastVolcano_56AF0_57020(int a1)
 {
   int result; // eax
@@ -65928,6 +66162,7 @@ LABEL_9:
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Crater spell (class 12 state 27 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CastCrater_56CA0_571D0(int a1)
 {
   int result; // eax
@@ -66060,6 +66295,7 @@ void FnSpellTeleport_56E50_57380(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Duel spell (class 12 state 33 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CastDuel_57040_57570(int a1)
 {
   int result; // eax
@@ -66154,6 +66390,7 @@ void FnSpellInvisable_571B0_576E0(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Steal Mana spell (class 12 state 39 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CastStealMana_57250_57780(int a1)
 {
   int result; // eax
@@ -66252,6 +66489,7 @@ int FnSpellRebound_573F0_57920(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Lightning spell (class 12 state 45 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CastLightning_57470_579A0(int a1)
 {
   int result; // eax
@@ -66441,6 +66679,7 @@ LABEL_12:
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Lightning Storm spell (class 12 state 54 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CastLightningStorm_579D0_57F00(int a1)
 {
   int result; // eax
@@ -66503,6 +66742,7 @@ LABEL_9:
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Mana Magnet spell (class 12 state 57 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CastManaMagnet_57B80_580B0(int a1)
 {
   int result; // eax
@@ -66565,6 +66805,7 @@ LABEL_5:
 }
 
 /// Handler of an owned Wall of Fire spell (class 12 state 60 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CastWallOfFire_57D40_58270(int a1)
 {
 	int result; // eax
@@ -66628,6 +66869,7 @@ int CastWallOfFire_57D40_58270(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Reverse Speed spell (class 12 state 63 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void CastReverseSpeed_57F00_58410(int a1)
 {
   unsigned int v1; // esi
@@ -66755,6 +66997,7 @@ LABEL_5:
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Rapid Fireball spell (class 12 state 69 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int CastRapidFireball_58240_58750(int a1)
 {
   int result; // eax
@@ -66945,6 +67188,7 @@ char sub_58A00_58F10(unsigned __int16 a1)
 }
 
 //SYNCHRONIZED WITH REMC1
+/// Name is a guess (not in the Hidden Worlds linker map).
 int GetSumaSpriteSizes_58AD0_58FE0(unsigned __int16 a1)
 {
   int first = begTmapsTab_12D744_12D734_2EB744_2EB734x[a1].var_8;
@@ -67717,6 +67961,7 @@ void SwapScreensVres256_599B0_59EC0(__int16 a1)//22A9B0_
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 0 (class 11 state 0, set by CreateSwitch00).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch00Tick_59A80_59F90(uint16_t* a1)
 {
   int result; // eax
@@ -67731,6 +67976,7 @@ void Switch00Tick_59A80_59F90(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 1 (class 11 state 1, set by CreateSwitch01).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch01Tick_59AB0_59FC0(uint16_t* a1)
 {
   int result; // eax
@@ -67745,6 +67991,7 @@ void Switch01Tick_59AB0_59FC0(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 2 (class 11 state 2, set by CreateSwitch02).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch02Tick_59AE0_59FF0(uint16_t* a1)
 {
   int result; // eax
@@ -67768,6 +68015,7 @@ void Switch02Tick_59AE0_59FF0(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 3 (class 11 state 3, set by CreateSwitch03).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch03Tick_59B30_5A040(uint16_t* a1)
 {
   int result; // eax
@@ -67818,6 +68066,7 @@ int FnSwitchOnVictory_59B80_5A090(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 5 (class 11 state 5, set by CreateSwitch05).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch05Tick_59C40_5A150(uint16_t* a1)
 {
   int result; // eax
@@ -67832,6 +68081,7 @@ void Switch05Tick_59C40_5A150(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 6 (class 11 state 6, set by CreateSwitch06).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Switch06Tick_59C70_5A180(uint16_t* a1)
 {
   int result; // eax
@@ -67847,6 +68097,7 @@ int Switch06Tick_59C70_5A180(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 7 (class 11 state 7, set by CreateSwitch07).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch07Tick_59CA0_5A1B0(uint16_t* a1)
 {
   int result; // eax
@@ -67870,6 +68121,7 @@ void Switch07Tick_59CA0_5A1B0(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 8 (class 11 state 8, set by CreateSwitch08).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch08Tick_59CF0_5A200(uint16_t* a1)
 {
   int result; // eax
@@ -67893,6 +68145,7 @@ void Switch08Tick_59CF0_5A200(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 9 (class 11 state 9, set by CreateSwitch09).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch09Tick_59D40_5A250(uint16_t* a1)
 {
   int result; // eax
@@ -67907,6 +68160,7 @@ void Switch09Tick_59D40_5A250(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 10 (class 11 state 10, set by CreateSwitch10).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Switch10Tick_59D70_5A280(uint16_t* a1)
 {
   int result; // eax
@@ -67922,6 +68176,7 @@ int Switch10Tick_59D70_5A280(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 11 (class 11 state 11, set by CreateSwitch11).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch11Tick_59DA0_5A2B0(uint16_t* a1)
 {
   int result; // eax
@@ -67945,6 +68200,7 @@ void Switch11Tick_59DA0_5A2B0(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 12 (class 11 state 12, set by CreateSwitch12).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch12Tick_59DF0_5A300(uint16_t* a1)
 {
   int result; // eax
@@ -68028,6 +68284,7 @@ LABEL_6:
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 13 (class 11 state 13, set by CreateSwitch13).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch13Tick_59F60_5A470(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 0);
@@ -68035,6 +68292,7 @@ void Switch13Tick_59F60_5A470(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 14 (class 11 state 14, set by CreateSwitch14).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch14Tick_59F70_5A480(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 1);
@@ -68042,6 +68300,7 @@ void Switch14Tick_59F70_5A480(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 15 (class 11 state 15, set by CreateSwitch15).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch15Tick_59F80_5A490(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 2);
@@ -68049,6 +68308,7 @@ void Switch15Tick_59F80_5A490(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 16 (class 11 state 16, set by CreateSwitch16).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch16Tick_59F90_5A4A0(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 3);
@@ -68056,6 +68316,7 @@ void Switch16Tick_59F90_5A4A0(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 17 (class 11 state 17, set by CreateSwitch17).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch17Tick_59FA0_5A4B0(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 4);
@@ -68063,6 +68324,7 @@ void Switch17Tick_59FA0_5A4B0(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 18 (class 11 state 18, set by CreateSwitch18).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch18Tick_59FB0_5A4C0(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 5);
@@ -68070,6 +68332,7 @@ void Switch18Tick_59FB0_5A4C0(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 19 (class 11 state 19, set by CreateSwitch19).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch19Tick_59FC0_5A4D0(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 6);
@@ -68077,6 +68340,7 @@ void Switch19Tick_59FC0_5A4D0(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 20 (class 11 state 20, set by CreateSwitch20).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch20Tick_59FD0_5A4E0(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 7);
@@ -68084,6 +68348,7 @@ void Switch20Tick_59FD0_5A4E0(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 21 (class 11 state 21, set by CreateSwitch21).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch21Tick_59FE0_5A4F0(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 8);
@@ -68091,6 +68356,7 @@ void Switch21Tick_59FE0_5A4F0(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 22 (class 11 state 22, set by CreateSwitch22).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch22Tick_59FF0_5A500(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 9);
@@ -68098,6 +68364,7 @@ void Switch22Tick_59FF0_5A500(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 23 (class 11 state 23, set by CreateSwitch23).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch23Tick_5A000_5A510(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 10);
@@ -68105,6 +68372,7 @@ void Switch23Tick_5A000_5A510(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 24 (class 11 state 24, set by CreateSwitch24).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch24Tick_5A010_5A520(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 11);
@@ -68112,6 +68380,7 @@ void Switch24Tick_5A010_5A520(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 25 (class 11 state 25, set by CreateSwitch25).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch25Tick_5A020_5A530(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 12);
@@ -68119,6 +68388,7 @@ void Switch25Tick_5A020_5A530(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 26 (class 11 state 26, set by CreateSwitch26).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch26Tick_5A030_5A540(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 13);
@@ -68126,6 +68396,7 @@ void Switch26Tick_5A030_5A540(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 27 (class 11 state 27, set by CreateSwitch27).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch27Tick_5A040_5A550(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 14);
@@ -68133,6 +68404,7 @@ void Switch27Tick_5A040_5A550(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 28 (class 11 state 28, set by CreateSwitch28).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch28Tick_5A050_5A560(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 15);
@@ -68140,6 +68412,7 @@ void Switch28Tick_5A050_5A560(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 29 (class 11 state 29, set by CreateSwitch29).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch29Tick_5A060_5A570(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 16);
@@ -68147,12 +68420,14 @@ void Switch29Tick_5A060_5A570(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 30 (class 11 state 30, set by CreateSwitch30).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Switch30Tick_5A070_5A580(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), -1);
 }
 
 /// Per-tick handler of switch type 31 (class 11 state 31, set by CreateSwitch31).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int Switch31Tick_5A080(uint16_t* a1)
 {
     return 0;
@@ -68202,6 +68477,7 @@ int CouldTriggerSwitch_5A120_5A630(int a1, int a2)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //SYNCHRONIZED WITH REMC1
+/// Name is a guess (not in the Hidden Worlds linker map).
 void DrawText_5A180_5A690(char* text, int posX, int posY, uint8 color)//22B180_
 {
 	int textIndex;
@@ -68241,6 +68517,7 @@ void DrawText_5A180_5A690(char* text, int posX, int posY, uint8 color)//22B180_
 }
 
 //----- (0005A3A0) --------------------------------------------------------
+/// Name is a guess (not in the Hidden Worlds linker map).
 __int16 GetLetterX_5A3A0_5A8B0()
 {
     return dword_AE44C_AE43C[33].dim.x;
@@ -68248,6 +68525,7 @@ __int16 GetLetterX_5A3A0_5A8B0()
 // AE44C: using guessed type int dword_AE44C_AE43C;
 
 //----- (0005A3B0) --------------------------------------------------------
+/// Name is a guess (not in the Hidden Worlds linker map).
 __int16 GetLetterY_5A3B0_5A8C0()
 {
   return dword_AE44C_AE43C[33].dim.y;
@@ -68560,6 +68838,7 @@ void VersionRequested_5A560_5AA70()
 // 1314A4: using guessed type int dword_1314A4;
 // 1314A8: using guessed type int dword_1314A8;
 
+/// Name is a guess (not in the Hidden Worlds linker map).
 void DrawStartGameTexts_5ACA0_5B1B0()//22bca0_
 {
   printf("Copyright (c) 1995 Bullfrog Productions Ltd.\n");
@@ -69026,6 +69305,7 @@ int AllocDOS_5B480_5B990(int a1, int16_t* a2, int16_t* a3)
 // 5B480: using guessed type char var_18[24];
 
 //----- (0005B500) --------------------------------------------------------
+/// Name is a guess (not in the Hidden Worlds linker map).
 void ClearScr_5B500_5BA10()
 {
     FixPerifery();
@@ -69045,6 +69325,7 @@ void ClearScr_5B500_5BA10()
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //----- (0005B560) --------------------------------------------------------
+/// Name is a guess (not in the Hidden Worlds linker map).
 void ClearScr_5B560()
 {
     FixPerifery();
@@ -69498,6 +69779,7 @@ int SetupMouse_5C214_5C724()
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //----- (0005C468) --------------------------------------------------------
+/// Name is a guess (not in the Hidden Worlds linker map).
 void ResizeScr_5C468_5C978()//22D468_
 {
     FixPerifery((char*)"chRes", typeResolution_12F02E_12F01E);
@@ -70006,6 +70288,7 @@ void sub_5CB73(int a1, __int16 a2)
 // 9ADB4: using guessed type __int16 word_9ADB4;
 // 9ADC4: using guessed type int dword_9ADC4;
 
+/// Name is a guess (not in the Hidden Worlds linker map).
 void fixWaitForBeam_5CC54_5D164() {
     FixPerifery((char*)"VSYNC");
     PortTimer_WaitRetrace(g_settings.menuFps); // PORT: emulated 70 Hz vertical retrace (was a fixed 20 ms sleep)
@@ -70013,6 +70296,7 @@ void fixWaitForBeam_5CC54_5D164() {
 }
 
 //----- (0005CC54) --------------------------------------------------------
+/// Name is a guess (not in the Hidden Worlds linker map).
 void WaitForBeam_5CC54_5D164()
 {
     FixPerifery((char*)"VSYNC");
@@ -70118,6 +70402,7 @@ int ResetScreen_5CD70_5D280()
 // 5CD70: using guessed type char var_38[28];
 
 //----- (0005CDA0) --------------------------------------------------------
+/// Name is a guess (not in the Hidden Worlds linker map).
 void Blit_5CDA0_5D2B0()
 {
     FixPerifery((char*)"blit320");
@@ -70167,6 +70452,7 @@ int LoadMusic_5CEF0_5D400(unsigned __int16 a1)
 //----- (0005CFA4) --------------------------------------------------------
 /// Makes the song offsets (+18) of the 32-byte TAB entries absolute (+ musicData_CBF68) and counts the songs
 /// into musicTrackCount_939D6.
+/// Name is a guess (not in the Hidden Worlds linker map).
 unsigned int FixMusicTabOffsets_5CFA4()
 {
   unsigned int result; // eax
@@ -70303,6 +70589,7 @@ int MyReadBufferLump_5D230_5D740(int a1, int a2, int a3)
 //----- (0005D290) --------------------------------------------------------
 /// Plays song a1 of the loaded music set (TAB entry a1: +18 data, +26 length) unless it is already playing;
 /// stops and unloads the current one first. Needs music available and on.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void PlayMusicTrack_5D290_5D7A0(__int16 a1)
 {
   int v1; // edx
@@ -72135,6 +72422,7 @@ unsigned __int64 sub_60BDC(int a1)
 // 60C8B: variable 'v4' is possibly undefined
 
 //----- (00060CE0) --------------------------------------------------------
+/// Name is a guess (not in the Hidden Worlds linker map).
 void DrawBitmap_60CE0_611F0(__int16 a1, __int16 a2, TypeTab* a3)//231CE0_
 {
   DrawSpriteVres256_60D65_61275(a3->dim, a2, a1, a3->Tab_0, 0, 0);
@@ -72143,6 +72431,7 @@ void DrawBitmap_60CE0_611F0(__int16 a1, __int16 a2, TypeTab* a3)//231CE0_
 // 12EFF4: using guessed type int dword_12EFF4;
 
 //----- (00060D18) --------------------------------------------------------
+/// Name is a guess (not in the Hidden Worlds linker map).
 void DrawBitmap_60D18_61228(__int16 a1, __int16 a2, TypeTab* a3)
 {
   DrawSpriteVres256_60D65_61275(a3->dim, a2, a1, a3->Tab_0, 0, 0);
@@ -73352,6 +73641,7 @@ void DrawBoxVres256_616C0(unsigned __int16 a1, unsigned __int16 a2, unsigned __i
 
 //----- (00061740) --------------------------------------------------------
 /// Draws the outline of rectangle (a1, a2, width a3, height a4) in colour a5 (DrawLineLowRes_6B260).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int DrawRectLowRes_61740(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5)
 {
   __int16 v6; // [esp+1Ch] [ebp+1Ch]
@@ -73367,6 +73657,7 @@ int DrawRectLowRes_61740(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigne
 
 //----- (00061810) --------------------------------------------------------
 /// Draws the outline of rectangle (a1, a2, width a3, height a4) in colour a5 (DrawLineHighRes_6B378).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int DrawRectHighRes_61810(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5)
 {
   __int16 v6; // [esp+1Ch] [ebp+1Ch]
@@ -73705,6 +73996,7 @@ void FreeMusic_62020()
 // 12F074: using guessed type int dword_12F074;
 // 12F07A: using guessed type int dword_12F07A;
 
+/// Name is a guess (not in the Hidden Worlds linker map).
 void free_62128_62638(void* buffer)
 {
     free_426E0_42A20(buffer);
@@ -74948,6 +75240,7 @@ void SaveFileAt_62E60_63370(char* name, uint8* buffer, int size)
   DataFileIO::Close(file);
 }
 
+/// Name is a guess (not in the Hidden Worlds linker map).
 size_t FileWrite_62ED0_633E0(FILE* descriptor, uint8_t* buffer, uint32_t count)
 {
     return fwrite(buffer, 1, count, descriptor);
@@ -74962,6 +75255,7 @@ void CopyScreenMCGA_62FA8_634B8(uint8_t* src, uint8_t* dst, size_t size)
 }
 
 //----- (00062FC4) --------------------------------------------------------
+/// Name is a guess (not in the Hidden Worlds linker map).
 void CopyScreen_62FC4_634D4(uint8_t* src, uint8_t* dst, size_t size)
 {
   //qmemcpy(a2, a1, 640 * a3);
@@ -75138,6 +75432,7 @@ int sub_6342C_6393C(unsigned int a1)
 // 62F78: using guessed type _DWORD int386(_DWORD, _DWORD, _DWORD);
 
 /// Frees a Pathstruct entry's buffer.
+/// Name is a guess (not in the Hidden Worlds linker map).
 void FreePathFile_634A0_639B0(Pathstruct* pathstruct)
 {
 	if (*pathstruct->colorPalette_var28)
@@ -75150,6 +75445,7 @@ void FreePathFile_634A0_639B0(Pathstruct* pathstruct)
 int counter_634E0_639F0 = 0;
 
 /// Loads one Pathstruct entry: frees the old buffer, then allocates and reads the file (LoadFileAt_3EEA0_3F1E0); entries whose path starts with "*" only get a buffer of the given size. Returns 1, 0 (file) or -1 (allocation).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int LoadPathFile_634E0_639F0(Pathstruct* pathstruct)//2344e0_
 {
     //debug
@@ -75234,6 +75530,7 @@ void sub_637C0()
 //----- (000637D1) --------------------------------------------------------
 /// HMI MIDI driver: hands an instrument bank (INST.BNK / DRUM.BNK) to the FM driver; a stub in the port, which
 /// passes the banks to PortMusic_LoadBanks.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int MidiSetInstruments_637D1(int a1, int a2, unsigned __int16 a3, int a4)
 {
   //fix MK_FP(byte_9C07A[9 * a1 + 1], byte_9C07A[9 * a1])(a2, a3, a1, a4);
@@ -75259,6 +75556,7 @@ void sub_638F8()
   ;
 }
 
+/// Name is a guess (not in the Hidden Worlds linker map).
 int GetRNCFilesize_63910_63E20(Pathstruct* pathstruct)//234910_
 {
 	uint8_t miniBuffer[8];
@@ -75905,6 +76203,7 @@ void sub_651E7()
 //----- (000651F8) --------------------------------------------------------
 // PORT: HMI SOS digital driver entry point, forwarded to portability/port_sound (SDL_mixer).
 /// Returns whether sound sample a2 has finished playing (PortSound_IsDone in the port).
+/// Name is a guess (not in the Hidden Worlds linker map).
 bool IsSampleDone_651F8(int a1, int a2)
 {
   return PortSound_IsDone(a2);
@@ -75984,6 +76283,7 @@ void SetupSpritesVres256_65DC0_662D0(TypeTab* a1, TypeTab* a2, uint8_t* a3)
 
 //----- (00065E00) --------------------------------------------------------
 /// Restarts the current song when it has played to its end (songs loop this way).
+/// Name is a guess (not in the Hidden Worlds linker map).
 void RestartMusicIfDone_65E00_66310()
 {
   if ( musicAvailable_939CC && musicOn_939CD && musicTrack_939D2 && SosMIDISongDone_5D7F0_5DD00(dword_CBFD8_CBFC8) )
@@ -78816,6 +79116,7 @@ __int16 sub_6A737(void (*a1)(_DWORD), unsigned int a2, int a3, int a4, __int16 a
 
 //----- (0006B260) --------------------------------------------------------
 /// Draws a line from (a1, a2) to (a3, a4) in colour a5, clipped to the viewport (320x200 mode: coordinates and viewport doubled).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int DrawLineLowRes_6B260(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6)
 {
   __int16 v6; // bx
@@ -78913,6 +79214,7 @@ int DrawLineLowRes_6B260(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigne
 
 //----- (0006B378) --------------------------------------------------------
 /// Draws a line from (a1, a2) to (a3, a4) in colour a5, clipped to the viewport (640x480 mode).
+/// Name is a guess (not in the Hidden Worlds linker map).
 int DrawLineHighRes_6B378(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6)
 {
   _BYTE *v7; // edi
@@ -103074,6 +103376,7 @@ LABEL_124:
 int test_index = 0;
 int tempCount;
 //SYNCHRONIZED WITH REMC2
+/// Name is a guess (not in the Hidden Worlds linker map).
 void DrawTriangle_729A3_72EB3(Type_RenderPoint* pnt1, Type_RenderPoint* pnt2, Type_RenderPoint* pnt3)//2439A3_ // draw textured triangle
 {
     Type_RenderPoint* sortPnt1; // esi
@@ -113398,6 +113701,7 @@ if (((sortPnt2->x_0 - sortPnt1->x_0) << 16) / (sortPnt2->y_1 - sortPnt1->y_1) > 
 }
 
 //SYNCHRONIZED WITH REMC2
+/// Name is a guess (not in the Hidden Worlds linker map).
 void SetViewPort2_79495_799A5(uint8* beginFrame, uint8* beginPointer, int pitch, int viewPortWidth, int viewPortHeight)
 {
 	if (pitch)
