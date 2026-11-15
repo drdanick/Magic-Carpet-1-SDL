@@ -813,15 +813,15 @@ int InitEffectCircleBall_3B3D0(uint16_t* a1);
 int InitEffectSkeleton_3B3E0(uint16_t* a1);
 int sub_3B460(uint16_t* a1);
 int InitEffectBlindness_3B4D0(uint16_t* a1);
-int CreateManaBall_3B5A0(uint16_t* a1);
-int CreateDeathMarker_3B620(uint16_t* a1);
-Type_AE400_29795* CreatePlayerFlag_3B690(axis_3d* a1);
-int CreateClass10Type43_3B6F0(uint16_t* a1);
-int CreateClass10Type41_3B760(uint16_t* a1);
-int CreateClass10Type42_3B7B0_3BB30(uint16_t* a1);
-int CreateBoulder_3B800(uint16_t* a1);
-int CreateCrabSpawnTimer_3B860(uint16_t* a1);
-int CreateWallOfFireEffect_3B8E0(uint16_t* a1);
+int InitEffectManaBall_3B5A0(uint16_t* a1);
+int InitEffectRip_3B620(uint16_t* a1);
+Type_AE400_29795* InitEffectBuilding_3B690(axis_3d* a1);
+int InitEffectCastle_3B6F0(uint16_t* a1);
+int InitEffectCastleAdjust_3B760(uint16_t* a1);
+int InitEffectCastleRepair_3B7B0_3BB30(uint16_t* a1);
+int InitEffectRollingRock_3B800(uint16_t* a1);
+int InitEffectCrabEgg_3B860(uint16_t* a1);
+int InitEffectExtra1_3B8E0(uint16_t* a1);
 int InitEffectExtra2_3B970(uint16_t* a1);
 int InitEffectExtra3_3BA00(uint16_t* a1);
 int InitEffectExtra4_3BA90(uint16_t* a1);
@@ -1362,7 +1362,7 @@ int SosMIDIUnInitSystem_60335();
 int SosMIDIInitDriver_6035F(unsigned int a1, unsigned int a2, int a3, int a4, int a5, unsigned int a6);
 int SosMIDIUnInitDriver_6080C(unsigned int a1, int a2);
 int SosMIDIResetDriver_6091D(int a1);
-void sub_609F4();
+void SosMIDIInitEnd_609F4();
 unsigned __int64 sub_60BDC(int a1);
 // _DWORD sprintf(_DWORD, _DWORD, ...); weak
 void DrawASpriteMCGA_60CE0_611F0(__int16 a1, __int16 a2, TypeTab* a3);
@@ -3632,21 +3632,21 @@ Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x0024, PORT_FN(InitEffectSkeleton_3B3E0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0026, PORT_FN(sub_3B460, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0027, PORT_FN(CreateManaBall_3B5A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0028, PORT_FN(CreateDeathMarker_3B620, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0029, PORT_FN(CreateClass10Type41_3B760, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x002A, PORT_FN(CreateClass10Type42_3B7B0_3BB30, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x002B, PORT_FN(CreateClass10Type43_3B6F0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x002C, PORT_FN(CreateBoulder_3B800, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x002D, (Type_AE400_29795 * (*)(axis_3d*))CreatePlayerFlag_3B690, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0027, PORT_FN(InitEffectManaBall_3B5A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0028, PORT_FN(InitEffectRip_3B620, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0029, PORT_FN(InitEffectCastleAdjust_3B760, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x002A, PORT_FN(InitEffectCastleRepair_3B7B0_3BB30, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x002B, PORT_FN(InitEffectCastle_3B6F0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x002C, PORT_FN(InitEffectRollingRock_3B800, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x002D, (Type_AE400_29795 * (*)(axis_3d*))InitEffectBuilding_3B690, 0x0001, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0032, PORT_FN(InitEffectRidgeNode_3B2A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0033, PORT_FN(InitEffectRidge_3B230, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0034, PORT_FN(CreateCrabSpawnTimer_3B860, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0035, PORT_FN(CreateWallOfFireEffect_3B8E0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0034, PORT_FN(InitEffectCrabEgg_3B860, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0035, PORT_FN(InitEffectExtra1_3B8E0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0036, PORT_FN(InitEffectExtra2_3B970, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0037, PORT_FN(InitEffectExtra3_3BA00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0038, PORT_FN(InitEffectExtra4_3BA90, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
@@ -4265,21 +4265,21 @@ Type_97D12 off_97D12[] = {
 { PORT_FN(InitEffectSkeleton_3B3E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 38 },
 { PORT_FN(sub_3B460, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 39 },
-{ PORT_FN(CreateManaBall_3B5A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 40 },
-{ PORT_FN(CreateDeathMarker_3B620, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 41 },
-{ PORT_FN(CreateClass10Type41_3B760, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 42 },
-{ PORT_FN(CreateClass10Type42_3B7B0_3BB30, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 43 },
-{ PORT_FN(CreateClass10Type43_3B6F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 44 },
-{ PORT_FN(CreateBoulder_3B800, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 45 },
-{ &CreatePlayerFlag_3B690, 1, 0x002548F4, 0 },
+{ PORT_FN(InitEffectManaBall_3B5A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 40 },
+{ PORT_FN(InitEffectRip_3B620, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 41 },
+{ PORT_FN(InitEffectCastleAdjust_3B760, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 42 },
+{ PORT_FN(InitEffectCastleRepair_3B7B0_3BB30, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 43 },
+{ PORT_FN(InitEffectCastle_3B6F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 44 },
+{ PORT_FN(InitEffectRollingRock_3B800, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 45 },
+{ &InitEffectBuilding_3B690, 1, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 50 },
 { PORT_FN(InitEffectRidgeNode_3B2A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 51 },
 { PORT_FN(InitEffectRidge_3B230, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 52 },
-{ PORT_FN(CreateCrabSpawnTimer_3B860, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 53 },
-{ PORT_FN(CreateWallOfFireEffect_3B8E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 54 },
+{ PORT_FN(InitEffectCrabEgg_3B860, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 53 },
+{ PORT_FN(InitEffectExtra1_3B8E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 54 },
 { PORT_FN(InitEffectExtra2_3B970, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 55 },
 { PORT_FN(InitEffectExtra3_3BA00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 56 },
 { PORT_FN(InitEffectExtra4_3BA90, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 },
@@ -28905,7 +28905,7 @@ void FnEffectSkeleton_26E90(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Per-tick handler of a mana ball (class 10 state 41, set by CreateManaBall_3B5A0).
+/// Per-tick handler of a mana ball (class 10 state 41, set by InitEffectManaBall_3B5A0).
 /// Original name: fn_effect_mana_ball (EFFECT.C), Hidden Worlds linker map.
 void FnEffectManaBall_27030(Type_AE400_29795* event)//1F8030_
 {
@@ -29496,7 +29496,7 @@ LABEL_42:
 
 int compare_27D30= 0;
 //SYNCHRONIZED WITH REMC1
-/// Per-tick handler of the player's flag (class 10 type 45, state 51, set by CreatePlayerFlag_3B690). Identified from its decoded sprite (named by the user).
+/// Per-tick handler of the player's flag (class 10 type 45, state 51, set by InitEffectBuilding_3B690). Identified from its decoded sprite (named by the user).
 /// Original name: fn_effect_tween_building (EFFECT.C), Hidden Worlds linker map.
 void FnEffectTweenBuilding_27D30(Type_AE400_29795* event)//1F8D30_
 {
@@ -30615,7 +30615,7 @@ int AffectBuilding_29640(Type_AE400_29795* event)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Per-tick handler of a crab spawn timer (class 10 state 56, set by CreateCrabSpawnTimer_3B860).
+/// Per-tick handler of a crab spawn timer (class 10 state 56, set by InitEffectCrabEgg_3B860).
 /// Original name: fn_effect_crab_egg (EFFECT.C), Hidden Worlds linker map.
 void FnEffectCrabEgg_296A0(Type_AE400_29795* a1x)
 {
@@ -47411,8 +47411,8 @@ int InitEffectBlindness_3B4D0(uint16_t* a1)
 
 //----- (0003B5A0) --------------------------------------------------------
 /// Constructor of a mana ball (class 10 type 39, state 41) at a1.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateManaBall_3B5A0(uint16_t* a1)//20C5A0_
+/// Original name: init_effect_mana_ball (INIT.C), Hidden Worlds linker map (placed by a unique run of equal function spacings in the map and in our code; class/type checked).
+int InitEffectManaBall_3B5A0(uint16_t* a1)//20C5A0_
 {
   int result; // eax
   int v2; // ebx
@@ -47447,8 +47447,8 @@ int CreateManaBall_3B5A0(uint16_t* a1)//20C5A0_
 
 //----- (0003B620) --------------------------------------------------------
 /// Constructor of a wizard's death marker (class 10 type 40, state 42) at a1.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateDeathMarker_3B620(uint16_t* a1)
+/// Original name: init_effect_rip (INIT.C), Hidden Worlds linker map (placed by a unique run of equal function spacings in the map and in our code; class/type checked).
+int InitEffectRip_3B620(uint16_t* a1)
 {
   int result; // eax
   _WORD *v2; // ebx
@@ -47473,8 +47473,8 @@ int CreateDeathMarker_3B620(uint16_t* a1)
 
 //----- (0003B690) --------------------------------------------------------
 /// Constructor of the player's flag (class 10 type 45) (initial state 51). Identified from its decoded sprite (named by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreatePlayerFlag_3B690(axis_3d* position)//20C690_
+/// Original name: init_effect_building (INIT.C), Hidden Worlds linker map (placed by a unique run of equal function spacings in the map and in our code; class/type checked).
+Type_AE400_29795* InitEffectBuilding_3B690(axis_3d* position)//20C690_
 {
   Type_AE400_29795* event = InitAThing_372C0_37680();
   if (event)
@@ -47494,9 +47494,9 @@ Type_AE400_29795* CreatePlayerFlag_3B690(axis_3d* position)//20C690_
 }
 
 //----- (0003B6F0) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 43).
 /// Constructor of class 10 type 43 (initial state 45).
-int CreateClass10Type43_3B6F0(uint16_t* a1)
+/// Original name: init_effect_castle (INIT.C), Hidden Worlds linker map (placed by a unique run of equal function spacings in the map and in our code; class/type checked).
+int InitEffectCastle_3B6F0(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -47520,9 +47520,9 @@ int CreateClass10Type43_3B6F0(uint16_t* a1)
 }
 
 //----- (0003B760) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 41).
 /// Constructor of class 10 type 41 (initial state 43).
-int CreateClass10Type41_3B760(uint16_t* a1)
+/// Original name: init_effect_castle_adjust (INIT.C), Hidden Worlds linker map (placed by a unique run of equal function spacings in the map and in our code; class/type checked).
+int InitEffectCastleAdjust_3B760(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -47544,9 +47544,9 @@ int CreateClass10Type41_3B760(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// TODO: rename when the entity is identified (class 10 type 42).
 /// Constructor of class 10 type 42 (initial state 44).
-int CreateClass10Type42_3B7B0_3BB30(uint16_t* a1)
+/// Original name: init_effect_castle_repair (INIT.C), Hidden Worlds linker map (placed by a unique run of equal function spacings in the map and in our code; class/type checked).
+int InitEffectCastleRepair_3B7B0_3BB30(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -47570,8 +47570,8 @@ int CreateClass10Type42_3B7B0_3BB30(uint16_t* a1)
 
 //----- (0003B800) --------------------------------------------------------
 /// Constructor of the boulder (class 10 type 44) (initial state 46). Identified from its decoded sprite (named by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateBoulder_3B800(uint16_t* a1)
+/// Original name: init_effect_rolling_rock (INIT.C), Hidden Worlds linker map (placed by a unique run of equal function spacings in the map and in our code; class/type checked).
+int InitEffectRollingRock_3B800(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -47595,8 +47595,8 @@ int CreateBoulder_3B800(uint16_t* a1)
 
 //----- (0003B860) --------------------------------------------------------
 /// Constructor of a crab spawn timer (class 10 type 52, state 56) at a1.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateCrabSpawnTimer_3B860(uint16_t* a1)
+/// Original name: init_effect_crab_egg (INIT.C), Hidden Worlds linker map (placed by a unique run of equal function spacings in the map and in our code; class/type checked).
+int InitEffectCrabEgg_3B860(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -47623,8 +47623,8 @@ int CreateCrabSpawnTimer_3B860(uint16_t* a1)
 
 //----- (0003B8E0) --------------------------------------------------------
 /// Constructor of the Wall of Fire spell's effect (class 10 type 53, state 58), created where CastWallOfFire's missile lands (missile +68/+69).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateWallOfFireEffect_3B8E0(uint16_t* a1)
+/// Original name: init_effect_extra1 (INIT.C), Hidden Worlds linker map (placed by a unique run of equal function spacings in the map and in our code; class/type checked).
+int InitEffectExtra1_3B8E0(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -56964,7 +56964,7 @@ char BuildCastleStage_47960_47CA0(int a1)
   int v4; // ecx
   __int16 v6; // [esp-4h] [ebp-10h]
 
-  v1 = CreateClass10Type42_3B7B0_3BB30((uint16_t*)PTR(a1 + 150));
+  v1 = InitEffectCastleRepair_3B7B0_3BB30((uint16_t*)PTR(a1 + 150));
   v2 = v1;
   if ( v1 )
   {
@@ -72468,7 +72468,8 @@ int SosMIDIResetDriver_6091D(int a1)
 
 //----- (000609F4) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_609F4()
+/// Original name: sosMIDIInit_End (sosminit.c), Hidden Worlds linker map (placed by a unique run of equal function spacings in the map and in our code; class/type checked).
+void SosMIDIInitEnd_609F4()
 {
   ;
 }
