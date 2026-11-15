@@ -470,7 +470,7 @@ void FnCreature08Dying_1CF60(Type_AE400_29795* a1);
 void FnCreature08Dead_1CFE0(Type_AE400_29795* a1);
 void FnCreature09Stand_1CFF0(Type_AE400_29795* a1);
 void FnCreature09Wander_1D060(Type_AE400_29795* a1);
-void sub_1D6D0(Type_AE400_29795* a1);
+void FnCreature09Rest_1D6D0(Type_AE400_29795* a1);
 void FnCreature09Attack_1DA60(Type_AE400_29795* a1);
 void FnCreature09Flock_1DC80(Type_AE400_29795* a1);
 void FnCreature09Dying_1DCB0(Type_AE400_29795* a1);
@@ -22914,7 +22914,7 @@ void FnCreature09Wander_1D060(Type_AE400_29795* a1x)
   if ( v2 )
   {
     if ( v2 == 1 )
-      sub_1D6D0(a1x);
+      FnCreature09Rest_1D6D0(a1x);
     goto LABEL_84;
   }
   if (a1x->var_u8_29853_58)
@@ -23146,7 +23146,8 @@ LABEL_84:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1D6D0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_09_rest (CREAT_09.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnCreature09Rest_1D6D0(Type_AE400_29795* a1x)
 {
   int v1; // ebp
   unsigned int v2; // esi
@@ -49431,7 +49432,7 @@ LABEL_28:
 // AE400: using guessed type int dword_AE400_AE3F0();
 // AE408: using guessed type int dword_AE408_AE3F8();
 
-/// Name is a guess (not in the Hidden Worlds linker map).
+/// Original name: load_level (IO.C), Hidden Worlds linker map (placed by offset projection).
 void LoadLevel_3E100_3E440(int level, void* buffer)
 {
   char pathBuffer[80];
