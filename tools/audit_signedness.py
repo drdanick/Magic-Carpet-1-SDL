@@ -4,7 +4,7 @@
 The struct conversion of the decompiled code typed some fields unsigned where the original loads them
 with movsx (or the other way round). Where the value then goes through a sign-sensitive operation (a
 difference compared with a limit, a division rounding toward zero, ...) the port behaves differently for
-values >= 0x8000 (found: axis_3d.x/.y in sub_120B0 and UpdateFollower_1A390).
+values >= 0x8000 (found: axis_3d.x/.y in AffectMapwho_120B0 and FnCreatureFlock_1A390).
 
 Fields come from the entity struct in engine/Basic.h: every 8/16-bit member whose name ends in its
 entity offset (..._29867_72) plus axis_3d x/y/z at +72/74/76. For every port function with an original

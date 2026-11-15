@@ -5,7 +5,7 @@ Watcom code normally preserves every register except eax across a call, and Hex-
 on that assumption. A few routines (hand-written asm, #pragma aux helpers) leave scratch values in ecx /
 edx / ... without saving them. When a caller then reads such a register right after the call, the
 original uses the callee's leftover value while the decompiled code uses the caller's old value.
-Example: sub_54F80 pushes edx after calling sub_42410 (which leaves dy*dy in edx) as the argument of
+Example: Seen_54F80 pushes edx after calling sub_42410 (which leaves dy*dy in edx) as the argument of
 the square root at 0x410CE - Hex-Rays showed the player index there.
 
 For every original function reachable from the port's function addresses this computes the registers

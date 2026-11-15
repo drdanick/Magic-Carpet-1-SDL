@@ -2,8 +2,8 @@
 """64-bit conversion helper: wraps function-pointer casts in sub_main.cpp in PORT_FN (engine/ptr32.h)
 where the function takes or returns an int "address" but the cast signature uses a pointer (or the
 other way round), e.g.
-    (void (*)(Type_AE400_29795*))RemoveSelfTick_253E0      RemoveSelfTick_253E0(int a1)
- -> PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*))
+    (void (*)(Type_AE400_29795*))FnEffectFreeze_253E0      FnEffectFreeze_253E0(int a1)
+ -> PORT_FN(FnEffectFreeze_253E0, void(Type_AE400_29795*))
 Casts whose parameter count differs from the function, or that need no conversion, stay as they are.
 
 Usage (repo root): python tools/x64_thunk_tables.py [--dry-run]

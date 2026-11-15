@@ -334,7 +334,7 @@ typedef struct {// len 32 - creature movement profile (creatureTypes_98F38[])
 	uint16 v_4;//?
 	uint16 v_6;//?
 	uint16 v_8;//?
-	int16 maxHeight_10; // max height above ground (KeepHeightAboveGround_42000_42340)
+	int16 maxHeight_10; // max height above ground (Gravity_42000_42340)
 	int16 minHeight_12; // min height above ground
 	int16 vertSpeed_14; // vertical speed towards the allowed band (negative = sinks)
 	uint16 maxSlope_16; // steepest terrain slope it can move onto (MoveCreature_196E0)
@@ -431,7 +431,7 @@ typedef struct _Type_AE400_29795 {// len 164
 	int32 manaDelta_29927_132;//132 per-tick mana change: regeneration, or minus a spell's cost
 	int32 manaMax_29931_136;//136 mana capacity
 	int32 mana_29935_140;//140 current mana
-	uint16 manaOwner_29939_144;//144 entity whose max mana (+136) this entity's mana counts towards (AddManaToOwner_48340_48680)
+	uint16 manaOwner_29939_144;//144 entity whose max mana (+136) this entity's mana counts towards (AddMana_48340_48680)
 	uint16 var_u16_29941_146;//146 //index entity
 	uint8_t stub4[2];
 	axis_3du var_u32_150;
@@ -547,7 +547,7 @@ typedef struct {//size 232713
 	uint8 var_u8_580;
 	uint32 var_u32_581;
 	uint8 stub4b[8];
-	ptr32<Type_AE400_29795> freeList_593[1000]; // free entity slots, used as a stack (FreeEntity_41E90_421D0)
+	ptr32<Type_AE400_29795> freeList_593[1000]; // free entity slots, used as a stack (DoDeleteThing_41E90_421D0)
 	int32 var_u32_4593;
 	ptr32<Type_AE400_29795> var_u32_4597[1000];
 
@@ -751,7 +751,7 @@ typedef struct {//size 6
 }
 Type_AD008_ACFF8;
 
-typedef struct {//size 6*4 - ring iterator (BeginRingIter_11410 / NextRingOffset_114B0)
+typedef struct {//size 6*4 - ring iterator (StartSearch_11410 / NextSearch_114B0)
 	int32 firstRing_0;
 	int32 lastRing_4;
 	int32 ring_8; // current ring, -1 = iterator free

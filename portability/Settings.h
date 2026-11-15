@@ -2,7 +2,7 @@
 // Port-level settings (not part of the original game). Filled from, in increasing priority:
 //   built-in defaults -> config.json -> environment -> command line ("--xxx" options).
 // Original DOS game options ("-level 3", "-cheat 1", ...) are passed through untouched to
-// ProcessCommandLine_34DD0_35190.
+// CommandLineInterupter_34DD0_35190.
 
 #include <cstdint>
 #include <string>
@@ -58,7 +58,7 @@ struct Remc1Settings {
 	int snapshotFrame = -1;    // --snapshot-frame N: dump process memory before/after the entity tick of frame N (diff harness)
 	std::vector<int> snapshotFrames; // --snapshot-frame N1,N2,...: all requested frames (snapshotFrame = the next one)
 	std::string snapshotDir;   // --snapshot-dir D: where the dumps go (default "snapshot")
-	std::string snapshotWhat = "tick"; // --snapshot-what tick|draw|frame: entity tick, one DrawWorld_30D90 or one DrawGameFrame_20FB0 call
+	std::string snapshotWhat = "tick"; // --snapshot-what tick|draw|frame: entity tick, one DrawWorld_30D90 or one Draw_20FB0 call
 };
 
 extern Remc1Settings g_settings;
