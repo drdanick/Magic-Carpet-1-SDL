@@ -48705,7 +48705,7 @@ void sub_3E410_3E750(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "%s/gam%05d.dat", "movie", saveSlot);
-  sub_62E60_63370(pathBuffer, (uint8*)str_AE400_AE3F0, sizeof(str_AE400_AE3F0));
+  sub_62E60_63370(pathBuffer, (uint8*)str_AE400_AE3F0, sizeof(Type_str_AE400_AE3F0)); // PORT: was sizeof(str_AE400_AE3F0), the pointer (8 bytes); the original writes 0x38D09 (0x3E430)
 }
 
 //----- (0003E460) --------------------------------------------------------

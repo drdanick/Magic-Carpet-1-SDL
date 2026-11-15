@@ -1175,6 +1175,10 @@ Known open issues:
   entity's max mana 0. The port now skips stale entries (first triggers at tick 9127 of the recording,
   so the recording replays exactly only up to there). Also pattern #65 (flag OR truncated to a byte)
   and the harmless `JUMPOUT(0x36079)` in `sub_36080_36440` (a shared epilogue) removed.
+- Fixed 2026-11-15: the game's own movie recorder (`movie/gam%05d.dat` + `mvi%05d.dat`, game-state flag 2)
+  saved 8 bytes of game state instead of 232713: `sizeof(str_AE400_AE3F0)` is the pointer. The original
+  writes 0x38D09 bytes (0x3E430). Found while naming the file routines; the other `sizeof(global)` uses
+  are arrays or structs.
 - Fixed 2026-11-15: class 5 state 90 (the `6t` state of creature type 15) did nothing; the original calls
   `sub_19B10(a1, 90)` like every other `6t` creature state (pattern #71). Found while naming the dispatch
   tables (not yet seen in a recording).
