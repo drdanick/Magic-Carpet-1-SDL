@@ -42459,6 +42459,7 @@ void sub_36480_36840(Type_AE400_193795* a1, Type_1090* a2)//207480_
 }
 
 //----- (000365C0) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 _WORD *sub_365C0_36980(int a1)
 {
   _WORD *result; // eax
@@ -53267,6 +53268,7 @@ LABEL_4:
 }
 
 //----- (00043010) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_43010(unsigned int a1, int a2, unsigned __int16 a3)
 {
   unsigned int v3; // edx
@@ -53968,6 +53970,7 @@ char *LoadFileAlloc_43E50(const char *a1)
 }
 
 //----- (00043EC0) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 void sub_43EC0_44200()
 {
   unsigned __int16 v5; // ax
@@ -64583,6 +64586,7 @@ LABEL_9:
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (000558F0) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_558F0()
 {
   int v0; // eax
@@ -68721,6 +68725,7 @@ void sub_5BB60_5C070()
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //----- (0005BD40) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_5BD40()//22CD40_
 {
   int result; // eax
@@ -69032,6 +69037,7 @@ void ResizeScr_5C468_5C978()//22D468_
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //----- (0005C76B) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 __int16 sub_5C76B()
 {
   __int16 result; // ax
@@ -69077,6 +69083,7 @@ __int16 sub_5C76B()
 // AE3FC: using guessed type int begBscreen_AE3FC_AE3EC_26C3FC_26C3EC;
 
 //----- (0005C82E) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 __int16 sub_5C82E()
 {
   __int16 result; // ax
@@ -69126,6 +69133,7 @@ int sub_5C8CD()
 // AE424: using guessed type int begPalData_AE424_AE414_26C424_26C414;
 
 //----- (0005C8F4) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 void sub_5C8F4()
 {
   __int16 v0; // ax
@@ -69396,6 +69404,7 @@ char sub_5CAE7()
 // 12EFF4: using guessed type int dword_12EFF4;
 
 //----- (0005CB73) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 void sub_5CB73(int a1, __int16 a2)
 {
   __int16 v2; // cx
@@ -69932,6 +69941,7 @@ void sub_5D750_5DC60(__int16 a1, __int16 a2)
 // CC140: using guessed type int dword_CC140;
 
 //----- (0005D7DF) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_5D7DF()
 {
   ;
@@ -69947,12 +69957,14 @@ bool MidiSongDone_5D7F0_5DD00(int a1)
 // 9C136: using guessed type int dword_9C136[8];
 
 //----- (0005D829) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_5D829()
 {
   ;
 }
 
 //----- (0005D872) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_5D872()
 {
   ;
@@ -70069,6 +70081,7 @@ int RegisterTimerEvent_5D97B(unsigned int a1, int a2, __int16 a3, unsigned int a
 // A0481: using guessed type int dword_A0481[];
 
 //----- (0005DB1D) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_5DB1D(unsigned int a1, unsigned int a2)
 {
   unsigned int i; // [esp+4h] [ebp-4h]
@@ -70169,6 +70182,7 @@ int RemoveTimerEvent_5DC91(int a1)
 // A0481: using guessed type int dword_A0481[];
 
 //----- (0005DE40) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_5DE40(int a1)
 {
   return dword_A0401[a1];
@@ -70185,6 +70199,7 @@ int sub_5DE63(int a1)
 // A039D: using guessed type int dword_A039D;
 
 //----- (0005DE91) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_5DE91(int a1, int a2, int a3)
 {
   void *retaddr[2]; // [esp+10h] [ebp+10h]
@@ -70226,12 +70241,14 @@ int sub_5DF4B(int a1, int a2, int a3)
 // 5DF60: positive sp value 4 has been found
 
 //----- (0005DF61) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_5DF61()
 {
   ;
 }
 
 //----- (0005DF72) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_5DF72()
 {
   ;
@@ -70667,12 +70684,14 @@ int sub_5EDD6(int a1)
 // 9EBC9: using guessed type int dword_9EBC9;
 
 //----- (0005EE00) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_5EE00()
 {
   ;
 }
 
 //----- (0005EE11) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_5EE11()
 {
   ;
@@ -70932,12 +70951,14 @@ int sub_5F83E(char a1)
 // 9ECAD: using guessed type char byte_9ECAD;
 
 //----- (0005F913) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_5F913()
 {
   ;
 }
 
 //----- (0005F924) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_5F924()
 {
   ;
@@ -71032,6 +71053,7 @@ void sub_5FD67()
 }
 
 //----- (00060199) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_60199(int a1, unsigned __int16 a2)
 {
   sub_5F935();
@@ -71456,12 +71478,14 @@ int MidiResetChannels_6091D(int a1)
 // 9EF0C: using guessed type int dword_9EF0C;
 
 //----- (000609F4) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_609F4()
 {
   ;
 }
 
 //----- (00060BDC) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 unsigned __int64 sub_60BDC(int a1)
 {
   int v2; // [esp+0h] [ebp-1Ch]
@@ -74546,6 +74570,7 @@ int LoadPathFile_634E0_639F0(Pathstruct* pathstruct)//2344e0_
 }
 
 //----- (0006377B) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6377B()
 {
   ;
@@ -74559,12 +74584,14 @@ char *sub_6378C(int a1)
 // 9EF10: using guessed type char *off_9EF10[20];
 
 //----- (000637AF) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_637AF()
 {
   ;
 }
 
 //----- (000637C0) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_637C0()
 {
   ;
@@ -74581,6 +74608,7 @@ int MidiSetInstruments_637D1(int a1, int a2, unsigned __int16 a3, int a4)
 // 9C07A: using guessed type _DWORD byte_9C07A[39];
 
 //----- (000638E0) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_638E0(int a1, int a2, int a3)
 {
   void *retaddr[2]; // [esp+10h] [ebp+10h]
@@ -74591,6 +74619,7 @@ int sub_638E0(int a1, int a2, int a3)
 // 9ECFE: using guessed type char byte_9ECFE;
 
 //----- (000638F8) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_638F8()
 {
   ;
@@ -74622,6 +74651,7 @@ int GetRNCFilesize_63910_63E20(Pathstruct* pathstruct)//234910_
 }
 
 //----- (00063A8C) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_63A8C()
 {
   ;
@@ -74701,6 +74731,7 @@ int sub_63C06()
 // 131578: using guessed type int dword_131578;
 
 //----- (00063C5A) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_63C5A_6416A(const void *a1, unsigned int a2, char *a3, __int16 a4, unsigned int a5)
 {
   int v7; // [esp+4h] [ebp-18h]
@@ -74757,6 +74788,7 @@ int sub_63C5A_6416A(const void *a1, unsigned int a2, char *a3, __int16 a4, unsig
 // 1315B8: using guessed type __int16 word_1315B8;
 
 //----- (00064248) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_64248(unsigned int a1, __int16 a2)
 {
   if ( !a1 && !a2 )
@@ -74785,12 +74817,14 @@ int sub_64248(unsigned int a1, __int16 a2)
 // 1315B8: using guessed type __int16 word_1315B8;
 
 //----- (00064414) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_64414()
 {
   ;
 }
 
 //----- (00064425) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_64425()
 {
   ;
@@ -74839,6 +74873,7 @@ void sub_645FB()
 }
 
 //----- (000647C0) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_647C0(int a1, unsigned __int16 a2)
 {
   sub_64436();
@@ -75214,12 +75249,14 @@ int sub_650FF_6560F(__int16 a1, int a2, unsigned int a3, _DWORD *a4)
 }
 
 //----- (000651D6) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_651D6()
 {
   ;
 }
 
 //----- (000651E7) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_651E7()
 {
   ;
@@ -75234,12 +75271,14 @@ bool IsSampleDone_651F8(int a1, int a2)
 }
 
 //----- (0006533A) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6533A()
 {
   ;
 }
 
 //----- (0006534B) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6534B()
 {
   ;
@@ -75268,6 +75307,7 @@ int sub_65965(int a1, int a2)
 }
 
 //----- (00065D57) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_65D57()
 {
   ;
@@ -75394,6 +75434,7 @@ void sub_65F10_66420(__int16 a1, __int16 a2)
 // CC1C6: using guessed type __int16 word_CC1C6;
 
 //----- (00066107) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_66107()
 {
   ;
@@ -75418,6 +75459,7 @@ int sub_661A4(int a1, int a2)
 // A0258: using guessed type int dword_A0258[5];
 
 //----- (0006623A) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6623A()
 {
   ;
@@ -75450,6 +75492,7 @@ void sub_66250(__int16 a1, __int16 a2, unsigned __int16 a3)
 // CC140: using guessed type int dword_CC140;
 
 //----- (00066313) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_66313()
 {
   ;
@@ -75463,6 +75506,7 @@ int sub_66324(int a1)
 }
 
 //----- (0006637C) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6637C()
 {
   ;
@@ -75612,6 +75656,7 @@ int sub_66612(unsigned __int8 a1)
 // 6B5A3: using guessed type _DWORD tolower(_DWORD);
 
 //----- (0006666C) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 __int16 sub_6666C(__int16 result)
 {
   _BOOL1 v1; // zf
@@ -75641,6 +75686,7 @@ __int16 sub_6666C(__int16 result)
 // 12EF71: using guessed type char byte_12EF71;
 
 //----- (00066CAD) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 void sub_66CAD()
 {
     FixPerifery();
@@ -75675,6 +75721,7 @@ unsigned __int8 sub_66D24(__int16 a1)
 // A01C4: using guessed type int dword_A01C4;
 
 //----- (00066D6A) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 unsigned __int8 sub_66D6A_6727A(int a1, __int16 a2, int a3, __int16 a4)
 {
   unsigned __int8 v4; // al
@@ -75807,6 +75854,7 @@ int sub_66EA2()
 // A01C4: using guessed type int dword_A01C4;
 
 //----- (00066EE5) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_66EE5()
 {
   ;
@@ -75823,18 +75871,21 @@ unsigned __int64 sub_66EF6(unsigned int a1, __int16 a2)
 // 66F12: variable 'v3' is possibly undefined
 
 //----- (00066F1A) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_66F1A()
 {
   ;
 }
 
 //----- (00066F2B) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_66F2B()
 {
   ;
 }
 
 //----- (00066F3C) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_66F3C()
 {
   int v0; // eax
@@ -75971,12 +76022,14 @@ LABEL_28:
 // A04D1: using guessed type char byte_A04D1;
 
 //----- (00067464) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_67464()
 {
   ;
 }
 
 //----- (00067475) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_67475()
 {
   ;
@@ -75990,6 +76043,7 @@ bool sub_67486(int a1)
 // 9B18E: using guessed type int dword_9B18E[5];
 
 //----- (000674B9) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_674B9()
 {
   ;
@@ -76232,6 +76286,7 @@ __int16 sub_67944()
 }
 
 //----- (0006797C) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6797C()
 {
   ;
@@ -76290,12 +76345,14 @@ int sub_67A29(int (*a1)(_DWORD, _DWORD, _DWORD, _DWORD), __int16 a2)
 // 9C22E: using guessed type int (*byte_9C22E)(_DWORD, _DWORD, _DWORD, _DWORD);
 
 //----- (00067A53) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_67A53()
 {
   ;
 }
 
 //----- (00067A64) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_67A64()
 {
   ;
@@ -76519,12 +76576,14 @@ int sub_6813F(int a1, int a2, int a3)
 }
 
 //----- (0006815E) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6815E()
 {
   ;
 }
 
 //----- (0006816F) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6816F()
 {
   ;
@@ -76708,12 +76767,14 @@ int sub_68491(int a1, int a2)
 // 9C9F0: using guessed type int dword_9C9F0[5];
 
 //----- (00068600) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_68600()
 {
   ;
 }
 
 //----- (00068611) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_68611()
 {
   ;
@@ -76813,36 +76874,42 @@ int sub_68813(unsigned int a1)
 // 9B18E: using guessed type int dword_9B18E[5];
 
 //----- (0006887D) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6887D()
 {
   ;
 }
 
 //----- (0006888E) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6888E()
 {
   ;
 }
 
 //----- (000688F5) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_688F5()
 {
   ;
 }
 
 //----- (00068906) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_68906()
 {
   ;
 }
 
 //----- (000689D1) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_689D1()
 {
   ;
 }
 
 //----- (000689E2) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_689E2()
 {
   ;
@@ -76961,12 +77028,14 @@ int sub_68C82()
 }
 
 //----- (00068C9B) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_68C9B()
 {
   ;
 }
 
 //----- (00068CAC) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_68CAC()
 {
   ;
@@ -77047,12 +77116,14 @@ unsigned int sub_68D7F(unsigned int a1, int a2, int a3)
 // A0C04: using guessed type int dword_A0C04[36];
 
 //----- (00068F15) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_68F15()
 {
   ;
 }
 
 //----- (00068F26) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_68F26()
 {
   ;
@@ -77110,12 +77181,14 @@ char sub_68F37(int a1, int a2, unsigned int a3)
 // A09F0: using guessed type int dword_A09F0;
 
 //----- (0006905C) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6905C()
 {
   ;
 }
 
 //----- (0006906D) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6906D()
 {
   ;
@@ -77206,12 +77279,14 @@ void sub_6907E(unsigned __int8 a1, unsigned __int8 a2, unsigned __int8 a3)
 // A0A38: using guessed type int dword_A0A38[12];
 
 //----- (0006954C) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6954C()
 {
   ;
 }
 
 //----- (0006955D) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6955D()
 {
   ;
@@ -77317,12 +77392,14 @@ int sub_69716(unsigned int a1)
 // A0994: using guessed type int dword_A0994[18];
 
 //----- (0006979E) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6979E()
 {
   ;
 }
 
 //----- (000697AF) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_697AF()
 {
   ;
@@ -77389,12 +77466,14 @@ void sub_697C0(int a1, int a2, unsigned int a3)
 // A09E7: using guessed type char byte_A09E7;
 
 //----- (0006999B) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6999B()
 {
   ;
 }
 
 //----- (000699AC) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_699AC()
 {
   ;
@@ -77437,12 +77516,14 @@ char sub_699BD()
 // A0954: using guessed type int dword_A0954[16];
 
 //----- (00069A83) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69A83()
 {
   ;
 }
 
 //----- (00069A94) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69A94()
 {
   ;
@@ -77550,12 +77631,14 @@ int sub_69BFE(int a1)
 }
 
 //----- (00069DFE) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69DFE()
 {
   ;
 }
 
 //----- (00069E0F) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69E0F()
 {
   ;
@@ -77578,12 +77661,14 @@ char sub_69E20()
 // A0788: using guessed type int dword_A0788;
 
 //----- (00069E63) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69E63()
 {
   ;
 }
 
 //----- (00069E74) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69E74()
 {
   ;
@@ -77604,12 +77689,14 @@ char sub_69E85(int a1, int a2, unsigned int a3)
 // A0788: using guessed type int dword_A0788;
 
 //----- (00069ECB) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69ECB()
 {
   ;
 }
 
 //----- (00069EDC) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69EDC()
 {
   ;
@@ -77663,12 +77750,14 @@ int sub_69F93(int a1, __int16 a2, int a3, int a4)
 }
 
 //----- (00069FC2) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69FC2()
 {
   ;
 }
 
 //----- (00069FD3) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69FD3()
 {
   ;
@@ -77693,12 +77782,14 @@ char sub_69FE4(unsigned int a1)
 // A0773: using guessed type char byte_A0773;
 
 //----- (0006A063) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A063()
 {
   ;
 }
 
 //----- (0006A074) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A074()
 {
   ;
@@ -77715,12 +77806,14 @@ char sub_6A085(unsigned __int8 a1, __int16 a2)
 }
 
 //----- (0006A0F9) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A0F9()
 {
   ;
 }
 
 //----- (0006A10A) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A10A()
 {
   ;
@@ -77748,12 +77841,14 @@ char sub_6A11B()
 // A0774: using guessed type char byte_A0774;
 
 //----- (0006A1B3) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A1B3()
 {
   ;
 }
 
 //----- (0006A1C4) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A1C4()
 {
   ;
@@ -77772,12 +77867,14 @@ char sub_6A1D5(unsigned __int8 a1, __int16 a2)
 }
 
 //----- (0006A275) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A275()
 {
   ;
 }
 
 //----- (0006A286) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A286()
 {
   ;
@@ -77795,12 +77892,14 @@ char sub_6A297(unsigned __int8 a1)
 }
 
 //----- (0006A2F5) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A2F5()
 {
   ;
 }
 
 //----- (0006A306) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A306()
 {
   ;
@@ -77829,12 +77928,14 @@ char sub_6A317()
 // A0773: using guessed type char byte_A0773;
 
 //----- (0006A3E3) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A3E3()
 {
   ;
 }
 
 //----- (0006A3F4) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A3F4()
 {
   ;
@@ -77890,12 +77991,14 @@ char sub_6A405(int a1, int a2, unsigned __int8 a3)
 // 6A405: using guessed type _DWORD arg_0;
 
 //----- (0006A5EC) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A5EC()
 {
   ;
 }
 
 //----- (0006A5FD) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A5FD()
 {
   ;
@@ -77910,6 +78013,7 @@ char sub_6A60E()
 // A0773: using guessed type char byte_A0773;
 
 //----- (0006A62D) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A62D()
 {
   ;
@@ -78199,6 +78303,7 @@ void sub_6B47C_6B98C(TColor* palette)
 // 6B49D: variable 'v3' is possibly undefined
 
 //----- (0006B87A) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_6B87A()
 {
   return dword_A0CA4;
@@ -78206,6 +78311,7 @@ int sub_6B87A()
 // A0CA4: using guessed type int dword_A0CA4;
 
 //----- (0006BCA3) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_6BCA3(int a1, unsigned __int8 *a2, int *a3)
 {
   int *v3; // edi
@@ -79179,18 +79285,21 @@ int sub_6D35C_6D86C(unsigned __int16 a1)
 // 6D35C: using guessed type char var_38[28];
 
 //----- (0006D5EC) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_6D5EC(int a1, int a2)
 {
   return *(_DWORD *)PTR(a2);
 }
 
 //----- (0006DD6C) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6DD6C()
 {
   ;
 }
 
 //----- (0006DD7D) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_6DD7D(int a1, int a2, __int16 a3)
 {
   if ( !*(int *)((char *)&dword_A01CC + 6 * a1) && !word_A01D0[3 * a1] )
@@ -79211,12 +79320,14 @@ int sub_6DD7D(int a1, int a2, __int16 a3)
 // A01EA: using guessed type int dword_A01EA[5];
 
 //----- (0006DE12) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6DE12()
 {
   ;
 }
 
 //----- (0006DE23) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6DE23()
 {
   ;
@@ -79395,42 +79506,49 @@ int sub_6E23C(int a1, __int16 a2)
 }
 
 //----- (0006E295) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6E295()
 {
   ;
 }
 
 //----- (0006E2A6) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6E2A6()
 {
   ;
 }
 
 //----- (0006E33D) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6E33D()
 {
   ;
 }
 
 //----- (0006E34E) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6E34E()
 {
   ;
 }
 
 //----- (0006E3B9) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6E3B9()
 {
   ;
 }
 
 //----- (0006E5A0) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 void *sub_6E5A0()
 {
   return &unk_131BE0;
 }
 
 //----- (0006E5A6) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 void *sub_6E5A6()
 {
   return &unk_131BDC;
@@ -80685,6 +80803,7 @@ int __stdcall sub_6FDEC(unsigned __int8 a1, unsigned __int8 a2, __int16 a3)
 // A1B42: using guessed type __int16 word_A1B42[];
 
 //----- (0006FEBF) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int __stdcall sub_6FEBF(unsigned __int16 a1)
 {
   int v2; // esi
@@ -80708,6 +80827,7 @@ int __stdcall sub_6FEBF(unsigned __int16 a1)
 // A118A: using guessed type int dword_A118A;
 
 //----- (0006FF53) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int __stdcall sub_6FF53(unsigned __int16 a1)
 {
   __int16 i; // si
@@ -81248,6 +81368,7 @@ int sub_70E1C(int a1, int a2, unsigned int a3)
 // A07C8: using guessed type int dword_A07C8[];
 
 //----- (00071012) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 char *sub_71012()
 {
   void *retaddr; // [esp+0h] [ebp+0h] BYREF
@@ -81258,6 +81379,7 @@ char *sub_71012()
 // A0CA8: using guessed type int dword_A0CA8;
 
 //----- (0007101B) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 void sub_7101B()
 {
   dword_A8874 = 0x8000;
@@ -81265,6 +81387,7 @@ void sub_7101B()
 // A8874: using guessed type int dword_A8874;
 
 //----- (00071524) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_71524()
 {
     //fix word_A636C = __SS__;
@@ -81272,12 +81395,14 @@ void sub_71524()
 // A636C: using guessed type __int16 word_A636C;
 
 //----- (00071B53) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 int sub_71B53()
 {
   return 0;
 }
 
 //----- (00071BC9) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 void sub_71BC9(int a1, const void *a2, void *a3)
 {
     FixPerifery();
@@ -112784,6 +112909,7 @@ void sub_79B2D()
 // 12EFF4: using guessed type int dword_12EFF4;
 
 //----- (0007B444) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_7B444()
 {
   return dword_A0CA8;
