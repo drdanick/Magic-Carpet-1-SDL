@@ -485,7 +485,7 @@ class, type)`). The state index is global within a class, not per type.
 | 3 | 0 | wizard on a carpet (player 0 = local human) | model 0 human, 1 computer in the wizard list; `Type_1103` at +160 |
 | 3 | 2 | castle | inferred (level 26: life 40000, owner = wizard) |
 | 3 | 3 | balloon | original-bugs #8 |
-| 3 | 4..11 | wizard start positions only | `sub_44D30_45070` |
+| 3 | 4..11 | wizard start positions only | `SpawnWizard_44D30_45070` |
 | 5 | 3 | worm segment | chain via +52/+54, original-bugs #1 |
 | 5 | 5 | crab (big ones shoot lightning) | seeks mana balls, raises more through 10/52 |
 | 5 | 16 | wyvern | life 100000, mana 50000 (level 26) |
@@ -505,6 +505,13 @@ class, type)`). The state index is global within a class, not per type.
 | 11 | 0..31 | switches/triggers: `CreateSwitch_3BB20(pos, type, state)`, wrappers `CreateSwitchNN_*` (state = type); MC2 calls this class switches | |
 | 11 | 2 | trigger (marked by standing stones on level 26; not recyclable) | life 300 |
 | 12 | 0..23 | spell, type = spell number (list below) | states below |
+
+Computer wizards (`ComputerWizardTick_13170`): AI mode = wizard data +415, chosen by `AiChooseAction_136C0` from
+check/start pairs. 1 castle upgrade (`AiCastleUpgradeMode_13800`), 3 build castle (`AiBuildCastle_138F0`), 6
+possession (`AiPossessionMode_13BA0`), 7 attack castle (`AiAttackCastleMode_13CA0`), 8 attack wizard, 9 attack
+balloon (8, 9 and 13 share `sub_13DC0`). Not identified yet: 2/5 (no-op), 4, 11 (below half life, targets the own
+castle), 12, 13. Target entity +146, its distance +148. Class-3 entities (wizards, castles, balloons) are in the
+list at `str_AE408_AE3F8` +36462.
 
 Spell numbers (from the spell-menu icons `begSprTab[6 + t]` of `hspr0-0`/`mspr0-0`, names confirmed by the
 user): 0 Fireball, 1 Heal, 2 Speed, 3 Possession, 4 Shield, 5 Beyond Sight, 6 Earthquake, 7 Meteor, 8 Volcano,
@@ -689,7 +696,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     `*WScreen`/`*BScreen` a guard band (`MallocGuarded`, freed through `free_426E0_42A20`); remc2
     keeps the same tables. Symptom: intermittent crash (heap-layout dependent) - use `tools/asan_run.sh`.
     Related: `ShowLevelPerformance_4E5B0_4E8F0` freed its font and then drew one more pass with it.
-46. **Half-converted typed offsets (again).** `sub_13BA0` (AI wizard, mode 6: chase target) computed its
+46. **Half-converted typed offsets (again).** `AiPossessionMode_13BA0` (AI wizard, mode 6: chase target) computed its
     heading towards `((uint8_t*)v1) + 36` with `v1` a `_WORD*` - 36 *bytes* into the target instead of
     its position at byte 72 (`v1 + 36`, asm `lea edi,[esi+48h]`). The AI wizard flew to the map corner
     and circled there. When one call uses `(uint8_t*)v + N` and a sibling uses `v + N`, check the asm.
@@ -797,7 +804,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     `lea esi, [ecx + eax*2 + 0x23d9]` with eax = 3 * player (0x44D6F), and the eight record handlers
     `SetPlayerStart0..7` write 9177, 9183, ..., 9219.
     - The port declared an 8-byte struct (`axis_3d` + an invented `uint16 v_9181`), so
-      `sub_44D30_45070` read player n's start 2n bytes too far.
+      `SpawnWizard_44D30_45070` read player n's start 2n bytes too far.
     - Player 0 (the human) was right. Every computer wizard started at a mix of its own y/z and the
       next entry (level 15: red at tile (186,16) instead of (42,186)), with its castle there too.
     - The same `memset(..., 48)` beside it gave it away: 8 x 6 = 48.
@@ -1091,7 +1098,7 @@ How the level's actors work (useful for "X never spawns" reports):
   when the human wizard (model 0 in the wizard list) touches the matching trigger entity
   (`Switch00Tick_59A80_59F90` & co., `sub_5A090_5A5A0`).
 - Class 3 types 4..11 only store wizard start positions; wizards are created per player
-  (`sub_44D30_45070`): model 0 = human, model 1 = computer (state 1, `ComputerWizardTick_13170` AI, mode byte at
+  (`SpawnWizard_44D30_45070`): model 0 = human, model 1 = computer (state 1, `ComputerWizardTick_13170` AI, mode byte at
   player+415).
 - Class 10 type 39 = mana ball (mana at +140); class 5 type 5 creatures (state 31, `CrabTick_1BD20`) seek mana
   balls and turn mana into class 10 type 52 spawn timers (state 0x38) that raise another type 5.
@@ -1109,7 +1116,7 @@ How the level's actors work (useful for "X never spawns" reports):
   targets (6.2.25); being hit flashed black instead of red (`byte_B700D/E/F` = `byte_B7010-3/-2/-1`,
   6.2.7). Regression replay: `tests/replays/castle_upgrade.txt` (a user recording).
 - Castle spell built the castle at the wrong place (6.2.22); post-level info FMV hung with sound on
-  (6.2.23); `byte_38C97[...]` castle-level reads in `sub_44D30_45070` now use the game-state field.
+  (6.2.23); `byte_38C97[...]` castle-level reads in `SpawnWizard_44D30_45070` now use the game-state field.
 
 Known open issues:
 - **Tools are platform-agnostic:** paths come from `tools/remc1_paths.py` (`find_port_exe()` = $REMC1_EXE or the
@@ -1191,7 +1198,7 @@ Known open issues:
   `AiChooseManaToPossess_15080` and `AiFindRivalWizard_145B0` compare `50000 - maxMana/10*k/255` signed (`idiv`, `jge`/`jle`), the
   port unsigned via `_DWORD`, so targets owned by a wizard with a lot of mana took the other branch.
   Found in `possession_spell_bug.recording` (frames 56995, 59853), which now desyncs from frame 18360.
-  Fixed again 2026-11-15 in the two sibling checks of `AiChooseAction_136C0` (`sub_143A0`, `sub_147E0`): the
+  Fixed again 2026-11-15 in the two sibling checks of `AiChooseAction_136C0` (`AiFindRivalCastle_143A0`, `AiFindRivalBalloon_147E0`): the
   same `50000 - ...` comparison plus a mana comparison each (`idiv`/`jge` in the original). `grep "50000 -"`
   finds every copy.
 - Fixed 2026-11-04: the heal spell cost no mana while the caster's mana delta was not negative (pattern

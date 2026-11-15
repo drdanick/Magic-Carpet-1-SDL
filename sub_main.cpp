@@ -336,31 +336,31 @@ _BOOL1 IsCastleSiteFree_12F70(_WORD *a1);
 int ComputerWizardTick_13170(int a1);
 int sub_132B0(int a1);
 int AiChooseAction_136C0(int a1);
-bool sub_13800(int a1);
+bool AiCastleUpgradeMode_13800(int a1);
 int sub_138E0();
 int AiBuildCastle_138F0(int a1);
 bool sub_13990(_WORD *a1);
 int sub_13A10(int a1);
 bool sub_13A70(int a1);
-bool sub_13BA0(int a1);
-bool sub_13CA0(int a1);
+bool AiPossessionMode_13BA0(int a1);
+bool AiAttackCastleMode_13CA0(int a1);
 bool sub_13DC0(int a1);
 bool sub_13DD0(int a1);
 int AiChooseCastleSite_13F00(int a1);
-int sub_14120(int a1);
+int AiPlanCastleUpgrade_14120(int a1);
 unsigned int AiPlanPossession_14230(int a1);
 int sub_14310(int a1);
-int sub_143A0(int a1);
+int AiFindRivalCastle_143A0(int a1);
 int AiFindRivalWizard_145B0(int a1);
-int sub_147E0(int a1);
+int AiFindRivalBalloon_147E0(int a1);
 int sub_14B10(int a1);
-int sub_14C40(int a1);
-int sub_14C80(int a1);
+int AiStartCastleUpgrade_14C40(int a1);
+int AiStartBuildCastle_14C80(int a1);
 int AiStartPossession_14CE0(int a1);
-int sub_14D00(int a1);
+int AiStartAttackCastle_14D00(int a1);
 int sub_14D20(int a1);
-int sub_14D40(int a1);
-int sub_14D60(int a1);
+int AiStartAttackBalloon_14D40(int a1);
+int AiStartAttackWizard_14D60(int a1);
 int sub_14DA0(int a1);
 int sub_14DC0(int a1);
 unsigned int GetWizardSpell_14E60(int a1, unsigned __int8 a2);
@@ -1013,14 +1013,14 @@ int sub_448E0_44C20();
 void sub_44BE0_44F20(Type_AE400_29795* a1, char a2);
 signed int sub_44C10_44F50(int a1);
 void sub_44C90_44FD0(Type_AE400_29795* event);
-void sub_44D30_45070(TypeStrAE400_13323* a1, Type_AE400_29795* event);
+void SpawnWizard_44D30_45070(TypeStrAE400_13323* a1, Type_AE400_29795* event);
 int sub_45410_45750(Type_AE400_29795* a1);
 void sub_455D0_45910(Type_AE400_29795* a1);
 void sub_45C10_45F50(Type_AE400_29795* a1);
 void PlayerWizardTick_45C90_45FD0(Type_AE400_29795* a1);
-int sub_45FC0_46300(int a1);
+int WizardDyingTick_45FC0_46300(int a1);
 void sub_463B0_466F0(int a1);
-void sub_46480_467C0(int a1);
+void WizardDeadTick_46480_467C0(int a1);
 void sub_46520_46860(Type_AE400_29795* a1);
 int sub_46540_46880(Type_AE400_29795* a1);
 void sub_46840_46B80(Type_AE400_29795* a1);
@@ -3805,8 +3805,8 @@ Type_254A34x str_254C3C[] = {
 Type_254A34x str_254ADC[] = {
 { 0x002548F4,0x0000,PlayerWizardTick_45C90_45FD0, 0x0001, 0x0000 },
 { 0x002548F4,0x0001,PORT_FN(ComputerWizardTick_13170, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0002,PORT_FN(sub_45FC0_46300, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0003,PORT_FN(sub_46480_467C0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0002,PORT_FN(WizardDyingTick_45FC0_46300, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0003,PORT_FN(WizardDeadTick_46480_467C0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0004,PORT_FN(sub_46DB0_470F0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0005,PORT_FN(CastleTick_46F10_47250, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0006,PORT_FN(sub_470E0, void(Type_AE400_29795*)),0x0001,0x0000 },
@@ -16723,7 +16723,7 @@ int ComputerWizardTick_13170(int a1)
       result = AiChooseAction_136C0(a1);
       break;
     case 1:
-      sub_13800(a1);
+      AiCastleUpgradeMode_13800(a1);
       result = AiChooseAction_136C0(a1);
       break;
     case 2:
@@ -16740,11 +16740,11 @@ int ComputerWizardTick_13170(int a1)
       result = AiChooseAction_136C0(a1);
       break;
     case 6:
-      sub_13BA0(a1);
+      AiPossessionMode_13BA0(a1);
       result = AiChooseAction_136C0(a1);
       break;
     case 7:
-      sub_13CA0(a1);
+      AiAttackCastleMode_13CA0(a1);
       result = AiChooseAction_136C0(a1);
       break;
     case 8:
@@ -16925,7 +16925,7 @@ int AiChooseAction_136C0(int a1)
 
   if ( AiChooseCastleSite_13F00(a1) )
   {
-    sub_14C80(a1);
+    AiStartBuildCastle_14C80(a1);
     return 1;
   }
   else if ( sub_14310(a1) )
@@ -16940,24 +16940,24 @@ int AiChooseAction_136C0(int a1)
     {
       return 1;
     }
-    else if ( sub_14120(a1) )
+    else if ( AiPlanCastleUpgrade_14120(a1) )
     {
-      sub_14C40(a1);
+      AiStartCastleUpgrade_14C40(a1);
       return 1;
     }
-    else if ( sub_143A0(a1) )
+    else if ( AiFindRivalCastle_143A0(a1) )
     {
-      sub_14D00(a1);
+      AiStartAttackCastle_14D00(a1);
       return 1;
     }
     else if ( AiFindRivalWizard_145B0(a1) )
     {
-      sub_14D60(a1);
+      AiStartAttackWizard_14D60(a1);
       return 1;
     }
-    else if ( sub_147E0(a1) )
+    else if ( AiFindRivalBalloon_147E0(a1) )
     {
-      sub_14D40(a1);
+      AiStartAttackBalloon_14D40(a1);
       return 1;
     }
     else if ( AiPlanPossession_14230(a1) )
@@ -16977,7 +16977,8 @@ int AiChooseAction_136C0(int a1)
 }
 
 //----- (00013800) --------------------------------------------------------
-bool sub_13800(int a1)
+/// AI mode 1: flies to the own castle and casts the castle spell (16) on it.
+bool AiCastleUpgradeMode_13800(int a1)
 {
   int v1; // ebx
   bool result; // eax
@@ -17108,7 +17109,8 @@ bool sub_13A70(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00013BA0) --------------------------------------------------------
-bool sub_13BA0(int a1)
+/// AI mode 6: approaches the target mana and casts possession (spell 3) on it.
+bool AiPossessionMode_13BA0(int a1)
 {
   _WORD *v1; // esi
   bool result; // eax
@@ -17143,7 +17145,8 @@ bool sub_13BA0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00013CA0) --------------------------------------------------------
-bool sub_13CA0(int a1)
+/// AI mode 7: approaches the target castle and casts attack spells at it (spell chosen by sub_16310).
+bool AiAttackCastleMode_13CA0(int a1)
 {
   int v1; // esi
   bool result; // eax
@@ -17287,7 +17290,8 @@ int AiChooseCastleSite_13F00(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00014120) --------------------------------------------------------
-int sub_14120(int a1)
+/// AI check: own castle present and finished (state 4), able to grow, castle spell ready and enough mana; targets the castle (+146/+148).
+int AiPlanCastleUpgrade_14120(int a1)
 {
   unsigned int v1; // esi
   unsigned int v2; // eax
@@ -17378,7 +17382,8 @@ int sub_14310(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (000143A0) --------------------------------------------------------
-int sub_143A0(int a1)
+/// AI check: the nearest rival castle (class 3 type 2 in the class-3 list, str_AE408 +36462) worth attacking; targets it (+146/+148).
+int AiFindRivalCastle_143A0(int a1)
 {
   unsigned int i; // ebx
   int v2; // edi
@@ -17480,7 +17485,8 @@ int AiFindRivalWizard_145B0(int a1)
 // AE408: using guessed type int dword_AE408_AE3F8();
 
 //----- (000147E0) --------------------------------------------------------
-int sub_147E0(int a1)
+/// AI check: the nearest rival balloon (class 3 type 3 in the class-3 list) carrying enough mana; targets it (+146/+148).
+int AiFindRivalBalloon_147E0(int a1)
 {
   unsigned int i; // ebx
   int v2; // edx
@@ -17577,21 +17583,23 @@ int sub_14B10(int a1)
 // AE408: using guessed type int dword_AE408_AE3F8();
 
 //----- (00014C40) --------------------------------------------------------
-int sub_14C40(int a1)
+/// sets the AI mode (wizard data +415) to 1, castle upgrade (after AiPlanCastleUpgrade_14120).
+int AiStartCastleUpgrade_14C40(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 1;
   return 1;
 }
 
 //----- (00014C80) --------------------------------------------------------
-int sub_14C80(int a1)
+/// sets the AI mode (wizard data +415) to 3, build a castle (after AiChooseCastleSite_13F00; mode handler AiBuildCastle_138F0).
+int AiStartBuildCastle_14C80(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 3;
   return 1;
 }
 
 //----- (00014CE0) --------------------------------------------------------
-/// AI: switches the wizard to AI mode 6 (possession; ComputerWizardTick_13170 then runs sub_13BA0).
+/// AI: switches the wizard to AI mode 6 (possession; ComputerWizardTick_13170 then runs AiPossessionMode_13BA0).
 int AiStartPossession_14CE0(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 6;
@@ -17599,7 +17607,8 @@ int AiStartPossession_14CE0(int a1)
 }
 
 //----- (00014D00) --------------------------------------------------------
-int sub_14D00(int a1)
+/// sets the AI mode (wizard data +415) to 7, attack a castle (after AiFindRivalCastle_143A0).
+int AiStartAttackCastle_14D00(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 7;
   return 1;
@@ -17613,14 +17622,16 @@ int sub_14D20(int a1)
 }
 
 //----- (00014D40) --------------------------------------------------------
-int sub_14D40(int a1)
+/// sets the AI mode (wizard data +415) to 9, attack a balloon (after AiFindRivalBalloon_147E0).
+int AiStartAttackBalloon_14D40(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 9;
   return 1;
 }
 
 //----- (00014D60) --------------------------------------------------------
-int sub_14D60(int a1)
+/// sets the AI mode (wizard data +415) to 8, attack a wizard (after AiFindRivalWizard_145B0).
+int AiStartAttackWizard_14D60(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 8;
   return 1;
@@ -48103,7 +48114,7 @@ void sub_3C9D0_3CD10()//20D9D0_
 		//add_compare(0x20DC7D, true);
 #endif debug1
 		//debug
-			sub_44D30_45070(&str_AE400_AE3F0->str_13323[v106x], actEvent);
+			SpawnWizard_44D30_45070(&str_AE400_AE3F0->str_13323[v106x], actEvent);
 			//adress 0x20DC8F
 			//debug
 #ifdef debug1
@@ -54457,7 +54468,8 @@ void sub_44C90_44FD0(Type_AE400_29795* event)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
+/// Puts player a1x's wizard at its start position (playerStart_9177), creating it (class 3, type 1 for a computer player, else 0) when `event` is entity 0 or moving it there on respawn; recreates its spells and, when new, picks its sprite by player number.
+void SpawnWizard_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
 {
   Type_AE400_29795* v2x; // ebx
   int v3; // edx
@@ -55090,7 +55102,8 @@ void PlayerWizardTick_45C90_45FD0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_45FC0_46300(int a1)
+/// Per-tick handler of a dying wizard (class 3 state 2): falls (gravity on +46), then scatters its spells, creates its death marker (10/40) and goes to state 3 with a respawn delay in +26.
+int WizardDyingTick_45FC0_46300(int a1)
 {
   __int16 v1; // cx
   int v2; // edi
@@ -55250,7 +55263,8 @@ void sub_463B0_466F0(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_46480_467C0(int a1)
+/// Per-tick handler of a dead wizard (class 3 state 3): a computer wizard that still has a castle respawns (SpawnWizard_44D30_45070) once +26 has counted down; the player goes through sub_463B0_466F0.
+void WizardDeadTick_46480_467C0(int a1)
 {
   int v1; // ecx
   int v2; // edx
@@ -55272,7 +55286,7 @@ void sub_46480_467C0(int a1)
           *(_WORD *)PTR(a1 + 26) = v4 - 1;
         else
         {
-          sub_44D30_45070((TypeStrAE400_13323*)PTR(dword_AE400_AE3F0() + 13323 + v2), (Type_AE400_29795*)PTR(a1));
+          SpawnWizard_44D30_45070((TypeStrAE400_13323*)PTR(dword_AE400_AE3F0() + 13323 + v2), (Type_AE400_29795*)PTR(a1));
           return;
         }
       }
