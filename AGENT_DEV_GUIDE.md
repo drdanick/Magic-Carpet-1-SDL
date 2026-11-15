@@ -571,7 +571,9 @@ width*height pixels; flag bit 0 = FLC deltas follow (frame count u16, then 0xF1F
 Spell numbers (from the spell-menu icons `begSprTab[6 + t]` of `hspr0-0`/`mspr0-0`, names confirmed by the
 user): 0 Fireball, 1 Heal, 2 Speed, 3 Possession, 4 Shield, 5 Beyond Sight, 6 Earthquake, 7 Meteor, 8 Volcano,
 9 Crater, 10 Teleport, 11 Duel, 12 Invisible, 13 Steal Mana, 14 Rebound, 15 Lightning, 16 Castle, 17 Undead Army,
-18 Lightning Storm, 19 Mana Magnet, 20 Wall of Fire, 21 Reverse Speed, 22 Global Death, 23 Rapid Fireball. The
+18 Lightning Storm, 19 Mana Magnet, 20 Wall of Fire, 21 Reverse Speed, 22 Global Death, 23 Rapid Fireball. Original (linker map) names differ for some: 11 rubber_band (Duel), 18 alliance (Lightning Storm),
+19 teleport_castle (Mana Magnet), 20-23 extra1-4 (Wall of Fire, Reverse Speed, Global Death, Rapid Fireball), 12 invisable,
+17 skeleton, 2 speed_up; the init_spell_* order in the map equals our constructor order. The
 game text (`data/etext.dat`) has no spell names. Most cast handlers (`Cast<Spell>_*`) create a class 9 missile
 (`Create<Spell>Missile_*`) and store the class/type of its payload in the missile's +68/+69. `FnShotGeneric_52770_52AB0`
 creates that entity on impact (`Create<Spell>Effect_*`, class 10). Example: Volcano -> 9/4 -> 10/9 -> 10/18 eruption.

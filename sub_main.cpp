@@ -862,29 +862,29 @@ Type_AE400_29795* CreateSwitch31_3BF50(axis_3d* position);
 
 int InitSpell_3BF70(int a1, char a2, char a3, int a4, __int16 a5, char a6, char a7, int a8, __int16 a9);
 int InitSpellPocession_3C040(int a1);
-int CreateCastleSpell_3C060(int a1);
-int CreateFireballSpell_3C090(int a1);
-int CreateSpeedSpell_3C0C0(int a1);
-int CreateHealSpell_3C0F0(int a1);
-int CreateTeleportSpell_3C120(int a1);
-int CreateEarthquakeSpell_3C150(int a1);
-int CreateManaMagnetSpell_3C180(int a1);
-int CreateShieldSpell_3C1B0(int a1);
-int CreateMeteorSpell_3C1E0(int a1);
-int CreateReboundSpell_3C210(int a1);
-int CreateLightningSpell_3C240(int a1);
-int CreateDuelSpell_3C270(int a1);
-int CreateStealManaSpell_3C2A0(int a1);
-int CreateInvisibleSpell_3C2D0(int a1);
-int CreateCraterSpell_3C300(int a1);
-int CreateBeyondSightSpell_3C330(int a1);
-int CreateLightningStormSpell_3C360(int a1);
-int CreateVolcanoSpell_3C390(int a1);
-int CreateUndeadArmySpell_3C3C0(int a1);
-int CreateWallOfFireSpell_3C3F0(int a1);
-int CreateReverseSpeedSpell_3C420(int a1);
-int CreateGlobalDeathSpell_3C450(int a1);
-int CreateRapidFireballSpell_3C480(int a1);
+int InitSpellCastle_3C060(int a1);
+int InitSpellFireball_3C090(int a1);
+int InitSpellSpeedUp_3C0C0(int a1);
+int InitSpellHeal_3C0F0(int a1);
+int InitSpellTeleport_3C120(int a1);
+int InitSpellEarthquake_3C150(int a1);
+int InitSpellTeleportCastle_3C180(int a1);
+int InitSpellShield_3C1B0(int a1);
+int InitSpellMeteor_3C1E0(int a1);
+int InitSpellRebound_3C210(int a1);
+int InitSpellLightning_3C240(int a1);
+int InitSpellRubberBand_3C270(int a1);
+int InitSpellStealMana_3C2A0(int a1);
+int InitSpellInvisable_3C2D0(int a1);
+int InitSpellCrater_3C300(int a1);
+int InitSpellBeyondSight_3C330(int a1);
+int InitSpellAlliance_3C360(int a1);
+int InitSpellVolcano_3C390(int a1);
+int InitSpellSkeleton_3C3C0(int a1);
+int InitSpellExtra1_3C3F0(int a1);
+int InitSpellExtra2_3C420(int a1);
+int InitSpellExtra3_3C450(int a1);
+int InitSpellExtra4_3C480(int a1);
 int CreateClass13Type0_3C4B0(int a1);
 int CreateClass13Type1_3C4E0(int a1);
 int CreateClass13Type2_3C510(int a1);
@@ -1173,7 +1173,7 @@ int PickupSpellOne_55DB0_562E0(Type_AE400_29795* a1x);
 int EnoughMana_55DD0_56300(int a1, int *a2);
 int AdjustMana_55E80_563B0(int a1, int a2);
 // int HandTheSpell_55EF0_56420(__int16 a1, int a2, int a3);
-int CastFireball_56090_565C0(int a1);
+int FnSpellFireball_56090_565C0(int a1);
 void FnSpellHeal_56270_567A0(int a1);
 void FnSpellSpeedUp_56380_568B0(int a1);
 int FnSpellPocession_56510_56A40(int a1);
@@ -1196,7 +1196,7 @@ int FnSpellTeleportCastle_57B80_580B0(int a1);
 int FnSpellExtra1_57D40_58270(int a1);
 void FnSpellExtra2_57F00_58410(int a1);
 int FnSpellExtra3_580A0_585B0(int a1);
-int CastRapidFireball_58240_58750(int a1);
+int FnSpellExtra4_58240_58750(int a1);
 void DrawColorSprite_58768_58C78(__int16 a1, __int16 a2, TypeTab* a3, unsigned __int8 a4);
 void OpenTmapDataFile_587E0_58CF0();
 int LoadTmapAt_58860_58D70(unsigned __int16 a1, uint8_t* a2);
@@ -3689,30 +3689,30 @@ Type_254A34 str_256208[] = {
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_2567D8[] = {
-{ 0x002548F4, 0x0000, PORT_FN(CreateFireballSpell_3C090, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(CreateHealSpell_3C0F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(CreateSpeedSpell_3C0C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(InitSpellFireball_3C090, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(InitSpellHeal_3C0F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(InitSpellSpeedUp_3C0C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0003, PORT_FN(InitSpellPocession_3C040, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(CreateShieldSpell_3C1B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(CreateBeyondSightSpell_3C330, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, PORT_FN(CreateEarthquakeSpell_3C150, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, PORT_FN(CreateMeteorSpell_3C1E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0008, PORT_FN(CreateVolcanoSpell_3C390, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0009, PORT_FN(CreateCraterSpell_3C300, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, PORT_FN(CreateTeleportSpell_3C120, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000B, PORT_FN(CreateDuelSpell_3C270, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000C, PORT_FN(CreateInvisibleSpell_3C2D0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000D, PORT_FN(CreateStealManaSpell_3C2A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000E, PORT_FN(CreateReboundSpell_3C210, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000F, PORT_FN(CreateLightningSpell_3C240, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0010, PORT_FN(CreateCastleSpell_3C060, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0011, PORT_FN(CreateUndeadArmySpell_3C3C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0012, PORT_FN(CreateLightningStormSpell_3C360, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0013, PORT_FN(CreateManaMagnetSpell_3C180, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0014, PORT_FN(CreateWallOfFireSpell_3C3F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0015, PORT_FN(CreateReverseSpeedSpell_3C420, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0016, PORT_FN(CreateGlobalDeathSpell_3C450, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0017, PORT_FN(CreateRapidFireballSpell_3C480, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(InitSpellShield_3C1B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(InitSpellBeyondSight_3C330, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, PORT_FN(InitSpellEarthquake_3C150, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, PORT_FN(InitSpellMeteor_3C1E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0008, PORT_FN(InitSpellVolcano_3C390, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0009, PORT_FN(InitSpellCrater_3C300, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, PORT_FN(InitSpellTeleport_3C120, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000B, PORT_FN(InitSpellRubberBand_3C270, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000C, PORT_FN(InitSpellInvisable_3C2D0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000D, PORT_FN(InitSpellStealMana_3C2A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000E, PORT_FN(InitSpellRebound_3C210, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000F, PORT_FN(InitSpellLightning_3C240, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0010, PORT_FN(InitSpellCastle_3C060, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0011, PORT_FN(InitSpellSkeleton_3C3C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0012, PORT_FN(InitSpellAlliance_3C360, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0013, PORT_FN(InitSpellTeleportCastle_3C180, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0014, PORT_FN(InitSpellExtra1_3C3F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0015, PORT_FN(InitSpellExtra2_3C420, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0016, PORT_FN(InitSpellExtra3_3C450, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0017, PORT_FN(InitSpellExtra4_3C480, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_256980[] = {
@@ -4105,7 +4105,7 @@ Type_254A34x str_256038[] = {
 };
 
 Type_254A34x str_2563D8[] = {//2563D8
-{ 0x002548F4,0x0000,PORT_FN(CastFireball_56090_565C0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0000,PORT_FN(FnSpellFireball_56090_565C0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250,0x0001,0x0000 },
 { 0x002548F4,0x0002,SpellJarSpawnTickWrapper_56260,0x0001,0x0000 },
 { 0x002548F4,0x0003,PORT_FN(FnSpellHeal_56270_567A0, void(Type_AE400_29795*)),0x0001,0x0000 },
@@ -4174,7 +4174,7 @@ Type_254A34x str_2563D8[] = {//2563D8
 { 0x002548F4, 0x0042, PORT_FN(FnSpellExtra3_580A0_585B0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0043, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0044, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0045, PORT_FN(CastRapidFireball_58240_58750, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0045, PORT_FN(FnSpellExtra4_58240_58750, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0046, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0047, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 }
@@ -4316,30 +4316,30 @@ Type_97D12 off_97D12[] = {
 { PORT_FN(Switch31Tick_5A080, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 } };
 
 Type_97D12 off_987DE[] = {
-{ PORT_FN(CreateFireballSpell_3C090, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 1 },
-{ PORT_FN(CreateHealSpell_3C0F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 2 },
-{ PORT_FN(CreateSpeedSpell_3C0C0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 3 },
+{ PORT_FN(InitSpellFireball_3C090, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 1 },
+{ PORT_FN(InitSpellHeal_3C0F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 2 },
+{ PORT_FN(InitSpellSpeedUp_3C0C0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 3 },
 { PORT_FN(InitSpellPocession_3C040, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 4 },
-{ PORT_FN(CreateShieldSpell_3C1B0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
-{ PORT_FN(CreateBeyondSightSpell_3C330, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 6 },
-{ PORT_FN(CreateEarthquakeSpell_3C150, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
-{ PORT_FN(CreateMeteorSpell_3C1E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 8 },
-{ PORT_FN(CreateVolcanoSpell_3C390, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 9 },
-{ PORT_FN(CreateCraterSpell_3C300, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 10 },
-{ PORT_FN(CreateTeleportSpell_3C120, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
-{ PORT_FN(CreateDuelSpell_3C270, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 12 },
-{ PORT_FN(CreateInvisibleSpell_3C2D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 13 },
-{ PORT_FN(CreateStealManaSpell_3C2A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 14 },
-{ PORT_FN(CreateReboundSpell_3C210, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 15 },
-{ PORT_FN(CreateLightningSpell_3C240, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 16 },
-{ PORT_FN(CreateCastleSpell_3C060, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 17 },
-{ PORT_FN(CreateUndeadArmySpell_3C3C0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 18 },
-{ PORT_FN(CreateLightningStormSpell_3C360, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 19 },
-{ PORT_FN(CreateManaMagnetSpell_3C180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 20 },
-{ PORT_FN(CreateWallOfFireSpell_3C3F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 21 },
-{ PORT_FN(CreateReverseSpeedSpell_3C420, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 22 },
-{ PORT_FN(CreateGlobalDeathSpell_3C450, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 23 },
-{ PORT_FN(CreateRapidFireballSpell_3C480, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 },
+{ PORT_FN(InitSpellShield_3C1B0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
+{ PORT_FN(InitSpellBeyondSight_3C330, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 6 },
+{ PORT_FN(InitSpellEarthquake_3C150, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
+{ PORT_FN(InitSpellMeteor_3C1E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 8 },
+{ PORT_FN(InitSpellVolcano_3C390, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 9 },
+{ PORT_FN(InitSpellCrater_3C300, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 10 },
+{ PORT_FN(InitSpellTeleport_3C120, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
+{ PORT_FN(InitSpellRubberBand_3C270, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 12 },
+{ PORT_FN(InitSpellInvisable_3C2D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 13 },
+{ PORT_FN(InitSpellStealMana_3C2A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 14 },
+{ PORT_FN(InitSpellRebound_3C210, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 15 },
+{ PORT_FN(InitSpellLightning_3C240, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 16 },
+{ PORT_FN(InitSpellCastle_3C060, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 17 },
+{ PORT_FN(InitSpellSkeleton_3C3C0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 18 },
+{ PORT_FN(InitSpellAlliance_3C360, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 19 },
+{ PORT_FN(InitSpellTeleportCastle_3C180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 20 },
+{ PORT_FN(InitSpellExtra1_3C3F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 21 },
+{ PORT_FN(InitSpellExtra2_3C420, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 22 },
+{ PORT_FN(InitSpellExtra3_3C450, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 23 },
+{ PORT_FN(InitSpellExtra4_3C480, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 },
 { nullptr, 0, 0x48F40000, 37 }
 };
 
@@ -48056,184 +48056,184 @@ int InitSpellPocession_3C040(int a1)
 
 //----- (0003C060) --------------------------------------------------------
 /// Constructor of the castle spell (class 12 type 16, state 48) via InitSpell_3BF70.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateCastleSpell_3C060(int a1)
+/// Original name: init_spell_castle (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_castle of the same type 16).
+int InitSpellCastle_3C060(int a1)
 {
   return InitSpell_3BF70(a1, 16, 48, 1000, 101, 1, 0, 0, 10000);
 }
 
 //----- (0003C090) --------------------------------------------------------
 /// Constructor of the fireball spell (class 12 type 0, state 0) via InitSpell_3BF70.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateFireballSpell_3C090(int a1)
+/// Original name: init_spell_fireball (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_fireball of the same type 0).
+int InitSpellFireball_3C090(int a1)
 {
   return InitSpell_3BF70(a1, 0, 0, 200, 5, 1, 0, 0, 125);
 }
 
 //----- (0003C0C0) --------------------------------------------------------
 /// Constructor of the speed spell (class 12 type 2, state 6) via InitSpell_3BF70.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateSpeedSpell_3C0C0(int a1)
+/// Original name: init_spell_speed_up (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_speed_up of the same type 2).
+int InitSpellSpeedUp_3C0C0(int a1)
 {
   return InitSpell_3BF70(a1, 2, 6, 1000, 251, 0, 0, 0, 100);
 }
 
 //----- (0003C0F0) --------------------------------------------------------
 /// Constructor of the heal spell (class 12 type 1, state 3) via InitSpell_3BF70.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateHealSpell_3C0F0(int a1)
+/// Original name: init_spell_heal (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_heal of the same type 1).
+int InitSpellHeal_3C0F0(int a1)
 {
   return InitSpell_3BF70(a1, 1, 3, 1000, 21, 1, 0, 0, 100);
 }
 
 //----- (0003C120) --------------------------------------------------------
 /// Constructor of the Teleport spell (class 12 type 10, state 30) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateTeleportSpell_3C120(int a1)
+/// Original name: init_spell_teleport (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_teleport of the same type 10).
+int InitSpellTeleport_3C120(int a1)
 {
   return InitSpell_3BF70(a1, 10, 30, 5000, 51, 1, 0, 10000, 100);
 }
 
 //----- (0003C150) --------------------------------------------------------
 /// Constructor of the Earthquake spell (class 12 type 6, state 18) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateEarthquakeSpell_3C150(int a1)
+/// Original name: init_spell_earthquake (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_earthquake of the same type 6).
+int InitSpellEarthquake_3C150(int a1)
 {
   return InitSpell_3BF70(a1, 6, 18, 6000, 51, 1, 0, 120000, 6000);
 }
 
 //----- (0003C180) --------------------------------------------------------
 /// Constructor of the Mana Magnet spell (class 12 type 19, state 57) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateManaMagnetSpell_3C180(int a1)
+/// Original name: init_spell_teleport_castle (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_teleport_castle of the same type 19).
+int InitSpellTeleportCastle_3C180(int a1)
 {
   return InitSpell_3BF70(a1, 19, 57, 4000, 17, 1, 0, 10000, 100);
 }
 
 //----- (0003C1B0) --------------------------------------------------------
 /// Constructor of the Shield spell (class 12 type 4, state 12) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateShieldSpell_3C1B0(int a1)
+/// Original name: init_spell_shield (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_shield of the same type 4).
+int InitSpellShield_3C1B0(int a1)
 {
   return InitSpell_3BF70(a1, 4, 12, 2000, 251, 1, 0, 0, 100);
 }
 
 //----- (0003C1E0) --------------------------------------------------------
 /// Constructor of the Meteor spell (class 12 type 7, state 21) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateMeteorSpell_3C1E0(int a1)
+/// Original name: init_spell_meteor (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_meteor of the same type 7).
+int InitSpellMeteor_3C1E0(int a1)
 {
   return InitSpell_3BF70(a1, 7, 21, 10000, 11, 1, 0, 100000, 10000);
 }
 
 //----- (0003C210) --------------------------------------------------------
 /// Constructor of the Rebound spell (class 12 type 14, state 42) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateReboundSpell_3C210(int a1)
+/// Original name: init_spell_rebound (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_rebound of the same type 14).
+int InitSpellRebound_3C210(int a1)
 {
   return InitSpell_3BF70(a1, 14, 42, 1000, 101, 1, 0, 8000, 100);
 }
 
 //----- (0003C240) --------------------------------------------------------
 /// Constructor of the Lightning spell (class 12 type 15, state 45) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateLightningSpell_3C240(int a1)
+/// Original name: init_spell_lightning (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_lightning of the same type 15).
+int InitSpellLightning_3C240(int a1)
 {
   return InitSpell_3BF70(a1, 15, 45, 1000, 2, 0, 0, 25000, 500);
 }
 
 //----- (0003C270) --------------------------------------------------------
 /// Constructor of the Duel spell (class 12 type 11, state 33) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateDuelSpell_3C270(int a1)
+/// Original name: init_spell_rubber_band (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_rubber_band of the same type 11).
+int InitSpellRubberBand_3C270(int a1)
 {
   return InitSpell_3BF70(a1, 11, 33, 2500, 17, 1, 0, 16000, 100);
 }
 
 //----- (0003C2A0) --------------------------------------------------------
 /// Constructor of the Steal Mana spell (class 12 type 13, state 39) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateStealManaSpell_3C2A0(int a1)
+/// Original name: init_spell_steal_mana (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_steal_mana of the same type 13).
+int InitSpellStealMana_3C2A0(int a1)
 {
   return InitSpell_3BF70(a1, 13, 39, 500, 11, 1, 0, 20000, 100);
 }
 
 //----- (0003C2D0) --------------------------------------------------------
 /// Constructor of the Invisible spell (class 12 type 12, state 36) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateInvisibleSpell_3C2D0(int a1)
+/// Original name: init_spell_invisable (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_invisable of the same type 12).
+int InitSpellInvisable_3C2D0(int a1)
 {
   return InitSpell_3BF70(a1, 12, 36, 5000, 251, 1, 0, 50000, 100);
 }
 
 //----- (0003C300) --------------------------------------------------------
 /// Constructor of the Crater spell (class 12 type 9, state 27) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateCraterSpell_3C300(int a1)
+/// Original name: init_spell_crater (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_crater of the same type 9).
+int InitSpellCrater_3C300(int a1)
 {
   return InitSpell_3BF70(a1, 9, 27, 12000, 31, 1, 0, 100000, 6000);
 }
 
 //----- (0003C330) --------------------------------------------------------
 /// Constructor of the Beyond Sight spell (class 12 type 5, state 15) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateBeyondSightSpell_3C330(int a1)
+/// Original name: init_spell_beyond_sight (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_beyond_sight of the same type 5).
+int InitSpellBeyondSight_3C330(int a1)
 {
   return InitSpell_3BF70(a1, 5, 15, 3000, 101, 1, 0, 0, 100);
 }
 
 //----- (0003C360) --------------------------------------------------------
 /// Constructor of the Lightning Storm spell (class 12 type 18, state 54) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateLightningStormSpell_3C360(int a1)
+/// Original name: init_spell_alliance (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_alliance of the same type 18).
+int InitSpellAlliance_3C360(int a1)
 {
   return InitSpell_3BF70(a1, 18, 54, 20000, 33, 1, 0, 90000, 2000);
 }
 
 //----- (0003C390) --------------------------------------------------------
 /// Constructor of the Volcano spell (class 12 type 8, state 24) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateVolcanoSpell_3C390(int a1)
+/// Original name: init_spell_volcano (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_volcano of the same type 8).
+int InitSpellVolcano_3C390(int a1)
 {
   return InitSpell_3BF70(a1, 8, 24, 30000, 65, 1, 0, 180000, 1000);
 }
 
 //----- (0003C3C0) --------------------------------------------------------
 /// Constructor of the Undead Army spell (class 12 type 17, state 51) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateUndeadArmySpell_3C3C0(int a1)
+/// Original name: init_spell_skeleton (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_skeleton of the same type 17).
+int InitSpellSkeleton_3C3C0(int a1)
 {
   return InitSpell_3BF70(a1, 17, 51, 13000, 13, 1, 0, 150000, 100);
 }
 
 //----- (0003C3F0) --------------------------------------------------------
 /// Constructor of the Wall of Fire spell (class 12 type 20, state 60) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateWallOfFireSpell_3C3F0(int a1)
+/// Original name: init_spell_extra1 (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_extra1 of the same type 20).
+int InitSpellExtra1_3C3F0(int a1)
 {
   return InitSpell_3BF70(a1, 20, 60, 5000, 51, 1, 0, 12000, 24464);
 }
 
 //----- (0003C420) --------------------------------------------------------
 /// Constructor of the Reverse Speed spell (class 12 type 21, state 63) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateReverseSpeedSpell_3C420(int a1)
+/// Original name: init_spell_extra2 (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_extra2 of the same type 21).
+int InitSpellExtra2_3C420(int a1)
 {
   return InitSpell_3BF70(a1, 21, 63, 1000, 251, 0, 0, 0, 100);
 }
 
 //----- (0003C450) --------------------------------------------------------
 /// Constructor of the Global Death spell (class 12 type 22, state 66) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateGlobalDeathSpell_3C450(int a1)
+/// Original name: init_spell_extra3 (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_extra3 of the same type 22).
+int InitSpellExtra3_3C450(int a1)
 {
   return InitSpell_3BF70(a1, 22, 66, 75000, 101, 1, 0, 200000, 7000);
 }
 
 //----- (0003C480) --------------------------------------------------------
 /// Constructor of the Rapid Fireball spell (class 12 type 23, state 69) via InitSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateRapidFireballSpell_3C480(int a1)
+/// Original name: init_spell_extra4 (INIT.C), Hidden Worlds linker map (via the cast handler fn_spell_extra4 of the same type 23).
+int InitSpellExtra4_3C480(int a1)
 {
   return InitSpell_3BF70(a1, 23, 69, 600, 3, 0, 0, 50000, 50);
 }
@@ -65692,8 +65692,8 @@ int HandTheSpell_55EF0_56420(__int16 a1, int a2, int a3)
 //SYNCHRONIZED WITH REMC1
 /// Fireball spell for spell slot a1 (+42 caster): fires missile 9/0 from the caster's hand along its
 /// heading/pitch; on impact it spawns explosion 10/0.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CastFireball_56090_565C0(int a1)
+/// Original name: fn_spell_fireball (SPELL.C), Hidden Worlds linker map (the only unused fn_spell_ name, type 0).
+int FnSpellFireball_56090_565C0(int a1)
 {
   int result; // eax
   unsigned __int16 v2; // dx
@@ -67013,8 +67013,8 @@ LABEL_5:
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Rapid Fireball spell (class 12 state 69 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CastRapidFireball_58240_58750(int a1)
+/// Original name: fn_spell_extra4 (SPELL.C), Hidden Worlds linker map (the only unused fn_spell_ name, type 23).
+int FnSpellExtra4_58240_58750(int a1)
 {
   int result; // eax
   unsigned __int16 v2; // dx
