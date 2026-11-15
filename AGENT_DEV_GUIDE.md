@@ -375,7 +375,7 @@ Differential execution (Unicorn and capstone, from the venv in §4):
 CARPET.EXE at its IDA addresses, port `.text/.rdata` relocated to the snapshot's image base, CRT
 imports as Python stubs, address-named globals copied to their original addresses (bigger first,
 then specific ones; a global whose static bytes disagree with the original at that address loses;
-pointers translated only at relocation sites/aligned dwords). Sound (`sub_55370_558A0`) is skipped on
+pointers translated only at relocation sites/aligned dwords). Sound (`PlayEntitySound_55370_558A0`) is skipped on
 both sides. Known layout differences the comparison cannot map: `word_12CD20/22/24/26/28` (the
 original's 10-byte record array split into parallel arrays), `trig_9074C`'s first 1 KB (small
 variables, not a table).
@@ -492,7 +492,7 @@ class, type)`). The state index is global within a class, not per type.
 | 9 | 3 | missile that starts an explosion ring (10/17) when it lands | `CreateExplosionRing_3AC70` called from 0x52AAA |
 | 9 | 9 | lightning bolt piece | `LightningBoltTick_535E0_53920` |
 | 10 | 0 | explosion | `ExplosionTick_24F60` |
-| 10 | 1 | created with the mana ball when a creature dies | `sub_1A800` |
+| 10 | 1 | created with the mana ball when a creature dies | `KillCreature_1A800` |
 | 10 | 6 | spawned when a spell-7 jar in state 3t+2 is picked up | `SpellJarSpawnTick_55D30_56260` |
 | 10 | 16 | lava from a volcano eruption | created by 10/18 |
 | 10 | 17 | expanding explosion ring: one 10/0 explosion per ring point per tick | `ExplosionRingTick_25CE0` |
@@ -633,7 +633,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     (original: `[esp+1Ch]` = first argument). The entity was never removed and level loading
     (`sub_36620_369E0`) looped forever (level 8 freeze). All 431 table handlers were checked for >1 parameter.
     Split stack structs again: `LightningBoltTick_535E0_53920` passed `&v27` (int) as the `axis_3d` step of
-    `sub_41EC0_42200`; the z step went past `v27`, so bolts never climbed/dived to their target (no lock-on).
+    `MoveAlongHeading_41EC0_42200`; the z step went past `v27`, so bolts never climbed/dived to their target (no lock-on).
     No other `int` local is passed as `axis_3d*` (scanned).
     Signedness (#50 family): `NextRingOffset_114B0` read the ring tables' (dx, dy) as unsigned bytes (asm
     `movsx`), so every area effect built on the ring iterator (meteor crater, ...) only reached one side
@@ -1121,7 +1121,7 @@ Known open issues:
   +54 = follower index. `UpdateFollower_1A390(a1x, a2)` (segment tick, `a2` = the segment type's base state,
   18 for these) takes `v3x = entity[a1x+52]` as the leader without validating it. When the segment's life
   drops below 0 (or it is hit by a wizard, damager class 3) it sets `v3x+146`, clears `v3x+52` and calls
-  `sub_424F0_42830(v3x, a2 + 2)` (state 20). If the real leader died earlier its slot can already hold
+  `SetEntityState_424F0_42830(v3x, a2 + 2)` (state 20). If the real leader died earlier its slot can already hold
   another entity: in `stuck_explosion_sprite.txt` (level 15) segment 174 dies at frame 36216, an explosion
   (10/0, `ExplosionTick_24F60`) reuses slot 174 at 36217, and at 36218 segment 157 (still +52 = 174) dies and puts
   the explosion into class-10 state 20 = handler 0x262C0, a bare `ret` (port: `sub_262C0`). The sprite
@@ -1164,8 +1164,8 @@ Known open issues:
 - Investigated 2026-10-25, kept (user decision: no deviation): the big crab at the end of level 22
   (`level22.recording`, entity 995, frame 12270) dropped no mana. Original bug, `docs/original-bugs.md`
   #9: its own lightning filled the entity table (277 class 9 type 9 bolt pieces, 66 new ones that
-  tick), so the death code's `CreateEntity` calls (mana ball from `sub_27690` 0x276E5, class 10 type 1
-  from `sub_1A800` 0x1A836) got null from `NewEvent_372C0_37680` and the mana was lost. Ticks
+  tick), so the death code's `CreateEntity` calls (mana ball from `DropManaBall_27690` 0x276E5, class 10 type 1
+  from `KillCreature_1A800` 0x1A836) got null from `NewEvent_372C0_37680` and the mana was lost. Ticks
   12269-12274 match the original byte for byte. Method worth reusing: when something "should have
   spawned", hook `CreateEntity_373F0_377B0` (0x373F0) in the emulator and print its return value at
   the caller's return address; hook `NewEvent` (0x372C0) to count new entities per caller.

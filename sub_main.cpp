@@ -88,7 +88,7 @@ off_987DE
 
 &word_AE454_AE444 0x26C454
 MoveCreature_196E0
-sub_41EC0_42200
+MoveAlongHeading_41EC0_42200
 
 addprocedurestop(0x205367, 0x0, true, true, 0x26C454, 0x12345678);
 
@@ -403,7 +403,7 @@ void sub_19D70(Type_AE400_29795* a1, char a2);
 int sub_1A120(Type_AE400_29795* a1, char a2, unsigned __int16 (*a3)(Type_AE400_29795*, int));
 void UpdateFollower_1A390(Type_AE400_29795* a1, unsigned __int16 a2);
 void sub_1A6C0(Type_AE400_29795* a1, char a2);
-void sub_1A800(Type_AE400_29795* a1);
+void KillCreature_1A800(Type_AE400_29795* a1);
 int sub_1A8E0(Type_AE400_29795* a1, Type_AE400_29795* a2);
 int sub_1A990(Type_AE400_29795* a1, Type_AE400_29795* a2);
 void CreatureShootAt_1AA40(Type_AE400_29795* a1, int a2);
@@ -585,7 +585,7 @@ void UndeadArmyEffectTick_26E90(int a1);
 void ManaBallTick_27030(Type_AE400_29795* event);
 void sub_274D0(Type_AE400_29795* event);
 void DeathMarkerTick_275C0(__int16 *a1);
-void sub_27690(_WORD *result, Type_AE400_29795* a2x);
+void DropManaBall_27690(_WORD *result, Type_AE400_29795* a2x);
 void MergeManaBalls_277D0(Type_AE400_29795* ev1, Type_AE400_29795* ev2);
 char sub_279D0(int a1);
 void sub_27D30(Type_AE400_29795* event);
@@ -687,7 +687,7 @@ int sub_36DC2_37182();
 void RefillLife_36DE0_371A0(Type_AE400_29795* event);
 void sub_36DF0_371B0(Type_AE400_29795* event, unsigned __int16 a2);
 int sub_36F90_37350(int a1);
-void sub_36FA0_37360(Type_AE400_29795* event, __int16 a2);
+void SetSprite_36FA0_37360(Type_AE400_29795* event, __int16 a2);
 void sub_37030_373F0(Type_AE400_29795* a1, __int16 a2);
 void sub_370A0_37460(Type_AE400_29795* a1, __int16 a2);
 void sub_370E0_374A0(Type_AE400_29795* a1, __int16 a2);
@@ -949,28 +949,28 @@ unsigned __int16 sub_415C0_41900();
 void sub_416B0();
 void UpdateEntities_41780_41AC0();
 void sub_41B20_41E60(TypeStrAE400_13323* a1, Type_AE400_29795* a2);
-int sub_41C70_41FB0(Type_AE400_29795* event, axis_3d* position);
+int MoveEntity_41C70_41FB0(Type_AE400_29795* event, axis_3d* position);
 // int sub_41CC0_42000(__int16 a1, int a2, int a3);
-void sub_41CF0_42030(Type_AE400_29795* event, axis_3d* position);
-void sub_41DD0_42110(Type_AE400_29795* event);
+void AddEntityToMap_41CF0_42030(Type_AE400_29795* event, axis_3d* position);
+void RemoveEntityFromMap_41DD0_42110(Type_AE400_29795* event);
 void MarkEntityForRemoval_41E80_421C0(Type_AE400_29795* event);
 void FreeEntity_41E90_421D0(Type_AE400_29795* event);
-void sub_41EC0_42200(axis_3d* a1, unsigned __int16 a2, __int16 a3, __int16 a4);
+void MoveAlongHeading_41EC0_42200(axis_3d* a1, unsigned __int16 a2, __int16 a3, __int16 a4);
 void sub_41F50_42290(axis_3d* pos1, axis_3d* pos2);
 int KeepHeightAboveGround_42000_42340(axis_3d* a1, int a2, int a3, int a4, int a5);
 int sub_42090_423D0(axis_3d* a1, int a2, int a3, int a4, int a5);
 __int16 HeadingTo_42150_42490(axis_3d* a1, axis_3d* a2);
 __int16 PitchTo_42180_424C0(axis_3d* a1, axis_3d* a2);
-int sub_42210_42550(__int16 a1, __int16 a2);
-int sub_42240_42580(int a1, __int16 a2);
-int sub_422A0_425E0(unsigned __int16 a1, __int16 a2, int a3, unsigned __int16 a4);
+int AngleDifference_42210_42550(__int16 a1, __int16 a2);
+int TurnDirection_42240_42580(int a1, __int16 a2);
+int TurnStep_422A0_425E0(unsigned __int16 a1, __int16 a2, int a3, unsigned __int16 a4);
 int sub_42300_42640(_WORD *a1, _WORD *a2);
 unsigned int Distance3D_42340_42680(axis_3d* a1, axis_3d* a2);
 int sub_42390_426D0(_WORD *a1, _WORD *a2);
-unsigned int sub_423D0_42710(axis_3d* a1, axis_3d* a2);
-int sub_42410_42750(_WORD *a1, _WORD *a2);
-void sub_424F0_42830(Type_AE400_29795* a1, unsigned __int8 a2);
-int sub_42510_42850(Type_AE400_29795* a1);
+unsigned int Distance2D_423D0_42710(axis_3d* a1, axis_3d* a2);
+int DistanceSquared2D_42410_42750(_WORD *a1, _WORD *a2);
+void SetEntityState_424F0_42830(Type_AE400_29795* a1, unsigned __int8 a2);
+int AdvanceAnimFrame_42510_42850(Type_AE400_29795* a1);
 void sub_42530_42870(char a1);
 void* malloc_42540_42880(size_t size);
 void* malloc_425C0_42900(size_t size);
@@ -1161,7 +1161,7 @@ int sub_54BD0_55100(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a
 void sub_54F00_55430();
 int sub_54F80(int a1);
 void sub_55100_55630();
-void sub_55370_558A0(__int16 a1, __int16 a2, __int16 a3);
+void PlayEntitySound_55370_558A0(__int16 a1, __int16 a2, __int16 a3);
 bool sub_55870(int a1, int a2);
 void sub_55890_55DC0(int a1, __int16 a2, __int16 a3);
 int sub_558F0();
@@ -14157,7 +14157,7 @@ template <class... A> _DWORD segread(A...) { return 0; }
 _DWORD settextposition(_DWORD a, _DWORD b) { return 0; };// weak
 //void sub_111B0(int a1, int a2) {};
 //void sub_193EE(__int16 a1) {};
-//_WORD * sub_27690(_WORD *result, int a2) { return 0; };
+//_WORD * DropManaBall_27690(_WORD *result, int a2) { return 0; };
 //void sub_10000() {}; // weak
 
 //unsigned __int16 sub_2DCB0_2DCF0(int a1, int a2) { return 0; };
@@ -14171,7 +14171,7 @@ _DWORD settextposition(_DWORD a, _DWORD b) { return 0; };// weak
 //unsigned __int8 sub_3F76D_3FAAD(int a1) { return 0; };
 //char InitAnojoy_3F820_sub_3FB60(__int16 a1, __int16 a2, int a3, int a4, int a5, char a6) { return 0; };
 //char sub_3FCA0_3FFE0(int a1, __int16 a2, __int16 a3, __int16 a4, char a5, __int16 a6, __int16 a7, __int16 a8, __int16 a9, __int16 a10, __int16 a11) { return 0; };
-//__int16 sub_41DD0_42110(__int16 result, int a2) { return 0; };
+//__int16 RemoveEntityFromMap_41DD0_42110(__int16 result, int a2) { return 0; };
 //char InitMusicDriver_43B20_43E60(int a1, unsigned int a2) { return 0; };
 //void MainMenuStep_4AB20_4AE60(__int16 a1, const char *a2, const char *a3, __int16 a4, __int16 a5) {};
 //void sub_4AC70_4AFB0(const char *a1, const char *a2) {};
@@ -15691,20 +15691,20 @@ int IsMoveBlocked_11640(Type_AE400_29795* a1x, axis_3d* a2x, char a3)
     if ( (a3 & 4) != 0 )
     {
       v7 = PitchTo_42180_424C0(&a1x->var_u32_29867_72, a2x);
-      v8 = sub_42240_42580(0, v7);
+      v8 = TurnDirection_42240_42580(0, v7);
       if ( v8 < 0 )
       {
         if ( v8 == -1 )
         {
           v10 = a1x->var_u32_29951_156->maxSlope_16;
-          if ( (unsigned __int16)sub_42210_42550(0, v7) > v10 )
+          if ( (unsigned __int16)AngleDifference_42210_42550(0, v7) > v10 )
             return 1;
         }
       }
       else if ( v8 > 0 && v8 == 1 )
       {
         v9 = a1x->var_u32_29951_156->v_18;
-        if ( (unsigned __int16)sub_42210_42550(0, v7) > v9 )
+        if ( (unsigned __int16)AngleDifference_42210_42550(0, v7) > v9 )
           return 1;
       }
     }
@@ -17094,7 +17094,7 @@ bool sub_13A70(int a1)
     }
     return 0;
   }
-  if ( sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(v1 + 72)) > 104857600 && AiCastSpell_155F0(a1, 0x13u) )
+  if ( DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(v1 + 72)) > 104857600 && AiCastSpell_155F0(a1, 0x13u) )
     return 1;
   AiCastSpell_155F0(a1, 0xCu);
   if ( !sub_15440(a1, v1) )
@@ -17123,7 +17123,7 @@ bool sub_13BA0(int a1)
       if ( AiCastSpell_155F0(a1, 3u) )
       {
         v3 = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(v1 + 36));
-        if ( (unsigned __int16)sub_42210_42550(*(_WORD *)PTR(a1 + 30), v3) < 0x1Cu )
+        if ( (unsigned __int16)AngleDifference_42210_42550(*(_WORD *)PTR(a1 + 30), v3) < 0x1Cu )
           v1[72] = *(_WORD *)PTR(a1 + 24);
       }
       v4 = *(__int16 *)PTR(a1 + 76) - ((__int16)v1[38] + 512);
@@ -17394,11 +17394,11 @@ int sub_143A0(int a1)
     {
       if ( (v2 = 164 * *(__int16 *)PTR(i + 24),
             50000 - *(_DWORD *)PTR(dword_AE400_AE3F0() + v2 + 29931) / 10 * *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522) / 255 < *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 8 * *(__int16 *)PTR(*(_DWORD *)PTR(dword_AE400_AE3F0() + v2 + 29955) + 48) + 460))
-        && sub_42410_42750((_WORD *)PTR(dword_AE400_AE3F0() + 29795 + v2 + 72), (_WORD *)PTR(i + 72)) > 58982400
+        && DistanceSquared2D_42410_42750((_WORD *)PTR(dword_AE400_AE3F0() + 29795 + v2 + 72), (_WORD *)PTR(i + 72)) > 58982400
         && !EntitiesCollide_11950((Type_AE400_29795*)PTR(dword_AE400_AE3F0() + 29795 + 164 * *(__int16 *)PTR(i + 24)), (Type_AE400_29795*)PTR(i))
         || *(_DWORD *)PTR(i + 140) + 640 * (255 - *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522)) < *(_DWORD *)PTR(164 * *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) + dword_AE400_AE3F0() + 29935) )
       {
-        v3 = sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
+        v3 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
         if ( v3 < v7 )
         {
           v6 = i;
@@ -17410,7 +17410,7 @@ int sub_143A0(int a1)
   if ( !v6 )
     return 0;
   v4 = *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 156) + 28);
-  if ( sub_42410_42750((_WORD *)PTR(v6 + 72), (_WORD *)PTR(a1 + 72)) >= v4 * v4 )
+  if ( DistanceSquared2D_42410_42750((_WORD *)PTR(v6 + 72), (_WORD *)PTR(a1 + 72)) >= v4 * v4 )
     return 0;
   *(_WORD *)PTR(a1 + 146) = (v6 - (dword_AE400_AE3F0() + 29795)) / 164;
   *(_WORD *)PTR(a1 + 148) = sub_15420(v6);
@@ -17455,7 +17455,7 @@ int AiFindRivalWizard_145B0(int a1)
         && GetWizardSpell_14E60(i, 0x10u)
         && *(_DWORD *)PTR(i + 140) + 32 * (255 - *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522)) < *(_DWORD *)PTR(a1 + 140) )
       {
-        v7 = sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
+        v7 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
         if ( v7 < v1 )
         {
           v9 = i;
@@ -17467,7 +17467,7 @@ int AiFindRivalWizard_145B0(int a1)
   if ( !v9 )
     return 0;
   v8 = *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 156) + 28) + 10;
-  if ( sub_42410_42750((_WORD *)PTR(v9 + 72), (_WORD *)PTR(a1 + 72)) >= v8 * v8 )
+  if ( DistanceSquared2D_42410_42750((_WORD *)PTR(v9 + 72), (_WORD *)PTR(a1 + 72)) >= v8 * v8 )
     return 0;
   *(_WORD *)PTR(a1 + 146) = (v9 - (dword_AE400_AE3F0() + 29795)) / 164;
   *(_WORD *)PTR(a1 + 148) = sub_15420(v9);
@@ -17509,7 +17509,7 @@ int sub_147E0(int a1)
         && 10 * (275 - v5) < *(_DWORD *)PTR(i + 140)
         && !EntitiesCollide_11950((Type_AE400_29795*)PTR(i), (Type_AE400_29795*)PTR(dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(v3 + 50))) )
       {
-        v6 = sub_42410_42750(v9, (_WORD *)PTR(i + 72));
+        v6 = DistanceSquared2D_42410_42750(v9, (_WORD *)PTR(i + 72));
         if ( v6 < v10 )
         {
           v12 = i;
@@ -17521,7 +17521,7 @@ int sub_147E0(int a1)
   if ( !v12 )
     return 0;
   v7 = *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 156) + 28);
-  if ( sub_42410_42750((_WORD *)PTR(v12 + 72), v9) >= v7 * v7 )
+  if ( DistanceSquared2D_42410_42750((_WORD *)PTR(v12 + 72), v9) >= v7 * v7 )
     return 0;
   *(_WORD *)PTR(a1 + 146) = (v12 - (dword_AE400_AE3F0() + 29795)) / 164;
   *(_WORD *)PTR(a1 + 148) = sub_15420(v12);
@@ -17555,7 +17555,7 @@ int sub_14B10(int a1)
     {
       if ( *(_WORD *)PTR(j + 24) != *(_WORD *)PTR(a1 + 24) && *(int *)PTR(j + 140) > 0 )
       {
-        v5 = sub_42410_42750(v8, (_WORD *)PTR(j + 72));
+        v5 = DistanceSquared2D_42410_42750(v8, (_WORD *)PTR(j + 72));
         if ( v5 < v1 )
         {
           v2 = j;
@@ -17698,10 +17698,10 @@ int sub_14EB0(int a1)//1E5EB0_
   v21 = v1[6];
   v2 = GetTerrainHeight_11F50(&word_AE454_AE444);
   KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v2, v21, v22, v23);
-  sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), 0, *(_WORD *)PTR(a1 + 126));
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), 0, *(_WORD *)PTR(a1 + 126));
   v3 = *(_WORD *)PTR(a1 + 30);
   HIBYTE(v3) += 2;
-  sub_41EC0_42200(&word_AE454_AE444, v3, 0, *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 16));
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, v3, 0, *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 16));
   v4 = *(_DWORD *)PTR(a1 + 160);
   v5 = *(_WORD *)PTR(v4 + 16);
   v6 = (__int16 *)PTR(v4 + 16);
@@ -17711,14 +17711,14 @@ int sub_14EB0(int a1)//1E5EB0_
     LOWORD(v7) = 0;
   v8 = *v6 - 4 * v7;
   *v6 = v8;
-  sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+  MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
   v9 = *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 12) - *(__int16 *)PTR(a1 + 126);
   if ( v9 )
     v9 /= (int)abs32(v9);
   *(_WORD *)PTR(a1 + 126) += 16 * v9;
   v10 = *(_WORD *)PTR(a1 + 34);
   HIBYTE(v10) &= 7u;
-  v11 = sub_42210_42550(*(_WORD *)PTR(a1 + 30), v10);
+  v11 = AngleDifference_42210_42550(*(_WORD *)PTR(a1 + 30), v10);
   v12 = 255 - *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 526);
   v13 = v11 / (int)(unsigned __int16)(((int)(v12 - (__CFSHL__(HIDWORD(v12), 4) + 16 * HIDWORD(v12))) >> 4) + 8);
   v14 = *(_DWORD *)PTR(a1 + 156);
@@ -17732,7 +17732,7 @@ int sub_14EB0(int a1)//1E5EB0_
   {
     v15 = *(_WORD *)PTR(v14 + 2);
   }
-  v16 = sub_42240_42580(*(unsigned __int16 *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) * v15;
+  v16 = TurnDirection_42240_42580(*(unsigned __int16 *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) * v15;
   v17 = *(unsigned __int16 *)PTR(a1 + 30);
   v18 = (v17 + v16) & 0x7FF;
   v19 = *(_WORD *)PTR(a1 + 34);
@@ -17774,7 +17774,7 @@ unsigned int AiChooseManaToPossess_15080(int a1)
     v4 = 164 * (unsigned __int16)v3 + dword_AE400_AE3F0();
     if ( *(_BYTE *)PTR(v4 + 29859) != 3 )
     {
-      v5 = sub_42410_42750(v10, (_WORD *)PTR(v2 + 72));
+      v5 = DistanceSquared2D_42410_42750(v10, (_WORD *)PTR(v2 + 72));
       if ( v5 >= v1 )
         goto LABEL_19;
       goto LABEL_18;
@@ -17785,7 +17785,7 @@ unsigned int AiChooseManaToPossess_15080(int a1)
     // (a target owned by a wizard with a lot of mana) it took the other branch (computer wizards picked other mana balls; possession_spell_bug.recording)
     if ( 50000 - *(int *)PTR(v4 + 29931) / 10 * *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522) / 255 < (int)*(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 8 * *(__int16 *)PTR(*(_DWORD *)PTR(v4 + 29955) + 48) + 460) )
     {
-      v5 = sub_42410_42750((_WORD *)PTR(v9 + 72), (_WORD *)PTR(v2 + 72));
+      v5 = DistanceSquared2D_42410_42750((_WORD *)PTR(v9 + 72), (_WORD *)PTR(v2 + 72));
       if ( v5 >= v1 )
         goto LABEL_19;
 LABEL_18:
@@ -17798,10 +17798,10 @@ LABEL_18:
     {
       v6 = dword_AE400_AE3F0() + 29795 >= v9 ? FindNearestRival_15260(v2, 2u) : sub_153B0(v2, v9);
       v7 = v6;
-      if ( (*(_WORD *)PTR(a1 + 24) == *(_WORD *)PTR(v11 + 24) || sub_42410_42750((_WORD *)PTR(v2 + 72), (_WORD *)PTR(v11 + 72)) > 26214400)
+      if ( (*(_WORD *)PTR(a1 + 24) == *(_WORD *)PTR(v11 + 24) || DistanceSquared2D_42410_42750((_WORD *)PTR(v2 + 72), (_WORD *)PTR(v11 + 72)) > 26214400)
         && (!v7 || !EntitiesCollide_11950((Type_AE400_29795*)PTR(v2), (Type_AE400_29795*)PTR(v7))) )
       {
-        v5 = sub_42410_42750(v10, (_WORD *)PTR(v2 + 72));
+        v5 = DistanceSquared2D_42410_42750(v10, (_WORD *)PTR(v2 + 72));
         if ( v5 < v1 )
           goto LABEL_18;
       }
@@ -17842,7 +17842,7 @@ unsigned int FindNearestRival_15260(int a1, unsigned __int8 a2)
       {
         if ( *(_WORD *)PTR(i + 24) != *(_WORD *)PTR(a1 + 24) )
         {
-          v5 = sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
+          v5 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
           if ( v5 < v2 )
           {
             v3 = i;
@@ -17857,7 +17857,7 @@ unsigned int FindNearestRival_15260(int a1, unsigned __int8 a2)
   {
     if ( *(_WORD *)PTR(j + 24) != *(_WORD *)PTR(a1 + 24) && *(char *)PTR(j + 65) == a2 )
     {
-      v7 = sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(j + 72));
+      v7 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(j + 72));
       if ( v7 < v2 )
       {
         v3 = j;
@@ -17886,7 +17886,7 @@ unsigned int sub_15340(int a1, int a2)
     v5 = *(_WORD *)PTR(i + 24);
     if ( v5 != *(_WORD *)PTR(a1 + 24) && v5 != *(_WORD *)PTR(a2 + 24) && *(_BYTE *)PTR(i + 65) <= 1u )
     {
-      v6 = sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
+      v6 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
       if ( v6 < v2 )
       {
         v3 = i;
@@ -17915,7 +17915,7 @@ unsigned int sub_153B0(int a1, int a2)
     v5 = *(_WORD *)PTR(i + 24);
     if ( v5 != *(_WORD *)PTR(a1 + 24) && v5 != *(_WORD *)PTR(a2 + 24) && *(_BYTE *)PTR(i + 65) == 2 )
     {
-      v6 = sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
+      v6 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
       if ( v6 < v2 )
       {
         v3 = i;
@@ -17973,7 +17973,7 @@ LABEL_8:
     *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 14) = 1;
     return 1;
   }
-  v6 = sub_423D0_42710((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a1 + 150));
+  v6 = Distance2D_423D0_42710((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a1 + 150));
   if ( v6 <= a3 )
     goto LABEL_8;
   if ( !sub_15E60(a1, 2u) )
@@ -18015,7 +18015,7 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
       if ( !v2
         || *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 404) < 0
         || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v2 + 136)
-        || (unsigned __int16)sub_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= 0xAAu )
+        || (unsigned __int16)AngleDifference_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= 0xAAu )
       {
         return 0;
       }
@@ -18063,7 +18063,7 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
       v5 = GetWizardSpell_14E60(a1, a2);
       if ( !v5
         || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v5 + 136)
-        || (unsigned __int16)sub_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= 0xE3u )
+        || (unsigned __int16)AngleDifference_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= 0xE3u )
       {
         return 0;
       }
@@ -18147,7 +18147,7 @@ int sub_15A00(int a1, unsigned __int8 a2)
       if ( *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v12 + 136) )
         goto LABEL_37;
       v14 = 255 - *(__int16 *)PTR(v13 + 524);
-      if ( (unsigned __int16)sub_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= ((((int)(v14
+      if ( (unsigned __int16)AngleDifference_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= ((((int)(v14
                                                                                            - (__CFSHL__(HIDWORD(v14), 2)
                                                                                             + 4 * HIDWORD(v14))) >> 2)
                                                                                     + 20) << 11)
@@ -18177,7 +18177,7 @@ int sub_15A00(int a1, unsigned __int8 a2)
       if ( *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v5 + 136) )
         goto LABEL_37;
       v7 = 255 - *(__int16 *)PTR(v6 + 524);
-      if ( (unsigned __int16)sub_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= ((((int)(v7
+      if ( (unsigned __int16)AngleDifference_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= ((((int)(v7
                                                                                            - (__CFSHL__(HIDWORD(v7), 2)
                                                                                             + 4 * HIDWORD(v7))) >> 2)
                                                                                     + 20) << 11)
@@ -18215,7 +18215,7 @@ int sub_15A00(int a1, unsigned __int8 a2)
         if ( *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v8 + 136) )
           goto LABEL_37;
         v11 = 255 - *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 524);
-        if ( (unsigned __int16)sub_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= ((((int)(v11
+        if ( (unsigned __int16)AngleDifference_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= ((((int)(v11
                                                                                              - (__CFSHL__(
                                                                                                   HIDWORD(v11),
                                                                                                   2)
@@ -18686,7 +18686,7 @@ unsigned int sub_16800(unsigned int a1, int a2)
   {
     if ( *(unsigned __int16 *)PTR(i + 146) == *(__int16 *)PTR(a2 + 24) )
     {
-      v4 = sub_42410_42750((_WORD *)PTR(a2 + 72), (_WORD *)PTR(i + 72));
+      v4 = DistanceSquared2D_42410_42750((_WORD *)PTR(a2 + 72), (_WORD *)PTR(i + 72));
       if ( v4 < v2 )
       {
         v2 = v4;
@@ -18717,7 +18717,7 @@ char sub_16890(int a1, int a2)
 {
   int v2; // eax
 
-  v2 = sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(a2 + 72));
+  v2 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(a2 + 72));
   if ( v2 < 0x100000 )
   {
     LOBYTE(v2) = *(_BYTE *)PTR(a2 + 65);
@@ -20040,8 +20040,8 @@ __int16 SegmentFollowTick_19550(int a1)
     v3 = v2 + 72;
     *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(v3);
     word_AE454_AE444.z = *(_WORD *)PTR(v3 + 4);
-    sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), -*(_WORD *)PTR(a1 + 56));
-    result = sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), -*(_WORD *)PTR(a1 + 56));
+    result = MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
     if ( *(_WORD *)PTR(a1 + 94) )
     {
       *(_DWORD *)PTR(a1 + 12) -= *(_DWORD *)PTR(a1 + 90);
@@ -20056,7 +20056,7 @@ __int16 SegmentFollowTick_19550(int a1)
   }
   else if ( (*(_BYTE *)PTR(a1 + 63) & 3) == 0 )
   {
-    sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v2 + 72));
+    MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v2 + 72));
     result = *(_WORD *)PTR(v2 + 30);
     *(_WORD *)PTR(a1 + 30) = result;
   }
@@ -20143,7 +20143,7 @@ void MoveCreature_196E0(Type_AE400_29795* a1x)
   v19 = a1x->var_u32_29951_156->minHeight_12;
   v2 = GetTerrainHeight_11F50(&word_AE454_AE444);
   KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v2, v19, v23, v27);
-  sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if (a1x->var_u32_29867_72.x >> 8 == word_AE454_AE444.x >> 8 )
   {
     v3 = word_AE454_AE444.y >> 8;
@@ -20169,7 +20169,7 @@ void MoveCreature_196E0(Type_AE400_29795* a1x)
   v20 = a1x->var_u32_29951_156->minHeight_12;
   v9 = GetTerrainHeight_11F50(&word_AE454_AE444);
   KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v9, v20, v24, v28);
-  sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if ( !IsMoveBlocked_11640(a1x, &word_AE454_AE444, 1) )
   {
     v10 = a1x->var_u32_29951_156->maxSlope_16;
@@ -20188,7 +20188,7 @@ void MoveCreature_196E0(Type_AE400_29795* a1x)
   v21 = a1x->var_u32_29951_156->minHeight_12;
   v13 = GetTerrainHeight_11F50(&word_AE454_AE444);
   KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v13, v21, v25, v29);
-  sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if ( !IsMoveBlocked_11640(a1x, &word_AE454_AE444, 1) )
   {
     v14 = a1x->var_u32_29951_156->maxSlope_16;
@@ -20207,7 +20207,7 @@ void MoveCreature_196E0(Type_AE400_29795* a1x)
   v22 = a1x->var_u32_29951_156->minHeight_12;
   v17 = GetTerrainHeight_11F50(&word_AE454_AE444);
   KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v17, v22, v26, v30);
-  sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if ( IsMoveBlocked_11640(a1x, &word_AE454_AE444, 1)
     || (v18 = a1x->var_u32_29951_156->maxSlope_16, v3 = TerrainSlope_19650(&word_AE454_AE444), v3 >= v18) )
   {
@@ -20217,9 +20217,9 @@ void MoveCreature_196E0(Type_AE400_29795* a1x)
   else
   {
 LABEL_3:
-    sub_41C70_41FB0(a1x, &word_AE454_AE444);
+    MoveEntity_41C70_41FB0(a1x, &word_AE454_AE444);
     v4 = a1x->var_u16_29825_30
-       + sub_422A0_425E0(
+       + TurnStep_422A0_425E0(
            a1x->var_u16_29825_30,
            a1x->var_u16_29829_34,
            a1x->var_u32_29951_156->v_4,
@@ -20320,7 +20320,7 @@ void sub_19B10(Type_AE400_29795* a1x, char a2)
         {
           v16 = a1x->var_u32_29951_156->v_30;
           v14 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, &v9x->var_u32_29867_72);
-          if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v14) < v16 && v13 < v10 )
+          if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v14) < v16 && v13 < v10 )
           {
             v17x = v9x;
             v10 = v13;
@@ -20334,7 +20334,7 @@ void sub_19B10(Type_AE400_29795* a1x, char a2)
         a1x->var_u16_29847_52 = v17x - str_AE400_AE3F0->str_29795;
       v7 = a2 + 3;
 LABEL_31:
-      sub_424F0_42830(a1x, v7);
+      SetEntityState_424F0_42830(a1x, v7);
     }
   }
 }
@@ -20447,7 +20447,7 @@ void sub_19D70(Type_AE400_29795* a1x, char a2)
         {
           v23 = a1x->var_u32_29951_156->v_30;
           v15 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(j + 72));
-          if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v15) < v23 && v14 < v11 )
+          if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v15) < v23 && v14 < v11 )
           {
             v26 = j;
             v11 = v14;
@@ -20459,7 +20459,7 @@ void sub_19D70(Type_AE400_29795* a1x, char a2)
           a1x->var_u16_29941_146 = (int)(v26 - (dword_AE400_AE3F0() + 29795)) / 164;
         v7 = a2 + 2;
 LABEL_42:
-        sub_424F0_42830(a1x, v7);
+        SetEntityState_424F0_42830(a1x, v7);
         return;
       }
       v16 = a1x->var_u32_29951_156->v_28;
@@ -20479,7 +20479,7 @@ LABEL_42:
           {
             v24 = a1x->var_u32_29951_156->v_30;
             v21 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v18 + 72));
-            if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v21) < v24 && v20 < v17 )
+            if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v21) < v24 && v20 < v17 )
             {
               v27 = v18;
               v17 = v20;
@@ -20568,7 +20568,7 @@ int sub_1A120(Type_AE400_29795* a1x, char a2, unsigned __int16 (*a3)(Type_AE400_
     else
     {
       dword_AE400_AE3F0(v3);
-      sub_424F0_42830(a1x, a2 + 4);
+      SetEntityState_424F0_42830(a1x, a2 + 4);
     }
     return v15;
   }
@@ -20580,7 +20580,7 @@ int sub_1A120(Type_AE400_29795* a1x, char a2, unsigned __int16 (*a3)(Type_AE400_
   if ( *(int *)PTR(v12 + 12) < 0 || (*(_BYTE *)PTR(v12 + 17) & 4) != 0 )
   {
 LABEL_26:
-    sub_424F0_42830(a1x, a2 + 1);
+    SetEntityState_424F0_42830(a1x, a2 + 1);
     return 0;
   }
   //v13 = *(_DWORD *)(a1 + 156);
@@ -20674,10 +20674,10 @@ LABEL_34:
     {
       v3x->var_u16_29941_146 = a1x->var_u16_29835_40;
       v3x->var_u16_29847_52 = 0;
-      sub_424F0_42830(v3x, v17);
+      SetEntityState_424F0_42830(v3x, v17);
       v9 = a2 + 4;
 LABEL_35:
-      sub_424F0_42830(a1x, v9);
+      SetEntityState_424F0_42830(a1x, v9);
       return;
     }
     //v10 = 41 * a1x->var_u16_29835_40;
@@ -20686,11 +20686,11 @@ LABEL_35:
       v11 = a1x->var_u16_29835_40;
       v3x->var_u16_29847_52 = 0;
       v3x->var_u16_29941_146 = v11;
-      sub_424F0_42830(v3x, v17);
+      SetEntityState_424F0_42830(v3x, v17);
       v12 = a1x->var_u16_29835_40;
       a1x->var_u16_29847_52 = 0;
       a1x->var_u16_29941_146 = v12;
-      sub_424F0_42830(a1x, v17);
+      SetEntityState_424F0_42830(a1x, v17);
     }
   }
   else
@@ -20707,7 +20707,7 @@ LABEL_35:
         case 2:
           a1x->var_u16_29941_146 = v3x->var_u16_29941_146;
           a1x->var_u16_29847_52 = 0;
-          sub_424F0_42830(a1x, v17);
+          SetEntityState_424F0_42830(a1x, v17);
           return;
         case 3:
             a1x->var_u16_29847_52 = v3x->var_u16_29847_52;
@@ -20763,7 +20763,7 @@ void sub_1A6C0(Type_AE400_29795* a1x, char a2)
     v4 = dword_AE400_AE3F0() + 29795;
     if ( ix == str_AE400_AE3F0->str_29795)
       break;
-    sub_424F0_42830(ix, a2 + 5);
+    SetEntityState_424F0_42830(ix, a2 + 5);
     v3 = ix->var_u16_29833_38;
     if ( v3 )
         a1x->var_u16_29833_38 = v3;
@@ -20779,11 +20779,12 @@ void sub_1A6C0(Type_AE400_29795* a1x, char a2)
     if ( v6 != 12 && v6 != 13 && v6 != 14 && v6 != 15 && v6 != 9 )
       ++*(_DWORD *)PTR(*(_DWORD *)PTR(v5 + 160) + 359);
   }
-  sub_424F0_42830(a1x, a2 + 5);
+  SetEntityState_424F0_42830(a1x, a2 + 5);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1A800(Type_AE400_29795* a1x)
+/// Creature death: drops its mana ball (DropManaBall_27690), creates the 10/1 entity and removes the creature.
+void KillCreature_1A800(Type_AE400_29795* a1x)
 {
   _WORD *v1; // eax
   int v2; // eax
@@ -20793,7 +20794,7 @@ void sub_1A800(Type_AE400_29795* a1x)
     v1 = (_WORD *)PTR(dword_AE408_AE3F8());
     if ( (str_AE408_AE3F8->var_u8_1 & 2) != 0 )
         a1x->mana_29935_140 = 5000;
-    sub_27690(v1, a1x);
+    DropManaBall_27690(v1, a1x);
     v2 = (int)OFF(CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 10, 1));
     if ( v2 )
       *(_WORD *)PTR(v2 + 24) = a1x->id_29819_24;
@@ -21114,7 +21115,7 @@ void sub_1B070(Type_AE400_29795* a1x)
 void sub_1B090(Type_AE400_29795* a1x)
 {
   if ( (unsigned __int16)sub_1A120(a1x, 0, PORT_FN(sub_1A8E0, unsigned __int16(Type_AE400_29795*, int))) )
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 8);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 8);
   sub_1B120(a1x);
 }
 
@@ -21134,7 +21135,7 @@ void sub_1B100(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1B110(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21174,7 +21175,7 @@ void sub_1B160(Type_AE400_29795* a1x)
       else
       {
         a1x->var_u16_29941_146 = 0;
-        sub_424F0_42830(a1x, 7u);
+        SetEntityState_424F0_42830(a1x, 7u);
       }
     }
   }
@@ -21217,7 +21218,7 @@ void sub_1B200(Type_AE400_29795* a1x)
     if ( v4 )
     {
       a1x->var_u16_29941_146 = (int)(v4 - (dword_AE400_AE3F0() + 29795)) / 164;
-      sub_424F0_42830(a1x, 6u);
+      SetEntityState_424F0_42830(a1x, 6u);
     }
   }
 }
@@ -21226,7 +21227,7 @@ void sub_1B200(Type_AE400_29795* a1x)
 void sub_1B2D0(Type_AE400_29795* a1x)
 {
   if ( (unsigned __int16)sub_1A120(a1x, 6, (unsigned __int16 (*)(Type_AE400_29795*, int))sub_1AB10) )
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 7);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 7);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21244,7 +21245,7 @@ void sub_1B330(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1B340(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21261,7 +21262,7 @@ void sub_1B370(Type_AE400_29795* a1x)
   sub_19D70(a1x, 12);
   if (a1x->var_u8_29865_70 == 14 )
   {
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 13);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 13);
     a1x->var_u16_29821_26 = 1;
   }
 }
@@ -21290,7 +21291,7 @@ void sub_1B3C0(Type_AE400_29795* a1x)
   result = sub_1A120(a1x, 12, (unsigned __int16 (*)(Type_AE400_29795*, int))sub_1AB10);
   if ( result )
   {
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 13);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 13);
     a1x->actSpeed_29921_126 = -a1x->acceleration_29925_130;
     result = 3 * a1x->var_u32_29951_156->v_26;
     a1x->var_u16_29821_26 = result;
@@ -21319,7 +21320,7 @@ void sub_1B4E0(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1B4F0(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21339,7 +21340,7 @@ void WormTick_1B510(Type_AE400_29795* a1x)
 void sub_1B520(Type_AE400_29795* a1x)
 {
   if ( (unsigned __int16)sub_1A120(a1x, 18, PORT_FN(sub_1A8E0, unsigned __int16(Type_AE400_29795*, int))) )
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 8);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 8);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21357,7 +21358,7 @@ void sub_1B580(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1B590(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21465,12 +21466,12 @@ void GuardTick_1B5D0(Type_AE400_29795* a1x)
       if ( *(_BYTE *)PTR(dword_AE400_AE3F0() + 164 * a1x->var_u16_29835_40 + 29859) == 3 )
       {
           a1x->var_u16_29941_146 = a1x->var_u16_29835_40;
-        sub_424F0_42830(a1x, 0x1Au);
+        SetEntityState_424F0_42830(a1x, 0x1Au);
       }
     }
     else
     {
-      sub_424F0_42830(a1x, 0x1Cu);
+      SetEntityState_424F0_42830(a1x, 0x1Cu);
     }
   }
   else
@@ -21494,7 +21495,7 @@ void GuardTick_1B5D0(Type_AE400_29795* a1x)
           }
           else
           {
-            sub_424F0_42830(a1x, 0x1Cu);
+            SetEntityState_424F0_42830(a1x, 0x1Cu);
             a1x->var_u16_29821_26 = 1;
             ++*(_WORD *)PTR(v36 + 26);
           }
@@ -21536,7 +21537,7 @@ void GuardTick_1B5D0(Type_AE400_29795* a1x)
             {
               v39 = a1x->var_u32_29951_156->v_30;
               v19 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v16 + 72));
-              if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v19) < v39 && v18 < v15 )
+              if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v19) < v39 && v18 < v15 )
               {
                 v38 = v16;
                 v15 = v18;
@@ -21580,7 +21581,7 @@ void GuardTick_1B5D0(Type_AE400_29795* a1x)
             if ( *(_BYTE *)PTR(v20 + 64) != 10 || *(_BYTE *)PTR(v20 + 65) != 45 )
             {
               a1x->var_u16_29941_146 = (v20 - (dword_AE400_AE3F0() + 29795)) / 164;
-              sub_424F0_42830(a1x, 0x1Au);
+              SetEntityState_424F0_42830(a1x, 0x1Au);
             }
           }
           else
@@ -21604,7 +21605,7 @@ void GuardTick_1B5D0(Type_AE400_29795* a1x)
                 {
                   v40 = a1x->var_u32_29951_156->v_30;
                   v35 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, &v30x->var_u32_29867_72);
-                  if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v35) < v40 && v34 < v31 )
+                  if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v35) < v40 && v34 < v31 )
                   {
                     v41x = v30x;
                     v31 = v34;
@@ -21616,7 +21617,7 @@ void GuardTick_1B5D0(Type_AE400_29795* a1x)
             if ( v41x )
             {
               a1x->var_u16_29847_52 = v41x - v7x;
-              sub_424F0_42830(a1x, 0x1Bu);
+              SetEntityState_424F0_42830(a1x, 0x1Bu);
             }
           }
         }
@@ -21674,7 +21675,7 @@ void sub_1BC10(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1BC40(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21689,9 +21690,9 @@ void sub_1BC50(Type_AE400_29795* a1x)
   a1x->rand_29799_4 = v1;
   a1x->actSpeed_29921_126 = 0;
   if ( (int)(v1 % 0x14) <= 10 )
-    sub_36FA0_37360(a1x, 206);
+    SetSprite_36FA0_37360(a1x, 206);
   else
-    sub_36FA0_37360(a1x, 1);
+    SetSprite_36FA0_37360(a1x, 1);
   v2 = dword_AE400_AE3F0();
   v3 = a1x->var_u16_29941_146;
   a1x->sClass_29861_66 = *(_BYTE *)PTR(dword_AE400_AE3F0() + 164 * v3 + 29859);
@@ -21703,7 +21704,7 @@ void sub_1BC50(Type_AE400_29795* a1x)
 void sub_1BCE0(Type_AE400_29795* a1x)
 {
   a1x->actSpeed_29921_126 = a1x->actSpeed_29923_128;
-  sub_36FA0_37360(a1x, 0);
+  SetSprite_36FA0_37360(a1x, 0);
   a1x->sClass_29861_66 = 3;
   a1x->sModel_29862_67 = -1;
 }
@@ -21711,7 +21712,7 @@ void sub_1BCE0(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1BD10(Type_AE400_29795* a1x)
 {
-  sub_424F0_42830(a1x, 0x1Fu);
+  SetEntityState_424F0_42830(a1x, 0x1Fu);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21794,12 +21795,12 @@ void CrabTick_1BD20(Type_AE400_29795* a1x)
       if ( *(_BYTE *)PTR(dword_AE400_AE3F0() + 164 * a1x->var_u16_29835_40 + 29859) == 3 )
       {
         a1x->var_u16_29941_146 = a1x->var_u16_29835_40;
-        sub_424F0_42830(a1x, 0x20u);
+        SetEntityState_424F0_42830(a1x, 0x20u);
       }
     }
     else
     {
-      sub_424F0_42830(a1x, 0x22u);
+      SetEntityState_424F0_42830(a1x, 0x22u);
     }
   }
   else
@@ -21825,7 +21826,7 @@ void CrabTick_1BD20(Type_AE400_29795* a1x)
         {
           v27 = a1x->var_u32_29951_156->v_30;
           v12 = HeadingTo_42150_42490(v28x, (axis_3d*)(_WORD *)PTR(v8 + 72));
-          if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v12) < v27 && v11 < v7 )
+          if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v12) < v27 && v11 < v7 )
           {
             v29 = v8;
             v7 = v11;
@@ -21837,7 +21838,7 @@ void CrabTick_1BD20(Type_AE400_29795* a1x)
       if ( v29 )
       {
         a1x->var_u16_29941_146 = (int)(v29 - v13) / 164;
-        sub_424F0_42830(a1x, 0x20u);
+        SetEntityState_424F0_42830(a1x, 0x20u);
       }
       else if (a1x->var_u16_29941_146)
       {
@@ -21846,14 +21847,14 @@ void CrabTick_1BD20(Type_AE400_29795* a1x)
         {
           v16 = (_WORD *)PTR(v15 + 72);
           v17 = a1x->actSpeed_29923_128 << 7;
-          if ( sub_423D0_42710(v28x, (axis_3d*)(_WORD *)PTR(v15 + 72)) > v17 )
+          if ( Distance2D_423D0_42710(v28x, (axis_3d*)(_WORD *)PTR(v15 + 72)) > v17 )
           {
              a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v16);
           }
           else
           {
             a1x->var_u16_29821_26 = 15;
-            sub_424F0_42830(a1x, 0x21u);
+            SetEntityState_424F0_42830(a1x, 0x21u);
           }
         }
         else
@@ -21910,7 +21911,7 @@ void sub_1C110(Type_AE400_29795* a1x)
   int v2; // edx
 
   if ( (unsigned __int16)sub_1A120(a1x, 30, PORT_FN(sub_1AB70, unsigned __int16(Type_AE400_29795*, int))) )
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 32);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 32);
   result = a1x->actLife_29807_12;
   v2 = a1x->maxLife_29803_8;
   if ( result < v2 )
@@ -21982,12 +21983,12 @@ void sub_1C170(Type_AE400_29795* a1x)
       if ( *(_BYTE *)PTR(v1 + 164 * a1x->var_u16_29835_40 + 29859) == 3 )
       {
         a1x->var_u16_29941_146 = a1x->var_u16_29835_40;
-        sub_424F0_42830(a1x, 0x20u);
+        SetEntityState_424F0_42830(a1x, 0x20u);
       }
     }
     else
     {
-      sub_424F0_42830(a1x, 0x22u);
+      SetEntityState_424F0_42830(a1x, 0x22u);
     }
   }
   else
@@ -21999,7 +22000,7 @@ void sub_1C170(Type_AE400_29795* a1x)
       v9 = 164 * a1x->var_u16_29941_146 + dword_AE400_AE3F0() + 29795;
       if ( *(_BYTE *)PTR(v9 + 64) == 10 && *(_BYTE *)PTR(v9 + 65) == 39 )
       {
-        v10 = sub_423D0_42710(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v9 + 72));
+        v10 = Distance2D_423D0_42710(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v9 + 72));
         v11 = a1x->actSpeed_29923_128;
         if ( v10 > 5 * v11 )
         {
@@ -22014,14 +22015,14 @@ void sub_1C170(Type_AE400_29795* a1x)
           a1x->mana_29935_140 += *(_DWORD *)PTR(v9 + 140);
           *(_WORD *)PTR(v9 + 144) = 0;
           MarkEntityForRemoval_41E80_421C0((Type_AE400_29795*)PTR(v9));
-          sub_424F0_42830(a1x, 0x1Fu);
+          SetEntityState_424F0_42830(a1x, 0x1Fu);
           sub_38820_38BA0(a1x);
         }
       }
       else
       {
         a1x->var_u16_29941_146 = 0;
-        sub_424F0_42830(a1x, 0x1Fu);
+        SetEntityState_424F0_42830(a1x, 0x1Fu);
       }
     }
   }
@@ -22036,7 +22037,7 @@ void sub_1C3C0(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1C3D0(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -22050,7 +22051,7 @@ void sub_1C4A0(Type_AE400_29795* a1x)
 {
   sub_19D70(a1x, 36);
   if (a1x->var_u8_29865_70 == 38 )
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 37);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 37);
   a1x->actSpeed_29921_126 = 30;
 }
 
@@ -22135,7 +22136,7 @@ void sub_1C4F0(Type_AE400_29795* a1x)
     else
     {
       dword_AE400_AE3F0(v1);
-      sub_424F0_42830(a1x, 0x28u);
+      SetEntityState_424F0_42830(a1x, 0x28u);
     }
     return;
   }
@@ -22147,7 +22148,7 @@ void sub_1C4F0(Type_AE400_29795* a1x)
   if ( *(int *)PTR(v10 + 12) < 0 || (*(_BYTE *)PTR(v10 + 17) & 4) != 0 )
   {
 LABEL_30:
-    sub_424F0_42830(a1x, 0x25u);
+    SetEntityState_424F0_42830(a1x, 0x25u);
     return;
   }
   v11 = a1x->var_u16_29821_26;
@@ -22164,7 +22165,7 @@ LABEL_30:
     *(_WORD *)PTR(*(_DWORD *)PTR(v10 + 160) + 26) = 256;
     v14x = str_AE400_AE3F0->str_29795;
     *(_WORD *)PTR(*(_DWORD *)PTR(v10 + 160) + 22) = 80;
-    sub_55370_558A0(a1x - v14x, -1, 42);
+    PlayEntitySound_55370_558A0(a1x - v14x, -1, 42);
     v12 = dword_AE400_AE3F0();
   }
   //v15 = *(_DWORD *)(a1 + 156);
@@ -22175,7 +22176,7 @@ LABEL_30:
     v17 = a1x->var_u32_29951_156->v_28;
     if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v10 + 72)) >= v17 )
       goto LABEL_30;
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 37);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 37);
     a1x->var_u8_29866_71 = 5;
   }
   v18 = a1x->var_u8_29866_71;
@@ -22213,7 +22214,7 @@ void sub_1C880(Type_AE400_29795* a1x)
   v1 = a1x->var_u8_29865_70;
   a1x->actSpeed_29921_126 = 30;
   if ( v1 == 38 )
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 37);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 37);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -22225,7 +22226,7 @@ void sub_1C8D0(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1C8E0(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -22265,7 +22266,7 @@ void sub_1C960(Type_AE400_29795* a1x)
     a1x->var_u16_29821_26 = v1 - 1;
     if ( v1 == 1 && a1x->var_u16_29881_86 == 198 )
     {
-      sub_36FA0_37360(a1x, 85);
+      SetSprite_36FA0_37360(a1x, 85);
       a1x->actSpeed_29921_126 = a1x->actSpeed_29923_128;
     }
   }
@@ -22275,7 +22276,7 @@ void sub_1C960(Type_AE400_29795* a1x)
     result = a1x->var_u16_29881_86;
     if ( result == 85 )
     {
-      sub_36FA0_37360(a1x, 198);
+      SetSprite_36FA0_37360(a1x, 198);
       a1x->var_u16_29821_26 = 30;
       result = a1x->acceleration_29925_130;
       a1x->actSpeed_29921_126 = result;
@@ -22286,7 +22287,7 @@ void sub_1C960(Type_AE400_29795* a1x)
     result = a1x->var_u16_29881_86;
     if ( result == 198 )
     {
-      sub_36FA0_37360(a1x, 85);
+      SetSprite_36FA0_37360(a1x, 85);
       result = a1x->actSpeed_29923_128;
       a1x->actSpeed_29921_126 = result;
     }
@@ -22310,7 +22311,7 @@ void sub_1CA20(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1CA30(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -22393,12 +22394,12 @@ void sub_1CA50(Type_AE400_29795* a1x)
       if ( *(_BYTE *)PTR(dword_AE400_AE3F0() + 164 * a1x->var_u16_29835_40 + 29859) == 3 )
       {
         a1x->var_u16_29941_146 = a1x->var_u16_29835_40;
-        sub_424F0_42830(a1x, 0x32u);
+        SetEntityState_424F0_42830(a1x, 0x32u);
       }
     }
     else
     {
-      sub_424F0_42830(a1x, 0x34u);
+      SetEntityState_424F0_42830(a1x, 0x34u);
     }
   }
   else
@@ -22428,7 +22429,7 @@ void sub_1CA50(Type_AE400_29795* a1x)
           {
             v20 = a1x->var_u32_29951_156->v_30;
             v13 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(j + 72));
-            if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v13) < v20 && v12 < v9 )
+            if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v13) < v20 && v12 < v9 )
             {
               v25 = j;
               v9 = v12;
@@ -22439,7 +22440,7 @@ void sub_1CA50(Type_AE400_29795* a1x)
         {
           a1x->var_u16_29941_146 = (int)(v25 - (dword_AE400_AE3F0() + 29795)) / 164;
           *(_WORD *)PTR(*(_DWORD *)PTR(v25 + 160) + 528) = 200;
-          sub_424F0_42830(a1x, 0x32u);
+          SetEntityState_424F0_42830(a1x, 0x32u);
         }
         else
         {
@@ -22460,7 +22461,7 @@ void sub_1CA50(Type_AE400_29795* a1x)
               {
                 v21 = a1x->var_u32_29951_156->v_30;
                 v19 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, &v16x->var_u32_29867_72);
-                if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v19) < v21 && v18 < v15 )
+                if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v19) < v21 && v18 < v15 )
                 {
                   v24x = v16x;
                   v15 = v18;
@@ -22472,7 +22473,7 @@ void sub_1CA50(Type_AE400_29795* a1x)
           if ( v24x )
           {
             a1x->var_u16_29847_52 = v24x - str_AE400_AE3F0->str_29795;
-            sub_424F0_42830(a1x, 0x33u);
+            SetEntityState_424F0_42830(a1x, 0x33u);
           }
         }
       }
@@ -22490,7 +22491,7 @@ void sub_1CE30(Type_AE400_29795* a1x)
   a1x->var_29811_16.byte[1] |= 0x80u;
   if ( (unsigned __int16)sub_1A120(a1x, 48, PORT_FN(sub_1AEE0, unsigned __int16(Type_AE400_29795*, int))) )
   {
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 38);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 38);
     v1 = 164 * a1x->var_u16_29941_146;
     if ( v1 + dword_AE400_AE3F0() + 29795 )
     {
@@ -22499,7 +22500,7 @@ void sub_1CE30(Type_AE400_29795* a1x)
     }
   }
   if ( !(a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26) )
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 38);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 38);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -22522,7 +22523,7 @@ void sub_1CF60(Type_AE400_29795* a1x)
 //SYNCHRONIZED REMC1
 void sub_1CFE0(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED REMC1
@@ -22539,7 +22540,7 @@ void sub_1CFF0(Type_AE400_29795* a1x)
   {
     if ( v1 == 17 )
     {
-      sub_36FA0_37360(a1x, 237);
+      SetSprite_36FA0_37360(a1x, 237);
       return;
     }
     else if (v2 < 16)
@@ -22547,7 +22548,7 @@ void sub_1CFF0(Type_AE400_29795* a1x)
       result = v2 / 2;
       if (!(v2 % 2))
       {
-        sub_42510_42850(a1x);
+        AdvanceAnimFrame_42510_42850(a1x);
         return;
       }
     }
@@ -22555,7 +22556,7 @@ void sub_1CFF0(Type_AE400_29795* a1x)
   else
   {
     sub_1DD50(a1x);
-    sub_424F0_42830(a1x, 0x37u);
+    SetEntityState_424F0_42830(a1x, 0x37u);
     a1x->var_u16_29821_26 = 400;
     a1x->var_u8_29866_71 = 0;
   }
@@ -22673,11 +22674,11 @@ void sub_1D060(Type_AE400_29795* a1x)
     if ( v4 <= 1 )
     {
       a1x->var_u16_29941_146 = a1x->var_u16_29835_40;
-      sub_424F0_42830(a1x, 0x38u);
+      SetEntityState_424F0_42830(a1x, 0x38u);
     }
     else
     {
-      sub_424F0_42830(a1x, 0x3Au);
+      SetEntityState_424F0_42830(a1x, 0x3Au);
     }
     goto LABEL_84;
   }
@@ -22715,7 +22716,7 @@ void sub_1D060(Type_AE400_29795* a1x)
       else
       {
         a1x->var_u16_29941_146 = (v52 - (dword_AE400_AE3F0() + 29795)) / 164;
-        sub_424F0_42830(a1x, 0x38u);
+        SetEntityState_424F0_42830(a1x, 0x38u);
         v10 = dword_AE400_AE3F0();
       }
     }
@@ -22752,7 +22753,7 @@ void sub_1D060(Type_AE400_29795* a1x)
             {
               v43 = a1x->var_u32_29951_156->v_30;
               v21 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(k + 72));
-              if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v21) < v43 && v20 < v44 )
+              if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v21) < v43 && v20 < v44 )
               {
                 v41 = k;
                 v44 = v20;
@@ -22766,7 +22767,7 @@ void sub_1D060(Type_AE400_29795* a1x)
         if ( v41 )
         {
           a1x->var_u16_29941_146 = (v41 - (v10 + 29795)) / 164;
-          sub_424F0_42830(a1x, 0x38u);
+          SetEntityState_424F0_42830(a1x, 0x38u);
         }
       }
       if ( !v46 )
@@ -22942,11 +22943,11 @@ void sub_1D6D0(Type_AE400_29795* a1x)
     if ( v2 <= 1 )
     {
       a1x->var_u16_29941_146 = a1x->var_u16_29835_40;
-      sub_424F0_42830(a1x, 0x38u);
+      SetEntityState_424F0_42830(a1x, 0x38u);
     }
     else
     {
-      sub_424F0_42830(a1x, 0x3Au);
+      SetEntityState_424F0_42830(a1x, 0x3Au);
     }
     return;
   }
@@ -23118,7 +23119,7 @@ void sub_1DA60(Type_AE400_29795* a1x)
     else
     {
       dword_AE400_AE3F0(v1);
-      sub_424F0_42830(a1x, 0x3Au);
+      SetEntityState_424F0_42830(a1x, 0x3Au);
     }
     goto LABEL_31;
   }
@@ -23128,7 +23129,7 @@ void sub_1DA60(Type_AE400_29795* a1x)
   if ( *(int *)PTR(v9 + 12) < 0 || (*(_BYTE *)PTR(v9 + 17) & 4) != 0 )
   {
 LABEL_29:
-    sub_424F0_42830(a1x, 0x37u);
+    SetEntityState_424F0_42830(a1x, 0x37u);
     goto LABEL_31;
   }
   if ( !(a1x->var_u8_29858_63 % 10) )
@@ -23167,7 +23168,7 @@ void sub_1DCB0(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1DCC0(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -23179,11 +23180,11 @@ void sub_1DCD0(Type_AE400_29795* a1x)
   v1 = 164 * a1x->var_u16_29941_146 + dword_AE400_AE3F0() + 29795;
   if (a1x->id_29819_24 == *(_WORD*)PTR(v1 + 24))
   {
-    sub_424F0_42830(a1x, 0x37u);
+    SetEntityState_424F0_42830(a1x, 0x37u);
     return;
   }
   a1x->actSpeed_29921_126 = 0;
-  sub_36FA0_37360(a1x, 202);
+  SetSprite_36FA0_37360(a1x, 202);
   a1x->sClass_29861_66 = *(_BYTE *)PTR(v1 + 64);
   result = *(_BYTE *)PTR(v1 + 65);
   a1x->sModel_29862_67 = result;
@@ -23193,7 +23194,7 @@ void sub_1DCD0(Type_AE400_29795* a1x)
 void sub_1DD50(Type_AE400_29795* a1x)
 {
   a1x->actSpeed_29921_126 = a1x->actSpeed_29923_128;
-  sub_36FA0_37360(a1x, 201);
+  SetSprite_36FA0_37360(a1x, 201);
   a1x->sClass_29861_66 = 3;
   a1x->sModel_29862_67 = -1;
   a1x->var_u16_29821_26 = 50;
@@ -23203,7 +23204,7 @@ void sub_1DD50(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1DD90(Type_AE400_29795* a1x)
 {
-  sub_36FA0_37360(a1x, 245);
+  SetSprite_36FA0_37360(a1x, 245);
   a1x->var_u8_29866_71 = 1;
 }
 
@@ -23212,7 +23213,7 @@ void sub_1DDB0(Type_AE400_29795* a1x)
 {
   a1x->var_u8_29866_71 = 0;
   a1x->var_u16_29821_26 = 400;
-  sub_36FA0_37360(a1x, 201);
+  SetSprite_36FA0_37360(a1x, 201);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -23248,7 +23249,7 @@ void sub_1DE20(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1DE30(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -23270,7 +23271,7 @@ void sub_1DE40(Type_AE400_29795* a1x)
     a1x->var_u16_29821_26 = v1 - 1;
     if ( v1 == 1 )
     {
-      sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 21);
+      PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 21);
       if ( (a1x->var_29811_16.byte[0] & 1) != 0 )
       {
         a1x->var_u16_29941_146 = 0;
@@ -23284,13 +23285,13 @@ void sub_1DE40(Type_AE400_29795* a1x)
         v8 = 9377 * v7 + 9439;
         a1x->rand_29799_4 = v8;
         word_AE454_AE444.y += ((v8 % 0x3C) << 8) + 12800;
-        sub_41C70_41FB0(a1x, &word_AE454_AE444);
-        sub_424F0_42830(a1x, 0x43u);
+        MoveEntity_41C70_41FB0(a1x, &word_AE454_AE444);
+        SetEntityState_424F0_42830(a1x, 0x43u);
         return;
       }
       else
       {
-        sub_424F0_42830(a1x, 0x44u);
+        SetEntityState_424F0_42830(a1x, 0x44u);
         return;
       }
     }
@@ -23391,7 +23392,7 @@ void sub_1DFE0(Type_AE400_29795* a1x)
   {
     if ( v1 > 1 )
     {
-      sub_424F0_42830(a1x, 0x46u);
+      SetEntityState_424F0_42830(a1x, 0x46u);
       return;
     }
     if ( *(_BYTE *)PTR(dword_AE400_AE3F0() + 164 * a1x->var_u16_29835_40 + 29859) == 3 )
@@ -23432,7 +23433,7 @@ LABEL_53:
             {
               v22 = a1x->var_u32_29951_156->v_30;
               v14 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(j + 72));
-              if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v14) < v22 && v13 < v10 )
+              if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v14) < v22 && v13 < v10 )
               {
                 v21 = j;
                 v10 = v13;
@@ -23562,7 +23563,7 @@ void sub_1E380(Type_AE400_29795* a1x)
     else
     {
       dword_AE400_AE3F0(v1);
-      sub_424F0_42830(a1x, 0x46u);
+      SetEntityState_424F0_42830(a1x, 0x46u);
     }
     return;
   }
@@ -23598,7 +23599,7 @@ void sub_1E380(Type_AE400_29795* a1x)
     v12 = dword_AE400_AE3F0();
     if ( !(a1x->var_u8_29858_63 % (8 * a1x->var_u32_29951_156->v_26)) )
     {
-      sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 11);
+      PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 11);
       v12 = dword_AE400_AE3F0();
     }
     a1x->var_u16_29821_26++;
@@ -23635,7 +23636,7 @@ LABEL_38:
       v19 = PitchTo_42180_424C0(&a1x->var_u32_29867_72, (axis_3d*)v18);
       //v20 = a1 - (dword_AE400_AE3F0() + 29795);
       *(_WORD *)PTR(v15 + 32) = v19;
-      sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 9);
+      PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 9);
     }
   }
 }
@@ -23655,7 +23656,7 @@ void sub_1E700(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1E710(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -23663,8 +23664,8 @@ void sub_1E720(Type_AE400_29795* a1x)
 {
   a1x->var_u16_29941_146 = 0;
   a1x->var_u16_29821_26 = 0;
-  sub_424F0_42830(a1x, 0x42u);
-  sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 11);
+  SetEntityState_424F0_42830(a1x, 0x42u);
+  PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 11);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -23676,12 +23677,12 @@ void sub_1E770(Type_AE400_29795* a1x)
   if ( a1x->var_u16_29941_146 )
   {
     a1x->var_u16_29821_26 = 0;
-    sub_424F0_42830(a1x, 0x42u);
+    SetEntityState_424F0_42830(a1x, 0x42u);
     v1 = 164 * a1x->var_u16_29941_146 + dword_AE400_AE3F0() + 29795;
     *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(v1 + 72);
     word_AE454_AE444.z = *(_WORD *)PTR(v1 + 76);
-    sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(v1 + 30), 0, a1x->actSpeed_29921_126 << 6);
-    sub_41C70_41FB0(a1x, &word_AE454_AE444);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(v1 + 30), 0, a1x->actSpeed_29921_126 << 6);
+    MoveEntity_41C70_41FB0(a1x, &word_AE454_AE444);
   }
 }
 
@@ -23731,7 +23732,7 @@ void sub_1E810(Type_AE400_29795* a1x)
         *(_WORD *)PTR(v8 + 24) = a1x->id_29819_24;
         *(_BYTE *)PTR(v8 + 18) |= 1u;
       }
-      sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 11);
+      PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 11);
     }
   }
 }
@@ -23807,7 +23808,7 @@ void sub_1EA40(Type_AE400_29795* a1x)
 LABEL_33:
     v22 = v26;
     a1x->var_u16_29941_146 = 0;
-    sub_424F0_42830(a1x, v22 + 1);
+    SetEntityState_424F0_42830(a1x, v22 + 1);
     return;
   }
   *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(v1 + 72);
@@ -23918,12 +23919,12 @@ LABEL_10:
       v21 = (int)OFF(CreateEntity_373F0_377B0(&word_AE454_AE444, 10, 45));
       if ( v21 )
       {
-        sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 10);
+        PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 10);
         sub_36DF0_371B0((Type_AE400_29795*)PTR(v21), v27);
         *(_BYTE *)PTR(v21 + 70) = 51;
       }
       a1x->var_u16_29941_146 = 0;
-      sub_424F0_42830(a1x, 0x4Fu);
+      SetEntityState_424F0_42830(a1x, 0x4Fu);
     }
   }
 }
@@ -23989,7 +23990,7 @@ void sub_1EED0(Type_AE400_29795* a1x)
       dword_AE400_AE3F0(v1);
       v8 = 76;
 LABEL_23:
-      sub_424F0_42830(a1x, v8);
+      SetEntityState_424F0_42830(a1x, v8);
       return;
     }
     v9 = 164 * a1x->var_u16_29835_40;
@@ -24093,7 +24094,7 @@ void sub_1F120(Type_AE400_29795* a1x)
     else
     {
       dword_AE400_AE3F0(v1);
-      sub_424F0_42830(a1x, 0x4Cu);
+      SetEntityState_424F0_42830(a1x, 0x4Cu);
     }
   }
   else
@@ -24108,14 +24109,14 @@ void sub_1F120(Type_AE400_29795* a1x)
       if ( !v10 || !*(_BYTE *)PTR(v9 + 64) )
       {
         a1x->var_u16_29821_26 = 5;
-        sub_424F0_42830(a1x, 0x49u);
+        SetEntityState_424F0_42830(a1x, 0x49u);
       }
       v11 = (_WORD *)PTR(v9 + 72);
       a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v11);
       if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)v11) < 0xA00 )
       {
         a1x->var_u16_29821_26 = 0;
-        sub_424F0_42830(a1x, 0x48u);
+        SetEntityState_424F0_42830(a1x, 0x48u);
       }
     }
   }
@@ -24202,7 +24203,7 @@ void sub_1F390(Type_AE400_29795* a1x)
   {
     v7 = 76;
 LABEL_28:
-    sub_424F0_42830(a1x, v7);
+    SetEntityState_424F0_42830(a1x, v7);
     return;
   }
   v8 = 164 * a1x->var_u16_29835_40;
@@ -24227,7 +24228,7 @@ void sub_1F5B0(Type_AE400_29795* a1x)
   v1 = 164 * a1x->var_u16_29833_38;
   if ( v1 + dword_AE400_AE3F0() + 29795 && *(_BYTE *)PTR(dword_AE400_AE3F0() + v1 + 29860) <= 1u )
     *(_WORD *)PTR(*(_DWORD *)PTR(dword_AE400_AE3F0() + 164 * a1x->var_u16_29833_38 + 29955) + 528) = 200;
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -24309,7 +24310,7 @@ void sub_1F640(Type_AE400_29795* a1x)
     else
     {
       dword_AE400_AE3F0(v1);
-      sub_424F0_42830(a1x, 0x52u);
+      SetEntityState_424F0_42830(a1x, 0x52u);
     }
   }
   else
@@ -24339,7 +24340,7 @@ LABEL_36:
           a1x->actSpeed_29921_126 = j;
           return;
         }
-        sub_424F0_42830(a1x, 0x52u);
+        SetEntityState_424F0_42830(a1x, 0x52u);
         a1x->var_u16_29821_26 = 1;
         LOWORD(j) = *(_WORD *)PTR(v16 + 26) + 1;
         *(_WORD *)PTR(v16 + 26) = j;
@@ -24403,7 +24404,7 @@ void sub_1FA00(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1FAA0(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -24485,7 +24486,7 @@ void sub_1FAC0(Type_AE400_29795* a1x)
     else
     {
       dword_AE400_AE3F0(v1);
-      sub_424F0_42830(a1x, 0x58u);
+      SetEntityState_424F0_42830(a1x, 0x58u);
     }
   }
   else
@@ -24515,7 +24516,7 @@ LABEL_37:
           a1x->actSpeed_29921_126 = j;
           return;
         }
-        sub_424F0_42830(a1x, 0x58u);
+        SetEntityState_424F0_42830(a1x, 0x58u);
         a1x->var_u16_29821_26 = 1;
         LOWORD(j) = *(_WORD *)PTR(v16 + 26) + 1;
         *(_WORD *)PTR(v16 + 26) = j;
@@ -24574,7 +24575,7 @@ void sub_1FEC0(Type_AE400_29795* a1x)
   v1 = 164 * a1x->var_u16_29833_38;
   if ( v1 + dword_AE400_AE3F0() + 29795 && *(_BYTE *)PTR(dword_AE400_AE3F0() + v1 + 29860) <= 1u )
     *(_WORD *)PTR(*(_DWORD *)PTR(dword_AE400_AE3F0() + 164 * a1x->var_u16_29833_38 + 29955) + 528) = 200;
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -24659,7 +24660,7 @@ void sub_1FF60(Type_AE400_29795* a1x)
   {
     if ( v1 > 1 )
     {
-      sub_424F0_42830(a1x, 0x5Eu);
+      SetEntityState_424F0_42830(a1x, 0x5Eu);
       goto LABEL_34;
     }
     v6 = dword_AE400_AE3F0() + 164 * a1x->var_u16_29835_40;
@@ -24685,7 +24686,7 @@ void sub_1FF60(Type_AE400_29795* a1x)
         {
           v15 = a1x->var_u32_29951_156->v_30;
           v13 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(j + 72));
-          if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v13) < v15 && v12 < v9 )
+          if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v13) < v15 && v12 < v9 )
           {
             v16 = j;
             v9 = v12;
@@ -24698,7 +24699,7 @@ void sub_1FF60(Type_AE400_29795* a1x)
       v7 = (int)(v16 - (dword_AE400_AE3F0() + 29795)) / 164;
 LABEL_33:
       a1x->var_u16_29941_146 = v7;
-      sub_424F0_42830(a1x, 0x5Cu);
+      SetEntityState_424F0_42830(a1x, 0x5Cu);
     }
   }
 LABEL_34:
@@ -24780,7 +24781,7 @@ void sub_201D0(Type_AE400_29795* a1x)
   if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v8 + 72)) >= v12 )
   {
 LABEL_22:
-    sub_424F0_42830(a1x, 0x5Bu);
+    SetEntityState_424F0_42830(a1x, 0x5Bu);
   }
   else
   {
@@ -24817,7 +24818,7 @@ void sub_203F0(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_20400(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -24829,16 +24830,16 @@ void sub_20410(Type_AE400_29795* a1x)
   v1 = a1x->rand_29799_4 % 0x14u;
   a1x->actSpeed_29921_126 = 0;
   if ( v1 <= 10 )
-    sub_36FA0_37360(a1x, 206);
+    SetSprite_36FA0_37360(a1x, 206);
   else
-    sub_36FA0_37360(a1x, 1);
+    SetSprite_36FA0_37360(a1x, 1);
 }
 
 //SYNCHRONIZED WITH REMC1
 void sub_20450(Type_AE400_29795* a1x)
 {
   a1x->actSpeed_29921_126 = a1x->actSpeed_29923_128;
-  sub_36FA0_37360(a1x, 0);
+  SetSprite_36FA0_37360(a1x, 0);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -24888,7 +24889,7 @@ void sub_20480(Type_AE400_29795* a1x)
       v14 = v21;
       word_AE454_AE444 = a1x->var_u32_29867_72;
       //word_AE454_AE444.z = *(_WORD *)(a1 + 76);
-      sub_41EC0_42200(&word_AE454_AE444, v14, 0, 256);
+      MoveAlongHeading_41EC0_42200(&word_AE454_AE444, v14, 0, 256);
       a1x->rand_29799_4 = 9377 * a1x->rand_29799_4 + 9439;
       v3 = a1x->rand_29799_4 % (unsigned int)*((unsigned __int16 *)v18 + (unsigned __int16)v20);
       v4 = (v3 + 2) * (IsMoveBlocked_11640(a1x, &word_AE454_AE444, 1) == 0);
@@ -24942,14 +24943,14 @@ void sub_20480(Type_AE400_29795* a1x)
   if (a1x->var_u16_29829_34 == a1x->var_u16_29825_30
     || (v9 = 9377 * a1x->rand_29799_4 + 9439, a1x->rand_29799_4 = v9, v10 = v9 % 0x14, result = v9 / 0x14, v10 <= 10) )
   {
-    sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
     //v11 = *(__int16 **)(a1 + 156);
     v17 = a1x->var_u32_29951_156->vertSpeed_14;
     v16 = a1x->var_u32_29951_156->maxHeight_10;
     v15 = a1x->var_u32_29951_156->minHeight_12;
     v12 = GetTerrainHeight_11F50(&word_AE454_AE444);
     v13 = KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v12, v15, v16, v17);
-    sub_41C70_41FB0(a1x, &word_AE454_AE444);
+    MoveEntity_41C70_41FB0(a1x, &word_AE454_AE444);
   }
 }
 
@@ -24995,7 +24996,7 @@ void WyvernTick_20710(Type_AE400_29795* a1x)
       if ( v3 )
       {
         a1x->var_u16_29941_146 = (int)(v3 - (dword_AE400_AE3F0() + 29795)) / 164;
-        sub_424F0_42830(a1x, 0x62u);
+        SetEntityState_424F0_42830(a1x, 0x62u);
       }
     }
   }
@@ -25080,7 +25081,7 @@ void sub_207E0(Type_AE400_29795* a1x)
     else
     {
       dword_AE400_AE3F0(v1);
-      sub_424F0_42830(a1x, 0x64u);
+      SetEntityState_424F0_42830(a1x, 0x64u);
     }
     return;
   }
@@ -25093,7 +25094,7 @@ void sub_207E0(Type_AE400_29795* a1x)
     a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v11 + 72));
   }
   if ( *(int *)PTR(v11 + 12) < 0 || (*(_BYTE *)PTR(v11 + 17) & 4) != 0 )
-    return sub_424F0_42830(a1x, 0x61u);
+    return SetEntityState_424F0_42830(a1x, 0x61u);
   v12 = a1x->var_u16_29821_26;
   if ( v12 )
   {
@@ -25124,11 +25125,11 @@ void sub_207E0(Type_AE400_29795* a1x)
     v16 = (__int16)(*(_WORD *)PTR(v11 + 72) - a1x->var_u32_29867_72.x);
     if ( v16 * v16
        + (__int16)(*(_WORD *)PTR(v11 + 74) - a1x->var_u32_29867_72.y) * (__int16)(*(_WORD *)PTR(v11 + 74) - a1x->var_u32_29867_72.y) >= v18 )
-      return sub_424F0_42830(a1x, 0x61u);
+      return SetEntityState_424F0_42830(a1x, 0x61u);
     if ( !(a1x->var_u8_29858_63 % (2 * a1x->var_u32_29951_156->v_26)) )
-      sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 39);
+      PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 39);
     v17 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v11 + 72));
-    result = sub_42210_42550(a1x->var_u16_29825_30, v17);
+    result = AngleDifference_42210_42550(a1x->var_u16_29825_30, v17);
     if ( result < 0xE3u )
       a1x->var_u16_29821_26 = 15;
   }
@@ -25149,7 +25150,7 @@ void sub_20B70(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_20B80(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //----- (00020BD0) --------------------------------------------------------
@@ -27092,10 +27093,10 @@ void ExplosionTick_24F60(Type_AE400_29795* a1x)
         v8 = v7 % 0x41;
         v9x = str_AE400_AE3F0->str_29795;
         a1x->var_u16_29841_46 = v8 - 32;
-        sub_55370_558A0(a1x - v9x, -1, 3);
+        PlayEntitySound_55370_558A0(a1x - v9x, -1, 3);
       }
       KeepHeightAboveGround_42000_42340(&a1x->var_u32_29867_72, v3, 0, 0, a1x->var_u16_29841_46);
-      sub_42510_42850(a1x);
+      AdvanceAnimFrame_42510_42850(a1x);
     }
     else
     {
@@ -27133,7 +27134,7 @@ void Class10Type1Tick_25130(int a1)
   if ( (v3 & 2) == 0 )
   {
     *(_BYTE *)PTR(a1 + 16) = v3 | 2;
-    sub_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 3);
+    PlayEntitySound_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 3);
   }
   result = BeginRingIter_11410(*(__int16 *)PTR(a1 + 26), *(__int16 *)PTR(a1 + 26));
   v4 = result;
@@ -27271,12 +27272,12 @@ void sub_25410(Type_AE400_29795* a1x)
   a1x->actLife_29807_12 = v1 - 1;
   if ( v1 >= 0 )
   {
-    sub_42510_42850(a1x);
+    AdvanceAnimFrame_42510_42850(a1x);
     if ( (a1x->var_29811_16.byte[0] & 2) == 0 )
     {
       v2 = dword_AE400_AE3F0() + 29795;
       a1x->var_29811_16.byte[0] |= 2u;
-      sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 27);
+      PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 27);
     }
   }
   else
@@ -27313,7 +27314,7 @@ void VolcanoEffectTick_25470(Type_AE400_29795* a1x)
   else
   {
     sub_127E0(a1x, 0, a1x->var_u16_29839_44);
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 10);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 10);
   }
 }
 
@@ -27408,7 +27409,7 @@ void CraterEffectTick_25670(Type_AE400_29795* a1x)
     }
     a1x->var_29811_16.byte[0] |= 2u;
     sub_255D0(a1x, 0, v3);
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 10);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 10);
   }
 }
 
@@ -27425,7 +27426,7 @@ void PossessionEffectTick_25760(Type_AE400_29795* a1x)
       MarkEntityForRemoval_41E80_421C0(a1x);
   else
   {
-    sub_42510_42850(a1x);
+    AdvanceAnimFrame_42510_42850(a1x);
     sub_120B0(a1x, 1u, a1x->var_u16_29839_44);
   }
 }
@@ -27462,7 +27463,7 @@ void sub_257B0(int a1)
       *(_WORD*)PTR(a1 + 26) = v5;
       if (v5 < 16 )
       {
-        sub_41EC0_42200(&word_AE454_AE444, *(_WORD*)PTR(a1 + 30), 0, 30);
+        MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD*)PTR(a1 + 30), 0, 30);
         if ((*(_BYTE*)PTR(a1 + 26) & 1) == 0)
           ++*(_WORD*)PTR(a1 + 86);
       }
@@ -27473,7 +27474,7 @@ void sub_257B0(int a1)
             *(_WORD*)PTR(a1 + 86) = v6 - 1;
       }
       v7 = nullsub_11((uint32)OFF(&word_AE454_AE444));
-      sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+      MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
   }
 }
 
@@ -27509,14 +27510,14 @@ void sub_258A0(int a1)
 		*(_WORD*)PTR(a1 + 26) = v5;
 		if (v5 < 16)
 		{
-			sub_41EC0_42200(&word_AE454_AE444, *(_WORD*)PTR(a1 + 30), 0, 30);
+			MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD*)PTR(a1 + 30), 0, 30);
 			if ((*(_BYTE*)PTR(a1 + 26) & 1) == 0)
 				++* (_WORD*)PTR(a1 + 86);
 		}
 		if (*(int*)PTR(a1 + 12) < 6)
 			--* (_WORD*)PTR(a1 + 86);
 		v6 = nullsub_11((uint32)OFF(&word_AE454_AE444));
-		v7 = sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+		v7 = MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
 		nullsub_19(v7);
 	}
 }
@@ -27550,7 +27551,7 @@ void EarthquakeEffectTick_25990(Type_AE400_29795* a1x)
   v4 = 9377 * a1x->rand_29799_4 + 9439;
   a1x->rand_29799_4 = v4;
   a1x->var_u16_29825_30 = (v4 % 0x5B + a1x->var_u16_29825_30 - 45) & 0x7FF;
-  sub_41EC0_42200(&a1x->var_u32_29867_72, a1x->var_u16_29825_30, 0, 256);
+  MoveAlongHeading_41EC0_42200(&a1x->var_u32_29867_72, a1x->var_u16_29825_30, 0, 256);
   result = (int)OFF(CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 10, 11));
   if ( result )
   {
@@ -27645,7 +27646,7 @@ void LavaTick_25A60(int a1)
       }
       v12 = *(_WORD*)PTR(a1 + 26) + 1;
       *(_WORD*)PTR(a1 + 26) = v12;
-      result = sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+      result = MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
       if (v7 == word_AE454_AE444.z)
       {
           sub_41F50_42290((axis_3d*)PTR(a1 + 72), &word_AE454_AE444);
@@ -27686,7 +27687,7 @@ void ExplosionRingTick_25CE0(Type_AE400_29795* a1x)
       if ((a1x->var_29811_16.byte[0] & 2) == 0)
       {
           a1x->var_29811_16.dword |= 0x10002u; // PORT: dword as in the original (byte[0] dropped the 0x10000 flag)
-          sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 30);
+          PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 30);
       }
       v3 = 768 * a1x->var_u16_29821_26;
       SetCollisionBox_37130_374F0(a1x, (int)(v3 - (__CFSHL__(HIDWORD(v3), 2) + 4 * HIDWORD(v3))) >> 2, 512);
@@ -27833,7 +27834,7 @@ LABEL_5:
         *(_WORD *)PTR(v15 + 30) = v16;
         *(_DWORD *)PTR(v15 + 150) = *(_DWORD *)PTR(a1 + 72);
         *(_WORD *)PTR(v15 + 154) = *(_WORD *)PTR(a1 + 76);
-        sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v15 + 150), *(_WORD *)PTR(v15 + 30), 0, 1536);
+        MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v15 + 150), *(_WORD *)PTR(v15 + 30), 0, 1536);
         *(_WORD *)PTR(v15 + 154) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v15 + 150));
       }
     }
@@ -27926,7 +27927,7 @@ void LightningEffectTick_262D0(Type_AE400_29795* a1x)
     if ( (a1x->var_29811_16.byte[0] & 2) == 0 )
     {
       sub_120B0(a1x, 0, a1x->var_u16_29839_44);
-      sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 24);
+      PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 24);
       v2 = a1x->var_29811_16.byte[0];
       a1x->actLife_29807_12 = 1;
       a1x->var_29811_16.byte[0] = v2 | 2;
@@ -27953,7 +27954,7 @@ void StealManaEffectTick_26360(Type_AE400_29795* a1x)
       MarkEntityForRemoval_41E80_421C0(a1x);
   else
   {
-      result = sub_42510_42850(a1x);
+      result = AdvanceAnimFrame_42510_42850(a1x);
       BYTE1(result) = a1x->var_29811_16.byte[0];
       if ((result & 0x200) == 0)
       {
@@ -27977,7 +27978,7 @@ void DuelEffectTick_263C0(Type_AE400_29795* a1x)
     MarkEntityForRemoval_41E80_421C0(a1x);
   else
   {
-    sub_42510_42850(a1x);
+    AdvanceAnimFrame_42510_42850(a1x);
     sub_120B0(a1x, 4u, a1x->var_u16_29839_44);
   }
 }
@@ -28182,7 +28183,7 @@ void sub_26920(Type_AE400_29795* a1x)
     *(_WORD *)PTR(v3 + 84) = v4;
     *(_WORD *)PTR(v3 + 24) = a1x->id_29819_24;
   }
-  sub_41EC0_42200(&a1x->var_u32_29867_72, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
+  MoveAlongHeading_41EC0_42200(&a1x->var_u32_29867_72, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -28203,9 +28204,9 @@ void sub_269A0(Type_AE400_29795* a1x)
   if ( !(unsigned __int8)sub_40D30_41070(a1x, 0, 1024, v3 % 0xF + 10, 0) )
   {
     sub_120B0(a1x, 0, a1x->var_u16_29839_44);
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 10);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 10);
   }
-  sub_41EC0_42200(&a1x->var_u32_29867_72, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
+  MoveAlongHeading_41EC0_42200(&a1x->var_u32_29867_72, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -28229,13 +28230,13 @@ void sub_26A60(int a1)
   {
     v1 = dword_AE400_AE3F0() + 29795;
     *(_BYTE *)PTR(a1 + 16) |= 2u;
-    sub_55370_558A0((a1 - v1) / 164, -1, 21);
+    PlayEntitySound_55370_558A0((a1 - v1) / 164, -1, 21);
   }
   v2 = *(_DWORD *)PTR(a1 + 12);
   if ( v2 > 0 && (*(_DWORD *)PTR(a1 + 12) = v2 - 1, v2 == 1) )
   {
     MarkEntityForRemoval_41E80_421C0((Type_AE400_29795*)PTR(a1));
-    sub_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 20);
+    PlayEntitySound_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 20);
   }
   else
   {
@@ -28248,12 +28249,12 @@ void sub_26A60(int a1)
       if ( EntitiesCollide_11950((Type_AE400_29795*)PTR(a1), (Type_AE400_29795*)PTR(v4)) )
       {
         v5 = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(v4 + 72), (axis_3d*)(uint16*)v8);
-        if ( (unsigned __int16)sub_42210_42550(*(_WORD *)PTR(v4 + 30), v5) < 0xAAu )
+        if ( (unsigned __int16)AngleDifference_42210_42550(*(_WORD *)PTR(v4 + 30), v5) < 0xAAu )
         {
           v7 = *(_DWORD *)PTR(a1 + 156);
           *(_WORD *)PTR(a1 + 154) = *(_WORD *)PTR(v7 + 12) + GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 150));
-          sub_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 22);
-          sub_41C70_41FB0((Type_AE400_29795*)PTR(v4), (axis_3d*)PTR(a1 + 150));
+          PlayEntitySound_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 22);
+          MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v4), (axis_3d*)PTR(a1 + 150));
           sub_44BE0_44F20((Type_AE400_29795*)PTR(v4), 6);
         }
       }
@@ -28284,14 +28285,14 @@ void sub_26C00(int a1)
       v3 = v2 + 72;
       *(_DWORD *)&word_AE454_AE444.x = *(_DWORD *)PTR(v3);
       word_AE454_AE444.z = *(_WORD *)PTR(v3 + 4);
-      sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+      MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
       v4 = *(_WORD *)PTR(a1 + 30) + 45;
       HIBYTE(v4) &= 7u;
       *(_WORD *)PTR(a1 + 30) = v4;
       v5 = GetTerrainHeight_11F50(&word_AE454_AE444);
       ++HIBYTE(v5);
       word_AE454_AE444.z = v5;
-      sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+      MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
     }
   }
 }
@@ -28382,7 +28383,7 @@ void sub_26D20(int a1)
           *(_WORD *)PTR(v7 + 44) = v9;
         }
       }
-      sub_55370_558A0((v8 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 23);
+      PlayEntitySound_55370_558A0((v8 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 23);
     }
     else
     {
@@ -28433,7 +28434,7 @@ void UndeadArmyEffectTick_26E90(int a1)
       {
         *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(a1 + 72);
         word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-        sub_41EC0_42200(&word_AE454_AE444, v10, 0, 512);
+        MoveAlongHeading_41EC0_42200(&word_AE454_AE444, v10, 0, 512);
         v3 = (int)OFF(CreateEntity_373F0_377B0(&word_AE454_AE444, 5, 9));
         v4 = v3;
         if ( v3 )
@@ -28485,7 +28486,7 @@ void ManaBallTick_27030(Type_AE400_29795* event)//1F8030_
     if (event->str_29885_90.var_u16_29895_100 != event->manaOwner_29939_144)
     {
         event->manaOwner_29939_144 = event->str_29885_90.var_u16_29895_100;
-      sub_55370_558A0(event->str_29885_90.var_u16_29895_100, -1, 4);
+      PlayEntitySound_55370_558A0(event->str_29885_90.var_u16_29895_100, -1, 4);
       event->var_29811_16.byte[0] &= ~0x40u;
     }
     event->str_29885_90.var_u16_29895_100 = 0;
@@ -28499,7 +28500,7 @@ void ManaBallTick_27030(Type_AE400_29795* event)//1F8030_
     word_AE454_AE444.x = 0;
     word_AE454_AE444.y = 0;
     word_AE454_AE444.z = 0;
-    sub_41EC0_42200(&word_AE454_AE444, event->var_u16_29825_30, 0, 4);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, event->var_u16_29825_30, 0, 4);
     event->var_u32_150.x += word_AE454_AE444.x;
     //v3 = word_AE454_AE444.y + event->var_u32_150.y;
     event->str_29885_90.var_u16_29913_118 = 0;
@@ -28517,13 +28518,13 @@ void ManaBallTick_27030(Type_AE400_29795* event)//1F8030_
       //v5 = HeadingTo_42150_42490(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72);
       event->var_u16_29825_30 = HeadingTo_42150_42490(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72);
       //v6 = event->var_u16_29941_146;
-      int tempV7 = sub_423D0_42710(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72);
+      int tempV7 = Distance2D_423D0_42710(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72);
       if (tempV7 <= 1024 )
       {
         if (tempV7 >= 16 )
         {
           word_AE454_AE444 = event->var_u32_29867_72;
-          sub_41EC0_42200(&word_AE454_AE444, event->var_u16_29825_30, 0, 16);
+          MoveAlongHeading_41EC0_42200(&word_AE454_AE444, event->var_u16_29825_30, 0, 16);
         }
         else
         {
@@ -28547,7 +28548,7 @@ void ManaBallTick_27030(Type_AE400_29795* event)//1F8030_
         int16_t tempV10 = GetTerrainHeight_11F50(&word_AE454_AE444);
         if (tempV10 > word_AE454_AE444.z )
           word_AE454_AE444.z = tempV10;
-        sub_41C70_41FB0(event, &word_AE454_AE444);
+        MoveEntity_41C70_41FB0(event, &word_AE454_AE444);
       }
       else
       {
@@ -28593,7 +28594,7 @@ void ManaBallTick_27030(Type_AE400_29795* event)//1F8030_
           event->var_u16_29841_46 = 0;
       word_AE454_AE444.z = tempV13;
     }
-    sub_41C70_41FB0(event, &word_AE454_AE444);
+    MoveEntity_41C70_41FB0(event, &word_AE454_AE444);
     if (tempV13 == word_AE454_AE444.z )
     {
         Type_AE400_29795* tempV15 = sub_11D10(event);
@@ -28671,7 +28672,7 @@ LABEL_15:
   v4 = event->var_u16_29881_86;
   if ( v4 != v1 + i )
   {
-    sub_36FA0_37360(event, v1 + i);
+    SetSprite_36FA0_37360(event, v1 + i);
     if ( i )
       sub_370E0_374A0(event, v1 + i);
   }
@@ -28709,7 +28710,8 @@ void DeathMarkerTick_275C0(__int16 *a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_27690(_WORD *result, Type_AE400_29795* a2x)
+/// Creates a mana ball (10/39) holding the entity's mana (+140) and mana owner (+144), thrown in a random direction; clears the owner.
+void DropManaBall_27690(_WORD *result, Type_AE400_29795* a2x)
 {
   _WORD *v2; // ebx
   int v3; // ecx
@@ -28739,7 +28741,7 @@ void sub_27690(_WORD *result, Type_AE400_29795* a2x)
       v6 = a2x->var_u32_29867_72.z;
       v7 = GetTerrainHeight_11F50(&a2x->var_u32_29867_72);
       v2[23] = (1024 - (v6 - v7) - (__CFSHL__((1024 - (v6 - v7)) >> 31, 3) + 8 * ((1024 - (v6 - v7)) >> 31))) >> 3;
-      sub_41EC0_42200((axis_3d*)(v2 + 75), v2[15], 0, v2[63]);
+      MoveAlongHeading_41EC0_42200((axis_3d*)(v2 + 75), v2[15], 0, v2[63]);
     }
     a2x->manaOwner_29939_144 = 0;
   }
@@ -29855,9 +29857,9 @@ void sub_28DC0(Type_AE400_29795* event)
     if ( v5 != event->manaOwner_29939_144)
     {
       event->manaOwner_29939_144 = v5;
-      sub_55370_558A0(v5, -1, 4);
+      PlayEntitySound_55370_558A0(v5, -1, 4);
       event->var_29811_16.byte[0] &= ~1u;
-      sub_36FA0_37360(event, 177);
+      SetSprite_36FA0_37360(event, 177);
       event->var_u16_29881_86 += *(_WORD *)PTR(*(_DWORD *)PTR(164 * event->str_29885_90.var_u16_29895_100 + dword_AE400_AE3F0() + 29955) + 48);
     }
     event->str_29885_90.var_u16_29895_100 = 0;
@@ -30068,7 +30070,7 @@ void sub_293D0(Type_AE400_29795* a1x)
   a1x->actLife_29807_12 = v1 - 1;
   if ( v1 >= 0 )
   {
-    sub_42510_42850(a1x);
+    AdvanceAnimFrame_42510_42850(a1x);
     if ( (a1x->var_29811_16.byte[0] & 2) == 0 )
     {
       a1x->var_29811_16.byte[0] |= 2u;
@@ -30113,7 +30115,7 @@ void sub_29540(Type_AE400_29795* a1x)
   word_AE454_AE444.x += a1x->var_u32_150.x;
   word_AE454_AE444.y += v2;
   word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
-  sub_41C70_41FB0(a1x, &word_AE454_AE444);
+  MoveEntity_41C70_41FB0(a1x, &word_AE454_AE444);
   sub_120B0(a1x, 0, a1x->var_u16_29839_44);
 }
 
@@ -30163,7 +30165,7 @@ void CrabSpawnTimerTick_296A0(Type_AE400_29795* a1x)
   a1x->var_u16_29821_26 = result - 1;
   if ( !result )
   {
-    sub_424F0_42830(a1x, 0x39u);
+    SetEntityState_424F0_42830(a1x, 0x39u);
     a1x->maxLife_29803_8 = 5000;
   }
 }
@@ -30250,7 +30252,7 @@ void WallOfFireEffectTick_29780(Type_AE400_29795* a1x)
           if ((a1x->var_29811_16.byte[0] & 2) == 0)
           {
               a1x->var_29811_16.dword |= 0x10002u; // PORT: dword as in the original (byte[0] dropped the 0x10000 flag)
-              sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 30);
+              PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 30);
           }
           __int64 v3 = 768 * a1x->var_u16_29821_26;
           SetCollisionBox_37130_374F0(a1x, (int)(v3 - (__CFSHL__(HIDWORD(v3), 2) + 4 * HIDWORD(v3))) >> 2, 512);
@@ -30303,7 +30305,7 @@ void ManaMagnetEffectTick_29920_29960(int a1)
 			result = dword_AE400_AE3F0() + 29795;
 			if (i <= dword_AE400_AE3F0() + 29795)
 				break;
-			if (*(_BYTE*)PTR(i + 65) == 39 && sub_42410_42750((_WORD*)PTR(a1 + 72), (_WORD*)PTR(i + 72)) < 12845056)
+			if (*(_BYTE*)PTR(i + 65) == 39 && DistanceSquared2D_42410_42750((_WORD*)PTR(a1 + 72), (_WORD*)PTR(i + 72)) < 12845056)
 			{
 				v4 = (a1 - (dword_AE400_AE3F0() + 29795)) / 164;
 				*(_DWORD*)PTR(i + 114) = 100;
@@ -30326,7 +30328,7 @@ void GlobalDeathEffectTick_299D0_29A10(Type_AE400_29795* a1x)
   {
     //v4 = dword_AE400_AE3F0() + 29795;
     a1x->var_u16_29821_26--;
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 43);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 43);
   }
   else
   {
@@ -30343,16 +30345,16 @@ void GlobalDeathEffectTick_299D0_29A10(Type_AE400_29795* a1x)
           {
             case 2:
             case 5:
-              if ( sub_423D0_42710(&a1x->var_u32_29867_72, (axis_3d*)v2) < 0xA00 )
+              if ( Distance2D_423D0_42710(&a1x->var_u32_29867_72, (axis_3d*)v2) < 0xA00 )
                 *(_DWORD *)PTR(i + 12) = -1;
               break;
             case 3:
-              if ( sub_423D0_42710(&a1x->var_u32_29867_72, (axis_3d*)v2) < 0xA00 )
+              if ( Distance2D_423D0_42710(&a1x->var_u32_29867_72, (axis_3d*)v2) < 0xA00 )
                 sub_12B50(a1x, i, 0, a1x->var_u16_29839_44);
               break;
             case 9:
             case 0xA:
-              if ( sub_423D0_42710(&a1x->var_u32_29867_72, (axis_3d*)v2) < 0xA00 )
+              if ( Distance2D_423D0_42710(&a1x->var_u32_29867_72, (axis_3d*)v2) < 0xA00 )
                 a1x->actLife_29807_12 = 0;
               break;
             default:
@@ -30361,8 +30363,8 @@ void GlobalDeathEffectTick_299D0_29A10(Type_AE400_29795* a1x)
         }
         v2 += 82;
       }
-      sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 44);
-      sub_55370_558A0(a1x->id_29819_24, -1, 44);
+      PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 44);
+      PlayEntitySound_55370_558A0(a1x->id_29819_24, -1, 44);
       sub_44BE0_44F20((Type_AE400_29795*)PTR(164 * a1x->id_29819_24 + dword_AE400_AE3F0() + 29795), 3);
       MarkEntityForRemoval_41E80_421C0(a1x);
     }
@@ -41836,7 +41838,7 @@ int sub_35D30_360F0(unsigned __int16 a1, unsigned __int16 a2, __int16 a3, __int1
   v8[0] = a3 << 8;
   v8[1] = a4 << 8;
   v4 = HeadingTo_42150_42490((axis_3d*)(uint16*)v7, (axis_3d*)(uint16*)v8);
-  v5 = sub_423D0_42710((axis_3d*)(uint16*)v7, (axis_3d*)(uint16*)v8);
+  v5 = Distance2D_423D0_42710((axis_3d*)(uint16*)v7, (axis_3d*)(uint16*)v8);
   result = (int)OFF(CreateEntity_373F0_377B0((axis_3d*)v7, 10, 32));
   if ( result )
   {
@@ -41863,7 +41865,7 @@ int sub_35DE0_361A0(unsigned __int16 a1, unsigned __int16 a2, __int16 a3, __int1
   v10[0] = a3 << 8;
   v10[1] = a4 << 8;
   v4 = HeadingTo_42150_42490((axis_3d*)(uint16*)v9, (axis_3d*)(uint16*)v10);
-  v5 = sub_423D0_42710((axis_3d*)(uint16*)v9, (axis_3d*)(uint16*)v10);
+  v5 = Distance2D_423D0_42710((axis_3d*)(uint16*)v9, (axis_3d*)(uint16*)v10);
   result = (int)OFF(CreateEntity_373F0_377B0((axis_3d*)v9, 10, 51));
   v7 = result;
   if ( result )
@@ -42856,14 +42858,14 @@ void sub_36DF0_371B0(Type_AE400_29795* event, unsigned __int16 a2)//207DF0_
   word_AE454_AE444 = event->var_u32_29867_72;
   word_AE454_AE444.x = event->var_u32_29867_72.x >> 8 << 8;
   word_AE454_AE444.y = event->var_u32_29867_72.y >> 8 << 8;
-  sub_41C70_41FB0(event, &word_AE454_AE444);
+  MoveEntity_41C70_41FB0(event, &word_AE454_AE444);
   uint8 pomX2 = (event->var_u32_29867_72.x >> 8) - (pomX >> 1);
   uint8 pomY2 = (event->var_u32_29867_72.y >> 8) - (pomY >> 1);
   if ( (pomX2 + pomY2) % 2 )
   {
     word_AE454_AE444 = event->var_u32_29867_72;
     word_AE454_AE444.x += 0x100;
-    sub_41C70_41FB0(event, &word_AE454_AE444);
+    MoveEntity_41C70_41FB0(event, &word_AE454_AE444);
     pomX2++;
   }
   sub_37150_37510(event, a2);
@@ -42886,7 +42888,8 @@ int sub_36F90_37350(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_36FA0_37360(Type_AE400_29795* event, __int16 a2)//207FA0_
+/// Gives the entity sprite descriptor a2 (+86, index into unk_99BA0x), resets its animation frame (+88), sets the frame count (+89) and the collision box from the descriptor size.
+void SetSprite_36FA0_37360(Type_AE400_29795* event, __int16 a2)//207FA0_
 {
   event->var_u8_29883_88 = 0;
   event->var_u16_29881_86 = a2;
@@ -42900,7 +42903,7 @@ void sub_36FA0_37360(Type_AE400_29795* event, __int16 a2)//207FA0_
 //SYNCHRONIZED WITH REMC1
 void sub_37030_373F0(Type_AE400_29795* a1x, __int16 a2)
 {
-  sub_36FA0_37360(a1x, a2);
+  SetSprite_36FA0_37360(a1x, a2);
   a1x->collisionBox_29873_78.radiusX_29875_80 = word_99BA6[7 * a2] / 2;
   a1x->collisionBox_29873_78.radiusY_29877_82 = word_99BA6[7 * a2] / 2;
   a1x->collisionBox_29873_78.radiusZ_29879_84 = word_99BA6[1 + 7 * a2] / 2;
@@ -42909,7 +42912,7 @@ void sub_37030_373F0(Type_AE400_29795* a1x, __int16 a2)
 //SYNCHRONIZED WITH REMC1
 void sub_370A0_37460(Type_AE400_29795* a1x, __int16 a2)
 {
-  sub_36FA0_37360(a1x, a2);
+  SetSprite_36FA0_37360(a1x, a2);
   a1x->collisionBox_29873_78.radiusX_29875_80 *= 2;
   a1x->collisionBox_29873_78.radiusY_29877_82 *= 2;
   a1x->collisionBox_29873_78.radiusZ_29879_84 *= 2;
@@ -42918,7 +42921,7 @@ void sub_370A0_37460(Type_AE400_29795* a1x, __int16 a2)
 //SYNCHRONIZED WITH REMC1
 void sub_370E0_374A0(Type_AE400_29795* a1x, __int16 a2)
 {
-  sub_36FA0_37360(a1x, a2);
+  SetSprite_36FA0_37360(a1x, a2);
   a1x->collisionBox_29873_78.radiusX_29875_80 /= 2;
   a1x->collisionBox_29873_78.radiusY_29877_82 /= 2;
   a1x->collisionBox_29873_78.radiusZ_29879_84 /= 2;
@@ -43035,7 +43038,7 @@ Type_AE400_29795* NewEvent_372C0_37680()//2082C0_
 		str_AE408_AE3F8->var_u32_36462[2] = nullptr;
 		str_AE408_AE3F8->var_u32_36462[0] = nullptr;
 		str_AE408_AE3F8->var_u32_36462[3] = nullptr;
-		sub_41DD0_42110(str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593]);
+		RemoveEntityFromMap_41DD0_42110(str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593]);
 		str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593]->var_u8_29859_64 = 0;
 		memset((void*)str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593], 0, sizeof(Type_AE400_29795));
 		str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593]->maxLife_29803_8 = 300;
@@ -43355,8 +43358,8 @@ Type_AE400_29795* CreatePlayerWizard_37820_37BE0(axis_3d* position)//208820_
 		event->var_u32_29951_156 = &creatureTypes_98F38[7];
 		event->var_u16_29823_28 = 29;
 		event->id_29819_24 = event - str_AE400_AE3F0->str_29795;
-		sub_41CF0_42030(event, position);
-		sub_36FA0_37360(event, 44);
+		AddEntityToMap_41CF0_42030(event, position);
+		SetSprite_36FA0_37360(event, 44);
 		RefillLife_36DE0_371A0(event);
 	}
 	return event;
@@ -43383,8 +43386,8 @@ int CreateComputerWizard_378A0_37C60(int a1)
     *(_DWORD *)PTR(result + 156) = (uint32)OFF(&creatureTypes_98F38[8]);
     *(_WORD *)PTR(result + 28) = 29;
     *(_WORD *)PTR(result + 24) = (result - (v3 + 29795)) / 164;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 44);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 44);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     return v2;
   }
@@ -43425,9 +43428,9 @@ int CreateCastle_37920_37CE0(int a1)
     HIWORD(v3) <<= 8;
     *(_DWORD *)PTR(v2 + 150) = v3;
     *(_WORD *)PTR(v2 + 154) = v4;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)&v3);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)&v3);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 177);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 177);
     return v2;
   }
   return result;
@@ -43455,9 +43458,9 @@ int CreateBalloon_37A00_37DC0(int a1)
     *(_DWORD *)PTR(v1 + 140) = 0;
     *(_WORD *)PTR(v1 + 28) = 1;
     *(_DWORD *)PTR(v1 + 156) = (uint32)OFF(&creatureTypes_98F38[9]);
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 169);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 169);
   }
   return v2;
 }
@@ -43608,7 +43611,7 @@ int CreateTree_37BC0(int a1)
   LOBYTE(v5) = -95 * *(_BYTE *)PTR(v1 + 4) - 33;
   *(_DWORD *)PTR(v1 + 4) = 9377 * *(_DWORD *)PTR(v1 + 4) + 9439;
   v9x.y += (v5 & 0x3F) - 32;
-  sub_41CF0_42030((Type_AE400_29795*)PTR(v1), &v9x);
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), &v9x);
   RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   v7 = 9377 * *(_DWORD *)PTR(v2 + 4) + 9439;
   *(_DWORD *)PTR(v2 + 4) = v7;
@@ -43637,7 +43640,7 @@ int CreateStone_37CF0(int a1)
     *(_BYTE *)PTR(result + 70) = 3;
     *(_BYTE *)PTR(result + 64) = 2;
     *(_BYTE *)PTR(result + 65) = 1;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     sub_37030_373F0((Type_AE400_29795*)(uint16*)v2, 79);
     return (int)OFF(v2);
@@ -43661,7 +43664,7 @@ int sub_37D70(int a1)
     *(_BYTE *)PTR(result + 70) = 6;
     *(_BYTE *)PTR(result + 64) = 2;
     *(_BYTE *)PTR(result + 65) = 2;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     sub_37030_373F0((Type_AE400_29795*)v2, 39);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 1024, 1024);
@@ -43687,7 +43690,7 @@ int CreateStandingStone_37E00(int a1)
     *(_BYTE *)PTR(result + 70) = 9;
     *(_BYTE *)PTR(result + 64) = 2;
     *(_BYTE *)PTR(result + 65) = 3;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     sub_37030_373F0((Type_AE400_29795*)v2, 270);
     return (int)OFF(v2);
@@ -43710,7 +43713,7 @@ int sub_37E80(int a1)
     *(_BYTE *)PTR(result + 64) = 2;
     *(_BYTE *)PTR(result + 65) = 4;
     *(_WORD *)PTR(result + 26) = (result - (dword_AE400_AE3F0() + 29795)) / 164 % 11;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     sub_37030_373F0((Type_AE400_29795*)v2, 48);
     return (int)OFF(v2);
@@ -43733,7 +43736,7 @@ int sub_37EF0(int a1)
     *(_BYTE *)PTR(result + 64) = 2;
     *(_BYTE *)PTR(result + 65) = 5;
     *(_WORD *)PTR(result + 26) = (result - (dword_AE400_AE3F0() + 29795)) / 164 % 11;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     sub_37030_373F0((Type_AE400_29795*)v2, 48);
     return (int)OFF(v2);
@@ -43819,9 +43822,9 @@ int sub_38030(int a1)
       *(_BYTE *)PTR(v7 + 70) = 120;
       v3[35] = (v3[34] - (__CFSHL__((int)v3[34] >> 31, 5) + 32 * ((int)v3[34] >> 31))) >> 5;
       *(_BYTE *)PTR(v7 + 63) = v13;
-      sub_36FA0_37360((Type_AE400_29795*)PTR(v7), v14);
+      SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v7), v14);
       *(_WORD *)PTR(v8 + 56) = *(_WORD *)PTR(v8 + 80);
-      sub_41CF0_42030((Type_AE400_29795*)PTR(v8), (axis_3d*)PTR(a1));
+      AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v8), (axis_3d*)PTR(a1));
       RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v8));
     }
     v11 = v12;
@@ -43829,9 +43832,9 @@ int sub_38030(int a1)
     ++v13;
   }
   while ( v13 <= 15 );
-  sub_41CF0_42030((Type_AE400_29795*)v3, (axis_3d*)PTR(a1));
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)v3, (axis_3d*)PTR(a1));
   RefillLife_36DE0_371A0((Type_AE400_29795*)v3);
-  sub_36FA0_37360((Type_AE400_29795*)v3, 40);
+  SetSprite_36FA0_37360((Type_AE400_29795*)v3, 40);
   return (int)OFF(v3);
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -43874,9 +43877,9 @@ int sub_38270(int a1)
   *(_BYTE *)PTR(v2 + 63) = v5;
   *(_BYTE *)PTR(v2 + 58) = *(_BYTE *)PTR(*(_DWORD *)PTR(v2 + 156) + 26) + 1;
   *(_BYTE *)PTR(v2 + 66) = 3;
-  sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
   RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-  sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 86);
+  SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 86);
   return v2;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -43930,9 +43933,9 @@ int sub_38370(int a1)
                       - *(unsigned __int8 *)PTR(v2 + 63) % *(_WORD *)PTR(*(_DWORD *)PTR(v2 + 156) + 26)
                       + 4;
   *(_BYTE *)PTR(v2 + 66) = 3;
-  sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
   RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-  sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 3);
+  SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 3);
   SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
   return v2;
 }
@@ -44047,9 +44050,9 @@ int CreateWorm_384B0(uint16_t* a1)//2094B0_
                 *(_BYTE*)PTR(v7 + 70) = 120;
                 *(_DWORD*)PTR(v7 + 140) = (v3[34] - (__CFSHL__((int)v3[34] >> 31, 5) + 32 * ((int)v3[34] >> 31))) >> 5;
                 *(_BYTE*)PTR(v7 + 63) = v11;
-                sub_36FA0_37360((Type_AE400_29795*)PTR(v7), v13);
+                SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v7), v13);
                 *(_WORD*)PTR(v8 + 56) = *(_WORD*)PTR(v8 + 80);
-                sub_41CF0_42030((Type_AE400_29795*)PTR(v8), (axis_3d*)a1);
+                AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v8), (axis_3d*)a1);
                 RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v8));
             }
             v6 = v10;
@@ -44057,9 +44060,9 @@ int CreateWorm_384B0(uint16_t* a1)//2094B0_
             ++v13;
             ++v11;
         } while (v11 <= 15);
-        sub_41CF0_42030((Type_AE400_29795*)v3, (axis_3d*)a1);
+        AddEntityToMap_41CF0_42030((Type_AE400_29795*)v3, (axis_3d*)a1);
         RefillLife_36DE0_371A0((Type_AE400_29795*)v3);
-        sub_36FA0_37360((Type_AE400_29795*)v3, 88);
+        SetSprite_36FA0_37360((Type_AE400_29795*)v3, 88);
         return (int)OFF(v3);
     }
     return result;
@@ -44109,9 +44112,9 @@ int CreateGuard_386E0(uint16_t* a1)
         - *(unsigned __int8*)PTR(v2 + 63) % *(__int16*)PTR(*(_DWORD*)PTR(v2 + 156) + 26);
     *(_BYTE*)PTR(v2 + 66) = 3;
     *(_BYTE*)PTR(v2 + 58) = v7 + 4;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 0);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 0);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
 }
@@ -44129,7 +44132,7 @@ void sub_38820_38BA0(Type_AE400_29795* a1x)
     LOWORD(v1) = 7;
   if ( (__int16)v1 > a1x->var_u16_29881_86 - 185 )
     a1x->maxLife_29803_8 += 5000;
-  sub_36FA0_37360(a1x, v1 + 185);
+  SetSprite_36FA0_37360(a1x, v1 + 185);
 }
 
 //----- (00038890) --------------------------------------------------------
@@ -44180,9 +44183,9 @@ int CreateCrab_38890(int a1)
      - *(unsigned __int8 *)PTR(v1 + 63) % *(__int16 *)PTR(*(_DWORD *)PTR(v1 + 156) + 26);
   *(_BYTE *)PTR(v1 + 66) = 3;
   *(_BYTE *)PTR(v1 + 58) = v8 + 4;
-  sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1));
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1));
   RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-  sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 185);
+  SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 185);
   SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
   *(_DWORD *)PTR(v2 + 12) = 5000;
   return v2;
@@ -44259,19 +44262,19 @@ int sub_389E0(int a1)
       *(_DWORD *)PTR(v5 + 140) = v10[34] / 3;
       *(_BYTE *)PTR(v5 + 63) = i;
       if ( i )
-        sub_36FA0_37360((Type_AE400_29795*)PTR(v5), 193);
+        SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v5), 193);
       else
-        sub_36FA0_37360((Type_AE400_29795*)PTR(v5), 50);
+        SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v5), 50);
       *(_WORD *)PTR(v6 + 56) = 4 * *(_WORD *)PTR(v6 + 80);
-      sub_41CF0_42030((Type_AE400_29795*)PTR(v6), (axis_3d*)PTR(a1));
+      AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v6), (axis_3d*)PTR(a1));
       RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v6));
     }
     v9 = v6;
   }
-  sub_41CF0_42030((Type_AE400_29795*)v10, (axis_3d*)PTR(a1));
-  sub_41CF0_42030((Type_AE400_29795*)v10, (axis_3d*)PTR(a1));
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)v10, (axis_3d*)PTR(a1));
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)v10, (axis_3d*)PTR(a1));
   RefillLife_36DE0_371A0((Type_AE400_29795*)v10);
-  sub_36FA0_37360((Type_AE400_29795*)v10, 49);
+  SetSprite_36FA0_37360((Type_AE400_29795*)v10, 49);
   return (int)OFF(v10);
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -44283,13 +44286,13 @@ int sub_38C00_38F80(int a1)
 
   if ( *(unsigned __int8 *)PTR(a1 + 63) % 2 )
   {
-    sub_36FA0_37360((Type_AE400_29795*)PTR(a1), 85);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(a1), 85);
     *(_BYTE *)PTR(a1 + 71) = 1;
     *(_DWORD *)PTR(a1 + 8) = 4000;
   }
   else
   {
-    sub_36FA0_37360((Type_AE400_29795*)PTR(a1), 199);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(a1), 199);
     *(_BYTE *)PTR(a1 + 71) = 2;
     *(_DWORD *)PTR(a1 + 8) = 2000;
   }
@@ -44339,7 +44342,7 @@ int sub_38C60(uint16_t* a1)
         *(_BYTE*)PTR(v2 + 58) = 64;
         *(_BYTE*)PTR(v2 + 66) = 3;
         *(_BYTE*)PTR(v2 + 63) = v6;
-        sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+        AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
         sub_38C00_38F80(v2);
         SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
         return v2;
@@ -44363,7 +44366,7 @@ int sub_38D09(/*int a1@<eax>, __int16 a2@<dx>, int a3@<ecx>, int a4@<ebx>, int a
     *(_BYTE*)PTR(a4 + 58) = 64;
     *(_BYTE*)PTR(a4 + 66) = 3;
     *(_BYTE*)PTR(a4 + 63) = a2;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(a4), (axis_3d*)PTR(a5));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(a4), (axis_3d*)PTR(a5));
     sub_38C00_38F80(a4);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(a4), 128, 128);
     return a4;
@@ -44412,9 +44415,9 @@ int sub_38D60(int a1)
     *(_BYTE *)PTR(v2 + 58) = 64;
     *(_BYTE *)PTR(v2 + 66) = 3;
     *(_BYTE *)PTR(v2 + 63) = v6;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 47);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 47);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
   }
@@ -44464,10 +44467,10 @@ int sub_38E70(int a1)
                       + 4;
   *(_BYTE *)PTR(v2 + 66) = 3;
   *(_WORD *)PTR(v2 + 26) = (v2 - (v5 + 29795)) / 164 % 10 + 29;
-  sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
   *(_WORD *)PTR(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)PTR(v2 + 72));
   RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-  sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 220);
+  SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 220);
   SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
   return v2;
 }
@@ -44516,9 +44519,9 @@ int sub_38FC0(int a1)
     *(_BYTE *)PTR(v2 + 58) = 64;
     *(_BYTE *)PTR(v2 + 66) = 3;
     *(_BYTE *)PTR(v2 + 63) = v6;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 208);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 208);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
   }
@@ -44573,9 +44576,9 @@ int sub_390D0(int a1)
     *(_BYTE *)PTR(v2 + 66) = 3;
     *(_WORD *)PTR(v2 + 26) = 0;
     *(_BYTE *)PTR(v2 + 63) = v5;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 200);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 200);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
   }
@@ -44627,9 +44630,9 @@ int sub_39200(int a1)
     *(_BYTE *)PTR(v2 + 66) = 3;
     *(_WORD *)PTR(v2 + 26) = 2;
     *(_BYTE *)PTR(v2 + 63) = v6;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 221);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 221);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
   }
@@ -44685,7 +44688,7 @@ int sub_39340(uint16_t* a1)
         *(_BYTE*)PTR(v2 + 66) = 3;
         *(_WORD*)PTR(v2 + 26) = 2;
         *(_BYTE*)PTR(v2 + 63) = v8;
-        sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+        AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
         RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
         v10 = 9377 * *(_DWORD*)PTR(v2 + 4) + 9439;
         *(_DWORD*)PTR(v2 + 4) = v10;
@@ -44695,12 +44698,12 @@ int sub_39340(uint16_t* a1)
         case 1u:
         case 2u:
         case 3u:
-            sub_36FA0_37360((Type_AE400_29795*)PTR(v3), 217);
+            SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v3), 217);
             break;
         case 4u:
         case 5u:
         case 6u:
-            sub_36FA0_37360((Type_AE400_29795*)PTR(v3), 218);
+            SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v3), 218);
             break;
         default:
             break;
@@ -44755,9 +44758,9 @@ int sub_39490(int a1)
     *(_BYTE *)PTR(v2 + 66) = 3;
     *(_WORD *)PTR(v2 + 26) = 2;
     *(_BYTE *)PTR(v2 + 63) = v6;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 219);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 219);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
   }
@@ -44807,9 +44810,9 @@ int sub_395B0(int a1)
   v6 = *(_BYTE *)PTR(v1 + 18) | 2;
   *(_BYTE *)PTR(v2 + 58) = v5 - v4 + 4;
   *(_BYTE *)PTR(v2 + 18) = v6;
-  sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
   RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-  sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 0);
+  SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 0);
   SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
   return v2;
 }
@@ -44860,9 +44863,9 @@ int CreateWyvern_396E0(int a1)
     *(_BYTE *)PTR(v2 + 66) = 3;
     *(_WORD *)PTR(v2 + 26) = 0;
     *(_BYTE *)PTR(v2 + 63) = v6;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 207);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 207);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
   }
@@ -45060,9 +45063,9 @@ int CreateFireball_39A10(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[5]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 42);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 42);
     return v2;
   }
   return result;
@@ -45093,9 +45096,9 @@ int CreatePossessionMissile_39A90(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_BYTE *)PTR(v2 + 66) = 10;
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 209);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 209);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 2 * *(_WORD *)PTR(v2 + 80), 2 * *(_WORD *)PTR(v2 + 84));
     return v2;
   }
@@ -45125,9 +45128,9 @@ int CreateEarthquakeMissile_39B40(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[1]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 211);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 211);
     return v2;
   }
   return result;
@@ -45156,9 +45159,9 @@ int CreateMeteorMissile_39BC0(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[1]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 76);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 76);
     return v2;
   }
   return result;
@@ -45187,9 +45190,9 @@ int CreateVolcanoMissile_39C40(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[1]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 210);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 210);
     return v2;
   }
   return result;
@@ -45218,9 +45221,9 @@ int CreateCraterMissile_39CC0(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[1]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 211);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 211);
     return v2;
   }
   return result;
@@ -45248,9 +45251,9 @@ int sub_39D40(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[1]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 212);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 212);
     return v2;
   }
   return result;
@@ -45279,9 +45282,9 @@ int CreateDuelMissile_39DC0(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[1]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 213);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 213);
     return v2;
   }
   return result;
@@ -45310,9 +45313,9 @@ int CreateStealManaMissile_39E40(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[4]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 214);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 214);
     return v2;
   }
   return result;
@@ -45342,9 +45345,9 @@ int CreateLightningBolt_39EC0(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[4]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 216);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 216);
     return v2;
   }
   return result;
@@ -45374,9 +45377,9 @@ int CreateHomingSpawnMissile_39F40(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[1]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 18);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 18);
     return v2;
   }
   return result;
@@ -45405,9 +45408,9 @@ int CreateUndeadArmyMissile_39FC0(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[1]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 281);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 281);
     return v2;
   }
   return result;
@@ -45436,9 +45439,9 @@ int CreateLightningStormMissile_3A040(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[1]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 216);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 216);
     return v2;
   }
   return result;
@@ -45461,7 +45464,7 @@ int sub_3A0C0(int a1)
     *(_WORD *)PTR(result + 128) = 384;
     *(_DWORD *)PTR(result + 8) = 5120 / *(__int16 *)PTR(result + 126);
     *(_BYTE *)PTR(result + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     sub_370A0_37460((Type_AE400_29795*)v2, 195);
     return (int)OFF(v2);
@@ -45486,9 +45489,9 @@ int sub_3A1A0(int a1)
     *(_WORD *)PTR(result + 128) = 128;
     *(_DWORD *)PTR(result + 8) = 4096 / *(__int16 *)PTR(result + 126);
     *(_BYTE *)PTR(result + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 196);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 196);
     return v2;
   }
   return result;
@@ -45511,9 +45514,9 @@ int sub_3A210(int a1)
     *(_WORD *)PTR(v1 + 126) = 128;
     *(_WORD *)PTR(v1 + 128) = 128;
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 215);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 215);
   }
   return v2;
 }
@@ -45541,9 +45544,9 @@ int CreateWallOfFireMissile_3A270(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[5]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 42);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 42);
     return v2;
   }
   return result;
@@ -45573,9 +45576,9 @@ int CreateManaMagnetMissile_3A2F0(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[2]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 209);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 209);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 2 * *(_WORD *)PTR(v2 + 80), 2 * *(_WORD *)PTR(v2 + 84));
     return v2;
   }
@@ -45605,9 +45608,9 @@ int CreateGlobalDeathMissile_3A390(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[5]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 42);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 42);
     return v2;
   }
   return result;
@@ -45636,9 +45639,9 @@ int sub_3A410(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[5]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 42);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 42);
     return v2;
   }
   return result;
@@ -45666,9 +45669,9 @@ int CreateExplosion_3A490(uint16_t* a1)
     *(_WORD *)PTR(v1 + 28) = 0;
     *(_DWORD *)PTR(v1 + 16) = v3 & 0xFFFDFFF7;
     *(_BYTE *)PTR(v1 + 18) |= 2u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_36FA0_37360((Type_AE400_29795*)v2, 7);
+    SetSprite_36FA0_37360((Type_AE400_29795*)v2, 7);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 128, 128);
   }
   return (int)OFF(v2);
@@ -45676,7 +45679,7 @@ int CreateExplosion_3A490(uint16_t* a1)
 
 //----- (0003A510) --------------------------------------------------------
 /// TODO: rename when the entity is identified (class 10 type 1).
-/// Constructor of class 10 type 1 (state 1); created together with the mana ball when a creature dies (sub_1A800).
+/// Constructor of class 10 type 1 (state 1); created together with the mana ball when a creature dies (KillCreature_1A800).
 int CreateClass10Type1_3A510(uint16_t* a1)
 {
   int v1; // eax
@@ -45695,9 +45698,9 @@ int CreateClass10Type1_3A510(uint16_t* a1)
     *(_WORD *)PTR(v1 + 44) = 400;
     *(_DWORD *)PTR(v1 + 16) = v3 & 0xFFFDFFF7;
     *(_BYTE *)PTR(v1 + 18) |= 2u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 41);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 41);
   }
   return v2;
 }
@@ -45750,9 +45753,9 @@ int sub_3A5D0(uint16_t* a1)
     v4 = *(_BYTE *)PTR(v1 + 18) | 2;
     *(_WORD *)PTR(v2 + 26) = 0;
     *(_BYTE *)PTR(v2 + 18) = v4;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 36);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 36);
   }
   return v2;
 }
@@ -45807,10 +45810,10 @@ int sub_3A6B0(uint16_t* a1)
     v4 = *(_BYTE *)PTR(v1 + 18) | 2;
     *(_WORD *)PTR(v2 + 26) = 0;
     *(_BYTE *)PTR(v2 + 18) = v4;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     *(_WORD *)PTR(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v2 + 72));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 244);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 244);
   }
   return v2;
 }
@@ -45837,10 +45840,10 @@ int CreateClass10Type6_3A730(uint16_t* a1)
     *(_WORD *)PTR(v1 + 46) = 0;
     *(_DWORD *)PTR(v1 + 16) = v3 & 0xFFFDFFF7;
     *(_BYTE *)PTR(v1 + 18) |= 2u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     v2[38] = GetTerrainHeight_11F50((axis_3d*)(short*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_36FA0_37360((Type_AE400_29795*)v2, 228);
+    SetSprite_36FA0_37360((Type_AE400_29795*)v2, 228);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 272, 1536);
     v2[13] = 0;
   }
@@ -45873,7 +45876,7 @@ int sub_3A7D0(uint16_t* a1)
     *(_BYTE *)PTR(v2 + 66) = 10;
     *(_BYTE *)PTR(v2 + 67) = 7;
     *(_WORD *)PTR(v2 + 126) = v5 % 0x14 + 20;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     *(_WORD *)PTR(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)(short*)a1);
     sub_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 78);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
@@ -46008,9 +46011,9 @@ int CreatePossessionEffect_3AA10(uint16_t* a1)
     *(_WORD *)PTR(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_WORD *)PTR(v1 + 44) = -1536;
     *(_BYTE *)PTR(v1 + 16) = *(_BYTE *)PTR(v1 + 16) & 0xF6 | 1;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 41);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 41);
     *(_BYTE *)PTR(v2 + 16) |= 1u;
     SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 512, 512);
   }
@@ -46052,7 +46055,7 @@ int sub_3AAA0(uint16_t* a1)
     BYTE1(v6) = *(_BYTE *)PTR(v2 + 18) | 2;
     *(_WORD *)PTR(v2 + 126) = v8 + 51;
     *(_BYTE *)PTR(v2 + 18) = BYTE1(v6);
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     sub_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 67);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     return v2;
@@ -46095,7 +46098,7 @@ int sub_3AB40(uint16_t* a1)
     BYTE1(v6) = *(_BYTE *)PTR(v2 + 18) | 2;
     *(_WORD *)PTR(v2 + 126) = v8 + 51;
     *(_BYTE *)PTR(v2 + 18) = BYTE1(v6);
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     sub_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 9);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     return v2;
@@ -46201,11 +46204,11 @@ int CreateLava_3ACC0(uint16_t* a1)
     BYTE1(v9) = *(_BYTE *)PTR(v2 + 18);
     *(_WORD *)PTR(v2 + 126) = v8 + 52;
     *(_BYTE *)PTR(v2 + 18) = BYTE1(v9) | 2;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     *(_WORD *)PTR(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)a1) + 64;
-    sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v2 + 150), *(_WORD *)PTR(v2 + 30), 0, *(_WORD *)PTR(v2 + 126));
+    MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v2 + 150), *(_WORD *)PTR(v2 + 30), 0, *(_WORD *)PTR(v2 + 126));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 210);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 210);
     return v2;
   }
   return result;
@@ -46259,10 +46262,10 @@ int CreateClass10Type19_3AE00(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 8) = 240;
     *(_DWORD *)PTR(v1 + 16) = v3 & 0xFFFDFFF7;
     *(_BYTE *)PTR(v1 + 18) |= 2u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     *(_BYTE *)PTR(v2 + 16) |= 1u;
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 228);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 228);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 512, 512);
   }
   return v2;
@@ -46288,9 +46291,9 @@ int CreateLightningEffect_3AE80(uint16_t* a1)
     *(_WORD *)PTR(v1 + 44) = 25;
     *(_DWORD *)PTR(v1 + 16) = v3 & 0xFFFDFFF7;
     *(_BYTE *)PTR(v1 + 18) |= 2u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 7);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 7);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 200, 200);
     *(_BYTE *)PTR(v2 + 16) |= 1u;
   }
@@ -46316,9 +46319,9 @@ int CreateStealManaEffect_3AF00(uint16_t* a1)
     *(_WORD *)PTR(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_WORD *)PTR(v1 + 44) = 2000;
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_36FA0_37360((Type_AE400_29795*)v2, 283);
+    SetSprite_36FA0_37360((Type_AE400_29795*)v2, 283);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 512, 512);
   }
   return (int)OFF(v2);
@@ -46343,9 +46346,9 @@ int CreateDuelEffect_3AF80(uint16_t* a1)
     *(_WORD *)PTR(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_WORD *)PTR(v1 + 44) = 200;
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_36FA0_37360((Type_AE400_29795*)v2, 284);
+    SetSprite_36FA0_37360((Type_AE400_29795*)v2, 284);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 512, 512);
   }
   return (int)OFF(v2);
@@ -46371,7 +46374,7 @@ int CreateTerrainRaiseStep_3B000(uint16_t* a1)
     v3 = *(_BYTE *)PTR(v1 + 16);
     *(_WORD *)PTR(v2 + 26) = 10;
     *(_BYTE *)PTR(v2 + 16) = v3 & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   }
   return v2;
@@ -46394,7 +46397,7 @@ int sub_3B060(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 72) = *(_DWORD *)a1;
     *(_WORD *)PTR(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   }
   return v2;
@@ -46412,7 +46415,7 @@ Type_AE400_29795* sub_3B0C0(axis_3d* position)
 		event->var_u8_29860_65 = 30;
 		event->var_u32_29867_72 = *position;
 		event->var_29811_16.byte[0] &= ~8u;
-		sub_41CF0_42030(event, position);
+		AddEntityToMap_41CF0_42030(event, position);
 		RefillLife_36DE0_371A0(event);
 	}
 	return event;
@@ -46435,7 +46438,7 @@ int sub_3B120(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 72) = *(_DWORD *)a1;
     *(_WORD *)PTR(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   }
   return v2;
@@ -46483,7 +46486,7 @@ int sub_3B1D0(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 72) = *(_DWORD *)a1;
     *(_WORD *)PTR(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   }
   return v2;
@@ -46533,7 +46536,7 @@ int sub_3B2A0(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 72) = *(_DWORD *)a1;
     *(_WORD *)PTR(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   }
   return v2;
@@ -46559,16 +46562,16 @@ int sub_3B300(uint16_t* a1)
     *(_BYTE *)PTR(result + 16) &= ~8u;
     *(_DWORD *)PTR(result + 72) = *(_DWORD *)a1;
     *(_WORD *)PTR(result + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
-    sub_36FA0_37360((Type_AE400_29795*)PTR(result), 223);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(result), 223);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 256, 256);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     *(_WORD *)PTR(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v2 + 72)) + 640;
     *(_DWORD *)PTR(v2 + 150) = *(_DWORD *)PTR(v2 + 72);
     *(_WORD *)PTR(v2 + 154) = *(_WORD *)PTR(v2 + 76);
     v3 = 9377 * *(_DWORD *)PTR(v2 + 4) + 9439;
     *(_DWORD *)PTR(v2 + 4) = v3;
-    sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v2 + 150), v3 & 0x7FF, 0, -32768);
+    MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v2 + 150), v3 & 0x7FF, 0, -32768);
     return v2;
   }
   return result;
@@ -46599,9 +46602,9 @@ int CreateUndeadArmyEffect_3B3E0(uint16_t* a1)
     *(_WORD *)PTR(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_WORD *)PTR(v1 + 44) = -1536;
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_36FA0_37360((Type_AE400_29795*)v2, 41);
+    SetSprite_36FA0_37360((Type_AE400_29795*)v2, 41);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 512, 512);
   }
   return (int)OFF(v2);
@@ -46624,9 +46627,9 @@ int sub_3B460(uint16_t* a1)
     v3 = v1[16] & 0xF7;
     *(_DWORD *)PTR(v2 + 8) = 32;
     *(_BYTE *)PTR(v2 + 16) = v3;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 272);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 272);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 512, 512);
   }
   return v2;
@@ -46680,7 +46683,7 @@ int CreateManaBall_3B5A0(uint16_t* a1)//20C5A0_
     *(_WORD *)PTR(result + 28) = 3;
     *(_BYTE *)PTR(result + 58) = 0x80;
     *(_BYTE *)PTR(result + 59) = 0;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     sub_274D0((Type_AE400_29795*)PTR(v2));
     return v2;
@@ -46705,7 +46708,7 @@ int CreateDeathMarker_3B620(uint16_t* a1)
     *(_BYTE *)PTR(result + 65) = 40;
     *(_WORD *)PTR(result + 26) = (result - (dword_AE400_AE3F0() + 29795)) / 164 % 11;
     *(_WORD *)PTR(result + 28) = 2;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
     sub_37030_373F0((Type_AE400_29795*)v2, 65);
     return (int)OFF(v2);
@@ -46728,8 +46731,8 @@ Type_AE400_29795* sub_3B690(axis_3d* position)//20C690_
       event->var_u16_29821_26 = 4;
       event->var_29811_16.dword = 9;
       event->var_u16_29823_28 = 33;
-    sub_41CF0_42030(event, position);
-    sub_36FA0_37360(event, 177);
+    AddEntityToMap_41CF0_42030(event, position);
+    SetSprite_36FA0_37360(event, 177);
   }
   return event;
 }
@@ -46750,9 +46753,9 @@ int sub_3B6F0(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 8) = 8;
     *(_WORD *)PTR(v1 + 44) = -1536;
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_36FA0_37360((Type_AE400_29795*)v2, 41);
+    SetSprite_36FA0_37360((Type_AE400_29795*)v2, 41);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 512, 512);
   }
   return (int)OFF(v2);
@@ -46819,9 +46822,9 @@ int sub_3B800(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 8) = 500;
     *(_WORD *)PTR(v1 + 44) = 500;
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 8);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 8);
   }
   return v2;
 }
@@ -46846,9 +46849,9 @@ int CreateCrabSpawnTimer_3B860(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 140) = 500;
     *(_DWORD *)PTR(v1 + 136) = 2000;
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 205);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 205);
   }
   return v2;
 }
@@ -47262,8 +47265,8 @@ int CreateSpell_3BF70(int a1, char a2, char a3, int a4, __int16 a5, char a6, cha
     v12 = *(_BYTE *)PTR(result + 16);
     *(_DWORD *)PTR(v10 + 136) = a4;
     *(_BYTE *)PTR(v10 + 16) = v12 & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v10), (axis_3d*)PTR(a1));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v10), 77);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v10), (axis_3d*)PTR(a1));
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v10), 77);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v10), 4 * *(_WORD *)PTR(v10 + 80), 4 * *(_WORD *)PTR(v10 + 84));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v10));
     return v10;
@@ -48035,7 +48038,7 @@ void sub_3C9D0_3CD10()//20D9D0_
 			if (str_AE400_AE3F0->var_29715[v102x][1] != -1)
 			{
 				actEvent->var_u32_29955_160->var_u16_2043_940 = str_AE400_AE3F0->var_29715[v102x][1];
-				sub_55370_558A0(0, str_AE400_AE3F0->str_13323[v106x].var_u16_13330_7, 14);
+				PlayEntitySound_55370_558A0(0, str_AE400_AE3F0->str_13323[v106x].var_u16_13330_7, 14);
 				sub_3DC90_3DFD0(&str_AE400_AE3F0->str_13323[v106x], 0);
 			}
 			goto LABEL_150;
@@ -48043,7 +48046,7 @@ void sub_3C9D0_3CD10()//20D9D0_
 			if (str_AE400_AE3F0->var_29715[v102x][1] != -1)
 			{
 				actEvent->var_u32_29955_160->var_u16_2047_944 = str_AE400_AE3F0->var_29715[v102x][1];
-				sub_55370_558A0(0, str_AE400_AE3F0->str_13323[v106x].var_u16_13330_7, 14);
+				PlayEntitySound_55370_558A0(0, str_AE400_AE3F0->str_13323[v106x].var_u16_13330_7, 14);
 				sub_3DC90_3DFD0(&str_AE400_AE3F0->str_13323[v106x], 0);
 			}
 			goto LABEL_150;
@@ -48058,7 +48061,7 @@ void sub_3C9D0_3CD10()//20D9D0_
 						actEvent->var_u32_29955_160->var_15198_1875_772[j] = -1;
 				}
 				actEvent->var_u32_29955_160->var_15198_1875_772[str_AE400_AE3F0->var_29715[v102x][1]] = str_AE400_AE3F0->var_29715[v102x][2];
-				sub_55370_558A0(0, str_AE400_AE3F0->str_13323[v106x].var_u16_13330_7, 14);
+				PlayEntitySound_55370_558A0(0, str_AE400_AE3F0->str_13323[v106x].var_u16_13330_7, 14);
 			}
 			goto LABEL_150;
 		case 0x18:
@@ -48102,7 +48105,7 @@ void sub_3C9D0_3CD10()//20D9D0_
 						 + 844) = 32;*/
 			}
 		LABEL_87:
-			sub_55370_558A0(0, str_AE400_AE3F0->str_13323[v106x].var_u16_13330_7, 14);
+			PlayEntitySound_55370_558A0(0, str_AE400_AE3F0->str_13323[v106x].var_u16_13330_7, 14);
 			goto LABEL_150;
 		case 0x1A:
 			for (v48 = 0; v48 < str_AE400_AE3F0->var_u16_10; v48++)
@@ -48392,7 +48395,7 @@ void sub_3DC90_3DFD0(TypeStrAE400_13323* a1x, char a2)
       sub_59720_59C30();
       sub_31A60_31AA0();
     }
-    sub_55370_558A0(0, a1x->var_u16_13330_7, 14);
+    PlayEntitySound_55370_558A0(0, a1x->var_u16_13330_7, 14);
   }
   sub_3DD10_3E050();
 }
@@ -51902,7 +51905,8 @@ void sub_41B20_41E60(TypeStrAE400_13323* a1x, Type_AE400_29795* a2x)//212B20_
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_41C70_41FB0(Type_AE400_29795* event, axis_3d* position)
+/// Moves the entity to `position`, relinking it on the map when the tile changes; returns 1 if it changed tile.
+int MoveEntity_41C70_41FB0(Type_AE400_29795* event, axis_3d* position)
 {
   int result; // eax
   if ((event->var_u32_29867_72.x >> 8) == (position->x >> 8) && (event->var_u32_29867_72.y >> 8) == (position->y >> 8))
@@ -51912,8 +51916,8 @@ int sub_41C70_41FB0(Type_AE400_29795* event, axis_3d* position)
   }
   else
   {
-    sub_41DD0_42110(event);
-    sub_41CF0_42030(event, position);
+    RemoveEntityFromMap_41DD0_42110(event);
+    AddEntityToMap_41CF0_42030(event, position);
     return 1;
   }
   return result;
@@ -51922,13 +51926,14 @@ int sub_41C70_41FB0(Type_AE400_29795* event, axis_3d* position)
 //----- (00041CC0) --------------------------------------------------------
 int sub_41CC0_42000(__int16 a1, int a2, int a3)
 {
-  sub_41DD0_42110((Type_AE400_29795*)PTR(a2));
-  sub_41CF0_42030((Type_AE400_29795*)PTR(a2), (axis_3d*)PTR(a3));
+  RemoveEntityFromMap_41DD0_42110((Type_AE400_29795*)PTR(a2));
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(a2), (axis_3d*)PTR(a3));
   return 1;
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_41CF0_42030(Type_AE400_29795* a1, axis_3d* a2)//212CF0_
+/// Puts the entity at position a2 and links it into its map tile's entity list (mapEntityIndex_10C1E0, +20 next / +22 previous); flag 4 of +16 = on the map.
+void AddEntityToMap_41CF0_42030(Type_AE400_29795* a1, axis_3d* a2)//212CF0_
 {
   if ( (a1->var_29811_16.byte[0] & 4) == 0 )
   {
@@ -51946,7 +51951,8 @@ void sub_41CF0_42030(Type_AE400_29795* a1, axis_3d* a2)//212CF0_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_41DD0_42110(Type_AE400_29795* a2)
+/// Unlinks the entity from its map tile's entity list (inverse of AddEntityToMap_41CF0_42030).
+void RemoveEntityFromMap_41DD0_42110(Type_AE400_29795* a2)
 {
   if ( (a2->var_29811_16.byte[0] & 4) != 0 )
   {
@@ -51979,14 +51985,15 @@ void MarkEntityForRemoval_41E80_421C0(Type_AE400_29795* event)
 /// (freeList_593 / freeListTop_40).
 void FreeEntity_41E90_421D0(Type_AE400_29795* a2)
 {
-  sub_41DD0_42110(a2);
+  RemoveEntityFromMap_41DD0_42110(a2);
   a2->var_u8_29859_64 = 0;
   str_AE400_AE3F0->freeListTop_40++;
   str_AE400_AE3F0->freeList_593[str_AE400_AE3F0->freeListTop_40] = a2;
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_41EC0_42200(axis_3d* a1x, unsigned __int16 a2, __int16 a3, __int16 a4)//212EC0_
+/// Moves position a1x by distance a4 along heading a2 and pitch a3 (11-bit angles, trig_9074C).
+void MoveAlongHeading_41EC0_42200(axis_3d* a1x, unsigned __int16 a2, __int16 a3, __int16 a4)//212EC0_
 {
   //_WORD *result; // eax
   unsigned __int16 v5; // bx
@@ -52112,12 +52119,13 @@ __int16 HeadingTo_42150_42490(axis_3d* a1x, axis_3d* a2x)
 __int16 PitchTo_42180_424C0(axis_3d* a1x, axis_3d* a2x)
 {
   __int16 v3; // [esp-4h] [ebp-8h]
-  v3 = -(__int16)sub_423D0_42710(a1x, a2x);
+  v3 = -(__int16)Distance2D_423D0_42710(a1x, a2x);
   return sub_40F87_412C7(a1x->z - a2x->z, v3);
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_42210_42550(__int16 a1, __int16 a2)
+/// Absolute difference of two 11-bit angles, 0..1024.
+int AngleDifference_42210_42550(__int16 a1, __int16 a2)
 {
   __int64 v2; // rax
   int result; // eax
@@ -52130,7 +52138,8 @@ int sub_42210_42550(__int16 a1, __int16 a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_42240_42580(int a1, __int16 a2)
+/// Direction of the shorter turn from angle a1 to angle a2: -1, 0 or +1.
+int TurnDirection_42240_42580(int a1, __int16 a2)
 {
   int v2; // ecx
   int v3; // ebx
@@ -52154,7 +52163,8 @@ int sub_42240_42580(int a1, __int16 a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_422A0_425E0(unsigned __int16 a1, __int16 a2, int a3, unsigned __int16 a4)
+/// Signed turn from angle a1 towards a2, at most a4 (TurnDirection * min(AngleDifference, a4)).
+int TurnStep_422A0_425E0(unsigned __int16 a1, __int16 a2, int a3, unsigned __int16 a4)
 {
   int v4; // ebx
   int v5; // esi
@@ -52162,8 +52172,8 @@ int sub_422A0_425E0(unsigned __int16 a1, __int16 a2, int a3, unsigned __int16 a4
 
   if ( a1 == a2 )
     return 0;
-  v4 = sub_42210_42550(a1, a2);
-  v5 = sub_42240_42580(a1, a2);
+  v4 = AngleDifference_42210_42550(a1, a2);
+  v5 = TurnDirection_42240_42580(a1, a2);
   v6 = v4;
   if ( (__int16)v4 > (int)a4 )
     v6 = a4;
@@ -52205,7 +52215,8 @@ int sub_42390_426D0(_WORD *a1, _WORD *a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-unsigned int sub_423D0_42710(axis_3d* a1x, axis_3d* a2x)
+/// x/y distance between two positions (Distance_410CE_4140E of the squared distance).
+unsigned int Distance2D_423D0_42710(axis_3d* a1x, axis_3d* a2x)
 {
   int v2; // edx
 
@@ -52214,7 +52225,8 @@ unsigned int sub_423D0_42710(axis_3d* a1x, axis_3d* a2x)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_42410_42750(_WORD *a1, _WORD *a2)
+/// Squared x/y distance between two positions.
+int DistanceSquared2D_42410_42750(_WORD *a1, _WORD *a2)
 {
   int v2; // edx
 
@@ -52223,13 +52235,15 @@ int sub_42410_42750(_WORD *a1, _WORD *a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_424F0_42830(Type_AE400_29795* a1x, unsigned __int8 a2)
+/// Sets the entity state (+70), the index of its handler in the class state table.
+void SetEntityState_424F0_42830(Type_AE400_29795* a1x, unsigned __int8 a2)
 {
   a1x->var_u8_29865_70 = a2;
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_42510_42850(Type_AE400_29795* a1x)
+/// Advances the animation frame (+88); returns 1 once the last frame (+89) has been reached.
+int AdvanceAnimFrame_42510_42850(Type_AE400_29795* a1x)
 {
   int result; // eax
 
@@ -54350,7 +54364,7 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
       //v8 = *(_WORD *)(v7 + 50);
       v32x = str_AE400_AE3F0->str_29795[event->var_u32_29955_160->var_50].var_u32_29867_72;
     }
-    sub_41C70_41FB0(event, &v32x);
+    MoveEntity_41C70_41FB0(event, &v32x);
   }
   v2x->var_u32_29955_160 = &a1x->str_1103;
   v2x->var_u32_29955_160->var_48 = a1x - str_AE400_AE3F0->str_13323;
@@ -54416,28 +54430,28 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
     switch (v2x->var_u32_29955_160->var_48)
     {
       case 0:
-        sub_36FA0_37360(v2x, 44);
+        SetSprite_36FA0_37360(v2x, 44);
         break;
       case 1:
-        sub_36FA0_37360(v2x, 273);
+        SetSprite_36FA0_37360(v2x, 273);
         break;
       case 2:
-        sub_36FA0_37360(v2x, 274);
+        SetSprite_36FA0_37360(v2x, 274);
         break;
       case 3:
-        sub_36FA0_37360(v2x, 275);
+        SetSprite_36FA0_37360(v2x, 275);
         break;
       case 4:
-        sub_36FA0_37360(v2x, 276);
+        SetSprite_36FA0_37360(v2x, 276);
         break;
       case 5:
-        sub_36FA0_37360(v2x, 277);
+        SetSprite_36FA0_37360(v2x, 277);
         break;
       case 6:
-        sub_36FA0_37360(v2x, 278);
+        SetSprite_36FA0_37360(v2x, 278);
         break;
       case 7:
-        sub_36FA0_37360(v2x, 279);
+        SetSprite_36FA0_37360(v2x, 279);
         break;
       default:
         break;
@@ -54467,7 +54481,7 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
             //v19 = dword_AE400_AE3F0() + 29795;
             v17x->id_29819_24 = v2x->id_29819_24;
             v2x->var_u32_29955_160->var_50 = v17x - str_AE400_AE3F0->str_29795;
-            sub_55370_558A0(v2x - str_AE400_AE3F0->str_29795, -1, 30);
+            PlayEntitySound_55370_558A0(v2x - str_AE400_AE3F0->str_29795, -1, 30);
             for ( i = 0; ; i++ )
             {
                 //232599
@@ -54571,16 +54585,16 @@ int sub_45410_45750(Type_AE400_29795* a1x)//216410_
     v7 = Distance3D_42340_42680(&a1x->var_u32_29867_72, &word_AE454_AE444);
     word_AE454_AE444 = a1x->var_u32_29867_72;
     v9 = ((((int)v1 >> 9) + 1) << 9) & 0x7FF;
-    v2 = sub_42210_42550(v1, (int)v1 >> 9 << 9);
-    sub_41EC0_42200(&word_AE454_AE444,
+    v2 = AngleDifference_42210_42550(v1, (int)v1 >> 9 << 9);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444,
       (int)v1 >> 9 << 9,
       v8,
       (v7 * (512 - v2) - (__CFSHL__((v7 * (512 - v2)) >> 31, 9) + ((v7 * (512 - v2)) >> 31 << 9))) >> 9);
     if ( sub_11810(&word_AE454_AE444) == 256 )
     {
       word_AE454_AE444 = a1x->var_u32_29867_72;
-      v3 = sub_42210_42550(v1, v9);
-      sub_41EC0_42200(&word_AE454_AE444,
+      v3 = AngleDifference_42210_42550(v1, v9);
+      MoveAlongHeading_41EC0_42200(&word_AE454_AE444,
         v9,
         v8,
         (v7 * (512 - v3) - (__CFSHL__((v7 * (512 - v3)) >> 31, 9) + ((v7 * (512 - v3)) >> 31 << 9))) >> 9);
@@ -54682,20 +54696,20 @@ void sub_455D0_45910(Type_AE400_29795* a1x)//2165D0_
   v8 = a1x->var_u32_29955_160->v_28;
   HIBYTE(v8) &= 7u;
   a1x->var_u32_29955_160->v_28 = v8;
-  sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, a1x->var_u32_29955_160->v_28, a1x->actSpeed_29921_126);
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, a1x->var_u32_29955_160->v_28, a1x->actSpeed_29921_126);
   v9 = a1x->var_u32_29955_160->v_16;
   if ( v9 )
   {
     v10 = a1x->var_u16_29825_30;
     HIBYTE(v10) += 2;
-    sub_41EC0_42200(&word_AE454_AE444, v10, 0, v9);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, v10, 0, v9);
   }
   v12 = a1x->var_u32_29955_160->v_22;
   if ( v12 )
   {
     if ( v12 > 128 )
         a1x->var_u32_29955_160->v_22 = 128;
-    sub_41EC0_42200(&word_AE454_AE444, a1x->var_u32_29955_160->v_24, 0, a1x->var_u32_29955_160->v_22);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, a1x->var_u32_29955_160->v_24, 0, a1x->var_u32_29955_160->v_22);
     v14 = a1x->var_u32_29955_160->v_22;
     if ( v14 )
       v15 = v14 / (int)abs16(v14);
@@ -54730,23 +54744,23 @@ void sub_455D0_45910(Type_AE400_29795* a1x)//2165D0_
     if ( (__int16)v23 > (__int16)v22 )
       LOWORD(v23) = 3 * a1x->actSpeed_29923_128 / 2;
     v24 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v20 + 72));
-    v25 = a1x->var_u16_29825_30 + sub_422A0_425E0(a1x->var_u16_29825_30, v24, 5, 0x82u);
+    v25 = a1x->var_u16_29825_30 + TurnStep_422A0_425E0(a1x->var_u16_29825_30, v24, 5, 0x82u);
     HIBYTE(v25) &= 7u;
     a1x->var_u16_29825_30 = v25;
-    sub_41EC0_42200(&word_AE454_AE444, v24, a1x->var_u16_29827_32, v23);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, v24, a1x->var_u16_29827_32, v23);
     a1x->var_u32_29955_160->u16_316++;
   }
   v26 = sub_45410_45750(a1x);
   if ( v26 )
-    sub_41C70_41FB0(a1x, &word_AE454_AE444);
+    MoveEntity_41C70_41FB0(a1x, &word_AE454_AE444);
   if ( sub_11810(&a1x->var_u32_29867_72) == 1 )
   {
-    sub_55370_558A0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 1);
+    PlayEntitySound_55370_558A0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 1);
     sub_55890_55DC0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 2);
   }
   else
   {
-    sub_55370_558A0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 2);
+    PlayEntitySound_55370_558A0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 2);
     sub_55890_55DC0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 1);
   }
   if ( a1x->var_u32_29955_160->u32_396 >= 1536 )
@@ -54755,7 +54769,7 @@ void sub_455D0_45910(Type_AE400_29795* a1x)//2165D0_
   }
   else
   {
-    sub_55370_558A0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 5);
+    PlayEntitySound_55370_558A0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 5);
     a1x->var_u32_29955_160->u32_396 = 2048;
   }
   if ( a1x->var_u32_29955_160->u32_400 >= 1536 )
@@ -54764,7 +54778,7 @@ void sub_455D0_45910(Type_AE400_29795* a1x)//2165D0_
   }
   else
   {
-    sub_55370_558A0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 31);
+    PlayEntitySound_55370_558A0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 31);
     a1x->var_u32_29955_160->u32_400 = 2048;
   }
   if ( a1x->var_u32_29955_160->var_48 == *(_WORD *)PTR(dword_AE400_AE3F0() + 8) )
@@ -54785,7 +54799,7 @@ void sub_455D0_45910(Type_AE400_29795* a1x)//2165D0_
     v29 = 9377 * a1x->rand_29799_4 + 9439;
     a1x->rand_29799_4 = v29;
     if ( !(v29 % 0xB) )
-      sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 46);
+      PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 46);
   }
 }
 
@@ -54916,7 +54930,7 @@ void PlayerWizardTick_45C90_45FD0(Type_AE400_29795* a1x)
     //v5 = dword_AE400_AE3F0();
     a1x->var_u8_29865_70 = 2;
     a1x->var_u16_29841_46 = 0;
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 16);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 16);
   }
 }
 
@@ -55031,7 +55045,7 @@ int sub_45FC0_46300(int a1)
         word_AE454_AE444.x += (v17 & 0x1FF) - 256;
         *(_DWORD *)PTR(a1 + 4) = 9377 * v18 + 9439;
         word_AE454_AE444.y += ((9377 * v18 + 9439) & 0x1FF) - 256;
-        sub_41C70_41FB0((Type_AE400_29795*)PTR(v16), &word_AE454_AE444);
+        MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v16), &word_AE454_AE444);
         v19 = 9377 * *(_DWORD *)PTR(a1 + 4) + 9439;
         *(_DWORD *)PTR(a1 + 4) = v19;
         *(_DWORD *)PTR(v16 + 12) = v19 % 0x5A + 200;
@@ -55070,9 +55084,9 @@ void sub_463B0_466F0(int a1)
   v1 = (_WORD *)PTR(dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(a1 + 38) + 72);
   *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)v1);
   *(_WORD *)PTR(a1 + 36) = PitchTo_42180_424C0((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)v1);
-  *(_WORD *)PTR(a1 + 30) += sub_422A0_425E0(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34), 5, 0x16u);
+  *(_WORD *)PTR(a1 + 30) += TurnStep_422A0_425E0(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34), 5, 0x16u);
   *(_BYTE *)PTR(a1 + 31) &= 7u;
-  *(_WORD *)PTR(a1 + 32) += sub_422A0_425E0(*(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 36), 5, 0x16u);
+  *(_WORD *)PTR(a1 + 32) += TurnStep_422A0_425E0(*(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 36), 5, 0x16u);
   *(_BYTE *)PTR(a1 + 33) &= 7u;
   *(_WORD *)PTR(a1 + 32) = 0;
   *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 329) = *(_WORD *)PTR(a1 + 32);
@@ -55213,7 +55227,7 @@ int sub_46540_46880(Type_AE400_29795* a1x)
     *(_BYTE *)((uint8_t*)a1x->var_u32_29955_160 + 392) = 4;
     v17x = str_AE400_AE3F0->str_29795;
     *(_DWORD *)((uint8_t*)a1x->var_u32_29955_160 + 383) = 16;
-    sub_55370_558A0(a1x - v17x, -1, 17);
+    PlayEntitySound_55370_558A0(a1x - v17x, -1, 17);
     if (a1x->actLife_29807_12 < 0 )
     {
       a1x->var_u16_29833_38 = a1x->str_29885_90.var_u16_29889_94;
@@ -55392,7 +55406,7 @@ LABEL_32:
     {
       if (a2x->var_48)
       {
-        sub_55370_558A0(0, a1x->var_u32_29955_160->var_48, 29);
+        PlayEntitySound_55370_558A0(0, a1x->var_u32_29955_160->var_48, 29);
         return;
       }
       if (a1x->mana_29935_140 < a2x->manaMax_29931_136)
@@ -55722,8 +55736,8 @@ int sub_47130_47470(int a1)
           v18 = v10 % 0x1400 + 3840;
           v11 = 9377 * *(_DWORD *)PTR(a1 + 4) + 9439;
           *(_DWORD *)PTR(a1 + 4) = v11;
-          sub_41EC0_42200(&word_AE454_AE444, v11 & 0x7FF, 0, v18);
-          sub_41C70_41FB0((Type_AE400_29795*)PTR(v6), &word_AE454_AE444);
+          MoveAlongHeading_41EC0_42200(&word_AE454_AE444, v11 & 0x7FF, 0, v18);
+          MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v6), &word_AE454_AE444);
           v13 = *(_DWORD *)PTR(v6 + 140);
           v3 -= v13;
           *(_DWORD *)PTR(a1 + 140) -= v13;
@@ -55742,8 +55756,8 @@ int sub_47130_47470(int a1)
           *(_WORD *)PTR(result + 24) = *(_WORD *)PTR(a1 + 24);
           v16 = 9377 * *(_DWORD *)PTR(a1 + 4) + 9439;
           *(_DWORD *)PTR(a1 + 4) = v16;
-          sub_41EC0_42200(&word_AE454_AE444, v16 & 0x7FF, 0, 6400);
-          result = sub_41C70_41FB0((Type_AE400_29795*)PTR(v15), &word_AE454_AE444);
+          MoveAlongHeading_41EC0_42200(&word_AE454_AE444, v16 & 0x7FF, 0, 6400);
+          result = MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v15), &word_AE454_AE444);
         }
       }
     }
@@ -55847,7 +55861,7 @@ LABEL_10:
       }
       if ( *(int *)PTR(v9 + 12) >= 0 )
         break;
-      sub_27690((_WORD *)PTR(v6), &str_AE400_AE3F0->str_29795[v6/164]);
+      DropManaBall_27690((_WORD *)PTR(v6), &str_AE400_AE3F0->str_29795[v6/164]);
       MarkEntityForRemoval_41E80_421C0((Type_AE400_29795*)PTR(v9));
       *(_WORD *)PTR(v21 + *(_DWORD *)PTR(v1 + 160) + 52) = 0;
 LABEL_27:
@@ -55896,7 +55910,7 @@ LABEL_32:
     v14 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(v13 + *(_DWORD *)PTR(v1 + 160) + 52);
     if ( v14 > dword_AE400_AE3F0() + 29795 )
     {
-      sub_27690(
+      DropManaBall_27690(
         (_WORD *)PTR(dword_AE400_AE3F0() + 29795),
           &str_AE400_AE3F0->str_29795[*(unsigned __int16*)PTR(v13 + *(_DWORD*)PTR(v1 + 160) + 52)]);
       MarkEntityForRemoval_41E80_421C0((Type_AE400_29795*)PTR(v14));
@@ -55934,7 +55948,7 @@ LABEL_32:
             word_AE454_AE444.x += 128;
             word_AE454_AE444.y += 640;
             word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
-            sub_41C70_41FB0((Type_AE400_29795*)PTR(v19), &word_AE454_AE444);
+            MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v19), &word_AE454_AE444);
           }
         }
       }
@@ -55964,7 +55978,7 @@ char sub_47960_47CA0(int a1)
   v2 = v1;
   if ( v1 )
   {
-    sub_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 10);
+    PlayEntitySound_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 10);
     v3 = *(_WORD *)PTR(a1 + 26);
     *(_BYTE *)PTR(a1 + 16) &= ~0x40u;
     *(_WORD *)PTR(a1 + 26) = v3 + 1;
@@ -56005,7 +56019,7 @@ void sub_47A70_47DB0(int a1)
     sub_47130_47470(a1);
     v2 = a1 - (dword_AE400_AE3F0() + 29795);
     *(_DWORD *)PTR(a1 + 136) += v1;
-    sub_55370_558A0(v2 / 164, -1, 30);
+    PlayEntitySound_55370_558A0(v2 / 164, -1, 30);
     v3 = dword_AE400_AE3F0();
     v4 = dword_AE400_AE3F0() + 29867;
     *(_DWORD *)PTR(dword_AE400_AE3F0() + 29867) = *(_DWORD *)PTR(a1 + 150);
@@ -56247,10 +56261,10 @@ LABEL_17:
         v14 = v10[6];
         v11 = GetTerrainHeight_11F50(&word_AE454_AE444);
         v12 = KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v11, v14, v15, v16);
-        sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+        MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
         return sub_481D0_48510(a1);
       }
-      v3 = sub_423D0_42710((axis_3d*)(uint16*)&word_AE454_AE444, (axis_3d*)(_WORD *)PTR(v1 + 72));
+      v3 = Distance2D_423D0_42710((axis_3d*)(uint16*)&word_AE454_AE444, (axis_3d*)(_WORD *)PTR(v1 + 72));
       if ( v3 > 1024 )
       {
         *(_BYTE *)PTR(v1 + 16) &= ~0x40u;
@@ -56283,7 +56297,7 @@ LABEL_17:
       if ( v2 == 3 )
       {
         v7 = *(__int16 *)PTR(v1 + 26) * *(__int16 *)PTR(a1 + 126);
-        if ( sub_423D0_42710((axis_3d*)(uint16*)&word_AE454_AE444, (axis_3d*)(_WORD *)PTR(v1 + 72)) <= v7 )
+        if ( Distance2D_423D0_42710((axis_3d*)(uint16*)&word_AE454_AE444, (axis_3d*)(_WORD *)PTR(v1 + 72)) <= v7 )
         {
           v8 = *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 156) + 12);
           if ( word_AE454_AE444.z <= v8 + (__int16)GetTerrainHeight_11F50(&word_AE454_AE444) && *(__int16 *)PTR(v1 + 26) > 0 )
@@ -56301,7 +56315,7 @@ LABEL_17:
       }
       LOWORD(v6) = *(_WORD *)PTR(a1 + 126);
     }
-    sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), v6);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), v6);
     goto LABEL_17;
   }
   return sub_481D0_48510(a1);
@@ -62088,12 +62102,12 @@ int sub_52550_52890(int a1, int a2)
   v4 = *(_DWORD *)PTR(a1 + 156);
   *(_WORD *)PTR(a1 + 36) = v3;
   v5 = *(_WORD *)PTR(a1 + 30)
-     + sub_422A0_425E0(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34), *(unsigned __int16 *)PTR(v4 + 4), *(_WORD *)PTR(v4 + 2));
+     + TurnStep_422A0_425E0(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34), *(unsigned __int16 *)PTR(v4 + 4), *(_WORD *)PTR(v4 + 2));
   HIBYTE(v5) &= 7u;
   v6 = *(_DWORD *)PTR(a1 + 156);
   *(_WORD *)PTR(a1 + 30) = v5;
   v7 = *(_WORD *)PTR(a1 + 32)
-     + sub_422A0_425E0(*(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 36), *(unsigned __int16 *)PTR(v6 + 8), *(_WORD *)PTR(v6 + 6));
+     + TurnStep_422A0_425E0(*(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 36), *(unsigned __int16 *)PTR(v6 + 8), *(_WORD *)PTR(v6 + 6));
   HIBYTE(v7) &= 7u;
   *(_WORD *)PTR(a1 + 32) = v7;
   return sub_524E0_52820(a2);
@@ -62113,12 +62127,12 @@ __int16 sub_52610_52950(int a1, int a2)
   v4 = *(_DWORD *)PTR(a1 + 156);
   *(_WORD *)PTR(a1 + 36) = v3;
   v5 = *(_WORD *)PTR(a1 + 30)
-     + sub_422A0_425E0(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34), *(unsigned __int16 *)PTR(v4 + 4), *(_WORD *)PTR(v4 + 2));
+     + TurnStep_422A0_425E0(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34), *(unsigned __int16 *)PTR(v4 + 4), *(_WORD *)PTR(v4 + 2));
   HIBYTE(v5) &= 7u;
   v6 = *(_DWORD *)PTR(a1 + 156);
   *(_WORD *)PTR(a1 + 30) = v5;
   result = *(_WORD *)PTR(a1 + 32)
-         + sub_422A0_425E0(*(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 36), *(unsigned __int16 *)PTR(v6 + 8), *(_WORD *)PTR(v6 + 6));
+         + TurnStep_422A0_425E0(*(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 36), *(unsigned __int16 *)PTR(v6 + 8), *(_WORD *)PTR(v6 + 6));
   HIBYTE(result) &= 7u;
   *(_WORD *)PTR(a1 + 32) = result;
   return result;
@@ -62215,8 +62229,8 @@ char UpdateMissile_52770_52AB0(int a1)
   *(_WORD *)PTR(a1 + 126) += 2 * v3;
   *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-  sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
-  sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+  MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
   v5 = sub_11980(a1);
   v6 = v5;
   if ( !v5 )
@@ -62264,7 +62278,7 @@ char UpdateMissile_52770_52AB0(int a1)
     }
     if (bool1)
     {
-      sub_55370_558A0((v5 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 28);
+      PlayEntitySound_55370_558A0((v5 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 28);
       v8 = dword_AE400_AE3F0() + 29795 + 164 * *(__int16 *)PTR(a1 + 24);
       *(_DWORD *)PTR(v6 + 140) -= (*(_DWORD *)PTR(a1 + 140)
                               - (__CFSHL__(*(int *)PTR(a1 + 140) >> 31, 2)
@@ -62272,8 +62286,8 @@ char UpdateMissile_52770_52AB0(int a1)
       v9 = *(_WORD *)PTR(a1 + 30);
       HIBYTE(v9) = (HIBYTE(v9) + 4) & 7;
       *(_WORD *)PTR(a1 + 34) = v9;
-      v10 = sub_42240_42580(0, *(_WORD *)PTR(a1 + 32));
-      v11 = -(v10 * sub_42210_42550(0, *(_WORD *)PTR(a1 + 32)));
+      v10 = TurnDirection_42240_42580(0, *(_WORD *)PTR(a1 + 32));
+      v11 = -(v10 * AngleDifference_42210_42550(0, *(_WORD *)PTR(a1 + 32)));
       BYTE1(v11) &= 7u;
       *(_WORD *)PTR(a1 + 36) = v11;
       v12 = *(_DWORD *)PTR(a1 + 4);
@@ -62289,11 +62303,11 @@ char UpdateMissile_52770_52AB0(int a1)
       word_AE454_AE444.z = *(_WORD *)PTR(v6 + 76);
       LOWORD(v13) = *(_WORD *)PTR(v6 + 84);
       word_AE454_AE444.z += v13;
-      return sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+      return MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
     }
   }
   sub_524C0_52800(v5);
-  sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
+  MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
   sub_524E0_52820(v6);
   //LOBYTE(result) = 1;
   v23_22 = 1;
@@ -62362,12 +62376,12 @@ void UpdateFireball_52B30_52E70(int a1)
       *(_BYTE *)PTR(a1 + 16) = v2 | 2;
       if ( FindMissileTarget_54520_548B0(a1) )
       {
-        v3 = sub_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34));
+        v3 = AngleDifference_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34));
         if ( v3 < 0 )
           v3 = 0;
         if ( v3 > 34 )
           v3 = 34;
-        v4 = v3 * sub_42240_42580(*(unsigned __int16 *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) + *(_WORD *)PTR(a1 + 30);
+        v4 = v3 * TurnDirection_42240_42580(*(unsigned __int16 *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) + *(_WORD *)PTR(a1 + 30);
         v5 = *(_WORD *)PTR(a1 + 36);
         *(_WORD *)PTR(a1 + 30) = v4;
         *(_WORD *)PTR(a1 + 32) = v5;
@@ -62387,8 +62401,8 @@ void UpdateFireball_52B30_52E70(int a1)
   v22 = *(_WORD *)PTR(a1 + 76);
   *(_DWORD *)&word_AE454_AE444 = v21;
   word_AE454_AE444.z = v22;
-  sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
-  sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+  MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
   v7 = sub_11980(a1);
   v8 = v7;
   v9 = v7;
@@ -62397,7 +62411,7 @@ void UpdateFireball_52B30_52E70(int a1)
     if ( *(char *)PTR(v7 + 17) >= 0 )
     {
       sub_524C0_52800(v7);
-      sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v8 + 72));
+      MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v8 + 72));
       result = sub_524E0_52820(v8);
       v24 = 1;
     }
@@ -62406,7 +62420,7 @@ void UpdateFireball_52B30_52E70(int a1)
       result = (*(_DWORD *)PTR(a1 + 140) - (__CFSHL__(*(int *)PTR(a1 + 140) >> 31, 2) + 4 * (*(int *)PTR(a1 + 140) >> 31))) >> 2;
       if ( result <= *(_DWORD *)PTR(v8 + 140) )
       {
-        sub_55370_558A0((v8 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 28);
+        PlayEntitySound_55370_558A0((v8 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 28);
         v11 = dword_AE400_AE3F0() + 29795 + 164 * *(__int16 *)PTR(a1 + 24);
         *(_DWORD *)PTR(v8 + 140) -= (*(_DWORD *)PTR(a1 + 140)
                                 - (__CFSHL__(*(int *)PTR(a1 + 140) >> 31, 2)
@@ -62414,8 +62428,8 @@ void UpdateFireball_52B30_52E70(int a1)
         v12 = *(_WORD *)PTR(a1 + 30);
         HIBYTE(v12) = (HIBYTE(v12) + 4) & 7;
         *(_WORD *)PTR(a1 + 34) = v12;
-        v13 = sub_42240_42580(0, *(_WORD *)PTR(a1 + 32));
-        v14 = -(v13 * sub_42210_42550(0, *(_WORD *)PTR(a1 + 32)));
+        v13 = TurnDirection_42240_42580(0, *(_WORD *)PTR(a1 + 32));
+        v14 = -(v13 * AngleDifference_42210_42550(0, *(_WORD *)PTR(a1 + 32)));
         BYTE1(v14) &= 7u;
         *(_WORD *)PTR(a1 + 36) = v14;
         v15 = *(_DWORD *)PTR(a1 + 4);
@@ -62430,7 +62444,7 @@ void UpdateFireball_52B30_52E70(int a1)
         word_AE454_AE444.z = *(_WORD *)PTR(v8 + 76);
         LOWORD(v16) = *(_WORD *)PTR(v8 + 84);
         word_AE454_AE444.z += v16;
-        sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+        MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
         return;
       }
     }
@@ -62449,7 +62463,7 @@ void UpdateFireball_52B30_52E70(int a1)
     }
     else
     {
-      result = sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)&v21);
+      result = MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)&v21);
       if ( *(_BYTE *)PTR(a1 + 65) != 4 )
       {
         result = sub_11810((axis_3d*)(__int16 *)PTR(a1 + 72));
@@ -62522,18 +62536,18 @@ char PossessionMissileTick_52ED0_53210(int a1)
   }
   *(_DWORD *)&word_AE454_AE444.x = *(_DWORD *)PTR(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-  sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
   v4 = GetTerrainHeight_11F50(&word_AE454_AE444);
   if ( v4 > word_AE454_AE444.z )
     word_AE454_AE444.z = v4;
-  sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+  MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
   v5 = sub_11AC0((_WORD *)PTR(a1));
   v6 = v5;
   v7 = v5;
   if ( v5 )
   {
     sub_524C0_52800(v5);
-    sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
+    MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
     sub_524E0_52820(v6);
     LOBYTE(v8) = 1;
     v13 = 1;
@@ -62655,8 +62669,8 @@ char StealManaMissileTick_530C0_53400(int a1)
   *(_WORD *)PTR(a1 + 126) += 2 * v3;
   *(_DWORD *)&word_AE454_AE444.x = *(_DWORD *)PTR(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-  sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
-  sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+  MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
   v5 = sub_11980(a1);
   v6 = v5;
   if ( v5 )
@@ -62679,7 +62693,7 @@ char StealManaMissileTick_530C0_53400(int a1)
       }
       if (bool1)
       {
-        sub_55370_558A0((v5 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 28);
+        PlayEntitySound_55370_558A0((v5 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 28);
         v8 = dword_AE400_AE3F0() + 29795 + 164 * *(__int16 *)PTR(a1 + 24);
         *(_DWORD *)PTR(v6 + 140) -= (*(_DWORD *)PTR(a1 + 140)
                                 - (__CFSHL__(*(int *)PTR(a1 + 140) >> 31, 2)
@@ -62687,8 +62701,8 @@ char StealManaMissileTick_530C0_53400(int a1)
         v9 = *(_WORD *)PTR(a1 + 30);
         HIBYTE(v9) = (HIBYTE(v9) + 4) & 7;
         *(_WORD *)PTR(a1 + 34) = v9;
-        v10 = sub_42240_42580(0, *(_WORD *)PTR(a1 + 32));
-        v11 = -(v10 * sub_42210_42550(0, *(_WORD *)PTR(a1 + 32)));
+        v10 = TurnDirection_42240_42580(0, *(_WORD *)PTR(a1 + 32));
+        v11 = -(v10 * AngleDifference_42210_42550(0, *(_WORD *)PTR(a1 + 32)));
         BYTE1(v11) &= 7u;
         *(_WORD *)PTR(a1 + 36) = v11;
         v12 = *(_DWORD *)PTR(a1 + 4);
@@ -62703,11 +62717,11 @@ char StealManaMissileTick_530C0_53400(int a1)
         word_AE454_AE444.z = *(_WORD *)PTR(v6 + 76);
         LOWORD(v11) = *(_WORD *)PTR(v6 + 84);
         word_AE454_AE444.z += v11;
-        return sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+        return MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
       }
     }
     sub_524C0_52800(v5);
-    sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
+    MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
     sub_524E0_52820(v6);
     v22_21 = 1;
   }
@@ -62798,7 +62812,7 @@ char sub_534C0_53800(int a1)
   }
   *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-  sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
   *(_DWORD *)PTR(a1 + 72) = *(_DWORD *)&word_AE454_AE444;
   *(_WORD *)PTR(a1 + 76) = word_AE454_AE444.z;
   v2 = sub_11980(a1);
@@ -62870,7 +62884,7 @@ __int16 LightningBoltTick_535E0_53920(unsigned int a1)
   *(_WORD *)PTR(a1 + 126) = v1;
   v23 = *(_DWORD *)PTR(a1 + 72);
   v24 = *(_WORD *)PTR(a1 + 76);
-  sub_41DD0_42110((Type_AE400_29795*)PTR(a1));
+  RemoveEntityFromMap_41DD0_42110((Type_AE400_29795*)PTR(a1));
   sub_534C0_53800(a1);
   v2 = *(_WORD *)PTR(a1 + 30);
   v3 = *(_WORD *)PTR(a1 + 32);
@@ -62893,7 +62907,7 @@ __int16 LightningBoltTick_535E0_53920(unsigned int a1)
   v6 = *(__int16 *)PTR(a1 + 126);
   v30 *= 8;
   v33 = (v6 - (__CFSHL__(v6 >> 31, 3) + 8 * (v6 >> 31))) >> 3;
-  sub_41EC0_42200((axis_3d*)(uint16*)&v27, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), v33);
+  MoveAlongHeading_41EC0_42200((axis_3d*)(uint16*)&v27, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), v33);
   v31 = 0;
   v32 = 0;
   *(_DWORD *)&word_AE454_AE444 = v23;
@@ -62913,8 +62927,8 @@ __int16 LightningBoltTick_535E0_53920(unsigned int a1)
         *(_BYTE *)PTR(v7 + 65) = 9;
         *(_WORD *)PTR(v7 + 24) = *(_WORD *)PTR(a1 + 24);
         *(_DWORD *)PTR(v7 + 8) = (v7 >= a1) - 1;
-        sub_36FA0_37360((Type_AE400_29795*)PTR(v7), 216);
-        sub_41CF0_42030((Type_AE400_29795*)PTR(v8), (axis_3d*)&v25);
+        SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v7), 216);
+        AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v8), (axis_3d*)&v25);
         RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v8));
       }
       v9 = (__int16)v30 / 2;
@@ -62964,7 +62978,7 @@ LABEL_21:
           + word_AE454_AE444.z;
       v16 = *(_WORD *)PTR(a1 + 30);
       HIBYTE(v16) = (HIBYTE(v16) + 2) & 7;
-      sub_41EC0_42200((axis_3d*)
+      MoveAlongHeading_41EC0_42200((axis_3d*)
           (uint16*)&v25,
         v16,
         0,
@@ -63047,12 +63061,12 @@ void UpdateHomingSpawnMissile_53980_53CC0(int a1)
     *(_WORD *)PTR(a1 + 126) += 2 * v5;
     *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(a1 + 72);
     word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-    sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
-    sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+    MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
     v7 = EntitiesCollide_11950((Type_AE400_29795*)PTR(a1), (Type_AE400_29795*)PTR(v2));
     if ( v7 )
     {
-      LOBYTE(v3) = sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v2 + 72));
+      LOBYTE(v3) = MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v2 + 72));
       v12 = 1;
     }
     else
@@ -63121,7 +63135,7 @@ char UpdateSpawningMissile_53B50_53E90(int a1)
     *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a1 + 150));
     *(_WORD *)PTR(a1 + 36) = PitchTo_42180_424C0((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a1 + 150));
     v3 = *(_WORD *)PTR(a1 + 30)
-       + sub_422A0_425E0(
+       + TurnStep_422A0_425E0(
            *(_WORD *)PTR(a1 + 30),
            *(_WORD *)PTR(a1 + 34),
            *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 156) + 4),
@@ -63129,7 +63143,7 @@ char UpdateSpawningMissile_53B50_53E90(int a1)
     HIBYTE(v3) &= 7u;
     *(_WORD *)PTR(a1 + 30) = v3;
     v4 = *(_WORD *)PTR(a1 + 32)
-       + sub_422A0_425E0(
+       + TurnStep_422A0_425E0(
            *(_WORD *)PTR(a1 + 32),
            *(_WORD *)PTR(a1 + 36),
            *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 156) + 8),
@@ -63144,13 +63158,13 @@ char UpdateSpawningMissile_53B50_53E90(int a1)
     *(_WORD *)PTR(a1 + 126) += 2 * v6;
     *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(a1 + 72);
     word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-    sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
-    sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+    MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
     v8 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(a1 + 146);
     if ( EntitiesCollide_11950((Type_AE400_29795*)PTR(a1), (Type_AE400_29795*)PTR(v8)) )
     {
       v9 = sub_524C0_52800(v8);
-      LOBYTE(v2) = sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v8 + 72));
+      LOBYTE(v2) = MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v8 + 72));
       v15 = 1;
     }
     else
@@ -63173,8 +63187,8 @@ char UpdateSpawningMissile_53B50_53E90(int a1)
         word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
         v12 = *(_WORD *)PTR(a1 + 30);
         HIBYTE(v12) = (HIBYTE(v12) + 4) & 7;
-        sub_41EC0_42200(&word_AE454_AE444, v12, *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
-        sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+        MoveAlongHeading_41EC0_42200(&word_AE454_AE444, v12, *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+        MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
       }
       v2 = (int)OFF(CreateEntity_373F0_377B0((axis_3d*)PTR(a1 + 72), *(char *)PTR(a1 + 68), *(char *)PTR(a1 + 69)));
       if ( v2 )
@@ -63254,8 +63268,8 @@ char LightningStormMissileTick_53DC0_54100(int a1)
   *(_WORD *)PTR(a1 + 126) += 2 * v3;
   *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-  sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
-  sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+  MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
   v5 = sub_11980(a1);
   v6 = v5;
   if ( !v5 )
@@ -63303,7 +63317,7 @@ char LightningStormMissileTick_53DC0_54100(int a1)
     }
     if (bool1)
     {
-      sub_55370_558A0((v5 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 28);
+      PlayEntitySound_55370_558A0((v5 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 28);
       v8 = dword_AE400_AE3F0() + 29795 + 164 * *(__int16 *)PTR(a1 + 24);
       *(_DWORD *)PTR(v6 + 140) -= (*(_DWORD *)PTR(a1 + 140)
                               - (__CFSHL__(*(int *)PTR(a1 + 140) >> 31, 2)
@@ -63311,8 +63325,8 @@ char LightningStormMissileTick_53DC0_54100(int a1)
       v9 = *(_WORD *)PTR(a1 + 30);
       HIBYTE(v9) = (HIBYTE(v9) + 4) & 7;
       *(_WORD *)PTR(a1 + 34) = v9;
-      v10 = sub_42240_42580(0, *(_WORD *)PTR(a1 + 32));
-      v11 = -(v10 * sub_42210_42550(0, *(_WORD *)PTR(a1 + 32)));
+      v10 = TurnDirection_42240_42580(0, *(_WORD *)PTR(a1 + 32));
+      v11 = -(v10 * AngleDifference_42210_42550(0, *(_WORD *)PTR(a1 + 32)));
       BYTE1(v11) &= 7u;
       *(_WORD *)PTR(a1 + 36) = v11;
       v12 = *(_DWORD *)PTR(a1 + 4);
@@ -63327,11 +63341,11 @@ char LightningStormMissileTick_53DC0_54100(int a1)
       word_AE454_AE444.z = *(_WORD *)PTR(v6 + 76);
       LOWORD(v13) = *(_WORD *)PTR(v6 + 84);
       word_AE454_AE444.z += v13;
-      return sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+      return MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
     }
   }
   sub_524C0_52800(v5);
-  sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
+  MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
   sub_524E0_52820(v6);
   //LOBYTE(result) = 1;
   v22_21 = 1;
@@ -63370,12 +63384,12 @@ void sub_54180_544D0(int a1)
   {
     v1 = 9377 * *(_DWORD *)PTR(a1 + 4) + 9439;
     *(_DWORD *)PTR(a1 + 4) = v1;
-    sub_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, (v1 & 3) + 33);
+    PlayEntitySound_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, (v1 & 3) + 33);
     *(_BYTE *)PTR(a1 + 16) |= 2u;
   }
   *(_DWORD *)&word_AE454_AE444.x = *(_DWORD *)PTR(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-  sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
   v2 = sub_11980(a1);
   if ( (__int16)GetTerrainHeight_11F50(&word_AE454_AE444) <= word_AE454_AE444.z )
   {
@@ -63385,7 +63399,7 @@ void sub_54180_544D0(int a1)
     {
       if (!v2)
       {
-        sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+        MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
         return;
       }
     }
@@ -63393,7 +63407,7 @@ void sub_54180_544D0(int a1)
   if ( v2 )
   {
     sub_524C0_52800(v2);
-    sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v2 + 72));
+    MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v2 + 72));
     sub_524E0_52820(v2);
   }
   sub_120B0((Type_AE400_29795*)PTR(a1), 0, *(_WORD *)PTR(a1 + 44));
@@ -63451,18 +63465,18 @@ char ManaMagnetMissileTick_542B0_54640(int a1)
   }
   *(_DWORD *)&word_AE454_AE444.x = *(_DWORD *)PTR(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-  sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
   v4 = GetTerrainHeight_11F50(&word_AE454_AE444);
   if ( v4 > word_AE454_AE444.z )
     word_AE454_AE444.z = v4;
-  sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+  MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
   v5 = sub_11C00((__int16 *)PTR(a1));
   v6 = v5;
   v7 = v5;
   if ( v5 )
   {
     sub_524C0_52800(v5);
-    sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
+    MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
     sub_524E0_52820(v6);
     LOBYTE(v8) = 1;
     v14 = 1;
@@ -63785,10 +63799,10 @@ int ScoreAimTarget_54A90_54FC0(__int16 *a1, int a2, unsigned __int16 a3, unsigne
 
   sub_524C0_52800(a2);
   v4 = HeadingTo_42150_42490((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72));
-  v12 = sub_42210_42550(a1[15], v4);
-  if ( v12 <= a3 && (v5 = PitchTo_42180_424C0((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72)), v13 = sub_42210_42550(a1[16], v5), v13 <= a4) )
+  v12 = AngleDifference_42210_42550(a1[15], v4);
+  if ( v12 <= a3 && (v5 = PitchTo_42180_424C0((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72)), v13 = AngleDifference_42210_42550(a1[16], v5), v13 <= a4) )
   {
-    v7 = sub_423D0_42710((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72));
+    v7 = Distance2D_423D0_42710((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72));
     sub_524E0_52820(a2);
     if ( v7 <= 5120 )
     {
@@ -63828,14 +63842,14 @@ int sub_54BD0_55100(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a
   v4 = (_WORD *)PTR(a2 + 72);
   v5 = (uint16*)(a1 + 36);
   v6 = HeadingTo_42150_42490((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72));
-  v15 = sub_42210_42550(a1[15], v6);
+  v15 = AngleDifference_42210_42550(a1[15], v6);
   if ( v15 > a3 )
     return -1;
   v8 = PitchTo_42180_424C0((axis_3d*)v5, (axis_3d*)v4);
-  v9 = sub_42210_42550(a1[16], v8);
+  v9 = AngleDifference_42210_42550(a1[16], v8);
   if ( v9 > a4 )
     return -1;
-  v10 = sub_423D0_42710((axis_3d*)v5, (axis_3d*)v4);
+  v10 = Distance2D_423D0_42710((axis_3d*)v5, (axis_3d*)v4);
   if ( v10 > 5120 )
     return -1;
   v11 = v10 * cos_9134C[v15];
@@ -63933,7 +63947,7 @@ int sub_54F80(int a1)
     else
     {
       v4 = *(unsigned __int16 *)PTR(dword_AE400_AE3F0() + 2049 * str_AE400_AE3F0->var_u16_8 + 13333);
-      v5 = sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(164 * (unsigned __int16)v4 + dword_AE400_AE3F0() + 29795 + 72));
+      v5 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(164 * (unsigned __int16)v4 + dword_AE400_AE3F0() + 29795 + 72));
       v6 = dword_AE400_AE3F0();
       if ( v5 < 37748736 )
       {
@@ -64029,7 +64043,8 @@ LABEL_13:
 // 12CD28: using guessed type __int16 word_12CD28[236];
 
 //----- (00055370) --------------------------------------------------------
-void sub_55370_558A0(__int16 a1, __int16 a2, __int16 a3)
+/// Plays sound effect a3 for entity a1 when sound is on and the entity is near the local player (a2 = the player it is for, -1 = everyone); volume/pan from its position.
+void PlayEntitySound_55370_558A0(__int16 a1, __int16 a2, __int16 a3)
 {
   unsigned int v3; // esi
   unsigned __int16 v4; // si
@@ -64058,7 +64073,7 @@ void sub_55370_558A0(__int16 a1, __int16 a2, __int16 a3)
     {
       if ( *(char *)PTR(v3 + 16) < 0 )
         return;
-      if ( sub_42410_42750(
+      if ( DistanceSquared2D_42410_42750(
              (_WORD *)PTR(164 * *(unsigned __int16 *)PTR(2049 * str_AE400_AE3F0->var_u16_8 + dword_AE400_AE3F0() + 13333)
                      + dword_AE400_AE3F0()
                      + 29795
@@ -64069,14 +64084,14 @@ void sub_55370_558A0(__int16 a1, __int16 a2, __int16 a3)
           + dword_AE400_AE3F0()
           + 29795;
       v15 = *(_WORD *)PTR(v3 + 24);
-      v14 = sub_423D0_42710((axis_3d*)(_WORD *)PTR(v12 + 72), (axis_3d*)(_WORD *)PTR(v3 + 72));
+      v14 = Distance2D_423D0_42710((axis_3d*)(_WORD *)PTR(v12 + 72), (axis_3d*)(_WORD *)PTR(v3 + 72));
       v13 = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(v12 + 72), (axis_3d*)(_WORD *)PTR(v3 + 72));
-      v4 = sub_42210_42550(*(_WORD *)PTR(v12 + 30), v13);
+      v4 = AngleDifference_42210_42550(*(_WORD *)PTR(v12 + 30), v13);
       v5 = (12288 * (512 - v4 / 2 + 512)
           - (__CFSHL__((12288 * (512 - v4 / 2 + 512)) >> 31, 10)
            + ((12288 * (512 - v4 / 2 + 512)) >> 31 << 10))) >> 10;
       v6 = 0x7FFF * (v5 - v14) / v5;
-      v7 = sub_42240_42580(*(unsigned __int16 *)PTR(v12 + 30), v13);
+      v7 = TurnDirection_42240_42580(*(unsigned __int16 *)PTR(v12 + 30), v13);
       if ( v6 < 512 )
         return;
       if ( v6 > 0x7FFF )
@@ -64432,7 +64447,7 @@ LABEL_31:
   if ( (a1x->var_29811_16.byte[2] & 4) != 0 )
     a1x->manaDelta_29927_132 = 0;
   dword_AE400_AE3F0(v11);
-  sub_55370_558A0(v23x - str_AE400_AE3F0->str_29795, -1, 18);
+  PlayEntitySound_55370_558A0(v23x - str_AE400_AE3F0->str_29795, -1, 18);
   v19 = dword_AE400_AE3F0();
   v20x = str_AE400_AE3F0->str_29795;
   a1x->var_29811_16.byte[0] |= 1u;
@@ -64520,7 +64535,7 @@ int CanCastSpell_55DD0_56300(int a1, int *a2)
   if ( *(_WORD *)PTR(a1 + 48) != *(_WORD *)PTR(a1 + 50) )
     return 1;
 LABEL_11:
-  sub_55370_558A0(0, *(_WORD *)PTR(a2[40] + 48), 29);
+  PlayEntitySound_55370_558A0(0, *(_WORD *)PTR(a2[40] + 48), 29);
   return 0;
 }
 
@@ -64574,7 +64589,7 @@ int sub_55EF0_56420(__int16 a1, int a2, int a3)
   {
     v3 = *(_WORD *)PTR(a2 + 30) - 512;
     HIBYTE(v3) &= 7u;
-    sub_41EC0_42200((axis_3d*)(uint16*)&v12, v3, 0, 256);
+    MoveAlongHeading_41EC0_42200((axis_3d*)(uint16*)&v12, v3, 0, 256);
     a1 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)&v12);
     if ( a1 > v13 )
     {
@@ -64588,7 +64603,7 @@ int sub_55EF0_56420(__int16 a1, int a2, int a3)
       v6 = v5 + v4 + 29795;
       if ( v6 == dword_AE400_AE3F0() + 29795 )
         break;
-      a1 = sub_41C70_41FB0((Type_AE400_29795*)PTR(v6), (axis_3d*)&v12);
+      a1 = MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v6), (axis_3d*)&v12);
       v5 = 164 * *(unsigned __int16 *)PTR(v6 + 54);
       v4 = dword_AE400_AE3F0();
     }
@@ -64597,7 +64612,7 @@ int sub_55EF0_56420(__int16 a1, int a2, int a3)
   {
     v7 = *(_WORD *)PTR(a2 + 30);
     HIBYTE(v7) = (HIBYTE(v7) + 2) & 7;
-    sub_41EC0_42200((axis_3d*)(uint16*)&v12, v7, 0, 256);
+    MoveAlongHeading_41EC0_42200((axis_3d*)(uint16*)&v12, v7, 0, 256);
     a1 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)&v12);
     if ( a1 > v13 )
     {
@@ -64611,12 +64626,12 @@ int sub_55EF0_56420(__int16 a1, int a2, int a3)
       v10 = v9 + v8;
       if ( v10 == dword_AE400_AE3F0() + 29795 )
         break;
-      a1 = sub_41C70_41FB0((Type_AE400_29795*)PTR(v10), (axis_3d*)&v12);
+      a1 = MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v10), (axis_3d*)&v12);
       v9 = 164 * *(unsigned __int16 *)PTR(v10 + 54);
       v8 = dword_AE400_AE3F0() + 29795;
     }
   }
-  return sub_41C70_41FB0((Type_AE400_29795*)PTR(a3), (axis_3d*)&v12);
+  return MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a3), (axis_3d*)&v12);
 }
 #undef v12
 #undef v13
@@ -64671,8 +64686,8 @@ LABEL_5:
           *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
           *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
           *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-          sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
-          sub_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
+          MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
+          PlayEntitySound_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
         }
       }
       ChargeSpellCost_55E80_563B0(a1, v3);
@@ -64705,7 +64720,7 @@ void HealSpellTick_56270_567A0(int a1)
         && v1[35] >= *(_DWORD *)PTR(a1 + 136) )
       {
         if ( *(_WORD *)PTR(a1 + 48) == *(_WORD *)PTR(a1 + 50) )
-          sub_55370_558A0(((int)OFF(v1) - dword_AE400_AE3F0() - 29795) / 164, -1, 25);
+          PlayEntitySound_55370_558A0(((int)OFF(v1) - dword_AE400_AE3F0() - 29795) / 164, -1, 25);
         v2 = 5 * v1[2] / 100 + v1[3];
         v3 = v1[2];
         v1[3] = v2;
@@ -64758,7 +64773,7 @@ void SpeedSpellTick_56380_568B0(int a1)
         {
           v2 = dword_AE400_AE3F0() + 29795;
           *(_BYTE *)PTR(a1 + 16) |= 0x80u;
-          sub_55370_558A0((int)(v1 - v2) / 164, -1, 19);
+          PlayEntitySound_55370_558A0((int)(v1 - v2) / 164, -1, 19);
         }
         if ( *(__int16 *)PTR(a1 + 48) == *(__int16 *)PTR(a1 + 50) - 2 )
         {
@@ -64853,10 +64868,10 @@ LABEL_5:
           *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
           *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
           *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-          sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 10240);
+          MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 10240);
           *(_WORD *)PTR(v4 + 30) = *(_WORD *)PTR(v3 + 30);
           *(_WORD *)PTR(v4 + 32) = *(_WORD *)PTR(v3 + 32);
-          sub_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 40);
+          PlayEntitySound_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 40);
         }
       }
       ChargeSpellCost_55E80_563B0(a1, v3);
@@ -64968,11 +64983,11 @@ LABEL_9:
     *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
     *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
     *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-    sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), 0, 4096);
+    MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), 0, 4096);
     v6 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v4 + 150));
     v7 = dword_AE400_AE3F0() + 29795;
     *(_WORD *)PTR(v4 + 154) = v6;
-    sub_55370_558A0((v4 - v7) / 164, -1, 9);
+    PlayEntitySound_55370_558A0((v4 - v7) / 164, -1, 9);
   }
   ChargeSpellCost_55E80_563B0(a1, v3);
   result = a1;
@@ -65026,11 +65041,11 @@ LABEL_9:
       *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
       *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
       *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-      sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 10240);
+      MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 10240);
       *(_WORD *)PTR(v4 + 30) = *(_WORD *)PTR(v3 + 30);
       v6 = dword_AE400_AE3F0() + 29795;
       *(_WORD *)PTR(v4 + 32) = *(_WORD *)PTR(v3 + 32);
-      sub_55370_558A0((v4 - v6) / 164, -1, 15);
+      PlayEntitySound_55370_558A0((v4 - v6) / 164, -1, 15);
     }
   }
   ChargeSpellCost_55E80_563B0(a1, v3);
@@ -65085,12 +65100,12 @@ LABEL_9:
       *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
       *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
       *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-      sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), 0, 4096);
+      MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), 0, 4096);
       *(_WORD *)PTR(v4 + 154) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v4 + 150));
       *(_WORD *)PTR(v4 + 30) = *(_WORD *)PTR(v3 + 30);
       v6 = dword_AE400_AE3F0() + 29795;
       *(_WORD *)PTR(v4 + 32) = *(_WORD *)PTR(v3 + 32);
-      sub_55370_558A0((v4 - v6) / 164, -1, 15);
+      PlayEntitySound_55370_558A0((v4 - v6) / 164, -1, 15);
     }
   }
   ChargeSpellCost_55E80_563B0(a1, v3);
@@ -65150,11 +65165,11 @@ LABEL_9:
       *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
       *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
       *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-      sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), 0, 4096);
+      MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), 0, 4096);
       v7 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v4 + 150));
       v8 = dword_AE400_AE3F0() + 29795;
       *(_WORD *)PTR(v4 + 154) = v7;
-      sub_55370_558A0((v4 - v8) / 164, -1, 15);
+      PlayEntitySound_55370_558A0((v4 - v8) / 164, -1, 15);
     }
   }
   ChargeSpellCost_55E80_563B0(a1, v3);
@@ -65192,28 +65207,28 @@ void CastTeleport_56E50_57380(int a1)
             *(_WORD *)PTR(a1 + 154) = *(_WORD *)PTR(v1 + 76);
             v4 = 9377 * *(_DWORD *)PTR(a1 + 4) + 9439;
             *(_DWORD *)PTR(a1 + 4) = v4;
-            sub_41EC0_42200((axis_3d*)(_WORD *)PTR(a1 + 150), v4 & 0x7FF, 0, 0x4000);
-            sub_41C70_41FB0((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1 + 150));
+            MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(a1 + 150), v4 & 0x7FF, 0, 0x4000);
+            MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1 + 150));
             *(_WORD *)PTR(*(_DWORD *)PTR(v1 + 160) + 12) = 0;
             v7 = (int)(v1 - (dword_AE400_AE3F0() + 29795)) / 164;
             *(_WORD *)PTR(a1 + 154) = 0;
-            sub_55370_558A0(v7, -1, 22);
+            PlayEntitySound_55370_558A0(v7, -1, 22);
           }
           else
           {
             if ( *(_WORD *)PTR(a1 + 154) )
             {
-              sub_41C70_41FB0((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1 + 150));
+              MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1 + 150));
               *(_WORD *)PTR(a1 + 154) = 0;
             }
             else
             {
               *(_DWORD *)PTR(a1 + 150) = *(_DWORD *)PTR(v1 + 72);
               *(_WORD *)PTR(a1 + 154) = *(_WORD *)PTR(v1 + 76);
-              sub_41C70_41FB0((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(v3 + 72));
+              MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(v3 + 72));
             }
             *(_WORD *)PTR(*(_DWORD *)PTR(v1 + 160) + 12) = 0;
-            sub_55370_558A0((int)(v1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 22);
+            PlayEntitySound_55370_558A0((int)(v1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 22);
           }
         }
         ChargeSpellCost_55E80_563B0(a1, v1);
@@ -65274,10 +65289,10 @@ LABEL_9:
       *(_DWORD *)PTR(v5 + 140) = *(_DWORD *)PTR(a1 + 140);
       *(_DWORD *)PTR(v5 + 150) = *(_DWORD *)PTR(v3 + 72);
       *(_WORD *)PTR(v5 + 154) = *(_WORD *)PTR(v3 + 76);
-      sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v5 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 10240);
+      MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v5 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 10240);
       *(_WORD *)PTR(v5 + 30) = *(_WORD *)PTR(v3 + 30);
       *(_WORD *)PTR(v5 + 32) = *(_WORD *)PTR(v3 + 32);
-      sub_55370_558A0((v5 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
+      PlayEntitySound_55370_558A0((v5 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
     }
   }
   ChargeSpellCost_55E80_563B0(a1, v3);
@@ -65374,11 +65389,11 @@ LABEL_9:
       *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
       *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
       *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-      sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
+      MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
       *(_WORD *)PTR(v4 + 30) = *(_WORD *)PTR(v3 + 30);
       v8 = dword_AE400_AE3F0() + 29795;
       *(_WORD *)PTR(v4 + 32) = *(_WORD *)PTR(v3 + 32);
-      sub_55370_558A0((v4 - v8) / 164, -1, 9);
+      PlayEntitySound_55370_558A0((v4 - v8) / 164, -1, 9);
     }
   }
   ChargeSpellCost_55E80_563B0(a1, v3);
@@ -65467,8 +65482,8 @@ LABEL_9:
       *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
       *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
       *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-      sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
-      sub_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 23);
+      MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
+      PlayEntitySound_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 23);
     }
   }
   ChargeSpellCost_55E80_563B0(a1, v3);
@@ -65517,7 +65532,7 @@ void CastCastle_57610_57B40(int a1)
             {
               *(_DWORD *)PTR(v3 + 150) = *(_DWORD *)PTR(v2 + 72);
               *(_WORD *)PTR(v3 + 154) = *(_WORD *)PTR(v2 + 76);
-              sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v3 + 150), *(_WORD *)PTR(v2 + 30), 0, 4096);
+              MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v3 + 150), *(_WORD *)PTR(v2 + 30), 0, 4096);
               v6 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v3 + 150));
               *(_BYTE *)PTR(v3 + 68) = 3;
               *(_BYTE *)PTR(v3 + 69) = 2;
@@ -65533,7 +65548,7 @@ void CastCastle_57610_57B40(int a1)
             *(_BYTE *)PTR(*(_DWORD *)PTR(v2 + 160) + 326) = 0;
             *(_WORD *)PTR(v3 + 30) = *(_WORD *)PTR(v2 + 30);
             *(_WORD *)PTR(v3 + 32) = *(_WORD *)PTR(v2 + 32);
-            sub_55370_558A0((v3 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 15);
+            PlayEntitySound_55370_558A0((v3 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 15);
           }
         }
       }
@@ -65597,10 +65612,10 @@ LABEL_12:
       *(_BYTE *)PTR(*(_DWORD *)PTR(v1 + 160) + 326) = 0;
       *(_DWORD *)PTR(v2 + 150) = *(_DWORD *)PTR(v1 + 72);
       *(_WORD *)PTR(v2 + 154) = *(_WORD *)PTR(v1 + 76);
-      sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v2 + 150), *(_WORD *)PTR(v1 + 30), *(_WORD *)PTR(v1 + 32), 0x4000);
+      MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v2 + 150), *(_WORD *)PTR(v1 + 30), *(_WORD *)PTR(v1 + 32), 0x4000);
       *(_WORD *)PTR(v2 + 30) = *(_WORD *)PTR(v1 + 30);
       *(_WORD *)PTR(v2 + 32) = *(_WORD *)PTR(v1 + 32);
-      sub_55370_558A0((v2 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
+      PlayEntitySound_55370_558A0((v2 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
     }
   }
   ChargeSpellCost_55E80_563B0(a1, v1);
@@ -65656,11 +65671,11 @@ LABEL_9:
       *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
       *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
       *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-      sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
+      MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
       *(_WORD *)PTR(v4 + 30) = *(_WORD *)PTR(v3 + 30);
       v7 = dword_AE400_AE3F0() + 29795;
       *(_WORD *)PTR(v4 + 32) = *(_WORD *)PTR(v3 + 32);
-      sub_55370_558A0((v4 - v7) / 164, -1, 9);
+      PlayEntitySound_55370_558A0((v4 - v7) / 164, -1, 9);
     }
   }
   ChargeSpellCost_55E80_563B0(a1, v3);
@@ -65718,8 +65733,8 @@ LABEL_5:
           *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
           *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
           *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-          sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
-          sub_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 40);
+          MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
+          PlayEntitySound_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 40);
         }
       }
       ChargeSpellCost_55E80_563B0(a1, v3);
@@ -65780,8 +65795,8 @@ int CastWallOfFire_57D40_58270(int a1)
 					*(_BYTE*)PTR(*(_DWORD*)PTR(v3 + 160) + 326) = 0;
 					*(_DWORD*)PTR(v4 + 150) = *(_DWORD*)PTR(v3 + 72);
 					*(_WORD*)PTR(v4 + 154) = *(_WORD*)PTR(v3 + 76);
-					sub_41EC0_42200((axis_3d*)(_WORD*)PTR(v4 + 150), *(_WORD*)PTR(v3 + 30), *(_WORD*)PTR(v3 + 32), 0x4000);
-					sub_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
+					MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD*)PTR(v4 + 150), *(_WORD*)PTR(v3 + 30), *(_WORD*)PTR(v3 + 32), 0x4000);
+					PlayEntitySound_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
 				}
 			}
 			ChargeSpellCost_55E80_563B0(a1, v3);
@@ -65821,7 +65836,7 @@ void CastReverseSpeed_57F00_58410(int a1)
         {
           v2 = dword_AE400_AE3F0() + 29795;
           *(_BYTE *)PTR(a1 + 16) |= 0x80u;
-          sub_55370_558A0((int)(v1 - v2) / 164, -1, 19);
+          PlayEntitySound_55370_558A0((int)(v1 - v2) / 164, -1, 19);
         }
         if ( *(__int16 *)PTR(a1 + 48) == *(__int16 *)PTR(a1 + 50) - 2 )
         {
@@ -65907,7 +65922,7 @@ LABEL_5:
           *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
           *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
           *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-          sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
+          MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
         }
       }
       ChargeSpellCost_55E80_563B0(a1, v3);
@@ -65969,8 +65984,8 @@ LABEL_5:
           *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
           *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
           *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-          sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
-          sub_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
+          MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
+          PlayEntitySound_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
         }
       }
       ChargeSpellCost_55E80_563B0(a1, v3);
@@ -66945,7 +66960,7 @@ int sub_59B80_5A090(uint16_t* a1)
       v3 = 2049 * *(__int16 *)PTR(*(_DWORD *)PTR(v1 + 160) + 48);
       v4 = dword_AE400_AE3F0() + 29795;
       *(_BYTE *)PTR(v3 + v4 - 16470) = *(_BYTE *)PTR(v3 + dword_AE400_AE3F0() + 13325) & 0xFD;
-      sub_55370_558A0(((int)OFF(a1) - v4) / 164, -1, 41);
+      PlayEntitySound_55370_558A0(((int)OFF(a1) - v4) / 164, -1, 41);
     }
   }
   return 0;
@@ -67135,7 +67150,7 @@ void sub_59E40_5A350(int a1, int a2)
       if ( v3 == 1 )
       {
 LABEL_6:
-        sub_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 41);
+        PlayEntitySound_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 41);
         sub_37440_37800(*(__int16 *)PTR(a1 + 24), 1);
         MarkEntityForRemoval_41E80_421C0((Type_AE400_29795*)PTR(a1));
         return;
@@ -67276,7 +67291,7 @@ int sub_5A090_5A5A0(int a1, int a2)
     {
       if ( !*(_BYTE *)PTR(i + 65) && EntitiesCollide_11950((Type_AE400_29795*)PTR(a1), (Type_AE400_29795*)PTR(i)) == a2 )
       {
-        sub_55370_558A0((int)(i - (dword_AE400_AE3F0() + 29795)) / 164, -1, 41);
+        PlayEntitySound_55370_558A0((int)(i - (dword_AE400_AE3F0() + 29795)) / 164, -1, 41);
         return 1;
       }
     }
