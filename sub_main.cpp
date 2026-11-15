@@ -1059,20 +1059,20 @@ int StandingStoneTick_49B50_49E90(int a1);
 void ScreenInitialize_4A980_4ACC0();
 void ScreensHandle_4AB20_4AE60();
 void SetupMenuPage_4AC70_4AFB0();
-int sub_4B430_4B770();
-int sub_4B480_4B7C0(int (*a1)(void), int a2);
-int sub_4B520_4B860();
+int CheckQuitHotkey_4B430_4B770();
+int WaitForInputOrTimeout_4B480_4B7C0(int (*a1)(void), int a2);
+int SettingRowExists_4B520_4B860();
 void ScreenConfigureGameDraw_4B560_4B8A0();
-char **sub_4B6A0_4B9E0();
-void sub_4B6F0_4BA30(char** texts);
-void sub_4B8D0_4BC10(__int16 a1);
+char **GetSettingPageTexts_4B6A0_4B9E0();
+void DrawSettingPageTexts_4B6F0_4BA30(char** texts);
+void DrawSoundSourceLine_4B8D0_4BC10(__int16 a1);
 void InitConfigScreen_4BB20_4BE60();
-void sub_4BC90_4BFD0();
+void BlankMenuScreen_4BC90_4BFD0();
 void GameMenuPage_4BD60_4C0A0();
-int sub_4C580_4C8C0();
-bool sub_4C640_4C980();
-bool sub_4C670_4C9B0();
-bool sub_4C6A0_4C9E0();
+int InputUnchanged_4C580_4C8C0();
+bool MainMenuSelectPrevious_4C640_4C980();
+bool MainMenuSelectNext_4C670_4C9B0();
+bool MainMenuEntryEnabled_4C6A0_4C9E0();
 void ScreenMainMenuAnims_4C6F0_4CA30();
 void InitMainMenuScreen_4C7E0_4CB20();
 void sub_4CAC0_4CE00();
@@ -58519,7 +58519,7 @@ void SetupMenuPage_4AC70_4AFB0()//21BC70_
 					switch (settingPage_12CBC9_12CBB9)
 					{
 					case 0:
-						if (sub_4B520_4B860())
+						if (SettingRowExists_4B520_4B860())
 						{
 							sprintf(string_12C9C0_12C9B0, "%s", off_4A66C_4A9AC[2 * (unsigned __int8)byte_12CBCB_12CBBB + 0]);
 							sprintf(string_12C9A0_12C990, "%s", off_4A66C_4A9AC[2 * (unsigned __int8)byte_12CBCB_12CBBB + 1]);
@@ -58527,7 +58527,7 @@ void SetupMenuPage_4AC70_4AFB0()//21BC70_
 						}
 						break;
 					case 1:
-						if (sub_4B520_4B860())
+						if (SettingRowExists_4B520_4B860())
 						{
 							sprintf(string_12C9E0_12C9D0, "%s", off_4A6CC_4AA0C[2 * (unsigned __int8)byte_12CBCB_12CBBB + 0]);
 							sprintf(string_12CA00_12C9F0, "%s", off_4A6CC_4AA0C[2 * (unsigned __int8)byte_12CBCB_12CBBB + 1]);
@@ -58545,7 +58545,7 @@ void SetupMenuPage_4AC70_4AFB0()//21BC70_
 						}
 						break;
 					case 2:
-						if (sub_4B520_4B860())
+						if (SettingRowExists_4B520_4B860())
 						{
 							sprintf(string_12CA80_12CA70, "%s", off_4A734_4AA74[2 * (unsigned __int8)byte_12CBCB_12CBBB + 0]);
 							sprintf(string_12CA9E_12CA8E, "%s", off_4A734_4AA74[2 * (unsigned __int8)byte_12CBCB_12CBBB + 1]);
@@ -58553,7 +58553,7 @@ void SetupMenuPage_4AC70_4AFB0()//21BC70_
 						}
 						break;
 					case 3:
-						if (sub_4B520_4B860())
+						if (SettingRowExists_4B520_4B860())
 						{
 							sprintf(string_12CA8A_12CA7A, "%s", off_4A74C_4AA8C[2 * (unsigned __int8)byte_12CBCB_12CBBB + 0]);
 							sprintf(string_12CAB2_12CAA2, "%s", off_4A74C_4AA8C[2 * (unsigned __int8)byte_12CBCB_12CBBB + 1]);
@@ -58561,7 +58561,7 @@ void SetupMenuPage_4AC70_4AFB0()//21BC70_
 						}
 						break;
 					case 4:
-						if (sub_4B520_4B860())
+						if (SettingRowExists_4B520_4B860())
 						{
 							sprintf(string_12CAD0_12CAC0, "%s", off_4A77C_4AABC[2 * (unsigned __int8)byte_12CBCB_12CBBB + 0]);
 							sprintf(string_12CAC6_12CAB6, "%s", off_4A77C_4AABC[2 * (unsigned __int8)byte_12CBCB_12CBBB + 1]);
@@ -58582,7 +58582,7 @@ void SetupMenuPage_4AC70_4AFB0()//21BC70_
 						}
 						break;
 					case 5:
-						if (sub_4B520_4B860())
+						if (SettingRowExists_4B520_4B860())
 						{
 							sprintf(string_12CA94_12CA84, "%s", off_4A79C_4AADC[2 * (unsigned __int8)byte_12CBCB_12CBBB + 0]);
 							sprintf(string_12CAA8_12CA98, "%s", off_4A79C_4AADC[2 * (unsigned __int8)byte_12CBCB_12CBBB + 1]);
@@ -58590,7 +58590,7 @@ void SetupMenuPage_4AC70_4AFB0()//21BC70_
 						}
 						break;
 					case 6:
-						if (sub_4B520_4B860())
+						if (SettingRowExists_4B520_4B860())
 						{
 							sprintf(string_12CA20_12CA10, "%s", off_4A7B4_4AAF4[2 * (unsigned __int8)byte_12CBCB_12CBBB + 0]);
 							sprintf(string_12CABC_12CAAC, "%s", off_4A7B4_4AAF4[2 * (unsigned __int8)byte_12CBCB_12CBBB + 1]);
@@ -58672,7 +58672,7 @@ void SetupMenuPage_4AC70_4AFB0()//21BC70_
 	if (bool1)
 	{
 		sub_51DF0_52130(word_4A8BE_4ABFE[4 * (unsigned __int8)byte_12CBD3_12CBC3 + 3]);
-		sub_4BC90_4BFD0();
+		BlankMenuScreen_4BC90_4BFD0();
 		if (byte_12CBD5_12CBC5 >= 0)
 		{
 			SetupSound_357C0_35B80();
@@ -58687,7 +58687,9 @@ void SetupMenuPage_4AC70_4AFB0()//21BC70_
 }
 
 //----- (0004B430) --------------------------------------------------------
-int sub_4B430_4B770()
+/// Shift+Q in the menus: sets leaveMenu_96880 and the local player's quit flag (+13327); returns 1 then.
+/// Name is a guess (not in the Hidden Worlds linker map).
+int CheckQuitHotkey_4B430_4B770()
 {
   int result; // eax
 
@@ -58707,7 +58709,9 @@ int sub_4B430_4B770()
 // 12EF70: using guessed type char lastPressedKey_12EF70_12EF60;
 
 //----- (0004B480) --------------------------------------------------------
-int sub_4B480_4B7C0(int (*a1)(void), int a2)//21C480_
+/// Waits up to a2 seconds (120 ticks each) for a key or mouse button, calling a1 every loop; also stops on the quit hotkey.
+/// Name is a guess (not in the Hidden Worlds linker map).
+int WaitForInputOrTimeout_4B480_4B7C0(int (*a1)(void), int a2)//21C480_
 {
   int v2; // ebx
   unsigned int v3; // esi
@@ -58717,7 +58721,7 @@ int sub_4B480_4B7C0(int (*a1)(void), int a2)//21C480_
   v3 = timerTicks_AC5D4_AC5C4 + 120 * a2;
   do
   {
-    result = sub_4B430_4B770();
+    result = CheckQuitHotkey_4B430_4B770();
     if ( result )
       v2 = 1;
     if ( mouseLeftButton_12EFDE_12EFCE || mouseRightButton_12EFDC_12EFCC || word_12EFDA_12EFCA || lastPressedKey_12EF70_12EF60 )
@@ -58748,13 +58752,15 @@ int sub_4B480_4B7C0(int (*a1)(void), int a2)//21C480_
 // 12EFDE: using guessed type __int16 mouseLeftButton_12EFDE_12EFCE;
 
 //----- (0004B520) --------------------------------------------------------
-int sub_4B520_4B860()
+/// Returns whether the current settings page (GetSettingPageTexts_4B6A0_4B9E0) has row byte_12CBCB (lists end with "!").
+/// Name is a guess (not in the Hidden Worlds linker map).
+int SettingRowExists_4B520_4B860()
 {
   char **v0; // eax
   int v1; // esi
   char i; // dl
 
-  v0 = sub_4B6A0_4B9E0();
+  v0 = GetSettingPageTexts_4B6A0_4B9E0();
   v1 = 1;
   for ( i = 0; **v0 != '!' && i != byte_12CBCB_12CBBB; i++ )
     v0 += 2;
@@ -58772,11 +58778,11 @@ void ScreenConfigureGameDraw_4B560_4B8A0()//21C560_
 
   SaveTextWindow_513E0_51720();
   SetTextWindow_51360_516A0(56, 64, 90, 78);
-  v0 = sub_4B6A0_4B9E0();
+  v0 = GetSettingPageTexts_4B6A0_4B9E0();
   if ( v0 )
-    sub_4B6F0_4BA30(v0);
+    DrawSettingPageTexts_4B6F0_4BA30(v0);
   else
-    sub_4B8D0_4BC10(0);
+    DrawSoundSourceLine_4B8D0_4BC10(0);
   if ( settingPage_12CBC9_12CBB9 == 7 )
   {
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -58797,7 +58803,9 @@ void ScreenConfigureGameDraw_4B560_4B8A0()//21C560_
         &begGcSprTab_12CAF8_2EAAF8_2EAAE8[word_4A8BE_4ABFE[4 * (unsigned __int8)byte_12CBD3_12CBC3 + 2]]);
 }
 
-char** sub_4B6A0_4B9E0()//21C6A0_
+/// Returns the text list of the current settings page (settingPage_12CBC9).
+/// Name is a guess (not in the Hidden Worlds linker map).
+char** GetSettingPageTexts_4B6A0_4B9E0()//21C6A0_
 {
   char **result = 0;
 
@@ -58834,7 +58842,9 @@ char** sub_4B6A0_4B9E0()//21C6A0_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4B6F0_4BA30(char** texts)//21C6F0_
+/// Draws a settings page's text list in the menu font.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void DrawSettingPageTexts_4B6F0_4BA30(char** texts)//21C6F0_
 {
   char** v1; // esi
   int v2; // ebp
@@ -58893,7 +58903,7 @@ void sub_4B6F0_4BA30(char** texts)//21C6F0_
       }
     }
     if ( settingPage_12CBC9_12CBB9 == 6 )
-      sub_4B8D0_4BC10(16);
+      DrawSoundSourceLine_4B8D0_4BC10(16);
     if ( (unsigned __int8)settingPage_12CBC9_12CBB9 < 7u )
     {
       SaveTextWindow_513E0_51720();
@@ -58910,7 +58920,9 @@ void sub_4B6F0_4BA30(char** texts)//21C6F0_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4B8D0_4BC10(__int16 a1)//21C8D0_
+/// Draws the "<Sound Source> : <card>" line of the sound setup page at y = a1.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void DrawSoundSourceLine_4B8D0_4BC10(__int16 a1)//21C8D0_
 {
 	__int16 v1; // si
 	__int16 v2; // si
@@ -59001,7 +59013,9 @@ void InitConfigScreen_4BB20_4BE60()
 }
 
 //----- (0004BC90) --------------------------------------------------------
-void sub_4BC90_4BFD0()
+/// Fades to black, hides the pointer and clears and shows the screen buffer.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void BlankMenuScreen_4BC90_4BFD0()
 {
   FadePalette256_61CC0_621D0(0, 0x10u, 0);
   if ( !byte_90B23 )
@@ -59069,9 +59083,9 @@ void GameMenuPage_4BD60_4C0A0()//21CD60_
   {
     pressedKeys_12EEF0_12EEE0[15] = 0;//byte_12EEFF TAB
     if (pressedKeys_12EEF0_12EEE0[42] || pressedKeys_12EEF0_12EEE0[54])//byte_12EF1A shift + 8/*  byte_12EF26 6/^/Right
-      sub_4C640_4C980();
+      MainMenuSelectPrevious_4C640_4C980();
     else
-      sub_4C670_4C9B0();
+      MainMenuSelectNext_4C670_4C9B0();
   }
   if (mouse_12CADC_12CACC.x >> 1 != word_12CBDA_12CBCA || mouse_12CADC_12CACC.y >> 1 != word_12CBD8_12CBC8 )
   {
@@ -59082,7 +59096,7 @@ void GameMenuPage_4BD60_4C0A0()//21CD60_
         word_12CBDA_12CBCA = mouse_12CADC_12CACC.x >> 1;
         word_12CBD8_12CBC8 = mouse_12CADC_12CACC.y >> 1;
         byte_12CBC6_12CBB6 = *(_BYTE *)&begMmMaskDat_12CBA0_2EABA0_2EAB90[(mouse_12CADC_12CACC.x >> 1) + (mouse_12CADC_12CACC.y >> 1) * scrWidth_12EFF0_12EFE0];
-        if ( !sub_4C6A0_4C9E0() )
+        if ( !MainMenuEntryEnabled_4C6A0_4C9E0() )
           byte_12CBC6_12CBB6 = 0;
       }
     }
@@ -59099,7 +59113,7 @@ void GameMenuPage_4BD60_4C0A0()//21CD60_
     if ( byte_12CBCD_12CBBD )
       byte_12CBCD_12CBBD = 0;
     byte_12CBC6_12CBB6 = *(_BYTE *)(begMmMaskDat_12CBA0_2EABA0_2EAB90 + word_12CBD8_12CBC8 * scrWidth_12EFF0_12EFE0 + word_12CBDA_12CBCA);
-    if ( !sub_4C6A0_4C9E0() )
+    if ( !MainMenuEntryEnabled_4C6A0_4C9E0() )
       byte_12CBC6_12CBB6 = 0;
   }
 #ifdef autostart
@@ -59278,7 +59292,7 @@ LABEL_79:
     Blit_5CDA0_5D2B0();
   else
     SwapScreensVres256_599B0_59EC0(480);
-  if ( sub_4C580_4C8C0() )
+  if ( InputUnchanged_4C580_4C8C0() )
   {
     v14 = (int)OFF(begWscreen_2ECFF4_2ECFE4);
     if ( dword_12CBB4_12CBA4 + 4800 <= (unsigned int)timerTicks_AC5D4_AC5C4 )
@@ -59334,7 +59348,9 @@ LABEL_79:
 }
 
 //----- (0004C580) --------------------------------------------------------
-int sub_4C580_4C8C0()
+/// Returns 1 if the mouse position, buttons and last key are the same as at the previous call (menu idle detection).
+/// Name is a guess (not in the Hidden Worlds linker map).
+int InputUnchanged_4C580_4C8C0()
 {
   int result; // eax
 
@@ -59371,7 +59387,9 @@ int sub_4C580_4C8C0()
 // 12EFE4: using guessed type __int16 mouseLeftButton2_12EFE4_12EFD4;
 
 //----- (0004C640) --------------------------------------------------------
-bool sub_4C640_4C980()
+/// Moves the main-menu selection to the previous enabled entry (wraps 1..11).
+/// Name is a guess (not in the Hidden Worlds linker map).
+bool MainMenuSelectPrevious_4C640_4C980()
 {
   bool result; // eax
 
@@ -59379,7 +59397,7 @@ bool sub_4C640_4C980()
   {
     if ( !--byte_12CBC6_12CBB6 )
       byte_12CBC6_12CBB6 = 11;
-    result = sub_4C6A0_4C9E0();
+    result = MainMenuEntryEnabled_4C6A0_4C9E0();
   }
   while ( !result );
   return result;
@@ -59387,7 +59405,9 @@ bool sub_4C640_4C980()
 // 12CBC6: using guessed type char byte_12CBC6_12CBB6;
 
 //----- (0004C670) --------------------------------------------------------
-bool sub_4C670_4C9B0()
+/// Moves the main-menu selection to the next enabled entry (wraps 1..11).
+/// Name is a guess (not in the Hidden Worlds linker map).
+bool MainMenuSelectNext_4C670_4C9B0()
 {
   bool result; // eax
 
@@ -59395,7 +59415,7 @@ bool sub_4C670_4C9B0()
   {
     if ( (unsigned __int8)++byte_12CBC6_12CBB6 > 0xBu )
       byte_12CBC6_12CBB6 = 1;
-    result = sub_4C6A0_4C9E0();
+    result = MainMenuEntryEnabled_4C6A0_4C9E0();
   }
   while ( !result );
   return result;
@@ -59403,7 +59423,9 @@ bool sub_4C670_4C9B0()
 // 12CBC6: using guessed type char byte_12CBC6_12CBB6;
 
 //----- (0004C6A0) --------------------------------------------------------
-bool sub_4C6A0_4C9E0()
+/// Returns whether main-menu entry byte_12CBC6 can be selected (entry 3 only in a network game, byte_93958; entries 7 and 11 depend on byte_12CBCD / byte_9687C).
+/// Name is a guess (not in the Hidden Worlds linker map).
+bool MainMenuEntryEnabled_4C6A0_4C9E0()
 {
   if ( (unsigned __int8)byte_12CBC6_12CBB6 <= 7u )
   {
@@ -60743,7 +60765,7 @@ void PlayLogoAnim_4EE70_4F1B0()//21FE70_
   lastPressedKey_12EF70_12EF60 = 0;
   word_90026 = 0;
   AniPlay_107C0_107C0(1, 1, (int)OFF(dword_4A620_4A960));
-  sub_4B480_4B7C0(0, 8);
+  WaitForInputOrTimeout_4B480_4B7C0(0, 8);
   FadePalette256_61CC0_621D0(0, 0x10u, 0);
   StopAllSamples_5D010_5D520();
   StopMusic_20E60_20E60();
@@ -60791,7 +60813,7 @@ void PlayIntelAnim_4EFC0_4F300()
     lastPressedKey_12EF70_12EF60 = 0;
     word_90026 = 0;
     AniPlay_107C0_107C0(1, 1, (int)OFF(dword_4A1E4_4A524));
-    sub_4B480_4B7C0(0, 1);
+    WaitForInputOrTimeout_4B480_4B7C0(0, 1);
     FadePalette256_61CC0_621D0(0, 0x10u, 0);
     StopAllSamples_5D010_5D520();
     StopMusic_20E60_20E60();
@@ -60886,11 +60908,11 @@ void PlayTitleAnim_4F1E0_4F520()
   if ( *(_BYTE *)PTR(dword_AE400_AE3F0() + 8608) == 32 )
   {
     if ( !word_AC5DC_AC5CC )
-      sub_4B480_4B7C0((int (*)(void))sub_4F120_4F460, 6);
+      WaitForInputOrTimeout_4B480_4B7C0((int (*)(void))sub_4F120_4F460, 6);
   }
   else if ( !word_AC5DC_AC5CC )
   {
-    sub_4B480_4B7C0(0, 6);
+    WaitForInputOrTimeout_4B480_4B7C0(0, 6);
   }
   dword_12CBB0_12CBA0 = 0;
   FadePalette256_61CC0_621D0(0, 0x10u, 0);
