@@ -504,7 +504,15 @@ class, type)`). The state index is global within a class, not per type.
 | 10 | 52 | crab spawn timer (state 0x38) | |
 | 11 | 0..31 | switches/triggers: `CreateSwitch_3BB20(pos, type, state)`, wrappers `CreateSwitchNN_*` (state = type); MC2 calls this class switches | |
 | 11 | 2 | trigger (marked by standing stones on level 26; not recyclable) | life 300 |
-| 12 | 0..23 | spell, type = spell number (0 fireball, 2 speed, 16 castle) | states below |
+| 12 | 0..23 | spell, type = spell number (list below) | states below |
+
+Spell numbers (from the spell-menu icons `begSprTab[6 + t]` of `hspr0-0`/`mspr0-0`, names confirmed by the
+user): 0 Fireball, 1 Heal, 2 Speed, 3 Possession, 4 Shield, 5 Beyond Sight, 6 Earthquake, 7 Meteor, 8 Volcano,
+9 Crater, 10 Teleport, 11 Duel, 12 Invisible, 13 Steal Mana, 14 Rebound, 15 Lightning, 16 Castle, 17 Undead Army,
+18 Lightning Storm, 19 Mana Magnet, 20 Wall of Fire, 21 Reverse Speed, 22 Global Death, 23 Rapid Fireball. The
+game text (`data/etext.dat`) has no spell names. Most cast handlers (`Cast<Spell>_*`) create a class 9 missile
+(`Create<Spell>Missile_*`) and store the class/type of its payload in the missile's +68/+69. `UpdateMissile_52770_52AB0`
+creates that entity on impact (`Create<Spell>Effect_*`, class 10). Example: Volcano -> 9/4 -> 10/9 -> 10/18 eruption.
 
 Spells (class 12), spell t: state 3t = owned, handler = the spell's cast routine (`CastFireball_56090`,
 `SpeedSpellTick_56380`, `CastCastle_57610`, ...); 3t+1 = jar on the ground (`SpellJarTick_55DB0_562E0`);
@@ -795,7 +803,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     - The same `memset(..., 48)` beside it gave it away: 8 x 6 = 48.
     - Check: an array's element size (`sizeof(T)` x count) against the original's index arithmetic
       (`imul`/`lea` scale) and any memset/memcpy of the whole array.
-65. **Flag constant ORed into one byte of a flag dword.** `ExplosionRingTick_25CE0` and `sub_29780` had
+65. **Flag constant ORed into one byte of a flag dword.** `ExplosionRingTick_25CE0` and `WallOfFireEffectTick_29780` had
     `var_29811_16.byte[0] |= 0x10002u` where the original does `or dword ptr [ebx+0x10], 0x10002`:
     the byte store kept the 0x2 and dropped the 0x10000 (+18 bit 0). Found as a lone one-byte
     `diff_tick` difference (`entity N +18: orig 1 port 0`). Grep for `byte[k] |= 0x` / `&= ~0x` with

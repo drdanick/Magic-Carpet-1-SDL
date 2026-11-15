@@ -549,27 +549,27 @@ void sub_24DA0(int a1, int a2, int a3, int a4, unsigned __int16 a5);
 int nullsub_2(void); // weak
 void ExplosionTick_24F60(Type_AE400_29795* a1x);
 void Class10Type1Tick_25130(int a1);
-void sub_252B0(int a1);
+void SpeedEffectTick_252B0(int a1);
 int Class10Type6Tick_252D0(int a1);
 void RemoveSelfTick_253E0(int a1);
 void sub_253F0(int a1);
 void sub_25410(Type_AE400_29795* a1);
-void sub_25470(Type_AE400_29795* a1);
+void VolcanoEffectTick_25470(Type_AE400_29795* a1);
 void sub_25570(Type_AE400_29795* a1);
 void sub_255D0(Type_AE400_29795* a1, __int16 a2, __int16 a3);
-void sub_25670(Type_AE400_29795* a1);
-void sub_25760(Type_AE400_29795* a1);
+void CraterEffectTick_25670(Type_AE400_29795* a1);
+void PossessionEffectTick_25760(Type_AE400_29795* a1);
 void sub_257B0(int a1);
 void sub_258A0(int a1);
 int nullsub_19(_DWORD); // weak
-void sub_25990(Type_AE400_29795* a1);
+void EarthquakeEffectTick_25990(Type_AE400_29795* a1);
 void LavaTick_25A60(int a1);
 void ExplosionRingTick_25CE0(Type_AE400_29795* a1);
 void VolcanoEruptionTick_25EC0(int a1);
 void Class10Type19Tick_26140(Type_AE400_29795* a1);
-void sub_262D0(Type_AE400_29795* a1);
-void sub_26360(Type_AE400_29795* a1);
-void sub_263C0(Type_AE400_29795* a1);
+void LightningEffectTick_262D0(Type_AE400_29795* a1);
+void StealManaEffectTick_26360(Type_AE400_29795* a1);
+void DuelEffectTick_263C0(Type_AE400_29795* a1);
 _BOOL1 sub_264D0(unsigned __int16 a1);
 void RaiseTerrainStripYUp_26560(int a2);
 void RaiseTerrainStripYDown_26670(_WORD *a2);
@@ -581,7 +581,7 @@ void sub_26A60(int a1);
 void sub_26C00(int a1);
 void sub_26CE0(int a1);
 void sub_26D20(int a1);
-void sub_26E90(int a1);
+void UndeadArmyEffectTick_26E90(int a1);
 void ManaBallTick_27030(Type_AE400_29795* event);
 void sub_274D0(Type_AE400_29795* event);
 void DeathMarkerTick_275C0(__int16 *a1);
@@ -599,10 +599,10 @@ void sub_29540(Type_AE400_29795* a1);
 int sub_29640(Type_AE400_29795* event);
 void CrabSpawnTimerTick_296A0(Type_AE400_29795* a1);
 void sub_29700(int a1);
-void sub_29780(Type_AE400_29795* a1);
+void WallOfFireEffectTick_29780(Type_AE400_29795* a1);
 
-void sub_29920_29960(int a1);
-void sub_299D0_29A10(Type_AE400_29795* a1);
+void ManaMagnetEffectTick_29920_29960(int a1);
+void GlobalDeathEffectTick_299D0_29A10(Type_AE400_29795* a1);
 void sub_29BA0_29BE0(int a1);
 void PrepRot_29C30_29C70(__int16 roll);
 // char sub_2A700_2A740(int a1, __int16 a2, __int16 a3, __int16 a4, int a5, int a6, __int16 a7, int a8);
@@ -758,48 +758,48 @@ int sub_399A0(int a1);
 int sub_399C0(int a1);
 int sub_399E0(int a1);
 int CreateFireball_39A10(int a1);
-int sub_39A90(int a1);
-int sub_39B40(int a1);
-int CreateClass9Type3_39BC0(int a1);
-int sub_39C40(int a1);
-int sub_39CC0(int a1);
+int CreatePossessionMissile_39A90(int a1);
+int CreateEarthquakeMissile_39B40(int a1);
+int CreateMeteorMissile_39BC0(int a1);
+int CreateVolcanoMissile_39C40(int a1);
+int CreateCraterMissile_39CC0(int a1);
 int sub_39D40(int a1);
-int sub_39DC0(int a1);
-int sub_39E40(int a1);
+int CreateDuelMissile_39DC0(int a1);
+int CreateStealManaMissile_39E40(int a1);
 int CreateLightningBolt_39EC0(int a1);
 int CreateHomingSpawnMissile_39F40(int a1);
-int sub_39FC0(int a1);
-int sub_3A040(int a1);
+int CreateUndeadArmyMissile_39FC0(int a1);
+int CreateLightningStormMissile_3A040(int a1);
 int sub_3A0C0(int a1);
 int sub_3A1A0(int a1);
 int sub_3A210(int a1);
-int sub_3A270(int a1);
-int sub_3A2F0(int a1);
-int sub_3A390(int a1);
+int CreateWallOfFireMissile_3A270(int a1);
+int CreateManaMagnetMissile_3A2F0(int a1);
+int CreateGlobalDeathMissile_3A390(int a1);
 int sub_3A410(int a1);
 int CreateExplosion_3A490(uint16_t* a1);
 int CreateClass10Type1_3A510(uint16_t* a1);
-int sub_3A570(uint16_t* a1);
+int CreateSpeedEffect_3A570(uint16_t* a1);
 int sub_3A5D0(uint16_t* a1);
 int sub_3A640(uint16_t* a1);
 int sub_3A6B0(uint16_t* a1);
 int CreateClass10Type6_3A730(uint16_t* a1);
 int sub_3A7D0(uint16_t* a1);
 int sub_3A870(uint16_t* a1);
-int sub_3A8D0(uint16_t* a1);
+int CreateVolcanoEffect_3A8D0(uint16_t* a1);
 int sub_3A930(uint16_t* a1);
-int sub_3A9A0(uint16_t* a1);
-int sub_3AA10(uint16_t* a1);
+int CreateCraterEffect_3A9A0(uint16_t* a1);
+int CreatePossessionEffect_3AA10(uint16_t* a1);
 int sub_3AAA0(uint16_t* a1);
 int sub_3AB40(uint16_t* a1);
-int sub_3ABE0(uint16_t* a1);
+int CreateEarthquakeEffect_3ABE0(uint16_t* a1);
 int CreateExplosionRing_3AC70(uint16_t* a1);
 int CreateLava_3ACC0(uint16_t* a1);
 int CreateVolcanoEruption_3ADB0(uint16_t* a1);
 int CreateClass10Type19_3AE00(uint16_t* a1);
-int sub_3AE80(uint16_t* a1);
-int sub_3AF00(uint16_t* a1);
-int sub_3AF80(uint16_t* a1);
+int CreateLightningEffect_3AE80(uint16_t* a1);
+int CreateStealManaEffect_3AF00(uint16_t* a1);
+int CreateDuelEffect_3AF80(uint16_t* a1);
 int CreateTerrainRaiseStep_3B000(uint16_t* a1);
 int sub_3B060(uint16_t* a1);
 Type_AE400_29795* sub_3B0C0(axis_3d* position);
@@ -810,7 +810,7 @@ int sub_3B230(uint16_t* a1);
 int sub_3B2A0(uint16_t* a1);
 int sub_3B300(uint16_t* a1);
 int sub_3B3D0(uint16_t* a1);
-int sub_3B3E0(uint16_t* a1);
+int CreateUndeadArmyEffect_3B3E0(uint16_t* a1);
 int sub_3B460(uint16_t* a1);
 int sub_3B4D0(uint16_t* a1);
 int CreateManaBall_3B5A0(uint16_t* a1);
@@ -821,9 +821,9 @@ int sub_3B760(uint16_t* a1);
 int sub_3B7B0_3BB30(uint16_t* a1);
 int sub_3B800(uint16_t* a1);
 int CreateCrabSpawnTimer_3B860(uint16_t* a1);
-int sub_3B8E0(uint16_t* a1);
-int sub_3B970(uint16_t* a1);
-int sub_3BA00(uint16_t* a1);
+int CreateWallOfFireEffect_3B8E0(uint16_t* a1);
+int CreateManaMagnetEffect_3B970(uint16_t* a1);
+int CreateGlobalDeathEffect_3BA00(uint16_t* a1);
 int sub_3BA90(uint16_t* a1);
 Type_AE400_29795* CreateSwitch_3BB20(axis_3d* position, char a2, char a3);
 
@@ -866,25 +866,25 @@ int CreateCastleSpell_3C060(int a1);
 int CreateFireballSpell_3C090(int a1);
 int CreateSpeedSpell_3C0C0(int a1);
 int CreateHealSpell_3C0F0(int a1);
-int sub_3C120(int a1);
-int sub_3C150(int a1);
-int sub_3C180(int a1);
-int sub_3C1B0(int a1);
-int sub_3C1E0(int a1);
-int sub_3C210(int a1);
-int sub_3C240(int a1);
-int sub_3C270(int a1);
-int sub_3C2A0(int a1);
-int sub_3C2D0(int a1);
-int sub_3C300(int a1);
-int sub_3C330(int a1);
-int sub_3C360(int a1);
-int sub_3C390(int a1);
-int sub_3C3C0(int a1);
-int sub_3C3F0(int a1);
-int sub_3C420(int a1);
-int sub_3C450(int a1);
-int sub_3C480(int a1);
+int CreateTeleportSpell_3C120(int a1);
+int CreateEarthquakeSpell_3C150(int a1);
+int CreateManaMagnetSpell_3C180(int a1);
+int CreateShieldSpell_3C1B0(int a1);
+int CreateMeteorSpell_3C1E0(int a1);
+int CreateReboundSpell_3C210(int a1);
+int CreateLightningSpell_3C240(int a1);
+int CreateDuelSpell_3C270(int a1);
+int CreateStealManaSpell_3C2A0(int a1);
+int CreateInvisibleSpell_3C2D0(int a1);
+int CreateCraterSpell_3C300(int a1);
+int CreateBeyondSightSpell_3C330(int a1);
+int CreateLightningStormSpell_3C360(int a1);
+int CreateVolcanoSpell_3C390(int a1);
+int CreateUndeadArmySpell_3C3C0(int a1);
+int CreateWallOfFireSpell_3C3F0(int a1);
+int CreateReverseSpeedSpell_3C420(int a1);
+int CreateGlobalDeathSpell_3C450(int a1);
+int CreateRapidFireballSpell_3C480(int a1);
 int sub_3C4B0(int a1);
 int sub_3C4E0(int a1);
 int sub_3C510(int a1);
@@ -1139,22 +1139,22 @@ int AimAtEntity_52500_52840(_WORD *a1, int a2);
 int sub_52550_52890(int a1, int a2);
 __int16 sub_52610_52950(int a1, int a2);
 char sub_526C0_52A00(int a1, unsigned int a2, unsigned int a3);
-char sub_52770_52AB0(int a1);
+char UpdateMissile_52770_52AB0(int a1);
 void UpdateFireball_52B30_52E70(int a1);
-char sub_52ED0_53210(int a1);
-char sub_53060(int a1);
-char Class9Type3Tick_53070_533B0(int a1);
-char sub_530B0(int a1);
-char sub_530C0_53400(int a1);
+char PossessionMissileTick_52ED0_53210(int a1);
+char MissileTick_53060(int a1);
+char MeteorMissileTick_53070_533B0(int a1);
+char DuelMissileTick_530B0(int a1);
+char StealManaMissileTick_530C0_53400(int a1);
 char sub_534C0_53800(int a1);
 __int16 LightningBoltTick_535E0_53920(unsigned int a1);
 void UpdateHomingSpawnMissile_53980_53CC0(int a1);
 char UpdateSpawningMissile_53B50_53E90(int a1);
-char sub_53DC0_54100(int a1);
+char LightningStormMissileTick_53DC0_54100(int a1);
 void sub_54180_544D0(int a1);
 void sub_54290_545E0(int a1);
-char sub_542B0_54640(int a1);
-void sub_54480_54810(int a1);
+char ManaMagnetMissileTick_542B0_54640(int a1);
+void GlobalDeathMissileTick_54480_54810(int a1);
 int FindMissileTarget_54520_548B0(int a1);
 int ScoreAimTarget_54A90_54FC0(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a4);
 int sub_54BD0_55100(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a4);
@@ -1177,26 +1177,26 @@ int CastFireball_56090_565C0(int a1);
 void HealSpellTick_56270_567A0(int a1);
 void SpeedSpellTick_56380_568B0(int a1);
 int PossessionSpellTick_56510_56A40(int a1);
-int sub_566C0(int a1);
-void sub_56730(int a1);
-int sub_567A0_56CD0(int a1);
-int sub_56950_56E80(int a1);
-int sub_56AF0_57020(int a1);
-int sub_56CA0_571D0(int a1);
-void sub_56E50_57380(int a1);
-int sub_57040_57570(int a1);
-void sub_571B0_576E0(int a1);
-int sub_57250_57780(int a1);
-int sub_573F0_57920(int a1);
-int sub_57470_579A0(int a1);
+int CastShield_566C0(int a1);
+void CastBeyondSight_56730(int a1);
+int CastEarthquake_567A0_56CD0(int a1);
+int CastMeteor_56950_56E80(int a1);
+int CastVolcano_56AF0_57020(int a1);
+int CastCrater_56CA0_571D0(int a1);
+void CastTeleport_56E50_57380(int a1);
+int CastDuel_57040_57570(int a1);
+void CastInvisible_571B0_576E0(int a1);
+int CastStealMana_57250_57780(int a1);
+int CastRebound_573F0_57920(int a1);
+int CastLightning_57470_579A0(int a1);
 void CastCastle_57610_57B40(int a1);
-void sub_57800_57D30(int a1);
-int sub_579D0_57F00(int a1);
-int sub_57B80_580B0(int a1);
-int sub_57D40_58270(int a1);
-void sub_57F00_58410(int a1);
-int sub_580A0_585B0(int a1);
-int sub_58240_58750(int a1);
+void CastUndeadArmy_57800_57D30(int a1);
+int CastLightningStorm_579D0_57F00(int a1);
+int CastManaMagnet_57B80_580B0(int a1);
+int CastWallOfFire_57D40_58270(int a1);
+void CastReverseSpeed_57F00_58410(int a1);
+int CastGlobalDeath_580A0_585B0(int a1);
+int CastRapidFireball_58240_58750(int a1);
 void DrawBitmap_58768_58C78(__int16 a1, __int16 a2, TypeTab* a3, unsigned __int8 a4);
 void sub_587E0_58CF0();
 int sub_58860_58D70(unsigned __int16 a1, uint8_t* a2);
@@ -3571,44 +3571,44 @@ Type_254A34 str_2556D8[] = {
 
 Type_254A34 str_255870[] = {
 { 0x002548F4, 0x0000, PORT_FN(CreateFireball_39A10, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_39A90, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(sub_39B40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(CreateClass9Type3_39BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(sub_39C40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(sub_39CC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(CreatePossessionMissile_39A90, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(CreateEarthquakeMissile_39B40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(CreateMeteorMissile_39BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(CreateVolcanoMissile_39C40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(CreateCraterMissile_39CC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0006, PORT_FN(sub_39D40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, PORT_FN(sub_39DC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0008, PORT_FN(sub_39E40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, PORT_FN(CreateDuelMissile_39DC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0008, PORT_FN(CreateStealManaMissile_39E40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0009, PORT_FN(CreateLightningBolt_39EC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000A, PORT_FN(CreateHomingSpawnMissile_39F40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000B, PORT_FN(sub_39FC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000C, PORT_FN(sub_3A040, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000B, PORT_FN(CreateUndeadArmyMissile_39FC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000C, PORT_FN(CreateLightningStormMissile_3A040, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000D, PORT_FN(sub_3A0C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000E, PORT_FN(sub_3A1A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000F, PORT_FN(sub_3A210, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0010, PORT_FN(sub_3A270, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0011, PORT_FN(sub_3A2F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0012, PORT_FN(sub_3A390, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0010, PORT_FN(CreateWallOfFireMissile_3A270, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0011, PORT_FN(CreateManaMagnetMissile_3A2F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0012, PORT_FN(CreateGlobalDeathMissile_3A390, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0013, PORT_FN(sub_3A410, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x0000, PORT_FN(CreateExplosion_3A490, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0001, PORT_FN(CreateClass10Type1_3A510, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(sub_3A570, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(CreateSpeedEffect_3A570, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0003, PORT_FN(sub_3A5D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0004, PORT_FN(sub_3A640, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0005, PORT_FN(sub_3A6B0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0006, PORT_FN(CreateClass10Type6_3A730, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0007, PORT_FN(sub_3A7D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0008, PORT_FN(sub_3A870, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0009, PORT_FN(sub_3A8D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0009, PORT_FN(CreateVolcanoEffect_3A8D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000A, PORT_FN(sub_3A930, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000B, PORT_FN(sub_3A9A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000C, PORT_FN(sub_3AA10, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000B, PORT_FN(CreateCraterEffect_3A9A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000C, PORT_FN(CreatePossessionEffect_3AA10, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000D, PORT_FN(sub_3AAA0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000E, PORT_FN(sub_3AB40, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000F, PORT_FN(sub_3ABE0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000F, PORT_FN(CreateEarthquakeEffect_3ABE0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0010, PORT_FN(CreateLava_3ACC0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0011, PORT_FN(CreateExplosionRing_3AC70, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0012, PORT_FN(CreateVolcanoEruption_3ADB0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
@@ -3616,10 +3616,10 @@ Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x0014, PORT_FN(NullConstructor_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0015, PORT_FN(NullConstructor_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0016, PORT_FN(NullConstructor_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0017, PORT_FN(sub_3AE80, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0017, PORT_FN(CreateLightningEffect_3AE80, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0018, PORT_FN(NullConstructor_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0019, PORT_FN(sub_3AF00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x001A, PORT_FN(sub_3AF80, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0019, PORT_FN(CreateStealManaEffect_3AF00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001A, PORT_FN(CreateDuelEffect_3AF80, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x001B, PORT_FN(CreateTerrainRaiseStep_3B000, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x001C, PORT_FN(sub_3B060, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x001D, PORT_FN(sub_3B120, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
@@ -3629,7 +3629,7 @@ Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x0021, PORT_FN(sub_3B4D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0022, PORT_FN(sub_3B300, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0023, PORT_FN(sub_3B3D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0024, PORT_FN(sub_3B3E0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0024, PORT_FN(CreateUndeadArmyEffect_3B3E0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0026, PORT_FN(sub_3B460, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0027, PORT_FN(CreateManaBall_3B5A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
@@ -3646,9 +3646,9 @@ Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x0032, PORT_FN(sub_3B2A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0033, PORT_FN(sub_3B230, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0034, PORT_FN(CreateCrabSpawnTimer_3B860, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0035, PORT_FN(sub_3B8E0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0036, PORT_FN(sub_3B970, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0037, PORT_FN(sub_3BA00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0035, PORT_FN(CreateWallOfFireEffect_3B8E0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0036, PORT_FN(CreateManaMagnetEffect_3B970, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0037, PORT_FN(CreateGlobalDeathEffect_3BA00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0038, PORT_FN(sub_3BA90, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
@@ -3693,26 +3693,26 @@ Type_254A34 str_2567D8[] = {
 { 0x002548F4, 0x0001, PORT_FN(CreateHealSpell_3C0F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0002, PORT_FN(CreateSpeedSpell_3C0C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0003, PORT_FN(CreatePossessionSpell_3C040, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(sub_3C1B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(sub_3C330, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, PORT_FN(sub_3C150, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, PORT_FN(sub_3C1E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0008, PORT_FN(sub_3C390, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0009, PORT_FN(sub_3C300, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, PORT_FN(sub_3C120, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000B, PORT_FN(sub_3C270, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000C, PORT_FN(sub_3C2D0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000D, PORT_FN(sub_3C2A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000E, PORT_FN(sub_3C210, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000F, PORT_FN(sub_3C240, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(CreateShieldSpell_3C1B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(CreateBeyondSightSpell_3C330, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, PORT_FN(CreateEarthquakeSpell_3C150, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, PORT_FN(CreateMeteorSpell_3C1E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0008, PORT_FN(CreateVolcanoSpell_3C390, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0009, PORT_FN(CreateCraterSpell_3C300, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, PORT_FN(CreateTeleportSpell_3C120, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000B, PORT_FN(CreateDuelSpell_3C270, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000C, PORT_FN(CreateInvisibleSpell_3C2D0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000D, PORT_FN(CreateStealManaSpell_3C2A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000E, PORT_FN(CreateReboundSpell_3C210, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000F, PORT_FN(CreateLightningSpell_3C240, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0010, PORT_FN(CreateCastleSpell_3C060, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0011, PORT_FN(sub_3C3C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0012, PORT_FN(sub_3C360, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0013, PORT_FN(sub_3C180, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0014, PORT_FN(sub_3C3F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0015, PORT_FN(sub_3C420, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0016, PORT_FN(sub_3C450, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0017, PORT_FN(sub_3C480, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0011, PORT_FN(CreateUndeadArmySpell_3C3C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0012, PORT_FN(CreateLightningStormSpell_3C360, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0013, PORT_FN(CreateManaMagnetSpell_3C180, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0014, PORT_FN(CreateWallOfFireSpell_3C3F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0015, PORT_FN(CreateReverseSpeedSpell_3C420, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0016, PORT_FN(CreateGlobalDeathSpell_3C450, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0017, PORT_FN(CreateRapidFireballSpell_3C480, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_256980[] = {
@@ -3972,46 +3972,46 @@ Type_254A34x str_255674[] = {
 
 Type_254A34x str_25573C[] = {
 { 0x002548F4,0x0000,PORT_FN(UpdateFireball_52B30_52E70, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4,0x0001,PORT_FN(sub_52ED0_53210, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0002,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0003,PORT_FN(Class9Type3Tick_53070_533B0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0004,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0005,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0006,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0007,PORT_FN(sub_530B0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0008,PORT_FN(sub_530C0_53400, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0001,PORT_FN(PossessionMissileTick_52ED0_53210, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0002,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0003,PORT_FN(MeteorMissileTick_53070_533B0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0004,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0005,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0006,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0007,PORT_FN(DuelMissileTick_530B0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0008,PORT_FN(StealManaMissileTick_530C0_53400, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0009,PORT_FN(LightningBoltTick_535E0_53920, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000A,PORT_FN(UpdateHomingSpawnMissile_53980_53CC0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000B,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000C,PORT_FN(sub_53DC0_54100, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000B,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000C,PORT_FN(LightningStormMissileTick_53DC0_54100, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000D,PORT_FN(sub_54180_544D0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000E,PORT_FN(sub_54290_545E0, void(Type_AE400_29795*)),0x0001,0x0000 }, // PORT: see below
-{ 0x002548F4,0x000F,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0010,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0011,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0012,PORT_FN(sub_542B0_54640, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0013,PORT_FN(sub_54480_54810, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0014,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 }, // PORT: entries 14-20 were missing (sub_542B0/sub_54480 were unreachable)
+{ 0x002548F4,0x000F,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0010,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0011,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0012,PORT_FN(ManaMagnetMissileTick_542B0_54640, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0013,PORT_FN(GlobalDeathMissileTick_54480_54810, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0014,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 }, // PORT: entries 14-20 were missing (sub_542B0/sub_54480 were unreachable)
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 }
 };
 
 Type_254A34x str_255998[] = {
 { 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))ExplosionTick_24F60,0x0001,0x0000 },
 { 0x002548F4,0x0001,PORT_FN(Class10Type1Tick_25130, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0002,PORT_FN(sub_252B0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0002,PORT_FN(SpeedEffectTick_252B0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0003,PORT_FN(sub_253F0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))EmptyStateHandler_25980,0x0001,0x0000 },
 { 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))sub_25410,0x0001,0x0000 },
 { 0x002548F4,0x0006,PORT_FN(Class10Type6Tick_252D0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0007,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0008,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))sub_25470,0x0001,0x0000 },
+{ 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))VolcanoEffectTick_25470,0x0001,0x0000 },
 { 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))sub_25570,0x0001,0x0000 },
-{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))sub_25670,0x0001,0x0000 },
-{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))sub_25760,0x0001,0x0000 },
+{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))CraterEffectTick_25670,0x0001,0x0000 },
+{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))PossessionEffectTick_25760,0x0001,0x0000 },
 { 0x002548F4,0x000D,PORT_FN(sub_257B0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000E,PORT_FN(sub_258A0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))sub_25990,0x0001,0x0000 },
+{ 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))EarthquakeEffectTick_25990,0x0001,0x0000 },
 { 0x002548F4,0x0010,PORT_FN(LavaTick_25A60, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))ExplosionRingTick_25CE0,0x0001,0x0000 },
 { 0x002548F4,0x0012,PORT_FN(VolcanoEruptionTick_25EC0, void(Type_AE400_29795*)),0x0001,0x0000 },
@@ -4019,10 +4019,10 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x0014,(void (*)(Type_AE400_29795*))EmptyStateHandler_262C0,0x0001,0x0000 },
 { 0x002548F4,0x0015,(void (*)(Type_AE400_29795*))EmptyStateHandler_262C0,0x0001,0x0000 },
 { 0x002548F4,0x0016,(void (*)(Type_AE400_29795*))EmptyStateHandler_262C0,0x0001,0x0000 },
-{ 0x002548F4,0x0017,(void (*)(Type_AE400_29795*))sub_262D0,0x0001,0x0000 },
+{ 0x002548F4,0x0017,(void (*)(Type_AE400_29795*))LightningEffectTick_262D0,0x0001,0x0000 },
 { 0x002548F4,0x0018,(void (*)(Type_AE400_29795*))EmptyStateHandler_26350,0x0001,0x0000 },
-{ 0x002548F4,0x0019,(void (*)(Type_AE400_29795*))sub_26360,0x0001,0x0000 },
-{ 0x002548F4,0x001A,(void (*)(Type_AE400_29795*))sub_263C0,0x0001,0x0000 },
+{ 0x002548F4,0x0019,(void (*)(Type_AE400_29795*))StealManaEffectTick_26360,0x0001,0x0000 },
+{ 0x002548F4,0x001A,(void (*)(Type_AE400_29795*))DuelEffectTick_263C0,0x0001,0x0000 },
 { 0x002548F4,0x001B,(void (*)(Type_AE400_29795*))RaiseTerrainStripYDown_26670,0x0001,0x0000 },
 { 0x002548F4,0x001C,PORT_FN(RaiseTerrainStripYUp_26560, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x001D,(void (*)(Type_AE400_29795*))RaiseTerrainStripX_26760,0x0001,0x0000 },
@@ -4034,7 +4034,7 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x0023,PORT_FN(sub_26CE0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0024,PORT_FN(sub_26A60, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0025,PORT_FN(sub_26C00, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0026,PORT_FN(sub_26E90, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0026,PORT_FN(UndeadArmyEffectTick_26E90, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 },
 { 0x002548F4,0x0028,PORT_FN(sub_26D20, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0029,ManaBallTick_27030,0x0001,0x0000 },
@@ -4054,9 +4054,9 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x0037,(void (*)(Type_AE400_29795*))sub_269A0,0x0001,0x0000 },
 { 0x002548F4,0x0038,(void (*)(Type_AE400_29795*))CrabSpawnTimerTick_296A0,0x0001,0x0000 },
 { 0x002548F4,0x0039,PORT_FN(sub_29700, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x003A,(void (*)(Type_AE400_29795*))sub_29780,0x0001,0x0000 },
-{ 0x002548F4,0x003B,PORT_FN(sub_29920_29960, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x003C,(void (*)(Type_AE400_29795*))sub_299D0_29A10,0x0001,0x0000 },
+{ 0x002548F4,0x003A,(void (*)(Type_AE400_29795*))WallOfFireEffectTick_29780,0x0001,0x0000 },
+{ 0x002548F4,0x003B,PORT_FN(ManaMagnetEffectTick_29920_29960, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x003C,(void (*)(Type_AE400_29795*))GlobalDeathEffectTick_299D0_29A10,0x0001,0x0000 },
 { 0x002548F4,0x003D,(void (*)(Type_AE400_29795*))EmptyStateHandler_29B70,0x0001,0x0000 },
 { 0x00000000,0x0000,nullptr,0x0000,0x0000 }
 };
@@ -4109,64 +4109,64 @@ Type_254A34x str_2563D8[] = {//2563D8
 { 0x002548F4,0x0009,PORT_FN(PossessionSpellTick_56510_56A40, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))sub_56250,0x0001,0x0000 },
 { 0x002548F4,0x000B,sub_56260,0x0001,0x0000 },
-{ 0x002548F4,0x000C,PORT_FN(sub_566C0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000C,PORT_FN(CastShield_566C0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))sub_56250,0x0001,0x0000 },
 { 0x002548F4, 0x000E, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000F, PORT_FN(sub_56730, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000F, PORT_FN(CastBeyondSight_56730, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0010, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0011, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0012, PORT_FN(sub_567A0_56CD0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0012, PORT_FN(CastEarthquake_567A0_56CD0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0013, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0014, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0015, PORT_FN(sub_56950_56E80, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0015, PORT_FN(CastMeteor_56950_56E80, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0016, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0017, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0018, PORT_FN(sub_56AF0_57020, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0018, PORT_FN(CastVolcano_56AF0_57020, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0019, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x001A, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001B, PORT_FN(sub_56CA0_571D0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001B, PORT_FN(CastCrater_56CA0_571D0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x001C, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x001D, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001E, PORT_FN(sub_56E50_57380, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001E, PORT_FN(CastTeleport_56E50_57380, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x001F, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0020, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0021, PORT_FN(sub_57040_57570, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0021, PORT_FN(CastDuel_57040_57570, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0022, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0023, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0024, PORT_FN(sub_571B0_576E0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0024, PORT_FN(CastInvisible_571B0_576E0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0025, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0026, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0027, PORT_FN(sub_57250_57780, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0027, PORT_FN(CastStealMana_57250_57780, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0028, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0029, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002A, PORT_FN(sub_573F0_57920, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x002A, PORT_FN(CastRebound_573F0_57920, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x002B, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x002C, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002D, PORT_FN(sub_57470_579A0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x002D, PORT_FN(CastLightning_57470_579A0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x002E, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x002F, sub_56260, 0x0001, 0x0000 },
 { 0x002548F4, 0x0030, PORT_FN(CastCastle_57610_57B40, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0031, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0032, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0033, PORT_FN(sub_57800_57D30, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0033, PORT_FN(CastUndeadArmy_57800_57D30, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0034, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0035, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0036, PORT_FN(sub_579D0_57F00, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0036, PORT_FN(CastLightningStorm_579D0_57F00, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0037, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0038, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0039, PORT_FN(sub_57B80_580B0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0039, PORT_FN(CastManaMagnet_57B80_580B0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x003A, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x003B, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003C, PORT_FN(sub_57D40_58270, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x003C, PORT_FN(CastWallOfFire_57D40_58270, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x003D, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x003E, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003F, PORT_FN(sub_57F00_58410, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x003F, PORT_FN(CastReverseSpeed_57F00_58410, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0040, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0041, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0042, PORT_FN(sub_580A0_585B0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0042, PORT_FN(CastGlobalDeath_580A0_585B0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0043, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0044, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0045, PORT_FN(sub_58240_58750, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0045, PORT_FN(CastRapidFireball_58240_58750, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0046, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0047, sub_56260, 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 }
@@ -4200,11 +4200,11 @@ Type_96902 dword_96902[] = {//254902
 /// Constructor that creates nothing (original 0x39A00 is "xor eax,eax; ret"); class 10 types 20-22 and 24.
 int NullConstructor_39A00(uint16_t* a1) { return 0; };
 /*int (*off_97D12[])(int) = {
-CreateExplosion_3A490, CreateClass10Type1_3A510, sub_3A570, sub_3A5D0, sub_3A640, sub_3A6B0, CreateClass10Type6_3A730, sub_3A7D0,
-sub_3A870, sub_3A8D0, sub_3A930, sub_3A9A0, sub_3AA10, sub_3AAA0, sub_3AB40, sub_3ABE0,
-CreateLava_3ACC0, CreateExplosionRing_3AC70, CreateVolcanoEruption_3ADB0, CreateClass10Type19_3AE00, loc_39A00, loc_39A00, loc_39A00, sub_3AE80,
-loc_39A00, sub_3AF00, sub_3AF80, CreateTerrainRaiseStep_3B000, sub_3B060, sub_3B120, sub_3B0C0, sub_3B1D0,
-sub_3B180, sub_3B4D0, sub_3B300, sub_3B3D0, sub_3B3E0 };*/
+CreateExplosion_3A490, CreateClass10Type1_3A510, CreateSpeedEffect_3A570, sub_3A5D0, sub_3A640, sub_3A6B0, CreateClass10Type6_3A730, sub_3A7D0,
+sub_3A870, CreateVolcanoEffect_3A8D0, sub_3A930, CreateCraterEffect_3A9A0, CreatePossessionEffect_3AA10, sub_3AAA0, sub_3AB40, CreateEarthquakeEffect_3ABE0,
+CreateLava_3ACC0, CreateExplosionRing_3AC70, CreateVolcanoEruption_3ADB0, CreateClass10Type19_3AE00, loc_39A00, loc_39A00, loc_39A00, CreateLightningEffect_3AE80,
+loc_39A00, CreateStealManaEffect_3AF00, CreateDuelEffect_3AF80, CreateTerrainRaiseStep_3B000, sub_3B060, sub_3B120, sub_3B0C0, sub_3B1D0,
+sub_3B180, sub_3B4D0, sub_3B300, sub_3B3D0, CreateUndeadArmyEffect_3B3E0 };*/
 #pragma pack (1)
 typedef struct {
     Type_AE400_29795*(*adress)(axis_3d*);
@@ -4218,20 +4218,20 @@ Type_97D12;
 Type_97D12 off_97D12[] = {
 { PORT_FN(CreateExplosion_3A490, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 1 },
 { PORT_FN(CreateClass10Type1_3A510, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 2 },
-{ PORT_FN(sub_3A570, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 3 },
+{ PORT_FN(CreateSpeedEffect_3A570, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 3 },
 { PORT_FN(sub_3A5D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 4 },
 { PORT_FN(sub_3A640, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
 { PORT_FN(sub_3A6B0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 6 },
 { PORT_FN(CreateClass10Type6_3A730, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
 { PORT_FN(sub_3A7D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 8 },
 { PORT_FN(sub_3A870, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 9 },
-{ PORT_FN(sub_3A8D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 10 },
+{ PORT_FN(CreateVolcanoEffect_3A8D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 10 },
 { PORT_FN(sub_3A930, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
-{ PORT_FN(sub_3A9A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 12 },
-{ PORT_FN(sub_3AA10, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 13 },
+{ PORT_FN(CreateCraterEffect_3A9A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 12 },
+{ PORT_FN(CreatePossessionEffect_3AA10, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 13 },
 { PORT_FN(sub_3AAA0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 14 },
 { PORT_FN(sub_3AB40, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 15 },
-{ PORT_FN(sub_3ABE0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 16 },
+{ PORT_FN(CreateEarthquakeEffect_3ABE0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 16 },
 { PORT_FN(CreateLava_3ACC0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 17 },
 { PORT_FN(CreateExplosionRing_3AC70, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 18 },
 { PORT_FN(CreateVolcanoEruption_3ADB0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 19 },
@@ -4239,10 +4239,10 @@ Type_97D12 off_97D12[] = {
 { PORT_FN(NullConstructor_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 21 },
 { PORT_FN(NullConstructor_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 22 },
 { PORT_FN(NullConstructor_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 23 },
-{ PORT_FN(sub_3AE80, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 24 },
+{ PORT_FN(CreateLightningEffect_3AE80, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 24 },
 { PORT_FN(NullConstructor_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 25 },
-{ PORT_FN(sub_3AF00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 26 },
-{ PORT_FN(sub_3AF80, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 27 },
+{ PORT_FN(CreateStealManaEffect_3AF00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 26 },
+{ PORT_FN(CreateDuelEffect_3AF80, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 27 },
 { PORT_FN(CreateTerrainRaiseStep_3B000, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 28 },
 { PORT_FN(sub_3B060, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 29 },
 { PORT_FN(sub_3B120, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 30 },
@@ -4252,7 +4252,7 @@ Type_97D12 off_97D12[] = {
 { PORT_FN(sub_3B4D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 34 },
 { PORT_FN(sub_3B300, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 35 },
 { PORT_FN(sub_3B3D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 36 },
-{ PORT_FN(sub_3B3E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 0 },
+{ PORT_FN(CreateUndeadArmyEffect_3B3E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 38 },
 { PORT_FN(sub_3B460, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 39 },
 { PORT_FN(CreateManaBall_3B5A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 40 },
@@ -4269,9 +4269,9 @@ Type_97D12 off_97D12[] = {
 { PORT_FN(sub_3B2A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 51 },
 { PORT_FN(sub_3B230, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 52 },
 { PORT_FN(CreateCrabSpawnTimer_3B860, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 53 },
-{ PORT_FN(sub_3B8E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 54 },
-{ PORT_FN(sub_3B970, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 55 },
-{ PORT_FN(sub_3BA00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 56 },
+{ PORT_FN(CreateWallOfFireEffect_3B8E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 54 },
+{ PORT_FN(CreateManaMagnetEffect_3B970, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 55 },
+{ PORT_FN(CreateGlobalDeathEffect_3BA00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 56 },
 { PORT_FN(sub_3BA90, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 },
 { nullptr, 0, 0x002548F4, 0 },
 { (Type_AE400_29795* (*)(axis_3d*))&sub_59A80_59F90, 1, 0x002548F4, 1 },
@@ -4312,26 +4312,26 @@ Type_97D12 off_987DE[] = {
 { PORT_FN(CreateHealSpell_3C0F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 2 },
 { PORT_FN(CreateSpeedSpell_3C0C0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 3 },
 { PORT_FN(CreatePossessionSpell_3C040, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 4 },
-{ PORT_FN(sub_3C1B0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
-{ PORT_FN(sub_3C330, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 6 },
-{ PORT_FN(sub_3C150, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
-{ PORT_FN(sub_3C1E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 8 },
-{ PORT_FN(sub_3C390, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 9 },
-{ PORT_FN(sub_3C300, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 10 },
-{ PORT_FN(sub_3C120, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
-{ PORT_FN(sub_3C270, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 12 },
-{ PORT_FN(sub_3C2D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 13 },
-{ PORT_FN(sub_3C2A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 14 },
-{ PORT_FN(sub_3C210, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 15 },
-{ PORT_FN(sub_3C240, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 16 },
+{ PORT_FN(CreateShieldSpell_3C1B0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
+{ PORT_FN(CreateBeyondSightSpell_3C330, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 6 },
+{ PORT_FN(CreateEarthquakeSpell_3C150, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
+{ PORT_FN(CreateMeteorSpell_3C1E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 8 },
+{ PORT_FN(CreateVolcanoSpell_3C390, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 9 },
+{ PORT_FN(CreateCraterSpell_3C300, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 10 },
+{ PORT_FN(CreateTeleportSpell_3C120, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
+{ PORT_FN(CreateDuelSpell_3C270, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 12 },
+{ PORT_FN(CreateInvisibleSpell_3C2D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 13 },
+{ PORT_FN(CreateStealManaSpell_3C2A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 14 },
+{ PORT_FN(CreateReboundSpell_3C210, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 15 },
+{ PORT_FN(CreateLightningSpell_3C240, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 16 },
 { PORT_FN(CreateCastleSpell_3C060, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 17 },
-{ PORT_FN(sub_3C3C0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 18 },
-{ PORT_FN(sub_3C360, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 19 },
-{ PORT_FN(sub_3C180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 20 },
-{ PORT_FN(sub_3C3F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 21 },
-{ PORT_FN(sub_3C420, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 22 },
-{ PORT_FN(sub_3C450, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 23 },
-{ PORT_FN(sub_3C480, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 },
+{ PORT_FN(CreateUndeadArmySpell_3C3C0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 18 },
+{ PORT_FN(CreateLightningStormSpell_3C360, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 19 },
+{ PORT_FN(CreateManaMagnetSpell_3C180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 20 },
+{ PORT_FN(CreateWallOfFireSpell_3C3F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 21 },
+{ PORT_FN(CreateReverseSpeedSpell_3C420, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 22 },
+{ PORT_FN(CreateGlobalDeathSpell_3C450, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 23 },
+{ PORT_FN(CreateRapidFireballSpell_3C480, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 },
 { nullptr, 0, 0x48F40000, 37 }
 };
 
@@ -27165,7 +27165,8 @@ void Class10Type1Tick_25130(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_252B0(int a1)
+/// Per-tick handler of the speed effect (class 10 state 2), created by the Speed and Reverse Speed spells.
+void SpeedEffectTick_252B0(int a1)
 {
   int result; // eax
 
@@ -27282,7 +27283,8 @@ void sub_25410(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZE WITH REMC1
-void sub_25470(Type_AE400_29795* a1x)
+/// Per-tick handler of the Volcano spell's effect (class 10 state 9).
+void VolcanoEffectTick_25470(Type_AE400_29795* a1x)
 {
   int v1; // eax
   unsigned int v2; // eax
@@ -27360,7 +27362,8 @@ void sub_255D0(Type_AE400_29795* a1x, __int16 a2, __int16 a3)
 }
 
 //SYNCHRONIZE WITH REMC1
-void sub_25670(Type_AE400_29795* a1x)
+/// Per-tick handler of the Crater spell's effect (class 10 state 11). Starts a volcano eruption (10/18).
+void CraterEffectTick_25670(Type_AE400_29795* a1x)
 {
   int v1; // eax
   int v2; // eax
@@ -27407,7 +27410,8 @@ void sub_25670(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_25760(Type_AE400_29795* a1x)
+/// Per-tick handler of the Possession spell's effect (class 10 state 12).
+void PossessionEffectTick_25760(Type_AE400_29795* a1x)
 {
   int v1; // eax
 
@@ -27515,7 +27519,8 @@ void sub_258A0(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_25990(Type_AE400_29795* a1x)
+/// Per-tick handler of the Earthquake spell's effect (class 10 state 15). Creates 10/11 entities (as the Crater spell does).
+void EarthquakeEffectTick_25990(Type_AE400_29795* a1x)
 {
   __int16 v1; // dx
   int v2; // eax
@@ -27904,7 +27909,8 @@ void Class10Type19Tick_26140(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_262D0(Type_AE400_29795* a1x)
+/// Per-tick handler of the Lightning spell's effect (class 10 state 23).
+void LightningEffectTick_262D0(Type_AE400_29795* a1x)
 {
   int v1; // eax
   char v2; // dl
@@ -27930,7 +27936,8 @@ void sub_262D0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_26360(Type_AE400_29795* a1x)
+/// Per-tick handler of the Steal Mana spell's effect (class 10 state 25).
+void StealManaEffectTick_26360(Type_AE400_29795* a1x)
 {
   int v1; // eax
   int result; // eax
@@ -27955,7 +27962,8 @@ void sub_26360(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_263C0(Type_AE400_29795* a1x)
+/// Per-tick handler of the Duel spell's effect (class 10 state 26).
+void DuelEffectTick_263C0(Type_AE400_29795* a1x)
 {
   int v1; // eax
 
@@ -28381,7 +28389,8 @@ void sub_26D20(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_26E90(int a1)
+/// Per-tick handler of the Undead Army spell's effect (class 10 state 38). Raises class 5 type 9 creatures.
+void UndeadArmyEffectTick_26E90(int a1)
 {
   int v1; // eax
   unsigned int i; // edx
@@ -30177,7 +30186,8 @@ void sub_29700(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_29780(Type_AE400_29795* a1x)
+/// Per-tick handler of the Wall of Fire spell's effect (class 10 state 58).
+void WallOfFireEffectTick_29780(Type_AE400_29795* a1x)
 {
   int v3_v4;
   Type_AE400_29795* v6_v7; // eax
@@ -30271,7 +30281,8 @@ void sub_29780(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_29920_29960(int a1)
+/// Per-tick handler of the Mana Magnet spell's effect (class 10 state 59).
+void ManaMagnetEffectTick_29920_29960(int a1)
 {
 	int v1; // eax
 	int result; // eax
@@ -30300,7 +30311,8 @@ void sub_29920_29960(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_299D0_29A10(Type_AE400_29795* a1x)
+/// Per-tick handler of the Global Death spell's effect (class 10 state 60).
+void GlobalDeathEffectTick_299D0_29A10(Type_AE400_29795* a1x)
 {
   int v1; // eax
   _WORD *v2; // esi
@@ -45050,7 +45062,8 @@ int CreateFireball_39A10(int a1)
 // 98FD8: using guessed type void *off_98FD8;
 
 //----- (00039A90) --------------------------------------------------------
-int sub_39A90(int a1)
+/// Constructor of the Possession spell's missile (class 9 type 1, state 1), fired by PossessionSpellTick_56510_56A40.
+int CreatePossessionMissile_39A90(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45082,7 +45095,8 @@ int sub_39A90(int a1)
 }
 
 //----- (00039B40) --------------------------------------------------------
-int sub_39B40(int a1)
+/// Constructor of the Earthquake spell's missile (class 9 type 2, state 2), fired by CastEarthquake_567A0_56CD0.
+int CreateEarthquakeMissile_39B40(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45112,9 +45126,8 @@ int sub_39B40(int a1)
 }
 
 //----- (00039BC0) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 9 type 3).
-/// Constructor of class 9 type 3 (state 3): a missile that starts an explosion ring (10/17) when it lands.
-int CreateClass9Type3_39BC0(int a1)
+/// Constructor of the Meteor spell's missile (class 9 type 3, state 3), fired by CastMeteor_56950_56E80.
+int CreateMeteorMissile_39BC0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45144,7 +45157,8 @@ int CreateClass9Type3_39BC0(int a1)
 }
 
 //----- (00039C40) --------------------------------------------------------
-int sub_39C40(int a1)
+/// Constructor of the Volcano spell's missile (class 9 type 4, state 4), fired by CastVolcano_56AF0_57020.
+int CreateVolcanoMissile_39C40(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45174,7 +45188,8 @@ int sub_39C40(int a1)
 }
 
 //----- (00039CC0) --------------------------------------------------------
-int sub_39CC0(int a1)
+/// Constructor of the Crater spell's missile (class 9 type 5, state 5), fired by CastCrater_56CA0_571D0.
+int CreateCraterMissile_39CC0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45234,7 +45249,8 @@ int sub_39D40(int a1)
 }
 
 //----- (00039DC0) --------------------------------------------------------
-int sub_39DC0(int a1)
+/// Constructor of the Duel spell's missile (class 9 type 7, state 7), fired by CastDuel_57040_57570.
+int CreateDuelMissile_39DC0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45264,7 +45280,8 @@ int sub_39DC0(int a1)
 }
 
 //----- (00039E40) --------------------------------------------------------
-int sub_39E40(int a1)
+/// Constructor of the Steal Mana spell's missile (class 9 type 8, state 8), fired by CastStealMana_57250_57780.
+int CreateStealManaMissile_39E40(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45358,7 +45375,8 @@ int CreateHomingSpawnMissile_39F40(int a1)
 }
 
 //----- (00039FC0) --------------------------------------------------------
-int sub_39FC0(int a1)
+/// Constructor of the Undead Army spell's missile (class 9 type 11, state 11), fired by CastUndeadArmy_57800_57D30.
+int CreateUndeadArmyMissile_39FC0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45388,7 +45406,8 @@ int sub_39FC0(int a1)
 }
 
 //----- (0003A040) --------------------------------------------------------
-int sub_3A040(int a1)
+/// Constructor of the Lightning Storm spell's missile (class 9 type 12, state 12), fired by CastLightningStorm_579D0_57F00.
+int CreateLightningStormMissile_3A040(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45492,7 +45511,8 @@ int sub_3A210(int a1)
 }
 
 //----- (0003A270) --------------------------------------------------------
-int sub_3A270(int a1)
+/// Constructor of the Wall of Fire spell's missile (class 9 type 16, state 17), fired by CastWallOfFire_57D40_58270.
+int CreateWallOfFireMissile_3A270(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45523,7 +45543,8 @@ int sub_3A270(int a1)
 // 98FD8: using guessed type void *off_98FD8;
 
 //----- (0003A2F0) --------------------------------------------------------
-int sub_3A2F0(int a1)
+/// Constructor of the Mana Magnet spell's missile (class 9 type 17, state 18), fired by CastManaMagnet_57B80_580B0.
+int CreateManaMagnetMissile_3A2F0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45554,7 +45575,8 @@ int sub_3A2F0(int a1)
 }
 
 //----- (0003A390) --------------------------------------------------------
-int sub_3A390(int a1)
+/// Constructor of the Global Death spell's missile (class 9 type 18, state 19), fired by CastGlobalDeath_580A0_585B0.
+int CreateGlobalDeathMissile_3A390(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45673,7 +45695,8 @@ int CreateClass10Type1_3A510(uint16_t* a1)
 }
 
 //----- (0003A570) --------------------------------------------------------
-int sub_3A570(uint16_t* a1)
+/// Constructor of the speed effect (class 10 type 2, state 2), created by SpeedSpellTick_56380_568B0 and CastReverseSpeed_57F00_58410.
+int CreateSpeedEffect_3A570(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -45879,7 +45902,8 @@ int sub_3A870(uint16_t* a1)
 }
 
 //----- (0003A8D0) --------------------------------------------------------
-int sub_3A8D0(uint16_t* a1)
+/// Constructor of the Volcano spell's effect (class 10 type 9, state 9), created where CastVolcano's missile lands (missile +68/+69).
+int CreateVolcanoEffect_3A8D0(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -45930,7 +45954,8 @@ int sub_3A930(uint16_t* a1)
 }
 
 //----- (0003A9A0) --------------------------------------------------------
-int sub_3A9A0(uint16_t* a1)
+/// Constructor of the Crater spell's effect (class 10 type 11, state 11), created where CastCrater's missile lands (missile +68/+69). Starts a volcano eruption (10/18).
+int CreateCraterEffect_3A9A0(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -45957,7 +45982,8 @@ int sub_3A9A0(uint16_t* a1)
 }
 
 //----- (0003AA10) --------------------------------------------------------
-int sub_3AA10(uint16_t* a1)
+/// Constructor of the Possession spell's effect (class 10 type 12, state 12), created where CastPossession's missile lands (missile +68/+69).
+int CreatePossessionEffect_3AA10(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46070,7 +46096,8 @@ int sub_3AB40(uint16_t* a1)
 }
 
 //----- (0003ABE0) --------------------------------------------------------
-int sub_3ABE0(uint16_t* a1)
+/// Constructor of the Earthquake spell's effect (class 10 type 15, state 15), created where CastEarthquake's missile lands (missile +68/+69). Creates 10/11 entities (as the Crater spell does).
+int CreateEarthquakeEffect_3ABE0(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46234,7 +46261,8 @@ int CreateClass10Type19_3AE00(uint16_t* a1)
 }
 
 //----- (0003AE80) --------------------------------------------------------
-int sub_3AE80(uint16_t* a1)
+/// Constructor of the Lightning spell's effect (class 10 type 23, state 23), created where CastLightning's missile lands (missile +68/+69).
+int CreateLightningEffect_3AE80(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46262,7 +46290,8 @@ int sub_3AE80(uint16_t* a1)
 }
 
 //----- (0003AF00) --------------------------------------------------------
-int sub_3AF00(uint16_t* a1)
+/// Constructor of the Steal Mana spell's effect (class 10 type 25, state 25), created where CastStealMana's missile lands (missile +68/+69).
+int CreateStealManaEffect_3AF00(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -46288,7 +46317,8 @@ int sub_3AF00(uint16_t* a1)
 }
 
 //----- (0003AF80) --------------------------------------------------------
-int sub_3AF80(uint16_t* a1)
+/// Constructor of the Duel spell's effect (class 10 type 26, state 26), created where CastDuel's missile lands (missile +68/+69).
+int CreateDuelEffect_3AF80(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -46543,7 +46573,8 @@ int sub_3B3D0(uint16_t* a1)
 }
 
 //----- (0003B3E0) --------------------------------------------------------
-int sub_3B3E0(uint16_t* a1)
+/// Constructor of the Undead Army spell's effect (class 10 type 36, state 38), created where CastUndeadArmy's missile lands (missile +68/+69). Raises class 5 type 9 creatures.
+int CreateUndeadArmyEffect_3B3E0(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -46815,7 +46846,8 @@ int CreateCrabSpawnTimer_3B860(uint16_t* a1)
 }
 
 //----- (0003B8E0) --------------------------------------------------------
-int sub_3B8E0(uint16_t* a1)
+/// Constructor of the Wall of Fire spell's effect (class 10 type 53, state 58), created where CastWallOfFire's missile lands (missile +68/+69).
+int CreateWallOfFireEffect_3B8E0(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46848,7 +46880,8 @@ int sub_3B8E0(uint16_t* a1)
 }
 
 //----- (0003B970) --------------------------------------------------------
-int sub_3B970(uint16_t* a1)
+/// Constructor of the Mana Magnet spell's effect (class 10 type 54, state 59), created where CastManaMagnet's missile lands (missile +68/+69).
+int CreateManaMagnetEffect_3B970(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46881,7 +46914,8 @@ int sub_3B970(uint16_t* a1)
 }
 
 //----- (0003BA00) --------------------------------------------------------
-int sub_3BA00(uint16_t* a1)
+/// Constructor of the Global Death spell's effect (class 10 type 55, state 60), created where CastGlobalDeath's missile lands (missile +68/+69).
+int CreateGlobalDeathEffect_3BA00(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -47265,115 +47299,134 @@ int CreateHealSpell_3C0F0(int a1)
 }
 
 //----- (0003C120) --------------------------------------------------------
-int sub_3C120(int a1)
+/// Constructor of the Teleport spell (class 12 type 10, state 30) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateTeleportSpell_3C120(int a1)
 {
   return CreateSpell_3BF70(a1, 10, 30, 5000, 51, 1, 0, 10000, 100);
 }
 
 //----- (0003C150) --------------------------------------------------------
-int sub_3C150(int a1)
+/// Constructor of the Earthquake spell (class 12 type 6, state 18) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateEarthquakeSpell_3C150(int a1)
 {
   return CreateSpell_3BF70(a1, 6, 18, 6000, 51, 1, 0, 120000, 6000);
 }
 
 //----- (0003C180) --------------------------------------------------------
-int sub_3C180(int a1)
+/// Constructor of the Mana Magnet spell (class 12 type 19, state 57) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateManaMagnetSpell_3C180(int a1)
 {
   return CreateSpell_3BF70(a1, 19, 57, 4000, 17, 1, 0, 10000, 100);
 }
 
 //----- (0003C1B0) --------------------------------------------------------
-int sub_3C1B0(int a1)
+/// Constructor of the Shield spell (class 12 type 4, state 12) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateShieldSpell_3C1B0(int a1)
 {
   return CreateSpell_3BF70(a1, 4, 12, 2000, 251, 1, 0, 0, 100);
 }
 
 //----- (0003C1E0) --------------------------------------------------------
-int sub_3C1E0(int a1)
+/// Constructor of the Meteor spell (class 12 type 7, state 21) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateMeteorSpell_3C1E0(int a1)
 {
   return CreateSpell_3BF70(a1, 7, 21, 10000, 11, 1, 0, 100000, 10000);
 }
 
 //----- (0003C210) --------------------------------------------------------
-int sub_3C210(int a1)
+/// Constructor of the Rebound spell (class 12 type 14, state 42) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateReboundSpell_3C210(int a1)
 {
   return CreateSpell_3BF70(a1, 14, 42, 1000, 101, 1, 0, 8000, 100);
 }
 
 //----- (0003C240) --------------------------------------------------------
-int sub_3C240(int a1)
+/// Constructor of the Lightning spell (class 12 type 15, state 45) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateLightningSpell_3C240(int a1)
 {
   return CreateSpell_3BF70(a1, 15, 45, 1000, 2, 0, 0, 25000, 500);
 }
 
 //----- (0003C270) --------------------------------------------------------
-int sub_3C270(int a1)
+/// Constructor of the Duel spell (class 12 type 11, state 33) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateDuelSpell_3C270(int a1)
 {
   return CreateSpell_3BF70(a1, 11, 33, 2500, 17, 1, 0, 16000, 100);
 }
 
 //----- (0003C2A0) --------------------------------------------------------
-int sub_3C2A0(int a1)
+/// Constructor of the Steal Mana spell (class 12 type 13, state 39) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateStealManaSpell_3C2A0(int a1)
 {
   return CreateSpell_3BF70(a1, 13, 39, 500, 11, 1, 0, 20000, 100);
 }
 
 //----- (0003C2D0) --------------------------------------------------------
-int sub_3C2D0(int a1)
+/// Constructor of the Invisible spell (class 12 type 12, state 36) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateInvisibleSpell_3C2D0(int a1)
 {
   return CreateSpell_3BF70(a1, 12, 36, 5000, 251, 1, 0, 50000, 100);
 }
 
 //----- (0003C300) --------------------------------------------------------
-int sub_3C300(int a1)
+/// Constructor of the Crater spell (class 12 type 9, state 27) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateCraterSpell_3C300(int a1)
 {
   return CreateSpell_3BF70(a1, 9, 27, 12000, 31, 1, 0, 100000, 6000);
 }
 
 //----- (0003C330) --------------------------------------------------------
-int sub_3C330(int a1)
+/// Constructor of the Beyond Sight spell (class 12 type 5, state 15) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateBeyondSightSpell_3C330(int a1)
 {
   return CreateSpell_3BF70(a1, 5, 15, 3000, 101, 1, 0, 0, 100);
 }
 
 //----- (0003C360) --------------------------------------------------------
-int sub_3C360(int a1)
+/// Constructor of the Lightning Storm spell (class 12 type 18, state 54) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateLightningStormSpell_3C360(int a1)
 {
   return CreateSpell_3BF70(a1, 18, 54, 20000, 33, 1, 0, 90000, 2000);
 }
 
 //----- (0003C390) --------------------------------------------------------
-int sub_3C390(int a1)
+/// Constructor of the Volcano spell (class 12 type 8, state 24) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateVolcanoSpell_3C390(int a1)
 {
   return CreateSpell_3BF70(a1, 8, 24, 30000, 65, 1, 0, 180000, 1000);
 }
 
 //----- (0003C3C0) --------------------------------------------------------
-int sub_3C3C0(int a1)
+/// Constructor of the Undead Army spell (class 12 type 17, state 51) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateUndeadArmySpell_3C3C0(int a1)
 {
   return CreateSpell_3BF70(a1, 17, 51, 13000, 13, 1, 0, 150000, 100);
 }
 
 //----- (0003C3F0) --------------------------------------------------------
-int sub_3C3F0(int a1)
+/// Constructor of the Wall of Fire spell (class 12 type 20, state 60) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateWallOfFireSpell_3C3F0(int a1)
 {
   return CreateSpell_3BF70(a1, 20, 60, 5000, 51, 1, 0, 12000, 24464);
 }
 
 //----- (0003C420) --------------------------------------------------------
-int sub_3C420(int a1)
+/// Constructor of the Reverse Speed spell (class 12 type 21, state 63) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateReverseSpeedSpell_3C420(int a1)
 {
   return CreateSpell_3BF70(a1, 21, 63, 1000, 251, 0, 0, 0, 100);
 }
 
 //----- (0003C450) --------------------------------------------------------
-int sub_3C450(int a1)
+/// Constructor of the Global Death spell (class 12 type 22, state 66) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateGlobalDeathSpell_3C450(int a1)
 {
   return CreateSpell_3BF70(a1, 22, 66, 75000, 101, 1, 0, 200000, 7000);
 }
 
 //----- (0003C480) --------------------------------------------------------
-int sub_3C480(int a1)
+/// Constructor of the Rapid Fireball spell (class 12 type 23, state 69) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateRapidFireballSpell_3C480(int a1)
 {
   return CreateSpell_3BF70(a1, 23, 69, 600, 3, 0, 0, 50000, 50);
 }
@@ -62071,7 +62124,8 @@ char sub_526C0_52A00(int a1, unsigned int a2, unsigned int a3)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //SYNCHRONIZE WITH REMC1
-char sub_52770_52AB0(int a1)
+/// Moves a spell missile along its heading (+30/+32, speed +126); on impact creates the entity whose class/type the caster stored in +68/+69 (the spell's effect).
+char UpdateMissile_52770_52AB0(int a1)
 {
   int v1; // edx
   char v2; // dl
@@ -62396,7 +62450,8 @@ LABEL_24:
 #undef v22
 
 //SYNCHRONIZE WITH REMC1
-char sub_52ED0_53210(int a1)
+/// Per-tick handler of the Possession spell's missile (class 9 state 1).
+char PossessionMissileTick_52ED0_53210(int a1)
 {
   unsigned __int16 v1; // si
   unsigned int v2; // ebp
@@ -62474,20 +62529,20 @@ char sub_52ED0_53210(int a1)
 }
 
 //----- (00053060) --------------------------------------------------------
-char sub_53060(int a1)
+/// Generic per-tick handler of a spell missile (class 9 states 2, 4-6, 11, 15-17, 20): UpdateMissile_52770_52AB0.
+char MissileTick_53060(int a1)
 {
-  return sub_52770_52AB0(a1);
+  return UpdateMissile_52770_52AB0(a1);
 }
 
 //SYNCHRONIZE WITH REMC1
-/// TODO: rename when the entity is identified (class 9 type 3).
-/// Per-tick handler of class 9 state 3 (set by CreateClass9Type3_39BC0); creates the explosion ring when it lands.
-char Class9Type3Tick_53070_533B0(int a1)
+/// Per-tick handler of the Meteor spell's missile (class 9 state 3).
+char MeteorMissileTick_53070_533B0(int a1)
 {
   int result; // eax
   char v2; // dh
 
-  sub_52770_52AB0(a1);
+  UpdateMissile_52770_52AB0(a1);
   if ( *(_BYTE *)PTR(a1 + 64) )
   {
     result = (int)OFF(CreateEntity_373F0_377B0((axis_3d*)PTR(a1 + 72), 10, 1));
@@ -62503,13 +62558,15 @@ char Class9Type3Tick_53070_533B0(int a1)
 }
 
 //----- (000530B0) --------------------------------------------------------
-char sub_530B0(int a1)
+/// Per-tick handler of the Duel spell's missile (class 9 state 7).
+char DuelMissileTick_530B0(int a1)
 {
-  return sub_530C0_53400(a1);
+  return StealManaMissileTick_530C0_53400(a1);
 }
 
 //SYNCHRONIZE WITH REMC1
-char sub_530C0_53400(int a1)
+/// Per-tick handler of the Steal Mana spell's missile (class 9 state 8).
+char StealManaMissileTick_530C0_53400(int a1)
 {
   int v1; // edx
   char v2; // dl
@@ -63107,7 +63164,8 @@ char UpdateSpawningMissile_53B50_53E90(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-char sub_53DC0_54100(int a1)
+/// Per-tick handler of the Lightning Storm spell's missile (class 9 state 12).
+char LightningStormMissileTick_53DC0_54100(int a1)
 {
   int v1; // edx
   char v2; // dl
@@ -63320,7 +63378,8 @@ void sub_54290_545E0(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-char sub_542B0_54640(int a1)
+/// Per-tick handler of the Mana Magnet spell's missile (class 9 state 18).
+char ManaMagnetMissileTick_542B0_54640(int a1)
 {
   unsigned __int16 v1; // si
   unsigned int v2; // ebp
@@ -63407,7 +63466,8 @@ char sub_542B0_54640(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_54480_54810(int a1)
+/// Per-tick handler of the Global Death spell's missile (class 9 state 19).
+void GlobalDeathMissileTick_54480_54810(int a1)
 {
   _WORD *result; // eax
 
@@ -64776,7 +64836,8 @@ LABEL_5:
 }
 
 //----- (000566C0) --------------------------------------------------------
-int sub_566C0(int a1)
+/// Handler of an owned Shield spell (class 12 state 12 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastShield_566C0(int a1)
 {
   int result; // eax
   unsigned int v2; // esi
@@ -64802,7 +64863,8 @@ int sub_566C0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00056730) --------------------------------------------------------
-void sub_56730(int a1)
+/// Handler of an owned Beyond Sight spell (class 12 state 15 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+void CastBeyondSight_56730(int a1)
 {
   unsigned __int16 v1; // dx
   unsigned int v2; // esi
@@ -64824,7 +64886,8 @@ void sub_56730(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //SYNCHRONIZED WITH REMC1
-int sub_567A0_56CD0(int a1)
+/// Handler of an owned Earthquake spell (class 12 state 18 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastEarthquake_567A0_56CD0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -64884,7 +64947,8 @@ LABEL_9:
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_56950_56E80(int a1)
+/// Handler of an owned Meteor spell (class 12 state 21 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastMeteor_56950_56E80(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -64942,7 +65006,8 @@ LABEL_9:
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_56AF0_57020(int a1)
+/// Handler of an owned Volcano spell (class 12 state 24 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastVolcano_56AF0_57020(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -65001,7 +65066,8 @@ LABEL_9:
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_56CA0_571D0(int a1)
+/// Handler of an owned Crater spell (class 12 state 27 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastCrater_56CA0_571D0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -65064,7 +65130,8 @@ LABEL_9:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_56E50_57380(int a1)
+/// Handler of an owned Teleport spell (class 12 state 30 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+void CastTeleport_56E50_57380(int a1)
 {
   unsigned int v1; // ebp
   __int16 v2; // ax
@@ -65130,7 +65197,8 @@ void sub_56E50_57380(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_57040_57570(int a1)
+/// Handler of an owned Duel spell (class 12 state 33 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastDuel_57040_57570(int a1)
 {
   int result; // eax
   unsigned __int16 v2; // dx
@@ -65185,7 +65253,8 @@ LABEL_9:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_571B0_576E0(int a1)
+/// Handler of an owned Invisible spell (class 12 state 36 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+void CastInvisible_571B0_576E0(int a1)
 {
   unsigned int v1; // esi
   __int16 v2; // di
@@ -65221,7 +65290,8 @@ void sub_571B0_576E0(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_57250_57780(int a1)
+/// Handler of an owned Steal Mana spell (class 12 state 39 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastStealMana_57250_57780(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -65284,7 +65354,8 @@ LABEL_9:
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_573F0_57920(int a1)
+/// Handler of an owned Rebound spell (class 12 state 42 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastRebound_573F0_57920(int a1)
 {
   int result; // eax
   unsigned int v2; // ebx
@@ -65316,7 +65387,8 @@ int sub_573F0_57920(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_57470_579A0(int a1)
+/// Handler of an owned Lightning spell (class 12 state 45 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastLightning_57470_579A0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -65440,7 +65512,8 @@ void CastCastle_57610_57B40(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_57800_57D30(int a1)
+/// Handler of an owned Undead Army spell (class 12 state 51 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+void CastUndeadArmy_57800_57D30(int a1)
 {
   unsigned int v1; // ebx
   int v2; // esi
@@ -65501,7 +65574,8 @@ LABEL_12:
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_579D0_57F00(int a1)
+/// Handler of an owned Lightning Storm spell (class 12 state 54 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastLightningStorm_579D0_57F00(int a1)
 {
   int result; // eax
   unsigned __int16 v2; // dx
@@ -65562,7 +65636,8 @@ LABEL_9:
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_57B80_580B0(int a1)
+/// Handler of an owned Mana Magnet spell (class 12 state 57 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastManaMagnet_57B80_580B0(int a1)
 {
   int result; // eax
   unsigned __int16 v2; // dx
@@ -65623,7 +65698,8 @@ LABEL_5:
   return result;
 }
 
-int sub_57D40_58270(int a1)
+/// Handler of an owned Wall of Fire spell (class 12 state 60 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastWallOfFire_57D40_58270(int a1)
 {
 	int result; // eax
 	unsigned __int16 v2; // dx
@@ -65685,7 +65761,8 @@ int sub_57D40_58270(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_57F00_58410(int a1)
+/// Handler of an owned Reverse Speed spell (class 12 state 63 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+void CastReverseSpeed_57F00_58410(int a1)
 {
   unsigned int v1; // esi
   int v2; // eax
@@ -65748,7 +65825,8 @@ void sub_57F00_58410(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_580A0_585B0(int a1)
+/// Handler of an owned Global Death spell (class 12 state 66 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastGlobalDeath_580A0_585B0(int a1)
 {
   int result; // eax
   unsigned __int16 v2; // bx
@@ -65809,7 +65887,8 @@ LABEL_5:
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_58240_58750(int a1)
+/// Handler of an owned Rapid Fireball spell (class 12 state 69 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastRapidFireball_58240_58750(int a1)
 {
   int result; // eax
   unsigned __int16 v2; // dx
