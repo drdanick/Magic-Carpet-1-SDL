@@ -316,14 +316,14 @@ void StopSearch_11490(int a1);
 int NextSearch_114B0(int a1, _DWORD *a2, _DWORD *a3);
 void SetupSearch_11540();
 int Colide_11640(Type_AE400_29795* a1, axis_3d* a2, char a3);
-int sub_11760(axis_3d* a1);
+int TerrainType_11760(axis_3d* a1);
 int TerrainBlock_11810(axis_3d* a1);
 bool Overlap_118C0(axis_3d* a1, axis_4d* a2, axis_3d* a3, axis_4d* a4);
 bool OverlapThing_11950(Type_AE400_29795* a1, Type_AE400_29795* a2);
-int sub_11980(int a1);
-int sub_11AC0(_WORD *a1);
-int sub_11C00(__int16 *a1);
-Type_AE400_29795* sub_11D10(Type_AE400_29795* event);
+int ColideThing_11980(int a1);
+int PocessionColideThing_11AC0(_WORD *a1);
+int PocessionColideThing2_11C00(__int16 *a1);
+Type_AE400_29795* TouchingThing_11D10(Type_AE400_29795* event);
 int CheckForMapwhoCellForSame_11E50(__int16 *a1, char a2, char a3);
 int GetTerrainHeight_11F50(axis_3d* position);
 void AffectMapwho_120B0(Type_AE400_29795* a1x, unsigned __int8 a2, unsigned __int16 a3);
@@ -337,14 +337,14 @@ int FnPlayerComputerFlyer_13170(int a1);
 int ActionGeneric_132B0(int a1);
 int ActionInitialise_136C0(int a1);
 bool ActionUpgradeMyCastle_13800(int a1);
-int AiNoopMode_138E0();
+int ActionRebuildMyCastle_138E0();
 int ActionBuildMyCastle_138F0(int a1);
 bool ActionProtectMyCastle_13990(_WORD *a1);
 int ActionWander_13A10(int a1);
 bool ActionRunaway_13A70(int a1);
 bool ActionCollectMana_13BA0(int a1);
 bool ActionAttackOpponentsCastle_13CA0(int a1);
-bool sub_13DC0(int a1);
+bool ActionAttackOpponentsFlyer_13DC0(int a1);
 bool ActionAttackTarget_13DD0(int a1);
 int AiChooseCastleSite_13F00(int a1);
 int IShouldUpgradeMyCastle_14120(int a1);
@@ -378,8 +378,8 @@ bool IAmUsingSpell_15E60(int a1, unsigned __int8 a2);
 bool MaximumManaEnough_15E90(int a1, unsigned __int8 a2);
 void CopyHumanPlayersSpells_15EC0(int a1);
 unsigned int PlayerIsUsingSpell_16000(int a1, unsigned __int8 a2);
-char sub_16030(int a1);
-char sub_16310(_DWORD *a1);
+char GetBestAttackSpell_16030(int a1);
+char GetBestAttackCastleSpell_16310(_DWORD *a1);
 void ProcessComputersHatred_16540();
 unsigned int IShouldDodge_16800(unsigned int a1, int a2);
 int Dodge_16870(int a1);
@@ -399,7 +399,7 @@ __int16 FnCreatureTail_19550(int a1);
 signed int SlopeAt_19650(axis_3d* a1);
 void MoveCreature_196E0(Type_AE400_29795* a1);
 void FnCreatureStand_19B10(Type_AE400_29795* a1, char a2);
-void sub_19D70(Type_AE400_29795* a1, char a2);
+void FnCreatureWander_19D70(Type_AE400_29795* a1, char a2);
 int FnCreatureAttack_1A120(Type_AE400_29795* a1, char a2, unsigned __int16 (*a3)(Type_AE400_29795*, int));
 void FnCreatureFlock_1A390(Type_AE400_29795* a1, unsigned __int16 a2);
 void CreatureDying_1A6C0(Type_AE400_29795* a1, char a2);
@@ -515,7 +515,7 @@ void FnCreature15Flock_203E0(Type_AE400_29795* a1);
 void FnCreature15Dying_203F0(Type_AE400_29795* a1);
 void FnCreature15Dead_20400(Type_AE400_29795* a1);
 void CastleArcherBeginAttack_20410(Type_AE400_29795* a1);
-void sub_20450(Type_AE400_29795* a1);
+void CastleArcherEndAttack_20450(Type_AE400_29795* a1);
 void MoveCastleArcher_20480(Type_AE400_29795* a1);
 void FnCreature16Stand_20700(Type_AE400_29795* a1);
 void FnCreature16Wander_20710(Type_AE400_29795* a1);
@@ -549,10 +549,10 @@ void DrawRectCheckedHighRes_24DA0(int a1, int a2, int a3, int a4, unsigned __int
 int nullsub_2(void); // weak
 void FnEffectExplosion_24F60(Type_AE400_29795* a1x);
 void FnEffectBigExplosion_25130(int a1);
-void SpeedEffectTick_252B0(int a1);
+void FnEffectDust_252B0(int a1);
 int FnEffectFire_252D0(int a1);
-void RemoveSelfTick_253E0(int a1);
-void Class10Type3Tick_253F0(int a1);
+void FnEffectFreeze_253E0(int a1);
+void FnEffectBlood_253F0(int a1);
 void FnEffectSplash_25410(Type_AE400_29795* a1);
 void FnEffectVolcano_25470(Type_AE400_29795* a1);
 void FnEffectMiniCrater_25570(Type_AE400_29795* a1);
@@ -564,7 +564,7 @@ void DarkSmokeTick_258A0(int a1);
 int nullsub_19(_DWORD); // weak
 void FnEffectEarthquake_25990(Type_AE400_29795* a1);
 void FnEffectSummonFire_25A60(int a1);
-void ExplosionRingTick_25CE0(Type_AE400_29795* a1);
+void FnEffectMeteor_25CE0(Type_AE400_29795* a1);
 void FnEffectVolcanoAfterMath_25EC0(int a1);
 void FnEffectFireColumn_26140(Type_AE400_29795* a1);
 void FnEffectLightning_262D0(Type_AE400_29795* a1);
@@ -599,7 +599,7 @@ void FnEffectRollingRock_29540(Type_AE400_29795* a1);
 int AffectBuilding_29640(Type_AE400_29795* event);
 void FnEffectCrabEgg_296A0(Type_AE400_29795* a1);
 void FnEffectCrabEggHatch_29700(int a1);
-void WallOfFireEffectTick_29780(Type_AE400_29795* a1);
+void FnEffectExtra1_29780(Type_AE400_29795* a1);
 
 void FnEffectExtra2_29920_29960(int a1);
 void FnEffectExtra3_299D0_29A10(Type_AE400_29795* a1);
@@ -608,8 +608,8 @@ void SetupRotateStuff_29C30_29C70(__int16 roll);
 // char sub_2A700_2A740(int a1, __int16 a2, __int16 a3, __int16 a4, int a5, int a6, __int16 a7, int a8);
 void DrawAThing_2C410_2C450(unsigned int a1);
 void DoMapWho_2DCB0_2DCF0(Type_BegBscreen* a2);
-void DrawSprite3D_2F170_2F1B0(Type_BegBscreen* a2);
-void DrawSprite_2FC50_2FC90(Type_BegBscreen* a2);
+void DoAsgMapWho_2F170_2F1B0(Type_BegBscreen* a2);
+void DoReflectMapWho_2FC50_2FC90(Type_BegBscreen* a2);
 void SimpleSky_30730_30770(int16_t roll);
 void EngineSetupTlscreen_309D0_30A10(int a1);
 void EngineSetupScreen_30A70_30AB0(int a1);
@@ -656,7 +656,7 @@ void ChangeResolution_34C80_35040();
 int CommandLineInterupter_34DD0_35190(int argc, char** argv);
 int ResetControlChange_356E0_35AA0();
 int CheckControlChange_35710_35AD0();
-void HmiTimerTick_357A0();
+void AniSpeedTimer_357A0();
 // void SetupSound_357C0_35B80(__int16 a1, int a2, unsigned __int16 a3, unsigned __int16 a4);
 void ResetSound_358A0_35C60();
 int ShortestMapDelta_358D0_35C90(__int16 a1, __int16 a2, __int16 a3);
@@ -700,14 +700,14 @@ Type_AE400_29795* InitModel_373F0_377B0(axis_3d* a1, int a2, int a3);
 void InitThings_37440_37800(int a1, char a2);
 void InitSingleThing_37560_37920(Type_1090* type1090);
 int NumberOfFreeThings_37710_37AD0();
-int SetPlayerStart0_37720_37AE0(int a1);
-int SetPlayerStart1_37740_37B00(int a1);
-int SetPlayerStart2_37760_37B20(int a1);
-int SetPlayerStart3_37780_37B40(int a1);
-int SetPlayerStart4_377A0_37B60(int a1);
-int SetPlayerStart5_377C0_37B80(int a1);
-int SetPlayerStart6_377E0_37BA0(int a1);
-int SetPlayerStart7_37800_37BC0(int a1);
+int InitPlayerFlyerStart1_37720_37AE0(int a1);
+int InitPlayerFlyerStart2_37740_37B00(int a1);
+int InitPlayerFlyerStart3_37760_37B20(int a1);
+int InitPlayerFlyerStart4_37780_37B40(int a1);
+int InitPlayerFlyerStart5_377A0_37B60(int a1);
+int InitPlayerFlyerStart6_377C0_37B80(int a1);
+int InitPlayerFlyerStart7_377E0_37BA0(int a1);
+int InitPlayerFlyerStart8_37800_37BC0(int a1);
 Type_AE400_29795* InitPlayerFlyer_37820_37BE0(axis_3d* position);
 int InitPlayerComputerFlyer_378A0_37C60(int a1);
 int InitPlayerCastle_37920_37CE0(int a1);
@@ -744,12 +744,12 @@ int InitCreature12_39200(int a1);
 int InitCreature14_39490(int a1);
 int InitCreature15_395B0(int a1);
 int InitCreature16_396E0(int a1);
-int Placeholder6_0_39800(int a1);
-int Placeholder6_1_39820(int a1);
-int Placeholder7_0_39840(int a1);
-int Placeholder7_1_39860(int a1);
-int Placeholder7_2_39880(int a1);
-int Placeholder7_3_398A0(int a1);
+int InitFamiliarRaven_39800(int a1);
+int InitFamiliarSprite_39820(int a1);
+int InitWeatherTornado_39840(int a1);
+int InitWeatherRainCloud_39860(int a1);
+int InitWeatherThunderCloud_39880(int a1);
+int InitWeatherThermals_398A0(int a1);
 int InitWeatherWind_398C0(int a1);
 int Placeholder8_0_39940(int a1);
 int Placeholder8_1_39960(int a1);
@@ -796,18 +796,18 @@ int InitEffectEarthquake_3ABE0(uint16_t* a1);
 int InitEffectMeteor_3AC70(uint16_t* a1);
 int InitEffectSummonFire_3ACC0(uint16_t* a1);
 int InitEffectVolcanoAfterMath_3ADB0(uint16_t* a1);
-int CreateVolcanoFire_3AE00(uint16_t* a1);
-int CreateLightningEffect_3AE80(uint16_t* a1);
-int CreateStealManaEffect_3AF00(uint16_t* a1);
-int CreateDuelEffect_3AF80(uint16_t* a1);
-int CreateTerrainRaiseStep_3B000(uint16_t* a1);
-int CreateClass10Type28_3B060(uint16_t* a1);
-Type_AE400_29795* CreateClass10Type30_3B0C0(axis_3d* position);
-int CreateClass10Type29_3B120(uint16_t* a1);
-int CreateClass10Type32_3B180(uint16_t* a1);
-int CreateClass10Type31_3B1D0(uint16_t* a1);
-int CreateClass10Type51_3B230(uint16_t* a1);
-int CreateClass10Type50_3B2A0(uint16_t* a1);
+int InitEffectFireColumn_3AE00(uint16_t* a1);
+int InitEffectLightning_3AE80(uint16_t* a1);
+int InitEffectStealMana_3AF00(uint16_t* a1);
+int InitEffectRubberBand_3AF80(uint16_t* a1);
+int InitEffectWallSection_3B000(uint16_t* a1);
+int InitEffectWallNode_3B060(uint16_t* a1);
+Type_AE400_29795* InitEffectPath_3B0C0(axis_3d* position);
+int InitEffectPathNode_3B120(uint16_t* a1);
+int InitEffectCanyon_3B180(uint16_t* a1);
+int InitEffectCanyonNode_3B1D0(uint16_t* a1);
+int InitEffectRidge_3B230(uint16_t* a1);
+int InitEffectRidgeNode_3B2A0(uint16_t* a1);
 int InitEffectTeleport_3B300(uint16_t* a1);
 int InitEffectCircleBall_3B3D0(uint16_t* a1);
 int InitEffectSkeleton_3B3E0(uint16_t* a1);
@@ -910,7 +910,7 @@ char SaveMapState_3E8C0_3EC00(__int16 a1);
 char MapStateFileExists_3E980(__int16 a1);
 void TapePackets_3E9D0_3ED10(char a1[10]);
 _BYTE *CloseTape_3EC50_3EF90();
-int access_3EC80_3EFC0(char* a1);
+int FileExist_3EC80_3EFC0(char* a1);
 void SearchDrive_3EC90_3EFD0(uint8_t diskChar, char* dir1, char* dir2);
 int LoadFileAt_3EEA0_3F1E0(char* path, uint8_t* buffer);
 int FileLengthsAreDifferent_3EF20_3F260();
@@ -980,11 +980,11 @@ int sub_42730_42A70(int a1, int a2);
 int sub_427A0(int a1, int a2);
 int sub_42860(int a1);
 void NETAbort_428B0_42BF0();
-int sub_42930(_BYTE *a1, char *a2, unsigned __int8 a3);
+int NETAdd_42930(_BYTE *a1, char *a2, unsigned __int8 a3);
 int NETCall_42A00_42D40(__int16 a1);
 int NETCancel_42C70_42FB0(__int16 a1);
 int NETCheckBios_42CF0_43030();
-int sub_42D40(_BYTE *a1, char *a2);
+int NETDelete_42D40(_BYTE *a1, char *a2);
 int NETHangUp_42DE0(_BYTE *a1);
 int NETListen_42E10(__int16 a1);
 int NetReceive_42F30(unsigned int a1, void *a2);
@@ -1011,8 +1011,8 @@ void SetupHost_44730_44A70();
 void sub_44840_44B80();
 int MakeupPlayerPerformance_448E0_44C20();
 void SetPlayerPalette_44BE0_44F20(Type_AE400_29795* a1, char a2);
-signed int sub_44C10_44F50(int a1);
-void sub_44C90_44FD0(Type_AE400_29795* event);
+signed int PlayerFireLog_44C10_44F50(int a1);
+void PlayerMarketLog_44C90_44FD0(Type_AE400_29795* event);
 void SetupPlayer_44D30_45070(TypeStrAE400_13323* a1, Type_AE400_29795* event);
 int PlayerMoveTo_45410_45750(Type_AE400_29795* a1);
 void MovePlayer_455D0_45910(Type_AE400_29795* a1);
@@ -1138,19 +1138,19 @@ int ResetTargetActualZpos_524E0_52820(int a1);
 int SetShotDestinationAngles_52500_52840(_WORD *a1, int a2);
 int TrackShotToTarget_52550_52890(int a1, int a2);
 __int16 TrackShotToTargetCastle_52610_52950(int a1, int a2);
-char sub_526C0_52A00(int a1, unsigned int a2, unsigned int a3);
-char UpdateMissile_52770_52AB0(int a1);
+char CountShot_526C0_52A00(int a1, unsigned int a2, unsigned int a3);
+char FnShotGeneric_52770_52AB0(int a1);
 void FnShotFireball_52B30_52E70(int a1);
-char PossessionMissileTick_52ED0_53210(int a1);
-char MissileTick_53060(int a1);
+char FnShotPocession_52ED0_53210(int a1);
+char FnShotEarthquake_53060(int a1);
 char FnShotMeteor_53070_533B0(int a1);
-char DuelMissileTick_530B0(int a1);
-char StealManaMissileTick_530C0_53400(int a1);
+char FnShotRubberBand_530B0(int a1);
+char FnShotStealMana_530C0_53400(int a1);
 char FnShotPreGeneric_534C0_53800(int a1);
 __int16 FnShotLightning_535E0_53920(unsigned int a1);
 void FnShotCastle_53980_53CC0(int a1);
 char FnFirstStageShot_53B50_53E90(int a1);
-char LightningStormMissileTick_53DC0_54100(int a1);
+char FnShotAlliance_53DC0_54100(int a1);
 void FnShotArrow_54180_544D0(int a1);
 void sub_54290_545E0(int a1);
 char ManaMagnetMissileTick_542B0_54640(int a1);
@@ -1176,33 +1176,33 @@ int AdjustMana_55E80_563B0(int a1, int a2);
 int CastFireball_56090_565C0(int a1);
 void FnSpellHeal_56270_567A0(int a1);
 void FnSpellSpeedUp_56380_568B0(int a1);
-int PossessionSpellTick_56510_56A40(int a1);
+int FnSpellPocession_56510_56A40(int a1);
 int FnSpellShield_566C0(int a1);
 void FnSpellBeyondSight_56730(int a1);
-int CastEarthquake_567A0_56CD0(int a1);
-int CastMeteor_56950_56E80(int a1);
-int CastVolcano_56AF0_57020(int a1);
-int CastCrater_56CA0_571D0(int a1);
+int FnSpellEarthquake_567A0_56CD0(int a1);
+int FnSpellMeteor_56950_56E80(int a1);
+int FnSpellVolcano_56AF0_57020(int a1);
+int FnSpellCrater_56CA0_571D0(int a1);
 void FnSpellTeleport_56E50_57380(int a1);
-int CastDuel_57040_57570(int a1);
+int FnSpellRubberBand_57040_57570(int a1);
 void FnSpellInvisable_571B0_576E0(int a1);
-int CastStealMana_57250_57780(int a1);
+int FnSpellStealMana_57250_57780(int a1);
 int FnSpellRebound_573F0_57920(int a1);
-int CastLightning_57470_579A0(int a1);
+int FnSpellLightning_57470_579A0(int a1);
 void FnSpellCastle_57610_57B40(int a1);
 void FnSpellSkeleton_57800_57D30(int a1);
-int CastLightningStorm_579D0_57F00(int a1);
-int CastManaMagnet_57B80_580B0(int a1);
-int CastWallOfFire_57D40_58270(int a1);
-void CastReverseSpeed_57F00_58410(int a1);
+int FnSpellAlliance_579D0_57F00(int a1);
+int FnSpellTeleportCastle_57B80_580B0(int a1);
+int FnSpellExtra1_57D40_58270(int a1);
+void FnSpellExtra2_57F00_58410(int a1);
 int FnSpellExtra3_580A0_585B0(int a1);
 int CastRapidFireball_58240_58750(int a1);
 void DrawColorSprite_58768_58C78(__int16 a1, __int16 a2, TypeTab* a3, unsigned __int8 a4);
 void OpenTmapDataFile_587E0_58CF0();
 int LoadTmapAt_58860_58D70(unsigned __int16 a1, uint8_t* a2);
-char sub_58910_58E20(unsigned __int16 a1);
-char sub_58A00_58F10(unsigned __int16 a1);
-int GetSumaSpriteSizes_58AD0_58FE0(unsigned __int16 a1);
+char RemoveTmapGroupFromHeap_58910_58E20(unsigned __int16 a1);
+char RemoveTmapGroupFromHeapEvenPermanent_58A00_58F10(unsigned __int16 a1);
+int TmapGroupSize_58AD0_58FE0(unsigned __int16 a1);
 void AddTmapGroupToHeap_58B30_59040(unsigned __int16 a1);
 int HeapFree_58C30_59140(unsigned int a1);
 void SetupSspriteManager_58E70_59380();
@@ -1229,14 +1229,14 @@ void Switch01Tick_59AB0_59FC0(uint16_t* a1);
 void Switch02Tick_59AE0_59FF0(uint16_t* a1);
 void Switch03Tick_59B30_5A040(uint16_t* a1);
 int FnSwitchOnVictory_59B80_5A090(uint16_t* a1);
-void Switch05Tick_59C40_5A150(uint16_t* a1);
-int Switch06Tick_59C70_5A180(uint16_t* a1);
-void Switch07Tick_59CA0_5A1B0(uint16_t* a1);
-void Switch08Tick_59CF0_5A200(uint16_t* a1);
-void Switch09Tick_59D40_5A250(uint16_t* a1);
-int Switch10Tick_59D70_5A280(uint16_t* a1);
-void Switch11Tick_59DA0_5A2B0(uint16_t* a1);
-void Switch12Tick_59DF0_5A300(uint16_t* a1);
+void FnSwitchDeathInside_59C40_5A150(uint16_t* a1);
+int FnSwitchDeathOutside_59C70_5A180(uint16_t* a1);
+void FnSwitchDeathInsideRe_59CA0_5A1B0(uint16_t* a1);
+void FnSwitchDeathOutsideRe_59CF0_5A200(uint16_t* a1);
+void FnSwitchObviousInside_59D40_5A250(uint16_t* a1);
+int FnSwitchObviousOutside_59D70_5A280(uint16_t* a1);
+void FnSwitchObviousInsideRe_59DA0_5A2B0(uint16_t* a1);
+void FnSwitchObviousOutsideRe_59DF0_5A300(uint16_t* a1);
 void SwitchOnCreature_59E40_5A350(int a1, int a2);
 void Switch13Tick_59F60_5A470(uint16_t* a1);
 void Switch14Tick_59F70_5A480(uint16_t* a1);
@@ -1270,9 +1270,9 @@ void VersionRequested_5A560_5AA70();
 void DrawStartGameTexts_5ACA0_5B1B0();
 void SetupPrint_5AD10_5B220(char* text);
 int SenseStatus_5AD30_5B240();
-int sub_5ADB0_5B2C0(int a1, int32_t* a2, char* a3);
-int sub_5AE30_5B340(int a1, char *a2);
-int sub_5AEB0_5B3C0(int a1, int32_t* a2, char* a3);
+int SenseGetConfiguration_5ADB0_5B2C0(int a1, int32_t* a2, char* a3);
+int SenseSetConfiguration_5AE30_5B340(int a1, char *a2);
+int SenseReport_5AEB0_5B3C0(int a1, int32_t* a2, char* a3);
 int SetupVFX1_5AF50_5B460();
 int GetVFXPackets_5B210();
 int VFXSetZero_5B2B0();
@@ -1334,7 +1334,7 @@ int SosTIMERUnInitSystem_5D948();
 int SosTIMERRegisterEvent_5D97B(unsigned int a1, int a2, __int16 a3, unsigned int a4);
 int SosTIMERAlterEventRate_5DB1D(unsigned int a1, unsigned int a2);
 int SosTIMERRemoveEvent_5DC91(int a1);
-int sub_5DE40(int a1);
+int SosTIMERGetEventRate_5DE40(int a1);
 int SosTIMERSetRate_5DE63(int a1);
 int SosTIMERHandler_5DE91(int a1, int a2, int a3);
 int SosTIMEROldHandler_5DF4B(int a1, int a2, int a3);
@@ -1358,7 +1358,7 @@ void sub_5F924();
 void sub_5F935();
 void sub_5FD67();
 int SosMIDIInitSystem_60199(int a1, unsigned __int16 a2);
-int sub_60335();
+int SosMIDIUnInitSystem_60335();
 int SosMIDIInitDriver_6035F(unsigned int a1, unsigned int a2, int a3, int a4, int a5, unsigned int a6);
 int SosMIDIUnInitDriver_6080C(unsigned int a1, int a2);
 int SosMIDIResetDriver_6091D(int a1);
@@ -1444,7 +1444,7 @@ void sub_64425();
 void sub_64436();
 void sub_645FB();
 int SosDIGIInitSystem_647C0(int a1, unsigned __int16 a2);
-int sub_6481C();
+int SosDIGIUnInitSystem_6481C();
 // int SosDIGIInitDriver_64846_64D56(int a1, int a2, unsigned int a3, unsigned int a4, int a5, unsigned int a6, int a7, unsigned int a8);
 int SosDIGIUnInitDriver_64F78(unsigned int a1, int a2, int a3);
 int sub_650FF_6560F(__int16 a1, int a2, unsigned int a3, _DWORD *a4);
@@ -1508,11 +1508,11 @@ int SosMAKEProtectedPtr_67582();
 __int16 sub_675C8(int a1, _DWORD *a2);
 int SosDetDRVGetCapsInfo_6765C_67B6C(const void *a1, int (*a2)(_DWORD), char a3, __int16 a4, char *a5, __int16 a6);
 // int SosDRVGetCapsPtr_676B0(int a1, int (*a2)(_DWORD), char a3, __int16 a4, int a5, __int16 a6);
-int sub_676E5(int (*a1)(_DWORD));
-int sub_67710(int (*a1)(_DWORD));
+int SosDRVStop_676E5(int (*a1)(_DWORD));
+int SosDetDRVExist_67710(int (*a1)(_DWORD));
 __int16 SosDetDRVGetSettings_6773B(int (*a1)(_DWORD));
 int SosDetDRVVerifySettings_67780(int (*a1)(_DWORD));
-int sub_677B8(int (*a1)(_DWORD));
+int SosDRVUnInit_677B8(int (*a1)(_DWORD));
 __int16 SosDRVGetFillInfo_677E3_67CF3(int a1, void (*a2)(_DWORD), char a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10);
 int SosDRVInit_67845(int (*a1)(_DWORD));
 int SosDRVStart_6787E(int (*a1)(_DWORD));
@@ -1523,9 +1523,9 @@ __int16 SosDIGIUnInitForWindows_67944();
 void sub_6797C();
 int *sub_6798D();
 int CallbackSendData_679AE(int a1, unsigned __int16 a2, int a3, int a4);
-int sub_679DE();
-int sub_679F7();
-int sub_67A10();
+int CallbackInit_679DE();
+int CallbackUnInit_679F7();
+int CallbackReset_67A10();
 int CallbackSetInstrumentData_67A29(int (*a1)(_DWORD, _DWORD, _DWORD, _DWORD), __int16 a2);
 void sub_67A53();
 void sub_67A64();
@@ -1533,13 +1533,13 @@ int *sub_67A75();
 int DigiSendData_67A96(unsigned int a1, int a2, int a3, int a4);
 // int DigiInit_67D9D(int a1, int a2, unsigned int a3, int a4, int a5);
 int DigiUnInit_67F1C(int a1, int a2, int a3);
-int sub_67F9A();
+int DigiReset_67F9A();
 int DigiSetInstrumentData_67FB3(int a1, __int16 a2, int a3, int a4);
 int DigiSampleCallback_6813F(int a1, int a2, int a3);
 void sub_6815E();
 void sub_6816F();
 int DigiQueueInit_68180(int a1, int a2);
-void sub_681F6();
+void DigiQueueUnInit_681F6();
 int DigiQueueAddItem_68207(int a1, int a2, __int16 a3);
 int DigiQueueGetItem_682CB(int a1);
 int DigiQueueDeleteItem_68365(int a1, int a2);
@@ -1595,8 +1595,8 @@ void sub_69ECB();
 void sub_69EDC();
 int FmSendData_69EED(unsigned int a1, __int16 a2, int a3, int a4);
 int FmInit_69F1C(int a1, int a2, int a3, int a4);
-int sub_69F57();
-int sub_69F75();
+int FmUnInit_69F57();
+int FmReset_69F75();
 int FmSetInstrumentData_69F93(int a1, __int16 a2, int a3, int a4);
 void sub_69FC2();
 void sub_69FD3();
@@ -3478,14 +3478,14 @@ Type_254A34 str_254B84[] = {
 { 0x002548F4, 0x0001, PORT_FN(InitPlayerComputerFlyer_378A0_37C60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0002, PORT_FN(InitPlayerCastle_37920_37CE0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0003, PORT_FN(InitPlayerBalloon_37A00_37DC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(SetPlayerStart0_37720_37AE0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(SetPlayerStart1_37740_37B00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, PORT_FN(SetPlayerStart2_37760_37B20, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, PORT_FN(SetPlayerStart3_37780_37B40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0008, PORT_FN(SetPlayerStart4_377A0_37B60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0009, PORT_FN(SetPlayerStart5_377C0_37B80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, PORT_FN(SetPlayerStart6_377E0_37BA0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000B, PORT_FN(SetPlayerStart7_37800_37BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(InitPlayerFlyerStart1_37720_37AE0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(InitPlayerFlyerStart2_37740_37B00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, PORT_FN(InitPlayerFlyerStart3_37760_37B20, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, PORT_FN(InitPlayerFlyerStart4_37780_37B40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0008, PORT_FN(InitPlayerFlyerStart5_377A0_37B60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0009, PORT_FN(InitPlayerFlyerStart6_377C0_37B80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, PORT_FN(InitPlayerFlyerStart7_377E0_37BA0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000B, PORT_FN(InitPlayerFlyerStart8_37800_37BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_254DBC[] = {//broken data in original
@@ -3548,15 +3548,15 @@ Type_254A34 str_255478[] = {
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_2555A0[] = {
-{ 0x002548F4, 0x0000, PORT_FN(Placeholder6_0_39800, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(Placeholder6_1_39820, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(InitFamiliarRaven_39800, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(InitFamiliarSprite_39820, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_255620[] = {
-{ 0x002548F4, 0x0000, PORT_FN(Placeholder7_0_39840, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(Placeholder7_1_39860, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(Placeholder7_2_39880, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(Placeholder7_3_398A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(InitWeatherTornado_39840, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(InitWeatherRainCloud_39860, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(InitWeatherThunderCloud_39880, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(InitWeatherThermals_398A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0004, PORT_FN(InitWeatherWind_398C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
@@ -3612,20 +3612,20 @@ Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x0010, PORT_FN(InitEffectSummonFire_3ACC0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0011, PORT_FN(InitEffectMeteor_3AC70, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0012, PORT_FN(InitEffectVolcanoAfterMath_3ADB0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0013, PORT_FN(CreateVolcanoFire_3AE00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0013, PORT_FN(InitEffectFireColumn_3AE00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0014, PORT_FN(NullConstructor_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0015, PORT_FN(NullConstructor_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0016, PORT_FN(NullConstructor_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0017, PORT_FN(CreateLightningEffect_3AE80, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0017, PORT_FN(InitEffectLightning_3AE80, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0018, PORT_FN(NullConstructor_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0019, PORT_FN(CreateStealManaEffect_3AF00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x001A, PORT_FN(CreateDuelEffect_3AF80, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x001B, PORT_FN(CreateTerrainRaiseStep_3B000, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x001C, PORT_FN(CreateClass10Type28_3B060, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x001D, PORT_FN(CreateClass10Type29_3B120, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x001E, (Type_AE400_29795 * (*)(axis_3d*))CreateClass10Type30_3B0C0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001F, PORT_FN(CreateClass10Type31_3B1D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0020, PORT_FN(CreateClass10Type32_3B180, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0019, PORT_FN(InitEffectStealMana_3AF00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001A, PORT_FN(InitEffectRubberBand_3AF80, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001B, PORT_FN(InitEffectWallSection_3B000, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001C, PORT_FN(InitEffectWallNode_3B060, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001D, PORT_FN(InitEffectPathNode_3B120, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001E, (Type_AE400_29795 * (*)(axis_3d*))InitEffectPath_3B0C0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001F, PORT_FN(InitEffectCanyonNode_3B1D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0020, PORT_FN(InitEffectCanyon_3B180, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0021, PORT_FN(CreateClass10Type33_3B4D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0022, PORT_FN(InitEffectTeleport_3B300, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0023, PORT_FN(InitEffectCircleBall_3B3D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
@@ -3643,8 +3643,8 @@ Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0032, PORT_FN(CreateClass10Type50_3B2A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0033, PORT_FN(CreateClass10Type51_3B230, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0032, PORT_FN(InitEffectRidgeNode_3B2A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0033, PORT_FN(InitEffectRidge_3B230, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0034, PORT_FN(CreateCrabSpawnTimer_3B860, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0035, PORT_FN(CreateWallOfFireEffect_3B8E0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0036, PORT_FN(InitEffectExtra2_3B970, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
@@ -3980,39 +3980,39 @@ Type_254A34x str_255674[] = {
 
 Type_254A34x str_25573C[] = {
 { 0x002548F4,0x0000,PORT_FN(FnShotFireball_52B30_52E70, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4,0x0001,PORT_FN(PossessionMissileTick_52ED0_53210, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0002,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0001,PORT_FN(FnShotPocession_52ED0_53210, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0002,PORT_FN(FnShotEarthquake_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0003,PORT_FN(FnShotMeteor_53070_533B0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0004,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0005,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0006,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0007,PORT_FN(DuelMissileTick_530B0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0008,PORT_FN(StealManaMissileTick_530C0_53400, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0004,PORT_FN(FnShotEarthquake_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0005,PORT_FN(FnShotEarthquake_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0006,PORT_FN(FnShotEarthquake_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0007,PORT_FN(FnShotRubberBand_530B0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0008,PORT_FN(FnShotStealMana_530C0_53400, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0009,PORT_FN(FnShotLightning_535E0_53920, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000A,PORT_FN(FnShotCastle_53980_53CC0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000B,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000C,PORT_FN(LightningStormMissileTick_53DC0_54100, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000B,PORT_FN(FnShotEarthquake_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000C,PORT_FN(FnShotAlliance_53DC0_54100, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000D,PORT_FN(FnShotArrow_54180_544D0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000E,PORT_FN(sub_54290_545E0, void(Type_AE400_29795*)),0x0001,0x0000 }, // PORT: see below
-{ 0x002548F4,0x000F,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0010,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0011,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000F,PORT_FN(FnShotEarthquake_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0010,PORT_FN(FnShotEarthquake_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0011,PORT_FN(FnShotEarthquake_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0012,PORT_FN(ManaMagnetMissileTick_542B0_54640, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0013,PORT_FN(FnShotExtra3_54480_54810, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0014,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 }, // PORT: entries 14-20 were missing (sub_542B0/sub_54480 were unreachable)
+{ 0x002548F4,0x0014,PORT_FN(FnShotEarthquake_53060, void(Type_AE400_29795*)),0x0001,0x0000 }, // PORT: entries 14-20 were missing (sub_542B0/sub_54480 were unreachable)
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 }
 };
 
 Type_254A34x str_255998[] = {
 { 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))FnEffectExplosion_24F60,0x0001,0x0000 },
 { 0x002548F4,0x0001,PORT_FN(FnEffectBigExplosion_25130, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0002,PORT_FN(SpeedEffectTick_252B0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0003,PORT_FN(Class10Type3Tick_253F0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0002,PORT_FN(FnEffectDust_252B0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0003,PORT_FN(FnEffectBlood_253F0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))EmptyStateHandler_25980,0x0001,0x0000 },
 { 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))FnEffectSplash_25410,0x0001,0x0000 },
 { 0x002548F4,0x0006,PORT_FN(FnEffectFire_252D0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0007,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0008,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0007,PORT_FN(FnEffectFreeze_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0008,PORT_FN(FnEffectFreeze_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))FnEffectVolcano_25470,0x0001,0x0000 },
 { 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))FnEffectMiniCrater_25570,0x0001,0x0000 },
 { 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))FnEffectCrater_25670,0x0001,0x0000 },
@@ -4021,7 +4021,7 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x000E,PORT_FN(DarkSmokeTick_258A0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))FnEffectEarthquake_25990,0x0001,0x0000 },
 { 0x002548F4,0x0010,PORT_FN(FnEffectSummonFire_25A60, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))ExplosionRingTick_25CE0,0x0001,0x0000 },
+{ 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))FnEffectMeteor_25CE0,0x0001,0x0000 },
 { 0x002548F4,0x0012,PORT_FN(FnEffectVolcanoAfterMath_25EC0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0013,(void (*)(Type_AE400_29795*))FnEffectFireColumn_26140,0x0001,0x0000 },
 { 0x002548F4,0x0014,(void (*)(Type_AE400_29795*))EmptyStateHandler_262C0,0x0001,0x0000 },
@@ -4034,10 +4034,10 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x001B,(void (*)(Type_AE400_29795*))FnEffectWallSectionN_26670,0x0001,0x0000 },
 { 0x002548F4,0x001C,PORT_FN(FnEffectWallSectionS_26560, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x001D,(void (*)(Type_AE400_29795*))FnEffectWallSectionE_26760,0x0001,0x0000 },
-{ 0x002548F4,0x001E,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x001F,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x001E,PORT_FN(FnEffectFreeze_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x001F,PORT_FN(FnEffectFreeze_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0020,(void (*)(Type_AE400_29795*))FnEffectPath_26890,0x0001,0x0000 },
-{ 0x002548F4,0x0021,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0021,PORT_FN(FnEffectFreeze_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0022,(void (*)(Type_AE400_29795*))FnEffectCanyon_26920,0x0001,0x0000 },
 { 0x002548F4,0x0023,PORT_FN(FnEffectBlindness_26CE0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0024,PORT_FN(FnEffectTeleport_26A60, void(Type_AE400_29795*)),0x0001,0x0000 },
@@ -4058,11 +4058,11 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x0033,(void (*)(Type_AE400_29795*))FnEffectTweenBuilding_27D30,0x0001,0x0000 },
 { 0x002548F4,0x0034,FnEffectStandBuilding_28DC0,0x0001,0x0000 },
 { 0x002548F4,0x0035,PORT_FN(FnEffectDestroyBuilding_28FE0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0036,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0036,PORT_FN(FnEffectFreeze_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0037,(void (*)(Type_AE400_29795*))FnEffectRidge_269A0,0x0001,0x0000 },
 { 0x002548F4,0x0038,(void (*)(Type_AE400_29795*))FnEffectCrabEgg_296A0,0x0001,0x0000 },
 { 0x002548F4,0x0039,PORT_FN(FnEffectCrabEggHatch_29700, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x003A,(void (*)(Type_AE400_29795*))WallOfFireEffectTick_29780,0x0001,0x0000 },
+{ 0x002548F4,0x003A,(void (*)(Type_AE400_29795*))FnEffectExtra1_29780,0x0001,0x0000 },
 { 0x002548F4,0x003B,PORT_FN(FnEffectExtra2_29920_29960, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x003C,(void (*)(Type_AE400_29795*))FnEffectExtra3_299D0_29A10,0x0001,0x0000 },
 { 0x002548F4,0x003D,(void (*)(Type_AE400_29795*))EmptyStateHandler_29B70,0x0001,0x0000 },
@@ -4074,14 +4074,14 @@ Type_254A34x str_256038[] = {
 { 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))Switch02Tick_59AE0_59FF0,0x0001,0x0000 },
 { 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))Switch03Tick_59B30_5A040,0x0001,0x0000 },
 { 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))FnSwitchOnVictory_59B80_5A090,0x0001,0x0000 },
-{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))Switch05Tick_59C40_5A150,0x0001,0x0000 },
-{ 0x002548F4,0x0006,(void (*)(Type_AE400_29795*))Switch06Tick_59C70_5A180,0x0001,0x0000 },
-{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))Switch07Tick_59CA0_5A1B0,0x0001,0x0000 },
-{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))Switch08Tick_59CF0_5A200,0x0001,0x0000 },
-{ 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))Switch09Tick_59D40_5A250,0x0001,0x0000 },
-{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))Switch10Tick_59D70_5A280,0x0001,0x0000 },
-{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))Switch11Tick_59DA0_5A2B0,0x0001,0x0000 },
-{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))Switch12Tick_59DF0_5A300,0x0001,0x0000 },
+{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))FnSwitchDeathInside_59C40_5A150,0x0001,0x0000 },
+{ 0x002548F4,0x0006,(void (*)(Type_AE400_29795*))FnSwitchDeathOutside_59C70_5A180,0x0001,0x0000 },
+{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))FnSwitchDeathInsideRe_59CA0_5A1B0,0x0001,0x0000 },
+{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))FnSwitchDeathOutsideRe_59CF0_5A200,0x0001,0x0000 },
+{ 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))FnSwitchObviousInside_59D40_5A250,0x0001,0x0000 },
+{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))FnSwitchObviousOutside_59D70_5A280,0x0001,0x0000 },
+{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))FnSwitchObviousInsideRe_59DA0_5A2B0,0x0001,0x0000 },
+{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))FnSwitchObviousOutsideRe_59DF0_5A300,0x0001,0x0000 },
 { 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))Switch13Tick_59F60_5A470,0x0001,0x0000 },
 { 0x002548F4,0x000E,(void (*)(Type_AE400_29795*))Switch14Tick_59F70_5A480,0x0001,0x0000 },
 { 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))Switch15Tick_59F80_5A490,0x0001,0x0000 },
@@ -4114,7 +4114,7 @@ Type_254A34x str_2563D8[] = {//2563D8
 { 0x002548F4,0x0006,PORT_FN(FnSpellSpeedUp_56380_568B0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250,0x0001,0x0000 },
 { 0x002548F4,0x0008,SpellJarSpawnTickWrapper_56260,0x0001,0x0000 },
-{ 0x002548F4,0x0009,PORT_FN(PossessionSpellTick_56510_56A40, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0009,PORT_FN(FnSpellPocession_56510_56A40, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250,0x0001,0x0000 },
 { 0x002548F4,0x000B,SpellJarSpawnTickWrapper_56260,0x0001,0x0000 },
 { 0x002548F4,0x000C,PORT_FN(FnSpellShield_566C0, void(Type_AE400_29795*)),0x0001,0x0000 },
@@ -4123,34 +4123,34 @@ Type_254A34x str_2563D8[] = {//2563D8
 { 0x002548F4, 0x000F, PORT_FN(FnSpellBeyondSight_56730, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0010, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0011, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0012, PORT_FN(CastEarthquake_567A0_56CD0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0012, PORT_FN(FnSpellEarthquake_567A0_56CD0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0013, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0014, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0015, PORT_FN(CastMeteor_56950_56E80, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0015, PORT_FN(FnSpellMeteor_56950_56E80, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0016, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0017, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0018, PORT_FN(CastVolcano_56AF0_57020, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0018, PORT_FN(FnSpellVolcano_56AF0_57020, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0019, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x001A, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001B, PORT_FN(CastCrater_56CA0_571D0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001B, PORT_FN(FnSpellCrater_56CA0_571D0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x001C, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x001D, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
 { 0x002548F4, 0x001E, PORT_FN(FnSpellTeleport_56E50_57380, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x001F, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0020, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0021, PORT_FN(CastDuel_57040_57570, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0021, PORT_FN(FnSpellRubberBand_57040_57570, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0022, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0023, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
 { 0x002548F4, 0x0024, PORT_FN(FnSpellInvisable_571B0_576E0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0025, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0026, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0027, PORT_FN(CastStealMana_57250_57780, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0027, PORT_FN(FnSpellStealMana_57250_57780, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0028, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0029, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
 { 0x002548F4, 0x002A, PORT_FN(FnSpellRebound_573F0_57920, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x002B, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x002C, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002D, PORT_FN(CastLightning_57470_579A0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x002D, PORT_FN(FnSpellLightning_57470_579A0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x002E, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x002F, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
 { 0x002548F4, 0x0030, PORT_FN(FnSpellCastle_57610_57B40, void(Type_AE400_29795*)), 0x0001, 0x0000 },
@@ -4159,16 +4159,16 @@ Type_254A34x str_2563D8[] = {//2563D8
 { 0x002548F4, 0x0033, PORT_FN(FnSpellSkeleton_57800_57D30, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0034, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0035, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0036, PORT_FN(CastLightningStorm_579D0_57F00, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0036, PORT_FN(FnSpellAlliance_579D0_57F00, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0037, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0038, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0039, PORT_FN(CastManaMagnet_57B80_580B0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0039, PORT_FN(FnSpellTeleportCastle_57B80_580B0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x003A, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x003B, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003C, PORT_FN(CastWallOfFire_57D40_58270, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x003C, PORT_FN(FnSpellExtra1_57D40_58270, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x003D, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x003E, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003F, PORT_FN(CastReverseSpeed_57F00_58410, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x003F, PORT_FN(FnSpellExtra2_57F00_58410, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0040, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
 { 0x002548F4, 0x0041, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
 { 0x002548F4, 0x0042, PORT_FN(FnSpellExtra3_580A0_585B0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
@@ -4210,9 +4210,9 @@ int NullConstructor_39A00(uint16_t* a1) { return 0; };
 /*int (*off_97D12[])(int) = {
 CreateExplosion_3A490, CreateClass10Type1_3A510, CreateSpeedEffect_3A570, CreateClass10Type3_3A5D0, CreateClass10Type4_3A640, CreateWaterSplash_3A6B0, CreateFire_3A730, CreateClass10Type7_3A7D0,
 CreateClass10Type8_3A870, CreateVolcanoEffect_3A8D0, CreateClass10Type10_3A930, CreateCraterEffect_3A9A0, CreatePossessionEffect_3AA10, InitEffectWhiteSmoke_3AAA0, InitEffectBlackSmoke_3AB40, InitEffectEarthquake_3ABE0,
-InitEffectSummonFire_3ACC0, InitEffectMeteor_3AC70, InitEffectVolcanoAfterMath_3ADB0, CreateVolcanoFire_3AE00, loc_39A00, loc_39A00, loc_39A00, CreateLightningEffect_3AE80,
-loc_39A00, CreateStealManaEffect_3AF00, CreateDuelEffect_3AF80, CreateTerrainRaiseStep_3B000, CreateClass10Type28_3B060, CreateClass10Type29_3B120, CreateClass10Type30_3B0C0, CreateClass10Type31_3B1D0,
-CreateClass10Type32_3B180, CreateClass10Type33_3B4D0, InitEffectTeleport_3B300, InitEffectCircleBall_3B3D0, InitEffectSkeleton_3B3E0 };*/
+InitEffectSummonFire_3ACC0, InitEffectMeteor_3AC70, InitEffectVolcanoAfterMath_3ADB0, InitEffectFireColumn_3AE00, loc_39A00, loc_39A00, loc_39A00, InitEffectLightning_3AE80,
+loc_39A00, InitEffectStealMana_3AF00, InitEffectRubberBand_3AF80, InitEffectWallSection_3B000, InitEffectWallNode_3B060, InitEffectPathNode_3B120, InitEffectPath_3B0C0, InitEffectCanyonNode_3B1D0,
+InitEffectCanyon_3B180, CreateClass10Type33_3B4D0, InitEffectTeleport_3B300, InitEffectCircleBall_3B3D0, InitEffectSkeleton_3B3E0 };*/
 #pragma pack (1)
 typedef struct {
     Type_AE400_29795*(*adress)(axis_3d*);
@@ -4243,20 +4243,20 @@ Type_97D12 off_97D12[] = {
 { PORT_FN(InitEffectSummonFire_3ACC0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 17 },
 { PORT_FN(InitEffectMeteor_3AC70, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 18 },
 { PORT_FN(InitEffectVolcanoAfterMath_3ADB0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 19 },
-{ PORT_FN(CreateVolcanoFire_3AE00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 20 },
+{ PORT_FN(InitEffectFireColumn_3AE00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 20 },
 { PORT_FN(NullConstructor_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 21 },
 { PORT_FN(NullConstructor_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 22 },
 { PORT_FN(NullConstructor_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 23 },
-{ PORT_FN(CreateLightningEffect_3AE80, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 24 },
+{ PORT_FN(InitEffectLightning_3AE80, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 24 },
 { PORT_FN(NullConstructor_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 25 },
-{ PORT_FN(CreateStealManaEffect_3AF00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 26 },
-{ PORT_FN(CreateDuelEffect_3AF80, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 27 },
-{ PORT_FN(CreateTerrainRaiseStep_3B000, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 28 },
-{ PORT_FN(CreateClass10Type28_3B060, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 29 },
-{ PORT_FN(CreateClass10Type29_3B120, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 30 },
-{ (Type_AE400_29795* (*)(axis_3d*))&CreateClass10Type30_3B0C0, 1, 0x002548F4, 31 },
-{ PORT_FN(CreateClass10Type31_3B1D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 32 },
-{ PORT_FN(CreateClass10Type32_3B180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 33 },
+{ PORT_FN(InitEffectStealMana_3AF00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 26 },
+{ PORT_FN(InitEffectRubberBand_3AF80, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 27 },
+{ PORT_FN(InitEffectWallSection_3B000, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 28 },
+{ PORT_FN(InitEffectWallNode_3B060, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 29 },
+{ PORT_FN(InitEffectPathNode_3B120, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 30 },
+{ (Type_AE400_29795* (*)(axis_3d*))&InitEffectPath_3B0C0, 1, 0x002548F4, 31 },
+{ PORT_FN(InitEffectCanyonNode_3B1D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 32 },
+{ PORT_FN(InitEffectCanyon_3B180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 33 },
 { PORT_FN(CreateClass10Type33_3B4D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 34 },
 { PORT_FN(InitEffectTeleport_3B300, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 35 },
 { PORT_FN(InitEffectCircleBall_3B3D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 36 },
@@ -4274,8 +4274,8 @@ Type_97D12 off_97D12[] = {
 { nullptr, 0, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 50 },
-{ PORT_FN(CreateClass10Type50_3B2A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 51 },
-{ PORT_FN(CreateClass10Type51_3B230, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 52 },
+{ PORT_FN(InitEffectRidgeNode_3B2A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 51 },
+{ PORT_FN(InitEffectRidge_3B230, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 52 },
 { PORT_FN(CreateCrabSpawnTimer_3B860, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 53 },
 { PORT_FN(CreateWallOfFireEffect_3B8E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 54 },
 { PORT_FN(InitEffectExtra2_3B970, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 55 },
@@ -4287,14 +4287,14 @@ Type_97D12 off_97D12[] = {
 { (Type_AE400_29795* (*)(axis_3d*))&Switch02Tick_59AE0_59FF0, 1, 0x002548F4, 3 },
 { (Type_AE400_29795* (*)(axis_3d*))&Switch03Tick_59B30_5A040, 1, 0x002548F4, 4 },
 { PORT_FN(FnSwitchOnVictory_59B80_5A090, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch05Tick_59C40_5A150, 1, 0x002548F4, 6 },
-{ PORT_FN(Switch06Tick_59C70_5A180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch07Tick_59CA0_5A1B0, 1, 0x002548F4, 8 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch08Tick_59CF0_5A200, 1, 0x002548F4, 9 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch09Tick_59D40_5A250, 1, 0x002548F4, 10 },
-{ PORT_FN(Switch10Tick_59D70_5A280, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch11Tick_59DA0_5A2B0, 1, 0x002548F4, 12 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch12Tick_59DF0_5A300, 1, 0x002548F4, 13 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchDeathInside_59C40_5A150, 1, 0x002548F4, 6 },
+{ PORT_FN(FnSwitchDeathOutside_59C70_5A180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchDeathInsideRe_59CA0_5A1B0, 1, 0x002548F4, 8 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchDeathOutsideRe_59CF0_5A200, 1, 0x002548F4, 9 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchObviousInside_59D40_5A250, 1, 0x002548F4, 10 },
+{ PORT_FN(FnSwitchObviousOutside_59D70_5A280, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchObviousInsideRe_59DA0_5A2B0, 1, 0x002548F4, 12 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchObviousOutsideRe_59DF0_5A300, 1, 0x002548F4, 13 },
 { (Type_AE400_29795* (*)(axis_3d*))&Switch13Tick_59F60_5A470, 1, 0x002548F4, 14 },
 { (Type_AE400_29795* (*)(axis_3d*))&Switch14Tick_59F70_5A480, 1, 0x002548F4, 15 },
 { (Type_AE400_29795* (*)(axis_3d*))&Switch15Tick_59F80_5A490, 1, 0x002548F4, 16 },
@@ -14170,7 +14170,7 @@ _DWORD settextposition(_DWORD a, _DWORD b) { return 0; };// weak
 
 //unsigned __int16 sub_2DCB0_2DCF0(int a1, int a2) { return 0; };
 //unsigned __int16 DrawSprite_2F170_2F1B0(int a1, int a2) { return 0; };
-//unsigned __int16 DrawSprite_2FC50_2FC90(int a1, int a2) { return 0; };
+//unsigned __int16 DoReflectMapWho_2FC50_2FC90(int a1, int a2) { return 0; };
 //unsigned __int16 sub_32B90_sub_32F80(int a1, int a2) { return 0; };
 //char CustomArea2_33800_33BF0(char a1, char a2, unsigned __int16 a3, unsigned __int8 a4) { return 0; };
 //__int16 CommandLineInterupter_34DD0_35190(__int16 a1, unsigned __int16 a2, int a3) { return 0; };
@@ -14257,8 +14257,8 @@ int SubtrackUntilZero(int x, int y)
     return result;
 }
 //void UpdateMouseEventData_8CB3A(uint32_t mouse_states, int32_t mouse_posx, int32_t mouse_posy)//26db3a
-/// Name is a guess (not in the Hidden Worlds linker map).
-void UpdateMouseEventData_5BE72_5C382(uint32_t mouse_states, int32_t mouse_posx, int32_t mouse_posy)
+/// Original name: MouseHandler256 (MOUSE.C), Hidden Worlds linker map (placed by function order between two matches).
+void MouseHandler256_5BE72_5C382(uint32_t mouse_states, int32_t mouse_posx, int32_t mouse_posy)
 {
     if (mouseInstalled_9AD98)
     {
@@ -14446,7 +14446,7 @@ void MouseEvents(uint32_t buttons, int x, int y)
         x *= 8;
         y *= 8;
     }
-    UpdateMouseEventData_5BE72_5C382(buttons, x, y);
+    MouseHandler256_5BE72_5C382(buttons, x, y);
 };
 
 //---------------------------------------
@@ -15765,7 +15765,8 @@ int Colide_11640(Type_AE400_29795* a1x, axis_3d* a2x, char a3)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_11760(axis_3d* a1x)
+/// Original name: terrain_type (COLIDE.C), Hidden Worlds linker map (placed by function order between two matches).
+int TerrainType_11760(axis_3d* a1x)
 {
   unsigned __int16 v1; // ax
 
@@ -15889,7 +15890,8 @@ bool OverlapThing_11950(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 }
 
 //----- (00011980) --------------------------------------------------------
-int sub_11980(int a1)
+/// Original name: colide_thing (COLIDE.C), Hidden Worlds linker map (placed by function order between two matches).
+int ColideThing_11980(int a1)
 {
   int v1; // edx
   int v2; // ebp
@@ -15934,7 +15936,8 @@ int sub_11980(int a1)
 // 10C1E0: using guessed type __int16 mapEntityIndex_10C1E0_10C1D0[7953];
 
 //----- (00011AC0) --------------------------------------------------------
-int sub_11AC0(_WORD *a1)
+/// Original name: pocession_colide_thing (COLIDE.C), Hidden Worlds linker map (placed by function order between two matches).
+int PocessionColideThing_11AC0(_WORD *a1)
 {
   int v1; // edx
   int v2; // ebp
@@ -15984,7 +15987,8 @@ int sub_11AC0(_WORD *a1)
 // 10C1E0: using guessed type __int16 mapEntityIndex_10C1E0_10C1D0[7953];
 
 //----- (00011C00) --------------------------------------------------------
-int sub_11C00(__int16 *a1)
+/// Original name: pocession_colide_thing2 (COLIDE.C), Hidden Worlds linker map (placed by function order between two matches).
+int PocessionColideThing2_11C00(__int16 *a1)
 {
   int v1; // edx
   int v2; // ebp
@@ -16028,7 +16032,8 @@ int sub_11C00(__int16 *a1)
 
 int counter_sub_11D10 = 0;
 //SYNCHRONIZED WITH REMC1
-Type_AE400_29795* sub_11D10(Type_AE400_29795* event)//1E2D10
+/// Original name: touching_thing (COLIDE.C), Hidden Worlds linker map (placed by function order between two matches).
+Type_AE400_29795* TouchingThing_11D10(Type_AE400_29795* event)//1E2D10
 {
   int v1; // edx
   int v2; // ebp
@@ -16787,7 +16792,7 @@ int FnPlayerComputerFlyer_13170(int a1)
       break;
     case 2:
     case 5:
-      AiNoopMode_138E0();
+      ActionRebuildMyCastle_138E0();
       result = ActionInitialise_136C0(a1);
       break;
     case 3:
@@ -16808,7 +16813,7 @@ int FnPlayerComputerFlyer_13170(int a1)
       break;
     case 8:
     case 9:
-      sub_13DC0(a1);
+      ActionAttackOpponentsFlyer_13DC0(a1);
       result = ActionInitialise_136C0(a1);
       break;
     case 0xB:
@@ -16820,7 +16825,7 @@ int FnPlayerComputerFlyer_13170(int a1)
       result = ActionInitialise_136C0(a1);
       break;
     case 0xD:
-      sub_13DC0(a1);
+      ActionAttackOpponentsFlyer_13DC0(a1);
       goto LABEL_13;
     default:
 LABEL_13:
@@ -17071,8 +17076,8 @@ bool ActionUpgradeMyCastle_13800(int a1)
 
 //----- (000138E0) --------------------------------------------------------
 /// AI modes 2 and 5: does nothing (returns 0).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int AiNoopMode_138E0()
+/// Original name: action_rebuild_my_castle (COMPUTER.C), Hidden Worlds linker map (placed by function order between two matches).
+int ActionRebuildMyCastle_138E0()
 {
   return 0;
 }
@@ -17214,7 +17219,7 @@ bool ActionCollectMana_13BA0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00013CA0) --------------------------------------------------------
-/// AI mode 7: approaches the target castle and casts attack spells at it (spell chosen by sub_16310).
+/// AI mode 7: approaches the target castle and casts attack spells at it (spell chosen by GetBestAttackCastleSpell_16310).
 /// Original name: action_attack_opponents_castle (COMPUTER.C), Hidden Worlds linker map.
 bool ActionAttackOpponentsCastle_13CA0(int a1)
 {
@@ -17235,7 +17240,7 @@ bool ActionAttackOpponentsCastle_13CA0(int a1)
       v3 = *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 526);
       if ( !(*(unsigned __int8 *)PTR(a1 + 63) % (64 - ((v3 - (__CFSHL__(v3 >> 31, 2) + 4 * (v3 >> 31))) >> 2))) )
       {
-        v4 = sub_16310((_DWORD *)PTR(a1));
+        v4 = GetBestAttackCastleSpell_16310((_DWORD *)PTR(a1));
         if ( v4 != -1 && UseSpell_155F0(a1, v4) )
           return 0;
         v5 = *(__int16 *)PTR(a1 + 76) - (*(__int16 *)PTR(v1 + 76) + 512);
@@ -17253,7 +17258,8 @@ bool ActionAttackOpponentsCastle_13CA0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00013DC0) --------------------------------------------------------
-bool sub_13DC0(int a1)
+/// Original name: action_attack_opponents_flyer (COMPUTER.C), Hidden Worlds linker map (placed by function order between two matches).
+bool ActionAttackOpponentsFlyer_13DC0(int a1)
 {
   return ActionAttackTarget_13DD0(a1);
 }
@@ -17275,7 +17281,7 @@ bool ActionAttackTarget_13DD0(int a1)
   *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v1 + 72));
   if ( !ComputerPlayersSpeed_15470(a1, v1, 3072, 4096) || *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 404) < 0 )
     return 1;
-  v3 = sub_16030(a1);
+  v3 = GetBestAttackSpell_16030(a1);
   if ( v3 == -1 || (v4 = v3, !AiSpellReady_15A00(a1, v3)) || !UseSpell_155F0(a1, v4) )
   {
     v5 = *(__int16 *)PTR(a1 + 76) - (*(__int16 *)PTR(v1 + 76) + 512);
@@ -18475,7 +18481,8 @@ unsigned int PlayerIsUsingSpell_16000(int a1, unsigned __int8 a2)
 }
 
 //----- (00016030) --------------------------------------------------------
-char sub_16030(int a1)
+/// Original name: get_best_attack_spell (COMPUTER.C), Hidden Worlds linker map (placed by function order between two matches).
+char GetBestAttackSpell_16030(int a1)
 {
   int v1; // eax
   int v2; // ecx
@@ -18575,7 +18582,8 @@ LABEL_51:
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00016310) --------------------------------------------------------
-char sub_16310(_DWORD *a1)
+/// Original name: get_best_attack_castle_spell (COMPUTER.C), Hidden Worlds linker map (placed by function order between two matches).
+char GetBestAttackCastleSpell_16310(_DWORD *a1)
 {
   int v1; // eax
   int v2; // ecx
@@ -20490,7 +20498,8 @@ LABEL_31:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_19D70(Type_AE400_29795* a1x, char a2)
+/// Original name: fn_creature_wander (CREATURE.C), Hidden Worlds linker map (placed by function order between two matches).
+void FnCreatureWander_19D70(Type_AE400_29795* a1x, char a2)
 {
   unsigned int v2; // ebp
   __int16 v3; // ax
@@ -21270,7 +21279,7 @@ void FnCreature00Stand_1B060(Type_AE400_29795* a1x)
 /// Original name: fn_creature_00_wander (CREAT_00.C), by the map's state convention (state 1 = 6*0+1); this name is listed in the map.
 void FnCreature00Wander_1B070(Type_AE400_29795* a1x)
 {
-  sub_19D70(a1x, 0);
+  FnCreatureWander_19D70(a1x, 0);
   BobAboveGround_1B120(a1x);
 }
 
@@ -21370,7 +21379,7 @@ void FnCreature01Wander_1B200(Type_AE400_29795* a1x)
   unsigned int v7; // edx
   unsigned int v8; // [esp+0h] [ebp-10h]
 
-  sub_19D70(a1x, 6);
+  FnCreatureWander_19D70(a1x, 6);
   //v1 = *(_DWORD *)(a1 + 156);
   result = a1x->var_u8_29858_63 / a1x->var_u32_29951_156->v_26;
   if ( !(a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26) )
@@ -21448,7 +21457,7 @@ void FnCreature02Stand_1B350(Type_AE400_29795* a1x)
 /// Original name: fn_creature_02_wander (CREAT_02.C), by the map's state convention (state 13 = 6*2+1); this name is listed in the map.
 void FnCreature02Wander_1B370(Type_AE400_29795* a1x)
 {
-  sub_19D70(a1x, 12);
+  FnCreatureWander_19D70(a1x, 12);
   if (a1x->var_u8_29865_70 == 14 )
   {
     PlayASample_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 13);
@@ -21533,7 +21542,7 @@ void FnCreature03Stand_1B500(Type_AE400_29795* a1x)
 /// Original name: fn_creature_03_wander (CREAT_03.C), by the map's state convention (state 19 = 6*3+1); this name is listed in the map.
 void FnCreature03Wander_1B510(Type_AE400_29795* a1x)
 {
-  sub_19D70(a1x, 18);
+  FnCreatureWander_19D70(a1x, 18);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -22282,7 +22291,7 @@ void FnCreature06Stand_1C490(Type_AE400_29795* a1x)
 /// Original name: fn_creature_06_wander (CREAT_06.C), by the map's state convention (state 37 = 6*6+1); this name is listed in the map.
 void FnCreature06Wander_1C4A0(Type_AE400_29795* a1x)
 {
-  sub_19D70(a1x, 36);
+  FnCreatureWander_19D70(a1x, 36);
   if (a1x->var_u8_29865_70 == 38 )
     PlayASample_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 37);
   a1x->actSpeed_29921_126 = 30;
@@ -22494,7 +22503,7 @@ void FnCreature07Wander_1C900(Type_AE400_29795* a1x)
     if ( v1 + v2 )
         a1x->actLife_29807_12 = a1x->maxLife_29803_8;
   }
-  sub_19D70(a1x, 42);
+  FnCreatureWander_19D70(a1x, 42);
   if (a1x->var_u8_29865_70 == 44 )
       a1x->var_u16_29821_26 = 1;
 }
@@ -23505,7 +23514,7 @@ void FnCreature10Stand_1DDD0(Type_AE400_29795* a1x)
 /// Original name: fn_creature_10_wander (CREAT_10.C), by the map's state convention (state 61 = 6*10+1); this name is listed in the map.
 void FnCreature10Wander_1DDE0(Type_AE400_29795* a1x)
 {
-  sub_19D70(a1x, 60);
+  FnCreatureWander_19D70(a1x, 60);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -25129,7 +25138,7 @@ LABEL_22:
   }
 LABEL_25:
   if (a1x->var_u8_29865_70 != 92 )
-    sub_20450(a1x);
+    CastleArcherEndAttack_20450(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -25172,7 +25181,8 @@ void CastleArcherBeginAttack_20410(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_20450(Type_AE400_29795* a1x)
+/// Original name: castle_archer_end_attack (CREAT_15.C), Hidden Worlds linker map (placed by function order between two matches).
+void CastleArcherEndAttack_20450(Type_AE400_29795* a1x)
 {
   a1x->actSpeed_29921_126 = a1x->actSpeed_29923_128;
   SetDrawThing_36FA0_37360(a1x, 0);
@@ -25313,7 +25323,7 @@ void FnCreature16Wander_20710(Type_AE400_29795* a1x)
   unsigned int v7; // edx
   unsigned int v8; // [esp+0h] [ebp-10h]
 
-  sub_19D70(a1x, 96);
+  FnCreatureWander_19D70(a1x, 96);
   if (a1x->var_u8_29865_70 == 97 )
   {
     //v1 = *(_DWORD *)(a1 + 156);
@@ -27450,7 +27460,7 @@ void FnEffectExplosion_24F60(Type_AE400_29795* a1x)
               if ( ((unsigned __int8)v5 < 6u || (unsigned __int8)v5 > 0x22u)
                 && (mapAngle_FC1E0_FC1D0[v10] & 7) != 1
                 && a1x->var_u32_29867_72.z - v3 <= 128
-                && (sub_11760(&a1x->var_u32_29867_72) & 1) == 0 )
+                && (TerrainType_11760(&a1x->var_u32_29867_72) & 1) == 0 )
               {
                 v6 = 9377 * a1x->rand_29799_4 + 9439;
                 a1x->rand_29799_4 = v6;
@@ -27543,8 +27553,8 @@ void FnEffectBigExplosion_25130(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of the speed effect (class 10 state 2), created by the Speed and Reverse Speed spells.
-/// Name is a guess (not in the Hidden Worlds linker map).
-void SpeedEffectTick_252B0(int a1)
+/// Original name: fn_effect_dust (EFFECT.C), Hidden Worlds linker map (placed by function order between two matches).
+void FnEffectDust_252B0(int a1)
 {
   int result; // eax
 
@@ -27573,7 +27583,7 @@ int FnEffectFire_252D0(int a1)
   *(_DWORD *)PTR(a1 + 12) = v1 - 1;
   if ( v1 < 0 )
     goto LABEL_11;
-  sub_44C10_44F50(a1);
+  PlayerFireLog_44C10_44F50(a1);
   if ( *(int *)PTR(a1 + 12) < 12 )
   {
     if ( *(__int16 *)PTR(a1 + 26) > 0 )
@@ -27620,16 +27630,16 @@ LABEL_11:
 
 //SYNCHRONIZED WITH REMC1
 /// State handler that removes its entity on the next tick (class 10 states 7, 8, 30, 31, 33, 54).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void RemoveSelfTick_253E0(int a1)
+/// Original name: fn_effect_freeze (EFFECT.C), Hidden Worlds linker map (placed by function order between two matches).
+void FnEffectFreeze_253E0(int a1)
 {
   DeleteThing_41E80_421C0((Type_AE400_29795*)PTR(a1));
 }
 
 //SYNCHRONIZED WITH REMC1
-/// TODO: rename when the entity is identified (class 10 type 3).
 /// Per-tick handler of class 10 state 3, the initial state of type 3.
-void Class10Type3Tick_253F0(int a1)
+/// Original name: fn_effect_blood (EFFECT.C), Hidden Worlds linker map (placed by function order between two matches).
+void FnEffectBlood_253F0(int a1)
 {
   int result; // eax
 
@@ -27705,7 +27715,7 @@ void FnEffectMiniCrater_25570(Type_AE400_29795* a1x)
 {
   unsigned int v1; // eax
 
-  if ( (sub_11760(&a1x->var_u32_29867_72) & 1) == 0 )
+  if ( (TerrainType_11760(&a1x->var_u32_29867_72) & 1) == 0 )
   {
     v1 = 9377 * a1x->rand_29799_4 + 9439;
     a1x->rand_29799_4 = v1;
@@ -27762,7 +27772,7 @@ void FnEffectCrater_25670(Type_AE400_29795* a1x)
       a1x->var_u16_29821_26++;
   v1 = a1x->actLife_29807_12;
   a1x->actLife_29807_12 = v1 - 1;
-  if ( v1 < 0 || (sub_11760(&a1x->var_u32_29867_72) & 1) != 0 )
+  if ( v1 < 0 || (TerrainType_11760(&a1x->var_u32_29867_72) & 1) != 0 )
   {
     DeleteThing_41E80_421C0(a1x);
   }
@@ -27921,7 +27931,7 @@ void FnEffectEarthquake_25990(Type_AE400_29795* a1x)
   int result; // eax
   unsigned int v4; // eax
 
-  if ( (sub_11760(&a1x->var_u32_29867_72) & 1) != 0 )
+  if ( (TerrainType_11760(&a1x->var_u32_29867_72) & 1) != 0 )
   {
       a1x->var_u16_29821_26++;
   }
@@ -28055,8 +28065,8 @@ void FnEffectSummonFire_25A60(int a1)
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of an expanding explosion ring (class 10 type 17): one 10/0 explosion per ring point per
 /// tick (docs/original-bugs.md #10).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void ExplosionRingTick_25CE0(Type_AE400_29795* a1x)
+/// Original name: fn_effect_meteor (EFFECT.C), Hidden Worlds linker map (placed by function order between two matches).
+void FnEffectMeteor_25CE0(Type_AE400_29795* a1x)
 {
   int v1; // eax
   __int16 result; // ax
@@ -28574,7 +28584,7 @@ void FnEffectCanyon_26920(Type_AE400_29795* a1x)
 
   v1 = a1x->actLife_29807_12;
   a1x->actLife_29807_12 = v1 - 1;
-  if (v1 < 0 || (sub_11760(&a1x->var_u32_29867_72) & 1) != 0)
+  if (v1 < 0 || (TerrainType_11760(&a1x->var_u32_29867_72) & 1) != 0)
   {
       DeleteThing_41E80_421C0(a1x);
       return;
@@ -28600,7 +28610,7 @@ void FnEffectRidge_269A0(Type_AE400_29795* a1x)
 
   v1 = a1x->actLife_29807_12;
   a1x->actLife_29807_12 = v1 - 1;
-  if (v1 < 0 || (sub_11760(&a1x->var_u32_29867_72) & 1) != 0)
+  if (v1 < 0 || (TerrainType_11760(&a1x->var_u32_29867_72) & 1) != 0)
   {
       DeleteThing_41E80_421C0(a1x);
       return;
@@ -29010,7 +29020,7 @@ void FnEffectManaBall_27030(Type_AE400_29795* event)//1F8030_
     MoveMapwho_41C70_41FB0(event, &word_AE454_AE444);
     if (tempV13 == word_AE454_AE444.z )
     {
-        Type_AE400_29795* tempV15 = sub_11D10(event);
+        Type_AE400_29795* tempV15 = TouchingThing_11D10(event);
       if (tempV15)
         JoinManaBalls_277D0(event, tempV15);
       SlopeDisplacement_41F50_42290(&event->var_u32_29867_72, &word_AE454_AE444);
@@ -30307,7 +30317,7 @@ void FnEffectStandBuilding_28DC0(Type_AE400_29795* event)
       }
     }
   }
-  sub_44C90_44FD0(event);
+  PlayerMarketLog_44C90_44FD0(event);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -30626,8 +30636,8 @@ void FnEffectCrabEggHatch_29700(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of the Wall of Fire spell's effect (class 10 state 58).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void WallOfFireEffectTick_29780(Type_AE400_29795* a1x)
+/// Original name: fn_effect_extra1 (EFFECT.C), Hidden Worlds linker map (placed by function order between two matches).
+void FnEffectExtra1_29780(Type_AE400_29795* a1x)
 {
   int v3_v4;
   Type_AE400_29795* v6_v7; // eax
@@ -32452,7 +32462,7 @@ LABEL_26:
                                 if (!*(_WORD*)PTR(v71 + 36))
                                     goto LABEL_85;
                             LABEL_84:
-                                DrawSprite_2FC50_2FC90((Type_BegBscreen*)PTR(v71));
+                                DoReflectMapWho_2FC50_2FC90((Type_BegBscreen*)PTR(v71));
                                 goto LABEL_85;
                             }
                             if (*(_WORD*)PTR(v71 + 36))
@@ -32535,7 +32545,7 @@ LABEL_26:
                             }
                             if (*(_WORD*)PTR(v84 + 36))
                                 LABEL_99:
-                            DrawSprite_2FC50_2FC90((Type_BegBscreen*)PTR(v84));
+                            DoReflectMapWho_2FC50_2FC90((Type_BegBscreen*)PTR(v84));
                         }
                         else if (*(_WORD*)PTR(v84 + 36))
                         {
@@ -33175,7 +33185,7 @@ LABEL_26:
                     }
                 }
                 if (*(_WORD*)PTR(v157 + 36))
-                    DrawSprite3D_2F170_2F1B0(/*5120,*/ (Type_BegBscreen*)PTR(v157));
+                    DoAsgMapWho_2F170_2F1B0(/*5120,*/ (Type_BegBscreen*)PTR(v157));
                 v149 = v157 + 44;
                 --v236;
             } while (v236);
@@ -33224,7 +33234,7 @@ LABEL_26:
                     }
                     if (*(_WORD*)PTR(v167 + 36))
                         //DrawSprite_2F170_2F1B0(5120, v167);
-                        DrawSprite3D_2F170_2F1B0((Type_BegBscreen*)PTR(v167));
+                        DoAsgMapWho_2F170_2F1B0((Type_BegBscreen*)PTR(v167));
                     v159 = v167 - 44;
                 } while (v159 >= v158);
             }
@@ -33643,7 +33653,7 @@ void DrawLandscape_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw, int posZ
 						}
 					}
 					if (tempBegBscreen[index62].haveBillboard_36)
-						DrawSprite_2FC50_2FC90(&tempBegBscreen[index62]);
+						DoReflectMapWho_2FC50_2FC90(&tempBegBscreen[index62]);
 					index62++;
 				}
 				//int indexv76 = textColumns * textRows - 2;
@@ -33700,7 +33710,7 @@ void DrawLandscape_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw, int posZ
 					}
 					if (tempBegBscreen[indexv76].haveBillboard_36)
 					{
-						DrawSprite_2FC50_2FC90(&tempBegBscreen[indexv76]);//fix it
+						DoReflectMapWho_2FC50_2FC90(&tempBegBscreen[indexv76]);//fix it
 					}
 					//indexv76--;
 				}
@@ -34237,7 +34247,7 @@ void DrawLandscape_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw, int posZ
 					}
 				}
 				if (tempBegBscreen[index149].haveBillboard_36)
-					DrawSprite3D_2F170_2F1B0(/*5120,*/ &tempBegBscreen[index149]);
+					DoAsgMapWho_2F170_2F1B0(/*5120,*/ &tempBegBscreen[index149]);
                 index149++;
 			}
 			if (index236)
@@ -34272,7 +34282,7 @@ void DrawLandscape_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw, int posZ
 						}
 					}
 					if (tempBegBscreen[index159].haveBillboard_36)
-						DrawSprite3D_2F170_2F1B0(/*5120,*/ &tempBegBscreen[index159]);
+						DoAsgMapWho_2F170_2F1B0(/*5120,*/ &tempBegBscreen[index159]);
 					//index158--;
 				} //while (index158 >= 100/*v158*/);//fix it
 			}
@@ -37086,8 +37096,8 @@ void DoMapWho_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Name is a guess (not in the Hidden Worlds linker map).
-void DrawSprite3D_2F170_2F1B0(/*int a1,*/ Type_BegBscreen* a2x)//200170_
+/// Original name: do_asg_map_who (ENGINE.C), Hidden Worlds linker map (placed by function order between two matches).
+void DoAsgMapWho_2F170_2F1B0(/*int a1,*/ Type_BegBscreen* a2x)//200170_
 {
 	//fix
 	Type_sub168_2_2* a1x = nullptr;
@@ -37368,8 +37378,8 @@ void DrawSprite3D_2F170_2F1B0(/*int a1,*/ Type_BegBscreen* a2x)//200170_
 int counter_2FC50_2FC90 = 0;
 int counter_2FC50_2FC90_2 = 0;
 //SYNCHRONIZED WITH REMC1
-/// Name is a guess (not in the Hidden Worlds linker map).
-void DrawSprite_2FC50_2FC90(Type_BegBscreen* a2x)//200C50_
+/// Original name: do_reflect_map_who (ENGINE.C), Hidden Worlds linker map (placed by function order between two matches).
+void DoReflectMapWho_2FC50_2FC90(Type_BegBscreen* a2x)//200C50_
 {
 	//fix
 	Type_sub168_2_2* a1x = nullptr;
@@ -42026,7 +42036,7 @@ void SetupSound_357C0_35B80()
       // PORT: with a sound driver present the game registers its 120 Hz tick with the HMI timer
       // service instead of reprogramming the PIT. That registration was missing, so the game clock
       // (timerTicks_AC5D4_AC5C4) never advanced with sound on and tick waits (info FMVs) hung forever.
-      PortTimer_Start(1193182 / 120, HmiTimerTick_357A0);
+      PortTimer_Start(1193182 / 120, AniSpeedTimer_357A0);
       byte_90AD5 = 1;
     }
     else
@@ -42063,8 +42073,8 @@ void SetupSound_357C0_35B80()
 //----- (000357A0) --------------------------------------------------------
 /// Game clock tick used when a sound driver is active: registered with the HMI timer service at
 /// 120 Hz (SetupSound_357C0_35B80) in place of the PIT ISR SystemCBfn_5A3E3. Original: `inc dword_AC5D4; retf`.
-/// Name is a guess (not in the Hidden Worlds linker map).
-void HmiTimerTick_357A0()
+/// Original name: ani_speed_timer (GAME.C), Hidden Worlds linker map (placed by function order between two matches).
+void AniSpeedTimer_357A0()
 {
   timerTicks_AC5D4_AC5C4++;
 }
@@ -43753,8 +43763,8 @@ int NumberOfFreeThings_37710_37AD0()
 //----- (00037720) --------------------------------------------------------
 /// Level record class 3 type 4: stores axis_3d a1 as player 0's wizard start position
 /// (playerStart_9177[0]).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int SetPlayerStart0_37720_37AE0(int a1)
+/// Original name: init_player_flyer_start1 (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitPlayerFlyerStart1_37720_37AE0(int a1)
 {
   int v1; // edi
   int result; // eax
@@ -43770,8 +43780,8 @@ int SetPlayerStart0_37720_37AE0(int a1)
 //----- (00037740) --------------------------------------------------------
 /// Level record class 3 type 5: stores axis_3d a1 as player 1's wizard start position
 /// (playerStart_9177[1]).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int SetPlayerStart1_37740_37B00(int a1)
+/// Original name: init_player_flyer_start2 (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitPlayerFlyerStart2_37740_37B00(int a1)
 {
   int v1; // edi
   int result; // eax
@@ -43787,8 +43797,8 @@ int SetPlayerStart1_37740_37B00(int a1)
 //----- (00037760) --------------------------------------------------------
 /// Level record class 3 type 6: stores axis_3d a1 as player 2's wizard start position
 /// (playerStart_9177[2]).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int SetPlayerStart2_37760_37B20(int a1)
+/// Original name: init_player_flyer_start3 (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitPlayerFlyerStart3_37760_37B20(int a1)
 {
   int v1; // edi
   int result; // eax
@@ -43804,8 +43814,8 @@ int SetPlayerStart2_37760_37B20(int a1)
 //----- (00037780) --------------------------------------------------------
 /// Level record class 3 type 7: stores axis_3d a1 as player 3's wizard start position
 /// (playerStart_9177[3]).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int SetPlayerStart3_37780_37B40(int a1)
+/// Original name: init_player_flyer_start4 (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitPlayerFlyerStart4_37780_37B40(int a1)
 {
   int v1; // edi
   int result; // eax
@@ -43821,8 +43831,8 @@ int SetPlayerStart3_37780_37B40(int a1)
 //----- (000377A0) --------------------------------------------------------
 /// Level record class 3 type 8: stores axis_3d a1 as player 4's wizard start position
 /// (playerStart_9177[4]).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int SetPlayerStart4_377A0_37B60(int a1)
+/// Original name: init_player_flyer_start5 (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitPlayerFlyerStart5_377A0_37B60(int a1)
 {
   int v1; // edi
   int result; // eax
@@ -43838,8 +43848,8 @@ int SetPlayerStart4_377A0_37B60(int a1)
 //----- (000377C0) --------------------------------------------------------
 /// Level record class 3 type 9: stores axis_3d a1 as player 5's wizard start position
 /// (playerStart_9177[5]).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int SetPlayerStart5_377C0_37B80(int a1)
+/// Original name: init_player_flyer_start6 (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitPlayerFlyerStart6_377C0_37B80(int a1)
 {
   int v1; // edi
   int result; // eax
@@ -43855,8 +43865,8 @@ int SetPlayerStart5_377C0_37B80(int a1)
 //----- (000377E0) --------------------------------------------------------
 /// Level record class 3 type 10: stores axis_3d a1 as player 6's wizard start position
 /// (playerStart_9177[6]).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int SetPlayerStart6_377E0_37BA0(int a1)
+/// Original name: init_player_flyer_start7 (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitPlayerFlyerStart7_377E0_37BA0(int a1)
 {
   int v1; // edi
   int result; // eax
@@ -43872,8 +43882,8 @@ int SetPlayerStart6_377E0_37BA0(int a1)
 //----- (00037800) --------------------------------------------------------
 /// Level record class 3 type 11: stores axis_3d a1 as player 7's wizard start position
 /// (playerStart_9177[7]).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int SetPlayerStart7_37800_37BC0(int a1)
+/// Original name: init_player_flyer_start8 (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitPlayerFlyerStart8_37800_37BC0(int a1)
 {
   int v1; // edi
   int result; // eax
@@ -45485,8 +45495,8 @@ int InitCreature16_396E0(int a1)
 
 //----- (00039800) --------------------------------------------------------
 /// Placeholder constructor (class 6 type 0): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder6_0_39800(int a1)
+/// Original name: init_familiar_raven (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitFamiliarRaven_39800(int a1)
 {
   int v0; // eax
 
@@ -45498,8 +45508,8 @@ int Placeholder6_0_39800(int a1)
 
 //----- (00039820) --------------------------------------------------------
 /// Placeholder constructor (class 6 type 1): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder6_1_39820(int a1)
+/// Original name: init_familiar_sprite (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitFamiliarSprite_39820(int a1)
 {
   int v0; // eax
 
@@ -45511,8 +45521,8 @@ int Placeholder6_1_39820(int a1)
 
 //----- (00039840) --------------------------------------------------------
 /// Placeholder constructor (class 7 type 0): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder7_0_39840(int a1)
+/// Original name: init_weather_tornado (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitWeatherTornado_39840(int a1)
 {
   int v0; // eax
 
@@ -45524,8 +45534,8 @@ int Placeholder7_0_39840(int a1)
 
 //----- (00039860) --------------------------------------------------------
 /// Placeholder constructor (class 7 type 1): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder7_1_39860(int a1)
+/// Original name: init_weather_rain_cloud (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitWeatherRainCloud_39860(int a1)
 {
   int v0; // eax
 
@@ -45537,8 +45547,8 @@ int Placeholder7_1_39860(int a1)
 
 //----- (00039880) --------------------------------------------------------
 /// Placeholder constructor (class 7 type 2): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder7_2_39880(int a1)
+/// Original name: init_weather_thunder_cloud (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitWeatherThunderCloud_39880(int a1)
 {
   int v0; // eax
 
@@ -45550,8 +45560,8 @@ int Placeholder7_2_39880(int a1)
 
 //----- (000398A0) --------------------------------------------------------
 /// Placeholder constructor (class 7 type 3): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder7_3_398A0(int a1)
+/// Original name: init_weather_thermals (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitWeatherThermals_398A0(int a1)
 {
   int v0; // eax
 
@@ -45710,7 +45720,7 @@ int InitShotFireball_39A10(int a1)
 // 98FD8: using guessed type void *off_98FD8;
 
 //----- (00039A90) --------------------------------------------------------
-/// Constructor of the Possession spell's missile (class 9 type 1, state 1), fired by PossessionSpellTick_56510_56A40.
+/// Constructor of the Possession spell's missile (class 9 type 1, state 1), fired by FnSpellPocession_56510_56A40.
 /// Original name: init_shot_pocession (INIT.C), Hidden Worlds linker map.
 int InitShotPocession_39A90(int a1)
 {
@@ -45744,7 +45754,7 @@ int InitShotPocession_39A90(int a1)
 }
 
 //----- (00039B40) --------------------------------------------------------
-/// Constructor of the Earthquake spell's missile (class 9 type 2, state 2), fired by CastEarthquake_567A0_56CD0.
+/// Constructor of the Earthquake spell's missile (class 9 type 2, state 2), fired by FnSpellEarthquake_567A0_56CD0.
 /// Original name: init_shot_earthquake (INIT.C), Hidden Worlds linker map.
 int InitShotEarthquake_39B40(int a1)
 {
@@ -45776,7 +45786,7 @@ int InitShotEarthquake_39B40(int a1)
 }
 
 //----- (00039BC0) --------------------------------------------------------
-/// Constructor of the Meteor spell's missile (class 9 type 3, state 3), fired by CastMeteor_56950_56E80.
+/// Constructor of the Meteor spell's missile (class 9 type 3, state 3), fired by FnSpellMeteor_56950_56E80.
 /// Name is a guess (not in the Hidden Worlds linker map).
 int CreateMeteorMissile_39BC0(int a1)
 {
@@ -45808,7 +45818,7 @@ int CreateMeteorMissile_39BC0(int a1)
 }
 
 //----- (00039C40) --------------------------------------------------------
-/// Constructor of the Volcano spell's missile (class 9 type 4, state 4), fired by CastVolcano_56AF0_57020.
+/// Constructor of the Volcano spell's missile (class 9 type 4, state 4), fired by FnSpellVolcano_56AF0_57020.
 /// Name is a guess (not in the Hidden Worlds linker map).
 int CreateVolcanoMissile_39C40(int a1)
 {
@@ -45840,7 +45850,7 @@ int CreateVolcanoMissile_39C40(int a1)
 }
 
 //----- (00039CC0) --------------------------------------------------------
-/// Constructor of the Crater spell's missile (class 9 type 5, state 5), fired by CastCrater_56CA0_571D0.
+/// Constructor of the Crater spell's missile (class 9 type 5, state 5), fired by FnSpellCrater_56CA0_571D0.
 /// Name is a guess (not in the Hidden Worlds linker map).
 int CreateCraterMissile_39CC0(int a1)
 {
@@ -45904,7 +45914,7 @@ int CreateClass9Type6_39D40(int a1)
 }
 
 //----- (00039DC0) --------------------------------------------------------
-/// Constructor of the Duel spell's missile (class 9 type 7, state 7), fired by CastDuel_57040_57570.
+/// Constructor of the Duel spell's missile (class 9 type 7, state 7), fired by FnSpellRubberBand_57040_57570.
 /// Name is a guess (not in the Hidden Worlds linker map).
 int CreateDuelMissile_39DC0(int a1)
 {
@@ -45936,7 +45946,7 @@ int CreateDuelMissile_39DC0(int a1)
 }
 
 //----- (00039E40) --------------------------------------------------------
-/// Constructor of the Steal Mana spell's missile (class 9 type 8, state 8), fired by CastStealMana_57250_57780.
+/// Constructor of the Steal Mana spell's missile (class 9 type 8, state 8), fired by FnSpellStealMana_57250_57780.
 /// Name is a guess (not in the Hidden Worlds linker map).
 int CreateStealManaMissile_39E40(int a1)
 {
@@ -46066,7 +46076,7 @@ int CreateUndeadArmyMissile_39FC0(int a1)
 }
 
 //----- (0003A040) --------------------------------------------------------
-/// Constructor of the Lightning Storm spell's missile (class 9 type 12, state 12), fired by CastLightningStorm_579D0_57F00.
+/// Constructor of the Lightning Storm spell's missile (class 9 type 12, state 12), fired by FnSpellAlliance_579D0_57F00.
 /// Name is a guess (not in the Hidden Worlds linker map).
 int CreateLightningStormMissile_3A040(int a1)
 {
@@ -46178,7 +46188,7 @@ int InitShotBlindness_3A210(int a1)
 }
 
 //----- (0003A270) --------------------------------------------------------
-/// Constructor of the Wall of Fire spell's missile (class 9 type 16, state 17), fired by CastWallOfFire_57D40_58270.
+/// Constructor of the Wall of Fire spell's missile (class 9 type 16, state 17), fired by FnSpellExtra1_57D40_58270.
 /// Original name: init_shot_extra1 (INIT.C), Hidden Worlds linker map.
 int InitShotExtra1_3A270(int a1)
 {
@@ -46211,7 +46221,7 @@ int InitShotExtra1_3A270(int a1)
 // 98FD8: using guessed type void *off_98FD8;
 
 //----- (0003A2F0) --------------------------------------------------------
-/// Constructor of the Mana Magnet spell's missile (class 9 type 17, state 18), fired by CastManaMagnet_57B80_580B0.
+/// Constructor of the Mana Magnet spell's missile (class 9 type 17, state 18), fired by FnSpellTeleportCastle_57B80_580B0.
 /// Original name: init_shot_extra2 (INIT.C), Hidden Worlds linker map.
 int InitShotExtra2_3A2F0(int a1)
 {
@@ -46368,7 +46378,7 @@ int CreateClass10Type1_3A510(uint16_t* a1)
 }
 
 //----- (0003A570) --------------------------------------------------------
-/// Constructor of the speed effect (class 10 type 2, state 2), created by FnSpellSpeedUp_56380_568B0 and CastReverseSpeed_57F00_58410.
+/// Constructor of the speed effect (class 10 type 2, state 2), created by FnSpellSpeedUp_56380_568B0 and FnSpellExtra2_57F00_58410.
 /// Name is a guess (not in the Hidden Worlds linker map).
 int CreateSpeedEffect_3A570(uint16_t* a1)
 {
@@ -46929,8 +46939,8 @@ int InitEffectVolcanoAfterMath_3ADB0(uint16_t* a1)
 
 //----- (0003AE00) --------------------------------------------------------
 /// Constructor of the volcano fire (class 10 type 19) (state 19); created by each volcano eruption start, index kept in game state +38. Identified from its decoded sprite (named by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateVolcanoFire_3AE00(uint16_t* a1)
+/// Original name: init_effect_fire_column (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitEffectFireColumn_3AE00(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46959,8 +46969,8 @@ int CreateVolcanoFire_3AE00(uint16_t* a1)
 
 //----- (0003AE80) --------------------------------------------------------
 /// Constructor of the Lightning spell's effect (class 10 type 23, state 23), created where CastLightning's missile lands (missile +68/+69).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateLightningEffect_3AE80(uint16_t* a1)
+/// Original name: init_effect_lightning (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitEffectLightning_3AE80(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46989,8 +46999,8 @@ int CreateLightningEffect_3AE80(uint16_t* a1)
 
 //----- (0003AF00) --------------------------------------------------------
 /// Constructor of the Steal Mana spell's effect (class 10 type 25, state 25), created where CastStealMana's missile lands (missile +68/+69).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateStealManaEffect_3AF00(uint16_t* a1)
+/// Original name: init_effect_steal_mana (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitEffectStealMana_3AF00(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -47017,8 +47027,8 @@ int CreateStealManaEffect_3AF00(uint16_t* a1)
 
 //----- (0003AF80) --------------------------------------------------------
 /// Constructor of the Duel spell's effect (class 10 type 26, state 26), created where CastDuel's missile lands (missile +68/+69).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateDuelEffect_3AF80(uint16_t* a1)
+/// Original name: init_effect_rubber_band (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitEffectRubberBand_3AF80(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -47045,8 +47055,8 @@ int CreateDuelEffect_3AF80(uint16_t* a1)
 
 //----- (0003B000) --------------------------------------------------------
 /// Constructor of a terrain-raising level-build step (class 10 type 27, state 27 = FnEffectWallSectionN_26670; states 28/29 continue it).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateTerrainRaiseStep_3B000(uint16_t* a1)
+/// Original name: init_effect_wall_section (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitEffectWallSection_3B000(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -47071,9 +47081,9 @@ int CreateTerrainRaiseStep_3B000(uint16_t* a1)
 }
 
 //----- (0003B060) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 28).
 /// Constructor of class 10 type 28 (initial state 30).
-int CreateClass10Type28_3B060(uint16_t* a1)
+/// Original name: init_effect_wall_node (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitEffectWallNode_3B060(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -47096,9 +47106,9 @@ int CreateClass10Type28_3B060(uint16_t* a1)
 }
 
 //----- (0003B0C0) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 30).
 /// Constructor of class 10 type 30 (initial state 32).
-Type_AE400_29795* CreateClass10Type30_3B0C0(axis_3d* position)
+/// Original name: init_effect_path (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+Type_AE400_29795* InitEffectPath_3B0C0(axis_3d* position)
 {
 	Type_AE400_29795* event = InitAThing_372C0_37680();
 	if (event)
@@ -47116,9 +47126,9 @@ Type_AE400_29795* CreateClass10Type30_3B0C0(axis_3d* position)
 }
 
 //----- (0003B120) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 29).
 /// Constructor of class 10 type 29 (initial state 31).
-int CreateClass10Type29_3B120(uint16_t* a1)
+/// Original name: init_effect_path_node (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitEffectPathNode_3B120(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -47141,9 +47151,9 @@ int CreateClass10Type29_3B120(uint16_t* a1)
 }
 
 //----- (0003B180) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 32).
 /// Constructor of class 10 type 32 (initial state 34).
-int CreateClass10Type32_3B180(uint16_t* a1)
+/// Original name: init_effect_canyon (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitEffectCanyon_3B180(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -47168,9 +47178,9 @@ int CreateClass10Type32_3B180(uint16_t* a1)
 }
 
 //----- (0003B1D0) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 31).
 /// Constructor of class 10 type 31 (initial state 33).
-int CreateClass10Type31_3B1D0(uint16_t* a1)
+/// Original name: init_effect_canyon_node (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitEffectCanyonNode_3B1D0(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -47193,9 +47203,9 @@ int CreateClass10Type31_3B1D0(uint16_t* a1)
 }
 
 //----- (0003B230) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 51).
 /// Constructor of class 10 type 51 (initial state 55).
-int CreateClass10Type51_3B230(uint16_t* a1)
+/// Original name: init_effect_ridge (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitEffectRidge_3B230(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -47222,9 +47232,9 @@ int CreateClass10Type51_3B230(uint16_t* a1)
 }
 
 //----- (0003B2A0) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 50).
 /// Constructor of class 10 type 50 (initial state 54).
-int CreateClass10Type50_3B2A0(uint16_t* a1)
+/// Original name: init_effect_ridge_node (INIT.C), Hidden Worlds linker map (placed by function order between two matches).
+int InitEffectRidgeNode_3B2A0(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -49840,8 +49850,8 @@ _BYTE *CloseTape_3EC50_3EF90()
 // AE408: using guessed type int dword_AE408_AE3F8();
 
 //----- (0003EC80) --------------------------------------------------------
-/// Name is a guess (not in the Hidden Worlds linker map).
-int access_3EC80_3EFC0(char* a1)
+/// Original name: FileExist (IO.C), Hidden Worlds linker map (placed by function order between two matches).
+int FileExist_3EC80_3EFC0(char* a1)
 {
   return access(a1, 0);
 }
@@ -49856,14 +49866,14 @@ void SearchDrive_3EC90_3EFD0(uint8_t diskChar, char* dir1, char* dir2)
     if (dos_getdiskfree(diskChar - 64, 0))
         return;
     sprintf(textBuffer1, "%c:%s", diskChar, dir1);
-    if (access_3EC80_3EFC0(FixPath(textBuffer1)) <= -1)
+    if (FileExist_3EC80_3EFC0(FixPath(textBuffer1)) <= -1)
     {
         if (mymkdir(FixPath(textBuffer1)))
             return;
         strcpy(textBuffer2, textBuffer1);
         strcpy(&textBuffer2[strlen(textBuffer2)], "/");
         strcpy(&textBuffer2[strlen(textBuffer2)], dir2);
-        if ((access_3EC80_3EFC0(FixPath(textBuffer2)) & 0x8000u) != 0 && mymkdir(FixPath(textBuffer2)))
+        if ((FileExist_3EC80_3EFC0(FixPath(textBuffer2)) & 0x8000u) != 0 && mymkdir(FixPath(textBuffer2)))
             return;
     }
     else
@@ -49871,7 +49881,7 @@ void SearchDrive_3EC90_3EFD0(uint8_t diskChar, char* dir1, char* dir2)
         strcpy(textBuffer2, textBuffer1);
         strcpy(&textBuffer2[strlen(textBuffer2)], "/");
         strcpy(&textBuffer2[strlen(textBuffer2)], dir2);
-        if ((access_3EC80_3EFC0(FixPath(textBuffer2)) & 0x8000u) != 0 && mymkdir(FixPath(textBuffer2)))
+        if ((FileExist_3EC80_3EFC0(FixPath(textBuffer2)) & 0x8000u) != 0 && mymkdir(FixPath(textBuffer2)))
             return;
     }
 }
@@ -52947,7 +52957,7 @@ int sub_42090_423D0(axis_3d* a1x, int a2, int a3, int a4, int a5)
   int v6; // ecx
 
   v5 = 0;
-  if ( (sub_11760(a1x) & 1) != 0 && !a2 )
+  if ( (TerrainType_11760(a1x) & 1) != 0 && !a2 )
     a3 = -768;
   v6 = a1x->z;
   if ( v6 <= a2 + a4 )
@@ -53480,7 +53490,8 @@ void NETAbort_428B0_42BF0()
 // 12EFDE: using guessed type __int16 mouseLeftButton_12EFDE_12EFCE;
 
 //----- (00042930) --------------------------------------------------------
-int sub_42930(_BYTE *a1, char *a2, unsigned __int8 a3)
+/// Original name: __NETAdd__ (NETWORK.C), Hidden Worlds linker map (placed by function order between two matches).
+int NETAdd_42930(_BYTE *a1, char *a2, unsigned __int8 a3)
 {
   const char *v3; // edx
   char *v5; // edi
@@ -53688,7 +53699,8 @@ int NETCheckBios_42CF0_43030()
 }
 
 //----- (00042D40) --------------------------------------------------------
-int sub_42D40(_BYTE *a1, char *a2)
+/// Original name: __NETDelete__ (NETWORK.C), Hidden Worlds linker map (placed by function order between two matches).
+int NETDelete_42D40(_BYTE *a1, char *a2)
 {
   const char *v2; // edx
   char *v4; // edi
@@ -54136,7 +54148,7 @@ int StartNetwork_43430_43770(char *a1, __int16 a2)
       if ( word_9395A != -1 || word_93988 )
         break;
       sprintf(v24, "%s%d", "TESTER", v8);
-      v7 = sub_42930((_BYTE *)connection_93990[v8], v24, v8);
+      v7 = NETAdd_42930((_BYTE *)connection_93990[v8], v24, v8);
       if ( v7 < 0xFFFE7961 )
       {
         if ( !v7 )
@@ -54145,7 +54157,7 @@ int StartNetwork_43430_43770(char *a1, __int16 a2)
       else if ( v7 > 0xFFFE7961 && v7 == -13 )
       {
         v23 = (_BYTE *)connection_93990[v8--];
-        sub_42D40(v23, v24);
+        NETDelete_42D40(v23, v24);
       }
       ++v8;
     }
@@ -54155,7 +54167,7 @@ int StartNetwork_43430_43770(char *a1, __int16 a2)
     if ( word_93988 )
     {
       sprintf(v24, "%s%d", "TESTER", word_9395A);
-      sub_42D40((_BYTE *)connection_93990[v8], v24);
+      NETDelete_42D40((_BYTE *)connection_93990[v8], v24);
       return -1;
     }
     v10 = 0;
@@ -54221,7 +54233,7 @@ int StartNetwork_43430_43770(char *a1, __int16 a2)
             if ( v19 == word_9395A )
             {
               sprintf(v24, "%s%d", "TESTER", word_9395A);
-              sub_42D40((_BYTE *)connection_93990[v21], v24);
+              NETDelete_42D40((_BYTE *)connection_93990[v21], v24);
             }
             else
             {
@@ -54277,7 +54289,7 @@ int StopNetwork_43760_43AA0(__int16 a1)
         }
       }
       sprintf(v4, "%s%d", "TESTER", word_9395A);
-      sub_42D40((_BYTE *)connection_93990[a1], v4);
+      NETDelete_42D40((_BYTE *)connection_93990[a1], v4);
       byte_93959 = 0;
     }
     else
@@ -54412,7 +54424,7 @@ void OpenMusic_43B20_43E60(unsigned int a2)
   {
     v3 = sub_6378C(v2);
     printf("\nError : %s\n", v3);
-    sub_60335();
+    SosMIDIUnInitSystem_60335();
     LOBYTE(v4) = SosTIMERUnInitSystem_5D948();
     musicAvailable_939CC = 0;
     musicOn_939CD = 0;
@@ -54439,7 +54451,7 @@ void OpenMusic_43B20_43E60(unsigned int a2)
             v8 = sub_6378C(v7);
             printf("\nError : %s\n", v8);
             SosMIDIUnInitDriver_6080C(dword_CBFDC, 1);
-            sub_60335();
+            SosMIDIUnInitSystem_60335();
             SosTIMERUnInitSystem_5D948();
             HIBYTE(v6) = 0;
             musicAvailable_939CC = 0;
@@ -54459,7 +54471,7 @@ void OpenMusic_43B20_43E60(unsigned int a2)
               v10 = sub_6378C(v4);
               printf("\nError : %s\n", v10);
               SosMIDIUnInitDriver_6080C(dword_CBFDC, 1);
-              sub_60335();
+              SosMIDIUnInitSystem_60335();
               LOBYTE(v4) = SosTIMERUnInitSystem_5D948();
               musicAvailable_939CC = 0;
               musicOn_939CD = 0;
@@ -54503,7 +54515,7 @@ void OpenMusic_43B20_43E60(unsigned int a2)
       {
         printf("\nError opening music files\n");
         SosMIDIUnInitDriver_6080C(dword_CBFDC, 1);
-        sub_60335();
+        SosMIDIUnInitSystem_60335();
         LOBYTE(v4) = SosTIMERUnInitSystem_5D948();
         musicAvailable_939CC = 0;
         musicOn_939CD = 0;
@@ -54798,14 +54810,14 @@ LABEL_63:
     if ( !byte_939D4 )
       SosTIMERUnInitSystem_5D948();
     SosDIGIUnInitDriver_64F78(dword_CC140, 1, 1);
-    sub_6481C();
+    SosDIGIUnInitSystem_6481C();
     goto LABEL_63;
   }
   v11 = sub_6378C(v10);
   printf("\nError : %s\n", v11);
   if ( !byte_939D4 )
     SosTIMERUnInitSystem_5D948();
-  sub_6481C();
+  SosDIGIUnInitSystem_6481C();
   byte_939E4 = 0;
   byte_939E5 = 0;
   FreeAllData_61610_61B20(&pathStrArray_258E00[PS25datasnds00dat]);
@@ -55183,7 +55195,8 @@ void SetPlayerPalette_44BE0_44F20(Type_AE400_29795* a1x, char a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-signed int sub_44C10_44F50(int a1)
+/// Original name: player_fire_log (PLAYER.C), Hidden Worlds linker map (placed by function order between two matches).
+signed int PlayerFireLog_44C10_44F50(int a1)
 {
   int v1; // ebx
   int v2; // esi
@@ -55198,7 +55211,8 @@ signed int sub_44C10_44F50(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_44C90_44FD0(Type_AE400_29795* event)
+/// Original name: player_market_log (PLAYER.C), Hidden Worlds linker map (placed by function order between two matches).
+void PlayerMarketLog_44C90_44FD0(Type_AE400_29795* event)
 {
   Type_AE400_29795* v1x; // ebx
   signed int result; // eax
@@ -63145,7 +63159,8 @@ __int16 TrackShotToTargetCastle_52610_52950(int a1, int a2)
 }
 
 //----- (000526C0) --------------------------------------------------------
-char sub_526C0_52A00(int a1, unsigned int a2, unsigned int a3)
+/// Original name: count_shot (SHOT.C), Hidden Worlds linker map (placed by function order between two matches).
+char CountShot_526C0_52A00(int a1, unsigned int a2, unsigned int a3)
 {
   int v3; // eax
   unsigned int v4; // edx
@@ -63179,8 +63194,8 @@ char sub_526C0_52A00(int a1, unsigned int a2, unsigned int a3)
 
 //SYNCHRONIZE WITH REMC1
 /// Moves a spell missile along its heading (+30/+32, speed +126); on impact creates the entity whose class/type the caster stored in +68/+69 (the spell's effect).
-/// Name is a guess (not in the Hidden Worlds linker map).
-char UpdateMissile_52770_52AB0(int a1)
+/// Original name: fn_shot_generic (SHOT.C), Hidden Worlds linker map (placed by function order between two matches).
+char FnShotGeneric_52770_52AB0(int a1)
 {
   int v1; // edx
   char v2; // dl
@@ -63238,7 +63253,7 @@ char UpdateMissile_52770_52AB0(int a1)
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
   DisplacementXyz_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
   MoveMapwho_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
-  v5 = sub_11980(a1);
+  v5 = ColideThing_11980(a1);
   v6 = v5;
   if ( !v5 )
   {
@@ -63326,7 +63341,7 @@ LABEL_25_26:
     v20 = (_WORD *)PTR(result);
     if ( result )
     {
-      sub_526C0_52A00(a1, v6, v22_21);
+      CountShot_526C0_52A00(a1, v6, v22_21);
       if ( *(_BYTE *)PTR(a1 + 69) == 34 )
         *(_DWORD *)PTR(v19 + 12) = *(unsigned __int16 *)PTR(a1 + 44);
       v20[12] = *(_WORD *)PTR(a1 + 24);
@@ -63411,7 +63426,7 @@ void FnShotFireball_52B30_52E70(int a1)
   word_AE454_AE444.z = v22;
   DisplacementXyz_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
   MoveMapwho_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
-  v7 = sub_11980(a1);
+  v7 = ColideThing_11980(a1);
   v8 = v7;
   v9 = v7;
   if ( v7 )
@@ -63494,7 +63509,7 @@ LABEL_24:
     v20 = (_WORD *)PTR(result);
     if ( result )
     {
-      sub_526C0_52A00(a1, v9, v23);
+      CountShot_526C0_52A00(a1, v9, v23);
       v20[12] = *(_WORD *)PTR(a1 + 24);
       v20[15] = *(_WORD *)PTR(a1 + 30);
       v20[16] = *(_WORD *)PTR(a1 + 32);
@@ -63507,8 +63522,8 @@ LABEL_24:
 
 //SYNCHRONIZE WITH REMC1
 /// Per-tick handler of the Possession spell's missile (class 9 state 1).
-/// Name is a guess (not in the Hidden Worlds linker map).
-char PossessionMissileTick_52ED0_53210(int a1)
+/// Original name: fn_shot_pocession (SHOT.C), Hidden Worlds linker map (placed by function order between two matches).
+char FnShotPocession_52ED0_53210(int a1)
 {
   unsigned __int16 v1; // si
   unsigned int v2; // ebp
@@ -63550,7 +63565,7 @@ char PossessionMissileTick_52ED0_53210(int a1)
   if ( v4 > word_AE454_AE444.z )
     word_AE454_AE444.z = v4;
   MoveMapwho_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
-  v5 = sub_11AC0((_WORD *)PTR(a1));
+  v5 = PocessionColideThing_11AC0((_WORD *)PTR(a1));
   v6 = v5;
   v7 = v5;
   if ( v5 )
@@ -63575,7 +63590,7 @@ char PossessionMissileTick_52ED0_53210(int a1)
     v11 = (_WORD *)PTR(v8);
     if ( v8 )
     {
-      sub_526C0_52A00(a1, v7, v2);
+      CountShot_526C0_52A00(a1, v7, v2);
       v11[12] = *(_WORD *)PTR(a1 + 24);
       v11[15] = *(_WORD *)PTR(a1 + 30);
       v11[16] = *(_WORD *)PTR(a1 + 32);
@@ -63586,11 +63601,11 @@ char PossessionMissileTick_52ED0_53210(int a1)
 }
 
 //----- (00053060) --------------------------------------------------------
-/// Generic per-tick handler of a spell missile (class 9 states 2, 4-6, 11, 15-17, 20): UpdateMissile_52770_52AB0.
-/// Name is a guess (not in the Hidden Worlds linker map).
-char MissileTick_53060(int a1)
+/// Generic per-tick handler of a spell missile (class 9 states 2, 4-6, 11, 15-17, 20): FnShotGeneric_52770_52AB0.
+/// Original name: fn_shot_earthquake (SHOT.C), Hidden Worlds linker map (placed by function order between two matches).
+char FnShotEarthquake_53060(int a1)
 {
-  return UpdateMissile_52770_52AB0(a1);
+  return FnShotGeneric_52770_52AB0(a1);
 }
 
 //SYNCHRONIZE WITH REMC1
@@ -63601,7 +63616,7 @@ char FnShotMeteor_53070_533B0(int a1)
   int result; // eax
   char v2; // dh
 
-  UpdateMissile_52770_52AB0(a1);
+  FnShotGeneric_52770_52AB0(a1);
   if ( *(_BYTE *)PTR(a1 + 64) )
   {
     result = (int)OFF(InitModel_373F0_377B0((axis_3d*)PTR(a1 + 72), 10, 1));
@@ -63618,16 +63633,16 @@ char FnShotMeteor_53070_533B0(int a1)
 
 //----- (000530B0) --------------------------------------------------------
 /// Per-tick handler of the Duel spell's missile (class 9 state 7).
-/// Name is a guess (not in the Hidden Worlds linker map).
-char DuelMissileTick_530B0(int a1)
+/// Original name: fn_shot_rubber_band (SHOT.C), Hidden Worlds linker map (placed by function order between two matches).
+char FnShotRubberBand_530B0(int a1)
 {
-  return StealManaMissileTick_530C0_53400(a1);
+  return FnShotStealMana_530C0_53400(a1);
 }
 
 //SYNCHRONIZE WITH REMC1
 /// Per-tick handler of the Steal Mana spell's missile (class 9 state 8).
-/// Name is a guess (not in the Hidden Worlds linker map).
-char StealManaMissileTick_530C0_53400(int a1)
+/// Original name: fn_shot_steal_mana (SHOT.C), Hidden Worlds linker map (placed by function order between two matches).
+char FnShotStealMana_530C0_53400(int a1)
 {
   int v1; // edx
   char v2; // dl
@@ -63684,7 +63699,7 @@ char StealManaMissileTick_530C0_53400(int a1)
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
   DisplacementXyz_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
   MoveMapwho_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
-  v5 = sub_11980(a1);
+  v5 = ColideThing_11980(a1);
   v6 = v5;
   if ( v5 )
   {
@@ -63774,7 +63789,7 @@ LABEL_25_26:
       v19 = (_WORD *)PTR(result);
       if ( result )
       {
-        sub_526C0_52A00(a1, v6, v21_20);
+        CountShot_526C0_52A00(a1, v6, v21_20);
         if ( *(_BYTE *)PTR(a1 + 69) == 34 )
           *(_DWORD *)PTR(v18 + 12) = *(unsigned __int16 *)PTR(a1 + 44);
         v19[12] = *(_WORD *)PTR(a1 + 24);
@@ -63787,7 +63802,7 @@ LABEL_25_26:
     }
     else
     {
-      sub_526C0_52A00(a1, 0, v21_20);
+      CountShot_526C0_52A00(a1, 0, v21_20);
       DeleteThing_41E80_421C0((Type_AE400_29795*)PTR(a1));
     }
   }
@@ -63829,7 +63844,7 @@ char FnShotPreGeneric_534C0_53800(int a1)
   DisplacementXyz_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
   *(_DWORD *)PTR(a1 + 72) = *(_DWORD *)&word_AE454_AE444;
   *(_WORD *)PTR(a1 + 76) = word_AE454_AE444.z;
-  v2 = sub_11980(a1);
+  v2 = ColideThing_11980(a1);
   if ( v2 )
   {
     v3 = v2 + 72;
@@ -63854,7 +63869,7 @@ char FnShotPreGeneric_534C0_53800(int a1)
 //SYNCHRONIZED WITH REMC1
 /// Lightning bolt tick (missile class 9 / model 9, state 9): steers the bolt (FnShotPreGeneric_534C0_53800 until flag 4),
 /// steps it along heading/pitch by speed/8 and leaves a trail of 9/9 state-14 segment sprites (216);
-/// on contact (sub_11980) it hits the target (sub_526C0_52A00).
+/// on contact (ColideThing_11980) it hits the target (CountShot_526C0_52A00).
 /// Original name: fn_shot_lightning (SHOT.C), Hidden Worlds linker map.
 __int16 FnShotLightning_535E0_53920(unsigned int a1)
 {
@@ -64010,14 +64025,14 @@ LABEL_20:
     goto LABEL_21;
   }
 LABEL_22:
-  v17 = sub_11980(a1);
+  v17 = ColideThing_11980(a1);
   v29 = 164 * *(unsigned __int16 *)PTR(a1 + 146) + dword_AE400_AE3F0() + 29795;
   v18 = (int)OFF(InitModel_373F0_377B0((axis_3d*)&v25, *(char *)PTR(a1 + 68), *(char *)PTR(a1 + 69)));
   v19 = (_WORD *)PTR(v18);
   v20 = v18;
   if ( v18 )
   {
-    sub_526C0_52A00(a1, v17, v29);
+    CountShot_526C0_52A00(a1, v17, v29);
     v19[12] = *(_WORD *)PTR(a1 + 24);
     v19[15] = *(_WORD *)PTR(a1 + 30);
     v21 = dword_AE400_AE3F0() + 29795;
@@ -64230,8 +64245,8 @@ char FnFirstStageShot_53B50_53E90(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of the Lightning Storm spell's missile (class 9 state 12).
-/// Name is a guess (not in the Hidden Worlds linker map).
-char LightningStormMissileTick_53DC0_54100(int a1)
+/// Original name: fn_shot_alliance (SHOT.C), Hidden Worlds linker map (placed by function order between two matches).
+char FnShotAlliance_53DC0_54100(int a1)
 {
   int v1; // edx
   char v2; // dl
@@ -64288,7 +64303,7 @@ char LightningStormMissileTick_53DC0_54100(int a1)
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
   DisplacementXyz_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
   MoveMapwho_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
-  v5 = sub_11980(a1);
+  v5 = ColideThing_11980(a1);
   v6 = v5;
   if ( !v5 )
   {
@@ -64375,7 +64390,7 @@ LABEL_25_26:
     v19 = result;
     if (result)
     {
-      sub_526C0_52A00(a1, v6, v21_20);
+      CountShot_526C0_52A00(a1, v6, v21_20);
       if ( *(_BYTE *)PTR(a1 + 69) == 34 )
         *(_DWORD *)PTR(v18 + 12) = *(unsigned __int16 *)PTR(a1 + 44);
       *(_WORD *)PTR(v19 + 24) = *(_WORD *)PTR(a1 + 24);
@@ -64410,7 +64425,7 @@ void FnShotArrow_54180_544D0(int a1)
   *(_DWORD *)&word_AE454_AE444.x = *(_DWORD *)PTR(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
   DisplacementXyz_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
-  v2 = sub_11980(a1);
+  v2 = ColideThing_11980(a1);
   if ( (__int16)GetTerrainHeight_11F50(&word_AE454_AE444) <= word_AE454_AE444.z )
   {
     v3 = *(_DWORD *)PTR(a1 + 12);
@@ -64491,7 +64506,7 @@ char ManaMagnetMissileTick_542B0_54640(int a1)
   if ( v4 > word_AE454_AE444.z )
     word_AE454_AE444.z = v4;
   MoveMapwho_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
-  v5 = sub_11C00((__int16 *)PTR(a1));
+  v5 = PocessionColideThing2_11C00((__int16 *)PTR(a1));
   v6 = v5;
   v7 = v5;
   if ( v5 )
@@ -64515,7 +64530,7 @@ char ManaMagnetMissileTick_542B0_54640(int a1)
     v11 = (_WORD *)InitModel_373F0_377B0((axis_3d*)PTR(a1 + 72), 10, 12);
     if ( v11 )
     {
-      sub_526C0_52A00(a1, v7, v2);
+      CountShot_526C0_52A00(a1, v7, v2);
       v11[12] = *(_WORD *)PTR(a1 + 24);
       v11[15] = *(_WORD *)PTR(a1 + 30);
       v11[16] = *(_WORD *)PTR(a1 + 32);
@@ -64524,7 +64539,7 @@ char ManaMagnetMissileTick_542B0_54640(int a1)
     v12 = (_WORD *)PTR(v8);
     if ( v8 )
     {
-      sub_526C0_52A00(a1, v7, v2);
+      CountShot_526C0_52A00(a1, v7, v2);
       v12[12] = *(_WORD *)PTR(a1 + 24);
       v12[15] = *(_WORD *)PTR(a1 + 30);
       v12[16] = *(_WORD *)PTR(a1 + 32);
@@ -65862,8 +65877,8 @@ void FnSpellSpeedUp_56380_568B0(int a1)
 /// Per-tick handler of an owned possession spell (class 12 type 3, state 9) while it is cast (+48 ticks
 /// left of +50): checks and charges the caster (EnoughMana_55DD0_56300, AdjustMana_55E80_563B0)
 /// and launches the possession missile (class 9 type 1) on the first tick.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int PossessionSpellTick_56510_56A40(int a1)
+/// Original name: fn_spell_pocession (SPELL.C), Hidden Worlds linker map (placed by function order between two matches).
+int FnSpellPocession_56510_56A40(int a1)
 {
   int result; // eax
   unsigned __int16 v2; // dx
@@ -65979,8 +65994,8 @@ void FnSpellBeyondSight_56730(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Earthquake spell (class 12 state 18 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CastEarthquake_567A0_56CD0(int a1)
+/// Original name: fn_spell_earthquake (SPELL.C), Hidden Worlds linker map (placed by function order between two matches).
+int FnSpellEarthquake_567A0_56CD0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -66041,8 +66056,8 @@ LABEL_9:
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Meteor spell (class 12 state 21 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CastMeteor_56950_56E80(int a1)
+/// Original name: fn_spell_meteor (SPELL.C), Hidden Worlds linker map (placed by function order between two matches).
+int FnSpellMeteor_56950_56E80(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -66101,8 +66116,8 @@ LABEL_9:
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Volcano spell (class 12 state 24 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CastVolcano_56AF0_57020(int a1)
+/// Original name: fn_spell_volcano (SPELL.C), Hidden Worlds linker map (placed by function order between two matches).
+int FnSpellVolcano_56AF0_57020(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -66162,8 +66177,8 @@ LABEL_9:
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Crater spell (class 12 state 27 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CastCrater_56CA0_571D0(int a1)
+/// Original name: fn_spell_crater (SPELL.C), Hidden Worlds linker map (placed by function order between two matches).
+int FnSpellCrater_56CA0_571D0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -66295,8 +66310,8 @@ void FnSpellTeleport_56E50_57380(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Duel spell (class 12 state 33 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CastDuel_57040_57570(int a1)
+/// Original name: fn_spell_rubber_band (SPELL.C), Hidden Worlds linker map (placed by function order between two matches).
+int FnSpellRubberBand_57040_57570(int a1)
 {
   int result; // eax
   unsigned __int16 v2; // dx
@@ -66390,8 +66405,8 @@ void FnSpellInvisable_571B0_576E0(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Steal Mana spell (class 12 state 39 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CastStealMana_57250_57780(int a1)
+/// Original name: fn_spell_steal_mana (SPELL.C), Hidden Worlds linker map (placed by function order between two matches).
+int FnSpellStealMana_57250_57780(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -66489,8 +66504,8 @@ int FnSpellRebound_573F0_57920(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Lightning spell (class 12 state 45 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CastLightning_57470_579A0(int a1)
+/// Original name: fn_spell_lightning (SPELL.C), Hidden Worlds linker map (placed by function order between two matches).
+int FnSpellLightning_57470_579A0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -66679,8 +66694,8 @@ LABEL_12:
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Lightning Storm spell (class 12 state 54 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CastLightningStorm_579D0_57F00(int a1)
+/// Original name: fn_spell_alliance (SPELL.C), Hidden Worlds linker map (placed by function order between two matches).
+int FnSpellAlliance_579D0_57F00(int a1)
 {
   int result; // eax
   unsigned __int16 v2; // dx
@@ -66742,8 +66757,8 @@ LABEL_9:
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Mana Magnet spell (class 12 state 57 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CastManaMagnet_57B80_580B0(int a1)
+/// Original name: fn_spell_teleport_castle (SPELL.C), Hidden Worlds linker map (placed by function order between two matches).
+int FnSpellTeleportCastle_57B80_580B0(int a1)
 {
   int result; // eax
   unsigned __int16 v2; // dx
@@ -66805,8 +66820,8 @@ LABEL_5:
 }
 
 /// Handler of an owned Wall of Fire spell (class 12 state 60 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CastWallOfFire_57D40_58270(int a1)
+/// Original name: fn_spell_extra1 (SPELL.C), Hidden Worlds linker map (placed by function order between two matches).
+int FnSpellExtra1_57D40_58270(int a1)
 {
 	int result; // eax
 	unsigned __int16 v2; // dx
@@ -66869,8 +66884,8 @@ int CastWallOfFire_57D40_58270(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Handler of an owned Reverse Speed spell (class 12 state 63 = 3*type): casts it when its owner fires it (EnoughMana_55DD0_56300 / AdjustMana_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void CastReverseSpeed_57F00_58410(int a1)
+/// Original name: fn_spell_extra2 (SPELL.C), Hidden Worlds linker map (placed by function order between two matches).
+void FnSpellExtra2_57F00_58410(int a1)
 {
   unsigned int v1; // esi
   int v2; // eax
@@ -67117,7 +67132,8 @@ int LoadTmapAt_58860_58D70(unsigned __int16 a1, uint8_t* a2)//229860_
 }
 
 //SYNCHRONIZED WITH REMC1
-char sub_58910_58E20(unsigned __int16 a1)
+/// Original name: remove_tmap_group_from_heap (SSPRITE.C), Hidden Worlds linker map (placed by function order between two matches).
+char RemoveTmapGroupFromHeap_58910_58E20(unsigned __int16 a1)
 {
   unsigned __int16 v1; // ax
   __int16 v2; // di
@@ -67141,7 +67157,7 @@ char sub_58910_58E20(unsigned __int16 a1)
       v4 = (_BYTE **)dword_12DF8C_12DF7C[v3];
       if ( v4 )
       {
-        // PORT: was (**v4 & 1) - the first field is a 4-byte ptr32 slot (64-bit); same test as sub_58A00_58F10
+        // PORT: was (**v4 & 1) - the first field is a 4-byte ptr32 slot (64-bit); same test as RemoveTmapGroupFromHeapEvenPermanent_58A00_58F10
         if ( (dword_12DF8C_12DF7C[v3]->var_u32_0->var_0 & 1) != 0 )
         {
           v5 = FindTmapAnim_10FD0(dword_AE3E0_AE3D0, v3);
@@ -67160,7 +67176,8 @@ char sub_58910_58E20(unsigned __int16 a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-char sub_58A00_58F10(unsigned __int16 a1)
+/// Original name: remove_tmap_group_from_heap_even_permanent (SSPRITE.C), Hidden Worlds linker map (placed by function order between two matches).
+char RemoveTmapGroupFromHeapEvenPermanent_58A00_58F10(unsigned __int16 a1)
 {
   int v1 = begTmapsTab_12D744_12D734_2EB744_2EB734x[a1].var_8;
   if ( !dword_12DF8C_12DF7C[v1] )
@@ -67188,8 +67205,8 @@ char sub_58A00_58F10(unsigned __int16 a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Name is a guess (not in the Hidden Worlds linker map).
-int GetSumaSpriteSizes_58AD0_58FE0(unsigned __int16 a1)
+/// Original name: tmap_group_size (SSPRITE.C), Hidden Worlds linker map (placed by function order between two matches).
+int TmapGroupSize_58AD0_58FE0(unsigned __int16 a1)
 {
   int first = begTmapsTab_12D744_12D734_2EB744_2EB734x[a1].var_8;
   int suma = 0;
@@ -67337,9 +67354,9 @@ int HeapFree_58C30_59140(unsigned int a1)
 	{
 		if (allSumas >= a1 || v19x[i] <= -1)
             return allSumas;
-		if (((!bool1) || sub_58A00_58F10(v19x[i]))
-			&& (sub_58910_58E20(v19x[i])))
-            allSumas += GetSumaSpriteSizes_58AD0_58FE0(v19x[i]);
+		if (((!bool1) || RemoveTmapGroupFromHeapEvenPermanent_58A00_58F10(v19x[i]))
+			&& (RemoveTmapGroupFromHeap_58910_58E20(v19x[i])))
+            allSumas += TmapGroupSize_58AD0_58FE0(v19x[i]);
 	}
 	return allSumas;
 }
@@ -67437,7 +67454,7 @@ void SetupDrawactsTable_58F90_594A0()//229F90_
 /// Original name: load_a_sprite (SSPRITE.C), Hidden Worlds linker map.
 bool LoadASprite_59050_59560(unsigned __int16 a1)//22A050_
 {
-  int32 sumaSpriteSizes = GetSumaSpriteSizes_58AD0_58FE0(a1);
+  int32 sumaSpriteSizes = TmapGroupSize_58AD0_58FE0(a1);
   int32 v2 = 0;
   int i = 0;
   for ( i = sumaSpriteSizes - HeapFreeSpace_369D0_36D90(dword_AE3EC_AE3DC) + 20; i > 0; i -= HeapFree_58C30_59140(i) )
@@ -67594,7 +67611,7 @@ char LoadSsprites_59230_59740()//22A230_
   {
     result = v0;
     if ( !byte_12E9E1_12E9D1[v0] )
-      result = sub_58910_58E20(v0);
+      result = RemoveTmapGroupFromHeap_58910_58E20(v0);
     //++v0;
   }
   //while ( v0 < 529);
@@ -67609,7 +67626,7 @@ char LoadSsprites_59230_59740()//22A230_
         break;
       if ( v4 == byte_12E9E1_12E9D1[i] && !dword_12DF8C_12DF7C[i] )
       {
-        v2 = GetSumaSpriteSizes_58AD0_58FE0(i);
+        v2 = TmapGroupSize_58AD0_58FE0(i);
         if ( v2 >= HeapFreeSpace_369D0_36D90(dword_AE3EC_AE3DC) )
         {
           if ( HeapFreeSpace_369D0_36D90(dword_AE3EC_AE3DC) < 0x400)
@@ -67710,7 +67727,7 @@ void RestoreTmapConfiguration_59420_59930()//22A420_
   {
     //result = i;
     if ( !str_AE400_AE3F0->var_u8_44[i])
-      /*result = */sub_58910_58E20(i);
+      /*result = */RemoveTmapGroupFromHeap_58910_58E20(i);
   }
   //v4 = 2;
   for(v4 = 2;v4;v4--)
@@ -67723,7 +67740,7 @@ void RestoreTmapConfiguration_59420_59930()//22A420_
         break;
       if ( v4 == str_AE400_AE3F0->var_u8_44[j] && !dword_12DF8C_12DF7C[j] )
       {
-        v2 = GetSumaSpriteSizes_58AD0_58FE0(j);
+        v2 = TmapGroupSize_58AD0_58FE0(j);
         if ( v2 >= HeapFreeSpace_369D0_36D90(dword_AE3EC_AE3DC) )
         {
           if (HeapFreeSpace_369D0_36D90(dword_AE3EC_AE3DC) < 0x400u)//fix
@@ -68066,8 +68083,8 @@ int FnSwitchOnVictory_59B80_5A090(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 5 (class 11 state 5, set by CreateSwitch05).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch05Tick_59C40_5A150(uint16_t* a1)
+/// Original name: fn_switch_death_inside (SWITCH.C), Hidden Worlds linker map (placed by function order between two matches).
+void FnSwitchDeathInside_59C40_5A150(uint16_t* a1)
 {
   int result; // eax
 
@@ -68081,8 +68098,8 @@ void Switch05Tick_59C40_5A150(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 6 (class 11 state 6, set by CreateSwitch06).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Switch06Tick_59C70_5A180(uint16_t* a1)
+/// Original name: fn_switch_death_outside (SWITCH.C), Hidden Worlds linker map (placed by function order between two matches).
+int FnSwitchDeathOutside_59C70_5A180(uint16_t* a1)
 {
   int result; // eax
 
@@ -68097,8 +68114,8 @@ int Switch06Tick_59C70_5A180(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 7 (class 11 state 7, set by CreateSwitch07).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch07Tick_59CA0_5A1B0(uint16_t* a1)
+/// Original name: fn_switch_death_inside_re (SWITCH.C), Hidden Worlds linker map (placed by function order between two matches).
+void FnSwitchDeathInsideRe_59CA0_5A1B0(uint16_t* a1)
 {
   int result; // eax
 
@@ -68121,8 +68138,8 @@ void Switch07Tick_59CA0_5A1B0(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 8 (class 11 state 8, set by CreateSwitch08).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch08Tick_59CF0_5A200(uint16_t* a1)
+/// Original name: fn_switch_death_outside_re (SWITCH.C), Hidden Worlds linker map (placed by function order between two matches).
+void FnSwitchDeathOutsideRe_59CF0_5A200(uint16_t* a1)
 {
   int result; // eax
 
@@ -68145,8 +68162,8 @@ void Switch08Tick_59CF0_5A200(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 9 (class 11 state 9, set by CreateSwitch09).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch09Tick_59D40_5A250(uint16_t* a1)
+/// Original name: fn_switch_obvious_inside (SWITCH.C), Hidden Worlds linker map (placed by function order between two matches).
+void FnSwitchObviousInside_59D40_5A250(uint16_t* a1)
 {
   int result; // eax
 
@@ -68160,8 +68177,8 @@ void Switch09Tick_59D40_5A250(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 10 (class 11 state 10, set by CreateSwitch10).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Switch10Tick_59D70_5A280(uint16_t* a1)
+/// Original name: fn_switch_obvious_outside (SWITCH.C), Hidden Worlds linker map (placed by function order between two matches).
+int FnSwitchObviousOutside_59D70_5A280(uint16_t* a1)
 {
   int result; // eax
 
@@ -68176,8 +68193,8 @@ int Switch10Tick_59D70_5A280(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 11 (class 11 state 11, set by CreateSwitch11).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch11Tick_59DA0_5A2B0(uint16_t* a1)
+/// Original name: fn_switch_obvious_inside_re (SWITCH.C), Hidden Worlds linker map (placed by function order between two matches).
+void FnSwitchObviousInsideRe_59DA0_5A2B0(uint16_t* a1)
 {
   int result; // eax
 
@@ -68200,8 +68217,8 @@ void Switch11Tick_59DA0_5A2B0(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 12 (class 11 state 12, set by CreateSwitch12).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch12Tick_59DF0_5A300(uint16_t* a1)
+/// Original name: fn_switch_obvious_outside_re (SWITCH.C), Hidden Worlds linker map (placed by function order between two matches).
+void FnSwitchObviousOutsideRe_59DF0_5A300(uint16_t* a1)
 {
   int result; // eax
 
@@ -68885,7 +68902,8 @@ int SenseStatus_5AD30_5B240()
 // 12EEC0: using guessed type int dword_12EEC0;
 
 //----- (0005ADB0) --------------------------------------------------------
-int sub_5ADB0_5B2C0(int a1, int32_t* a2, char* a3)
+/// Original name: SenseGetConfiguration (VFX.C), Hidden Worlds linker map (placed by function order between two matches).
+int SenseGetConfiguration_5ADB0_5B2C0(int a1, int32_t* a2, char* a3)
 {
   int v3; // ebx
   int v4; // eax
@@ -68923,7 +68941,8 @@ int sub_5ADB0_5B2C0(int a1, int32_t* a2, char* a3)
 // 12EED8: using guessed type __int16 word_12EED8_12EEC8;
 
 //----- (0005AE30) --------------------------------------------------------
-int sub_5AE30_5B340(int a1, char *a2)
+/// Original name: SenseSetConfiguration (VFX.C), Hidden Worlds linker map (placed by function order between two matches).
+int SenseSetConfiguration_5AE30_5B340(int a1, char *a2)
 {
   int v2; // edx
   char *v3; // eax
@@ -68958,7 +68977,8 @@ int sub_5AE30_5B340(int a1, char *a2)
 // 12EED8: using guessed type __int16 word_12EED8_12EEC8;
 
 //----- (0005AEB0) --------------------------------------------------------
-int sub_5AEB0_5B3C0(int a1, int32_t* a2, char* a3)
+/// Original name: SenseReport (VFX.C), Hidden Worlds linker map (placed by function order between two matches).
+int SenseReport_5AEB0_5B3C0(int a1, int32_t* a2, char* a3)
 {
   int v3; // ebx
   int v4; // eax
@@ -69011,7 +69031,7 @@ int SetupVFX1_5AF50_5B460()
 		dword_12EE94_12EE84 = sub_6660D_66B1D(vipEnv, &v16, 16);
 		dword_12EE24_12EE14 = dword_12EE94_12EE84 + 1;
 		dword_12EE10_12EE00 = SenseStatus_5AD30_5B240();
-		if (!dword_12EE10_12EE00 || sub_5ADB0_5B2C0(dword_12EE10_12EE00, &dword_12EE18_12EE08, byte_12EC10_12EC00))
+		if (!dword_12EE10_12EE00 || SenseGetConfiguration_5ADB0_5B2C0(dword_12EE10_12EE00, &dword_12EE18_12EE08, byte_12EC10_12EC00))
 		{
 			ResetVFX1_5B3B0_5B8C0();
 			return 0;
@@ -69072,7 +69092,7 @@ int SetupVFX1_5AF50_5B460()
 				continue;
 			}
 		}
-		if (sub_5AE30_5B340(dword_12EE10_12EE00, byte_12EC10_12EC00))
+		if (SenseSetConfiguration_5AE30_5B340(dword_12EE10_12EE00, byte_12EC10_12EC00))
 		{
 			ResetVFX1_5B3B0_5B8C0();
 			return 0;
@@ -69100,7 +69120,7 @@ int GetVFXPackets_5B210()
 {
   unsigned __int8 v2; // al
 
-  if ( sub_5AEB0_5B3C0(dword_12EE10_12EE00, &dword_12EE18_12EE08, byte_12ED10_12ED00) )
+  if ( SenseReport_5AEB0_5B3C0(dword_12EE10_12EE00, &dword_12EE18_12EE08, byte_12ED10_12ED00) )
   {
     ResetVFX1_5B3B0_5B8C0();
     return 0;
@@ -70627,7 +70647,7 @@ void PlayMusicTrack_5D290_5D7A0(__int16 a1)
       v2 = sub_6378C(v4);
       printf("\nError : %s", v2);
       SosMIDIUnInitDriver_6080C(dword_CBFDC, 1);
-      sub_60335();
+      SosMIDIUnInitSystem_60335();
       musicAvailable_939CC = 0;
     }
     else
@@ -70638,7 +70658,7 @@ void PlayMusicTrack_5D290_5D7A0(__int16 a1)
         v3 = sub_6378C(v5);
         printf("\nError : %s", v3);
         SosMIDIUnInitDriver_6080C(dword_CBFDC, 1);
-        sub_60335();
+        SosMIDIUnInitSystem_60335();
       }
       else
       {
@@ -71061,7 +71081,8 @@ int SosTIMERRemoveEvent_5DC91(int a1)
 
 //----- (0005DE40) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
-int sub_5DE40(int a1)
+/// Original name: sosTIMERGetEventRate (sostmr.c), Hidden Worlds linker map (placed by function order between two matches).
+int SosTIMERGetEventRate_5DE40(int a1)
 {
   return dword_A0401[a1];
 }
@@ -71963,11 +71984,11 @@ int SosMIDIInitSystem_60199(int a1, unsigned __int16 a2)
   word_131526 = __CS__;
   dword_131522 = (int)CallbackSendData_679AE;
   word_13152C = __CS__;
-  dword_131528 = (int)sub_679DE;
+  dword_131528 = (int)CallbackInit_679DE;
   word_131532 = __CS__;
-  dword_13152E = (int)sub_679F7;
+  dword_13152E = (int)CallbackUnInit_679F7;
   word_131538 = __CS__;
-  dword_131534 = (int)sub_67A10;
+  dword_131534 = (int)CallbackReset_67A10;
   word_13153E = __CS__;
   dword_13153A = (int)CallbackSetInstrumentData_67A29;
   word_1314CC = __CS__;
@@ -71987,7 +72008,7 @@ int SosMIDIInitSystem_60199(int a1, unsigned __int16 a2)
   word_131514 = __CS__;
   dword_131510 = (int)DigiUnInit_67F1C;
   word_13151A = __CS__;
-  dword_131516 = (int)sub_67F9A;
+  dword_131516 = (int)DigiReset_67F9A;
   word_131520 = __CS__;
   dword_13151C = (int)DigiSetInstrumentData_67FB3;
   word_1314EA = __CS__;
@@ -71995,9 +72016,9 @@ int SosMIDIInitSystem_60199(int a1, unsigned __int16 a2)
   word_1314F0 = __CS__;
   dword_1314EC = (int)FmInit_69F1C;
   word_1314F6 = __CS__;
-  dword_1314F2 = (int)sub_69F57;
+  dword_1314F2 = (int)FmUnInit_69F57;
   word_1314FC = __CS__;
-  dword_1314F8 = (int)sub_69F75;
+  dword_1314F8 = (int)FmReset_69F75;
   word_131502 = __CS__;
   dword_1314FE = (int)FmSetInstrumentData_69F93;
   dword_9C22A = 1;*/
@@ -72048,7 +72069,8 @@ int SosMIDIInitSystem_60199(int a1, unsigned __int16 a2)
 // 13153E: using guessed type __int16 word_13153E;
 
 //----- (00060335) --------------------------------------------------------
-int sub_60335()
+/// Original name: sosMIDIUnInitSystem (sosminit.c), Hidden Worlds linker map (placed by function order between two matches).
+int SosMIDIUnInitSystem_60335()
 {
   sub_5FD67();
   dword_9C22A = 0;
@@ -73947,7 +73969,7 @@ void FreeSound_61F90()
     if ( !musicAvailable_939CC )
       SosTIMERUnInitSystem_5D948();
     SosDIGIUnInitDriver_64F78(dword_CC140, 1, 1);
-    sub_6481C();
+    SosDIGIUnInitSystem_6481C();
     FreeAllData_61610_61B20(&pathStrArray_258E00[PS25datasnds00dat]);
   }
 }
@@ -73974,7 +73996,7 @@ void FreeMusic_62020()
     if ( byte_9AF9C )
       SosMIDIUnInitDriver_6080C(dword_12F074, 1);
     SosTIMERUnInitSystem_5D948();
-    sub_60335();
+    SosMIDIUnInitSystem_60335();
     if ( byte_CBFEF )
     {
       free_62128_62638((void*)PTR(dword_CBFE8));
@@ -75699,7 +75721,7 @@ int sub_63C5A_6416A(const void *a1, unsigned int a2, char *a3, __int16 a4, unsig
   }
   if ( v9 != 1 )
     return 7;
-  v8 = sub_67710((int (*)(_DWORD))PTR(dword_131584));
+  v8 = SosDetDRVExist_67710((int (*)(_DWORD))PTR(dword_131584));
   if ( !v8 )
     return 8;
   SosDetDRVGetCapsInfo_6765C_67B6C(a1, (int (*)(_DWORD))PTR(dword_131584), dword_1315B4, word_1315B8, a3, a4);
@@ -75730,7 +75752,7 @@ int sub_64248(unsigned int a1, __int16 a2)
   lseek(dword_131574, dword_131570, 0);
   read(dword_131574, (void*)unk_131540, 48);
   read(dword_131574, (void*)PTR(dword_131578), dword_131564);
-  sub_67710((int (*)(_DWORD))PTR(dword_131584));
+  SosDetDRVExist_67710((int (*)(_DWORD))PTR(dword_131584));
   SosDetDRVGetSettings_6773B((int (*)(_DWORD))PTR(dword_131584));
   port_writegsdword(a1, dword_A06DC);
   port_writegsdword(a1 + 8, dword_A06E0);
@@ -75827,7 +75849,8 @@ int SosDIGIInitSystem_647C0(int a1, unsigned __int16 a2)
 // A04D2: using guessed type char byte_A04D2;
 
 //----- (0006481C) --------------------------------------------------------
-int sub_6481C()
+/// Original name: sosDIGIUnInitSystem (sosinit.c), Hidden Worlds linker map (placed by function order between two matches).
+int SosDIGIUnInitSystem_6481C()
 {
   sub_645FB();
   dword_9EF80 = 0;
@@ -76136,8 +76159,8 @@ int SosDIGIUnInitDriver_64F78(unsigned int a1, int a2, int a3)
   if ( (unsigned int)dword_A02C6[a1] < 0xE106 && dword_9EF6C[a1] && a2 )
     dword_9EF6C[a1] = 0;
   v8 = (int (*)(_DWORD))PTR(dword_A01EA[a1]);
-  sub_676E5(v8);
-  sub_677B8(v8);
+  SosDRVStop_676E5(v8);
+  SosDRVUnInit_677B8(v8);
   SosDIGIUnInitForWindows_67944();
   if ( a3 )
   {
@@ -77130,13 +77153,15 @@ int SosDRVGetCapsPtr_676B0(int a1, int (*a2)(_DWORD), char a3, __int16 a4, int a
 }
 
 //----- (000676E5) --------------------------------------------------------
-int sub_676E5(int (*a1)(_DWORD))
+/// Original name: _sosDRVStop (sosdrv.asm), Hidden Worlds linker map (placed by function order between two matches).
+int SosDRVStop_676E5(int (*a1)(_DWORD))
 {
   return a1((uint32)OFF(a1));
 }
 
 //----- (00067710) --------------------------------------------------------
-int sub_67710(int (*a1)(_DWORD))
+/// Original name: _sosDetDRVExist (sosdrv.asm), Hidden Worlds linker map (placed by function order between two matches).
+int SosDetDRVExist_67710(int (*a1)(_DWORD))
 {
   return a1((uint32)OFF(a1));
 }
@@ -77171,7 +77196,8 @@ int SosDetDRVVerifySettings_67780(int (*a1)(_DWORD))
 }
 
 //----- (000677B8) --------------------------------------------------------
-int sub_677B8(int (*a1)(_DWORD))
+/// Original name: _sosDRVUnInit (sosdrv.asm), Hidden Worlds linker map (placed by function order between two matches).
+int SosDRVUnInit_677B8(int (*a1)(_DWORD))
 {
   return a1((uint32)OFF(a1));
 }
@@ -77293,7 +77319,8 @@ int CallbackSendData_679AE(int a1, unsigned __int16 a2, int a3, int a4)
 // 9C22E: using guessed type int (*byte_9C22E)(_DWORD, _DWORD, _DWORD, _DWORD);
 
 //----- (000679DE) --------------------------------------------------------
-int sub_679DE()
+/// Original name: _callbackInit (sosmcbck.c), Hidden Worlds linker map (placed by function order between two matches).
+int CallbackInit_679DE()
 {
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
@@ -77301,7 +77328,8 @@ int sub_679DE()
 }
 
 //----- (000679F7) --------------------------------------------------------
-int sub_679F7()
+/// Original name: _callbackUnInit (sosmcbck.c), Hidden Worlds linker map (placed by function order between two matches).
+int CallbackUnInit_679F7()
 {
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
@@ -77309,7 +77337,8 @@ int sub_679F7()
 }
 
 //----- (00067A10) --------------------------------------------------------
-int sub_67A10()
+/// Original name: _callbackReset (sosmcbck.c), Hidden Worlds linker map (placed by function order between two matches).
+int CallbackReset_67A10()
 {
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
@@ -77484,7 +77513,7 @@ int DigiUnInit_67F1C(int a1, int a2, int a3)
       SosTIMERRemoveEvent_5DC91(dword_9D94A[a3]);
     }
   }
-  sub_681F6();
+  DigiQueueUnInit_681F6();
   return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
 }
 // 9D922: using guessed type int dword_9D922[5];
@@ -77493,7 +77522,8 @@ int DigiUnInit_67F1C(int a1, int a2, int a3)
 // 9D95E: using guessed type int dword_9D95E[5];
 
 //----- (00067F9A) --------------------------------------------------------
-int sub_67F9A()
+/// Original name: _digiReset (sosmdigi.c), Hidden Worlds linker map (placed by function order between two matches).
+int DigiReset_67F9A()
 {
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
@@ -77605,7 +77635,8 @@ int DigiQueueInit_68180(int a1, int a2)
 // 9C9DC: using guessed type int dword_9C9DC[5];
 
 //----- (000681F6) --------------------------------------------------------
-void sub_681F6()
+/// Original name: digiQueueUnInit (sosmdq.c), Hidden Worlds linker map (placed by function order between two matches).
+void DigiQueueUnInit_681F6()
 {
   ;
 }
@@ -78734,7 +78765,8 @@ int FmInit_69F1C(int a1, int a2, int a3, int a4)
 // 131AEC: using guessed type int dword_131AEC;
 
 //----- (00069F57) --------------------------------------------------------
-int sub_69F57()
+/// Original name: _fmUnInit (sosfm.c), Hidden Worlds linker map (placed by function order between two matches).
+int FmUnInit_69F57()
 {
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
@@ -78743,7 +78775,8 @@ int sub_69F57()
 }
 
 //----- (00069F75) --------------------------------------------------------
-int sub_69F75()
+/// Original name: _fmReset (sosfm.c), Hidden Worlds linker map (placed by function order between two matches).
+int FmReset_69F75()
 {
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 

@@ -535,9 +535,13 @@ class, type)`). The state index is global within a class, not per type.
 | 10 | 1 | created with the mana ball when a creature dies | `KillCreature_1A800` |
 | 10 | 6 | fire (named from its sprite by the user); spawned by Wall of Fire and when a spell-7 jar in state 3t+2 is picked up | `FnEffectFire_252D0` |
 | 10 | 16 | lava from a volcano eruption | created by 10/18 |
-| 10 | 17 | expanding explosion ring: one 10/0 explosion per ring point per tick | `ExplosionRingTick_25CE0` |
+| 10 | 17 | expanding explosion ring: one 10/0 explosion per ring point per tick | `FnEffectMeteor_25CE0` |
 | 10 | 18 | volcano eruption emitter (128 ticks, then removes itself) | `FnEffectVolcanoAfterMath_25EC0` |
 | 10 | 19 | volcano fire, created by each eruption start, index in game state +38 | `FnEffectFireColumn_26140` |
+| 6 | 0, 1 | familiars: raven, sprite (`init_familiar_*`; placeholder constructors in this build) | linker map |
+| 7 | 0-4 | weather: tornado, rain cloud, thunder cloud, thermals, wind (`init_weather_*`) | linker map |
+| 10 | 3 | blood (`fn_effect_blood`) | linker map |
+| 10 | 7 | freeze (`fn_effect_freeze`; removed after one tick) | linker map |
 | 10 | 5 | water splash (e.g. a burnt tree falling into water) | named from its sprite by the user |
 | 10 | 13, 14 | smoke clouds (made by fires) | named from their sprites by the user |
 | 10 | 34 | mirror | named from its sprite by the user |
@@ -554,7 +558,7 @@ class, type)`). The state index is global within a class, not per type.
 Computer wizards (`FnPlayerComputerFlyer_13170`): AI mode = wizard data +415, chosen by `ActionInitialise_136C0` from
 check/start pairs. 1 castle upgrade (`ActionUpgradeMyCastle_13800`), 3 build castle (`ActionBuildMyCastle_138F0`), 6
 possession (`ActionCollectMana_13BA0`), 7 attack castle (`ActionAttackOpponentsCastle_13CA0`), 8 attack wizard, 9 attack
-balloon (8, 9 and 13 share `sub_13DC0`). Not identified yet: 2/5 (no-op), 4, 11 (below half life, targets the own
+balloon (8, 9 and 13 share `ActionAttackOpponentsFlyer_13DC0`). Not identified yet: 2/5 (no-op), 4, 11 (below half life, targets the own
 castle), 12, 13. Target entity +146, its tag +148 (`TargetChecksum_15420`: id + type + 128*class, so `ValidTarget_15440` notices
 when the slot has been reused). Class-3 entities (wizards, castles, balloons) are in the
 list at `str_AE408_AE3F8` +36462.
@@ -569,7 +573,7 @@ user): 0 Fireball, 1 Heal, 2 Speed, 3 Possession, 4 Shield, 5 Beyond Sight, 6 Ea
 9 Crater, 10 Teleport, 11 Duel, 12 Invisible, 13 Steal Mana, 14 Rebound, 15 Lightning, 16 Castle, 17 Undead Army,
 18 Lightning Storm, 19 Mana Magnet, 20 Wall of Fire, 21 Reverse Speed, 22 Global Death, 23 Rapid Fireball. The
 game text (`data/etext.dat`) has no spell names. Most cast handlers (`Cast<Spell>_*`) create a class 9 missile
-(`Create<Spell>Missile_*`) and store the class/type of its payload in the missile's +68/+69. `UpdateMissile_52770_52AB0`
+(`Create<Spell>Missile_*`) and store the class/type of its payload in the missile's +68/+69. `FnShotGeneric_52770_52AB0`
 creates that entity on impact (`Create<Spell>Effect_*`, class 10). Example: Volcano -> 9/4 -> 10/9 -> 10/18 eruption.
 
 Creatures (class 5), type t: states 6t..6t+5 = idle (`FnCreatureStand_19B10`), the type's own main state
@@ -649,9 +653,9 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     at x tile = z>>8 (far out at sea). `defs.h` now `static_assert`s that these macros only see 1/2/4/8
     byte objects, so any new instance fails to compile - fix by naming the field (`.x`).
 23. **Missing timer registration with sound on.** With a sound driver present the game registers its
-    120 Hz clock (`HmiTimerTick_357A0`) with the HMI timer service instead of the PIT ISR. That call
+    120 Hz clock (`AniSpeedTimer_357A0`) with the HMI timer service instead of the PIT ISR. That call
     was commented out, so `timerTicks_AC5D4_AC5C4` never advanced with sound enabled and every wait on it
-    (post-level info FMV) hung. Now `PortTimer_Start(1193182/120, HmiTimerTick_357A0)`.
+    (post-level info FMV) hung. Now `PortTimer_Start(1193182/120, AniSpeedTimer_357A0)`.
 24. **Signed fields declared unsigned in structs.** `axis_4d` (entity collision box at +78) had its
     z offset as `uint16_t`; castles use -8192, so the box test compared against z+57344 and nothing
     ever hit a castle (castle-upgrade missiles flew through). When a comparison involving a struct
@@ -727,7 +731,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     immediates in the original code; repeat that check (scan the code object for aligned addresses
     inside the table, `tools/check_creature_types.py`) whenever a table pointer looks suspicious.
 41. **DOS mouse-driver units.** In 640x480 (`typeResolution & 8`) the game set the INT 33h range to
-    0..5120 x 0..3840 and divides positions by 8 (`UpdateMouseEventData_5BE72_5C382`); setting the
+    0..5120 x 0..3840 and divides positions by 8 (`MouseHandler256_5BE72_5C382`); setting the
     position multiplies by 8 (`sub_59750`). The port feeds pixels, so `MouseEvents` scales by 8 in that
     mode and `VGA_Set_mouse` is given pixels. Without it the cursor was stuck in the top-left 80x60 and
     mouse steering died after pressing R.
@@ -866,7 +870,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     - The same `memset(..., 48)` beside it gave it away: 8 x 6 = 48.
     - Check: an array's element size (`sizeof(T)` x count) against the original's index arithmetic
       (`imul`/`lea` scale) and any memset/memcpy of the whole array.
-65. **Flag constant ORed into one byte of a flag dword.** `ExplosionRingTick_25CE0` and `WallOfFireEffectTick_29780` had
+65. **Flag constant ORed into one byte of a flag dword.** `FnEffectMeteor_25CE0` and `FnEffectExtra1_29780` had
     `var_29811_16.byte[0] |= 0x10002u` where the original does `or dword ptr [ebx+0x10], 0x10002`:
     the byte store kept the 0x2 and dropped the 0x10000 (+18 bit 0). Found as a lone one-byte
     `diff_tick` difference (`entity N +18: orig 1 port 0`). Grep for `byte[k] |= 0x` / `&= ~0x` with
@@ -916,7 +920,7 @@ same code as MC1's `DrawAThing_2C410_2C450`/`DrawSprite_*` and uses the same scr
 |---|---|
 | VGA mode 13h / 640×480 SVGA, `0x3C8/0x3C9` palette | `VGA_Resize`, `VGA_Set_Palette` (6-bit DAC ×4), `VGA_Blit(begWscreen…)` → SDL INDEX8 surface → RGB texture |
 | INT 9 keyboard ISR filling `pressedKeys_12EEF0_12EEE0[128]` / `lastPressedKey_12EF70_12EF60` | `VGA_InjectKey()` ← SDL key events / input scripts; SDL scancode → DOS set-1 scancode in `fixchar()` |
-| INT 33h mouse callback | `MouseEvents(buttons, x, y)` → `UpdateMouseEventData_5BE72_5C382`; buttons: 1 move, 2/4 left down/up, 8/0x10 right, 0x20/0x40 middle |
+| INT 33h mouse callback | `MouseEvents(buttons, x, y)` → `MouseHandler256_5BE72_5C382`; buttons: 1 move, 2/4 left down/up, 8/0x10 right, 0x20/0x40 middle |
 | PIT channel 0 (divisor 9903 ≈ 120.5 Hz) + INT 8 ISR `SystemCBfn_5A3E3` | `PortTimer_Start(divisor, SystemCBfn_5A3E3)` in `OpenTimerInterrupt_5A459_5A969` |
 | HMI SOS digital driver (`hmidrv.386`) | `portability/port_sound.cpp` on SDL_mixer (§6.4) |
 | HMI MIDI driver (`hmimdrv.386`) | `portability/port_music.cpp`: libADLMIDI + BW_MidiSequencer (§6.4b) |

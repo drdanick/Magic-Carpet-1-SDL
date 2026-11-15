@@ -164,7 +164,7 @@ disappears together with every other tree and stone on the map. The triggers the
 
 **Cause:** scenery (class 2: trees, stones) is on the recycle list. When the entity table is full,
 `InitAThing_372C0_37680` takes new slots from that list (see #8) and overwrites them for good. An expanding
-explosion ring (class 10 type 17, `ExplosionRingTick_25CE0`, started by a class 9 type 3 missile) creates one explosion
+explosion ring (class 10 type 17, `FnEffectMeteor_25CE0`, started by a class 9 type 3 missile) creates one explosion
 (10/0) per point of a growing ring every tick. Three of them at once, all from the player's wizard,
 made 120-130 explosions per tick. With the table full, those took the scenery slots: 359 trees
 (class 2 type 0), 93 standing stones (type 3) and 56 type 1 stones were all gone within five ticks.

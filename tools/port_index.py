@@ -45,7 +45,7 @@ def strip_comments(text):
 def addr_from_name(name):
     m = NAME_ADDR.match(name)
     if not m:
-        # names like DrawSprite_2FC50_2FC90 handled above; also Name_XXXXX at the end
+        # names like DoReflectMapWho_2FC50_2FC90 handled above; also Name_XXXXX at the end
         m2 = re.search(r'_([0-9A-F]{5})(?:_[0-9A-F]{5})?$', name)
         return int(m2.group(1), 16) if m2 else None
     return int(m.group(1), 16)
