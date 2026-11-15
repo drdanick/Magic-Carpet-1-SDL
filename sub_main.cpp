@@ -400,9 +400,9 @@ signed int TerrainSlope_19650(axis_3d* a1);
 void MoveCreature_196E0(Type_AE400_29795* a1);
 void CreatureIdleTick_19B10(Type_AE400_29795* a1, char a2);
 void sub_19D70(Type_AE400_29795* a1, char a2);
-int sub_1A120(Type_AE400_29795* a1, char a2, unsigned __int16 (*a3)(Type_AE400_29795*, int));
+int CreatureAttackTick_1A120(Type_AE400_29795* a1, char a2, unsigned __int16 (*a3)(Type_AE400_29795*, int));
 void UpdateFollower_1A390(Type_AE400_29795* a1, unsigned __int16 a2);
-void sub_1A6C0(Type_AE400_29795* a1, char a2);
+void CreatureDying_1A6C0(Type_AE400_29795* a1, char a2);
 void KillCreature_1A800(Type_AE400_29795* a1);
 int sub_1A8E0(Type_AE400_29795* a1, Type_AE400_29795* a2);
 int sub_1A990(Type_AE400_29795* a1, Type_AE400_29795* a2);
@@ -413,61 +413,61 @@ int sub_1AE30(Type_AE400_29795* a1, Type_AE400_29795* a2);
 int sub_1AEE0(Type_AE400_29795* a1, Type_AE400_29795* a2);
 void Class5Type0IdleTick_1B060(Type_AE400_29795* a1);
 void Class5Type0Tick_1B070(Type_AE400_29795* a1);
-void sub_1B090(Type_AE400_29795* a1);
-void sub_1B0E0(Type_AE400_29795* a1);
-void sub_1B100(Type_AE400_29795* a1);
-void sub_1B110(Type_AE400_29795* a1);
+void Class5Type0AttackTick_1B090(Type_AE400_29795* a1);
+void Class5Type0FollowTick_1B0E0(Type_AE400_29795* a1);
+void Class5Type0DyingTick_1B100(Type_AE400_29795* a1);
+void Class5Type0DeadTick_1B110(Type_AE400_29795* a1);
 void sub_1B120(Type_AE400_29795* a1);
 void Class5Type1IdleTick_1B160(Type_AE400_29795* a1);
 void Class5Type1Tick_1B200(Type_AE400_29795* a1);
-void sub_1B2D0(Type_AE400_29795* a1);
-void sub_1B320(Type_AE400_29795* a1);
-void sub_1B330(Type_AE400_29795* a1);
-void sub_1B340(Type_AE400_29795* a1);
+void Class5Type1AttackTick_1B2D0(Type_AE400_29795* a1);
+void Class5Type1FollowTick_1B320(Type_AE400_29795* a1);
+void Class5Type1DyingTick_1B330(Type_AE400_29795* a1);
+void Class5Type1DeadTick_1B340(Type_AE400_29795* a1);
 void Class5Type2IdleTick_1B350(Type_AE400_29795* a1);
 void Class5Type2Tick_1B370(Type_AE400_29795* a1);
-void sub_1B3C0(Type_AE400_29795* a1);
-void sub_1B4C0(Type_AE400_29795* a1);
-void sub_1B4E0(Type_AE400_29795* a1);
-void sub_1B4F0(Type_AE400_29795* a1);
+void Class5Type2AttackTick_1B3C0(Type_AE400_29795* a1);
+void Class5Type2FollowTick_1B4C0(Type_AE400_29795* a1);
+void Class5Type2DyingTick_1B4E0(Type_AE400_29795* a1);
+void Class5Type2DeadTick_1B4F0(Type_AE400_29795* a1);
 void WormIdleTick_1B500(Type_AE400_29795* a1);
 void WormTick_1B510(Type_AE400_29795* a1);
-void sub_1B520(Type_AE400_29795* a1);
-void sub_1B570(Type_AE400_29795* a1);
-void sub_1B580(Type_AE400_29795* a1);
-void sub_1B590(Type_AE400_29795* a1);
+void WormAttackTick_1B520(Type_AE400_29795* a1);
+void WormFollowTick_1B570(Type_AE400_29795* a1);
+void WormDyingTick_1B580(Type_AE400_29795* a1);
+void WormDeadTick_1B590(Type_AE400_29795* a1);
 void GuardIdleTick_1B5A0(Type_AE400_29795* a1);
 void GuardTick_1B5D0(Type_AE400_29795* a1);
-void sub_1BB20(Type_AE400_29795* a1);
-void sub_1BBE0(Type_AE400_29795* a1);
-void sub_1BC10(Type_AE400_29795* a1);
-void sub_1BC40(Type_AE400_29795* a1);
+void GuardAttackTick_1BB20(Type_AE400_29795* a1);
+void GuardFollowTick_1BBE0(Type_AE400_29795* a1);
+void GuardDyingTick_1BC10(Type_AE400_29795* a1);
+void GuardDeadTick_1BC40(Type_AE400_29795* a1);
 void sub_1BC50(Type_AE400_29795* a1);
 void sub_1BCE0(Type_AE400_29795* a1);
 void sub_1BD10(Type_AE400_29795* a1);
 void CrabTick_1BD20(Type_AE400_29795* a1);
-void sub_1C110(Type_AE400_29795* a1);
+void CrabAttackTick_1C110(Type_AE400_29795* a1);
 void sub_1C170(Type_AE400_29795* a1);
-void sub_1C3C0(Type_AE400_29795* a1);
-void sub_1C3D0(Type_AE400_29795* a1);
+void CrabDyingTick_1C3C0(Type_AE400_29795* a1);
+void CrabDeadTick_1C3D0(Type_AE400_29795* a1);
 void Class5Type6IdleTick_1C490(Type_AE400_29795* a1);
 void Class5Type6Tick_1C4A0(Type_AE400_29795* a1);
 void sub_1C4F0(Type_AE400_29795* a1);
-void sub_1C880(Type_AE400_29795* a1);
-void sub_1C8D0(Type_AE400_29795* a1);
-void sub_1C8E0(Type_AE400_29795* a1);
+void Class5Type6FollowTick_1C880(Type_AE400_29795* a1);
+void Class5Type6DyingTick_1C8D0(Type_AE400_29795* a1);
+void Class5Type6DeadTick_1C8E0(Type_AE400_29795* a1);
 void Class5Type7IdleTick_1C8F0(Type_AE400_29795* a1);
 void Class5Type7Tick_1C900(Type_AE400_29795* a1);
-void sub_1C960(Type_AE400_29795* a1);
-void sub_1CA00(Type_AE400_29795* a1);
-void sub_1CA20(Type_AE400_29795* a1);
-void sub_1CA30(Type_AE400_29795* a1);
+void Class5Type7AttackTick_1C960(Type_AE400_29795* a1);
+void Class5Type7FollowTick_1CA00(Type_AE400_29795* a1);
+void Class5Type7DyingTick_1CA20(Type_AE400_29795* a1);
+void Class5Type7DeadTick_1CA30(Type_AE400_29795* a1);
 void Class5Type8IdleTick_1CA40(Type_AE400_29795* a1);
 void Class5Type8Tick_1CA50(Type_AE400_29795* a1);
-void sub_1CE30(Type_AE400_29795* a1);
-void sub_1CF50(Type_AE400_29795* a1);
-void sub_1CF60(Type_AE400_29795* a1);
-void sub_1CFE0(Type_AE400_29795* a1);
+void Class5Type8AttackTick_1CE30(Type_AE400_29795* a1);
+void Class5Type8FollowTick_1CF50(Type_AE400_29795* a1);
+void Class5Type8DyingTick_1CF60(Type_AE400_29795* a1);
+void Class5Type8DeadTick_1CFE0(Type_AE400_29795* a1);
 void Class5Type9Tick_1CFF0(Type_AE400_29795* a1);
 void sub_1D060(Type_AE400_29795* a1);
 void sub_1D6D0(Type_AE400_29795* a1);
@@ -481,10 +481,10 @@ void sub_1DD90(Type_AE400_29795* a1);
 void sub_1DDB0(Type_AE400_29795* a1);
 void Class5Type10IdleTick_1DDD0(Type_AE400_29795* a1);
 void Class5Type10Tick_1DDE0(Type_AE400_29795* a1);
-int sub_1DDF0(Type_AE400_29795* a1);
-void sub_1DE10(Type_AE400_29795* a1);
-void sub_1DE20(Type_AE400_29795* a1);
-void sub_1DE30(Type_AE400_29795* a1);
+int Class5Type10AttackTick_1DDF0(Type_AE400_29795* a1);
+void Class5Type10FollowTick_1DE10(Type_AE400_29795* a1);
+void Class5Type10DyingTick_1DE20(Type_AE400_29795* a1);
+void Class5Type10DeadTick_1DE30(Type_AE400_29795* a1);
 void Class5Type11Tick_1DE40(Type_AE400_29795* a1);
 void sub_1DFE0(Type_AE400_29795* a1);
 void sub_1E380(Type_AE400_29795* a1);
@@ -500,29 +500,29 @@ void sub_1EA40(Type_AE400_29795* a1);
 void Class5Type12Tick_1EED0(Type_AE400_29795* a1);
 void sub_1F120(Type_AE400_29795* a1);
 void sub_1F390(Type_AE400_29795* a1);
-void sub_1F5A0(Type_AE400_29795* a1);
-void sub_1F5B0(Type_AE400_29795* a1);
+void Class5Type12DyingTick_1F5A0(Type_AE400_29795* a1);
+void Class5Type12DeadTick_1F5B0(Type_AE400_29795* a1);
 void Class5Type13Tick_1F640(Type_AE400_29795* a1);
-void sub_1FA00(Type_AE400_29795* a1);
-void sub_1FAA0(Type_AE400_29795* a1);
+void Class5Type13DyingTick_1FA00(Type_AE400_29795* a1);
+void Class5Type13DeadTick_1FAA0(Type_AE400_29795* a1);
 void Class5Type14Tick_1FAC0(Type_AE400_29795* a1);
-void sub_1FE90(Type_AE400_29795* a1);
-void sub_1FEC0(Type_AE400_29795* a1);
+void Class5Type14DyingTick_1FE90(Type_AE400_29795* a1);
+void Class5Type14DeadTick_1FEC0(Type_AE400_29795* a1);
 // void sub_1FF40(char a1, int a2, char a3, int a4, int a5);
 void Class5Type15Tick_1FF60(Type_AE400_29795* a1);
 void sub_201D0(Type_AE400_29795* a1);
-void sub_203E0(Type_AE400_29795* a1);
-void sub_203F0(Type_AE400_29795* a1);
-void sub_20400(Type_AE400_29795* a1);
+void Class5Type15FollowTick_203E0(Type_AE400_29795* a1);
+void Class5Type15DyingTick_203F0(Type_AE400_29795* a1);
+void Class5Type15DeadTick_20400(Type_AE400_29795* a1);
 void sub_20410(Type_AE400_29795* a1);
 void sub_20450(Type_AE400_29795* a1);
 void sub_20480(Type_AE400_29795* a1);
 void WyvernIdleTick_20700(Type_AE400_29795* a1);
 void WyvernTick_20710(Type_AE400_29795* a1);
 void sub_207E0(Type_AE400_29795* a1);
-void sub_20B60(Type_AE400_29795* a1);
-void sub_20B70(Type_AE400_29795* a1);
-void sub_20B80(Type_AE400_29795* a1);
+void WyvernFollowTick_20B60(Type_AE400_29795* a1);
+void WyvernDyingTick_20B70(Type_AE400_29795* a1);
+void WyvernDeadTick_20B80(Type_AE400_29795* a1);
 int DangerMusicFadeStep_20BD0();
 void UpdateDangerMusic_20D00(char a1);
 void StopMusic_20E60_20E60();
@@ -3826,58 +3826,58 @@ Type_254A34x str_254DAC[] = {
 Type_254A34x str_254DCC[] = {//254DCC
 { 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))Class5Type0IdleTick_1B060, 0x0001, 0x0000 },
 { 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))Class5Type0Tick_1B070,0x0001,0x0000 },
-{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))sub_1B090,0x0001,0x0000 },
-{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))sub_1B0E0,0x0001,0x0000 },
-{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))sub_1B100,0x0001,0x0000 },
-{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))sub_1B110,0x0001,0x0000 },
+{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))Class5Type0AttackTick_1B090,0x0001,0x0000 },
+{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))Class5Type0FollowTick_1B0E0,0x0001,0x0000 },
+{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))Class5Type0DyingTick_1B100,0x0001,0x0000 },
+{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))Class5Type0DeadTick_1B110,0x0001,0x0000 },
 { 0x002548F4,0x0006,(void (*)(Type_AE400_29795*))Class5Type1IdleTick_1B160,0x0001,0x0000 },
 { 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))Class5Type1Tick_1B200,0x0001,0x0000 },
-{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))sub_1B2D0,0x0001,0x0000 },
-{ 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))sub_1B320,0x0001,0x0000 },
-{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))sub_1B330,0x0001,0x0000 },
-{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))sub_1B340,0x0001,0x0000 },
+{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))Class5Type1AttackTick_1B2D0,0x0001,0x0000 },
+{ 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))Class5Type1FollowTick_1B320,0x0001,0x0000 },
+{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))Class5Type1DyingTick_1B330,0x0001,0x0000 },
+{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))Class5Type1DeadTick_1B340,0x0001,0x0000 },
 { 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))Class5Type2IdleTick_1B350,0x0001,0x0000 },
 { 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))Class5Type2Tick_1B370,0x0001,0x0000 },
-{ 0x002548F4, 0x000E, (void (*)(Type_AE400_29795*))sub_1B3C0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000F, (void (*)(Type_AE400_29795*))sub_1B4C0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0010, (void (*)(Type_AE400_29795*))sub_1B4E0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0011, (void (*)(Type_AE400_29795*))sub_1B4F0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000E, (void (*)(Type_AE400_29795*))Class5Type2AttackTick_1B3C0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000F, (void (*)(Type_AE400_29795*))Class5Type2FollowTick_1B4C0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0010, (void (*)(Type_AE400_29795*))Class5Type2DyingTick_1B4E0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0011, (void (*)(Type_AE400_29795*))Class5Type2DeadTick_1B4F0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0012, (void (*)(Type_AE400_29795*))WormIdleTick_1B500, 0x0001, 0x0000 },
 { 0x002548F4, 0x0013, (void (*)(Type_AE400_29795*))WormTick_1B510, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0014, (void (*)(Type_AE400_29795*))sub_1B520, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0015, (void (*)(Type_AE400_29795*))sub_1B570, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0016, (void (*)(Type_AE400_29795*))sub_1B580, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0017, (void (*)(Type_AE400_29795*))sub_1B590, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0014, (void (*)(Type_AE400_29795*))WormAttackTick_1B520, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0015, (void (*)(Type_AE400_29795*))WormFollowTick_1B570, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0016, (void (*)(Type_AE400_29795*))WormDyingTick_1B580, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0017, (void (*)(Type_AE400_29795*))WormDeadTick_1B590, 0x0001, 0x0000 },
 { 0x002548F4, 0x0018, (void (*)(Type_AE400_29795*))GuardIdleTick_1B5A0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0019, (void (*)(Type_AE400_29795*))GuardTick_1B5D0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001A, (void (*)(Type_AE400_29795*))sub_1BB20, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001B, (void (*)(Type_AE400_29795*))sub_1BBE0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001C, (void (*)(Type_AE400_29795*))sub_1BC10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001D, (void (*)(Type_AE400_29795*))sub_1BC40, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001A, (void (*)(Type_AE400_29795*))GuardAttackTick_1BB20, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001B, (void (*)(Type_AE400_29795*))GuardFollowTick_1BBE0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001C, (void (*)(Type_AE400_29795*))GuardDyingTick_1BC10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001D, (void (*)(Type_AE400_29795*))GuardDeadTick_1BC40, 0x0001, 0x0000 },
 { 0x002548F4, 0x001E, (void (*)(Type_AE400_29795*))sub_1BD10, 0x0001, 0x0000 },
 { 0x002548F4, 0x001F, (void (*)(Type_AE400_29795*))CrabTick_1BD20, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0020, (void (*)(Type_AE400_29795*))sub_1C110, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0020, (void (*)(Type_AE400_29795*))CrabAttackTick_1C110, 0x0001, 0x0000 },
 { 0x002548F4, 0x0021, (void (*)(Type_AE400_29795*))sub_1C170, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0022, (void (*)(Type_AE400_29795*))sub_1C3C0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0023, (void (*)(Type_AE400_29795*))sub_1C3D0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0022, (void (*)(Type_AE400_29795*))CrabDyingTick_1C3C0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0023, (void (*)(Type_AE400_29795*))CrabDeadTick_1C3D0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0024, (void (*)(Type_AE400_29795*))Class5Type6IdleTick_1C490, 0x0001, 0x0000 },
 { 0x002548F4, 0x0025, (void (*)(Type_AE400_29795*))Class5Type6Tick_1C4A0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0026, (void (*)(Type_AE400_29795*))sub_1C4F0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0027, (void (*)(Type_AE400_29795*))sub_1C880, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0028, (void (*)(Type_AE400_29795*))sub_1C8D0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0029, (void (*)(Type_AE400_29795*))sub_1C8E0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0027, (void (*)(Type_AE400_29795*))Class5Type6FollowTick_1C880, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0028, (void (*)(Type_AE400_29795*))Class5Type6DyingTick_1C8D0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0029, (void (*)(Type_AE400_29795*))Class5Type6DeadTick_1C8E0, 0x0001, 0x0000 },
 { 0x002548F4, 0x002A, (void (*)(Type_AE400_29795*))Class5Type7IdleTick_1C8F0, 0x0001, 0x0000 },
 { 0x002548F4, 0x002B, (void (*)(Type_AE400_29795*))Class5Type7Tick_1C900, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002C, (void (*)(Type_AE400_29795*))sub_1C960, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002D, (void (*)(Type_AE400_29795*))sub_1CA00, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002E, (void (*)(Type_AE400_29795*))sub_1CA20, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002F, (void (*)(Type_AE400_29795*))sub_1CA30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002C, (void (*)(Type_AE400_29795*))Class5Type7AttackTick_1C960, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002D, (void (*)(Type_AE400_29795*))Class5Type7FollowTick_1CA00, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002E, (void (*)(Type_AE400_29795*))Class5Type7DyingTick_1CA20, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002F, (void (*)(Type_AE400_29795*))Class5Type7DeadTick_1CA30, 0x0001, 0x0000 },
 { 0x002548F4, 0x0030, (void (*)(Type_AE400_29795*))Class5Type8IdleTick_1CA40, 0x0001, 0x0000 },
 { 0x002548F4, 0x0031, (void (*)(Type_AE400_29795*))Class5Type8Tick_1CA50, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0032, (void (*)(Type_AE400_29795*))sub_1CE30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0033, (void (*)(Type_AE400_29795*))sub_1CF50, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0034, (void (*)(Type_AE400_29795*))sub_1CF60, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0035, (void (*)(Type_AE400_29795*))sub_1CFE0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0032, (void (*)(Type_AE400_29795*))Class5Type8AttackTick_1CE30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0033, (void (*)(Type_AE400_29795*))Class5Type8FollowTick_1CF50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0034, (void (*)(Type_AE400_29795*))Class5Type8DyingTick_1CF60, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0035, (void (*)(Type_AE400_29795*))Class5Type8DeadTick_1CFE0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0036, (void (*)(Type_AE400_29795*))Class5Type9Tick_1CFF0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0037, (void (*)(Type_AE400_29795*))sub_1D060, 0x0001, 0x0000 },
 { 0x002548F4, 0x0038, (void (*)(Type_AE400_29795*))sub_1DA60, 0x0001, 0x0000 },
@@ -3886,10 +3886,10 @@ Type_254A34x str_254DCC[] = {//254DCC
 { 0x002548F4, 0x003B, (void (*)(Type_AE400_29795*))sub_1DCC0, 0x0001, 0x0000 },
 { 0x002548F4, 0x003C, (void (*)(Type_AE400_29795*))Class5Type10IdleTick_1DDD0, 0x0001, 0x0000 },
 { 0x002548F4, 0x003D, (void (*)(Type_AE400_29795*))Class5Type10Tick_1DDE0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003E, (void (*)(Type_AE400_29795*))sub_1DDF0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003F, (void (*)(Type_AE400_29795*))sub_1DE10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0040, (void (*)(Type_AE400_29795*))sub_1DE20, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0041, (void (*)(Type_AE400_29795*))sub_1DE30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003E, (void (*)(Type_AE400_29795*))Class5Type10AttackTick_1DDF0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003F, (void (*)(Type_AE400_29795*))Class5Type10FollowTick_1DE10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0040, (void (*)(Type_AE400_29795*))Class5Type10DyingTick_1DE20, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0041, (void (*)(Type_AE400_29795*))Class5Type10DeadTick_1DE30, 0x0001, 0x0000 },
 { 0x002548F4, 0x0042, (void (*)(Type_AE400_29795*))Class5Type11Tick_1DE40, 0x0001, 0x0000 },
 { 0x002548F4, 0x0043, (void (*)(Type_AE400_29795*))sub_1DFE0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0044, (void (*)(Type_AE400_29795*))sub_1E380, 0x0001, 0x0000 },
@@ -3900,32 +3900,32 @@ Type_254A34x str_254DCC[] = {//254DCC
 { 0x002548F4, 0x0049, (void (*)(Type_AE400_29795*))Class5Type12Tick_1EED0, 0x0001, 0x0000 },
 { 0x002548F4, 0x004A, (void (*)(Type_AE400_29795*))sub_1F120, 0x0001, 0x0000 },
 { 0x002548F4, 0x004B, (void (*)(Type_AE400_29795*))sub_1F390, 0x0001, 0x0000 },
-{ 0x002548F4, 0x004C, (void (*)(Type_AE400_29795*))sub_1F5A0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x004D, (void (*)(Type_AE400_29795*))sub_1F5B0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x004C, (void (*)(Type_AE400_29795*))Class5Type12DyingTick_1F5A0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x004D, (void (*)(Type_AE400_29795*))Class5Type12DeadTick_1F5B0, 0x0001, 0x0000 },
 { 0x002548F4, 0x004E, (void (*)(Type_AE400_29795*))EmptyStateHandler_1F630, 0x0001, 0x0000 },
 { 0x002548F4, 0x004F, (void (*)(Type_AE400_29795*))Class5Type13Tick_1F640, 0x0001, 0x0000 },
 { 0x002548F4, 0x0050, (void (*)(Type_AE400_29795*))EmptyStateHandler_1F9F0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0051, (void (*)(Type_AE400_29795*))EmptyStateHandler_1F9F0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0052, (void (*)(Type_AE400_29795*))sub_1FA00, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0053, (void (*)(Type_AE400_29795*))sub_1FAA0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0052, (void (*)(Type_AE400_29795*))Class5Type13DyingTick_1FA00, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0053, (void (*)(Type_AE400_29795*))Class5Type13DeadTick_1FAA0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0054, (void (*)(Type_AE400_29795*))EmptyStateHandler_1FAB0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0055, (void (*)(Type_AE400_29795*))Class5Type14Tick_1FAC0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0056, (void (*)(Type_AE400_29795*))EmptyStateHandler_1FE80, 0x0001, 0x0000 },
 { 0x002548F4, 0x0057, (void (*)(Type_AE400_29795*))EmptyStateHandler_1FE80, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0058, (void (*)(Type_AE400_29795*))sub_1FE90, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0059, (void (*)(Type_AE400_29795*))sub_1FEC0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0058, (void (*)(Type_AE400_29795*))Class5Type14DyingTick_1FE90, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0059, (void (*)(Type_AE400_29795*))Class5Type14DeadTick_1FEC0, 0x0001, 0x0000 },
 { 0x002548F4, 0x005A, (void (*)(Type_AE400_29795*))Class5Type15IdleTick_1FF50, 0x0001, 0x0000 },
 { 0x002548F4, 0x005B, (void (*)(Type_AE400_29795*))Class5Type15Tick_1FF60, 0x0001, 0x0000 },
 { 0x002548F4, 0x005C, (void (*)(Type_AE400_29795*))sub_201D0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x005D, (void (*)(Type_AE400_29795*))sub_203E0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x005E, (void (*)(Type_AE400_29795*))sub_203F0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x005F, (void (*)(Type_AE400_29795*))sub_20400, 0x0001, 0x0000 },
+{ 0x002548F4, 0x005D, (void (*)(Type_AE400_29795*))Class5Type15FollowTick_203E0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x005E, (void (*)(Type_AE400_29795*))Class5Type15DyingTick_203F0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x005F, (void (*)(Type_AE400_29795*))Class5Type15DeadTick_20400, 0x0001, 0x0000 },
 { 0x002548F4, 0x0060, (void (*)(Type_AE400_29795*))WyvernIdleTick_20700, 0x0001, 0x0000 },
 { 0x002548F4, 0x0061, (void (*)(Type_AE400_29795*))WyvernTick_20710, 0x0001, 0x0000 },
 { 0x002548F4, 0x0062, (void (*)(Type_AE400_29795*))sub_207E0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0063, (void (*)(Type_AE400_29795*))sub_20B60, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0064, (void (*)(Type_AE400_29795*))sub_20B70, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0065, (void (*)(Type_AE400_29795*))sub_20B80, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0063, (void (*)(Type_AE400_29795*))WyvernFollowTick_20B60, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0064, (void (*)(Type_AE400_29795*))WyvernDyingTick_20B70, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0065, (void (*)(Type_AE400_29795*))WyvernDeadTick_20B80, 0x0001, 0x0000 },
 { 0x002548F4, 0x0066, (void (*)(Type_AE400_29795*))EmptyStateHandler_20B90, 0x0000, 0x0000 },
 { 0x002548F4, 0x0067, (void (*)(Type_AE400_29795*))EmptyStateHandler_20B90, 0x0000, 0x0000 },
 { 0x002548F4, 0x0068, (void (*)(Type_AE400_29795*))EmptyStateHandler_20B90, 0x0000, 0x0000 },
@@ -20519,7 +20519,8 @@ LABEL_42:
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_1A120(Type_AE400_29795* a1x, char a2, unsigned __int16 (*a3)(Type_AE400_29795*, int))
+/// Shared attack state (a2 + 2) of class 5 creatures: takes damage like CreatureIdleTick_19B10 (dies: a2 + 4; hit by a wizard: retargets it), otherwise moves (MoveCreature_196E0) towards the target (+146) and calls the attack routine a3.
+int CreatureAttackTick_1A120(Type_AE400_29795* a1x, char a2, unsigned __int16 (*a3)(Type_AE400_29795*, int))
 {
   int v3; // esi
   unsigned int v4; // edi
@@ -20768,7 +20769,8 @@ LABEL_24:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1A6C0(Type_AE400_29795* a1x, char a2)
+/// Dying state (a2 + 4) of a class 5 creature: puts its followers (+54 chain) and itself into a2 + 5 (dead) and, when the killer (+38) is the player's wizard (class 3 type 0), counts the kill (wizard data +359; not for types 9 and 12-15).
+void CreatureDying_1A6C0(Type_AE400_29795* a1x, char a2)
 {
   Type_AE400_29795* ix; // ebx
   __int16 v3; // cx
@@ -21136,28 +21138,36 @@ void Class5Type0Tick_1B070(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B090(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 0).
+/// Class 5 type 0 attack state: CreatureAttackTick_1A120(a1x, 0, ...) (state 2).
+void Class5Type0AttackTick_1B090(Type_AE400_29795* a1x)
 {
-  if ( (unsigned __int16)sub_1A120(a1x, 0, PORT_FN(sub_1A8E0, unsigned __int16(Type_AE400_29795*, int))) )
+  if ( (unsigned __int16)CreatureAttackTick_1A120(a1x, 0, PORT_FN(sub_1A8E0, unsigned __int16(Type_AE400_29795*, int))) )
     PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 8);
   sub_1B120(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B0E0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 0).
+/// Class 5 type 0 follow state: UpdateFollower_1A390(a1x, 0) (state 3).
+void Class5Type0FollowTick_1B0E0(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0);
   sub_1B120(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B100(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 0).
+/// Class 5 type 0 dying state: CreatureDying_1A6C0(a1x, 0) (state 4).
+void Class5Type0DyingTick_1B100(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 0);
+  CreatureDying_1A6C0(a1x, 0);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B110(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 0).
+/// Class 5 type 0 dead state: KillCreature_1A800 (state 5).
+void Class5Type0DeadTick_1B110(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
@@ -21252,26 +21262,34 @@ void Class5Type1Tick_1B200(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B2D0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 1).
+/// Class 5 type 1 attack state: CreatureAttackTick_1A120(a1x, 6, ...) (state 8).
+void Class5Type1AttackTick_1B2D0(Type_AE400_29795* a1x)
 {
-  if ( (unsigned __int16)sub_1A120(a1x, 6, (unsigned __int16 (*)(Type_AE400_29795*, int))sub_1AB10) )
+  if ( (unsigned __int16)CreatureAttackTick_1A120(a1x, 6, (unsigned __int16 (*)(Type_AE400_29795*, int))sub_1AB10) )
     PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 7);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B320(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 1).
+/// Class 5 type 1 follow state: UpdateFollower_1A390(a1x, 6) (state 9).
+void Class5Type1FollowTick_1B320(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 6u);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B330(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 1).
+/// Class 5 type 1 dying state: CreatureDying_1A6C0(a1x, 6) (state 10).
+void Class5Type1DyingTick_1B330(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 6);
+  CreatureDying_1A6C0(a1x, 6);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B340(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 1).
+/// Class 5 type 1 dead state: KillCreature_1A800 (state 11).
+void Class5Type1DeadTick_1B340(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
@@ -21300,7 +21318,9 @@ void Class5Type2Tick_1B370(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B3C0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 2).
+/// Class 5 type 2 attack state: CreatureAttackTick_1A120(a1x, 12, ...) (state 14).
+void Class5Type2AttackTick_1B3C0(Type_AE400_29795* a1x)
 {
   __int16 v1; // dx
   int v2; // ecx
@@ -21320,7 +21340,7 @@ void sub_1B3C0(Type_AE400_29795* a1x)
   else
     LOWORD(v3) = 0;
   a1x->var_u32_29867_72.z += v3 * a1x->var_u32_29951_156->vertSpeed_14;
-  result = sub_1A120(a1x, 12, (unsigned __int16 (*)(Type_AE400_29795*, int))sub_1AB10);
+  result = CreatureAttackTick_1A120(a1x, 12, (unsigned __int16 (*)(Type_AE400_29795*, int))sub_1AB10);
   if ( result )
   {
     PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 13);
@@ -21336,7 +21356,9 @@ void sub_1B3C0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B4C0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 2).
+/// Class 5 type 2 follow state: UpdateFollower_1A390(a1x, 12) (state 15).
+void Class5Type2FollowTick_1B4C0(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0xCu);
   if (a1x->var_u8_29865_70 == 14 )
@@ -21344,13 +21366,17 @@ void sub_1B4C0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B4E0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 2).
+/// Class 5 type 2 dying state: CreatureDying_1A6C0(a1x, 12) (state 16).
+void Class5Type2DyingTick_1B4E0(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 12);
+  CreatureDying_1A6C0(a1x, 12);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B4F0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 2).
+/// Class 5 type 2 dead state: KillCreature_1A800 (state 17).
+void Class5Type2DeadTick_1B4F0(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
@@ -21370,26 +21396,30 @@ void WormTick_1B510(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B520(Type_AE400_29795* a1x)
+/// Class 5 type 3 attack state: CreatureAttackTick_1A120(a1x, 18, ...) (state 20).
+void WormAttackTick_1B520(Type_AE400_29795* a1x)
 {
-  if ( (unsigned __int16)sub_1A120(a1x, 18, PORT_FN(sub_1A8E0, unsigned __int16(Type_AE400_29795*, int))) )
+  if ( (unsigned __int16)CreatureAttackTick_1A120(a1x, 18, PORT_FN(sub_1A8E0, unsigned __int16(Type_AE400_29795*, int))) )
     PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 8);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B570(Type_AE400_29795* a1x)
+/// Class 5 type 3 follow state: UpdateFollower_1A390(a1x, 18) (state 21).
+void WormFollowTick_1B570(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0x12u);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B580(Type_AE400_29795* a1x)
+/// Class 5 type 3 dying state: CreatureDying_1A6C0(a1x, 18) (state 22).
+void WormDyingTick_1B580(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 18);
+  CreatureDying_1A6C0(a1x, 18);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B590(Type_AE400_29795* a1x)
+/// Class 5 type 3 dead state: KillCreature_1A800 (state 23).
+void WormDeadTick_1B590(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
@@ -21663,11 +21693,12 @@ void GuardTick_1B5D0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1BB20(Type_AE400_29795* a1x)
+/// Class 5 type 4 attack state: CreatureAttackTick_1A120(a1x, 24, ...) (state 26).
+void GuardAttackTick_1BB20(Type_AE400_29795* a1x)
 {
   int result; // eax
 
-  sub_1A120(a1x, 24, PORT_FN(sub_1A990, unsigned __int16(Type_AE400_29795*, int)));
+  CreatureAttackTick_1A120(a1x, 24, PORT_FN(sub_1A990, unsigned __int16(Type_AE400_29795*, int)));
   if (a1x->var_u8_29865_70 != 26)
   {
       sub_1BCE0(a1x);
@@ -21690,7 +21721,8 @@ void sub_1BB20(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1BBE0(Type_AE400_29795* a1x)
+/// Class 5 type 4 follow state: UpdateFollower_1A390(a1x, 24) (state 27).
+void GuardFollowTick_1BBE0(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0x18u);
   if (a1x->var_u8_29865_70 == 26 )
@@ -21698,16 +21730,18 @@ void sub_1BBE0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1BC10(Type_AE400_29795* a1x)
+/// Class 5 type 4 dying state: CreatureDying_1A6C0(a1x, 24) (state 28).
+void GuardDyingTick_1BC10(Type_AE400_29795* a1x)
 {
   if (a1x->var_u16_29821_26)
     MarkEntityForRemoval_41E80_421C0(a1x);
   else
-    sub_1A6C0(a1x, 24);
+    CreatureDying_1A6C0(a1x, 24);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1BC40(Type_AE400_29795* a1x)
+/// Class 5 type 4 dead state: KillCreature_1A800 (state 29).
+void GuardDeadTick_1BC40(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
@@ -21939,12 +21973,13 @@ void CrabTick_1BD20(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1C110(Type_AE400_29795* a1x)
+/// Class 5 type 5 attack state: CreatureAttackTick_1A120(a1x, 30, ...) (state 32).
+void CrabAttackTick_1C110(Type_AE400_29795* a1x)
 {
   int result; // eax
   int v2; // edx
 
-  if ( (unsigned __int16)sub_1A120(a1x, 30, PORT_FN(sub_1AB70, unsigned __int16(Type_AE400_29795*, int))) )
+  if ( (unsigned __int16)CreatureAttackTick_1A120(a1x, 30, PORT_FN(sub_1AB70, unsigned __int16(Type_AE400_29795*, int))) )
     PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 32);
   result = a1x->actLife_29807_12;
   v2 = a1x->maxLife_29803_8;
@@ -22063,13 +22098,15 @@ void sub_1C170(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1C3C0(Type_AE400_29795* a1x)
+/// Class 5 type 5 dying state: CreatureDying_1A6C0(a1x, 30) (state 34).
+void CrabDyingTick_1C3C0(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 30);
+  CreatureDying_1A6C0(a1x, 30);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1C3D0(Type_AE400_29795* a1x)
+/// Class 5 type 5 dead state: KillCreature_1A800 (state 35).
+void CrabDeadTick_1C3D0(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
@@ -22244,7 +22281,9 @@ LABEL_30:
 }
 
 //SYNCHRONIZED EITH REMC1
-void sub_1C880(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 6).
+/// Class 5 type 6 follow state: UpdateFollower_1A390(a1x, 36) (state 39).
+void Class5Type6FollowTick_1C880(Type_AE400_29795* a1x)
 {
   char v1; // ah
 
@@ -22256,13 +22295,17 @@ void sub_1C880(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1C8D0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 6).
+/// Class 5 type 6 dying state: CreatureDying_1A6C0(a1x, 36) (state 40).
+void Class5Type6DyingTick_1C8D0(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 36);
+  CreatureDying_1A6C0(a1x, 36);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1C8E0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 6).
+/// Class 5 type 6 dead state: KillCreature_1A800 (state 41).
+void Class5Type6DeadTick_1C8E0(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
@@ -22297,7 +22340,9 @@ void Class5Type7Tick_1C900(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1C960(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 7).
+/// Class 5 type 7 attack state: CreatureAttackTick_1A120(a1x, 42, ...) (state 44).
+void Class5Type7AttackTick_1C960(Type_AE400_29795* a1x)
 {
   __int16 v1; // dx
   __int16 result; // ax
@@ -22312,7 +22357,7 @@ void sub_1C960(Type_AE400_29795* a1x)
       a1x->actSpeed_29921_126 = a1x->actSpeed_29923_128;
     }
   }
-  result = sub_1A120(a1x, 42, PORT_FN(sub_1AE30, unsigned __int16(Type_AE400_29795*, int)));
+  result = CreatureAttackTick_1A120(a1x, 42, PORT_FN(sub_1AE30, unsigned __int16(Type_AE400_29795*, int)));
   if ( (_BYTE)result )
   {
     result = a1x->var_u16_29881_86;
@@ -22337,7 +22382,9 @@ void sub_1C960(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1CA00(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 7).
+/// Class 5 type 7 follow state: UpdateFollower_1A390(a1x, 42) (state 45).
+void Class5Type7FollowTick_1CA00(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0x2Au);
   if (a1x->var_u8_29865_70 == 44 )
@@ -22345,13 +22392,17 @@ void sub_1CA00(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1CA20(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 7).
+/// Class 5 type 7 dying state: CreatureDying_1A6C0(a1x, 42) (state 46).
+void Class5Type7DyingTick_1CA20(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 42);
+  CreatureDying_1A6C0(a1x, 42);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1CA30(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 7).
+/// Class 5 type 7 dead state: KillCreature_1A800 (state 47).
+void Class5Type7DeadTick_1CA30(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
@@ -22528,14 +22579,16 @@ void Class5Type8Tick_1CA50(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1CE30(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 8).
+/// Class 5 type 8 attack state: CreatureAttackTick_1A120(a1x, 48, ...) (state 50).
+void Class5Type8AttackTick_1CE30(Type_AE400_29795* a1x)
 {
   int v1; // eax
 
   if (a1x->var_u16_29821_26)
     a1x->actSpeed_29921_126 = a1x->actSpeed_29923_128;
   a1x->var_29811_16.byte[1] |= 0x80u;
-  if ( (unsigned __int16)sub_1A120(a1x, 48, PORT_FN(sub_1AEE0, unsigned __int16(Type_AE400_29795*, int))) )
+  if ( (unsigned __int16)CreatureAttackTick_1A120(a1x, 48, PORT_FN(sub_1AEE0, unsigned __int16(Type_AE400_29795*, int))) )
   {
     PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 38);
     v1 = 164 * a1x->var_u16_29941_146;
@@ -22550,24 +22603,30 @@ void sub_1CE30(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1CF50(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 8).
+/// Class 5 type 8 follow state: UpdateFollower_1A390(a1x, 48) (state 51).
+void Class5Type8FollowTick_1CF50(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0x30u);
 }
 
 //SYNCHRONIZED REMC1
-void sub_1CF60(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 8).
+/// Class 5 type 8 dying state: CreatureDying_1A6C0(a1x, 48) (state 52).
+void Class5Type8DyingTick_1CF60(Type_AE400_29795* a1x)
 {
   int v1; // eax
 
   v1 = 164 * a1x->var_u16_29833_38;
   if ( v1 + dword_AE400_AE3F0() + 29795 && *(_BYTE *)PTR(dword_AE400_AE3F0() + v1 + 29860) <= 1u )
     *(_WORD *)PTR(*(_DWORD *)PTR(dword_AE400_AE3F0() + 164 * a1x->var_u16_29833_38 + 29955) + 528) = 200;
-  sub_1A6C0(a1x, 48);
+  CreatureDying_1A6C0(a1x, 48);
 }
 
 //SYNCHRONIZED REMC1
-void sub_1CFE0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 8).
+/// Class 5 type 8 dead state: KillCreature_1A800 (state 53).
+void Class5Type8DeadTick_1CFE0(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
@@ -23210,7 +23269,7 @@ void sub_1DC80(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1DCB0(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 54);
+  CreatureDying_1A6C0(a1x, 54);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -23281,25 +23340,33 @@ void Class5Type10Tick_1DDE0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_1DDF0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 10).
+/// Class 5 type 10 attack state: CreatureAttackTick_1A120(a1x, 60, ...) (state 62).
+int Class5Type10AttackTick_1DDF0(Type_AE400_29795* a1x)
 {
-  return sub_1A120(a1x, 60, PORT_FN(sub_1A990, unsigned __int16(Type_AE400_29795*, int)));
+  return CreatureAttackTick_1A120(a1x, 60, PORT_FN(sub_1A990, unsigned __int16(Type_AE400_29795*, int)));
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DE10(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 10).
+/// Class 5 type 10 follow state: UpdateFollower_1A390(a1x, 60) (state 63).
+void Class5Type10FollowTick_1DE10(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0x3Cu);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DE20(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 10).
+/// Class 5 type 10 dying state: CreatureDying_1A6C0(a1x, 60) (state 64).
+void Class5Type10DyingTick_1DE20(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 60);
+  CreatureDying_1A6C0(a1x, 60);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DE30(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 10).
+/// Class 5 type 10 dead state: KillCreature_1A800 (state 65).
+void Class5Type10DeadTick_1DE30(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
@@ -23704,7 +23771,7 @@ void sub_1E6F0(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1E700(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 66);
+  CreatureDying_1A6C0(a1x, 66);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -24271,13 +24338,17 @@ LABEL_28:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1F5A0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 12).
+/// Class 5 type 12 dying state: CreatureDying_1A6C0(a1x, 72) (state 76).
+void Class5Type12DyingTick_1F5A0(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 72);
+  CreatureDying_1A6C0(a1x, 72);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1F5B0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 12).
+/// Class 5 type 12 dead state: KillCreature_1A800 (state 77).
+void Class5Type12DeadTick_1F5B0(Type_AE400_29795* a1x)
 {
   int v1; // eax
 
@@ -24441,7 +24512,9 @@ LABEL_36:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1FA00(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 13).
+/// Class 5 type 13 dying state: CreatureDying_1A6C0(a1x, 78) (state 82).
+void Class5Type13DyingTick_1FA00(Type_AE400_29795* a1x)
 {
   int v2; // eax
 
@@ -24455,12 +24528,14 @@ void sub_1FA00(Type_AE400_29795* a1x)
           if (*(_BYTE*)PTR(dword_AE400_AE3F0() + v2 + 29860) <= 1u)
               *(_WORD*)PTR(*(_DWORD*)PTR(164 * a1x->var_u16_29833_38 + dword_AE400_AE3F0() + 29955) + 528) = 200;
       }
-      sub_1A6C0(a1x, 78);
+      CreatureDying_1A6C0(a1x, 78);
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1FAA0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 13).
+/// Class 5 type 13 dead state: KillCreature_1A800 (state 83).
+void Class5Type13DeadTick_1FAA0(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
@@ -24619,16 +24694,20 @@ LABEL_37:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1FE90(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 14).
+/// Class 5 type 14 dying state: CreatureDying_1A6C0(a1x, 84) (state 88).
+void Class5Type14DyingTick_1FE90(Type_AE400_29795* a1x)
 {
   if (a1x->var_u16_29821_26)
     MarkEntityForRemoval_41E80_421C0(a1x);
   else
-    sub_1A6C0(a1x, 84);
+    CreatureDying_1A6C0(a1x, 84);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1FEC0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 14).
+/// Class 5 type 14 dead state: KillCreature_1A800 (state 89).
+void Class5Type14DeadTick_1FEC0(Type_AE400_29795* a1x)
 {
   int v1; // eax
 
@@ -24866,19 +24945,25 @@ LABEL_25:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_203E0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 15).
+/// Class 5 type 15 follow state: UpdateFollower_1A390(a1x, 90) (state 93).
+void Class5Type15FollowTick_203E0(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0x5Au);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_203F0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 15).
+/// Class 5 type 15 dying state: CreatureDying_1A6C0(a1x, 90) (state 94).
+void Class5Type15DyingTick_203F0(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 90);
+  CreatureDying_1A6C0(a1x, 90);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_20400(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 15).
+/// Class 5 type 15 dead state: KillCreature_1A800 (state 95).
+void Class5Type15DeadTick_20400(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
@@ -25199,19 +25284,22 @@ void sub_207E0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_20B60(Type_AE400_29795* a1x)
+/// Class 5 type 16 follow state: UpdateFollower_1A390(a1x, 96) (state 99).
+void WyvernFollowTick_20B60(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0x60u);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_20B70(Type_AE400_29795* a1x)
+/// Class 5 type 16 dying state: CreatureDying_1A6C0(a1x, 96) (state 100).
+void WyvernDyingTick_20B70(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 96);
+  CreatureDying_1A6C0(a1x, 96);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_20B80(Type_AE400_29795* a1x)
+/// Class 5 type 16 dead state: KillCreature_1A800 (state 101).
+void WyvernDeadTick_20B80(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }

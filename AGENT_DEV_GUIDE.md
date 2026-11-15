@@ -522,6 +522,11 @@ game text (`data/etext.dat`) has no spell names. Most cast handlers (`Cast<Spell
 (`Create<Spell>Missile_*`) and store the class/type of its payload in the missile's +68/+69. `UpdateMissile_52770_52AB0`
 creates that entity on impact (`Create<Spell>Effect_*`, class 10). Example: Volcano -> 9/4 -> 10/9 -> 10/18 eruption.
 
+Creatures (class 5), type t: states 6t..6t+5 = idle (`CreatureIdleTick_19B10`), the type's own main state
+(the constructor's), attack (`CreatureAttackTick_1A120` or a type-specific routine), follow a same-type leader
+(`UpdateFollower_1A390`), dying (`CreatureDying_1A6C0`: kill credit for the player) and dead (`KillCreature_1A800`).
+Types 9 and 11 start in their +0 state and differ; state 120 = body segments (`SegmentFollowTick_19550`).
+
 Spells (class 12), spell t: state 3t = owned, handler = the spell's cast routine (`CastFireball_56090`,
 `SpeedSpellTick_56380`, `CastCastle_57610`, ...); 3t+1 = jar on the ground (`SpellJarTick_55DB0_562E0`);
 3t+2 = jar that also spawns the spell's `off_987DE` entity when picked up (`SpellJarSpawnTick_55D30_56260`).
@@ -1135,7 +1140,7 @@ Known open issues:
   the explosion into class-10 state 20 = handler 0x262C0, a bare `ret` (port: `sub_262C0`). The sprite
   never changes again. `diff_tick` (ticks 36216-36218, 36480-36650) and `diff_call` (draw at 36600) match
   CARPET.EXE exactly; `diff_tick --watch 58401` (entity 174 +70) shows the original writing 0x14 at
-  eip 0x424F8 via 0x1A52B (UpdateFollower) <- 0x19614 (`SegmentFollowTick_19550`) <- 0x1B57C (`sub_1B570`).
+  eip 0x424F8 via 0x1A52B (UpdateFollower) <- 0x19614 (`SegmentFollowTick_19550`) <- 0x1B57C (`WormFollowTick_1B570`).
   Replay needs a build *without* the `CreatureShootAt_1AA40` fix (that fix changes level 15 from frame
   660): check out `sub_main.cpp` from before commit "Fix skeletons shooting into empty space", build,
   copy `build/win-x64/RelWithDebInfo` elsewhere and pass `--exe` / `REMC1_PORT_EXE`.
