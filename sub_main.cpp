@@ -3747,7 +3747,9 @@ int sub_1F630() { return 0; };
 int sub_1F9F0() { return 0; };
 int sub_1FAB0() { return 0; };
 int sub_1FE80() { return 0; };
-int sub_1FF50() { return 0; };//?
+// PORT: was "int sub_1FF50() { return 0; };//?" - IDA took the code-segment table at 0x1FF40 for code and lost this
+// function; the original (0x1FF50) is "push 5Ah; push a1; call sub_19B10", like the other 6t state handlers.
+void sub_1FF50(Type_AE400_29795* a1x) { sub_19B10(a1x, 90); }
 int sub_20B90() { return 0; };
 int sub_20BA0() { return 0; };
 int sub_20BB0() { return 0; };

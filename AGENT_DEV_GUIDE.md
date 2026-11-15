@@ -826,6 +826,13 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     eax,1E0h; jb` at 0x4D662-0x4D674). Hex-Rays saw no write to the counter inside the loop and emitted
     `while ( 1 ) ;`, so the game hung after the outro. Port tick waits call `PortTimer_Yield()` in the
     loop. No other `while ( 1 ) ;` is left (2026-11-15).
+71. **A `return 0` stub standing in for a real function.** The state tables reference about 20 one-line
+    stubs (`int sub_49B70() { return 0; };`). They are bare `ret`s in the original, except `sub_1FF50`
+    (class 5 state 90). IDA decoded the code-segment table at 0x1FF40 (the turn weights, see
+    `turnWeights_1FF40`) as code (`sub_1FF40`, junk), lost the function at 0x1FF50 behind it
+    (`push 5Ah; push a1; call sub_19B10`), and the port stubbed it out. Check every stub with
+    `tools/orig_disasm.py 0xADDR --max 3`: it must be `ret` (or `xor eax,eax; ret`). All checked
+    2026-11-15.
 
 The MC2 renderer in remc2 (`GameRenderOriginal.cpp`, e.g. `DrawSprite_41BD3`) is structurally the
 same code as MC1's `BlitSprite_2C410_2C450`/`DrawSprite_*` and uses the same scratch offsets in the BScreen
@@ -1159,6 +1166,9 @@ Known open issues:
   entity's max mana 0. The port now skips stale entries (first triggers at tick 9127 of the recording,
   so the recording replays exactly only up to there). Also pattern #65 (flag OR truncated to a byte)
   and the harmless `JUMPOUT(0x36079)` in `sub_36080_36440` (a shared epilogue) removed.
+- Fixed 2026-11-15: class 5 state 90 (the `6t` state of creature type 15) did nothing; the original calls
+  `sub_19B10(a1, 90)` like every other `6t` creature state (pattern #71). Found while naming the dispatch
+  tables (not yet seen in a recording).
 - Fixed 2026-11-15: hang after the ending FMV (`level50-end-freeze.recording`, pattern #70). As in the
   original, finishing level 50 plays the outro, waits 4 s, sets the quit flag (+13327 of the player's
   `str_13323` entry) and the game exits.
