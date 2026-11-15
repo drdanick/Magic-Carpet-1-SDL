@@ -510,7 +510,8 @@ Computer wizards (`ComputerWizardTick_13170`): AI mode = wizard data +415, chose
 check/start pairs. 1 castle upgrade (`AiCastleUpgradeMode_13800`), 3 build castle (`AiBuildCastle_138F0`), 6
 possession (`AiPossessionMode_13BA0`), 7 attack castle (`AiAttackCastleMode_13CA0`), 8 attack wizard, 9 attack
 balloon (8, 9 and 13 share `sub_13DC0`). Not identified yet: 2/5 (no-op), 4, 11 (below half life, targets the own
-castle), 12, 13. Target entity +146, its distance +148. Class-3 entities (wizards, castles, balloons) are in the
+castle), 12, 13. Target entity +146, its tag +148 (`EntityTag_15420`: id + type + 128*class, so `AiTargetValid_15440` notices
+when the slot has been reused). Class-3 entities (wizards, castles, balloons) are in the
 list at `str_AE408_AE3F8` +36462.
 
 Spell numbers (from the spell-menu icons `begSprTab[6 + t]` of `hspr0-0`/`mspr0-0`, names confirmed by the
@@ -843,10 +844,10 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     `while ( 1 ) ;`, so the game hung after the outro. Port tick waits call `PortTimer_Yield()` in the
     loop. No other `while ( 1 ) ;` is left (2026-11-15).
 71. **A `return 0` stub standing in for a real function.** The state tables reference about 20 one-line
-    stubs (`int sub_49B70() { return 0; };`, now `EmptyStateHandler_*`). They are bare `ret`s in the original, except `sub_1FF50`
+    stubs (`int sub_49B70() { return 0; };`, now `EmptyStateHandler_*`). They are bare `ret`s in the original, except `Class5Type15IdleTick_1FF50`
     (class 5 state 90). IDA decoded the code-segment table at 0x1FF40 (the turn weights, see
     `turnWeights_1FF40`) as code (`sub_1FF40`, junk), lost the function at 0x1FF50 behind it
-    (`push 5Ah; push a1; call sub_19B10`), and the port stubbed it out. Check every stub with
+    (`push 5Ah; push a1; call 0x19B10` = `CreatureIdleTick_19B10`), and the port stubbed it out. Check every stub with
     `tools/orig_disasm.py 0xADDR --max 3`: it must be `ret` (or `xor eax,eax; ret`). All checked
     2026-11-15.
 
@@ -1187,7 +1188,7 @@ Known open issues:
   writes 0x38D09 bytes (0x3E430). Found while naming the file routines; the other `sizeof(global)` uses
   are arrays or structs.
 - Fixed 2026-11-15: class 5 state 90 (the `6t` state of creature type 15) did nothing; the original calls
-  `sub_19B10(a1, 90)` like every other `6t` creature state (pattern #71). Found while naming the dispatch
+  `CreatureIdleTick_19B10(a1, 90)` like every other `6t` creature state (pattern #71). Found while naming the dispatch
   tables (not yet seen in a recording).
 - Fixed 2026-11-15: hang after the ending FMV (`level50-end-freeze.recording`, pattern #70). As in the
   original, finishing level 50 plays the outro, waits 4 s, sets the quit flag (+13327 of the player's

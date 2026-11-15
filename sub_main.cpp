@@ -369,8 +369,8 @@ unsigned int AiChooseManaToPossess_15080(int a1);
 unsigned int FindNearestRival_15260(int a1, unsigned __int8 a2);
 unsigned int sub_15340(int a1, int a2);
 unsigned int sub_153B0(int a1, int a2);
-__int16 sub_15420(int a1);
-bool sub_15440(int a1, int a2);
+__int16 EntityTag_15420(int a1);
+bool AiTargetValid_15440(int a1, int a2);
 int AiApproachTarget_15470(int a1, int a2, signed int a3, signed int a4);
 int AiCastSpell_155F0(int a1, unsigned __int8 a2);
 int sub_15A00(int a1, unsigned __int8 a2);
@@ -384,7 +384,7 @@ void sub_16540();
 unsigned int sub_16800(unsigned int a1, int a2);
 int sub_16870(int a1);
 char sub_16890(int a1, int a2);
-_BOOL1 sub_16920(int a1);
+_BOOL1 AiHasAttackSpell_16920(int a1);
 char sub_16990();
 void sub_169E0();
 void ProcessKeys_16B00();
@@ -398,7 +398,7 @@ int sub_194F0_194F0();
 __int16 SegmentFollowTick_19550(int a1);
 signed int TerrainSlope_19650(axis_3d* a1);
 void MoveCreature_196E0(Type_AE400_29795* a1);
-void sub_19B10(Type_AE400_29795* a1, char a2);
+void CreatureIdleTick_19B10(Type_AE400_29795* a1, char a2);
 void sub_19D70(Type_AE400_29795* a1, char a2);
 int sub_1A120(Type_AE400_29795* a1, char a2, unsigned __int16 (*a3)(Type_AE400_29795*, int));
 void UpdateFollower_1A390(Type_AE400_29795* a1, unsigned __int16 a2);
@@ -411,32 +411,32 @@ int sub_1AB10(Type_AE400_29795* a1, int a2);
 int sub_1AB70(Type_AE400_29795* a1, Type_AE400_29795* a2);
 int sub_1AE30(Type_AE400_29795* a1, Type_AE400_29795* a2);
 int sub_1AEE0(Type_AE400_29795* a1, Type_AE400_29795* a2);
-void sub_1B060(Type_AE400_29795* a1);
+void Class5Type0IdleTick_1B060(Type_AE400_29795* a1);
 void Class5Type0Tick_1B070(Type_AE400_29795* a1);
 void sub_1B090(Type_AE400_29795* a1);
 void sub_1B0E0(Type_AE400_29795* a1);
 void sub_1B100(Type_AE400_29795* a1);
 void sub_1B110(Type_AE400_29795* a1);
 void sub_1B120(Type_AE400_29795* a1);
-void sub_1B160(Type_AE400_29795* a1);
+void Class5Type1IdleTick_1B160(Type_AE400_29795* a1);
 void Class5Type1Tick_1B200(Type_AE400_29795* a1);
 void sub_1B2D0(Type_AE400_29795* a1);
 void sub_1B320(Type_AE400_29795* a1);
 void sub_1B330(Type_AE400_29795* a1);
 void sub_1B340(Type_AE400_29795* a1);
-void sub_1B350(Type_AE400_29795* a1);
+void Class5Type2IdleTick_1B350(Type_AE400_29795* a1);
 void Class5Type2Tick_1B370(Type_AE400_29795* a1);
 void sub_1B3C0(Type_AE400_29795* a1);
 void sub_1B4C0(Type_AE400_29795* a1);
 void sub_1B4E0(Type_AE400_29795* a1);
 void sub_1B4F0(Type_AE400_29795* a1);
-void sub_1B500(Type_AE400_29795* a1);
+void WormIdleTick_1B500(Type_AE400_29795* a1);
 void WormTick_1B510(Type_AE400_29795* a1);
 void sub_1B520(Type_AE400_29795* a1);
 void sub_1B570(Type_AE400_29795* a1);
 void sub_1B580(Type_AE400_29795* a1);
 void sub_1B590(Type_AE400_29795* a1);
-void sub_1B5A0(Type_AE400_29795* a1);
+void GuardIdleTick_1B5A0(Type_AE400_29795* a1);
 void GuardTick_1B5D0(Type_AE400_29795* a1);
 void sub_1BB20(Type_AE400_29795* a1);
 void sub_1BBE0(Type_AE400_29795* a1);
@@ -450,19 +450,19 @@ void sub_1C110(Type_AE400_29795* a1);
 void sub_1C170(Type_AE400_29795* a1);
 void sub_1C3C0(Type_AE400_29795* a1);
 void sub_1C3D0(Type_AE400_29795* a1);
-void sub_1C490(Type_AE400_29795* a1);
+void Class5Type6IdleTick_1C490(Type_AE400_29795* a1);
 void Class5Type6Tick_1C4A0(Type_AE400_29795* a1);
 void sub_1C4F0(Type_AE400_29795* a1);
 void sub_1C880(Type_AE400_29795* a1);
 void sub_1C8D0(Type_AE400_29795* a1);
 void sub_1C8E0(Type_AE400_29795* a1);
-void sub_1C8F0(Type_AE400_29795* a1);
+void Class5Type7IdleTick_1C8F0(Type_AE400_29795* a1);
 void Class5Type7Tick_1C900(Type_AE400_29795* a1);
 void sub_1C960(Type_AE400_29795* a1);
 void sub_1CA00(Type_AE400_29795* a1);
 void sub_1CA20(Type_AE400_29795* a1);
 void sub_1CA30(Type_AE400_29795* a1);
-void sub_1CA40(Type_AE400_29795* a1);
+void Class5Type8IdleTick_1CA40(Type_AE400_29795* a1);
 void Class5Type8Tick_1CA50(Type_AE400_29795* a1);
 void sub_1CE30(Type_AE400_29795* a1);
 void sub_1CF50(Type_AE400_29795* a1);
@@ -479,7 +479,7 @@ void sub_1DCD0(Type_AE400_29795* a1);
 void sub_1DD50(Type_AE400_29795* a1);
 void sub_1DD90(Type_AE400_29795* a1);
 void sub_1DDB0(Type_AE400_29795* a1);
-void sub_1DDD0(Type_AE400_29795* a1);
+void Class5Type10IdleTick_1DDD0(Type_AE400_29795* a1);
 void Class5Type10Tick_1DDE0(Type_AE400_29795* a1);
 int sub_1DDF0(Type_AE400_29795* a1);
 void sub_1DE10(Type_AE400_29795* a1);
@@ -517,7 +517,7 @@ void sub_20400(Type_AE400_29795* a1);
 void sub_20410(Type_AE400_29795* a1);
 void sub_20450(Type_AE400_29795* a1);
 void sub_20480(Type_AE400_29795* a1);
-void sub_20700(Type_AE400_29795* a1);
+void WyvernIdleTick_20700(Type_AE400_29795* a1);
 void WyvernTick_20710(Type_AE400_29795* a1);
 void sub_207E0(Type_AE400_29795* a1);
 void sub_20B60(Type_AE400_29795* a1);
@@ -915,8 +915,8 @@ void CreateGameDir_3EC90_3EFD0(uint8_t diskChar, char* dir1, char* dir2);
 int LoadFile_3EEA0_3F1E0(char* path, uint8_t* buffer);
 int sub_3EF20_3F260();
 bool access_3EF30_3F270(char* a1);
-char sub_3EF50_3F290(char *a1, char *a2, const char *a3);
-void sub_3F1D0_3F510();
+char CopyDataFilePair_3EF50_3F290(char *a1, char *a2, const char *a3);
+void CopyDataToInstallDir_3F1D0_3F510();
 void sub_3F370_3F6B0();
 void sub_3F398_3F6D8();
 void sub_3F413(unsigned __int8 a1);
@@ -1262,7 +1262,7 @@ int sub_5A120_5A630(int a1, int a2);
 void DrawText_5A180_5A690(char* text, int posX, int posY, uint8 color);
 __int16 GetLetterX_5A3A0_5A8B0();
 __int16 GetLetterY_5A3B0_5A8C0();
-void sub_5A3C0_5A8D0(int fontIndex);
+void SetFont_5A3C0_5A8D0(int fontIndex);
 // void sub_5A3E3(int a1, int a2, int a3, int a4, int a5, int a6, int a7);
 void sub_5A459_5A969();
 void sub_5A4EA_5A9FA();
@@ -3766,8 +3766,10 @@ int EmptyStateHandler_1FAB0() { return 0; };
 /// Empty entity state handler (original 0x1FE80 is a bare ret).
 int EmptyStateHandler_1FE80() { return 0; };
 // PORT: was "int sub_1FF50() { return 0; };//?" - IDA took the code-segment table at 0x1FF40 for code and lost this
-// function; the original (0x1FF50) is "push 5Ah; push a1; call sub_19B10", like the other 6t state handlers.
-void sub_1FF50(Type_AE400_29795* a1x) { sub_19B10(a1x, 90); }
+// function; the original (0x1FF50) is "push 5Ah; push a1; call sub_19B10" (CreatureIdleTick_19B10), like the other 6t state handlers.
+/// TODO: rename when the entity is identified (class 5 type 15).
+/// Idle state of class 5 type 15 (state 90): CreatureIdleTick_19B10(a1x, 90).
+void Class5Type15IdleTick_1FF50(Type_AE400_29795* a1x) { CreatureIdleTick_19B10(a1x, 90); }
 /// Empty entity state handler (original 0x20B90 is a bare ret).
 int EmptyStateHandler_20B90() { return 0; };
 /// Empty entity state handler (original 0x20BA0 is a bare ret).
@@ -3822,31 +3824,31 @@ Type_254A34x str_254DAC[] = {
 };
 
 Type_254A34x str_254DCC[] = {//254DCC
-{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))sub_1B060, 0x0001, 0x0000 },
+{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))Class5Type0IdleTick_1B060, 0x0001, 0x0000 },
 { 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))Class5Type0Tick_1B070,0x0001,0x0000 },
 { 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))sub_1B090,0x0001,0x0000 },
 { 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))sub_1B0E0,0x0001,0x0000 },
 { 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))sub_1B100,0x0001,0x0000 },
 { 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))sub_1B110,0x0001,0x0000 },
-{ 0x002548F4,0x0006,(void (*)(Type_AE400_29795*))sub_1B160,0x0001,0x0000 },
+{ 0x002548F4,0x0006,(void (*)(Type_AE400_29795*))Class5Type1IdleTick_1B160,0x0001,0x0000 },
 { 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))Class5Type1Tick_1B200,0x0001,0x0000 },
 { 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))sub_1B2D0,0x0001,0x0000 },
 { 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))sub_1B320,0x0001,0x0000 },
 { 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))sub_1B330,0x0001,0x0000 },
 { 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))sub_1B340,0x0001,0x0000 },
-{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))sub_1B350,0x0001,0x0000 },
+{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))Class5Type2IdleTick_1B350,0x0001,0x0000 },
 { 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))Class5Type2Tick_1B370,0x0001,0x0000 },
 { 0x002548F4, 0x000E, (void (*)(Type_AE400_29795*))sub_1B3C0, 0x0001, 0x0000 },
 { 0x002548F4, 0x000F, (void (*)(Type_AE400_29795*))sub_1B4C0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0010, (void (*)(Type_AE400_29795*))sub_1B4E0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0011, (void (*)(Type_AE400_29795*))sub_1B4F0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0012, (void (*)(Type_AE400_29795*))sub_1B500, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0012, (void (*)(Type_AE400_29795*))WormIdleTick_1B500, 0x0001, 0x0000 },
 { 0x002548F4, 0x0013, (void (*)(Type_AE400_29795*))WormTick_1B510, 0x0001, 0x0000 },
 { 0x002548F4, 0x0014, (void (*)(Type_AE400_29795*))sub_1B520, 0x0001, 0x0000 },
 { 0x002548F4, 0x0015, (void (*)(Type_AE400_29795*))sub_1B570, 0x0001, 0x0000 },
 { 0x002548F4, 0x0016, (void (*)(Type_AE400_29795*))sub_1B580, 0x0001, 0x0000 },
 { 0x002548F4, 0x0017, (void (*)(Type_AE400_29795*))sub_1B590, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0018, (void (*)(Type_AE400_29795*))sub_1B5A0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0018, (void (*)(Type_AE400_29795*))GuardIdleTick_1B5A0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0019, (void (*)(Type_AE400_29795*))GuardTick_1B5D0, 0x0001, 0x0000 },
 { 0x002548F4, 0x001A, (void (*)(Type_AE400_29795*))sub_1BB20, 0x0001, 0x0000 },
 { 0x002548F4, 0x001B, (void (*)(Type_AE400_29795*))sub_1BBE0, 0x0001, 0x0000 },
@@ -3858,19 +3860,19 @@ Type_254A34x str_254DCC[] = {//254DCC
 { 0x002548F4, 0x0021, (void (*)(Type_AE400_29795*))sub_1C170, 0x0001, 0x0000 },
 { 0x002548F4, 0x0022, (void (*)(Type_AE400_29795*))sub_1C3C0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0023, (void (*)(Type_AE400_29795*))sub_1C3D0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0024, (void (*)(Type_AE400_29795*))sub_1C490, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0024, (void (*)(Type_AE400_29795*))Class5Type6IdleTick_1C490, 0x0001, 0x0000 },
 { 0x002548F4, 0x0025, (void (*)(Type_AE400_29795*))Class5Type6Tick_1C4A0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0026, (void (*)(Type_AE400_29795*))sub_1C4F0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0027, (void (*)(Type_AE400_29795*))sub_1C880, 0x0001, 0x0000 },
 { 0x002548F4, 0x0028, (void (*)(Type_AE400_29795*))sub_1C8D0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0029, (void (*)(Type_AE400_29795*))sub_1C8E0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002A, (void (*)(Type_AE400_29795*))sub_1C8F0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002A, (void (*)(Type_AE400_29795*))Class5Type7IdleTick_1C8F0, 0x0001, 0x0000 },
 { 0x002548F4, 0x002B, (void (*)(Type_AE400_29795*))Class5Type7Tick_1C900, 0x0001, 0x0000 },
 { 0x002548F4, 0x002C, (void (*)(Type_AE400_29795*))sub_1C960, 0x0001, 0x0000 },
 { 0x002548F4, 0x002D, (void (*)(Type_AE400_29795*))sub_1CA00, 0x0001, 0x0000 },
 { 0x002548F4, 0x002E, (void (*)(Type_AE400_29795*))sub_1CA20, 0x0001, 0x0000 },
 { 0x002548F4, 0x002F, (void (*)(Type_AE400_29795*))sub_1CA30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0030, (void (*)(Type_AE400_29795*))sub_1CA40, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0030, (void (*)(Type_AE400_29795*))Class5Type8IdleTick_1CA40, 0x0001, 0x0000 },
 { 0x002548F4, 0x0031, (void (*)(Type_AE400_29795*))Class5Type8Tick_1CA50, 0x0001, 0x0000 },
 { 0x002548F4, 0x0032, (void (*)(Type_AE400_29795*))sub_1CE30, 0x0001, 0x0000 },
 { 0x002548F4, 0x0033, (void (*)(Type_AE400_29795*))sub_1CF50, 0x0001, 0x0000 },
@@ -3882,7 +3884,7 @@ Type_254A34x str_254DCC[] = {//254DCC
 { 0x002548F4, 0x0039, (void (*)(Type_AE400_29795*))sub_1DC80, 0x0001, 0x0000 },
 { 0x002548F4, 0x003A, (void (*)(Type_AE400_29795*))sub_1DCB0, 0x0001, 0x0000 },
 { 0x002548F4, 0x003B, (void (*)(Type_AE400_29795*))sub_1DCC0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003C, (void (*)(Type_AE400_29795*))sub_1DDD0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003C, (void (*)(Type_AE400_29795*))Class5Type10IdleTick_1DDD0, 0x0001, 0x0000 },
 { 0x002548F4, 0x003D, (void (*)(Type_AE400_29795*))Class5Type10Tick_1DDE0, 0x0001, 0x0000 },
 { 0x002548F4, 0x003E, (void (*)(Type_AE400_29795*))sub_1DDF0, 0x0001, 0x0000 },
 { 0x002548F4, 0x003F, (void (*)(Type_AE400_29795*))sub_1DE10, 0x0001, 0x0000 },
@@ -3912,13 +3914,13 @@ Type_254A34x str_254DCC[] = {//254DCC
 { 0x002548F4, 0x0057, (void (*)(Type_AE400_29795*))EmptyStateHandler_1FE80, 0x0001, 0x0000 },
 { 0x002548F4, 0x0058, (void (*)(Type_AE400_29795*))sub_1FE90, 0x0001, 0x0000 },
 { 0x002548F4, 0x0059, (void (*)(Type_AE400_29795*))sub_1FEC0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x005A, (void (*)(Type_AE400_29795*))sub_1FF50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x005A, (void (*)(Type_AE400_29795*))Class5Type15IdleTick_1FF50, 0x0001, 0x0000 },
 { 0x002548F4, 0x005B, (void (*)(Type_AE400_29795*))Class5Type15Tick_1FF60, 0x0001, 0x0000 },
 { 0x002548F4, 0x005C, (void (*)(Type_AE400_29795*))sub_201D0, 0x0001, 0x0000 },
 { 0x002548F4, 0x005D, (void (*)(Type_AE400_29795*))sub_203E0, 0x0001, 0x0000 },
 { 0x002548F4, 0x005E, (void (*)(Type_AE400_29795*))sub_203F0, 0x0001, 0x0000 },
 { 0x002548F4, 0x005F, (void (*)(Type_AE400_29795*))sub_20400, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0060, (void (*)(Type_AE400_29795*))sub_20700, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0060, (void (*)(Type_AE400_29795*))WyvernIdleTick_20700, 0x0001, 0x0000 },
 { 0x002548F4, 0x0061, (void (*)(Type_AE400_29795*))WyvernTick_20710, 0x0001, 0x0000 },
 { 0x002548F4, 0x0062, (void (*)(Type_AE400_29795*))sub_207E0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0063, (void (*)(Type_AE400_29795*))sub_20B60, 0x0001, 0x0000 },
@@ -16986,7 +16988,7 @@ bool AiCastleUpgradeMode_13800(int a1)
   int v4; // eax
 
   v1 = 164 * *(unsigned __int16 *)PTR(a1 + 146) + dword_AE400_AE3F0() + 29795;
-  result = sub_15440(a1, v1);
+  result = AiTargetValid_15440(a1, v1);
   if ( result )
   {
     *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v1 + 72));
@@ -17050,7 +17052,7 @@ bool sub_13990(_WORD *a1)
   bool result; // eax
 
   v1 = 164 * (unsigned __int16)a1[73] + dword_AE400_AE3F0() + 29795;
-  result = sub_15440((int)OFF(a1), v1);
+  result = AiTargetValid_15440((int)OFF(a1), v1);
   if ( result )
   {
     a1[17] = HeadingTo_42150_42490((axis_3d*)(a1 + 36), (axis_3d*)(_WORD *)PTR(v1 + 72));
@@ -17101,7 +17103,7 @@ bool sub_13A70(int a1)
   if ( DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(v1 + 72)) > 104857600 && AiCastSpell_155F0(a1, 0x13u) )
     return 1;
   AiCastSpell_155F0(a1, 0xCu);
-  if ( !sub_15440(a1, v1) )
+  if ( !AiTargetValid_15440(a1, v1) )
     return 0;
   *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v1 + 72));
   return !AiApproachTarget_15470(a1, v1, 256, 2048);
@@ -17119,7 +17121,7 @@ bool AiPossessionMode_13BA0(int a1)
   int v5; // eax
 
   v1 = (_WORD *)PTR(dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(a1 + 146));
-  result = sub_15440(a1, (int)OFF(v1));
+  result = AiTargetValid_15440(a1, (int)OFF(v1));
   if ( result )
   {
     *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(v1 + 36)); // PORT: was ((uint8_t*)v1) + 36 - v1 is _WORD*, the target's position is at byte 72 (asm lea edi,[esi+48h])
@@ -17156,7 +17158,7 @@ bool AiAttackCastleMode_13CA0(int a1)
   int v6; // eax
 
   v1 = 164 * *(unsigned __int16 *)PTR(a1 + 146) + dword_AE400_AE3F0() + 29795;
-  result = sub_15440(a1, v1);
+  result = AiTargetValid_15440(a1, v1);
   if ( result )
   {
     *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v1 + 72));
@@ -17198,7 +17200,7 @@ bool sub_13DD0(int a1)
   int v5; // eax
 
   v1 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(a1 + 146);
-  result = sub_15440(a1, v1);
+  result = AiTargetValid_15440(a1, v1);
   if ( !result )
     return result;
   *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v1 + 72));
@@ -17316,7 +17318,7 @@ int AiPlanCastleUpgrade_14120(int a1)
     return 0;
   }
   *(_WORD *)PTR(a1 + 146) = (int)(v1 - (dword_AE400_AE3F0() + 29795)) / 164;
-  *(_WORD *)PTR(a1 + 148) = sub_15420(v1);
+  *(_WORD *)PTR(a1 + 148) = EntityTag_15420(v1);
   return 1;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -17354,7 +17356,7 @@ unsigned int AiPlanPossession_14230(int a1)
       {
 LABEL_5:
         *(_WORD *)PTR(a1 + 146) = (int)(v3 - (dword_AE400_AE3F0() + 29795)) / 164;
-        *(_WORD *)PTR(a1 + 148) = sub_15420(v4);
+        *(_WORD *)PTR(a1 + 148) = EntityTag_15420(v4);
         return 1;
       }
     }
@@ -17376,7 +17378,7 @@ int sub_14310(int a1)
   if ( v1 <= dword_AE400_AE3F0() + 29795 )
     return 0;
   *(_WORD *)PTR(a1 + 146) = 164 * *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) / 164;
-  *(_WORD *)PTR(a1 + 148) = sub_15420(v1);
+  *(_WORD *)PTR(a1 + 148) = EntityTag_15420(v1);
   return 1;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -17393,7 +17395,7 @@ int AiFindRivalCastle_143A0(int a1)
   unsigned int v7; // [esp+Ch] [ebp-18h]
 
   v7 = -1;
-  if ( !sub_16920(a1) || !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && GetWizardSpell_14E60(a1, 0x10u) )
+  if ( !AiHasAttackSpell_16920(a1) || !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && GetWizardSpell_14E60(a1, 0x10u) )
     return 0;
   v6 = 0;
   for ( i = *(_DWORD *)PTR(dword_AE408_AE3F8() + 36462); i > dword_AE400_AE3F0() + 29795; i = *(_DWORD *)PTR(i) )
@@ -17421,7 +17423,7 @@ int AiFindRivalCastle_143A0(int a1)
   if ( DistanceSquared2D_42410_42750((_WORD *)PTR(v6 + 72), (_WORD *)PTR(a1 + 72)) >= v4 * v4 )
     return 0;
   *(_WORD *)PTR(a1 + 146) = (v6 - (dword_AE400_AE3F0() + 29795)) / 164;
-  *(_WORD *)PTR(a1 + 148) = sub_15420(v6);
+  *(_WORD *)PTR(a1 + 148) = EntityTag_15420(v6);
   return 1;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -17442,7 +17444,7 @@ int AiFindRivalWizard_145B0(int a1)
   int v9; // [esp+8h] [ebp-18h]
 
   v1 = -1;
-  if ( !sub_16920(a1) || !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && GetWizardSpell_14E60(a1, 0x10u) )
+  if ( !AiHasAttackSpell_16920(a1) || !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && GetWizardSpell_14E60(a1, 0x10u) )
     return 0;
   v9 = 0;
   for ( i = *(_DWORD *)PTR(dword_AE408_AE3F8() + 36462); i > dword_AE400_AE3F0() + 29795; i = *(_DWORD *)PTR(i) )
@@ -17455,7 +17457,7 @@ int AiFindRivalWizard_145B0(int a1)
       if ( *(_WORD *)PTR(v5 + 462) == 1 )
       {
         *(_WORD *)PTR(a1 + 146) = (int)(i - (dword_AE400_AE3F0() + 29795)) / 164;
-        *(_WORD *)PTR(a1 + 148) = sub_15420(i);
+        *(_WORD *)PTR(a1 + 148) = EntityTag_15420(i);
         return 1;
       }
       if ( 50000 - *(__int16 *)PTR(v4 + 522) * (*(int *)PTR(i + 136) / 10) / 255 <= (int)*(unsigned __int16 *)PTR(v5 + 460) // PORT: signed (idiv/jle at 0x146C8-0x146E8); _DWORD made it unsigned
@@ -17478,7 +17480,7 @@ int AiFindRivalWizard_145B0(int a1)
   if ( DistanceSquared2D_42410_42750((_WORD *)PTR(v9 + 72), (_WORD *)PTR(a1 + 72)) >= v8 * v8 )
     return 0;
   *(_WORD *)PTR(a1 + 146) = (v9 - (dword_AE400_AE3F0() + 29795)) / 164;
-  *(_WORD *)PTR(a1 + 148) = sub_15420(v9);
+  *(_WORD *)PTR(a1 + 148) = EntityTag_15420(v9);
   return 1;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -17501,7 +17503,7 @@ int AiFindRivalBalloon_147E0(int a1)
   int v12; // [esp+Ch] [ebp-18h]
 
   v10 = -1;
-  if ( !sub_16920(a1) )
+  if ( !AiHasAttackSpell_16920(a1) )
     return 0;
   v12 = 0;
   v9 = (_WORD *)PTR(a1 + 72);
@@ -17533,7 +17535,7 @@ int AiFindRivalBalloon_147E0(int a1)
   if ( DistanceSquared2D_42410_42750((_WORD *)PTR(v12 + 72), v9) >= v7 * v7 )
     return 0;
   *(_WORD *)PTR(a1 + 146) = (v12 - (dword_AE400_AE3F0() + 29795)) / 164;
-  *(_WORD *)PTR(a1 + 148) = sub_15420(v12);
+  *(_WORD *)PTR(a1 + 148) = EntityTag_15420(v12);
   return 1;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -17552,7 +17554,7 @@ int sub_14B10(int a1)
 
   v1 = -1;
   v2 = 0;
-  if ( !sub_16920(a1) )
+  if ( !AiHasAttackSpell_16920(a1) )
     return 0;
   v3 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 50);
   if ( v3 == dword_AE400_AE3F0() + 29795 )
@@ -17576,7 +17578,7 @@ int sub_14B10(int a1)
   if ( !v2 )
     return 0;
   *(_WORD *)PTR(a1 + 146) = (v2 - (dword_AE400_AE3F0() + 29795)) / 164;
-  *(_WORD *)PTR(a1 + 148) = sub_15420(v2);
+  *(_WORD *)PTR(a1 + 148) = EntityTag_15420(v2);
   return 1;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -17657,7 +17659,7 @@ int sub_14DC0(int a1)
   else
   {
     *(_WORD *)PTR(a1 + 146) = 164 * *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) / 164;
-    *(_WORD *)PTR(a1 + 148) = sub_15420(v1);
+    *(_WORD *)PTR(a1 + 148) = EntityTag_15420(v1);
     *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 11;
   }
   return 1;
@@ -17943,15 +17945,17 @@ unsigned int sub_153B0(int a1, int a2)
 // AE408: using guessed type int dword_AE408_AE3F8();
 
 //----- (00015420) --------------------------------------------------------
-__int16 sub_15420(int a1)
+/// Tag of an entity slot's occupant: id (+24) + type (+65) + 128 * class (+64). The AI keeps its target's tag in +148 to notice when the slot is reused.
+__int16 EntityTag_15420(int a1)
 {
   return *(_WORD *)PTR(a1 + 24) + *(char *)PTR(a1 + 65) + (*(char *)PTR(a1 + 64) << 7);
 }
 
 //----- (00015440) --------------------------------------------------------
-bool sub_15440(int a1, int a2)
+/// Returns whether entity a2 is still the AI's target (EntityTag_15420(a2) == a1 +148).
+bool AiTargetValid_15440(int a1, int a2)
 {
-  return sub_15420(a2) == *(_WORD *)PTR(a1 + 148);
+  return EntityTag_15420(a2) == *(_WORD *)PTR(a1 + 148);
 }
 
 //----- (00015470) --------------------------------------------------------
@@ -18776,7 +18780,8 @@ LABEL_14:
 }
 
 //----- (00016920) --------------------------------------------------------
-_BOOL1 sub_16920(int a1)
+/// Returns whether the wizard owns an attack spell: Fireball, Lightning, Volcano, Undead Army, Wall of Fire or Meteor.
+_BOOL1 AiHasAttackSpell_16920(int a1)
 {
   return GetWizardSpell_14E60(a1, 0)
       || GetWizardSpell_14E60(a1, 0xFu)
@@ -20244,7 +20249,8 @@ LABEL_3:
 }
 
 //SYNCHONIZED WITH REMC1
-void sub_19B10(Type_AE400_29795* a1x, char a2)
+/// Shared idle state of class 5 creatures (state a2 = 6 * type): when a wizard (class 3) has hit it, targets that wizard (+146) and goes to a2+2; when its life is gone, a2+4; otherwise every +156->v_26 ticks it looks for a same-type creature without a leader inside its view range/angle, follows it (+52) and goes to a2+3.
+void CreatureIdleTick_19B10(Type_AE400_29795* a1x, char a2)
 {
   unsigned int v2; // edx
   __int16 v3; // ax
@@ -21113,9 +21119,11 @@ int sub_1AEE0(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B060(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 0).
+/// Idle state of class 5 type 0 (state 0): CreatureIdleTick_19B10(a1x, 0).
+void Class5Type0IdleTick_1B060(Type_AE400_29795* a1x)
 {
-  sub_19B10(a1x, 0);
+  CreatureIdleTick_19B10(a1x, 0);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21171,12 +21179,14 @@ void sub_1B120(Type_AE400_29795* a1x)
 }
 
 //SYNCHONIZED WITH REMC1
-void sub_1B160(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 1).
+/// Idle state of class 5 type 1 (state 6): CreatureIdleTick_19B10(a1x, 6).
+void Class5Type1IdleTick_1B160(Type_AE400_29795* a1x)
 {
   //__int16 result; // ax
   int v2; // eax
 
-  sub_19B10(a1x, 6);
+  CreatureIdleTick_19B10(a1x, 6);
   MoveCreature_196E0(a1x);
   //HIBYTE(result) = a1x->var_u8_29865_70;
   if ( a1x->var_u8_29865_70 == 6 )
@@ -21267,9 +21277,11 @@ void sub_1B340(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B350(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 2).
+/// Idle state of class 5 type 2 (state 12): CreatureIdleTick_19B10(a1x, 12).
+void Class5Type2IdleTick_1B350(Type_AE400_29795* a1x)
 {
-  sub_19B10(a1x, 12);
+  CreatureIdleTick_19B10(a1x, 12);
   if (a1x->var_u8_29865_70 == 14 )
       a1x->var_u16_29821_26 = 1;
 }
@@ -21344,9 +21356,10 @@ void sub_1B4F0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B500(Type_AE400_29795* a1x)
+/// Idle state of class 5 type 3 (state 18): CreatureIdleTick_19B10(a1x, 18).
+void WormIdleTick_1B500(Type_AE400_29795* a1x)
 {
-  sub_19B10(a1x, 18);
+  CreatureIdleTick_19B10(a1x, 18);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21382,9 +21395,10 @@ void sub_1B590(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B5A0(Type_AE400_29795* a1x)
+/// Idle state of class 5 type 4 (state 24): CreatureIdleTick_19B10(a1x, 24).
+void GuardIdleTick_1B5A0(Type_AE400_29795* a1x)
 {
-  sub_19B10(a1x, 24);
+  CreatureIdleTick_19B10(a1x, 24);
   if (a1x->var_u8_29865_70 == 26 )
     sub_1BC50(a1x);
 }
@@ -22061,9 +22075,11 @@ void sub_1C3D0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1C490(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 6).
+/// Idle state of class 5 type 6 (state 36): CreatureIdleTick_19B10(a1x, 36).
+void Class5Type6IdleTick_1C490(Type_AE400_29795* a1x)
 {
-  sub_19B10(a1x, 36);
+  CreatureIdleTick_19B10(a1x, 36);
 }
 
 //SYNCHRONIZED EITH REMC1
@@ -22252,9 +22268,11 @@ void sub_1C8E0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1C8F0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 7).
+/// Idle state of class 5 type 7 (state 42): CreatureIdleTick_19B10(a1x, 42).
+void Class5Type7IdleTick_1C8F0(Type_AE400_29795* a1x)
 {
-  sub_19B10(a1x, 42);
+  CreatureIdleTick_19B10(a1x, 42);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -22339,9 +22357,11 @@ void sub_1CA30(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1CA40(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 8).
+/// Idle state of class 5 type 8 (state 48): CreatureIdleTick_19B10(a1x, 48).
+void Class5Type8IdleTick_1CA40(Type_AE400_29795* a1x)
 {
-  sub_19B10(a1x, 48);
+  CreatureIdleTick_19B10(a1x, 48);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -23245,9 +23265,11 @@ void sub_1DDB0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DDD0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 10).
+/// Idle state of class 5 type 10 (state 60): CreatureIdleTick_19B10(a1x, 60).
+void Class5Type10IdleTick_1DDD0(Type_AE400_29795* a1x)
 {
-  sub_19B10(a1x, 60);
+  CreatureIdleTick_19B10(a1x, 60);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -24631,7 +24653,7 @@ void sub_1FF40(char a1, Type_AE400_29795* a2x, char a3, int a4, int a5)
 
   v5 = a4 - (a1 + *(_DWORD *)PTR(v6 + 27));
   *(_BYTE *)PTR(v5 - 1957008686) += a3 - *(_BYTE *)PTR(a5 + 128);
-  sub_19B10(a2x, (char)(uintptr_t)&retaddr);
+  CreatureIdleTick_19B10(a2x, (char)(uintptr_t)&retaddr);
 }
 // 1FF47: positive sp value 8 has been found
 // 1FF41: variable 'v6' is possibly undefined
@@ -24995,9 +25017,10 @@ void sub_20480(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_20700(Type_AE400_29795* a1x)
+/// Idle state of class 5 type 16 (state 96): CreatureIdleTick_19B10(a1x, 96).
+void WyvernIdleTick_20700(Type_AE400_29795* a1x)
 {
-  sub_19B10(a1x, 96);
+  CreatureIdleTick_19B10(a1x, 96);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -25458,7 +25481,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 		//add_compare(0x1F2257, true, true);
 #endif debug1
 		//debug
-			sub_5A3C0_5A8D0(1);
+			SetFont_5A3C0_5A8D0(1);
 			//adress 1F225E_
 			//debug
 #ifdef debug1
@@ -25487,10 +25510,10 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 		//add_compare(0x1F2341, true, true);
 #endif debug1
 		//debug
-			sub_5A3C0_5A8D0(1);
+			SetFont_5A3C0_5A8D0(1);
 			if ((str_AE408_AE3F8->var_u8_1 & 2) == 0)
 			{
-				sub_5A3C0_5A8D0(1);
+				SetFont_5A3C0_5A8D0(1);
 				textDrawAxisY = 50;
 				if ((str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u16_13325 & 2) != 0)
 				{
@@ -25585,7 +25608,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 				}
 			}
 			if ((str_AE408_AE3F8->var_u8_1 & 2) != 0)
-				sub_5A3C0_5A8D0(1);
+				SetFont_5A3C0_5A8D0(1);
 
 		}
 		goto LABEL_139;
@@ -25605,7 +25628,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 			str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].str_13895_572[v4x + 1].pitch_8,
 			str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].str_13895_572[v4x + 1].roll_10,
 			str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].str_13895_572[v4x + 1].fov_12);
-		sub_5A3C0_5A8D0(1);
+		SetFont_5A3C0_5A8D0(1);
 		textDrawAxisX = GetLetterX_5A3A0_5A8B0();
 		intLetterY = -GetLetterY_5A3B0_5A8C0() / 2;
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
@@ -25861,7 +25884,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 		//add_compare(0x1F356A, true, true);
 #endif debug1
 		//debug
-		sub_5A3C0_5A8D0(1);
+		SetFont_5A3C0_5A8D0(1);
 		if ((str_AE408_AE3F8->var_u8_0 & 0x20) == 0
 			&& (str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u32_13341_18 & 2) != 0
 			&& (str_AE408_AE3F8->var_u8_0 & 2) != 0)
@@ -26050,7 +26073,7 @@ int sub_22880()
   unsigned __int8 v24; // [esp+128h] [ebp-18h]
   unsigned __int8 v25; // [esp+12Ch] [ebp-14h]
 
-  sub_5A3C0_5A8D0(1);
+  SetFont_5A3C0_5A8D0(1);
   v0 = 0;
   v1 = 0;
   v2 = dword_AE400_AE3F0() + 13323;
@@ -26677,7 +26700,7 @@ void DrawSpellIconWithCharges_23D40(int a1, int a2, Type_AE400_29795* a3x, char 
   LOBYTE(v4) = dword_AE400_AE3F0() + 99;
   if ( a3x > str_AE400_AE3F0->str_29795 )
   {
-    sub_5A3C0_5A8D0(1);
+    SetFont_5A3C0_5A8D0(1);
     LOBYTE(v4) = dword_AE400_AE3F0() + 99;
     v5 = dword_AE400_AE3F0() + 29795 + 164 * a3x->var_u16_29837_42;
     v21 = v5;
@@ -26819,7 +26842,7 @@ void DrawSpellMenuIcon_24230(__int16 a1, __int16 a2, unsigned int a3, char a4)
   LOBYTE(v4) = dword_AE400_AE3F0() + 99;
   if ( a3 > dword_AE400_AE3F0() + 29795 )
   {
-    sub_5A3C0_5A8D0(1);
+    SetFont_5A3C0_5A8D0(1);
     LOBYTE(v4) = dword_AE400_AE3F0() + 99;
     v5 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(a3 + 42);
     if ( v5 > dword_AE400_AE3F0() + 29795 )
@@ -40670,7 +40693,7 @@ void TopProcedure_340B0_34470(int argc, const char** argv)//2050B0_205470
   else
   {
     str_AE408_AE3F8->var_u8_23 = 0;
-    sub_3F1D0_3F510();
+    CopyDataToInstallDir_3F1D0_3F510();
     sub_58F90_594A0();
     sub_41230_41570();
     sub_44730_44A70();
@@ -41158,7 +41181,7 @@ void LoadDataAndColourLookup_34B40_34F00()//205B40_205F00
 		indexB1 += 4;
 	}
 	str_AE408_AE3F8->var_u8_23 = 1;
-	sub_5A3C0_5A8D0(0);
+	SetFont_5A3C0_5A8D0(0);
 }
 
 //----- (00034C60) --------------------------------------------------------
@@ -49275,7 +49298,8 @@ bool access_3EF30_3F270(char* a1)
   return (unsigned __int16)access(a1, 0) == 0;
 }
 
-char sub_3EF50_3F290(char *a1, char *a2, const char *a3)
+/// Copies <a3>.tab and <a3>.dat from directory a1 to a2, printing the progress in percent; returns 2/1 if a directory is missing, 3 if a file cannot be opened.
+char CopyDataFilePair_3EF50_3F290(char *a1, char *a2, const char *a3)
 {
   int writed;
   int blockSize;
@@ -49338,7 +49362,8 @@ char sub_3EF50_3F290(char *a1, char *a2, const char *a3)
   return 0;
 }
 
-void sub_3F1D0_3F510()
+/// Setup: copies the texture maps (data/tmaps) and the levels into the install directory ("Creating Setup Directories..", "Setup levels..").
+void CopyDataToInstallDir_3F1D0_3F510()
 {
 	//fixed
 	char helpStr1[20];
@@ -49364,7 +49389,7 @@ void sub_3F1D0_3F510()
 	{
 		sprintf(textBuffer2, "%s%s/%s", "C:", "\\carpet.cd", "data");
 		dword_B76F0_B76E0 = gettextposition(outtext((char*)"Creating Setup Directories.."));
-		if (!sub_3EF50_3F290((char*)"data", textBuffer2, helpStr1))
+		if (!CopyDataFilePair_3EF50_3F290((char*)"data", textBuffer2, helpStr1))
 			sprintf(textBuffer2, "%s%s/%s/%s.dat", "C:", "\\carpet.cd", "data", helpStr1);
 	}
 	outtext((char*)"\n");
@@ -49373,7 +49398,7 @@ void sub_3F1D0_3F510()
 	{
 		sprintf(textBuffer2, "%s%s/%s", "C:", "\\carpet.cd", "levels");
 		dword_B76F0_B76E0 = gettextposition(outtext((char*)"Setup levels.."));
-		if (!sub_3EF50_3F290((char*)"levels", textBuffer2, helpStr2))
+		if (!CopyDataFilePair_3EF50_3F290((char*)"levels", textBuffer2, helpStr2))
 			sprintf(textBuffer2, "%s%s/%s/%s.dat", "C:", "\\carpet.cd", "levels", helpStr2);
 	}
 }
@@ -56823,7 +56848,7 @@ char sub_48710_48A50(int a1, int a2, __int16 a3, __int16 a4, int a5, int a6, __i
   v13 = v12 * sin_90B4C[a7 & 0x7FF];
   v14 = (cos_9134C[a7 & 0x7FF] * v12) >> 16;
   v70 = a6 / 2;
-  sub_5A3C0_5A8D0(1);
+  SetFont_5A3C0_5A8D0(1);
   v62 = v14;
   v69 = 164 * *(unsigned __int16 *)PTR(dword_AE400_AE3F0() + 2049 * str_AE400_AE3F0->var_u16_8 + 13333) + dword_AE400_AE3F0() + 29795;
   v15 = *(_WORD *)PTR(*(_DWORD *)PTR(v69 + 160) + 686);
@@ -67581,7 +67606,8 @@ __int16 GetLetterY_5A3B0_5A8C0()
 }
 // AE44C: using guessed type int dword_AE44C_AE43C;
 
-void sub_5A3C0_5A8D0(int fontIndex)//22B3C0_
+/// Selects font fontIndex (0 or 1; falls back to 0 when it is not loaded) for the text routines.
+void SetFont_5A3C0_5A8D0(int fontIndex)//22B3C0_
 {
     dword_AE3B8_2[0].bTab = begFont0Tab_AE3B8_AE3A8_26C3B8_26C3A8;
     dword_AE3B8_2[1].bTab = begFont1Tab_AE3BC_26C3BC_26C3AC;
@@ -67773,7 +67799,7 @@ void DrawVersionInfo_5A560_5AA70()
 
   if ( (*(_BYTE *)PTR(dword_AE400_AE3F0() + 2049 * str_AE400_AE3F0->var_u16_8 + 13328) & 8) != 0 )
   {
-    sub_5A3C0_5A8D0(1);
+    SetFont_5A3C0_5A8D0(1);
     DrawText_5A180_5A690((char*)"Product name", 320, 0, byte_AD167_AD157[3841]);
     v0 = GetLetterY_5A3B0_5A8C0();
     DrawText_5A180_5A690((char*)"Magic Carpet", 320, v0, byte_AD167_AD157[16]);
