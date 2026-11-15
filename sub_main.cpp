@@ -293,7 +293,7 @@ __int16 StepDecodeFrameChunk_100B8();
 __int16 StepDecodeFileHeader_10166();
 int StepDecodePrefixChunk_10190();
 __int16 StepDecodeSS2_101A1();
-int DecodeFlcBrun_10254();
+int StepDecodeBrun_10254();
 void DelayTimer2_10300();
 void ReadData_103C0(void *a1, unsigned int a2);
 int NextFrame_103F0();
@@ -306,7 +306,7 @@ __int16 FNFliBrun_10BD0();
 Type_AE3E0* DynAnimBankInit_10CB0(unsigned __int16 a1);
 void DynAnimBankAddPage_10D40(Type_AE3E0* a1, Type_sub168_2* a2, __int16 a3);
 void DynAnimBankAnimatePage_10EB0(Type_sub_AE3E0* a1);
-void ClearTmapAnim_10F10(Type_sub_AE3E0* a1);
+void DynAnimBankDeletePage_10F10(Type_sub_AE3E0* a1);
 Type_sub_AE3E0* FindTmapAnim_10FD0(Type_AE3E0* a1, __int16 a2);
 void FreeAnimSequences_11010(Type_AE3E0** a1);
 bool sub_11050();
@@ -332,7 +332,7 @@ int AffectMapwhoChangeInAltitude_127E0(Type_AE400_29795* a1, char a2, unsigned _
 int AffectThingDirect_12B50(Type_AE400_29795* a1, int a2, unsigned __int8 a3, unsigned __int16 a4);
 void CastleClearAllBuildings_12C50(_WORD *a1);
 char CastleOkToExtend_12D10(_WORD *a1);
-_BOOL1 IsCastleSiteFree_12F70(_WORD *a1);
+_BOOL1 CastleOkHere_12F70(_WORD *a1);
 int FnPlayerComputerFlyer_13170(int a1);
 int ActionGeneric_132B0(int a1);
 int ActionInitialise_136C0(int a1);
@@ -417,7 +417,7 @@ void FnCreature00Attack_1B090(Type_AE400_29795* a1);
 void FnCreature00Flock_1B0E0(Type_AE400_29795* a1);
 void FnCreature00Dying_1B100(Type_AE400_29795* a1);
 void FnCreature00Dead_1B110(Type_AE400_29795* a1);
-void BobAboveGround_1B120(Type_AE400_29795* a1);
+void DragonBounce_1B120(Type_AE400_29795* a1);
 void FnCreature01Stand_1B160(Type_AE400_29795* a1);
 void FnCreature01Wander_1B200(Type_AE400_29795* a1);
 void FnCreature01Attack_1B2D0(Type_AE400_29795* a1);
@@ -442,8 +442,8 @@ void FnCreature04Attack_1BB20(Type_AE400_29795* a1);
 void FnCreature04Flock_1BBE0(Type_AE400_29795* a1);
 void FnCreature04Dying_1BC10(Type_AE400_29795* a1);
 void FnCreature04Dead_1BC40(Type_AE400_29795* a1);
-void sub_1BC50(Type_AE400_29795* a1);
-void sub_1BCE0(Type_AE400_29795* a1);
+void ArcherBeginAttack_1BC50(Type_AE400_29795* a1);
+void ArcherEndAttack_1BCE0(Type_AE400_29795* a1);
 void FnCreature05Stand_1BD10(Type_AE400_29795* a1);
 void FnCreature05Wander_1BD20(Type_AE400_29795* a1);
 void FnCreature05Attack_1C110(Type_AE400_29795* a1);
@@ -475,10 +475,10 @@ void FnCreature09Attack_1DA60(Type_AE400_29795* a1);
 void FnCreature09Flock_1DC80(Type_AE400_29795* a1);
 void FnCreature09Dying_1DCB0(Type_AE400_29795* a1);
 void FnCreature09Dead_1DCC0(Type_AE400_29795* a1);
-void sub_1DCD0(Type_AE400_29795* a1);
-void sub_1DD50(Type_AE400_29795* a1);
-void sub_1DD90(Type_AE400_29795* a1);
-void sub_1DDB0(Type_AE400_29795* a1);
+void SkeletonBeginAttack_1DCD0(Type_AE400_29795* a1);
+void SkeletonEndAttack_1DD50(Type_AE400_29795* a1);
+void SkeletonSitDown_1DD90(Type_AE400_29795* a1);
+void SkeletonGetUp_1DDB0(Type_AE400_29795* a1);
 void FnCreature10Stand_1DDD0(Type_AE400_29795* a1);
 void FnCreature10Wander_1DDE0(Type_AE400_29795* a1);
 int FnCreature10Attack_1DDF0(Type_AE400_29795* a1);
@@ -531,9 +531,9 @@ void Draw_20FB0();
 void DrawBar_22810(int a1, int a2, int a3, int a4, int a5, unsigned __int8 a6);
 int DrawPlayerInformation_22880();
 void DrawInformationBars_22E50(Type_AE400_29795* a1x);
-void sub_23940(__int16 a1, __int16 a2, TypeTab* a3);
+void DrawTransparentSprite_23940(__int16 a1, __int16 a2, TypeTab* a3);
 void sub_23AE0(__int16 a1, __int16 a2, TypeTab* a3, unsigned __int8 a4);
-void sub_23CF0(__int16 a1, __int16 a2, int a3);
+void DrawSpellNotOwned_23CF0(__int16 a1, __int16 a2, int a3);
 void DrawSpell_23D40(int a1, int a2, Type_AE400_29795* a3x, char a4);
 void DrawSpellShort_24230(__int16 a1, __int16 a2, unsigned int a3, char a4);
 void DrawDarkBox_247C0(int result, int a2, __int16 a3, __int16 a4, int a5, unsigned __int8 a6);
@@ -542,10 +542,10 @@ void DrawIntroText_24B50(char* a1);
 int ClearIntroTextArea_24B80();
 void ResetIntroText_24BB0();
 void SetIntroTextColor_24BF0(unsigned __int8 a1);
-void sub_24C20(int a1, int a2, int a3, int a4, unsigned __int16 a5);
-void sub_24CA0(int a1, int a2, int a3, int a4, unsigned __int16 a5);
-void DrawRectCheckedLowRes_24D20(int a1, int a2, int a3, int a4, unsigned __int16 a5);
-void DrawRectCheckedHighRes_24DA0(int a1, int a2, int a3, int a4, unsigned __int16 a5);
+void DrawBoxCMCGA_24C20(int a1, int a2, int a3, int a4, unsigned __int16 a5);
+void DrawBoxCVres256_24CA0(int a1, int a2, int a3, int a4, unsigned __int16 a5);
+void DrawBoxOutlineCMCGA_24D20(int a1, int a2, int a3, int a4, unsigned __int16 a5);
+void DrawBoxOutlineCVres256_24DA0(int a1, int a2, int a3, int a4, unsigned __int16 a5);
 int nullsub_2(void); // weak
 void FnEffectExplosion_24F60(Type_AE400_29795* a1x);
 void FnEffectBigExplosion_25130(int a1);
@@ -620,7 +620,7 @@ void StereoModeOff_315C0_31600();
 void InitStereoMode_31600_31640();
 void SetPalette256_319A0_319E0(TColor* palette);
 void EnsureMonoMode_31A00_31A40();
-void sub_31A60_31AA0();
+void RestorePossibleStereoMode_31A60_31AA0();
 void CreateWorld_31AA0_31AE0(int a1);
 unsigned __int16 SmoothTheAlts_31BB0();
 unsigned __int16 MarkSea_31D40();
@@ -646,7 +646,7 @@ unsigned __int16 sub_34070();
 // int Game_340B0_34470(int a1, __int16 a2, __int16 a3, unsigned __int16 a4, int a5);
 int StartLoadingPage_34460_34820();
 void StopLoadingPage_344F0();
-// void DrawAndEventsInGame_34530_348F0(__int16 a1, __int16 a2, __int16 a3);
+// void GameLoop_34530_348F0(__int16 a1, __int16 a2, __int16 a3);
 void ProcessMainGame_34610_349D0();
 void ProcessPalettes_34690_34A50();
 void LoadAllGameData_34B00_34EC0();
@@ -683,7 +683,7 @@ void HeapDelete_36A90_36E50(Type_sub168* a1, Type_sub168_2* a2);
 void HeapDone_36C10_36FD0(Type_sub168** a1);
 // void KInt_36C65(int a1, int a2, int a3, int a4, int a5, int a6, int a7);
 void OpenIKeyboard_36D83();
-int sub_36DC2_37182();
+int CloseIKeyboard_36DC2_37182();
 void ConfigureAThing_36DE0_371A0(Type_AE400_29795* event);
 void ConfigureBuilding_36DF0_371B0(Type_AE400_29795* event, unsigned __int16 a2);
 int SetCreatureMana_36F90_37350(int a1);
@@ -812,7 +812,7 @@ int InitEffectTeleport_3B300(uint16_t* a1);
 int InitEffectCircleBall_3B3D0(uint16_t* a1);
 int InitEffectSkeleton_3B3E0(uint16_t* a1);
 int sub_3B460(uint16_t* a1);
-int CreateClass10Type33_3B4D0(uint16_t* a1);
+int InitEffectBlindness_3B4D0(uint16_t* a1);
 int CreateManaBall_3B5A0(uint16_t* a1);
 int CreateDeathMarker_3B620(uint16_t* a1);
 Type_AE400_29795* CreatePlayerFlag_3B690(axis_3d* a1);
@@ -885,10 +885,10 @@ int InitSpellExtra1_3C3F0(int a1);
 int InitSpellExtra2_3C420(int a1);
 int InitSpellExtra3_3C450(int a1);
 int InitSpellExtra4_3C480(int a1);
-int CreateClass13Type0_3C4B0(int a1);
-int CreateClass13Type1_3C4E0(int a1);
-int CreateClass13Type2_3C510(int a1);
-int CreateClass13Type3_3C540(int a1);
+int InitObjectiveGainMana_3C4B0(int a1);
+int InitObjectiveKillCreature_3C4E0(int a1);
+int InitObjectiveKillCity_3C510(int a1);
+int InitObjectiveKillPlayer_3C540(int a1);
 void InitMusicFromSetup_3C570();
 void sub_3C800_sub_3CB40();
 void ExecutePlayerInputs_3C9D0_3CD10();
@@ -941,10 +941,10 @@ __int16 Arctan_40F87_412C7(__int16 a1, __int16 a2);
 unsigned int Sqrl_410CE_4140E(unsigned int a1);
 void SetColour_41144(unsigned __int8 a1, unsigned __int8 a2, unsigned __int8 a3, unsigned __int8 a4);
 int ClearScreenMCGA_411D7_41517(void *a2, unsigned __int16 a3, char a4);
-int ClearScreen640_411FD_4153D(void *a2, unsigned __int16 a3, char a4);
+int ClearScreenVres256_411FD_4153D(void *a2, unsigned __int16 a3, char a4);
 void ExamineMemory_41230_41570();
 void CreateMemory_41490_417D0();
-void sub_41540_41880();
+void RestoreMemory_41540_41880();
 unsigned __int16 LevelCompletion_415C0_41900();
 void RelinkThings_416B0();
 void ProcessThings_41780_41AC0();
@@ -970,7 +970,7 @@ int GetDistanceSquared_42390_426D0(_WORD *a1, _WORD *a2);
 unsigned int GetDistanceXy_423D0_42710(axis_3d* a1, axis_3d* a2);
 int GetDistanceXySquared_42410_42750(_WORD *a1, _WORD *a2);
 void SetState_424F0_42830(Type_AE400_29795* a1, unsigned __int8 a2);
-int AdvanceAnimFrame_42510_42850(Type_AE400_29795* a1);
+int Animate_42510_42850(Type_AE400_29795* a1);
 void sub_42530_42870(char a1);
 void* malloc_42540_42880(size_t size);
 void* malloc_425C0_42900(size_t size);
@@ -999,16 +999,16 @@ void SetupNetwork_43270_435B0();
 void ResetNetwork_433C0_43700();
 int StartNetwork_43430_43770(char *a1, __int16 a2);
 int StopNetwork_43760_43AA0(__int16 a1);
-void sub_43870_43BB0(unsigned __int16 a1, char *a2, unsigned int a3);
-void sub_438D0_43C10(unsigned __int16 a1, char *a2, unsigned int a3);
-void sub_43930_43C70(uint8* a1[8], unsigned int size);
+void SendNetwork_43870_43BB0(unsigned __int16 a1, char *a2, unsigned int a3);
+void ReceiveNetwork_438D0_43C10(unsigned __int16 a1, char *a2, unsigned int a3);
+void ExchangeNetwork_43930_43C70(uint8* a1[8], unsigned int size);
 void OpenMusic_43B20_43E60(unsigned int a2);
 char *LoadFileAlloc_43E50(const char *a1);
 void OpenSound_43EC0_44200();
 void Orgdata_44470_447B0();
 void SetupStrings_44700_44A40(char* a1, char** a2, int a3);
 void SetupHost_44730_44A70();
-void sub_44840_44B80();
+void ResetHost_44840_44B80();
 int MakeupPlayerPerformance_448E0_44C20();
 void SetPlayerPalette_44BE0_44F20(Type_AE400_29795* a1, char a2);
 signed int PlayerFireLog_44C10_44F50(int a1);
@@ -1047,22 +1047,22 @@ int AddMana_48340_48680(int a1);
 void LocalPlayOneChannelSample_483C0(__int16 a1, __int16 a2, __int16 a3, __int16 a4);
 void LocalPlayDifferentSample_48470(__int16 a1, __int16 a2, __int16 a3, __int16 a4);
 int LocalPlayActualSample_48520(__int16 a1, __int16 a2, __int16 a3, __int16 a4);
-bool sub_48570(__int16 a1, __int16 a2, __int16 a3, __int16 a4);
+bool TriggerSample_48570(__int16 a1, __int16 a2, __int16 a3, __int16 a4);
 char RotateDots_48710_48A50(int a1, int a2, __int16 a3, __int16 a4, int a5, int a6, __int16 a7, int a8);
-int DrawMinimap_49300_49640(int a1, int a2, int a3, int a4, int a5, int a6, __int16 a7, int a8, int a9, int a10);
+int ElipticalMap_49300_49640(int a1, int a2, int a3, int a4, int a5, int a6, __int16 a7, int a8, int a9, int a10);
 void FnSceneryTree_49890_49BD0(int a1);
 int FnSceneryTreeBurning_499C0_49D00(int a1);
 void FnSceneryTreeDead_49A50_49D90(_WORD* a1);
 int FnSceneryStandingStone_49AA0_49DE0(int a1);
 int FnSceneryDolmen_49AD0_49E10(int a1);
 int StandingStoneTick_49B50_49E90(int a1);
-void sub_4A980_4ACC0();
-void MainMenuStep_4AB20_4AE60();
+void ScreenInitialize_4A980_4ACC0();
+void ScreensHandle_4AB20_4AE60();
 void SetupMenuPage_4AC70_4AFB0();
 int sub_4B430_4B770();
 int sub_4B480_4B7C0(int (*a1)(void), int a2);
 int sub_4B520_4B860();
-void sub_4B560_4B8A0();
+void ScreenConfigureGameDraw_4B560_4B8A0();
 char **sub_4B6A0_4B9E0();
 void sub_4B6F0_4BA30(char** texts);
 void sub_4B8D0_4BC10(__int16 a1);
@@ -1073,7 +1073,7 @@ int sub_4C580_4C8C0();
 bool sub_4C640_4C980();
 bool sub_4C670_4C9B0();
 bool sub_4C6A0_4C9E0();
-void sub_4C6F0_4CA30();
+void ScreenMainMenuAnims_4C6F0_4CA30();
 void InitMainMenuScreen_4C7E0_4CB20();
 void sub_4CAC0_4CE00();
 void sub_4CB70_4CEB0();
@@ -1091,7 +1091,7 @@ void sub_4E270_4E5B0();
 void ScreenNetworkSetAllPlayersListening_4E320_4E660();
 void ScreenNetworkCallPlayer_4E3D0_4E710(unsigned __int8 a1);
 void ScreenNetworkPlayerConnected_4E470_4E7B0(unsigned __int8 a1);
-void sub_4E510(unsigned __int8 a1);
+void ScreenNetworkResetPlayer_4E510(unsigned __int8 a1);
 int ShowLevelPerformance_4E5B0_4E8F0();
 void PlayLogoAnim_4EE70_4F1B0();
 void PlayIntelAnim_4EFC0_4F300();
@@ -1118,8 +1118,8 @@ _DWORD *GetTextWindow_513A0_516E0(_DWORD *a1);
 void SaveTextWindow_513E0_51720();
 void RestoreTextWindow_51400_51740();
 int GetTextWidth_51420_51760(_DWORD *a1, char *a2);
-void sub_51480_517C0(Type_dword_96884* a1, TypeStrFont* a2, TColor* colorBuffer);
-void DrawText_51560_518A0(_BYTE *a1, int a2, __int16 a3, char* text);
+void InitializeFont_51480_517C0(Type_dword_96884* a1, TypeStrFont* a2, TColor* colorBuffer);
+void DrawFontBPP_51560_518A0(_BYTE *a1, int a2, __int16 a3, char* text);
 __int16 sub_51650_51990(int a1, int a2, __int16 a3, int a4);
 void RelocateFontGlyphs_519E0_51D20(TypeStrFont* a1);
 void ReadSaveGameNames_51A10_51D50();
@@ -1155,9 +1155,9 @@ void FnShotArrow_54180_544D0(int a1);
 void FnShotFollow_54290_545E0(int a1);
 char FnShotExtra2_542B0_54640(int a1);
 void FnShotExtra3_54480_54810(int a1);
-int FindMissileTarget_54520_548B0(int a1);
+int ShotSearchForATarget_54520_548B0(int a1);
 int ShotTargetNumber_54A90_54FC0(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a4);
-int sub_54BD0_55100(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a4);
+int ShotTargetNumber2_54BD0_55100(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a4);
 void ProcessSight_54F00_55430();
 int Seen_54F80(int a1);
 void sub_55100_55630();
@@ -1166,7 +1166,7 @@ bool NearVolume_55870(int a1, int a2);
 void StopASample_55890_55DC0(int a1, __int16 a2, __int16 a3);
 int Cbfadeoutmusic_558F0();
 int StopFadeOutMusic_55960();
-int sub_559A0();
+int NumberOfSamplesPlaying_559A0();
 int PickupSpell_55A40_55F70(Type_AE400_29795* a1x, char a2, char a3);
 void PickupSpellToAll_55D30_56260(Type_AE400_29795* a1x);
 int PickupSpellOne_55DB0_562E0(Type_AE400_29795* a1x);
@@ -1222,12 +1222,12 @@ void RestoreTmapConfiguration_59420_59930();
 void sub_59500_59A10(Type_99974* a1);
 void sub_59560_59A70(Type_99974* a1);
 void CentreMouseCoordinates_59720_59C30();
-void sub_59750(int16 a1, int16 a2);
+void SetNewMousePosition_59750(int16 a1, int16 a2);
 void SwapScreensVres256_599B0_59EC0(__int16 a1);
-void Switch00Tick_59A80_59F90(uint16_t* a1);
-void Switch01Tick_59AB0_59FC0(uint16_t* a1);
-void Switch02Tick_59AE0_59FF0(uint16_t* a1);
-void Switch03Tick_59B30_5A040(uint16_t* a1);
+void FnSwitchHiddenInside_59A80_59F90(uint16_t* a1);
+void FnSwitchHiddenOutside_59AB0_59FC0(uint16_t* a1);
+void FnSwitchHiddenInsideRe_59AE0_59FF0(uint16_t* a1);
+void FnSwitchHiddenOutsideRe_59B30_5A040(uint16_t* a1);
 int FnSwitchOnVictory_59B80_5A090(uint16_t* a1);
 void FnSwitchDeathInside_59C40_5A150(uint16_t* a1);
 int FnSwitchDeathOutside_59C70_5A180(uint16_t* a1);
@@ -1260,12 +1260,12 @@ int FnSwitchExitLevel_5A080(uint16_t* a1);
 int TriggerSwitch_5A090_5A5A0(int a1, int a2);
 int CouldTriggerSwitch_5A120_5A630(int a1, int a2);
 void DrawText_5A180_5A690(char* text, int posX, int posY, uint8 color);
-__int16 GetLetterX_5A3A0_5A8B0();
-__int16 GetLetterY_5A3B0_5A8C0();
+__int16 CharacterWidth_5A3A0_5A8B0();
+__int16 CharacterHeight_5A3B0_5A8C0();
 void SetUserfont_5A3C0_5A8D0(int fontIndex);
 // void SystemCBfn_5A3E3(int a1, int a2, int a3, int a4, int a5, int a6, int a7);
 void OpenTimerInterrupt_5A459_5A969();
-void sub_5A4EA_5A9FA();
+void CloseTimerInterrupt_5A4EA_5A9FA();
 void VersionRequested_5A560_5AA70();
 void CopyrightRequested_5ACA0_5B1B0();
 void SetupPrint_5AD10_5B220(char* text);
@@ -1281,8 +1281,8 @@ int ResetVFX1_5B3B0_5B8C0();
 int VFX1MouseInt_5B3E0(int a1);
 int FreeDOS_5B450(__int16 a1);
 int AllocDOS_5B480_5B990(int a1, int16_t* a2, int16_t* a3);
-void ClearScr_5B500_5BA10();
-void ClearScr_5B560();
+void HeadsetStereoOn_5B500_5BA10();
+void HeadsetStereoOff_5B560();
 int nullsub_11(_DWORD); // weak
 void sub_5B5E0();
 void sub_5B5F4_5BB04();
@@ -1294,7 +1294,7 @@ void PlaceMouse_5BDF8_5C308();
 void RemoveMouse_5BE50_5C360();
 void SetPointer_5C05C_5C56C(TypeTab* a1);
 int SetupMouse_5C214_5C724();
-void ResizeScr_5C468_5C978();
+void SetMouseLimits_5C468_5C978();
 __int16 DecodeFRAMECHUNK_5C76B();
 __int16 DecodeFILEHEADER_5C82E();
 int DecodeCOPY_5C891();
@@ -1304,7 +1304,7 @@ void DoPalette_5C8F4();
 __int16 DecodeSS2_5C969();
 int DecodeLC_5CA40();
 char DecodeBRUN_5CAE7();
-void sub_5CB73(int a1, __int16 a2);
+void DelayTimer_5CB73(int a1, __int16 a2);
 // _DWORD printf(const char *, ...); weak
 // _DWORD memset(_DWORD, _DWORD, _DWORD); weak
 void WaitForBeam_5CC54_5D164();
@@ -1314,21 +1314,21 @@ void Blit_5CDA0_5D2B0();
 // _DWORD dos_getdrive(_DWORD); weak
 // _DWORD dos_getdiskfree(_DWORD, _DWORD); weak
 int LoadMusic_5CEF0_5D400(unsigned __int16 a1);
-unsigned int FixMusicTabOffsets_5CFA4();
+unsigned int FormatMusic_5CFA4();
 void StopAllSamples_5D010_5D520();
 int LoadSounds_5D070_5D580(unsigned __int8 a1);
-unsigned int sub_5D138();
+unsigned int FormatSounds_5D138();
 int AniRead_5D1A0(int a1, int a2, unsigned int a3);
 int MyReadBufferLump_5D230_5D740(int a1, int a2, int a3);
 void PlayMusicTrack_5D290_5D7A0(__int16 a1);
 void PlaySampleAndLoop_5D460_5D970(__int16 a1, __int16 a2, __int16 a3);
 void PlayActualSample_5D610_5DB20(__int16 a1, __int16 a2);
 void StopSample_5D750_5DC60(__int16 a1, __int16 a2);
-void sub_5D7DF();
+void SosMIDIDoneStart_5D7DF();
 bool SosMIDISongDone_5D7F0_5DD00(int a1);
-void sub_5D829();
+void SosMIDIDoneEnd_5D829();
 // int rand(void); weak
-void sub_5D872();
+void SosDIGITmrStart_5D872();
 int SosTIMERInitSystem_5D883_5DD93(unsigned int a2, char a3);
 int SosTIMERUnInitSystem_5D948();
 int SosTIMERRegisterEvent_5D97B(unsigned int a1, int a2, __int16 a3, unsigned int a4);
@@ -1338,14 +1338,14 @@ int SosTIMERGetEventRate_5DE40(int a1);
 int SosTIMERSetRate_5DE63(int a1);
 int SosTIMERHandler_5DE91(int a1, int a2, int a3);
 int SosTIMEROldHandler_5DF4B(int a1, int a2, int a3);
-void sub_5DF61();
-void sub_5DF72();
+void SosDIGITmrEnd_5DF61();
+void SosMIDIStStart_5DF72();
 int SosMIDIHandleMIDIData_5DF83(int a1, unsigned int a2, unsigned __int16 a3, int a4, int a5);
 int SosMIDIResetChannelStealing_5E9C1(int a1);
 int SosMIDISendMIDIData_5EDA0(int a1, int a2, unsigned __int16 a3, int a4);
 int SosMIDIEnableChannelStealing_5EDD6(int a1);
-void sub_5EE00();
-void sub_5EE11();
+void SosMIDIStEnd_5EE00();
+void SosMIDISongStart_5EE11();
 int SosMIDIInitSong_5EE22(unsigned int a1, int a2, int a3, __int16 a4, unsigned int a5);
 int SosMIDIUnInitSong_5F355(unsigned int a1);
 int SosMIDIStartSong_5F398(int a1);
@@ -1353,10 +1353,10 @@ int SosMIDIStopSong_5F420(unsigned int a1);
 int SosMIDIResetSong_5F529(int a1, unsigned int a2);
 int SosMIDIGetDeltaTime_5F7C7(unsigned int a1, int a2, unsigned int a3);
 int SosMIDISetMasterVolume_5F83E(char a1);
-void sub_5F913();
-void sub_5F924();
-void sub_5F935();
-void sub_5FD67();
+void SosMIDISongEnd_5F913();
+void SosMIDIInitStart_5F924();
+void SosMIDILockMemory_5F935();
+void SosMIDIUnLockMemory_5FD67();
 int SosMIDIInitSystem_60199(int a1, unsigned __int16 a2);
 int SosMIDIUnInitSystem_60335();
 int SosMIDIInitDriver_6035F(unsigned int a1, unsigned int a2, int a3, int a4, int a5, unsigned int a6);
@@ -1365,8 +1365,8 @@ int SosMIDIResetDriver_6091D(int a1);
 void sub_609F4();
 unsigned __int64 sub_60BDC(int a1);
 // _DWORD sprintf(_DWORD, _DWORD, ...); weak
-void DrawBitmap_60CE0_611F0(__int16 a1, __int16 a2, TypeTab* a3);
-void DrawBitmap_60D18_61228(__int16 a1, __int16 a2, TypeTab* a3);
+void DrawASpriteMCGA_60CE0_611F0(__int16 a1, __int16 a2, TypeTab* a3);
+void DrawASpriteVres256_60D18_61228(__int16 a1, __int16 a2, TypeTab* a3);
 void DrawSpriteMCGA_60D50_61260(TypeTabDimm a1, int a2, int a3, uint8_t* sprite, unsigned __int8 a5, char a6);
 void DrawSpriteVres256_60D65_61275(TypeTabDimm a1, int a2, int a3, uint8_t* sprite, unsigned __int8 a5, char a6);
 int PixelMCGA_61594_61AA4(unsigned __int16 a1, unsigned __int16 a2, __int16 a3);
@@ -1383,7 +1383,7 @@ int VesaGetInfo_61AB0_61FC0();
 void SetupScreenMCGA_61B90_620A0(TColor* a1);
 void SetupScreenVres256_61C30_62140(TColor* a1);
 void FadePalette256_61CC0_621D0(TColor* palette, unsigned __int8 a2, char a3);
-void sub_61EC8();
+void StopOpenFadePalette256_61EC8();
 // _DWORD stricmp(_DWORD, _DWORD); weak
 // _DWORD StrToInt(_DWORD); weak
 void FreeSound_61F90();
@@ -1434,20 +1434,20 @@ int sub_638E0(int a1, int a2, int a3);
 void sub_638F8();
 int GetRNCFilesize_63910_63E20(Pathstruct* pathstruct);
 // _DWORD strcmp(_DWORD, _DWORD); weak
-void sub_63A8C();
+void SosDIGIDetecStart_63A8C();
 int SosDIGIDetectInit_63A9D_63FAD(int a3, __int16 a4);
 int SosDIGIDetectUnInit_63C06();
-// int sub_63C5A_6416A(const void *a1, unsigned int a2, char *a3, __int16 a4, unsigned int a5);
+// int SosDIGIDetectFindHardware_63C5A_6416A(const void *a1, unsigned int a2, char *a3, __int16 a4, unsigned int a5);
 int sub_64248(unsigned int a1, __int16 a2);
 void sub_64414();
-void sub_64425();
-void sub_64436();
-void sub_645FB();
+void SosDIGIInitStart_64425();
+void SosDIGILockMemory_64436();
+void SosDIGIUnLockMemory_645FB();
 int SosDIGIInitSystem_647C0(int a1, unsigned __int16 a2);
 int SosDIGIUnInitSystem_6481C();
 // int SosDIGIInitDriver_64846_64D56(int a1, int a2, unsigned int a3, unsigned int a4, int a5, unsigned int a6, int a7, unsigned int a8);
 int SosDIGIUnInitDriver_64F78(unsigned int a1, int a2, int a3);
-int sub_650FF_6560F(__int16 a1, int a2, unsigned int a3, _DWORD *a4);
+int SosDIGIAllocateBuffer_650FF_6560F(__int16 a1, int a2, unsigned int a3, _DWORD *a4);
 void sub_651D6();
 void sub_651E7();
 bool IsSampleDone_651F8(int a1, int a2);
@@ -1463,12 +1463,12 @@ void RestartMusicIfDone_65E00_66310();
 void SetGraphicsWindow_65EB0_663C0(__int16 a1, __int16 a2, __int16 a3, __int16 a4);
 void PlayOneChannelSample_65F10_66420(__int16 a1, __int16 a2);
 // _DWORD memmove(_DWORD, _DWORD, _DWORD); weak
-void sub_66107();
+void SosDIGIVolStart_66107();
 int SosDIGISetSampleVolume_66118(int a1, int a2, unsigned __int16 a3);
 int SosDIGISetMasterVolume_661A4(int a1, int a2);
-void sub_6623A();
+void SosDIGIVolEnd_6623A();
 void SetSampleVolume_66250(__int16 a1, __int16 a2, unsigned __int16 a3);
-void sub_66313();
+void SosDIGIPlyngStart_66313();
 int SosDIGISamplesPlaying_66324(int a1);
 void SosMIDIInitEnd_6637C();
 void ResetSpritesMCGA_66390(TypeTab* a1, TypeTab* a2, uint8_t* a3);
@@ -1491,17 +1491,17 @@ unsigned __int8 SosTIMERDRVDisable_66DF5();
 unsigned __int8 SosTIMERDRVEnable_66E21();
 unsigned __int8 SosTIMERDRVUnInit_66E4D();
 int SosTIMERDRVCallOld_66EA2();
-void sub_66EE5();
+void SosMIDIPtrStart_66EE5();
 unsigned __int64 SosMIDINormalizePtr_66EF6(unsigned int a1, __int16 a2);
-void sub_66F1A();
-void sub_66F2B();
+void SosMIDIPtrEnd_66F1A();
+void SosMIDITmrStart_66F2B();
 int SosMIDISongHandler_66F3C();
-void sub_67464();
-void sub_67475();
+void SosMIDITmrEnd_67464();
+void SosMIDICapsStart_67475();
 bool SosMIDIGetDeviceCaps_67486(int a1);
 void SosMIDICapsEnd_674B9();
-void sub_674CD();
-void sub_674FA();
+void SosDRVLockMemory_674CD();
+void SosDRVUnLockMemory_674FA();
 void SosFillSampleStructs_67527(int a1, int a2, __int16 a3);
 int SosGetPhysicalAddr_67557_67A67(__int16 a1, int a2, int a3);
 int SosMAKEProtectedPtr_67582();
@@ -1520,31 +1520,31 @@ int SosDRVSetRate_678AF(int (*a1)(_DWORD));
 int SosDRVSetAction_678DE(int (*a1)(_DWORD));
 __int16 SosDIGIInitForWindows_6790D();
 __int16 SosDIGIUnInitForWindows_67944();
-void sub_6797C();
-int *sub_6798D();
+void SosMIDICbckStart_6797C();
+int *CallbackGetCallTable_6798D();
 int CallbackSendData_679AE(int a1, unsigned __int16 a2, int a3, int a4);
 int CallbackInit_679DE();
 int CallbackUnInit_679F7();
 int CallbackReset_67A10();
 int CallbackSetInstrumentData_67A29(int (*a1)(_DWORD, _DWORD, _DWORD, _DWORD), __int16 a2);
-void sub_67A53();
-void sub_67A64();
-int *sub_67A75();
+void SosMIDICbckEnd_67A53();
+void SosMIDIDigiStart_67A64();
+int *DigiGetCallTable_67A75();
 int DigiSendData_67A96(unsigned int a1, int a2, int a3, int a4);
 // int DigiInit_67D9D(int a1, int a2, unsigned int a3, int a4, int a5);
 int DigiUnInit_67F1C(int a1, int a2, int a3);
 int DigiReset_67F9A();
 int DigiSetInstrumentData_67FB3(int a1, __int16 a2, int a3, int a4);
 int DigiSampleCallback_6813F(int a1, int a2, int a3);
-void sub_6815E();
-void sub_6816F();
+void SosMIDIDigiEnd_6815E();
+void SosMIDIDqStart_6816F();
 int DigiQueueInit_68180(int a1, int a2);
 void DigiQueueUnInit_681F6();
 int DigiQueueAddItem_68207(int a1, int a2, __int16 a3);
 int DigiQueueGetItem_682CB(int a1);
 int DigiQueueDeleteItem_68365(int a1, int a2);
 int DigiQueueDeleteItemMIDI_68491(int a1, int a2);
-void sub_68600();
+void SosMIDIDqEnd_68600();
 void sub_68611();
 int sub_68622_68B32(__int16 a1, int a2, unsigned int a3, unsigned int a4, int *a5, unsigned int a6);
 int sub_68813(unsigned int a1);
@@ -1553,76 +1553,76 @@ void sub_6888E();
 void sub_688F5();
 void sub_68906();
 void sub_689D1();
-void sub_689E2();
-int *sub_689F3();
+void SosMIDIAWEStart_689E2();
+int *AweGetCallTable_689F3();
 // int AweSendData_68A14(int a1, int a2, int a3, unsigned int a4);
 int AweInit_68BDA(int a1, int a2, int a3, __int16 a4);
-int sub_68C4B();
-int sub_68C69();
-int sub_68C82();
-void sub_68C9B();
-void sub_68CAC();
+int AweUnInit_68C4B();
+int AweReset_68C69();
+int AweSetInstrumentData_68C82();
+void SosMIDIAWEEnd_68C9B();
+void SosFMDrvbendStart_68CAC();
 char DrvPitchBend_68CBD(int a1, int a2, unsigned int a3);
 unsigned int DrvCalculatePitch_68D7F(unsigned int a1, int a2, int a3);
-void sub_68F15();
-void sub_68F26();
+void SosFMDrvbendEnd_68F15();
+void SosFMDrvctrlStart_68F26();
 char DrvControlChange_68F37(int a1, int a2, unsigned int a3);
-void sub_6905C();
-void sub_6906D();
+void SosFMDrvctrlEnd_6905C();
+void SosFMDrvnotonStart_6906D();
 void DrvNoteOn_6907E(unsigned __int8 a1, unsigned __int8 a2, unsigned __int8 a3);
-void sub_6954C();
-void sub_6955D();
+void SosFMDrvnotonEnd_6954C();
+void SosFMDrvntoffStart_6955D();
 char DrvNoteOff_6956E(int a1, int a2, unsigned int a3);
 int DrvChannelNotesOff_6966D(unsigned int a1);
 int DrvChannelResetControllers_69716(unsigned int a1);
-void sub_6979E();
-void sub_697AF();
+void SosFMDrvntoffEnd_6979E();
+void SosFMDrvparseStart_697AF();
 void DrvParse_697C0(int a1, int a2, unsigned int a3);
-void sub_6999B();
-void sub_699AC();
+void SosFMDrvparseEnd_6999B();
+void SosFMDrvresetStart_699AC();
 char DrvReset_699BD();
-void sub_69A83();
-void sub_69A94();
+void SosFMDrvresetEnd_69A83();
+void SosFMDrvstbnkStart_69A94();
 int DrvSetupBNKData_69AA5(int a1, int a2, int a3, __int16 a4);
 int DrvProcessBNK_69BFE(int a1);
-void sub_69DFE();
-void sub_69E0F();
+void SosFMDrvstbnkEnd_69DFE();
+void SosFMDrvunintStart_69E0F();
 char DrvUninit_69E20();
-void sub_69E63();
-void sub_69E74();
+void SosFMDrvunintEnd_69E63();
+void SosFMDrvinitStart_69E74();
 char DrvInit_69E85(int a1, int a2, unsigned int a3);
-void sub_69ECB();
-void sub_69EDC();
+void SosFMDrvinitEnd_69ECB();
+void SosFMFMStart_69EDC();
 int FmSendData_69EED(unsigned int a1, __int16 a2, int a3, int a4);
 int FmInit_69F1C(int a1, int a2, int a3, int a4);
 int FmUnInit_69F57();
 int FmReset_69F75();
 int FmSetInstrumentData_69F93(int a1, __int16 a2, int a3, int a4);
-void sub_69FC2();
-void sub_69FD3();
+void SosFMFMEnd_69FC2();
+void SosYMInitStart_69FD3();
 char YmInit_69FE4(unsigned int a1);
-void sub_6A063();
+void SosYMInitEnd_6A063();
 void sub_6A074();
 char sub_6A085(unsigned __int8 a1, __int16 a2);
 void sub_6A0F9();
-void sub_6A10A();
+void SosYMModeStart_6A10A();
 char YmSetMode_6A11B();
-void sub_6A1B3();
+void SosYMModeEnd_6A1B3();
 void sub_6A1C4();
 char sub_6A1D5(unsigned __int8 a1, __int16 a2);
 void sub_6A275();
-void sub_6A286();
+void SosYMNotoffStart_6A286();
 char YmNoteOff_6A297(unsigned __int8 a1);
-void sub_6A2F5();
-void sub_6A306();
+void SosYMNotoffEnd_6A2F5();
+void SosYMResetStart_6A306();
 char YmReset_6A317();
-void sub_6A3E3();
-void sub_6A3F4();
+void SosYMResetEnd_6A3E3();
+void SosYMSetinsStart_6A3F4();
 char YmSetInstrument_6A405(int a1, int a2, unsigned __int8 a3);
-void sub_6A5EC();
-void sub_6A5FD();
+void SosYMSetinsEnd_6A5EC();
+void SosYMUninitStart_6A5FD();
 char YmUnInit_6A60E();
-void sub_6A62D();
+void SosYMUninitEnd_6A62D();
 unsigned __int8 sub_6A640(unsigned __int8 a1, unsigned __int8 a2);
 // _DWORD fstrcpy(_DWORD, _DWORD, _DWORD, _DWORD); weak
 __int16 sub_6A737(void (*a1)(_DWORD), unsigned int a2, int a3, int a4, __int16 a5);
@@ -1700,7 +1700,7 @@ int __stdcall AWE32CONTROLLER_6FA53(unsigned __int16 a1, unsigned __int16 a2, un
 void __stdcall AWE32PROGRAMCHANGE_6FC44(unsigned __int16 a1, __int16 a2);
 void __stdcall AWE32POLYKEYPRESSURE_6FDA4(int a1, int a2, int a3);
 void __stdcall AWE32CHANNELPRESSURE_6FDAC(unsigned __int16 a1, __int16 a2);
-int __stdcall sub_6FDEC(unsigned __int8 a1, unsigned __int8 a2, __int16 a3);
+int __stdcall AWE32PITCHBEND_6FDEC(unsigned __int8 a1, unsigned __int8 a2, __int16 a3);
 int __stdcall sub_6FEBF(unsigned __int16 a1);
 int __stdcall sub_6FF53(unsigned __int16 a1);
 char __stdcall sub_70044(__int16 a1);
@@ -3626,7 +3626,7 @@ Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x001E, (Type_AE400_29795 * (*)(axis_3d*))InitEffectPath_3B0C0, 0x0001, 0x0000 },
 { 0x002548F4, 0x001F, PORT_FN(InitEffectCanyonNode_3B1D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0020, PORT_FN(InitEffectCanyon_3B180, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0021, PORT_FN(CreateClass10Type33_3B4D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0021, PORT_FN(InitEffectBlindness_3B4D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0022, PORT_FN(InitEffectTeleport_3B300, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0023, PORT_FN(InitEffectCircleBall_3B3D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0024, PORT_FN(InitEffectSkeleton_3B3E0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
@@ -3716,10 +3716,10 @@ Type_254A34 str_2567D8[] = {
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_256980[] = {
-{ 0x002548F4, 0x0000, PORT_FN(CreateClass13Type0_3C4B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(CreateClass13Type1_3C4E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(CreateClass13Type2_3C510, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(CreateClass13Type3_3C540, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(InitObjectiveGainMana_3C4B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(InitObjectiveKillCreature_3C4E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(InitObjectiveKillCity_3C510, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(InitObjectiveKillPlayer_3C540, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 /// Empty entity state handler (original 0x25980 is a bare ret).
@@ -4069,10 +4069,10 @@ Type_254A34x str_255998[] = {
 { 0x00000000,0x0000,nullptr,0x0000,0x0000 }
 };
 Type_254A34x str_256038[] = {
-{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))Switch00Tick_59A80_59F90,0x0001,0x0000 },
-{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))Switch01Tick_59AB0_59FC0,0x0001,0x0000 },
-{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))Switch02Tick_59AE0_59FF0,0x0001,0x0000 },
-{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))Switch03Tick_59B30_5A040,0x0001,0x0000 },
+{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))FnSwitchHiddenInside_59A80_59F90,0x0001,0x0000 },
+{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))FnSwitchHiddenOutside_59AB0_59FC0,0x0001,0x0000 },
+{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))FnSwitchHiddenInsideRe_59AE0_59FF0,0x0001,0x0000 },
+{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))FnSwitchHiddenOutsideRe_59B30_5A040,0x0001,0x0000 },
 { 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))FnSwitchOnVictory_59B80_5A090,0x0001,0x0000 },
 { 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))FnSwitchDeathInside_59C40_5A150,0x0001,0x0000 },
 { 0x002548F4,0x0006,(void (*)(Type_AE400_29795*))FnSwitchDeathOutside_59C70_5A180,0x0001,0x0000 },
@@ -4214,7 +4214,7 @@ InitEffectExplosion_3A490, InitEffectBigExplosion_3A510, InitEffectDust_3A570, I
 InitEffectMiniVolcano_3A870, InitEffectVolcano_3A8D0, InitEffectMiniCrater_3A930, InitEffectCrater_3A9A0, InitEffectPocession_3AA10, InitEffectWhiteSmoke_3AAA0, InitEffectBlackSmoke_3AB40, InitEffectEarthquake_3ABE0,
 InitEffectSummonFire_3ACC0, InitEffectMeteor_3AC70, InitEffectVolcanoAfterMath_3ADB0, InitEffectFireColumn_3AE00, loc_39A00, loc_39A00, loc_39A00, InitEffectLightning_3AE80,
 loc_39A00, InitEffectStealMana_3AF00, InitEffectRubberBand_3AF80, InitEffectWallSection_3B000, InitEffectWallNode_3B060, InitEffectPathNode_3B120, InitEffectPath_3B0C0, InitEffectCanyonNode_3B1D0,
-InitEffectCanyon_3B180, CreateClass10Type33_3B4D0, InitEffectTeleport_3B300, InitEffectCircleBall_3B3D0, InitEffectSkeleton_3B3E0 };*/
+InitEffectCanyon_3B180, InitEffectBlindness_3B4D0, InitEffectTeleport_3B300, InitEffectCircleBall_3B3D0, InitEffectSkeleton_3B3E0 };*/
 #pragma pack (1)
 typedef struct {
     Type_AE400_29795*(*adress)(axis_3d*);
@@ -4259,7 +4259,7 @@ Type_97D12 off_97D12[] = {
 { (Type_AE400_29795* (*)(axis_3d*))&InitEffectPath_3B0C0, 1, 0x002548F4, 31 },
 { PORT_FN(InitEffectCanyonNode_3B1D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 32 },
 { PORT_FN(InitEffectCanyon_3B180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 33 },
-{ PORT_FN(CreateClass10Type33_3B4D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 34 },
+{ PORT_FN(InitEffectBlindness_3B4D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 34 },
 { PORT_FN(InitEffectTeleport_3B300, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 35 },
 { PORT_FN(InitEffectCircleBall_3B3D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 36 },
 { PORT_FN(InitEffectSkeleton_3B3E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 0 },
@@ -4284,10 +4284,10 @@ Type_97D12 off_97D12[] = {
 { PORT_FN(InitEffectExtra3_3BA00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 56 },
 { PORT_FN(InitEffectExtra4_3BA90, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 },
 { nullptr, 0, 0x002548F4, 0 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch00Tick_59A80_59F90, 1, 0x002548F4, 1 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch01Tick_59AB0_59FC0, 1, 0x002548F4, 2 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch02Tick_59AE0_59FF0, 1, 0x002548F4, 3 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch03Tick_59B30_5A040, 1, 0x002548F4, 4 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchHiddenInside_59A80_59F90, 1, 0x002548F4, 1 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchHiddenOutside_59AB0_59FC0, 1, 0x002548F4, 2 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchHiddenInsideRe_59AE0_59FF0, 1, 0x002548F4, 3 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchHiddenOutsideRe_59B30_5A040, 1, 0x002548F4, 4 },
 { PORT_FN(FnSwitchOnVictory_59B80_5A090, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
 { (Type_AE400_29795* (*)(axis_3d*))&FnSwitchDeathInside_59C40_5A150, 1, 0x002548F4, 6 },
 { PORT_FN(FnSwitchDeathOutside_59C70_5A180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
@@ -14183,7 +14183,7 @@ _DWORD settextposition(_DWORD a, _DWORD b) { return 0; };// weak
 //char sub_3FCA0_3FFE0(int a1, __int16 a2, __int16 a3, __int16 a4, char a5, __int16 a6, __int16 a7, __int16 a8, __int16 a9, __int16 a10, __int16 a11) { return 0; };
 //__int16 DeleteMapwho_41DD0_42110(__int16 result, int a2) { return 0; };
 //char OpenMusic_43B20_43E60(int a1, unsigned int a2) { return 0; };
-//void MainMenuStep_4AB20_4AE60(__int16 a1, const char *a2, const char *a3, __int16 a4, __int16 a5) {};
+//void ScreensHandle_4AB20_4AE60(__int16 a1, const char *a2, const char *a3, __int16 a4, __int16 a5) {};
 //void SetupMenuPage_4AC70_4AFB0(const char *a1, const char *a2) {};
 //int sub_4CC00_4CF40() { return 0; };// weak	
 //void PlayIntelAnim_4EFC0_4F300(__int16 a1) {};
@@ -14440,7 +14440,7 @@ void UpdateMouseEventData_8CB3A(uint32_t mouse_states, int32_t mouse_posx, int32
 void MouseEvents(uint32_t buttons, int x, int y)
 {
     // PORT: in 640x480 mode (typeResolution & 8) the original set the DOS mouse range to 0..5120 x
-    // 0..3840 (ResizeScr_5C468_5C978) and works in those units: UpdateMouseEventData divides by 8.
+    // 0..3840 (SetMouseLimits_5C468_5C978) and works in those units: UpdateMouseEventData divides by 8.
     // x/y arrive in pixels; passing them unscaled pinned the cursor to the top-left 80x60 pixels
     // (mouse steering dead after pressing R).
     if ((typeResolution_12F02E_12F01E & 8) != 0)
@@ -14532,7 +14532,7 @@ __int16 StepDecodeFrameChunk_100B8()
     }
     else if ( word_9000C == 15 )
     {
-      result = DecodeFlcBrun_10254();
+      result = StepDecodeBrun_10254();
     }
     else
     {
@@ -14659,8 +14659,8 @@ LABEL_18:
 
 //----- (00010254) --------------------------------------------------------
 /// Decodes an FLC BRUN (byte run, chunk type 15) chunk into the frame.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int DecodeFlcBrun_10254()
+/// Original name: StepDecodeBrun (ANI.ASM), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int StepDecodeBrun_10254()
 {
   _BYTE *v0; // edi
   char *v1; // esi
@@ -15368,8 +15368,8 @@ void DynAnimBankAnimatePage_10EB0(Type_sub_AE3E0* a1x)//1E1EB0_
 
 //SYNCHRONIZED WITH REMC1
 /// Frees an animation table entry.
-/// Name is a guess (not in the Hidden Worlds linker map).
-void ClearTmapAnim_10F10(Type_sub_AE3E0* a1x)
+/// Original name: DynAnimBankDeletePage (ANIMDYN.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void DynAnimBankDeletePage_10F10(Type_sub_AE3E0* a1x)
 {
   if ( a1x )
   {
@@ -16719,8 +16719,8 @@ LABEL_30:
 /// Castle spell site check at a1 (axis_3d*): 1 if no castle (class 3/2) is within its box + 2048 and no
 /// impassable tile (mapAngle bit 0x80) lies in the 8x8 tiles from tile (x-8, y-8). The castle missile
 /// builds at the last point of its path where this holds (FnFirstStageShot_53B50_53E90).
-/// Name is a guess (not in the Hidden Worlds linker map).
-_BOOL1 IsCastleSiteFree_12F70(_WORD *a1)
+/// Original name: castle_ok_here (COLIDE.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+_BOOL1 CastleOkHere_12F70(_WORD *a1)
 {
   _BOOL1 v1; // bl
   unsigned int v2; // ecx
@@ -21292,7 +21292,7 @@ void FnCreature00Stand_1B060(Type_AE400_29795* a1x)
 void FnCreature00Wander_1B070(Type_AE400_29795* a1x)
 {
   FnCreatureWander_19D70(a1x, 0);
-  BobAboveGround_1B120(a1x);
+  DragonBounce_1B120(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21302,7 +21302,7 @@ void FnCreature00Attack_1B090(Type_AE400_29795* a1x)
 {
   if ( (unsigned __int16)FnCreatureAttack_1A120(a1x, 0, PORT_FN(CreatureFireBallShot_1A8E0, unsigned __int16(Type_AE400_29795*, int))) )
     PlayASample_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 8);
-  BobAboveGround_1B120(a1x);
+  DragonBounce_1B120(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21311,7 +21311,7 @@ void FnCreature00Attack_1B090(Type_AE400_29795* a1x)
 void FnCreature00Flock_1B0E0(Type_AE400_29795* a1x)
 {
   FnCreatureFlock_1A390(a1x, 0);
-  BobAboveGround_1B120(a1x);
+  DragonBounce_1B120(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21332,8 +21332,8 @@ void FnCreature00Dead_1B110(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Vertical bobbing: z += vertical speed (+26), speed -= 5 per tick, kicked back to 150 when within 256 of the ground (dragon states).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void BobAboveGround_1B120(Type_AE400_29795* a1x)
+/// Original name: dragon_bounce (CREAT_00.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void DragonBounce_1B120(Type_AE400_29795* a1x)
 {
   __int16 v1; // ax
   int v2; // edx
@@ -21597,7 +21597,7 @@ void FnCreature04Stand_1B5A0(Type_AE400_29795* a1x)
 {
   FnCreatureStand_19B10(a1x, 24);
   if (a1x->var_u8_29865_70 == 26 )
-    sub_1BC50(a1x);
+    ArcherBeginAttack_1BC50(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21857,7 +21857,7 @@ void FnCreature04Wander_1B5D0(Type_AE400_29795* a1x)
     }
   }
   if (a1x->var_u8_29865_70 == 26 )
-    sub_1BC50(a1x);
+    ArcherBeginAttack_1BC50(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21870,7 +21870,7 @@ void FnCreature04Attack_1BB20(Type_AE400_29795* a1x)
   FnCreatureAttack_1A120(a1x, 24, PORT_FN(CreatureArrowShot_1A990, unsigned __int16(Type_AE400_29795*, int)));
   if (a1x->var_u8_29865_70 != 26)
   {
-      sub_1BCE0(a1x);
+      ArcherEndAttack_1BCE0(a1x);
       return;
   }
   result = a1x->var_u8_29858_63 / a1x->var_u32_29951_156->v_26;
@@ -21896,7 +21896,7 @@ void FnCreature04Flock_1BBE0(Type_AE400_29795* a1x)
 {
   FnCreatureFlock_1A390(a1x, 0x18u);
   if (a1x->var_u8_29865_70 == 26 )
-    sub_1BC50(a1x);
+    ArcherBeginAttack_1BC50(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21919,7 +21919,8 @@ void FnCreature04Dead_1BC40(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1BC50(Type_AE400_29795* a1x)
+/// Original name: archer_begin_attack (CREAT_04.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void ArcherBeginAttack_1BC50(Type_AE400_29795* a1x)
 {
   unsigned int v1; // eax
   int v2; // ecx
@@ -21941,7 +21942,8 @@ void sub_1BC50(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1BCE0(Type_AE400_29795* a1x)
+/// Original name: archer_end_attack (CREAT_04.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void ArcherEndAttack_1BCE0(Type_AE400_29795* a1x)
 {
   a1x->actSpeed_29921_126 = a1x->actSpeed_29923_128;
   SetDrawThing_36FA0_37360(a1x, 0);
@@ -22836,14 +22838,14 @@ void FnCreature09Stand_1CFF0(Type_AE400_29795* a1x)
       result = v2 / 2;
       if (!(v2 % 2))
       {
-        AdvanceAnimFrame_42510_42850(a1x);
+        Animate_42510_42850(a1x);
         return;
       }
     }
   }
   else
   {
-    sub_1DD50(a1x);
+    SkeletonEndAttack_1DD50(a1x);
     SetState_424F0_42830(a1x, 0x37u);
     a1x->var_u16_29821_26 = 400;
     a1x->var_u8_29866_71 = 0;
@@ -22912,7 +22914,7 @@ void FnCreature09Wander_1D060(Type_AE400_29795* a1x)
   {
     a1x->var_u16_29821_26 = v1 - 1;
     if ( v1 == 1 )
-      sub_1DD90(a1x);
+      SkeletonSitDown_1DD90(a1x);
   }
   v2 = a1x->var_u8_29866_71;
   v3 = dword_AE400_AE3F0();
@@ -23147,7 +23149,7 @@ LABEL_78:
   }
 LABEL_84:
   if ( a1x->var_u8_29865_70 == 56 )
-    sub_1DCD0(a1x);
+    SkeletonBeginAttack_1DCD0(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -23247,7 +23249,7 @@ void FnCreature09Rest_1D6D0(Type_AE400_29795* a1x)
   {
     a1x->var_u16_29821_26 = v8 + 1;
     if ( v8 == -1 )
-      sub_1DDB0(a1x);
+      SkeletonGetUp_1DDB0(a1x);
     return;
   }
   if (a1x->var_u8_29853_58)
@@ -23440,7 +23442,7 @@ LABEL_29:
   }
 LABEL_31:
   if (a1x->var_u8_29865_70 != 56 )
-    sub_1DD50(a1x);
+    SkeletonEndAttack_1DD50(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -23450,7 +23452,7 @@ void FnCreature09Flock_1DC80(Type_AE400_29795* a1x)
 {
   FnCreatureFlock_1A390(a1x, 0x36u);
   if ( a1x->var_u8_29865_70 == 56 )
-    sub_1DCD0(a1x);
+    SkeletonBeginAttack_1DCD0(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -23470,7 +23472,8 @@ void FnCreature09Dead_1DCC0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DCD0(Type_AE400_29795* a1x)
+/// Original name: skeleton_begin_attack (CREAT_09.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SkeletonBeginAttack_1DCD0(Type_AE400_29795* a1x)
 {
   int v1; // esi
   char result; // al
@@ -23489,7 +23492,8 @@ void sub_1DCD0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DD50(Type_AE400_29795* a1x)
+/// Original name: skeleton_end_attack (CREAT_09.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SkeletonEndAttack_1DD50(Type_AE400_29795* a1x)
 {
   a1x->actSpeed_29921_126 = a1x->actSpeed_29923_128;
   SetDrawThing_36FA0_37360(a1x, 201);
@@ -23500,14 +23504,16 @@ void sub_1DD50(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DD90(Type_AE400_29795* a1x)
+/// Original name: skeleton_sit_down (CREAT_09.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SkeletonSitDown_1DD90(Type_AE400_29795* a1x)
 {
   SetDrawThing_36FA0_37360(a1x, 245);
   a1x->var_u8_29866_71 = 1;
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DDB0(Type_AE400_29795* a1x)
+/// Original name: skeleton_get_up (CREAT_09.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SkeletonGetUp_1DDB0(Type_AE400_29795* a1x)
 {
   a1x->var_u8_29866_71 = 0;
   a1x->var_u16_29821_26 = 400;
@@ -25732,7 +25738,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 				if ((typeResolution_12F02E_12F01E & 1) != 0)
 					ClearScreenMCGA_411D7_41517((void*)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
 				else
-					ClearScreen640_411FD_4153D((void*)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+					ClearScreenVres256_411FD_4153D((void*)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
 			}
 		}
 		if (str_AE400_AE3F0->set.var_u8_8600 < 40)
@@ -25740,7 +25746,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 			if ((typeResolution_12F02E_12F01E & 1) != 0)
 				ClearScreenMCGA_411D7_41517((void*)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
 			else
-				ClearScreen640_411FD_4153D((void*)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+				ClearScreenVres256_411FD_4153D((void*)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
 		}
 		EngineSetupScreen_30A70_30AB0(str_AE400_AE3F0->set.var_u8_8600);//set viewport
         if (DrawGameFrame_20FB0_index == 1)
@@ -25767,7 +25773,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 		{
 			if (str_AE400_AE3F0->set.mapOn_8601)
 			{
-				DrawMinimap_49300_49640(
+				ElipticalMap_49300_49640(
 					0,
 					0,
 					str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].str_13895_572[v4x + 1].axis.x,
@@ -25833,7 +25839,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 					if (str_AE400_AE3F0->set.var_u8_8600 == 40)
 					{
 						DrawText_5A180_5A690(dword_AE238_AE228[60], 132, 50, byte_AD167_AD157[1]);
-						textDrawAxisY = GetLetterY_5A3B0_5A8C0() + 50;
+						textDrawAxisY = CharacterHeight_5A3B0_5A8C0() + 50;
 						DrawText_5A180_5A690(dword_AE238_AE228[61], 132, textDrawAxisY, byte_AD167_AD157[1]);
 					}
 					else
@@ -25844,7 +25850,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 							132,
 							50,
 							byte_AD167_AD157[1 + 273 * ((int)(v9 - (__CFSHL__(HIDWORD(v9), 8) + (HIDWORD(v9) << 8))) >> 8)]);
-						textDrawAxisY = GetLetterY_5A3B0_5A8C0() + 50;
+						textDrawAxisY = CharacterHeight_5A3B0_5A8C0() + 50;
 						v10 = 4080 * str_AE408_AE3F8->str_93.var_u8[2];
 						DrawText_5A180_5A690(
 							dword_AE238_AE228[61],
@@ -25852,7 +25858,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 							textDrawAxisY,
 							byte_AD167_AD157[1 + 273 * ((int)(v10 - (__CFSHL__(HIDWORD(v10), 8) + (HIDWORD(v10) << 8))) >> 8)]);
 					}
-					textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+					textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 				}
 				if ((str_AE408_AE3F8->var_u8_2 & 1) != 0)
 				{
@@ -25864,7 +25870,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 							- (__CFSHL__(str_AE408_AE3F8->str_93.var_u8[2] / 0x80809u, 8)
 								+ ((str_AE408_AE3F8->str_93.var_u8[2] / 0x80809u) << 8))) >> 8)];
 					DrawText_5A180_5A690((char*)"PAUSED!", 132, textDrawAxisY, textIndex);
-					textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+					textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 				}
                 for(int v13x = 0; v13x < str_AE400_AE3F0->var_u16_10; v13x++)
 				//int v13x = 0;
@@ -25878,21 +25884,21 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 						{
 							sprintf(textBuffer, "%s %s", str_AE400_AE3F0->str_13323[v13x].str_14357, textVar);
 							DrawText_5A180_5A690(textBuffer, 132, textDrawAxisY, byte_AD167_AD157[3841]);
-                            textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+                            textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
                             str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].messages_13351_28[v13x].periods_13415--;
 						}
 						break;
 					case 1:
 						sprintf(textBuffer, ">%s?", textVar);
 						DrawText_5A180_5A690(textBuffer, 132, textDrawAxisY, byte_AD167_AD157[3841]);
-						textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+						textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 						break;
 					case 2:
 						if (str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].messages_13351_28[v13x].periods_13415 > 0)
 						{
 							sprintf(textBuffer, "%s", textVar);
 							DrawText_5A180_5A690(textBuffer, 132, textDrawAxisY, byte_AD167_AD157[3841]);
-							textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+							textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
                             str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].messages_13351_28[v13x].periods_13415--;
 						}
 						break;
@@ -25909,7 +25915,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 										+ ((str_AE408_AE3F8->str_93.var_u8[2] / 0x80809u) << 8))) >> 8)];
 							DrawText_5A180_5A690(textBuffer, 132, textDrawAxisY, textIndex);
 						//LABEL_41:
-							textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+							textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 						//LABEL_42:
 							str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].messages_13351_28[v13x].periods_13415--;
 						}
@@ -25942,181 +25948,181 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 			str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].str_13895_572[v4x + 1].roll_10,
 			str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].str_13895_572[v4x + 1].fov_12);
 		SetUserfont_5A3C0_5A8D0(1);
-		textDrawAxisX = GetLetterX_5A3A0_5A8B0();
-		intLetterY = -GetLetterY_5A3B0_5A8C0() / 2;
+		textDrawAxisX = CharacterWidth_5A3A0_5A8B0();
+		intLetterY = -CharacterHeight_5A3B0_5A8C0() / 2;
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 		{
-			textDrawAxisY = GetLetterY_5A3B0_5A8C0() + intLetterY;
+			textDrawAxisY = CharacterHeight_5A3B0_5A8C0() + intLetterY;
 			DrawText_5A180_5A690((char*)"Cursor up       Move forwards.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		else
 		{
-			textDrawAxisY = GetLetterY_5A3B0_5A8C0() + intLetterY;
+			textDrawAxisY = CharacterHeight_5A3B0_5A8C0() + intLetterY;
 			DrawText_5A180_5A690((char*)"Cursor up       Move forwards.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"Cursor down     Move backwards.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		else
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"Cursor down     Move backwards.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
-		textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+		textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 		DrawText_5A180_5A690((char*)"Cursor left     Move left.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
-		textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+		textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 		DrawText_5A180_5A690((char*)"Cursor right    Move right.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"Left button     Use spell to the left.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		else
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"Left button     Use spell to the left.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"Right button    Use spell to the right.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		else
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"Right button    Use spell to the right.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"1 - 0           Select assigned spells.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		else
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"1 - 0           Select assigned spells.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
-		textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+		textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 		DrawText_5A180_5A690((char*)"Space           Rebirth.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
-		textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+		textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 		DrawText_5A180_5A690((char*)"Shift Q         Exit to dos.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"F5              Reflections toggle.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		else
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"F5              Reflections toggle.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
-		textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+		textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 		DrawText_5A180_5A690((char*)"F6              Sky toggle.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"F7              Shadows toggle.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		else
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"F7              Shadows toggle.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"F8              Icons toggle.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		else
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"F8              Icons toggle.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"F9              Speed blur toggle.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		else
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"F9              Speed blur toggle.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"F10             Stereo modes toggle.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		else
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"F10             Stereo modes toggle.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
-		textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+		textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 		DrawText_5A180_5A690((char*)"Return          ", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"Left and Right  Spell selection.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		else
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"Left and Right  Spell selection.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
-		textDrawAxisY += GetLetterY_5A3B0_5A8C0() * 2;
+		textDrawAxisY += CharacterHeight_5A3B0_5A8C0() * 2;
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"If you are experiencing slowness, try Pressing F5,F6,F7.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		else
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"If you are experiencing slowness, try Pressing F5,F6,F7.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
-		textDrawAxisY += GetLetterY_5A3B0_5A8C0() * 2;
+		textDrawAxisY += CharacterHeight_5A3B0_5A8C0() * 2;
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"Magic Carpet comes to you from Bullfrog Productions Ltd.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		else
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"Magic Carpet comes to you from Bullfrog Productions Ltd.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"And will be released on the 15th November 1994.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		else
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"And will be released on the 15th November 1994.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"Copyright 1994 Bullfrog Productions Ltd.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
 		else
 		{
-			textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+			textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 			DrawText_5A180_5A690((char*)"Copyright 1994 Bullfrog Productions Ltd.", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		}
-		textDrawAxisY += GetLetterY_5A3B0_5A8C0();
-		textDrawAxisY += GetLetterY_5A3B0_5A8C0();
+		textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
+		textDrawAxisY += CharacterHeight_5A3B0_5A8C0();
 		DrawText_5A180_5A690((char*)"Good Luck!", textDrawAxisX, textDrawAxisY, byte_AE167_AE157);
 		goto LABEL_139;
 	case 2:
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 			ClearScreenMCGA_411D7_41517((void*)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
 		else
-			ClearScreen640_411FD_4153D((void*)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+			ClearScreenVres256_411FD_4153D((void*)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
 		locMouseX = 384;
 		if (typeResolution_12F02E_12F01E == 1)
 			locMouseY = 162;
@@ -26142,7 +26148,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 			str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].str_13895_572[v4x + 1].fov_12);
 		if (typeResolution_12F02E_12F01E == 1)
 		{
-			DrawMinimap_49300_49640(
+			ElipticalMap_49300_49640(
 				0,
 				0,
 				str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].str_13895_572[v4x + 1].axis.x,
@@ -26165,7 +26171,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 		}
 		else
 		{
-			DrawMinimap_49300_49640(
+			ElipticalMap_49300_49640(
 				0,
 				0,
 				str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].str_13895_572[v4x + 1].axis.x,
@@ -26246,9 +26252,9 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 					removeItMaybe = 380;
 					int i;
 					for (i = 0; *(&off_9AB44[i])[str_AE408_AE3F8->var_u16_166] != 33; i++)
-						removeItMaybe -= GetLetterY_5A3B0_5A8C0();
+						removeItMaybe -= CharacterHeight_5A3B0_5A8C0();
 					int k = 0;
-					for (int j = 8; i > 0; j += GetLetterY_5A3B0_5A8C0())
+					for (int j = 8; i > 0; j += CharacterHeight_5A3B0_5A8C0())
 					{
 						if (k)
 							DrawText_5A180_5A690(((&off_9AB44[k])[str_AE408_AE3F8->var_u16_166]), 8, j, byte_AD167_AD157[1]);
@@ -26294,7 +26300,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 			if ((typeResolution_12F02E_12F01E & 1) == 0)
 			{
 			LABEL_125:
-				DrawRectCheckedHighRes_24DA0(locMouseX, locMouseY, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.x, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.y, byte_AE167_AE157);
+				DrawBoxOutlineCVres256_24DA0(locMouseX, locMouseY, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.x, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.y, byte_AE167_AE157);
 				goto LABEL_126;
 			}
 			goto LABEL_118;
@@ -26320,7 +26326,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 			goto LABEL_132;
 		}
 	}
-	sub_23CF0(locMouseX, locMouseY, spellMenuOrder_99B88[spellIndex]);
+	DrawSpellNotOwned_23CF0(locMouseX, locMouseY, spellMenuOrder_99B88[spellIndex]);
 	if (!byte_B7700_B76F0)
 		goto LABEL_126;
 	if (mouse_9AD90.x < locMouseX)
@@ -26334,7 +26340,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 	if ((typeResolution_12F02E_12F01E & 1) == 0)
 		goto LABEL_125;
 LABEL_118:
-	DrawRectCheckedLowRes_24D20(locMouseX, locMouseY, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.x, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.y, byte_AE167_AE157);
+	DrawBoxOutlineCMCGA_24D20(locMouseX, locMouseY, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.x, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.y, byte_AE167_AE157);
 	goto LABEL_126;
 }
 
@@ -26350,9 +26356,9 @@ void DrawBar_22810(int a1, int a2, int a3, int a4, int a5, unsigned __int8 a6)
   if ( v6 >= 2 && a4 >= 2 )
   {
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      sub_24C20(a1, a2, v6, a4, a6);
+      DrawBoxCMCGA_24C20(a1, a2, v6, a4, a6);
     else
-      sub_24CA0(a1, a2, v6, a4, a6);
+      DrawBoxCVres256_24CA0(a1, a2, v6, a4, a6);
   }
 }
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
@@ -26423,18 +26429,18 @@ int DrawPlayerInformation_22880()
       v7 = v21;
       v22 = byte_99B58[v16];
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-        DrawBitmap_60CE0_611F0(v21, v5, &begSprTab_AE42C_AE41C_26C42C_26C41C[85]);
+        DrawASpriteMCGA_60CE0_611F0(v21, v5, &begSprTab_AE42C_AE41C_26C42C_26C41C[85]);
       else
-        DrawBitmap_60D18_61228(v21, v5, &begSprTab_AE42C_AE41C_26C42C_26C41C[85]);
+        DrawASpriteVres256_60D18_61228(v21, v5, &begSprTab_AE42C_AE41C_26C42C_26C41C[85]);
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-        sub_24C20(
+        DrawBoxCMCGA_24C20(
           v7 + 4,
           (__int16)v5 + 4,
           *(unsigned __int8 *)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 514) - 8,
           *(unsigned __int8 *)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 515) - 8,
           v22);
       else
-        sub_24CA0(
+        DrawBoxCVres256_24CA0(
           v7 + 4,
           (__int16)v5 + 4,
           *(unsigned __int8 *)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 514) - 8,
@@ -26455,18 +26461,18 @@ int DrawPlayerInformation_22880()
           if ( v8 == v19 )
           {
             if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-              DrawBitmap_60CE0_611F0(v9, v5, &begSprTab_AE42C_AE41C_26C42C_26C41C[86]);
+              DrawASpriteMCGA_60CE0_611F0(v9, v5, &begSprTab_AE42C_AE41C_26C42C_26C41C[86]);
             else
-              DrawBitmap_60D18_61228(v9, v5, &begSprTab_AE42C_AE41C_26C42C_26C41C[86]);
+              DrawASpriteVres256_60D18_61228(v9, v5, &begSprTab_AE42C_AE41C_26C42C_26C41C[86]);
             if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-              sub_24C20(
+              DrawBoxCMCGA_24C20(
                 v9 + 4,
                 (__int16)v5 + 4,
                 *(unsigned __int8 *)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 520) - 8,
                 *(unsigned __int8 *)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 521) - 8,
                 byte_AD167_AD157[1]); // PORT: was (unsigned __int8)&byte_AD167_AD157[1] - the original reads the byte (mov al, [0xad168])
             else
-              sub_24CA0(
+              DrawBoxCVres256_24CA0(
                 v9 + 4,
                 (__int16)v5 + 4,
                 *(unsigned __int8 *)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 520) - 8,
@@ -26479,18 +26485,18 @@ int DrawPlayerInformation_22880()
           v25 = byte_99B58[1+v10];
           v24 = byte_99B58[v10];
           if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-            DrawBitmap_60CE0_611F0(v9, v5, &begSprTab_AE42C_AE41C_26C42C_26C41C[86]);
+            DrawASpriteMCGA_60CE0_611F0(v9, v5, &begSprTab_AE42C_AE41C_26C42C_26C41C[86]);
           else
-            DrawBitmap_60D18_61228(v9, v5, &begSprTab_AE42C_AE41C_26C42C_26C41C[86]);
+            DrawASpriteVres256_60D18_61228(v9, v5, &begSprTab_AE42C_AE41C_26C42C_26C41C[86]);
           if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-            sub_24C20(
+            DrawBoxCMCGA_24C20(
               v9 + 4,
               (__int16)v5 + 4,
               *(unsigned __int8 *)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 520) - 8,
               *(unsigned __int8 *)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 521) - 8,
               v24);
           else
-            sub_24CA0(
+            DrawBoxCVres256_24CA0(
               v9 + 4,
               (__int16)v5 + 4,
               *(unsigned __int8 *)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 520) - 8,
@@ -26562,7 +26568,7 @@ void DrawInformationBars_22E50(Type_AE400_29795* a1x)//1F3E50_
   v29 = byte_99B58[2 * v2];
   v27 = byte_99B58[1+2 * v2];
   v28 = byte_99B58[2 * v2 + str_AE408_AE3F8->str_93.var_u8[2]];
-  sub_23940(2, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[40]);
+  DrawTransparentSprite_23940(2, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[40]);
   //v3 = *(_DWORD *)(a1 + 160);
   v22 = begSprTab_AE42C_AE41C_26C42C_26C41C[40].dim.x + 2;
   v4x = &str_AE400_AE3F0->str_29795[a1x->var_u32_29955_160->var_50];
@@ -26570,23 +26576,23 @@ void DrawInformationBars_22E50(Type_AE400_29795* a1x)//1F3E50_
   {
     if ( a1x->var_u32_29955_160->u8_391 > 0 && str_AE408_AE3F8->str_93.var_u8[1])
     {
-      sub_23940(v22, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[55]);
+      DrawTransparentSprite_23940(v22, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[55]);
       a1x->var_u32_29955_160->u8_391--;
     }
     else
     {
-      sub_23940(v22, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[41]);
+      DrawTransparentSprite_23940(v22, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[41]);
     }
     v5 = v22 + 2;
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      DrawBitmap_60CE0_611F0(v5, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[(v4x->var_u16_29821_26 + 43)]);
+      DrawASpriteMCGA_60CE0_611F0(v5, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[(v4x->var_u16_29821_26 + 43)]);
     else
-      DrawBitmap_60D18_61228(v5, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[(v4x->var_u16_29821_26 + 43)]);
+      DrawASpriteVres256_60D18_61228(v5, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[(v4x->var_u16_29821_26 + 43)]);
     v6 = v22 + 38;
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      DrawBitmap_60CE0_611F0(v6, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[42]);
+      DrawASpriteMCGA_60CE0_611F0(v6, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[42]);
     else
-      DrawBitmap_60D18_61228(v6, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[42]);
+      DrawASpriteVres256_60D18_61228(v6, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[42]);
     v7 = v22 + 58;
     DrawBar_22810(v22 + 58, 10, 64, 10, (v4x->actLife_29807_12 << 6) / v4x->maxLife_29803_8, 0x7Bu);
     v8 = v4x->manaMax_29931_136;
@@ -26619,33 +26625,33 @@ LABEL_21:
     if ( (str_AE408_AE3F8->var_u8_0 & 0x10) == 0 )
     {
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-        sub_24C20(v7 + (str_AE400_AE3F0->str_193795.var_u16_232595_38800 << 6) / 100, 26, 2, 2, v28);
+        DrawBoxCMCGA_24C20(v7 + (str_AE400_AE3F0->str_193795.var_u16_232595_38800 << 6) / 100, 26, 2, 2, v28);
       else
-        sub_24CA0(v7 + (str_AE400_AE3F0->str_193795.var_u16_232595_38800 << 6) / 100, 26, 2, 2, v28);
+        DrawBoxCVres256_24CA0(v7 + (str_AE400_AE3F0->str_193795.var_u16_232595_38800 << 6) / 100, 26, 2, 2, v28);
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-        sub_24C20(v7 + (str_AE400_AE3F0->str_193795.var_u16_232595_38800 << 6) / 100, 38, 2, 2, v28);
+        DrawBoxCMCGA_24C20(v7 + (str_AE400_AE3F0->str_193795.var_u16_232595_38800 << 6) / 100, 38, 2, 2, v28);
       else
-        sub_24CA0(v7 + (str_AE400_AE3F0->str_193795.var_u16_232595_38800 << 6) / 100, 38, 2, 2, v28);
+        DrawBoxCVres256_24CA0(v7 + (str_AE400_AE3F0->str_193795.var_u16_232595_38800 << 6) / 100, 38, 2, 2, v28);
     }
     goto LABEL_29;
   }
-  sub_23940(v22, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[54]);
+  DrawTransparentSprite_23940(v22, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[54]);
 LABEL_29:
   v23 = begSprTab_AE42C_AE41C_26C42C_26C41C[41].dim.x + v22;
   if ( v4x <= str_AE400_AE3F0->str_29795)
   {
-    sub_23940(v23, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[54]);
+    DrawTransparentSprite_23940(v23, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[54]);
   }
   else
   {
     if ( a1x->var_u32_29955_160->u8_393 > 0 && str_AE408_AE3F8->str_93.var_u8[1] )
     {
-      sub_23940(v23, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[55]);
+      DrawTransparentSprite_23940(v23, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[55]);
       a1x->var_u32_29955_160->u8_393--;
     }
     else
     {
-      sub_23940(v23, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[41]);
+      DrawTransparentSprite_23940(v23, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[41]);
     }
     switch ( v4x->var_u16_29821_26 )
     {
@@ -26670,14 +26676,14 @@ LABEL_29:
     {
       v14 = v23 + 2;
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-        DrawBitmap_60CE0_611F0(v14, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[(v26 + 50)]);
+        DrawASpriteMCGA_60CE0_611F0(v14, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[(v26 + 50)]);
       else
-        DrawBitmap_60D18_61228(v14, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[(v26 + 50)]);
+        DrawASpriteVres256_60D18_61228(v14, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[(v26 + 50)]);
       v15 = v23 + 38;
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-        DrawBitmap_60CE0_611F0(v15, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[42]);
+        DrawASpriteMCGA_60CE0_611F0(v15, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[42]);
       else
-        DrawBitmap_60D18_61228(v15, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[42]);
+        DrawASpriteVres256_60D18_61228(v15, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[42]);
     }
     v16 = 0;
     if ( v26 > 0 )
@@ -26700,30 +26706,30 @@ LABEL_29:
   v24 = begSprTab_AE42C_AE41C_26C42C_26C41C[41].dim.x + v23;
   if ( a1x->var_u32_29955_160->u8_392 > 0 && str_AE408_AE3F8->str_93.var_u8[1] )
   {
-    sub_23940(v24, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[55]);
+    DrawTransparentSprite_23940(v24, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[55]);
     a1x->var_u32_29955_160->u8_392--;
   }
   else
   {
-    sub_23940(v24, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[41]);
+    DrawTransparentSprite_23940(v24, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[41]);
   }
   if ((a1x->var_29811_16.byte[0] & 0x30) != 0 || a1x->var_u32_29955_160->u16_331 && str_AE408_AE3F8->str_93.var_u8[1] )
   {
-    sub_23940(v24 + 2, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[43]);
-    sub_23940(v24 + 38, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[42]);
+    DrawTransparentSprite_23940(v24 + 2, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[43]);
+    DrawTransparentSprite_23940(v24 + 38, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[42]);
   }
   else
   {
     v18 = v24 + 2;
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      DrawBitmap_60CE0_611F0(v18, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[43]);
+      DrawASpriteMCGA_60CE0_611F0(v18, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[43]);
     else
-      DrawBitmap_60D18_61228(v18, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[43]);
+      DrawASpriteVres256_60D18_61228(v18, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[43]);
     v19 = v24 + 38;
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      DrawBitmap_60CE0_611F0(v19, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[42]);
+      DrawASpriteMCGA_60CE0_611F0(v19, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[42]);
     else
-      DrawBitmap_60D18_61228(v19, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[42]);
+      DrawASpriteVres256_60D18_61228(v19, 2, &begSprTab_AE42C_AE41C_26C42C_26C41C[42]);
   }
   v20 = v24 + 58;
   DrawBar_22810(v24 + 58, 10, 64, 10, (a1x->actLife_29807_12 << 6) / a1x->maxLife_29803_8, 0x7Bu);
@@ -26732,18 +26738,19 @@ LABEL_29:
   if ( (str_AE408_AE3F8->var_u8_0 & 0x10) == 0 )
   {
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      sub_24C20(v20 + (str_AE400_AE3F0->str_193795.var_u16_232595_38800 << 6) / 100, 26, 2, 2, v28);
+      DrawBoxCMCGA_24C20(v20 + (str_AE400_AE3F0->str_193795.var_u16_232595_38800 << 6) / 100, 26, 2, 2, v28);
     else
-      sub_24CA0(v20 + (str_AE400_AE3F0->str_193795.var_u16_232595_38800 << 6) / 100, 26, 2, 2, v28);
+      DrawBoxCVres256_24CA0(v20 + (str_AE400_AE3F0->str_193795.var_u16_232595_38800 << 6) / 100, 26, 2, 2, v28);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      sub_24C20(v20 + (str_AE400_AE3F0->str_193795.var_u16_232595_38800 << 6) / 100, 38, 2, 2, v28);
+      DrawBoxCMCGA_24C20(v20 + (str_AE400_AE3F0->str_193795.var_u16_232595_38800 << 6) / 100, 38, 2, 2, v28);
     else
-      sub_24CA0(v20 + (str_AE400_AE3F0->str_193795.var_u16_232595_38800 << 6) / 100, 38, 2, 2, v28);
+      DrawBoxCVres256_24CA0(v20 + (str_AE400_AE3F0->str_193795.var_u16_232595_38800 << 6) / 100, 38, 2, 2, v28);
   }
 }
 
 //----- (00023940) --------------------------------------------------------
-void sub_23940(__int16 a1, __int16 a2, TypeTab* a3x)
+/// Original name: draw_transparent_sprite (DRAW.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void DrawTransparentSprite_23940(__int16 a1, __int16 a2, TypeTab* a3x)
 {
   int v3; // eax
   int v4; // edx
@@ -26978,9 +26985,10 @@ LABEL_11:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_23CF0(__int16 a1, __int16 a2, int a3)
+/// Original name: draw_spell_not_owned (DRAW.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void DrawSpellNotOwned_23CF0(__int16 a1, __int16 a2, int a3)
 {
-  sub_23940(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[3]);
+  DrawTransparentSprite_23940(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[3]);
   sub_23AE0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[a3 + 6], 0xA6u);
 }
 
@@ -27034,17 +27042,17 @@ void DrawSpell_23D40(int a1, int a2, Type_AE400_29795* a3x, char a4)
           if (a3x->var_48)
           {
             if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-              DrawBitmap_60CE0_611F0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[2]);
+              DrawASpriteMCGA_60CE0_611F0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[2]);
             else
-              DrawBitmap_60D18_61228(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[2]);
+              DrawASpriteVres256_60D18_61228(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[2]);
           }
           else if ( (typeResolution_12F02E_12F01E & 1) != 0 )
           {
-            DrawBitmap_60CE0_611F0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[1]);
+            DrawASpriteMCGA_60CE0_611F0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[1]);
           }
           else
           {
-            DrawBitmap_60D18_61228(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[1]);
+            DrawASpriteVres256_60D18_61228(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[1]);
           }
         }
         else
@@ -27053,17 +27061,17 @@ void DrawSpell_23D40(int a1, int a2, Type_AE400_29795* a3x, char a4)
             v8 = &begSprTab_AE42C_AE41C_26C42C_26C41C[2];
           else
             v8 = &begSprTab_AE42C_AE41C_26C42C_26C41C[1];
-          sub_23940(a1, a2, v8);
+          DrawTransparentSprite_23940(a1, a2, v8);
         }
         if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-          DrawBitmap_60CE0_611F0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[a3x->var_u8_29860_65 + 6]);
+          DrawASpriteMCGA_60CE0_611F0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[a3x->var_u8_29860_65 + 6]);
         else
-          DrawBitmap_60D18_61228(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[a3x->var_u8_29860_65 + 6]);
+          DrawASpriteVres256_60D18_61228(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[a3x->var_u8_29860_65 + 6]);
         v9 = 56 * (*(_DWORD *)PTR(v5 + 140) % a3x->manaMax_29931_136);
         if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-          sub_24C20(a1 + 4, a2 + 36, v9 / a3x->manaMax_29931_136, 4, v26);
+          DrawBoxCMCGA_24C20(a1 + 4, a2 + 36, v9 / a3x->manaMax_29931_136, 4, v26);
         else
-          sub_24CA0(a1 + 4, a2 + 36, v9 / a3x->manaMax_29931_136, 4, v26);
+          DrawBoxCVres256_24CA0(a1 + 4, a2 + 36, v9 / a3x->manaMax_29931_136, 4, v26);
         v22 = 0;
         v10 = *(_DWORD *)PTR(v5 + 140) / a3x->manaMax_29931_136;
         v23 = 4;
@@ -27097,9 +27105,9 @@ void DrawSpell_23D40(int a1, int a2, Type_AE400_29795* a3x, char a4)
           if ( v11 > 0 )
           {
             if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-              sub_24C20(a1 + 4, a2 + 36, 55 * v11 / a3x->var_u8_29857_62, 4, (unsigned __int8)byte_AD167_AD157[241]);
+              DrawBoxCMCGA_24C20(a1 + 4, a2 + 36, 55 * v11 / a3x->var_u8_29857_62, 4, (unsigned __int8)byte_AD167_AD157[241]);
             else
-              sub_24CA0(a1 + 4, a2 + 36, 55 * v11 / a3x->var_u8_29857_62, 4, (unsigned __int8)byte_AD167_AD157[241]);
+              DrawBoxCVres256_24CA0(a1 + 4, a2 + 36, 55 * v11 / a3x->var_u8_29857_62, 4, (unsigned __int8)byte_AD167_AD157[241]);
           }
         }
         v14 = *(_DWORD *)PTR(v21 + 160);
@@ -27173,17 +27181,17 @@ void DrawSpellShort_24230(__int16 a1, __int16 a2, unsigned int a3, char a4)
           if ( *(_WORD *)PTR(a3 + 48) )
           {
             if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-              DrawBitmap_60CE0_611F0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[4]);
+              DrawASpriteMCGA_60CE0_611F0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[4]);
             else
-              DrawBitmap_60D18_61228(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[4]);
+              DrawASpriteVres256_60D18_61228(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[4]);
           }
           else if ( (typeResolution_12F02E_12F01E & 1) != 0 )
           {
-            DrawBitmap_60CE0_611F0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[3]);
+            DrawASpriteMCGA_60CE0_611F0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[3]);
           }
           else
           {
-            DrawBitmap_60D18_61228(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[3]);
+            DrawASpriteVres256_60D18_61228(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[3]);
           }
         }
         else
@@ -27192,12 +27200,12 @@ void DrawSpellShort_24230(__int16 a1, __int16 a2, unsigned int a3, char a4)
             v7 = &begSprTab_AE42C_AE41C_26C42C_26C41C[4];
           else
             v7 = &begSprTab_AE42C_AE41C_26C42C_26C41C[3];
-          sub_23940(a1, a2, v7);
+          DrawTransparentSprite_23940(a1, a2, v7);
         }
         if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-          DrawBitmap_60CE0_611F0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[(*(char *)PTR(a3 + 65) + 6)]);
+          DrawASpriteMCGA_60CE0_611F0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[(*(char *)PTR(a3 + 65) + 6)]);
         else
-          DrawBitmap_60D18_61228(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[(*(char *)PTR(a3 + 65) + 6)]);
+          DrawASpriteVres256_60D18_61228(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[(*(char *)PTR(a3 + 65) + 6)]);
         v8 = *(_DWORD *)PTR(v5 + 160);
         if ( *(_BYTE *)PTR(dword_AE400_AE3F0() + 2049 * *(__int16 *)PTR(v8 + 48) + 14421)
           || (*(char *)PTR(v8 + *(char*)PTR(a3 + 65) + 844) > 0) )
@@ -27281,7 +27289,7 @@ void SetupIntroText_24AB0()//1F5AB0_
     byte_90091 = 1;
     LoadPathFiles_40440_40780(&pathStrArray_F1EF0[PSF1datascreenssfont1dat]);
     SetTextWindow_51360_516A0(10, 180, 300, 50);
-    sub_51480_517C0(&byte_AE460_AE450, &sFont1Tab_271288_B3278, begPalDat_AE428_AE418_26C428_26C418);
+    InitializeFont_51480_517C0(&byte_AE460_AE450, &sFont1Tab_271288_B3278, begPalDat_AE428_AE418_26C428_26C418);
     byte_AE460_AE450.var8_6 = FindColor_5CC70_5D180(begPalDat_AE428_AE418_26C428_26C418, 0x3Fu, 0x3Fu, 0x3Fu);
     word_B329C_B328C = 19200;
     dword_B3294_B3284 = (int)OFF(begWscreen_2ECFF4_2ECFE4) + 57600;
@@ -27296,7 +27304,7 @@ void DrawIntroText_24B50(char* a1)
   if ( byte_9009E )
   {
     ClearIntroTextArea_24B80();
-    DrawText_51560_518A0((uint8*)&byte_AE460_AE450, 0, 0, a1);
+    DrawFontBPP_51560_518A0((uint8*)&byte_AE460_AE450, 0, 0, a1);
     dword_900A0 = a1;
   }
 }
@@ -27353,7 +27361,8 @@ void SetIntroTextColor_24BF0(unsigned __int8 a1)
 }
 
 //----- (00024C20) --------------------------------------------------------
-void sub_24C20(int a1, int a2, int a3, int a4, unsigned __int16 a5)
+/// Original name: DrawBoxCMCGA (DRAW.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void DrawBoxCMCGA_24C20(int a1, int a2, int a3, int a4, unsigned __int16 a5)
 {
   if ( a3 >= 2
     && a4 >= 2
@@ -27369,7 +27378,8 @@ void sub_24C20(int a1, int a2, int a3, int a4, unsigned __int16 a5)
 }
 
 //----- (00024CA0) --------------------------------------------------------
-void sub_24CA0(int a1, int a2, int a3, int a4, unsigned __int16 a5)
+/// Original name: DrawBoxCVres256 (DRAW.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void DrawBoxCVres256_24CA0(int a1, int a2, int a3, int a4, unsigned __int16 a5)
 {
   if ( a3 >= 2
     && a4 >= 2
@@ -27386,8 +27396,8 @@ void sub_24CA0(int a1, int a2, int a3, int a4, unsigned __int16 a5)
 
 //----- (00024D20) --------------------------------------------------------
 /// DrawRectLowRes_61740 if the rectangle is at least 2x2 and inside 640x400.
-/// Name is a guess (not in the Hidden Worlds linker map).
-void DrawRectCheckedLowRes_24D20(int a1, int a2, int a3, int a4, unsigned __int16 a5)
+/// Original name: DrawBoxOutlineCMCGA (DRAW.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void DrawBoxOutlineCMCGA_24D20(int a1, int a2, int a3, int a4, unsigned __int16 a5)
 {
   if ( a3 >= 2
     && a4 >= 2
@@ -27404,8 +27414,8 @@ void DrawRectCheckedLowRes_24D20(int a1, int a2, int a3, int a4, unsigned __int1
 
 //----- (00024DA0) --------------------------------------------------------
 /// DrawRectHighRes_61810 if the rectangle is at least 2x2 and inside 640x480.
-/// Name is a guess (not in the Hidden Worlds linker map).
-void DrawRectCheckedHighRes_24DA0(int a1, int a2, int a3, int a4, unsigned __int16 a5)
+/// Original name: DrawBoxOutlineCVres256 (DRAW.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void DrawBoxOutlineCVres256_24DA0(int a1, int a2, int a3, int a4, unsigned __int16 a5)
 {
   if ( a3 >= 2
     && a4 >= 2
@@ -27493,7 +27503,7 @@ void FnEffectExplosion_24F60(Type_AE400_29795* a1x)
         PlayASample_55370_558A0(a1x - v9x, -1, 3);
       }
       Gravity_42000_42340(&a1x->var_u32_29867_72, v3, 0, 0, a1x->var_u16_29841_46);
-      AdvanceAnimFrame_42510_42850(a1x);
+      Animate_42510_42850(a1x);
     }
     else
     {
@@ -27675,7 +27685,7 @@ void FnEffectSplash_25410(Type_AE400_29795* a1x)
   a1x->actLife_29807_12 = v1 - 1;
   if ( v1 >= 0 )
   {
-    AdvanceAnimFrame_42510_42850(a1x);
+    Animate_42510_42850(a1x);
     if ( (a1x->var_29811_16.byte[0] & 2) == 0 )
     {
       v2 = dword_AE400_AE3F0() + 29795;
@@ -27835,7 +27845,7 @@ void FnEffectPocession_25760(Type_AE400_29795* a1x)
       DeleteThing_41E80_421C0(a1x);
   else
   {
-    AdvanceAnimFrame_42510_42850(a1x);
+    Animate_42510_42850(a1x);
     AffectMapwho_120B0(a1x, 1u, a1x->var_u16_29839_44);
   }
 }
@@ -28373,7 +28383,7 @@ void FnEffectStealMana_26360(Type_AE400_29795* a1x)
       DeleteThing_41E80_421C0(a1x);
   else
   {
-      result = AdvanceAnimFrame_42510_42850(a1x);
+      result = Animate_42510_42850(a1x);
       BYTE1(result) = a1x->var_29811_16.byte[0];
       if ((result & 0x200) == 0)
       {
@@ -28398,7 +28408,7 @@ void FnEffectRubberBand_263C0(Type_AE400_29795* a1x)
     DeleteThing_41E80_421C0(a1x);
   else
   {
-    AdvanceAnimFrame_42510_42850(a1x);
+    Animate_42510_42850(a1x);
     AffectMapwho_120B0(a1x, 4u, a1x->var_u16_29839_44);
   }
 }
@@ -30525,7 +30535,7 @@ void FnEffectCastle_293D0(Type_AE400_29795* a1x)
   a1x->actLife_29807_12 = v1 - 1;
   if ( v1 >= 0 )
   {
-    AdvanceAnimFrame_42510_42850(a1x);
+    Animate_42510_42850(a1x);
     if ( (a1x->var_29811_16.byte[0] & 2) == 0 )
     {
       a1x->var_29811_16.byte[0] |= 2u;
@@ -38652,7 +38662,7 @@ void InitStereoMode_31600_31640()//202600_
 	TColor tempPal2[256];
 
 	if (str_AE400_AE3F0->set.mod3D_8603 && pitchViewPort_93AD4 == 640)
-		ClearScr_5B500_5BA10();
+		HeadsetStereoOn_5B500_5BA10();
 	if (blurBuffer_AE404_AE3F4 && !str_AE400_AE3F0->set.var_u8_8606)
 	{
 		if (scrWidth_12EFF0_12EFE0 == 320)
@@ -38841,7 +38851,7 @@ void EnsureMonoMode_31A00_31A40()
     if ( str_AE400_AE3F0->set.var_u8_8606 )
     {
       if ( pitchViewPort_93AD4 == 640 )
-        ClearScr_5B560();
+        HeadsetStereoOff_5B560();
     }
     byte_90754 = str_AE400_AE3F0->set.mod3D_8603;
     StereoModeOff_315C0_31600();
@@ -38856,7 +38866,8 @@ void EnsureMonoMode_31A00_31A40()
 // AE428: using guessed type int begPalDat_AE428_AE418_26C428_26C418;
 
 //----- (00031A60) --------------------------------------------------------
-void sub_31A60_31AA0()//202A60_
+/// Original name: restore_possible_stereo_mode (ENGINE.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void RestorePossibleStereoMode_31A60_31AA0()//202A60_
 {
   str_AE400_AE3F0->set.mod3D_8603 = byte_90754;
   if (byte_90754 == 1 )
@@ -41120,7 +41131,7 @@ void Game_340B0_34470(int argc, const char** argv)//2050B0_205470
     }
     else
     {
-      sub_4A980_4ACC0();
+      ScreenInitialize_4A980_4ACC0();
     }
     str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u8_13327 = 0;
     while ( 1 )
@@ -41144,7 +41155,7 @@ void Game_340B0_34470(int argc, const char** argv)//2050B0_205470
         musicOn_939CD = musicAvailable_939CC;
         leaveMenu_96880 = false;
         do
-          MainMenuStep_4AB20_4AE60();
+          ScreensHandle_4AB20_4AE60();
         while ( !leaveMenu_96880 );
         if (!IsHiddenWord)
             sub_34070();
@@ -41155,7 +41166,7 @@ void Game_340B0_34470(int argc, const char** argv)//2050B0_205470
         LoadAllGameData_34B00_34EC0();//find here 205241
         FreeAllData_61610_61B20(&pathStrArray_258E00[PS25datasnds00dat]);
         FreeAllData_61610_61B20(&pathStrArray_258E00[PS25datamusic00dat]);
-        sub_41540_41880();
+        RestoreMemory_41540_41880();
         if ( !str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u8_13327 )
         {
           LoadSounds_5D070_5D580(0);
@@ -41166,7 +41177,7 @@ void Game_340B0_34470(int argc, const char** argv)//2050B0_205470
           EnsureMonoMode_31A00_31A40();
           if (someVar == 8 )
             ChangeResolution_34C80_35040();
-          sub_31A60_31AA0();
+          RestorePossibleStereoMode_31A60_31AA0();
         }
         sub_42530_42870(3);
       }
@@ -41265,8 +41276,8 @@ int counter_34530 = 0;
 //SYNCHRONIZED WITH REMC1
 // PORT: differential harness hooks: --snapshot-what <hex address> dumps memory around that call
 #define SNAP_CALL(addr, call) { MemSnapshot_Call(#addr + 2, true, addr, nullptr, 0); call; MemSnapshot_Call(#addr + 2, false, addr, nullptr, 0); }
-/// Name is a guess (not in the Hidden Worlds linker map).
-void DrawAndEventsInGame_34530_348F0()//205530_
+/// Original name: game_loop (GAME.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void GameLoop_34530_348F0()//205530_
 {
 	//debug
 #ifdef debug1
@@ -41384,7 +41395,7 @@ void ProcessMainGame_34610_349D0()//205610_
     //result = 2049 * str_AE400_AE3F0->var_u16_8 + dword_AE400_AE3F0();
     if (str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u8_13327 || (str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u16_13325 & 8) != 0 )
       break;
-    DrawAndEventsInGame_34530_348F0();
+    GameLoop_34530_348F0();
   }
   PortTimer_SetFrameCap(g_settings.menuFps);
 }
@@ -41428,7 +41439,7 @@ void ProcessPalettes_34690_34A50()
   else if (str_AE408_AE3F8->var_u8_23 == 3 )
   {
     if ( str_AE400_AE3F0->set.mod3D_8603 )
-      sub_61EC8();
+      StopOpenFadePalette256_61EC8();
     //LOBYTE(v1) = *(_BYTE *)(dword_AE408_AE3F8() + 152);
     switch (str_AE408_AE3F8->var_u8_152)
     {
@@ -41539,7 +41550,7 @@ void ProcessPalettes_34690_34A50()
           byte_B700E[ii] = v11;
         }
 LABEL_61:
-        sub_61EC8();
+        StopOpenFadePalette256_61EC8();
         SetPalette256_319A0_319E0((TColor*)byte_B7010);
         //LOBYTE(v1) = dword_AE408_AE3F8();
         str_AE408_AE3F8->var_u8_152 = 1;
@@ -41608,7 +41619,7 @@ void SetupGame_34B40_34F00()//205B40_205F00
 void ResetGame_34C60_35020()//205C60
 {
     ResetSspriteManager_58F00_59410();
-    sub_44840_44B80();
+    ResetHost_44840_44B80();
     FreeAllData_61610_61B20(&pathStrArray[PSSearchD]);
     CopyrightRequested_5ACA0_5B1B0();
 }
@@ -41645,7 +41656,7 @@ void ChangeResolution_34C80_35040()//205C80_
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     ClearScreenMCGA_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreenVres256_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   SetupMouse_5C214_5C724();
   SetPointer_5C05C_5C56C(&begPointersTab_AE450_AE440_26C450_26C440[0]);
   str_AE408_AE3F8->var_u8_23 = 0;
@@ -42102,7 +42113,7 @@ void AniSpeedTimer_357A0()
 void ResetSound_358A0_35C60()
 {
     if (!byte_90AD5)
-        sub_5A4EA_5A9FA();
+        CloseTimerInterrupt_5A4EA_5A9FA();
     else
     {
         PortTimer_Stop(); // PORT: counterpart of the HMI timer registration in SetupSound_357C0_35B80
@@ -43369,7 +43380,8 @@ void OpenIKeyboard_36D83()
 // B7324: using guessed type __int16 keysVect1_B7324;
 
 //----- (00036DC2) --------------------------------------------------------
-int sub_36DC2_37182()
+/// Original name: CloseIKeyboard (IKEYBOAR.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int CloseIKeyboard_36DC2_37182()
 {
     FixPerifery();
   return dos_setvect(9, keysVect2_B7320, (unsigned __int16)keysVect1_B7324);
@@ -47374,9 +47386,9 @@ int sub_3B460(uint16_t* a1)
 }
 
 //----- (0003B4D0) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 33).
 /// Constructor of class 10 type 33 (initial state 35).
-int CreateClass10Type33_3B4D0(uint16_t* a1)
+/// Original name: init_effect_blindness (INIT.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int InitEffectBlindness_3B4D0(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -48259,9 +48271,9 @@ int InitSpellExtra4_3C480(int a1)
 }
 
 //----- (0003C4B0) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 13 type 0).
 /// Constructor of class 13 type 0 (initial state 0).
-int CreateClass13Type0_3C4B0(int a1)
+/// Original name: init_objective_gain_mana (INIT.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int InitObjectiveGainMana_3C4B0(int a1)
 {
   int v0; // eax
   int v1; // ebx
@@ -48282,9 +48294,9 @@ int CreateClass13Type0_3C4B0(int a1)
 }
 
 //----- (0003C4E0) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 13 type 1).
 /// Constructor of class 13 type 1 (initial state 1).
-int CreateClass13Type1_3C4E0(int a1)
+/// Original name: init_objective_kill_creature (INIT.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int InitObjectiveKillCreature_3C4E0(int a1)
 {
   int v0; // eax
   int v1; // ebx
@@ -48305,9 +48317,9 @@ int CreateClass13Type1_3C4E0(int a1)
 }
 
 //----- (0003C510) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 13 type 2).
 /// Constructor of class 13 type 2 (initial state 2).
-int CreateClass13Type2_3C510(int a1)
+/// Original name: init_objective_kill_city (INIT.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int InitObjectiveKillCity_3C510(int a1)
 {
   int v0; // eax
   int v1; // ebx
@@ -48328,9 +48340,9 @@ int CreateClass13Type2_3C510(int a1)
 }
 
 //----- (0003C540) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 13 type 3).
 /// Constructor of class 13 type 3 (initial state 3).
-int CreateClass13Type3_3C540(int a1)
+/// Original name: init_objective_kill_player (INIT.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int InitObjectiveKillPlayer_3C540(int a1)
 {
   int v0; // eax
   int v1; // ebx
@@ -48648,7 +48660,7 @@ void ExecutePlayerInputs_3C9D0_3CD10()//20D9D0_
 	if ((str_AE408_AE3F8->var_u8_0 & 0x10) != 0)
 	{
 		str_AE408_AE3F8->var_u32_157 = timerTicks_AC5D4_AC5C4;
-		sub_43930_43C70((uint8**)&str_AE400_AE3F0->var_29715, 0xAu);
+		ExchangeNetwork_43930_43C70((uint8**)&str_AE400_AE3F0->var_29715, 0xAu);
 		str_AE408_AE3F8->var_u32_157 = timerTicks_AC5D4_AC5C4 - str_AE408_AE3F8->var_u32_157;
 		int v1x = 0;
 		v111 = 0;
@@ -48687,7 +48699,7 @@ void ExecutePlayerInputs_3C9D0_3CD10()//20D9D0_
 			v109++;
 		}
 		if (v111)
-			sub_43930_43C70((uint8**)&str_AE400_AE3F0->str_13323, 0x801u);
+			ExchangeNetwork_43930_43C70((uint8**)&str_AE400_AE3F0->str_13323, 0x801u);
 	}
 	//v7 = dword_AE400_AE3F0() + 2049 * str_AE400_AE3F0->var_u16_8;
 	//v8 = dword_AE408_AE3F8();
@@ -49221,7 +49233,7 @@ void SetControlMode_3DC90_3DFD0(TypeStrAE400_13323* a1x, char a2)
     {
       SetPointer_5C05C_5C56C(&begPointersTab_AE450_AE440_26C450_26C440[0]);
       CentreMouseCoordinates_59720_59C30();
-      sub_31A60_31AA0();
+      RestorePossibleStereoMode_31A60_31AA0();
     }
     PlayASample_55370_558A0(0, a1x->var_u16_13330_7, 14);
   }
@@ -50582,14 +50594,14 @@ void sub_3FB30_3FE70(__int16 a1, __int16 a2, char* a3)
       CopyScreenMCGA_62FA8_634B8(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0xC8u);
     else
       CopyScreen_62FC4_634D4(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0x1E0u);
-    sub_4B560_4B8A0();
+    ScreenConfigureGameDraw_4B560_4B8A0();
     v3 = a2;
     if ( a3 + 6 * (a1 + a2) )
     {
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-        DrawBitmap_60CE0_611F0(a1, a2, (TypeTab*)a3);
+        DrawASpriteMCGA_60CE0_611F0(a1, a2, (TypeTab*)a3);
       else
-        DrawBitmap_60D18_61228(a1, a2, (TypeTab*)a3);
+        DrawASpriteVres256_60D18_61228(a1, a2, (TypeTab*)a3);
     }
     ReadDigistick_3F413(v3);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -50606,14 +50618,14 @@ void sub_3FB30_3FE70(__int16 a1, __int16 a2, char* a3)
       CopyScreenMCGA_62FA8_634B8(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0xC8u);
     else
       CopyScreen_62FC4_634D4(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0x1E0u);
-    sub_4B560_4B8A0();
+    ScreenConfigureGameDraw_4B560_4B8A0();
     v4 = a2;
     if ( a3 + 6 * (a1 + a2) )
     {
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-        DrawBitmap_60CE0_611F0(a1, a2, (TypeTab*)a3);
+        DrawASpriteMCGA_60CE0_611F0(a1, a2, (TypeTab*)a3);
       else
-        DrawBitmap_60D18_61228(a1, a2, (TypeTab*)a3);
+        DrawASpriteVres256_60D18_61228(a1, a2, (TypeTab*)a3);
     }
     ReadDigistick_3F413(v4);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -52138,8 +52150,8 @@ int ClearScreenMCGA_411D7_41517(void *a2, unsigned __int16 a3, char a4)
 
 //----- (000411FD) --------------------------------------------------------
 /// Fills a2 whole rows of a 640-wide screen buffer with colour a4.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int ClearScreen640_411FD_4153D(void *a2, unsigned __int16 a3, char a4)
+/// Original name: ClearScreenVres256 (MATHS.ASM), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int ClearScreenVres256_411FD_4153D(void *a2, unsigned __int16 a3, char a4)
 {
   int v4; // eax
   int v6; // [esp-8h] [ebp-Ch]
@@ -52310,11 +52322,12 @@ void CreateMemory_41490_417D0()
 // 1314AC: using guessed type int freeMem_1314AC_13149C;
 
 //----- (00041540) --------------------------------------------------------
-void sub_41540_41880()
+/// Original name: restore_memory (MEMORY.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void RestoreMemory_41540_41880()
 {
   if ( !byte_93950 && !sub_427A0(*(_DWORD *)PTR(dword_AE408_AE3F8() + 168), *(_DWORD *)PTR(dword_AE408_AE3F8() + 172)) )
   {
-    sub_44840_44B80();
+    ResetHost_44840_44B80();
     printf("ERROR : UNABLE TO GROW MEMORY.\n");
     exit(1);
   }
@@ -53151,8 +53164,8 @@ void SetState_424F0_42830(Type_AE400_29795* a1x, unsigned __int8 a2)
 
 //SYNCHRONIZED WITH REMC1
 /// Advances the animation frame (+88); returns 1 once the last frame (+89) has been reached.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int AdvanceAnimFrame_42510_42850(Type_AE400_29795* a1x)
+/// Original name: animate (MOVE.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int Animate_42510_42850(Type_AE400_29795* a1x)
 {
   int result; // eax
 
@@ -53568,7 +53581,7 @@ int NETAdd_42930(_BYTE *a1, char *a2, unsigned __int8 a3)
     ScreenNetworkCallPlayer_4E3D0_4E710(a3);
   }
   if ( v13 )
-    sub_4E510(a3);
+    ScreenNetworkResetPlayer_4E510(a3);
   else
     ScreenNetworkPlayerConnected_4E470_4E7B0(a3);
   return -(unsigned __int8)a1[49];
@@ -54343,7 +54356,8 @@ int StopNetwork_43760_43AA0(__int16 a1)
 // 93990: using guessed type int connection_93990[7];
 
 //----- (00043870) --------------------------------------------------------
-void sub_43870_43BB0(unsigned __int16 a1, char *a2, unsigned int a3)
+/// Original name: SendNetwork (NETWORK.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SendNetwork_43870_43BB0(unsigned __int16 a1, char *a2, unsigned int a3)
 {
   if ( byte_93958 && byte_939B0[a1] == 1 )
   {
@@ -54356,7 +54370,8 @@ void sub_43870_43BB0(unsigned __int16 a1, char *a2, unsigned int a3)
 // 93990: using guessed type int connection_93990[7];
 
 //----- (000438D0) --------------------------------------------------------
-void sub_438D0_43C10(unsigned __int16 a1, char *a2, unsigned int a3)
+/// Original name: ReceiveNetwork (NETWORK.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void ReceiveNetwork_438D0_43C10(unsigned __int16 a1, char *a2, unsigned int a3)
 {
   if ( byte_93958 && byte_939B0[a1] == 1 )
   {
@@ -54369,7 +54384,8 @@ void sub_438D0_43C10(unsigned __int16 a1, char *a2, unsigned int a3)
 // 93990: using guessed type int connection_93990[7];
 
 //SYNCHRONIZED WITH REMC1
-void sub_43930_43C70(uint8* a1[8], unsigned int size)
+/// Original name: ExchangeNetwork (NETWORK.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void ExchangeNetwork_43930_43C70(uint8* a1[8], unsigned int size)
 {
   if ( byte_93958 )
   {
@@ -54378,18 +54394,18 @@ void sub_43930_43C70(uint8* a1[8], unsigned int size)
       for ( int i = 0; i < word_9395C; i++ )
       {
         if ( i != word_9395A )
-          sub_438D0_43C10(i, (char*)a1[i], size);
+          ReceiveNetwork_438D0_43C10(i, (char*)a1[i], size);
       }
       for ( int i = 0; i < word_9395C; i++ )
       {
         if ( i != word_9395A )
-          sub_43870_43BB0(i, (char*)a1[0], size * word_9395C);
+          SendNetwork_43870_43BB0(i, (char*)a1[0], size * word_9395C);
       }
     }
     else
     {
-      sub_43870_43BB0(word_9398A, (char*)a1[word_9395A], size);
-      sub_438D0_43C10(word_9398A, (char*)a1[0], word_9395C * size);
+      SendNetwork_43870_43BB0(word_9398A, (char*)a1[word_9395A], size);
+      ReceiveNetwork_438D0_43C10(word_9398A, (char*)a1[0], word_9395C * size);
     }
   }
 }
@@ -54787,7 +54803,7 @@ LABEL_63:
       if ( !v7 )
         break;
       ++a3;
-      //fix v7 = sub_63C5A_6416A(v13, a5, byte_CC0C2, __DS__, (unsigned int)v13);
+      //fix v7 = SosDIGIDetectFindHardware_63C5A_6416A(v13, a5, byte_CC0C2, __DS__, (unsigned int)v13);
     }
     while ( (__int16)a3 < 5 );
     //fix if ( v7 || (v7 = sub_64248((unsigned int)&dword_CC134, __DS__)) != 0 )
@@ -55009,7 +55025,7 @@ void SetupHost_44730_44A70()//215730_
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       ClearScreenMCGA_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
     else
-      ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+      ClearScreenVres256_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
     if ( (*(_WORD *)PTR(dword_AE408_AE3F8()) & 0x110) != 0 )
     {
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -55028,7 +55044,7 @@ void SetupHost_44730_44A70()//215730_
     SetupMouse_5C214_5C724();
     if ( !mouseInstalled_9AD98 )
     {
-      sub_44840_44B80();
+      ResetHost_44840_44B80();
       printf("ERROR : MOUSE DRIVER NOT FOUND.\n");
       exit(1);
     }
@@ -55050,7 +55066,8 @@ void SetupHost_44730_44A70()//215730_
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //----- (00044840) --------------------------------------------------------
-void sub_44840_44B80()//215840
+/// Original name: reset_host (PCHOST.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void ResetHost_44840_44B80()//215840
 {
   if ( byte_93A84 != 1 )
     JUMPOUT(0x44836);
@@ -55058,10 +55075,10 @@ void sub_44840_44B80()//215840
   if ( (str_AE408_AE3F8->var_u8_0 & 8) != 0 )
     sub_5B5F4_5BB04();
   else
-    sub_36DC2_37182();
+    CloseIKeyboard_36DC2_37182();
   ResetScreen_5CD70_5D280();
   ResetNetwork_433C0_43700();
-  sub_5A4EA_5A9FA();
+  CloseTimerInterrupt_5A4EA_5A9FA();
 }
 // 44847: control flows out of bounds to 44836
 // 93A84: using guessed type char byte_93A84;
@@ -57441,7 +57458,7 @@ void LocalPlayOneChannelSample_483C0(__int16 a1, __int16 a2, __int16 a3, __int16
     }
     sub_65965(dword_CC140, v5);
 LABEL_10:
-    sub_48570(a1, a2, a3, a4);
+    TriggerSample_48570(a1, a2, a3, a4);
   }
 }
 // 939E4: using guessed type char byte_939E4;
@@ -57473,7 +57490,7 @@ void LocalPlayDifferentSample_48470(__int16 a1, __int16 a2, __int16 a3, __int16 
     v6 = 1;
 LABEL_9:
     if ( !v6 )
-      sub_48570(a1, a2, a3, a4);
+      TriggerSample_48570(a1, a2, a3, a4);
   }
 }
 // 939E4: using guessed type char byte_939E4;
@@ -57492,7 +57509,7 @@ int LocalPlayActualSample_48520(__int16 a1, __int16 a2, __int16 a3, __int16 a4)
   {
     result = a2;
     if ( a2 <= (int)(unsigned __int16)word_CC1C6 )
-      return sub_48570(a1, a2, a3, a4);
+      return TriggerSample_48570(a1, a2, a3, a4);
   }
   return result;
 }
@@ -57501,7 +57518,8 @@ int LocalPlayActualSample_48520(__int16 a1, __int16 a2, __int16 a3, __int16 a4)
 // CC1C6: using guessed type __int16 word_CC1C6;
 
 //----- (00048570) --------------------------------------------------------
-bool sub_48570(__int16 a1, __int16 a2, __int16 a3, __int16 a4)
+/// Original name: trigger_sample (PLAYSAMP.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+bool TriggerSample_48570(__int16 a1, __int16 a2, __int16 a3, __int16 a4)
 {
   __int16 v4; // bx
   bool result; // eax
@@ -57828,7 +57846,7 @@ LABEL_66:
               if ( (typeResolution_12F02E_12F01E & 1) != 0 )
               {
 LABEL_83:
-                DrawBitmap_60CE0_611F0(v41, v42 - *(unsigned __int8 *)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 6 * v29 + 5), &begSprTab_AE42C_AE41C_26C42C_26C41C[v29]);
+                DrawASpriteMCGA_60CE0_611F0(v41, v42 - *(unsigned __int8 *)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 6 * v29 + 5), &begSprTab_AE42C_AE41C_26C42C_26C41C[v29]);
                 goto LABEL_97;
               }
               goto LABEL_84;
@@ -57836,7 +57854,7 @@ LABEL_83:
             if ( (typeResolution_12F02E_12F01E & 1) != 0 )
             {
 LABEL_78:
-              DrawBitmap_60CE0_611F0(
+              DrawASpriteMCGA_60CE0_611F0(
                 v41 - ((int)*(unsigned __int8 *)(6 * v29 + ((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 4) >> 1),
                 v42 - *(unsigned __int8 *)(6 * v29 + ((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 5),
                   &begSprTab_AE42C_AE41C_26C42C_26C41C[v29]);
@@ -57851,7 +57869,7 @@ LABEL_78:
             if ( (typeResolution_12F02E_12F01E & 1) != 0 )
               goto LABEL_78;
 LABEL_94:
-            DrawBitmap_60D18_61228(
+            DrawASpriteVres256_60D18_61228(
               v41 - ((int)*(unsigned __int8 *)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 6 * v29 + 4) >> 1),
               v42 - *(unsigned __int8 *)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 6 * v29 + 5),
                 &begSprTab_AE42C_AE41C_26C42C_26C41C[v29]);
@@ -57864,7 +57882,7 @@ LABEL_94:
               if ((typeResolution_12F02E_12F01E & 1) != 0)
                   goto LABEL_83;
           LABEL_84:
-              DrawBitmap_60D18_61228(v41, v42 - *(unsigned __int8*)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 6 * v29 + 5), &begSprTab_AE42C_AE41C_26C42C_26C41C[v29]);
+              DrawASpriteVres256_60D18_61228(v41, v42 - *(unsigned __int8*)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 6 * v29 + 5), &begSprTab_AE42C_AE41C_26C42C_26C41C[v29]);
             goto LABEL_97;
           }
           if ( v29 == 83 || v29 == 84 )
@@ -57872,12 +57890,12 @@ LABEL_94:
             v44 = 2 * v41;
             v45 = 2 * v42;
             if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-              DrawBitmap_60CE0_611F0(
+              DrawASpriteMCGA_60CE0_611F0(
                 v44 - ((int)*(unsigned __int8 *)(6 * v29 + ((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 4) >> 1),
                 v45 - ((int)*(unsigned __int8 *)(6 * v29 + ((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 5) >> 1),
                   &begSprTab_AE42C_AE41C_26C42C_26C41C[v29]);
             else
-              DrawBitmap_60D18_61228(
+              DrawASpriteVres256_60D18_61228(
                 v44 - ((int)*(unsigned __int8 *)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 6 * v29 + 4) >> 1),
                 v45 - ((int)*(unsigned __int8 *)(((uint8_t*)begSprTab_AE42C_AE41C_26C42C_26C41C) + 6 * v29 + 5) >> 1),
                   &begSprTab_AE42C_AE41C_26C42C_26C41C[v29]);
@@ -57991,8 +58009,8 @@ LABEL_97:
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //----- (00049300) --------------------------------------------------------
-/// Name is a guess (not in the Hidden Worlds linker map).
-int DrawMinimap_49300_49640(int a1, int a2, int a3, int a4, int a5, int a6, __int16 a7, int a8, int a9, int a10)//21A300_
+/// Original name: eliptical_map (SCANNER.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int ElipticalMap_49300_49640(int a1, int a2, int a3, int a4, int a5, int a6, __int16 a7, int a8, int a9, int a10)//21A300_
 {
   int v10; // ebx
   int v11; // edx
@@ -58326,7 +58344,8 @@ int StandingStoneTick_49B50_49E90(int a1)
   return result;
 }
 
-void sub_4A980_4ACC0()
+/// Original name: screen_initialize (SCREENS.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void ScreenInitialize_4A980_4ACC0()
 {
     char tempPath[40];
     FILE* file;
@@ -58377,8 +58396,8 @@ void sub_4A980_4ACC0()
 /// One step of the main menu: loads its graphics when needed, runs the page selected by
 /// mainMenuSelector_12CBCE and restarts the music when a song ends; once a page sets leaveMenu_96880, loads the
 /// game's data screens.
-/// Name is a guess (not in the Hidden Worlds linker map).
-void MainMenuStep_4AB20_4AE60()//21BB20_21BE60
+/// Original name: screens_handle (SCREENS.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void ScreensHandle_4AB20_4AE60()//21BB20_21BE60
 {
   if (bool_12CA7C_12CA6C)
   {
@@ -58436,7 +58455,7 @@ void MainMenuStep_4AB20_4AE60()//21BB20_21BE60
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       ClearScreenMCGA_411D7_41517((void *)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, 0xC8u, 0);
     else
-      ClearScreen640_411FD_4153D((void *)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, 0x1E0u, 0);
+      ClearScreenVres256_411FD_4153D((void *)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, 0x1E0u, 0);
     bool_12CA7C_12CA6C = true;
     StopMusic_20E60_20E60();
   }
@@ -58641,7 +58660,7 @@ void SetupMenuPage_4AC70_4AFB0()//21BC70_
 	{
 		CopyScreen_62FC4_634D4(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0x1E0u);
 	}
-	sub_4B560_4B8A0();
+	ScreenConfigureGameDraw_4B560_4B8A0();
 	if ((typeResolution_12F02E_12F01E & 1) != 0)
 		Blit_5CDA0_5D2B0();
 	else
@@ -58746,7 +58765,8 @@ int sub_4B520_4B860()
 // 12CBCB: using guessed type char byte_12CBCB_12CBBB;
 
 //SYNCHRONIZED WITH REMC1
-void sub_4B560_4B8A0()//21C560_
+/// Original name: screen_configure_game_draw (SCREENS.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void ScreenConfigureGameDraw_4B560_4B8A0()//21C560_
 {
   char** v0; // eax
 
@@ -58760,18 +58780,18 @@ void sub_4B560_4B8A0()//21C560_
   if ( settingPage_12CBC9_12CBB9 == 7 )
   {
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      DrawBitmap_60CE0_611F0(554, 224, &begGcSprTab_12CAF8_2EAAF8_2EAAE8[11]);
+      DrawASpriteMCGA_60CE0_611F0(554, 224, &begGcSprTab_12CAF8_2EAAF8_2EAAE8[11]);
     else
-      DrawBitmap_60D18_61228(554, 224, &begGcSprTab_12CAF8_2EAAF8_2EAAE8[11]);
+      DrawASpriteVres256_60D18_61228(554, 224, &begGcSprTab_12CAF8_2EAAF8_2EAAE8[11]);
   }
   RestoreTextWindow_51400_51740();
   if ((typeResolution_12F02E_12F01E & 1) != 0)
-    DrawBitmap_60CE0_611F0(
+    DrawASpriteMCGA_60CE0_611F0(
           2 * word_4A8BE_4ABFE[4 * (unsigned __int8)byte_12CBD3_12CBC3 + 0],
           2 * word_4A8BE_4ABFE[4 * (unsigned __int8)byte_12CBD3_12CBC3 + 1],
           &begGcSprTab_12CAF8_2EAAF8_2EAAE8[word_4A8BE_4ABFE[4 * (unsigned __int8)byte_12CBD3_12CBC3 + 2]]);
   else
-    DrawBitmap_60D18_61228(
+    DrawASpriteVres256_60D18_61228(
              2 * word_4A8BE_4ABFE[4 * (unsigned __int8)byte_12CBD3_12CBC3 + 0],
              2 * word_4A8BE_4ABFE[4 * (unsigned __int8)byte_12CBD3_12CBC3 + 1],
         &begGcSprTab_12CAF8_2EAAF8_2EAAE8[word_4A8BE_4ABFE[4 * (unsigned __int8)byte_12CBD3_12CBC3 + 2]]);
@@ -58847,13 +58867,13 @@ void sub_4B6F0_4BA30(char** texts)//21C6F0_
           str_96884.var8_6 = v7;
       if ( !byte_12CBCA_12CBBA )
           str_96884.var8_6 = v4;
-      DrawText_51560_518A0((uint8*)&str_96884, 0, 0, dword_AE238_AE228[73]);
+      DrawFontBPP_51560_518A0((uint8*)&str_96884, 0, 0, dword_AE238_AE228[73]);
       str_96884.var8_6 = v10;
       if ( byte_12CBCB_12CBBB == 1 )
           str_96884.var8_6 = v11;
       if ( byte_12CBCA_12CBBA == 1 )
           str_96884.var8_6 = v4;
-      DrawText_51560_518A0((uint8*)&str_96884, 0, v6, dword_AE238_AE228[74]);
+      DrawFontBPP_51560_518A0((uint8*)&str_96884, 0, v6, dword_AE238_AE228[74]);
     }
     else
     {
@@ -58869,7 +58889,7 @@ void sub_4B6F0_4BA30(char** texts)//21C6F0_
         v1 += 2;
         ++v3;
         v5 += v6;
-        DrawText_51560_518A0((uint8*)&str_96884, 0, v8, text);
+        DrawFontBPP_51560_518A0((uint8*)&str_96884, 0, v8, text);
       }
     }
     if ( settingPage_12CBC9_12CBB9 == 6 )
@@ -58879,7 +58899,7 @@ void sub_4B6F0_4BA30(char** texts)//21C6F0_
       SaveTextWindow_513E0_51720();
       SetTextWindow_51360_516A0(66, 43, 84, 14);
       str_96884.var8_6 = v4;
-      DrawText_51560_518A0(
+      DrawFontBPP_51560_518A0(
           (uint8*)&str_96884,
         1,
         1,
@@ -58915,37 +58935,37 @@ void sub_4B8D0_4BC10(__int16 a1)//21C8D0_
 	GetTextWindow_513A0_516E0((uint32*)&v13);
 	str_96884.var8_6 = FindColor_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x1Eu, 0x18u, 0x11u);
 	sprintf(v12, "%s :", dword_AE238_AE228[17]);
-	DrawText_51560_518A0((uint8*)&str_96884, 0, a1, v12);
+	DrawFontBPP_51560_518A0((uint8*)&str_96884, 0, a1, v12);
 	v2 = v1 - 2;
 	sprintf(v12, "%s", string_12C9C0_12C9B0);
 	v3 = v13[1] - v13[0];
 	v4 = GetTextWidth_51420_51760((uint32*)&str_96884, v12);
-	DrawText_51560_518A0((uint8*)&str_96884, (__int16)(v3 - v4), v2 + a1, v12);
+	DrawFontBPP_51560_518A0((uint8*)&str_96884, (__int16)(v3 - v4), v2 + a1, v12);
 	sprintf(v12, "%s :", dword_AE238_AE228[18]);
 	v5 = v2 + v2 + a1;
-	DrawText_51560_518A0((uint8*)&str_96884, 0, v5, v12);
+	DrawFontBPP_51560_518A0((uint8*)&str_96884, 0, v5, v12);
 	v6 = v2 + v5;
 	sprintf(v12, "%s", string_12C9E0_12C9D0);
 	v7 = v13[1] - v13[0];
 	v8 = GetTextWidth_51420_51760((uint32*)&str_96884, v12);
-	DrawText_51560_518A0((uint8*)&str_96884, (__int16)(v7 - v8), v6, v12);
+	DrawFontBPP_51560_518A0((uint8*)&str_96884, (__int16)(v7 - v8), v6, v12);
 	v9 = v2 + v6;
 	if (strncmp((char*)&string_12C9A0_12C990, "NONE", 4))
 	{
 		sprintf(v12, "%s : %s\n", dword_AE238_AE228[23], string_12CA80_12CA70);
-		DrawText_51560_518A0((uint8*)&str_96884, 0, v9, v12);
+		DrawFontBPP_51560_518A0((uint8*)&str_96884, 0, v9, v12);
 		sprintf(v12, "%s : %s\n", dword_AE238_AE228[24], string_12CA8A_12CA7A);
 		v10 = v2 + v9;
-		DrawText_51560_518A0((uint8*)&str_96884, 0, v10, v12);
+		DrawFontBPP_51560_518A0((uint8*)&str_96884, 0, v10, v12);
 		sprintf(v12, "%s : %s\n", dword_AE238_AE228[25], string_12CAD0_12CAC0);
 		v11 = v2 + v10;
 		v9 = v2 + v2 + v10;
-		DrawText_51560_518A0((uint8*)&str_96884, 0, v11, v12);
+		DrawFontBPP_51560_518A0((uint8*)&str_96884, 0, v11, v12);
 	}
 	if (strncmp((char*)&string_12CA00_12C9F0, "NONE", 4))
 	{
 		sprintf(v12, "%s : %s\n", dword_AE238_AE228[26], string_12CA94_12CA84);
-		DrawText_51560_518A0((uint8*)&str_96884, 0, v9, v12);
+		DrawFontBPP_51560_518A0((uint8*)&str_96884, 0, v9, v12);
 	}
 }
 
@@ -58962,7 +58982,7 @@ void InitConfigScreen_4BB20_4BE60()
     SetupSpritesMCGA_65D70_66280(begGcSprTab_12CAF8_2EAAF8_2EAAE8, endGcSprTab_12CAFC_2EAAFC_2EAAEC, begGcSprDat_12CB00_2EAB00_2EAAF0);
   else
     SetupSpritesVres256_65DC0_662D0(begGcSprTab_12CAF8_2EAAF8_2EAAE8, endGcSprTab_12CAFC_2EAAFC_2EAAEC, begGcSprDat_12CB00_2EAB00_2EAAF0);
-  sub_51480_517C0(&str_96884, &sFont0Tab_12CB28_2EAB28_2EAB18, begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
+  InitializeFont_51480_517C0(&str_96884, &sFont0Tab_12CB28_2EAB28_2EAB18, begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
   str_96884.var8_4 &= ~2u;
   str_96884.var8_5 = 0;
   if ( !byte_90B23 )
@@ -58989,7 +59009,7 @@ void sub_4BC90_4BFD0()
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     ClearScreenMCGA_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreenVres256_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -59031,7 +59051,7 @@ void GameMenuPage_4BD60_4C0A0()//21CD60_
   v2 = 0;
   if ( (byte_12CBD5_12CBC5 & 1) == 0 )
     InitMainMenuScreen_4C7E0_4CB20();
-  sub_4C6F0_4CA30();
+  ScreenMainMenuAnims_4C6F0_4CA30();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     CopyScreenMCGA_62FA8_634B8(begScreenBackup2_12CBA8_2EABA8_2EAB98, begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, 0xC8u);
   else
@@ -59250,9 +59270,9 @@ LABEL_79:
   if ( (byte_90B23 & 0x23) != 0 )
   {
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      DrawBitmap_60CE0_611F0(mouse_9AD90.x, mouse_9AD90.y, &begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
+      DrawASpriteMCGA_60CE0_611F0(mouse_9AD90.x, mouse_9AD90.y, &begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
     else
-      DrawBitmap_60D18_61228(mouse_9AD90.x, mouse_9AD90.y, &begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
+      DrawASpriteVres256_60D18_61228(mouse_9AD90.x, mouse_9AD90.y, &begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
   }
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
@@ -59412,7 +59432,8 @@ bool sub_4C6A0_4C9E0()
 // 12CBCD: using guessed type char byte_12CBCD_12CBBD;
 
 //SYNCHRONIZED WITH REMC1
-void sub_4C6F0_4CA30()//21D6F0_
+/// Original name: screen_main_menu_anims (SCREENS.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void ScreenMainMenuAnims_4C6F0_4CA30()//21D6F0_
 {
   int result; // eax
   __int16 v1; // dx
@@ -59476,7 +59497,7 @@ void InitMainMenuScreen_4C7E0_4CB20()
     SetupSpritesMCGA_65D70_66280(begMmSprTab_12CB04_2EAB04_2EAAF4, endMmSprTab_12CB08_2EAB08_2EAAF8, begMmSprDat_12CB0C_2EAB0C_2EAAFC);
   else
     SetupSpritesVres256_65DC0_662D0(begMmSprTab_12CB04_2EAB04_2EAAF4, endMmSprTab_12CB08_2EAB08_2EAAF8, begMmSprDat_12CB0C_2EAB0C_2EAAFC);
-  sub_51480_517C0(&str_9688C, &sFont1Tab_12CB34_2EAB34_2EAB24, begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
+  InitializeFont_51480_517C0(&str_9688C, &sFont1Tab_12CB34_2EAB34_2EAB24, begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
   str_9688C.var8_4 &= ~2u;
   LoadFileAt_3EEA0_3F1E0((char*)"data\\screens\\mainmenu.dat", (uint8_t*)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -59538,7 +59559,7 @@ void sub_4CAC0_4CE00()
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       ClearScreenMCGA_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
     else
-      ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+      ClearScreenVres256_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       Blit_5CDA0_5D2B0();
     else
@@ -59567,13 +59588,13 @@ void sub_4CB70_4CEB0()
   else
   {
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      DrawBitmap_60CE0_611F0(358, 10, &begMmSprTab_12CB04_2EAB04_2EAAF4[1]);
+      DrawASpriteMCGA_60CE0_611F0(358, 10, &begMmSprTab_12CB04_2EAB04_2EAAF4[1]);
     else
-      DrawBitmap_60D18_61228(358, 10, &begMmSprTab_12CB04_2EAB04_2EAAF4[1]);
+      DrawASpriteVres256_60D18_61228(358, 10, &begMmSprTab_12CB04_2EAB04_2EAAF4[1]);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      DrawBitmap_60CE0_611F0(336, 86, &begMmSprTab_12CB04_2EAB04_2EAAF4[2]);
+      DrawASpriteMCGA_60CE0_611F0(336, 86, &begMmSprTab_12CB04_2EAB04_2EAAF4[2]);
     else
-      DrawBitmap_60D18_61228(336, 86, &begMmSprTab_12CB04_2EAB04_2EAAF4[2]);
+      DrawASpriteVres256_60D18_61228(336, 86, &begMmSprTab_12CB04_2EAB04_2EAAF4[2]);
   }
 }
 // 12CB04: using guessed type int begMmSprTab_12CB04_2EAB04_2EAAF4;
@@ -59586,10 +59607,10 @@ void sub_4CC00_4CF40()//21DC00_
 {
     SetGraphicsWindow_65EB0_663C0(65, 75, 189, 44);
     if ((typeResolution_12F02E_12F01E & 1) != 0)
-        DrawBitmap_60CE0_611F0(24, 8, &begMmSprTab_12CB04_2EAB04_2EAAF4[1]);
+        DrawASpriteMCGA_60CE0_611F0(24, 8, &begMmSprTab_12CB04_2EAB04_2EAAF4[1]);
     else
-        DrawBitmap_60D18_61228(24, 8, &begMmSprTab_12CB04_2EAB04_2EAAF4[1]);
-    DrawText_51560_518A0((uint8*)&str_9688C, 30, 12, off_96864[dword_4A12C_4A46C[byte_12CBC6_12CBB6].var-1]);
+        DrawASpriteVres256_60D18_61228(24, 8, &begMmSprTab_12CB04_2EAB04_2EAAF4[1]);
+    DrawFontBPP_51560_518A0((uint8*)&str_9688C, 30, 12, off_96864[dword_4A12C_4A46C[byte_12CBC6_12CBB6].var-1]);
     SetGraphicsWindow_65EB0_663C0(0, 0, 320, 200);
 }
 
@@ -59705,9 +59726,9 @@ int sub_4CCA0_4CFE0(int a1)
     if ( (byte_90B23 & 0x23) != 0 )
     {
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-        DrawBitmap_60CE0_611F0(mouse_9AD90.x, mouse_9AD90.y, &begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
+        DrawASpriteMCGA_60CE0_611F0(mouse_9AD90.x, mouse_9AD90.y, &begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
       else
-        DrawBitmap_60D18_61228(mouse_9AD90.x, mouse_9AD90.y, &begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
+        DrawASpriteVres256_60D18_61228(mouse_9AD90.x, mouse_9AD90.y, &begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
     }
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       Blit_5CDA0_5D2B0();
@@ -59771,25 +59792,25 @@ void sub_4D190_4D4D0()
     CopyScreen_62FC4_634D4(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0x1E0u);
   SetGraphicsWindow_65EB0_663C0(65, 75, 189, 44);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-    DrawBitmap_60CE0_611F0(24, 8, &begMmSprTab_12CB04_2EAB04_2EAAF4[2]);
+    DrawASpriteMCGA_60CE0_611F0(24, 8, &begMmSprTab_12CB04_2EAB04_2EAAF4[2]);
   else
-    DrawBitmap_60D18_61228(24, 8, &begMmSprTab_12CB04_2EAB04_2EAAF4[2]);
+    DrawASpriteVres256_60D18_61228(24, 8, &begMmSprTab_12CB04_2EAB04_2EAAF4[2]);
   SetGraphicsWindow_65EB0_663C0(0, 0, 320, 200);
   if ( (byte_12CBD5_12CBC5 & 0x40) == 0 )
   {
-    DrawText_51560_518A0(
+    DrawFontBPP_51560_518A0(
         (uint8*)&str_9688C,
       30,
       12,
         off_96864[dword_4A12C_4A46C[byte_12CBC6_12CBB6].var-1]);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      DrawBitmap_60CE0_611F0(136, 210, &begMmSprTab_12CB04_2EAB04_2EAAF4[5]);
+      DrawASpriteMCGA_60CE0_611F0(136, 210, &begMmSprTab_12CB04_2EAB04_2EAAF4[5]);
     else
-      DrawBitmap_60D18_61228(136, 210, &begMmSprTab_12CB04_2EAB04_2EAAF4[5]);
+      DrawASpriteVres256_60D18_61228(136, 210, &begMmSprTab_12CB04_2EAB04_2EAAF4[5]);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      DrawBitmap_60CE0_611F0(480, 210, &begMmSprTab_12CB04_2EAB04_2EAAF4[6]);
+      DrawASpriteMCGA_60CE0_611F0(480, 210, &begMmSprTab_12CB04_2EAB04_2EAAF4[6]);
     else
-      DrawBitmap_60D18_61228(480, 210, &begMmSprTab_12CB04_2EAB04_2EAAF4[6]);
+      DrawASpriteVres256_60D18_61228(480, 210, &begMmSprTab_12CB04_2EAB04_2EAAF4[6]);
   }
 }
 
@@ -59806,7 +59827,7 @@ void sub_4D300_4D640()//21E300_
     //v0 = 4 * i;
     SetTextWindow_51360_516A0(dword_4A7EC_4AB2C[i][0], dword_4A7EC_4AB2C[i][1], dword_4A7EC_4AB2C[i][2], dword_4A7EC_4AB2C[i][3]);
     v1 = dword_4A7EC_4AB2C[i][3] - str_9688C.next->dim.y;
-    DrawText_51560_518A0((uint8*)&str_9688C, 4, ((int)v1 - HIDWORD(v1)) >> 1, off_96864[i]);
+    DrawFontBPP_51560_518A0((uint8*)&str_9688C, 4, ((int)v1 - HIDWORD(v1)) >> 1, off_96864[i]);
   }
   RestoreTextWindow_51400_51740();
 }
@@ -59828,7 +59849,7 @@ void PlayIntroAnim_4D3B0_4D6F0()//21E3B0_
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     ClearScreenMCGA_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreenVres256_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -59856,7 +59877,7 @@ void PlayIntroAnim_4D3B0_4D6F0()//21E3B0_
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     ClearScreenMCGA_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreenVres256_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -59888,7 +59909,7 @@ void PlayOutroAndQuit_4D560_4D8A0()
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     ClearScreenMCGA_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreenVres256_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -60069,7 +60090,7 @@ void sub_4D680_4D9C0()
         SetTextWindow_51360_516A0(173, 42, 90, 15);
         v32 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
         v10 = GetTextWidth_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
-        DrawText_51560_518A0((uint8*)&str_9688C, (__int16)((90 - v10) / 2), 1, (char*)v32);
+        DrawFontBPP_51560_518A0((uint8*)&str_9688C, (__int16)((90 - v10) / 2), 1, (char*)v32);
         RestoreTextWindow_51400_51740();
         if ( (typeResolution_12F02E_12F01E & 1) != 0 )
           Blit_5CDA0_5D2B0();
@@ -60092,7 +60113,7 @@ void sub_4D680_4D9C0()
           v13 = dword_AE408_AE3F8();
           str_AE408_AE3F8->var_u8_0 |= 0x10u;
           *(_BYTE *)PTR(v12 + 10 * *(__int16 *)PTR(v12 + 8) + 29716) = *(_BYTE *)PTR(v13 + 17);
-          sub_43930_43C70((uint8**)PTR(v12 + 29715), 0xAu);
+          ExchangeNetwork_43930_43C70((uint8**)PTR(v12 + 29715), 0xAu);
           leaveMenu_96880 = true;
           v35 = 1;
           v34 = 1;
@@ -60107,14 +60128,14 @@ void sub_4D680_4D9C0()
   SetTextWindow_51360_516A0(173, 42, 90, 15);
   v33 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
   v26 = 90 - GetTextWidth_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
-  DrawText_51560_518A0((uint8*)&str_9688C, (__int16)(v26 / 2), 1, (char*)v33);
+  DrawFontBPP_51560_518A0((uint8*)&str_9688C, (__int16)(v26 / 2), 1, (char*)v33);
   RestoreTextWindow_51400_51740();
   if ( (byte_90B23 & 0x23) != 0 )
   {
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      DrawBitmap_60CE0_611F0(mouse_9AD90.x, mouse_9AD90.y, &begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
+      DrawASpriteMCGA_60CE0_611F0(mouse_9AD90.x, mouse_9AD90.y, &begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
     else
-      DrawBitmap_60D18_61228(mouse_9AD90.x, mouse_9AD90.y, &begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
+      DrawASpriteVres256_60D18_61228(mouse_9AD90.x, mouse_9AD90.y, &begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
   }
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
@@ -60192,9 +60213,9 @@ char sub_4DCC0_4E000()
       if ( byte_9689D[3 * v2] )
       {
         if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-          DrawBitmap_60CE0_611F0(2 * (word_4A7CC_4AB0C[2 * v2] + 10), 2 * (word_4A7CE_4AB0E[2 * v2] - 10), &begPMultSprTab_12CB10_2EAB10_2EAB00[17]);
+          DrawASpriteMCGA_60CE0_611F0(2 * (word_4A7CC_4AB0C[2 * v2] + 10), 2 * (word_4A7CE_4AB0E[2 * v2] - 10), &begPMultSprTab_12CB10_2EAB10_2EAB00[17]);
         else
-          DrawBitmap_60D18_61228(2 * (word_4A7CC_4AB0C[2 * v2] + 10), 2 * (word_4A7CE_4AB0E[2 * v2] - 10), &begPMultSprTab_12CB10_2EAB10_2EAB00[17]);
+          DrawASpriteVres256_60D18_61228(2 * (word_4A7CC_4AB0C[2 * v2] + 10), 2 * (word_4A7CE_4AB0E[2 * v2] - 10), &begPMultSprTab_12CB10_2EAB10_2EAB00[17]);
       }
       else if ( byte_9689C[3 * v2] )
       {
@@ -60204,34 +60225,34 @@ char sub_4DCC0_4E000()
         {
           case 0:
             if ( (typeResolution_12F02E_12F01E & 1) == 0 )
-                DrawBitmap_60CE0_611F0(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 9]);
+                DrawASpriteMCGA_60CE0_611F0(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 9]);
             else
-                DrawBitmap_60CE0_611F0(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 9]);
+                DrawASpriteMCGA_60CE0_611F0(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 9]);
             break;
           case 1:
             if ( (dword_12CBB0_12CBA0 & 0x10) == 0 )
               break;
             if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-                DrawBitmap_60CE0_611F0(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 17]);
+                DrawASpriteMCGA_60CE0_611F0(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 17]);
             else
-                DrawBitmap_60D18_61228(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 17]);
+                DrawASpriteVres256_60D18_61228(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 17]);
             break;
           case 2:
             if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-                DrawBitmap_60CE0_611F0(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 17]);
+                DrawASpriteMCGA_60CE0_611F0(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 17]);
             else
-                DrawBitmap_60D18_61228(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 17]);
+                DrawASpriteVres256_60D18_61228(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 17]);
             break;
           case 3:
             if ( (typeResolution_12F02E_12F01E & 1) == 0 )
             {
 //LABEL_23:
               //v5 = (int)begPMultSprTab_12CB10_2EAB10_2EAB00;
-              DrawBitmap_60D18_61228(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 9]);
+              DrawASpriteVres256_60D18_61228(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 9]);
             }
             else
 //LABEL_30:
-            DrawBitmap_60CE0_611F0(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 9]);
+            DrawASpriteMCGA_60CE0_611F0(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 9]);
             break;
           default:
             break;
@@ -60245,14 +60266,14 @@ char sub_4DCC0_4E000()
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       {
 //LABEL_32:
-        DrawBitmap_60CE0_611F0(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 1]);
+        DrawASpriteMCGA_60CE0_611F0(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 1]);
       }
       else
       {
 //LABEL_33:
         //v4 = (int)begPMultSprTab_12CB10_2EAB10_2EAB00;
 //LABEL_34:
-        DrawBitmap_60D18_61228(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 1]);
+        DrawASpriteVres256_60D18_61228(2 * word_4A7CC_4AB0C[2 * v2], 2 * word_4A7CE_4AB0E[2 * v2], &begPMultSprTab_12CB10_2EAB10_2EAB00[v2 + 1]);
       }
     }
     ++v2;
@@ -60273,7 +60294,7 @@ char sub_4DCC0_4E000()
     str_9688C.var8_6 = v9;
     v12 = off_99A84[v8];
     v10 = GetTextWidth_51420_51760((uint32*)&str_9688C, v12);
-    DrawText_51560_518A0((uint8*)&str_9688C, (__int16)((90 - v10) / 2), v6, v12);
+    DrawFontBPP_51560_518A0((uint8*)&str_9688C, (__int16)((90 - v10) / 2), v6, v12);
     ++v8;
     v6 += str_9688C.var8_5 - 2;
   }
@@ -60295,7 +60316,7 @@ char sub_4E0E0_4E420()
     SetupSpritesMCGA_65D70_66280(begPMultSprTab_12CB10_2EAB10_2EAB00, endPMultSprTab_12CB14_2EAB14_2EAB04, begPMultSprDat_12CB18_2EAB18_2EAB08);
   else
     SetupSpritesVres256_65DC0_662D0(begPMultSprTab_12CB10_2EAB10_2EAB00, endPMultSprTab_12CB14_2EAB14_2EAB04, begPMultSprDat_12CB18_2EAB18_2EAB08);
-  sub_51480_517C0(&str_9688C, &sFont1Tab_12CB34_2EAB34_2EAB24, begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
+  InitializeFont_51480_517C0(&str_9688C, &sFont1Tab_12CB34_2EAB34_2EAB24, begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
   str_9688C.var8_4 &= ~2u;
   LoadFileAt_3EEA0_3F1E0((char*)"data\\screens\\pmulti.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
   LoadFileAt_3EEA0_3F1E0((char*)"data\\screens\\pmulti.dat", (uint8_t*)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
@@ -60325,7 +60346,7 @@ void sub_4E270_4E5B0()
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     ClearScreenMCGA_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreenVres256_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -60364,7 +60385,7 @@ void ScreenNetworkSetAllPlayersListening_4E320_4E660()
   SetTextWindow_51360_516A0(173, 42, 90, 15);
   v2 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
   v1 = 90 - GetTextWidth_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
-  DrawText_51560_518A0((uint8*)&str_9688C, (__int16)(v1 / 2), 1, (char*)v2);
+  DrawFontBPP_51560_518A0((uint8*)&str_9688C, (__int16)(v1 / 2), 1, (char*)v2);
   RestoreTextWindow_51400_51740();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
@@ -60386,7 +60407,7 @@ void ScreenNetworkCallPlayer_4E3D0_4E710(unsigned __int8 a1)
   SetTextWindow_51360_516A0(173, 42, 90, 15);
   v2 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
   v1 = 90 - GetTextWidth_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
-  DrawText_51560_518A0((uint8*)&str_9688C, (__int16)(v1 / 2), 1, (char*)v2);
+  DrawFontBPP_51560_518A0((uint8*)&str_9688C, (__int16)(v1 / 2), 1, (char*)v2);
   RestoreTextWindow_51400_51740();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
@@ -60408,7 +60429,7 @@ void ScreenNetworkPlayerConnected_4E470_4E7B0(unsigned __int8 a1)
   SetTextWindow_51360_516A0(173, 42, 90, 15);
   v2 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
   v1 = 90 - GetTextWidth_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
-  DrawText_51560_518A0((uint8*)&str_9688C, (__int16)(v1 / 2), 1, (char*)v2);
+  DrawFontBPP_51560_518A0((uint8*)&str_9688C, (__int16)(v1 / 2), 1, (char*)v2);
   RestoreTextWindow_51400_51740();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
@@ -60417,7 +60438,8 @@ void ScreenNetworkPlayerConnected_4E470_4E7B0(unsigned __int8 a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4E510(unsigned __int8 a1)
+/// Original name: screen_network_reset_player (SCREENS.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void ScreenNetworkResetPlayer_4E510(unsigned __int8 a1)
 {
   int v1; // eax
   unsigned __int8 *v2; // [esp-4h] [ebp-4h]
@@ -60429,7 +60451,7 @@ void sub_4E510(unsigned __int8 a1)
   SetTextWindow_51360_516A0(173, 42, 90, 15);
   v2 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
   v1 = 90 - GetTextWidth_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
-  DrawText_51560_518A0((uint8*)&str_9688C, (__int16)(v1 / 2), 1, (char*)v2);
+  DrawFontBPP_51560_518A0((uint8*)&str_9688C, (__int16)(v1 / 2), 1, (char*)v2);
   RestoreTextWindow_51400_51740();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
@@ -60496,7 +60518,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       ClearScreenMCGA_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
     else
-      ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+      ClearScreenVres256_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       Blit_5CDA0_5D2B0();
     else
@@ -60534,7 +60556,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
         ClearScreenMCGA_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
       else
-        ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+        ClearScreenVres256_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
         Blit_5CDA0_5D2B0();
       else
@@ -60597,16 +60619,16 @@ int ShowLevelPerformance_4E5B0_4E8F0()
         CopyScreen_62FC4_634D4(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0x1E0u);
       if ( timerTicks_AC5D4_AC5C4 > v18 )
       {
-        DrawText_51560_518A0((uint8*)&perfFont_96894, 40, 8, dword_999B8[str_AE408_AE3F8->var_u16_17]);
+        DrawFontBPP_51560_518A0((uint8*)&perfFont_96894, 40, 8, dword_999B8[str_AE408_AE3F8->var_u16_17]);
         if ( !v26 )
         {
           PlayOneChannelSample_65F10_66420(0, 3);
           v26 = 1;
         }
-        DrawText_51560_518A0((uint8*)&perfFont_96894, 40, 80, dword_AE238_AE228[66]);
+        DrawFontBPP_51560_518A0((uint8*)&perfFont_96894, 40, 80, dword_AE238_AE228[66]);
         sprintf((char*)v15, "% 3d %%", *(_DWORD *)PTR(*(_DWORD *)PTR(v7 + 160) + 359));
         v8 = GetTextWidth_51420_51760((uint32*)&perfFont_96894, (char *)v15);
-        DrawText_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v8), 80, (char*)v15);
+        DrawFontBPP_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v8), 80, (char*)v15);
       }
       if ( timerTicks_AC5D4_AC5C4 > v23 )
       {
@@ -60615,10 +60637,10 @@ int ShowLevelPerformance_4E5B0_4E8F0()
           PlayOneChannelSample_65F10_66420(0, 3);
           v25 = 1;
         }
-        DrawText_51560_518A0((uint8*)&perfFont_96894, 40, 120, dword_AE238_AE228[67]);
+        DrawFontBPP_51560_518A0((uint8*)&perfFont_96894, 40, 120, dword_AE238_AE228[67]);
         sprintf((char*)v15, "% 3d %%", *(_DWORD *)PTR(*(_DWORD *)PTR(v7 + 160) + 367));
         v9 = GetTextWidth_51420_51760((uint32*)&perfFont_96894, (char *)v15);
-        DrawText_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v9), 120, (char*)v15);
+        DrawFontBPP_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v9), 120, (char*)v15);
       }
       if ( timerTicks_AC5D4_AC5C4 > v21 )
       {
@@ -60627,10 +60649,10 @@ int ShowLevelPerformance_4E5B0_4E8F0()
           PlayOneChannelSample_65F10_66420(0, 3);
           v24 = 1;
         }
-        DrawText_51560_518A0((uint8*)&perfFont_96894, 40, 160, dword_AE238_AE228[68]);
+        DrawFontBPP_51560_518A0((uint8*)&perfFont_96894, 40, 160, dword_AE238_AE228[68]);
         sprintf((char*)v15, "% 3d %%", *(_DWORD *)PTR(*(_DWORD *)PTR(v7 + 160) + 363));
         v10 = GetTextWidth_51420_51760((uint32*)&perfFont_96894, (char *)v15);
-        DrawText_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v10), 160, (char*)v15);
+        DrawFontBPP_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v10), 160, (char*)v15);
       }
       if ( timerTicks_AC5D4_AC5C4 > v17 )
       {
@@ -60639,10 +60661,10 @@ int ShowLevelPerformance_4E5B0_4E8F0()
           PlayOneChannelSample_65F10_66420(0, 3);
           v27 = 1;
         }
-        DrawText_51560_518A0((uint8*)&perfFont_96894, 40, 200, dword_AE238_AE228[59]);
+        DrawFontBPP_51560_518A0((uint8*)&perfFont_96894, 40, 200, dword_AE238_AE228[59]);
         sprintf((char*)v15, "% 3d %%", *(_DWORD *)PTR(*(_DWORD *)PTR(v7 + 160) + 371));
         v11 = GetTextWidth_51420_51760((uint32*)&perfFont_96894, (char *)v15);
-        DrawText_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v11), 200, (char*)v15);
+        DrawFontBPP_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v11), 200, (char*)v15);
       }
       if ( timerTicks_AC5D4_AC5C4 > v22 )
       {
@@ -60651,10 +60673,10 @@ int ShowLevelPerformance_4E5B0_4E8F0()
           PlayOneChannelSample_65F10_66420(0, 3);
           v2 = 1;
         }
-        DrawText_51560_518A0((uint8*)&perfFont_96894, 40, 240, dword_AE238_AE228[69]);
+        DrawFontBPP_51560_518A0((uint8*)&perfFont_96894, 40, 240, dword_AE238_AE228[69]);
         sprintf((char*)v15, "% 3d %%", *(_DWORD *)PTR(*(_DWORD *)PTR(v7 + 160) + 375));
         v12 = GetTextWidth_51420_51760((uint32*)&perfFont_96894, (char *)v15);
-        DrawText_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v12), 240, (char*)v15);
+        DrawFontBPP_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v12), 240, (char*)v15);
       }
       if ( timerTicks_AC5D4_AC5C4 > v19 )
       {
@@ -60663,7 +60685,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
           PlayOneChannelSample_65F10_66420(0, 3);
           v16 = 1;
         }
-        DrawText_51560_518A0((uint8*)&perfFont_96894, 40, 280, dword_AE238_AE228[79]);
+        DrawFontBPP_51560_518A0((uint8*)&perfFont_96894, 40, 280, dword_AE238_AE228[79]);
         sprintf(
             (char*)v15,
           "%dh% 02dm %02ds",
@@ -60671,7 +60693,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
           *(_DWORD *)PTR(*(_DWORD *)PTR(v7 + 160) + 379) / 120 / 60 % 60,
           *(_DWORD *)PTR(*(_DWORD *)PTR(v7 + 160) + 379) / 120 % 60);
         v13 = GetTextWidth_51420_51760((uint32*)&perfFont_96894, (char *)v15);
-        DrawText_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v13), 280, (char*)v15);
+        DrawFontBPP_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v13), 280, (char*)v15);
       }
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
         Blit_5CDA0_5D2B0();
@@ -60709,7 +60731,7 @@ void PlayLogoAnim_4EE70_4F1B0()//21FE70_
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     ClearScreenMCGA_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreenVres256_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -60728,7 +60750,7 @@ void PlayLogoAnim_4EE70_4F1B0()//21FE70_
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     ClearScreenMCGA_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreenVres256_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -60757,7 +60779,7 @@ void PlayIntelAnim_4EFC0_4F300()
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       ClearScreenMCGA_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
     else
-      ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+      ClearScreenVres256_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       Blit_5CDA0_5D2B0();
     else
@@ -60776,7 +60798,7 @@ void PlayIntelAnim_4EFC0_4F300()
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       ClearScreenMCGA_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
     else
-      ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+      ClearScreenVres256_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       Blit_5CDA0_5D2B0();
     else
@@ -60837,7 +60859,7 @@ void PlayTitleAnim_4F1E0_4F520()
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     ClearScreenMCGA_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreenVres256_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -60877,7 +60899,7 @@ void PlayTitleAnim_4F1E0_4F520()
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     ClearScreenMCGA_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreenVres256_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -60987,12 +61009,12 @@ void SelectLanguage_4F3F0_4F730()//2203F0_
 				CopyScreen_62FC4_634D4(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0x1E0u);
 			}
 			if ((typeResolution_12F02E_12F01E & 1) != 0)
-				DrawBitmap_60CE0_611F0(
+				DrawASpriteMCGA_60CE0_611F0(
 					2 * asc_4A8F4_4AC34[2 * str_AE408_AE3F8->var_u8_151 + 1],
 					2 * asc_4A8F4_4AC34[2 * str_AE408_AE3F8->var_u8_151 + 2],
 					&begLangSprTab_12CB58_2EAB58_2EAB48[str_AE408_AE3F8->var_u8_151 + 1]);
 			else
-				DrawBitmap_60D18_61228(
+				DrawASpriteVres256_60D18_61228(
 					2 * asc_4A8F4_4AC34[2 * str_AE408_AE3F8->var_u8_151 + 1],
 					2 * asc_4A8F4_4AC34[2 * str_AE408_AE3F8->var_u8_151 + 2],
 					&begLangSprTab_12CB58_2EAB58_2EAB48[str_AE408_AE3F8->var_u8_151 + 1]);
@@ -61095,13 +61117,13 @@ int sub_4F8D0_4FC10(int a1, void (*a2)())
     if ( !byte_90B23 || (byte_90B23 & 0x23) != 0 && (v3 & 3) == 0 )
       sub_50770_50AB0();
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      DrawBitmap_60CE0_611F0(136, 210, &begMmSprTab_12CB04_2EAB04_2EAAF4[5]);
+      DrawASpriteMCGA_60CE0_611F0(136, 210, &begMmSprTab_12CB04_2EAB04_2EAAF4[5]);
     else
-      DrawBitmap_60D18_61228(136, 210, &begMmSprTab_12CB04_2EAB04_2EAAF4[5]);
+      DrawASpriteVres256_60D18_61228(136, 210, &begMmSprTab_12CB04_2EAB04_2EAAF4[5]);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      DrawBitmap_60CE0_611F0(480, 210, &begMmSprTab_12CB04_2EAB04_2EAAF4[6]);
+      DrawASpriteMCGA_60CE0_611F0(480, 210, &begMmSprTab_12CB04_2EAB04_2EAAF4[6]);
     else
-      DrawBitmap_60D18_61228(480, 210, &begMmSprTab_12CB04_2EAB04_2EAAF4[6]);
+      DrawASpriteVres256_60D18_61228(480, 210, &begMmSprTab_12CB04_2EAB04_2EAAF4[6]);
     if ( a2 )
       a2();
     if ( (byte_12CAE4_12CAD4 & 1) != 0 || pressedKeys_12EEF0_12EEE0[1] || pressedKeys_12EEF0_12EEE0[28])//byte_12EEF1_12EEE1 ESC byte_12EF0C Enter
@@ -61128,9 +61150,9 @@ int sub_4F8D0_4FC10(int a1, void (*a2)())
     if ( (byte_90B23 & 0x23) != 0 )
     {
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-        DrawBitmap_60CE0_611F0(mouse_9AD90.x, mouse_9AD90.y, &begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
+        DrawASpriteMCGA_60CE0_611F0(mouse_9AD90.x, mouse_9AD90.y, &begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
       else
-        DrawBitmap_60D18_61228(mouse_9AD90.x, mouse_9AD90.y, &begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
+        DrawASpriteVres256_60D18_61228(mouse_9AD90.x, mouse_9AD90.y, &begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
     }
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       Blit_5CDA0_5D2B0();
@@ -61201,9 +61223,9 @@ void sub_4FE00_50140()
   SetGraphicsWindow_65EB0_663C0(65, 75, 189, 44);
   v0 = (int)*(unsigned __int8 *)(((uint8_t*)begMmSprTab_12CB04_2EAB04_2EAAF4) + 46) >> 1;
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-    DrawBitmap_60CE0_611F0(189 - v0, 44 - ((int)*(unsigned __int8 *)(((uint8_t*)begMmSprTab_12CB04_2EAB04_2EAAF4) + 47) >> 1), &begMmSprTab_12CB04_2EAB04_2EAAF4[7]);
+    DrawASpriteMCGA_60CE0_611F0(189 - v0, 44 - ((int)*(unsigned __int8 *)(((uint8_t*)begMmSprTab_12CB04_2EAB04_2EAAF4) + 47) >> 1), &begMmSprTab_12CB04_2EAB04_2EAAF4[7]);
   else
-    DrawBitmap_60D18_61228(189 - v0, 44 - ((int)*(unsigned __int8 *)(((uint8_t*)begMmSprTab_12CB04_2EAB04_2EAAF4) + 47) >> 1), &begMmSprTab_12CB04_2EAB04_2EAAF4[7]);
+    DrawASpriteVres256_60D18_61228(189 - v0, 44 - ((int)*(unsigned __int8 *)(((uint8_t*)begMmSprTab_12CB04_2EAB04_2EAAF4) + 47) >> 1), &begMmSprTab_12CB04_2EAB04_2EAAF4[7]);
   SetGraphicsWindow_65EB0_663C0(0, 0, 320, 200);
 }
 
@@ -61275,7 +61297,7 @@ void sub_4FFE0_50320()
   GetTextWindow_513A0_516E0(v2);
   v1 = dword_AE238_AE228[36];
   v0 = GetTextWidth_51420_51760((uint32*)&str_9688C, dword_AE238_AE228[36]);
-  DrawText_51560_518A0((uint8*)&str_9688C, (__int16)((v2[4] - v0) / 2), 12, (char*)v1);
+  DrawFontBPP_51560_518A0((uint8*)&str_9688C, (__int16)((v2[4] - v0) / 2), 12, (char*)v1);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -61353,7 +61375,7 @@ void sub_50350_50690()
     CopyScreen_62FC4_634D4(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0x1E0u);
   v1 = dword_AE238_AE228[34];
   v0 = GetTextWidth_51420_51760((uint32*)&str_9688C, dword_AE238_AE228[34]);
-  DrawText_51560_518A0((uint8*)&str_9688C, (__int16)((v2[4] - v0) / 2), 10, (char*)v1);
+  DrawFontBPP_51560_518A0((uint8*)&str_9688C, (__int16)((v2[4] - v0) / 2), 10, (char*)v1);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -61370,7 +61392,7 @@ void sub_503E0_50720()
     CopyScreen_62FC4_634D4(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0x1E0u);
   v1 = dword_AE238_AE228[35];
   v0 = GetTextWidth_51420_51760((uint32*)&str_9688C, dword_AE238_AE228[35]);
-  DrawText_51560_518A0((uint8*)&str_9688C, (__int16)((v2[4] - v0) / 2), 10, (char*)v1);
+  DrawFontBPP_51560_518A0((uint8*)&str_9688C, (__int16)((v2[4] - v0) / 2), 10, (char*)v1);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -61923,18 +61945,18 @@ LABEL_73:
     lastPressedKey_12EF70_12EF60 = 0;
     a8();
     *(_BYTE *)PTR(a10 + 6) = a6;
-    DrawText_51560_518A0((_BYTE *)PTR(a10), (__int16)a1, a2, a4);
+    DrawFontBPP_51560_518A0((_BYTE *)PTR(a10), (__int16)a1, a2, a4);
     if ( a9 )
     {
       if ( a9 == 1 )
       {
         v16 = GetTextWidth_51420_51760((_DWORD *)PTR(a10), a5);
-        DrawText_51560_518A0((_BYTE *)PTR(a10), (__int16)((v33[4] - v16) / 2), a2, a5);
+        DrawFontBPP_51560_518A0((_BYTE *)PTR(a10), (__int16)((v33[4] - v16) / 2), a2, a5);
       }
     }
     else
     {
-      DrawText_51560_518A0((_BYTE *)PTR(a10), (__int16)v37, a2, a5);
+      DrawFontBPP_51560_518A0((_BYTE *)PTR(a10), (__int16)v37, a2, a5);
     }
     v17 = a5;
     v18 = v32;
@@ -62009,8 +62031,8 @@ int StrDelete_51330_51670(int a1, __int16 a2)
 // 660B5: using guessed type _DWORD memmove(_DWORD, _DWORD, _DWORD);
 
 //----- (00051360) --------------------------------------------------------
-/// Sets the text window (array_12C970: x0, x1, y0, y1, width, height) to x a1, y a2, width a3, height a4; DrawText_51560_518A0 draws relative to it and clips to it.
-/// Name is a guess (not in the Hidden Worlds linker map).
+/// Sets the text window (array_12C970: x0, x1, y0, y1, width, height) to x a1, y a2, width a3, height a4; DrawFontBPP_51560_518A0 draws relative to it and clips to it.
+/// Original name: SetTextWindow (SCREENS.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
 void SetTextWindow_51360_516A0(int a1, int a2, int a3, int a4)
 {
   array_12C970[0] = a1;
@@ -62112,7 +62134,8 @@ int GetTextWidth_51420_51760(_DWORD *a1, char *a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_51480_517C0(Type_dword_96884* a1x, TypeStrFont* a2x, TColor* colorBuffer)//222480_
+/// Original name: InitializeFont (SCREENS.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void InitializeFont_51480_517C0(Type_dword_96884* a1x, TypeStrFont* a2x, TColor* colorBuffer)//222480_
 {
   RelocateFontGlyphs_519E0_51D20(a2x);
   a1x->next = &a2x->bTab[1];
@@ -62123,8 +62146,8 @@ void sub_51480_517C0(Type_dword_96884* a1x, TypeStrFont* a2x, TColor* colorBuffe
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Name is a guess (not in the Hidden Worlds linker map).
-void DrawText_51560_518A0(_BYTE *a1, int a2, __int16 a3, char* text)//222560_
+/// Original name: DrawFontBPP (SCREENS.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void DrawFontBPP_51560_518A0(_BYTE *a1, int a2, __int16 a3, char* text)//222560_
 {
   int v4; // edi
   char* v5; // ebx
@@ -62151,7 +62174,7 @@ void DrawText_51560_518A0(_BYTE *a1, int a2, __int16 a3, char* text)//222560_
         if ( (a1[4] & 0x10) != 0 )
         {
           if ( *(v5 - 1) != ' ')
-            DrawBitmap_60D18_61228(v4, a3, (TypeTab*)PTR(v9 + *(_DWORD *)a1));
+            DrawASpriteVres256_60D18_61228(v4, a3, (TypeTab*)PTR(v9 + *(_DWORD *)a1));
           v4 += *(unsigned __int8 *)PTR(v10 + 4) - 2;
         }
         else
@@ -63252,7 +63275,7 @@ char FnShotGeneric_52770_52AB0(int a1)
     if ( (v2 & 2) == 0 )
     {
       *(_BYTE *)PTR(a1 + 16) = v2 | 2;
-      if ( FindMissileTarget_54520_548B0(a1) )
+      if ( ShotSearchForATarget_54520_548B0(a1) )
       {
         *(_WORD *)PTR(a1 + 30) = *(_WORD *)PTR(a1 + 34);
         *(_WORD *)PTR(a1 + 32) = *(_WORD *)PTR(a1 + 36);
@@ -63380,7 +63403,7 @@ LABEL_25_26:
 
 //SYNCHRONIZE WITH REMC1
 /// Per-tick update of the fireball missile (9/0). On its first tick it auto-aims
-/// (FindMissileTarget_54520_548B0, heading bent by at most 34 units); then it moves, collides with
+/// (ShotSearchForATarget_54520_548B0, heading bent by at most 34 units); then it moves, collides with
 /// entities/terrain and on impact spawns the class/subtype at +68/+69 (explosion).
 /// Original name: fn_shot_fireball (SHOT.C), Hidden Worlds linker map.
 void FnShotFireball_52B30_52E70(int a1)
@@ -63420,7 +63443,7 @@ void FnShotFireball_52B30_52E70(int a1)
     if ( (v2 & 2) == 0 )
     {
       *(_BYTE *)PTR(a1 + 16) = v2 | 2;
-      if ( FindMissileTarget_54520_548B0(a1) )
+      if ( ShotSearchForATarget_54520_548B0(a1) )
       {
         v3 = GetAngleDifference_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34));
         if ( v3 < 0 )
@@ -63570,7 +63593,7 @@ char FnShotPocession_52ED0_53210(int a1)
     if ( (v3 & 2) == 0 )
     {
       *(_BYTE *)PTR(a1 + 16) = v3 | 2;
-      if ( FindMissileTarget_54520_548B0(a1) )
+      if ( ShotSearchForATarget_54520_548B0(a1) )
       {
         *(_WORD *)PTR(a1 + 30) = *(_WORD *)PTR(a1 + 34);
         *(_WORD *)PTR(a1 + 32) = *(_WORD *)PTR(a1 + 36);
@@ -63698,7 +63721,7 @@ char FnShotStealMana_530C0_53400(int a1)
     if ( (v2 & 2) == 0 )
     {
       *(_BYTE *)PTR(a1 + 16) = v2 | 2;
-      if ( FindMissileTarget_54520_548B0(a1) )
+      if ( ShotSearchForATarget_54520_548B0(a1) )
       {
         *(_WORD *)PTR(a1 + 30) = *(_WORD *)PTR(a1 + 34);
         *(_WORD *)PTR(a1 + 32) = *(_WORD *)PTR(a1 + 36);
@@ -63850,7 +63873,7 @@ char FnShotPreGeneric_534C0_53800(int a1)
     if ( (v1 & 2) == 0 )
     {
       *(_BYTE *)PTR(a1 + 16) = v1 | 2;
-      if ( FindMissileTarget_54520_548B0(a1) )
+      if ( ShotSearchForATarget_54520_548B0(a1) )
       {
         *(_WORD *)PTR(a1 + 30) = *(_WORD *)PTR(a1 + 34);
         *(_WORD *)PTR(a1 + 32) = *(_WORD *)PTR(a1 + 36);
@@ -64229,7 +64252,7 @@ char FnFirstStageShot_53B50_53E90(int a1)
       word_AE454_AE444.z = v2;
       if ( (__int16)v2 > v10
         || (v11 = *(_DWORD *)PTR(a1 + 12) - 1, *(_DWORD *)PTR(a1 + 12) = v11, v11 < 0)
-        || (LOBYTE(v2) = !IsCastleSiteFree_12F70((_WORD *)PTR(a1 + 72)), (v16 = v2) != 0) )
+        || (LOBYTE(v2) = !CastleOkHere_12F70((_WORD *)PTR(a1 + 72)), (v16 = v2) != 0) )
       {
         v15 = 1;
       }
@@ -64256,7 +64279,7 @@ char FnFirstStageShot_53B50_53E90(int a1)
   else
   {
     *(_BYTE *)PTR(a1 + 16) = v1 | 2;
-    LOBYTE(v2) = IsCastleSiteFree_12F70((_WORD *)PTR(a1 + 72));
+    LOBYTE(v2) = CastleOkHere_12F70((_WORD *)PTR(a1 + 72));
     if ( !(_BYTE)v2 )
     {
       SetCastleSpell_46D20_47060((Type_AE400_29795*)PTR(a1), 0);
@@ -64302,7 +64325,7 @@ char LightningStormMissileTick_53DC0_54100(int a1)
     if ( (v2 & 2) == 0 )
     {
       *(_BYTE *)PTR(a1 + 16) = v2 | 2;
-      if ( FindMissileTarget_54520_548B0(a1) )
+      if ( ShotSearchForATarget_54520_548B0(a1) )
       {
         *(_WORD *)PTR(a1 + 30) = *(_WORD *)PTR(a1 + 34);
         *(_WORD *)PTR(a1 + 32) = *(_WORD *)PTR(a1 + 36);
@@ -64512,7 +64535,7 @@ char FnShotExtra2_542B0_54640(int a1)
     if ( (v3 & 2) == 0 )
     {
       *(_BYTE *)PTR(a1 + 16) = v3 | 2;
-      if ( FindMissileTarget_54520_548B0(a1) )
+      if ( ShotSearchForATarget_54520_548B0(a1) )
       {
         *(_WORD *)PTR(a1 + 30) = *(_WORD *)PTR(a1 + 34);
         *(_WORD *)PTR(a1 + 32) = *(_WORD *)PTR(a1 + 36);
@@ -64595,8 +64618,8 @@ void FnShotExtra3_54480_54810(int a1)
 /// wizard list (var_u32_36462[0], within the caster's range) and the per-model creature lists
 /// (str_36382x[], entities with +58 set), scored by ShotTargetNumber_54A90_54FC0. On success stores the
 /// target in +146, the wanted heading/pitch in +34/+36 and returns 1.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int FindMissileTarget_54520_548B0(int a1)
+/// Original name: shot_search_for_a_target (SHOT.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int ShotSearchForATarget_54520_548B0(int a1)
 {
   unsigned int v1; // edi
   int v2_25; // ebp
@@ -64676,7 +64699,7 @@ int FindMissileTarget_54520_548B0(int a1)
           {
             if ( *(_BYTE *)PTR(v10 + 65) == 2 )
             {
-              v11 = sub_54BD0_55100((__int16 *)PTR(a1), v10, 0x71u, 0x71u);
+              v11 = ShotTargetNumber2_54BD0_55100((__int16 *)PTR(a1), v10, 0x71u, 0x71u);
               if ( v11 >= v8 )
                 goto LABEL_35;
             }
@@ -64795,7 +64818,7 @@ LABEL_76:
             goto LABEL_13;
           if ( *(_BYTE *)PTR(v3 + 65) == 2 )
           {
-            v4 = sub_54BD0_55100((__int16 *)PTR(a1), v3, 0x71u, 0x71u);
+            v4 = ShotTargetNumber2_54BD0_55100((__int16 *)PTR(a1), v3, 0x71u, 0x71u);
             if ( v4 < v1 )
               goto LABEL_12;
           }
@@ -64888,7 +64911,8 @@ int ShotTargetNumber_54A90_54FC0(__int16 *a1, int a2, unsigned __int16 a3, unsig
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_54BD0_55100(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a4)
+/// Original name: shot_target_number2 (SHOT.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int ShotTargetNumber2_54BD0_55100(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a4)
 {
   _WORD *v4; // ebx
   _WORD *v5; // esi
@@ -65387,7 +65411,8 @@ int StopFadeOutMusic_55960()
 // 968E1: using guessed type char byte_968E1;
 
 //----- (000559A0) --------------------------------------------------------
-int sub_559A0()
+/// Original name: NumberOfSamplesPlaying (SOUND.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int NumberOfSamplesPlaying_559A0()
 {
   if ( byte_939E4 && byte_939E5 )
     return SosDIGISamplesPlaying_66324(dword_CC140);
@@ -67186,7 +67211,7 @@ char RemoveTmapGroupFromHeap_58910_58E20(unsigned __int16 a1)
         if ( (dword_12DF8C_12DF7C[v3]->var_u32_0->var_0 & 1) != 0 )
         {
           v5 = FindTmapAnim_10FD0(dword_AE3E0_AE3D0, v3);
-          ClearTmapAnim_10F10(v5);
+          DynAnimBankDeletePage_10F10(v5);
         }
         HeapDelete_36A90_36E50(dword_AE3EC_AE3DC, dword_12D748_12D738[v3]);
         dword_12DF8C_12DF7C[v3] = 0;
@@ -67217,7 +67242,7 @@ char RemoveTmapGroupFromHeapEvenPermanent_58A00_58F10(unsigned __int16 a1)
       {
         if ( (dword_12DF8C_12DF7C[i]->var_u32_0->var_0 & 1) != 0 )
         {
-          ClearTmapAnim_10F10(FindTmapAnim_10FD0(dword_AE3E0_AE3D0, i));
+          DynAnimBankDeletePage_10F10(FindTmapAnim_10FD0(dword_AE3E0_AE3D0, i));
         }
         HeapDelete_36A90_36E50(dword_AE3EC_AE3DC, dword_12D748_12D738[i]);
         dword_12DF8C_12DF7C[i] = 0;
@@ -67816,14 +67841,15 @@ void sub_59560_59A70(Type_99974* a1)
 void CentreMouseCoordinates_59720_59C30()
 {
   if ( typeResolution_12F02E_12F01E == 1 )
-    sub_59750(320, 200);
+    SetNewMousePosition_59750(320, 200);
   else
-    sub_59750(320, 240);
+    SetNewMousePosition_59750(320, 240);
 }
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //----- (00059750) --------------------------------------------------------
-void sub_59750(int16 x, int16 y)
+/// Original name: set_new_mouse_position (SUPPORT.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SetNewMousePosition_59750(int16 x, int16 y)
 {
 	//__int16 v2; // si
 	//__int16 v3; // bx
@@ -68003,8 +68029,8 @@ void SwapScreensVres256_599B0_59EC0(__int16 a1)//22A9B0_
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 0 (class 11 state 0, set by CreateSwitch00).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch00Tick_59A80_59F90(uint16_t* a1)
+/// Original name: fn_switch_hidden_inside (SWITCH.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void FnSwitchHiddenInside_59A80_59F90(uint16_t* a1)
 {
   int result; // eax
 
@@ -68018,8 +68044,8 @@ void Switch00Tick_59A80_59F90(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 1 (class 11 state 1, set by CreateSwitch01).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch01Tick_59AB0_59FC0(uint16_t* a1)
+/// Original name: fn_switch_hidden_outside (SWITCH.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void FnSwitchHiddenOutside_59AB0_59FC0(uint16_t* a1)
 {
   int result; // eax
 
@@ -68033,8 +68059,8 @@ void Switch01Tick_59AB0_59FC0(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 2 (class 11 state 2, set by CreateSwitch02).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch02Tick_59AE0_59FF0(uint16_t* a1)
+/// Original name: fn_switch_hidden_inside_re (SWITCH.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void FnSwitchHiddenInsideRe_59AE0_59FF0(uint16_t* a1)
 {
   int result; // eax
 
@@ -68057,8 +68083,8 @@ void Switch02Tick_59AE0_59FF0(uint16_t* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 3 (class 11 state 3, set by CreateSwitch03).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch03Tick_59B30_5A040(uint16_t* a1)
+/// Original name: fn_switch_hidden_outside_re (SWITCH.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void FnSwitchHiddenOutsideRe_59B30_5A040(uint16_t* a1)
 {
   int result; // eax
 
@@ -68539,11 +68565,11 @@ void DrawText_5A180_5A690(char* text, int posX, int posY, uint8 color)//22B180_
 		case 0:
 		case 9:
 		case 32:
-			tempPosX += GetLetterX_5A3A0_5A8B0();
+			tempPosX += CharacterWidth_5A3A0_5A8B0();
 			break;
 		case 10:
 			tempPosX = posX;
-			posY += GetLetterY_5A3B0_5A8C0();
+			posY += CharacterHeight_5A3B0_5A8C0();
 			break;
 		case 13:
 			break;
@@ -68559,16 +68585,16 @@ void DrawText_5A180_5A690(char* text, int posX, int posY, uint8 color)//22B180_
 }
 
 //----- (0005A3A0) --------------------------------------------------------
-/// Name is a guess (not in the Hidden Worlds linker map).
-__int16 GetLetterX_5A3A0_5A8B0()
+/// Original name: character_width (TEXT.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+__int16 CharacterWidth_5A3A0_5A8B0()
 {
     return dword_AE44C_AE43C[33].dim.x;
 }
 // AE44C: using guessed type int dword_AE44C_AE43C;
 
 //----- (0005A3B0) --------------------------------------------------------
-/// Name is a guess (not in the Hidden Worlds linker map).
-__int16 GetLetterY_5A3B0_5A8C0()
+/// Original name: character_height (TEXT.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+__int16 CharacterHeight_5A3B0_5A8C0()
 {
   return dword_AE44C_AE43C[33].dim.y;
 }
@@ -68710,7 +68736,8 @@ void OpenTimerInterrupt_5A459_5A969()
 // 12EC04: using guessed type __int16 word_12EC04;
 
 //----- (0005A4EA) --------------------------------------------------------
-void sub_5A4EA_5A9FA()
+/// Original name: close_timer_interrupt (TIMER.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void CloseTimerInterrupt_5A4EA_5A9FA()
 {
     FixPerifery();
 
@@ -68773,75 +68800,75 @@ void VersionRequested_5A560_5AA70()
   {
     SetUserfont_5A3C0_5A8D0(1);
     DrawText_5A180_5A690((char*)"Product name", 320, 0, byte_AD167_AD157[3841]);
-    v0 = GetLetterY_5A3B0_5A8C0();
+    v0 = CharacterHeight_5A3B0_5A8C0();
     DrawText_5A180_5A690((char*)"Magic Carpet", 320, v0, byte_AD167_AD157[16]);
-    v1 = GetLetterY_5A3B0_5A8C0() + v0;
+    v1 = CharacterHeight_5A3B0_5A8C0() + v0;
     DrawText_5A180_5A690((char*)"Version number", 320, v1, byte_AD167_AD157[3841]);
-    v2 = GetLetterY_5A3B0_5A8C0() + v1;
+    v2 = CharacterHeight_5A3B0_5A8C0() + v1;
     DrawText_5A180_5A690((char*)"Beta v8.0", 320, v2, byte_AD167_AD157[16]);
-    v3 = GetLetterY_5A3B0_5A8C0() + v2;
+    v3 = CharacterHeight_5A3B0_5A8C0() + v2;
     DrawText_5A180_5A690((char*)"Version date", 320, v3, byte_AD167_AD157[3841]);
-    v4 = GetLetterY_5A3B0_5A8C0() + v3;
+    v4 = CharacterHeight_5A3B0_5A8C0() + v3;
     sprintf(v32, "%s %s", "16:26:18", "Jun 05 1995");
     DrawText_5A180_5A690(v32, 320, v4, byte_AD167_AD157[16]);
-    v5 = GetLetterY_5A3B0_5A8C0() + v4;
+    v5 = CharacterHeight_5A3B0_5A8C0() + v4;
     DrawText_5A180_5A690((char*)"Programmer", 320, v5, byte_AD167_AD157[3841]);
-    v6 = GetLetterY_5A3B0_5A8C0() + v5;
+    v6 = CharacterHeight_5A3B0_5A8C0() + v5;
     DrawText_5A180_5A690((char*)"Bullfrog, Sean Cooper.", 320, v6, byte_AD167_AD157[16]);
-    v7 = GetLetterY_5A3B0_5A8C0() + v6;
+    v7 = CharacterHeight_5A3B0_5A8C0() + v6;
     DrawText_5A180_5A690((char*)"Supplied to", 320, v7, byte_AD167_AD157[3841]);
-    v8 = GetLetterY_5A3B0_5A8C0() + v7;
+    v8 = CharacterHeight_5A3B0_5A8C0() + v7;
     DrawText_5A180_5A690((char*)"PUBLIC", 320, v8, byte_AD167_AD157[16]);
-    v9 = GetLetterY_5A3B0_5A8C0() + v8;
+    v9 = CharacterHeight_5A3B0_5A8C0() + v8;
     DrawText_5A180_5A690((char*)"Level Number", 320, v9, byte_AD167_AD157[3841]);
-    v10 = GetLetterY_5A3B0_5A8C0() + v9;
+    v10 = CharacterHeight_5A3B0_5A8C0() + v9;
     sprintf(v32, "%d", str_AE408_AE3F8->var_u16_17);
     DrawText_5A180_5A690(v32, 320, v10, byte_AD167_AD157[16]);
-    v11 = GetLetterY_5A3B0_5A8C0() + v10;
+    v11 = CharacterHeight_5A3B0_5A8C0() + v10;
     if ( (str_AE408_AE3F8->var_u8_0 & 0x10) != 0 )
     {
       DrawText_5A180_5A690((char*)"Transfer rate:", 320, v11, byte_AD167_AD157[3841]);
-      v12 = GetLetterY_5A3B0_5A8C0() + v11;
+      v12 = CharacterHeight_5A3B0_5A8C0() + v11;
       sprintf(v32, "%d", *(_DWORD *)PTR(dword_AE408_AE3F8() + 157));
       DrawText_5A180_5A690(v32, 320, v12, byte_AD167_AD157[16]);
-      v11 = GetLetterY_5A3B0_5A8C0() + v12;
+      v11 = CharacterHeight_5A3B0_5A8C0() + v12;
     }
     DrawText_5A180_5A690((char*)"GameTurn:", 320, v11, byte_AD167_AD157[3841]);
-    v13 = GetLetterY_5A3B0_5A8C0() + v11;
+    v13 = CharacterHeight_5A3B0_5A8C0() + v11;
     sprintf(v32, "%d", *(_DWORD *)PTR(dword_AE408_AE3F8() + 153));
     DrawText_5A180_5A690(v32, 320, v13, byte_AD167_AD157[16]);
-    v14 = GetLetterY_5A3B0_5A8C0() + v13;
+    v14 = CharacterHeight_5A3B0_5A8C0() + v13;
     DrawText_5A180_5A690((char*)"Sound Number", 320, v14, byte_AD167_AD157[3841]);
-    v15 = GetLetterY_5A3B0_5A8C0() + v14;
+    v15 = CharacterHeight_5A3B0_5A8C0() + v14;
     sprintf(v32, "%d", (unsigned __int8)byte_939EC);
     DrawText_5A180_5A690(v32, 320, v15, byte_AD167_AD157[16]);
-    v16 = GetLetterY_5A3B0_5A8C0() + v15;
+    v16 = CharacterHeight_5A3B0_5A8C0() + v15;
     DrawText_5A180_5A690((char*)"Game turn", 320, v16, byte_AD167_AD157[3841]);
-    v17 = GetLetterY_5A3B0_5A8C0() + v16;
+    v17 = CharacterHeight_5A3B0_5A8C0() + v16;
     sprintf(v32, "%d %d", *(_DWORD *)PTR(dword_AE400_AE3F0() + 2049 * str_AE400_AE3F0->var_u16_8 + 13341), timerTicks_AC5D4_AC5C4);
     DrawText_5A180_5A690(v32, 320, v17, byte_AD167_AD157[16]);
-    v18 = GetLetterY_5A3B0_5A8C0() + v17;
+    v18 = CharacterHeight_5A3B0_5A8C0() + v17;
     DrawText_5A180_5A690((char*)"Thing", 320, v18, byte_AD167_AD157[3841]);
-    v19 = GetLetterY_5A3B0_5A8C0() + v18;
+    v19 = CharacterHeight_5A3B0_5A8C0() + v18;
     v20 = NumberOfFreeThings_37710_37AD0();
     sprintf(v32, "Thing %d, Active %d", 164, 1000 - v20);
     DrawText_5A180_5A690(v32, 320, v19, byte_AD167_AD157[16]);
-    v21 = GetLetterY_5A3B0_5A8C0() + v19;
+    v21 = CharacterHeight_5A3B0_5A8C0() + v19;
     sprintf(v32, "Carpet %d", sub_38D09);
     DrawText_5A180_5A690(v32, 320, v21, byte_AD167_AD157[16]);
-    v22 = GetLetterY_5A3B0_5A8C0() + v21;
+    v22 = CharacterHeight_5A3B0_5A8C0() + v21;
     sprintf(v32, "Tape %d", 36478);
     DrawText_5A180_5A690(v32, 320, v22, byte_AD167_AD157[16]);
-    v23 = GetLetterY_5A3B0_5A8C0() + v22;
+    v23 = CharacterHeight_5A3B0_5A8C0() + v22;
     sprintf(v32, "Heap %d", *(_DWORD *)PTR(dword_AE408_AE3F8() + 172));
     DrawText_5A180_5A690(v32, 320, v23, byte_AD167_AD157[16]);
-    v24 = GetLetterY_5A3B0_5A8C0() + v23;
+    v24 = CharacterHeight_5A3B0_5A8C0() + v23;
     sub_63338_63848();
     DrawText_5A180_5A690((char*)"Memory (Used/Free)", 320, v24, byte_AD167_AD157[3841]);
-    v25 = GetLetterY_5A3B0_5A8C0() + v24;
+    v25 = CharacterHeight_5A3B0_5A8C0() + v24;
     sprintf(v32, "%d/%d", dword_1314A8, dword_1314A4);
     DrawText_5A180_5A690(v32, 320, v25, byte_AD167_AD157[16]);
-    GetLetterY_5A3B0_5A8C0();
+    CharacterHeight_5A3B0_5A8C0();
     v26 = &dword_1302A0_130290;
     v27 = 0;
     for ( i = 0; v26; v26 = (int *)PTR(v26[2]) )
@@ -68852,12 +68879,12 @@ void VersionRequested_5A560_5AA70()
       else
         v29 = byte_AD167_AD157[3841];
       DrawText_5A180_5A690(v32, v27, i, v29);
-      v30 = (uint16_t)GetLetterY_5A3B0_5A8C0(); // PORT: was LOWORD(v30) = - the high word was never set (audit_partial_init.py)
+      v30 = (uint16_t)CharacterHeight_5A3B0_5A8C0(); // PORT: was LOWORD(v30) = - the high word was never set (audit_partial_init.py)
       i += v30;
-      if ( (__int16)i > 400 - GetLetterY_5A3B0_5A8C0() )
+      if ( (__int16)i > 400 - CharacterHeight_5A3B0_5A8C0() )
       {
         i = 0;
-        v27 += 12 * GetLetterX_5A3A0_5A8B0();
+        v27 += 12 * CharacterWidth_5A3A0_5A8B0();
       }
     }
   }
@@ -69350,8 +69377,8 @@ int AllocDOS_5B480_5B990(int a1, int16_t* a2, int16_t* a3)
 // 5B480: using guessed type char var_18[24];
 
 //----- (0005B500) --------------------------------------------------------
-/// Name is a guess (not in the Hidden Worlds linker map).
-void ClearScr_5B500_5BA10()
+/// Original name: headset_stereo_on (VFX.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void HeadsetStereoOn_5B500_5BA10()
 {
     FixPerifery();
 
@@ -69370,8 +69397,8 @@ void ClearScr_5B500_5BA10()
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //----- (0005B560) --------------------------------------------------------
-/// Name is a guess (not in the Hidden Worlds linker map).
-void ClearScr_5B560()
+/// Original name: headset_stereo_off (VFX.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void HeadsetStereoOff_5B560()
 {
     FixPerifery();
 
@@ -69714,7 +69741,7 @@ void SetPointer_5C05C_5C56C(TypeTab* a1x)//22D05C_
   for ( int i = 0; i < 0x1000; i++ )
     dword_12EFC8_12EFB8[i] = 0xfe;
   if ( a1x )
-    DrawBitmap_60CE0_611F0(0, 0, a1x);
+    DrawASpriteMCGA_60CE0_611F0(0, 0, a1x);
   scrWidth_12EFF0_12EFE0 = temp12EFF0;
   word_9ADFC = temp9ADFC;
   viewportBegY_12F018_12F008 = dword_12F014;
@@ -69780,7 +69807,7 @@ int SetupMouse_5C214_5C724()
   //fix v5[0] = __CS__;
   FixPerifery((char*)"mouseSubr");
   int386x(51, v2, v1, v5);//Set Mouse User Defined Subroutine and Input Mask
-  ResizeScr_5C468_5C978();
+  SetMouseLimits_5C468_5C978();
   if ( !dword_12EFC8_12EFB8 )
     dword_12EFC8_12EFB8 = (uint8_t*)malloc_42540_42880(4096);
   if ( !dword_12EF98_12EF88 )
@@ -69825,8 +69852,8 @@ int SetupMouse_5C214_5C724()
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //----- (0005C468) --------------------------------------------------------
-/// Name is a guess (not in the Hidden Worlds linker map).
-void ResizeScr_5C468_5C978()//22D468_
+/// Original name: SetMouseLimits (MOUSE.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SetMouseLimits_5C468_5C978()//22D468_
 {
     FixPerifery((char*)"chRes", typeResolution_12F02E_12F01E);
     if (typeResolution_12F02E_12F01E == 8)
@@ -70310,7 +70337,8 @@ char DecodeBRUN_5CAE7()
 
 //----- (0005CB73) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
-void sub_5CB73(int a1, __int16 a2)
+/// Original name: DelayTimer (ANIM.ASM), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void DelayTimer_5CB73(int a1, __int16 a2)
 {
   __int16 v2; // cx
 
@@ -70491,7 +70519,7 @@ int LoadMusic_5CEF0_5D400(unsigned __int16 a1)
     FreePathFile_634A0_639B0(&pathStrArray_258E00[PS25datamusic00dat]);
     return 1;
   }
-  FixMusicTabOffsets_5CFA4();
+  FormatMusic_5CFA4();
   return 0;
 }
 // 60CAC: using guessed type _DWORD sprintf(_DWORD, _DWORD, ...);
@@ -70501,8 +70529,8 @@ int LoadMusic_5CEF0_5D400(unsigned __int16 a1)
 //----- (0005CFA4) --------------------------------------------------------
 /// Makes the song offsets (+18) of the 32-byte TAB entries absolute (+ musicData_CBF68) and counts the songs
 /// into musicTrackCount_939D6.
-/// Name is a guess (not in the Hidden Worlds linker map).
-unsigned int FixMusicTabOffsets_5CFA4()
+/// Original name: FormatMusic (LOAD_MUS.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+unsigned int FormatMusic_5CFA4()
 {
   unsigned int result; // eax
   unsigned int v1; // [esp+0h] [ebp-4h]
@@ -70560,7 +70588,7 @@ int LoadSounds_5D070_5D580(unsigned __int8 a1)
     FreePathFile_634A0_639B0(&pathStrArray_258E00[PS25datasnds00dat]);
     return 1;
   }
-  sub_5D138();
+  FormatSounds_5D138();
   return 0;
 }
 // 60CAC: using guessed type _DWORD sprintf(_DWORD, _DWORD, ...);
@@ -70568,7 +70596,8 @@ int LoadSounds_5D070_5D580(unsigned __int8 a1)
 // 939EC: using guessed type char byte_939EC;
 
 //----- (0005D138) --------------------------------------------------------
-unsigned int sub_5D138()
+/// Original name: FormatSounds (LOAD_SOU.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+unsigned int FormatSounds_5D138()
 {
   PortSound_ClearCache(); // PORT: bank memory replaced
   unsigned int result; // eax
@@ -70862,7 +70891,8 @@ void StopSample_5D750_5DC60(__int16 a1, __int16 a2)
 
 //----- (0005D7DF) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_5D7DF()
+/// Original name: sosMIDIDone_Start (sosmdone.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDIDoneStart_5D7DF()
 {
   ;
 }
@@ -70879,14 +70909,16 @@ bool SosMIDISongDone_5D7F0_5DD00(int a1)
 
 //----- (0005D829) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_5D829()
+/// Original name: sosMIDIDone_End (sosmdone.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDIDoneEnd_5D829()
 {
   ;
 }
 
 //----- (0005D872) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_5D872()
+/// Original name: sosDIGITmr_Start (sostmr.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosDIGITmrStart_5D872()
 {
   ;
 }
@@ -71174,14 +71206,16 @@ int SosTIMEROldHandler_5DF4B(int a1, int a2, int a3)
 
 //----- (0005DF61) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_5DF61()
+/// Original name: sosDIGITmr_End (sostmr.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosDIGITmrEnd_5DF61()
 {
   ;
 }
 
 //----- (0005DF72) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_5DF72()
+/// Original name: sosMIDISt_Start (sosmst.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDIStStart_5DF72()
 {
   ;
 }
@@ -71621,14 +71655,16 @@ int SosMIDIEnableChannelStealing_5EDD6(int a1)
 
 //----- (0005EE00) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_5EE00()
+/// Original name: sosMIDISt_End (sosmst.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDIStEnd_5EE00()
 {
   ;
 }
 
 //----- (0005EE11) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_5EE11()
+/// Original name: sosMIDISong_Start (sosmsong.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDISongStart_5EE11()
 {
   ;
 }
@@ -71895,104 +71931,108 @@ int SosMIDISetMasterVolume_5F83E(char a1)
 
 //----- (0005F913) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_5F913()
+/// Original name: sosMIDISong_End (sosmsong.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDISongEnd_5F913()
 {
   ;
 }
 
 //----- (0005F924) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_5F924()
+/// Original name: sosMIDIInit_Start (sosminit.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDIInitStart_5F924()
 {
   ;
 }
 
 //----- (0005F935) --------------------------------------------------------
-void sub_5F935()
+/// Original name: sosMIDILockMemory (sosminit.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDILockMemory_5F935()
 {
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
 }
 
 //----- (0005FD67) --------------------------------------------------------
-void sub_5FD67()
+/// Original name: sosMIDIUnLockMemory (sosminit.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDIUnLockMemory_5FD67()
 {
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
 }
 
 //----- (00060199) --------------------------------------------------------
@@ -72001,7 +72041,7 @@ void sub_5FD67()
 /// Original name: sosMIDIInitSystem (sosminit.c), Hidden Worlds linker map.
 int SosMIDIInitSystem_60199(int a1, unsigned __int16 a2)
 {
-  sub_5F935();
+  SosMIDILockMemory_5F935();
   //fix
   /*
   if ( a1 || a2 )
@@ -72025,11 +72065,11 @@ int SosMIDIInitSystem_60199(int a1, unsigned __int16 a2)
   word_1314D2 = __CS__;
   dword_1314CE = (int)AweInit_68BDA;
   word_1314D8 = __CS__;
-  dword_1314D4 = (int)sub_68C4B;
+  dword_1314D4 = (int)AweUnInit_68C4B;
   word_1314DE = __CS__;
-  dword_1314DA = (int)sub_68C69;
+  dword_1314DA = (int)AweReset_68C69;
   word_1314E4 = __CS__;
-  dword_1314E0 = (int)sub_68C82;
+  dword_1314E0 = (int)AweSetInstrumentData_68C82;
   word_131508 = __CS__;
   dword_131504 = (int)DigiSendData_67A96;
   word_13150E = __CS__;
@@ -72101,7 +72141,7 @@ int SosMIDIInitSystem_60199(int a1, unsigned __int16 a2)
 /// Original name: sosMIDIUnInitSystem (sosminit.c), Hidden Worlds linker map (placed by function order between two matches).
 int SosMIDIUnInitSystem_60335()
 {
-  sub_5FD67();
+  SosMIDIUnLockMemory_5FD67();
   dword_9C22A = 0;
   return 0;
 }
@@ -72195,7 +72235,7 @@ int SosMIDIInitDriver_6035F(unsigned int a1, unsigned int a2, int a3, int a4, in
       break;
     case 40963:
       v27 = v7;
-      v26 = sub_6798D();
+      v26 = CallbackGetCallTable_6798D();
       for ( i = 0; i < 6; ++i )
       {
         v14 = 36 * v31 + 6 * i;
@@ -72217,7 +72257,7 @@ int SosMIDIInitDriver_6035F(unsigned int a1, unsigned int a2, int a3, int a4, in
       break;
     case 40965:
       v27 = v7;
-      v26 = sub_67A75();
+      v26 = DigiGetCallTable_67A75();
       for ( i = 0; i < 6; ++i )
       {
         v8 = 36 * v31 + 6 * i;
@@ -72239,7 +72279,7 @@ int SosMIDIInitDriver_6035F(unsigned int a1, unsigned int a2, int a3, int a4, in
       break;
     case 40968:
       v27 = v7;
-      v26 = sub_689F3();
+      v26 = AweGetCallTable_689F3();
       for ( i = 0; i < 6; ++i )
       {
         v17 = 36 * v31 + 6 * i;
@@ -72473,8 +72513,8 @@ unsigned __int64 sub_60BDC(int a1)
 // 60C8B: variable 'v4' is possibly undefined
 
 //----- (00060CE0) --------------------------------------------------------
-/// Name is a guess (not in the Hidden Worlds linker map).
-void DrawBitmap_60CE0_611F0(__int16 a1, __int16 a2, TypeTab* a3)//231CE0_
+/// Original name: DrawASpriteMCGA (SPRITE03.ASM), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void DrawASpriteMCGA_60CE0_611F0(__int16 a1, __int16 a2, TypeTab* a3)//231CE0_
 {
   DrawSpriteVres256_60D65_61275(a3->dim, a2, a1, a3->Tab_0, 0, 0);
 }
@@ -72482,8 +72522,8 @@ void DrawBitmap_60CE0_611F0(__int16 a1, __int16 a2, TypeTab* a3)//231CE0_
 // 12EFF4: using guessed type int dword_12EFF4;
 
 //----- (00060D18) --------------------------------------------------------
-/// Name is a guess (not in the Hidden Worlds linker map).
-void DrawBitmap_60D18_61228(__int16 a1, __int16 a2, TypeTab* a3)
+/// Original name: DrawASpriteVres256 (SPRITE03.ASM), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void DrawASpriteVres256_60D18_61228(__int16 a1, __int16 a2, TypeTab* a3)
 {
   DrawSpriteVres256_60D65_61275(a3->dim, a2, a1, a3->Tab_0, 0, 0);
 }
@@ -73867,7 +73907,7 @@ void SetupScreenMCGA_61B90_620A0(TColor* a1)//232B90_
     scrWidth_12EFF0_12EFE0 = 320;
     scrHeight_12EFF8_12EFE8 = 200;
     SetPalette256_319A0_319E0(a1);
-    ResizeScr_5C468_5C978();
+    SetMouseLimits_5C468_5C978();
     SetGraphicsWindow_65EB0_663C0(0, 0, 320, 200);
     /*
   char v2[28]; // [esp+0h] [ebp-38h] BYREF
@@ -73906,7 +73946,7 @@ void SetupScreenVres256_61C30_62140(TColor* a1)//232C30_
   scrHeight_12EFF8_12EFE8 = 480;
   VesaSetMode_619B8_61EC8(0x101);
   SetPalette256_319A0_319E0(a1);
-  ResizeScr_5C468_5C978();
+  SetMouseLimits_5C468_5C978();
   SetGraphicsWindow_65EB0_663C0(0, 0, 640, 480);
 }
 // 62F78: using guessed type _DWORD int386(_DWORD, _DWORD, _DWORD);
@@ -73978,7 +74018,8 @@ void FadePalette256_61CC0_621D0(TColor* palette, unsigned __int8 a2, char a3)//2
 // 61CC0: using guessed type unsigned __int8 var_30C[768];
 
 //----- (00061EC8) --------------------------------------------------------
-void sub_61EC8()
+/// Original name: StopOpenFadePalette256 (FADE256.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void StopOpenFadePalette256_61EC8()
 {
   byte_9AFA8 = 0;
 }
@@ -73991,7 +74032,7 @@ void FreeSound_61F90()
   if ( byte_939E4 )
   {
     StopAllSamples_5D010_5D520();
-    while ( sub_559A0() )
+    while ( NumberOfSamplesPlaying_559A0() )
       ;
     SosDIGISetMasterVolume_661A4(dword_CC140, 0);
     SosTIMERRemoveEvent_5DC91(dword_CC148);
@@ -75635,7 +75676,8 @@ int GetRNCFilesize_63910_63E20(Pathstruct* pathstruct)//234910_
 
 //----- (00063A8C) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_63A8C()
+/// Original name: sosDIGIDetec_Start (sosdetec.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosDIGIDetecStart_63A8C()
 {
   ;
 }
@@ -75673,7 +75715,7 @@ int SosDIGIDetectInit_63A9D_63FAD(int a3, __int16 a4)
     v4 = SosMAKEProtectedPtr_67582();
     word_1315B8 = WORD2(v4);
     dword_1315B4 = v4;
-    sub_674CD();
+    SosDRVLockMemory_674CD();
     lseek(dword_131574, 0, 0);
     dword_9EF64 = 0;
     dword_9EF60 = 1;
@@ -75705,7 +75747,7 @@ int SosDIGIDetectUnInit_63C06()
 {
   dword_9EF60 = 0;
   close(dword_131574);
-  sub_674FA();
+  SosDRVUnLockMemory_674FA();
   Port_ArenaFree((void*)PTR(dword_131578));
   return 0;
 }
@@ -75717,7 +75759,8 @@ int SosDIGIDetectUnInit_63C06()
 
 //----- (00063C5A) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
-int sub_63C5A_6416A(const void *a1, unsigned int a2, char *a3, __int16 a4, unsigned int a5)
+/// Original name: sosDIGIDetectFindHardware (sosdetec.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int SosDIGIDetectFindHardware_63C5A_6416A(const void *a1, unsigned int a2, char *a3, __int16 a4, unsigned int a5)
 {
   int v7; // [esp+4h] [ebp-18h]
   int v8; // [esp+Ch] [ebp-10h]
@@ -75810,51 +75853,54 @@ void sub_64414()
 
 //----- (00064425) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_64425()
+/// Original name: sosDIGIInit_Start (sosinit.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosDIGIInitStart_64425()
 {
   ;
 }
 
 //----- (00064436) --------------------------------------------------------
-void sub_64436()
+/// Original name: sosDIGILockMemory (sosinit.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosDIGILockMemory_64436()
 {
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
-  sub_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
+  SosDRVLockMemory_674CD();
 }
 
 //----- (000645FB) --------------------------------------------------------
-void sub_645FB()
+/// Original name: sosDIGIUnLockMemory (sosinit.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosDIGIUnLockMemory_645FB()
 {
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
-  sub_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
+  SosDRVUnLockMemory_674FA();
 }
 
 //----- (000647C0) --------------------------------------------------------
@@ -75863,7 +75909,7 @@ void sub_645FB()
 /// Original name: sosDIGIInitSystem (sosinit.c), Hidden Worlds linker map.
 int SosDIGIInitSystem_647C0(int a1, unsigned __int16 a2)
 {
-  sub_64436();
+  SosDIGILockMemory_64436();
   dword_9EF80 = 1;
   //fix
   /*
@@ -75881,7 +75927,7 @@ int SosDIGIInitSystem_647C0(int a1, unsigned __int16 a2)
 /// Original name: sosDIGIUnInitSystem (sosinit.c), Hidden Worlds linker map (placed by function order between two matches).
 int SosDIGIUnInitSystem_6481C()
 {
-  sub_645FB();
+  SosDIGIUnLockMemory_645FB();
   dword_9EF80 = 0;
   return 0;
 }
@@ -76005,7 +76051,7 @@ int SosDIGIInitDriver_64846_64D56(
         dword_9EF6C[v43] = 1;
         v34 = 0;
         v33 = 0;
-        a1 = sub_650FF_6560F(v10, a1, v49, (uint32*)&v40);
+        a1 = SosDIGIAllocateBuffer_650FF_6560F(v10, a1, v49, (uint32*)&v40);
         v30 = v10;
         v29 = a1;
         if ( !a1 && v10 == v34 )
@@ -76223,7 +76269,8 @@ int SosDIGIUnInitDriver_64F78(unsigned int a1, int a2, int a3)
 // A0338: using guessed type int dword_A0338[6];
 
 //----- (000650FF) --------------------------------------------------------
-int sub_650FF_6560F(__int16 a1, int a2, unsigned int a3, _DWORD *a4)
+/// Original name: sosDIGIAllocateBuffer (sosinit.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int SosDIGIAllocateBuffer_650FF_6560F(__int16 a1, int a2, unsigned int a3, _DWORD *a4)
 {
   int v5; // [esp+14h] [ebp-4h] BYREF
 
@@ -76433,7 +76480,8 @@ void PlayOneChannelSample_65F10_66420(__int16 a1, __int16 a2)
 
 //----- (00066107) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_66107()
+/// Original name: sosDIGIVol_Start (sosvol.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosDIGIVolStart_66107()
 {
   ;
 }
@@ -76460,7 +76508,8 @@ int SosDIGISetMasterVolume_661A4(int a1, int a2)
 
 //----- (0006623A) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6623A()
+/// Original name: sosDIGIVol_End (sosvol.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosDIGIVolEnd_6623A()
 {
   ;
 }
@@ -76494,7 +76543,8 @@ void SetSampleVolume_66250(__int16 a1, __int16 a2, unsigned __int16 a3)
 
 //----- (00066313) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_66313()
+/// Original name: sosDIGIPlyng_Start (sosplyng.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosDIGIPlyngStart_66313()
 {
   ;
 }
@@ -76869,7 +76919,8 @@ int SosTIMERDRVCallOld_66EA2()
 
 //----- (00066EE5) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_66EE5()
+/// Original name: sosMIDIPtr_Start (sosmptr.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDIPtrStart_66EE5()
 {
   ;
 }
@@ -76887,14 +76938,16 @@ unsigned __int64 SosMIDINormalizePtr_66EF6(unsigned int a1, __int16 a2)
 
 //----- (00066F1A) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_66F1A()
+/// Original name: sosMIDIPtr_End (sosmptr.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDIPtrEnd_66F1A()
 {
   ;
 }
 
 //----- (00066F2B) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_66F2B()
+/// Original name: sosMIDITmr_Start (sosmtmr.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDITmrStart_66F2B()
 {
   ;
 }
@@ -77040,14 +77093,16 @@ LABEL_28:
 
 //----- (00067464) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_67464()
+/// Original name: sosMIDITmr_End (sosmtmr.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDITmrEnd_67464()
 {
   ;
 }
 
 //----- (00067475) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_67475()
+/// Original name: sosMIDICaps_Start (sosmcaps.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDICapsStart_67475()
 {
   ;
 }
@@ -77070,7 +77125,8 @@ void SosMIDICapsEnd_674B9()
 }
 
 //----- (000674CD) --------------------------------------------------------
-void sub_674CD()
+/// Original name: _sosDRVLockMemory (sosdrv.asm), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosDRVLockMemory_674CD()
 {
   __int16 result; // ax
 
@@ -77081,7 +77137,8 @@ void sub_674CD()
 }
 
 //----- (000674FA) --------------------------------------------------------
-void sub_674FA()
+/// Original name: _sosDRVUnLockMemory (sosdrv.asm), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosDRVUnLockMemory_674FA()
 {
   __int16 result; // ax
 
@@ -77325,13 +77382,15 @@ __int16 SosDIGIUnInitForWindows_67944()
 
 //----- (0006797C) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6797C()
+/// Original name: sosMIDICbck_Start (sosmcbck.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDICbckStart_6797C()
 {
   ;
 }
 
 //----- (0006798D) --------------------------------------------------------
-int *sub_6798D()
+/// Original name: callbackGetCallTable (sosmcbck.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int *CallbackGetCallTable_6798D()
 {
   return &dword_131522;
 }
@@ -77389,20 +77448,23 @@ int CallbackSetInstrumentData_67A29(int (*a1)(_DWORD, _DWORD, _DWORD, _DWORD), _
 
 //----- (00067A53) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_67A53()
+/// Original name: sosMIDICbck_End (sosmcbck.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDICbckEnd_67A53()
 {
   ;
 }
 
 //----- (00067A64) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_67A64()
+/// Original name: sosMIDIDigi_Start (sosmdigi.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDIDigiStart_67A64()
 {
   ;
 }
 
 //----- (00067A75) --------------------------------------------------------
-int *sub_67A75()
+/// Original name: digiGetCallTable (sosmdigi.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int *DigiGetCallTable_67A75()
 {
   return &dword_131504;
 }
@@ -77626,14 +77688,16 @@ int DigiSampleCallback_6813F(int a1, int a2, int a3)
 
 //----- (0006815E) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6815E()
+/// Original name: sosMIDIDigi_End (sosmdigi.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDIDigiEnd_6815E()
 {
   ;
 }
 
 //----- (0006816F) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6816F()
+/// Original name: sosMIDIDq_Start (sosmdq.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDIDqStart_6816F()
 {
   ;
 }
@@ -77823,7 +77887,8 @@ int DigiQueueDeleteItemMIDI_68491(int a1, int a2)
 
 //----- (00068600) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_68600()
+/// Original name: sosMIDIDq_End (sosmdq.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDIDqEnd_68600()
 {
   ;
 }
@@ -77889,7 +77954,7 @@ int sub_68622_68B32(
         v8 = a1;
         v7 = SosMAKEProtectedPtr_67582();
         read(v14, (void*)PTR(v10), v13);
-        sub_674CD();
+        SosDRVLockMemory_674CD();
         a2 = (int)OFF(a5);
         *a5 = v10;
       }
@@ -77965,13 +78030,15 @@ void sub_689D1()
 
 //----- (000689E2) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_689E2()
+/// Original name: sosMIDIAWE_Start (sosmawe.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDIAWEStart_689E2()
 {
   ;
 }
 
 //----- (000689F3) --------------------------------------------------------
-int *sub_689F3()
+/// Original name: aweGetCallTable (sosmawe.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int *AweGetCallTable_689F3()
 {
   return &dword_1314C8;
 }
@@ -78003,7 +78070,7 @@ int AweSendData_68A14(int a1, int a2, int a3, unsigned int a4)
     }
     else if ( v6 == 0xE0 )
     {
-      sub_6FDEC(port_readgsbyte(a4 + 2), port_readgsbyte(a4 + 1), port_readgsbyte(a4) & 0xF);
+      AWE32PITCHBEND_6FDEC(port_readgsbyte(a4 + 2), port_readgsbyte(a4 + 1), port_readgsbyte(a4) & 0xF);
     }
     return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
   }
@@ -78060,7 +78127,8 @@ int AweInit_68BDA(int a1, int a2, int a3, __int16 a4)
 // A2995: using guessed type void *off_A2995;
 
 //----- (00068C4B) --------------------------------------------------------
-int sub_68C4B()
+/// Original name: _aweUnInit (sosmawe.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int AweUnInit_68C4B()
 {
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
@@ -78069,7 +78137,8 @@ int sub_68C4B()
 }
 
 //----- (00068C69) --------------------------------------------------------
-int sub_68C69()
+/// Original name: _aweReset (sosmawe.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int AweReset_68C69()
 {
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
@@ -78077,7 +78146,8 @@ int sub_68C69()
 }
 
 //----- (00068C82) --------------------------------------------------------
-int sub_68C82()
+/// Original name: _aweSetInstrumentData (sosmawe.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int AweSetInstrumentData_68C82()
 {
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
@@ -78086,14 +78156,16 @@ int sub_68C82()
 
 //----- (00068C9B) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_68C9B()
+/// Original name: sosMIDIAWE_End (sosmawe.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosMIDIAWEEnd_68C9B()
 {
   ;
 }
 
 //----- (00068CAC) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_68CAC()
+/// Original name: sosFMDrvbend_Start (drvbend.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMDrvbendStart_68CAC()
 {
   ;
 }
@@ -78176,14 +78248,16 @@ unsigned int DrvCalculatePitch_68D7F(unsigned int a1, int a2, int a3)
 
 //----- (00068F15) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_68F15()
+/// Original name: sosFMDrvbend_End (drvbend.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMDrvbendEnd_68F15()
 {
   ;
 }
 
 //----- (00068F26) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_68F26()
+/// Original name: sosFMDrvctrl_Start (drvctrl.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMDrvctrlStart_68F26()
 {
   ;
 }
@@ -78242,14 +78316,16 @@ char DrvControlChange_68F37(int a1, int a2, unsigned int a3)
 
 //----- (0006905C) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6905C()
+/// Original name: sosFMDrvctrl_End (drvctrl.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMDrvctrlEnd_6905C()
 {
   ;
 }
 
 //----- (0006906D) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6906D()
+/// Original name: sosFMDrvnoton_Start (drvnoton.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMDrvnotonStart_6906D()
 {
   ;
 }
@@ -78341,14 +78417,16 @@ void DrvNoteOn_6907E(unsigned __int8 a1, unsigned __int8 a2, unsigned __int8 a3)
 
 //----- (0006954C) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6954C()
+/// Original name: sosFMDrvnoton_End (drvnoton.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMDrvnotonEnd_6954C()
 {
   ;
 }
 
 //----- (0006955D) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6955D()
+/// Original name: sosFMDrvntoff_Start (drvntoff.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMDrvntoffStart_6955D()
 {
   ;
 }
@@ -78457,14 +78535,16 @@ int DrvChannelResetControllers_69716(unsigned int a1)
 
 //----- (0006979E) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6979E()
+/// Original name: sosFMDrvntoff_End (drvntoff.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMDrvntoffEnd_6979E()
 {
   ;
 }
 
 //----- (000697AF) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_697AF()
+/// Original name: sosFMDrvparse_Start (drvparse.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMDrvparseStart_697AF()
 {
   ;
 }
@@ -78532,14 +78612,16 @@ void DrvParse_697C0(int a1, int a2, unsigned int a3)
 
 //----- (0006999B) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6999B()
+/// Original name: sosFMDrvparse_End (drvparse.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMDrvparseEnd_6999B()
 {
   ;
 }
 
 //----- (000699AC) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_699AC()
+/// Original name: sosFMDrvreset_Start (drvreset.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMDrvresetStart_699AC()
 {
   ;
 }
@@ -78583,14 +78665,16 @@ char DrvReset_699BD()
 
 //----- (00069A83) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_69A83()
+/// Original name: sosFMDrvreset_End (drvreset.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMDrvresetEnd_69A83()
 {
   ;
 }
 
 //----- (00069A94) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_69A94()
+/// Original name: sosFMDrvstbnk_Start (drvstbnk.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMDrvstbnkStart_69A94()
 {
   ;
 }
@@ -78700,14 +78784,16 @@ int DrvProcessBNK_69BFE(int a1)
 
 //----- (00069DFE) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_69DFE()
+/// Original name: sosFMDrvstbnk_End (drvstbnk.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMDrvstbnkEnd_69DFE()
 {
   ;
 }
 
 //----- (00069E0F) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_69E0F()
+/// Original name: sosFMDrvunint_Start (drvunint.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMDrvunintStart_69E0F()
 {
   ;
 }
@@ -78731,14 +78817,16 @@ char DrvUninit_69E20()
 
 //----- (00069E63) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_69E63()
+/// Original name: sosFMDrvunint_End (drvunint.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMDrvunintEnd_69E63()
 {
   ;
 }
 
 //----- (00069E74) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_69E74()
+/// Original name: sosFMDrvinit_Start (drvinit.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMDrvinitStart_69E74()
 {
   ;
 }
@@ -78760,14 +78848,16 @@ char DrvInit_69E85(int a1, int a2, unsigned int a3)
 
 //----- (00069ECB) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_69ECB()
+/// Original name: sosFMDrvinit_End (drvinit.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMDrvinitEnd_69ECB()
 {
   ;
 }
 
 //----- (00069EDC) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_69EDC()
+/// Original name: sosFMFM_Start (sosfm.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMFMStart_69EDC()
 {
   ;
 }
@@ -78826,14 +78916,16 @@ int FmSetInstrumentData_69F93(int a1, __int16 a2, int a3, int a4)
 
 //----- (00069FC2) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_69FC2()
+/// Original name: sosFMFM_End (sosfm.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosFMFMEnd_69FC2()
 {
   ;
 }
 
 //----- (00069FD3) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_69FD3()
+/// Original name: sosYMInit_Start (yminit.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosYMInitStart_69FD3()
 {
   ;
 }
@@ -78859,7 +78951,8 @@ char YmInit_69FE4(unsigned int a1)
 
 //----- (0006A063) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6A063()
+/// Original name: sosYMInit_End (yminit.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosYMInitEnd_6A063()
 {
   ;
 }
@@ -78890,7 +78983,8 @@ void sub_6A0F9()
 
 //----- (0006A10A) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6A10A()
+/// Original name: sosYMMode_Start (ymmode.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosYMModeStart_6A10A()
 {
   ;
 }
@@ -78919,7 +79013,8 @@ char YmSetMode_6A11B()
 
 //----- (0006A1B3) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6A1B3()
+/// Original name: sosYMMode_End (ymmode.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosYMModeEnd_6A1B3()
 {
   ;
 }
@@ -78952,7 +79047,8 @@ void sub_6A275()
 
 //----- (0006A286) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6A286()
+/// Original name: sosYMNotoff_Start (ymnotoff.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosYMNotoffStart_6A286()
 {
   ;
 }
@@ -78971,14 +79067,16 @@ char YmNoteOff_6A297(unsigned __int8 a1)
 
 //----- (0006A2F5) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6A2F5()
+/// Original name: sosYMNotoff_End (ymnotoff.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosYMNotoffEnd_6A2F5()
 {
   ;
 }
 
 //----- (0006A306) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6A306()
+/// Original name: sosYMReset_Start (ymreset.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosYMResetStart_6A306()
 {
   ;
 }
@@ -79008,14 +79106,16 @@ char YmReset_6A317()
 
 //----- (0006A3E3) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6A3E3()
+/// Original name: sosYMReset_End (ymreset.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosYMResetEnd_6A3E3()
 {
   ;
 }
 
 //----- (0006A3F4) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6A3F4()
+/// Original name: sosYMSetins_Start (ymsetins.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosYMSetinsStart_6A3F4()
 {
   ;
 }
@@ -79072,14 +79172,16 @@ char YmSetInstrument_6A405(int a1, int a2, unsigned __int8 a3)
 
 //----- (0006A5EC) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6A5EC()
+/// Original name: sosYMSetins_End (ymsetins.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosYMSetinsEnd_6A5EC()
 {
   ;
 }
 
 //----- (0006A5FD) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6A5FD()
+/// Original name: sosYMUninit_Start (ymuninit.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosYMUninitStart_6A5FD()
 {
   ;
 }
@@ -79095,7 +79197,8 @@ char YmUnInit_6A60E()
 
 //----- (0006A62D) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
-void sub_6A62D()
+/// Original name: sosYMUninit_End (ymuninit.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+void SosYMUninitEnd_6A62D()
 {
   ;
 }
@@ -80466,7 +80569,7 @@ int sub_6DE34_6E344(
         v10 = (int)OFF(Port_ArenaAlloc(dword_131BA4));
         if ( !v10 )
           return 5;
-        sub_674CD();
+        SosDRVLockMemory_674CD();
         SosGetPhysicalAddr_67557_67A67(a1, a2, v10);
         v8 = a1;
         v7 = SosMAKEProtectedPtr_67582();
@@ -80549,7 +80652,7 @@ int sub_6E09A_6E5AA(__int16 a1, int a2, unsigned int a3, int *a4, unsigned int a
         v9 = (int)OFF(Port_ArenaAlloc(dword_131BA4));
         if ( !v9 )
           return 5;
-        sub_674CD();
+        SosDRVLockMemory_674CD();
         SosGetPhysicalAddr_67557_67A67(a1, a2, v9);
         v7 = a1;
         v6 = SosMAKEProtectedPtr_67582();
@@ -81862,7 +81965,8 @@ void __stdcall AWE32CHANNELPRESSURE_6FDAC(unsigned __int16 a1, __int16 a2)
 // A1B3E: using guessed type __int16 word_A1B3E[];
 
 //----- (0006FDEC) --------------------------------------------------------
-int __stdcall sub_6FDEC(unsigned __int8 a1, unsigned __int8 a2, __int16 a3)
+/// Original name: AWE32PITCHBEND (midieng.c), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
+int __stdcall AWE32PITCHBEND_6FDEC(unsigned __int8 a1, unsigned __int8 a2, __int16 a3)
 {
   unsigned __int8 v3; // al
   __int64 v4; // rax

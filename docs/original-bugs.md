@@ -18,7 +18,7 @@ Status:
 | 4 | Reads/writes through null or stale pointers | several (see below) | worked around |
 | 5 | Level performance screen draws with a freed font | `ShowLevelPerformance_4E5B0_4E8F0` | worked around |
 | 6 | Terrain smoothing reads in front of the map on its first row | `SmoothPoint_360C0_36480` | fixed |
-| 7 | Castles built among walls: the site check looks at one quarter of the site | `IsCastleSiteFree_12F70` | kept |
+| 7 | Castles built among walls: the site check looks at one quarter of the site | `CastleOkHere_12F70` | kept |
 | 8 | Full entity table recycles live entities (balloons vanish, HUD divides by zero) | `InitAThing_372C0_37680` | fixed |
 | 9 | A creature dying while the entity table is full drops no mana | `FnCreatureDead_1A800`, `CreateManaBalls_27690` | kept |
 | 10 | Big explosions recycle all trees and standing stones; their triggers stay | `InitAThing_372C0_37680` | kept |
@@ -103,7 +103,7 @@ level 12 the grid point (192, 64) lies in the maze. The AI castles in the record
 points: (0, 64), (0, 0) and (192, 64).
 
 The castle spell's missile then stops at the first point of its path where
-`IsCastleSiteFree_12F70` fails and builds one step back. That check tests only the 8x8 tiles from
+`CastleOkHere_12F70` fails and builds one step back. That check tests only the 8x8 tiles from
 (x-8, y-8) to (x-1, y-1), i.e. the quarter of the site north-west of the castle point, for walls
 (`mapAngle` bit 0x80). The missile also builds without any check where it hits the ground, hits its
 target or runs out of time. A castle can therefore stand right next to walls, and

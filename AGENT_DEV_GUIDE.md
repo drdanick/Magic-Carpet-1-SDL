@@ -45,12 +45,11 @@ back to the original controls.
 red/blue (anaglyph) mode, toggled with F10 (`set.mod3D_8603` cycles 0 off -> 1 -> 2), plus VFX1 headset stereo. The
 red/blue mode does not work in the port yet. Pieces found so far: `InitStereoMode_31600_31640` (`init_stereo_mode`),
 `StereoModeOff_315C0_31600` (`stereo_mode_off`), `EnsureMonoMode_31A00_31A40` (`ensure_mono_mode`; turns stereo off
-around menus), `sub_31A60_31AA0` (probably `restore_possible_stereo_mode`, restores `byte_90754` = `stereo_mode_was`),
+around menus), `RestorePossibleStereoMode_31A60_31AA0` (`restore_possible_stereo_mode`, confirmed by the map; restores `byte_90754` = `stereo_mode_was`),
 the map's `superstereolorescopy`/`superstereohirescopy` (graph_text; likely among `sub_79906`, `sub_79A1B`,
 `sub_79B2D`, which `EngineShowScreen_30B30_30B70` calls when a mode is on), the mode-1 column blend in
 `EngineShowScreen_30B30_30B70`, the mode-2 branch in `Engine_30D90_30DD0`, and VFX.C: `headset_stereo_on`/`off`
-(the upstream-named `ClearScr_5B500_5BA10`/`ClearScr_5B560` called by `InitStereoMode`/`EnsureMonoMode`, not
-confirmed by the map match), `PutVFX1Palette_5B310_5B820`, `SetupVFX1_5AF50_5B460`. With a headset
+(`HeadsetStereoOn_5B500_5BA10`/`HeadsetStereoOff_5B560`, confirmed by the map; called by `InitStereoMode`/`EnsureMonoMode`), `PutVFX1Palette_5B310_5B820`, `SetupVFX1_5AF50_5B460`. With a headset
 (`set.var_u8_8606`) `Engine` draws the landscape twice, offset left/right, side by side.
 
 **Audit against CARPET.EXE (2026-10-17):** §4 "Comparing with the original executable" is the main
@@ -538,6 +537,7 @@ class, type)`). The state index is global within a class, not per type.
 | 10 | 17 | expanding explosion ring: one 10/0 explosion per ring point per tick | `FnEffectMeteor_25CE0` |
 | 10 | 18 | volcano eruption emitter (128 ticks, then removes itself) | `FnEffectVolcanoAfterMath_25EC0` |
 | 10 | 19 | volcano fire, created by each eruption start, index in game state +38 | `FnEffectFireColumn_26140` |
+| 13 | 0-3 | objectives: gain mana, kill creature, kill city, kill player (`init_objective_*`) | linker map |
 | 1 | 1-10 | commands: attack, wander, goto, get/drop object, follow, wait for time/person/trigger/death (`init_command_*`; placeholder constructors) | linker map |
 | 8 | 0-5 | power-ups: speed up, pulse, shield, floater, armour, rain proofing (`init_powerup_*`; placeholder constructors) | linker map |
 | 10 | 20-22, 24 | unimplemented effects rain of fire, whirl wind, whirl pool, tidal wave (one null constructor, `NullConstructor_39A00`) | linker map |
@@ -740,7 +740,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     inside the table, `tools/check_creature_types.py`) whenever a table pointer looks suspicious.
 41. **DOS mouse-driver units.** In 640x480 (`typeResolution & 8`) the game set the INT 33h range to
     0..5120 x 0..3840 and divides positions by 8 (`MouseHandler256_5BE72_5C382`); setting the
-    position multiplies by 8 (`sub_59750`). The port feeds pixels, so `MouseEvents` scales by 8 in that
+    position multiplies by 8 (`SetNewMousePosition_59750`). The port feeds pixels, so `MouseEvents` scales by 8 in that
     mode and `VGA_Set_mouse` is given pixels. Without it the cursor was stuck in the top-left 80x60 and
     mouse steering died after pressing R.
 42. **Guards commented out during cleanup.** `DrawAThing_2C410_2C450` had its `if ( a1 != 2 )` around the
@@ -794,7 +794,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     ever hold values with the sign bit set (checked on snapshots), the rest are small enums.
     **Variant: sign tests on unsigned byte arrays.** The original tests a flag bit with `test b, 80h`;
     Hex-Rays writes that as `arr[i] < 0` / `>= 0`, which is constant once the port declares the array
-    `uint8_t`. `mapAngle_FC1E0_FC1D0` bit 0x80 = impassable tile: `IsCastleSiteFree_12F70`,
+    `uint8_t`. `mapAngle_FC1E0_FC1D0` bit 0x80 = impassable tile: `CastleOkHere_12F70`,
     `CastleOkToExtend_12D10` and `AdjustPoint_40A10_40D50` never saw walls (castles built on and grew into
     walls, level 12). Fixed with `(arr[i] & 0x80)`. MSVC C4296 does NOT catch these (the byte is
     promoted to int); scan with a script for `NAME[...] < 0` / `>= 0` where NAME is declared unsigned
@@ -950,7 +950,7 @@ space (§4).
   `SosDIGISamplesPlaying_66324`); these forward to `port_sound` (32 SDL_mixer channels, volume/pan, looping when flag
   `0x4000` is set with the count at `+12`). The "sample done" state the game polls is driven by timer
   ticks, not by SDL callbacks, so goldens are identical with sound on or off.
-  `PortSound_ClearCache` runs when banks are reloaded (`sub_5D138`).
+  `PortSound_ClearCache` runs when banks are reloaded (`FormatSounds_5D138`).
 - `sampleDesc_939F0[64]`, the bank globals (`dword_CC154/CC1C0/CC130`, `CBF60/64/68`) and
   `word_CBFF0/word_CBFF2` were several IDA names for single objects (pattern 6.2.7): they are macros
   aliasing `snds00Tab_2854A1` / `music00Tab_289F60` / one array.
@@ -958,7 +958,7 @@ space (§4).
 ### 6.4b Music (AdLib, General MIDI and MT-32 done)
 - Data: `MUSIC<set>-<variant>.DAT/.TAB`, RNC packed, loaded by `LoadMusic_5CEF0_5D400(set)`; variant
   `musicVariant_CBFEE` = 0 AdLib, 1 Roland, 2 General MIDI (set in `OpenMusic_43B20_43E60` from the card). TAB: a
-  32-byte header, then one 32-byte entry per song (`+18` data offset, made absolute by `FixMusicTabOffsets_5CFA4`, `+26`
+  32-byte header, then one 32-byte entry per song (`+18` data offset, made absolute by `FormatMusic_5CFA4`, `+26`
   length; `musicTrackCount_939D6` = song count). The songs are **HMI HMP** files (`HMIMIDIP`; 120 ticks/s = the
   driver's timer rate at song+0x38). Set 0: GAME1-3 (levels, chosen with `pseudoRand % 3 + 1` - so
   **music on changes the game**) and SETUP (menus, track 4); set 1: INTRO4-6 (level script opcode `B`).
@@ -1017,7 +1017,7 @@ third implementation without touching game code; a world-renderer seam (`IGameRe
 `GameRenderInterface.h`) comes with the Phase 3 split.
 
 ### 6.6 Frame pacing
-The game logic advances once per frame (`DrawAndEventsInGame_34530_348F0` runs one
+The game logic advances once per frame (`GameLoop_34530_348F0` runs one
 `ProcessThings_41780_41AC0` per frame) and the DOS original simply ran as fast as the CPU allowed,
 so the port caps the frame rate: `PortTimer_LimitFrame()` in the blit functions, cap switched by
 context (`ProcessMainGame_34610_349D0` sets `maxGameFps` = 30 like remc2, menus/movies use `menuFps` = 70),
@@ -1164,7 +1164,7 @@ How the level's actors work (useful for "X never spawns" reports):
   `data_8 == 0` records are created at load (`InitSingleThing_37560_37920`), `0xFFFF` class-10 records are features
   (`PreprocessFeatures_36430_367F0`), other values are trigger groups spawned by `InitThings_37440_37800(group)`
   when the human wizard (model 0 in the wizard list) touches the matching trigger entity
-  (`Switch00Tick_59A80_59F90` & co., `TriggerSwitch_5A090_5A5A0`).
+  (`FnSwitchHiddenInside_59A80_59F90` & co., `TriggerSwitch_5A090_5A5A0`).
 - Class 3 types 4..11 only store wizard start positions; wizards are created per player
   (`SetupPlayer_44D30_45070`): model 0 = human, model 1 = computer (state 1, `FnPlayerComputerFlyer_13170` AI, mode byte at
   player+415).
