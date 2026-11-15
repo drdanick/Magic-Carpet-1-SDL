@@ -3,7 +3,7 @@
 //
 // The game's Bullfrog sound layer (sub_48570 & co.) keeps 32 logical channels and talks to the
 // driver through a handful of calls (start sample, is-done, stop, set volume). Those HMI entry
-// points (sub_6535C, sub_651F8, sub_65965, sub_66118, ...) now forward here; samples are the
+// points (sub_6535C, IsSampleDone_651F8, sub_65965, sub_66118, ...) now forward here; samples are the
 // 8-bit unsigned mono PCM from data/sndsN-V.dat (V=0: 11025 Hz, V=1: 22050 Hz).
 
 #include <cstdint>

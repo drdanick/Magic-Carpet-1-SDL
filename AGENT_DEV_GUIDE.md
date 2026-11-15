@@ -871,7 +871,7 @@ space (§4).
 - Banks: `SNDSn-v.DAT/.TAB` (RNC packed; `sub_5D070` loads `snds%d-%d`, 14 sets). TAB entries are 32
   bytes: `name[18]`, `+18` offset into the DAT, `+26` length, `+30` word. Variant `-0` = 11025 Hz,
   `-1` = 22050 Hz (used: `byte_939EC = 1`), `-3` = low memory. Samples are unsigned 8-bit mono.
-- The game talks to the HMI SOS API (`sub_651F8`, `sub_6535C`, `sub_65965`, `sub_66118`, `sub_661A4`,
+- The game talks to the HMI SOS API (`IsSampleDone_651F8`, `sub_6535C`, `sub_65965`, `sub_66118`, `sub_661A4`,
   `sub_66324`); these forward to `port_sound` (32 SDL_mixer channels, volume/pan, looping when flag
   `0x4000` is set with the count at `+12`). The "sample done" state the game polls is driven by timer
   ticks, not by SDL callbacks, so goldens are identical with sound on or off.
