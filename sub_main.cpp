@@ -412,20 +412,20 @@ int sub_1AB70(Type_AE400_29795* a1, Type_AE400_29795* a2);
 int sub_1AE30(Type_AE400_29795* a1, Type_AE400_29795* a2);
 int sub_1AEE0(Type_AE400_29795* a1, Type_AE400_29795* a2);
 void sub_1B060(Type_AE400_29795* a1);
-void sub_1B070(Type_AE400_29795* a1);
+void Class5Type0Tick_1B070(Type_AE400_29795* a1);
 void sub_1B090(Type_AE400_29795* a1);
 void sub_1B0E0(Type_AE400_29795* a1);
 void sub_1B100(Type_AE400_29795* a1);
 void sub_1B110(Type_AE400_29795* a1);
 void sub_1B120(Type_AE400_29795* a1);
 void sub_1B160(Type_AE400_29795* a1);
-void sub_1B200(Type_AE400_29795* a1);
+void Class5Type1Tick_1B200(Type_AE400_29795* a1);
 void sub_1B2D0(Type_AE400_29795* a1);
 void sub_1B320(Type_AE400_29795* a1);
 void sub_1B330(Type_AE400_29795* a1);
 void sub_1B340(Type_AE400_29795* a1);
 void sub_1B350(Type_AE400_29795* a1);
-void sub_1B370(Type_AE400_29795* a1);
+void Class5Type2Tick_1B370(Type_AE400_29795* a1);
 void sub_1B3C0(Type_AE400_29795* a1);
 void sub_1B4C0(Type_AE400_29795* a1);
 void sub_1B4E0(Type_AE400_29795* a1);
@@ -451,24 +451,24 @@ void sub_1C170(Type_AE400_29795* a1);
 void sub_1C3C0(Type_AE400_29795* a1);
 void sub_1C3D0(Type_AE400_29795* a1);
 void sub_1C490(Type_AE400_29795* a1);
-void sub_1C4A0(Type_AE400_29795* a1);
+void Class5Type6Tick_1C4A0(Type_AE400_29795* a1);
 void sub_1C4F0(Type_AE400_29795* a1);
 void sub_1C880(Type_AE400_29795* a1);
 void sub_1C8D0(Type_AE400_29795* a1);
 void sub_1C8E0(Type_AE400_29795* a1);
 void sub_1C8F0(Type_AE400_29795* a1);
-void sub_1C900(Type_AE400_29795* a1);
+void Class5Type7Tick_1C900(Type_AE400_29795* a1);
 void sub_1C960(Type_AE400_29795* a1);
 void sub_1CA00(Type_AE400_29795* a1);
 void sub_1CA20(Type_AE400_29795* a1);
 void sub_1CA30(Type_AE400_29795* a1);
 void sub_1CA40(Type_AE400_29795* a1);
-void sub_1CA50(Type_AE400_29795* a1);
+void Class5Type8Tick_1CA50(Type_AE400_29795* a1);
 void sub_1CE30(Type_AE400_29795* a1);
 void sub_1CF50(Type_AE400_29795* a1);
 void sub_1CF60(Type_AE400_29795* a1);
 void sub_1CFE0(Type_AE400_29795* a1);
-void sub_1CFF0(Type_AE400_29795* a1);
+void Class5Type9Tick_1CFF0(Type_AE400_29795* a1);
 void sub_1D060(Type_AE400_29795* a1);
 void sub_1D6D0(Type_AE400_29795* a1);
 void sub_1DA60(Type_AE400_29795* a1);
@@ -480,12 +480,12 @@ void sub_1DD50(Type_AE400_29795* a1);
 void sub_1DD90(Type_AE400_29795* a1);
 void sub_1DDB0(Type_AE400_29795* a1);
 void sub_1DDD0(Type_AE400_29795* a1);
-void sub_1DDE0(Type_AE400_29795* a1);
+void Class5Type10Tick_1DDE0(Type_AE400_29795* a1);
 int sub_1DDF0(Type_AE400_29795* a1);
 void sub_1DE10(Type_AE400_29795* a1);
 void sub_1DE20(Type_AE400_29795* a1);
 void sub_1DE30(Type_AE400_29795* a1);
-void sub_1DE40(Type_AE400_29795* a1);
+void Class5Type11Tick_1DE40(Type_AE400_29795* a1);
 void sub_1DFE0(Type_AE400_29795* a1);
 void sub_1E380(Type_AE400_29795* a1);
 void sub_1E6F0(Type_AE400_29795* a1);
@@ -497,19 +497,19 @@ void sub_1E810(Type_AE400_29795* a1);
 _BOOL1 sub_1E920(_WORD *a1, unsigned __int16 a2, unsigned __int16 a3, unsigned __int16 a4);
 _WORD *sub_1E9B0(unsigned __int16 a1, _WORD *a2, _WORD *a3);
 void sub_1EA40(Type_AE400_29795* a1);
-void sub_1EED0(Type_AE400_29795* a1);
+void Class5Type12Tick_1EED0(Type_AE400_29795* a1);
 void sub_1F120(Type_AE400_29795* a1);
 void sub_1F390(Type_AE400_29795* a1);
 void sub_1F5A0(Type_AE400_29795* a1);
 void sub_1F5B0(Type_AE400_29795* a1);
-void sub_1F640(Type_AE400_29795* a1);
+void Class5Type13Tick_1F640(Type_AE400_29795* a1);
 void sub_1FA00(Type_AE400_29795* a1);
 void sub_1FAA0(Type_AE400_29795* a1);
-void sub_1FAC0(Type_AE400_29795* a1);
+void Class5Type14Tick_1FAC0(Type_AE400_29795* a1);
 void sub_1FE90(Type_AE400_29795* a1);
 void sub_1FEC0(Type_AE400_29795* a1);
 // void sub_1FF40(char a1, int a2, char a3, int a4, int a5);
-void sub_1FF60(Type_AE400_29795* a1);
+void Class5Type15Tick_1FF60(Type_AE400_29795* a1);
 void sub_201D0(Type_AE400_29795* a1);
 void sub_203E0(Type_AE400_29795* a1);
 void sub_203F0(Type_AE400_29795* a1);
@@ -552,15 +552,15 @@ void Class10Type1Tick_25130(int a1);
 void SpeedEffectTick_252B0(int a1);
 int Class10Type6Tick_252D0(int a1);
 void RemoveSelfTick_253E0(int a1);
-void sub_253F0(int a1);
-void sub_25410(Type_AE400_29795* a1);
+void Class10Type3Tick_253F0(int a1);
+void Class10Type5Tick_25410(Type_AE400_29795* a1);
 void VolcanoEffectTick_25470(Type_AE400_29795* a1);
-void sub_25570(Type_AE400_29795* a1);
+void Class10Type10Tick_25570(Type_AE400_29795* a1);
 void sub_255D0(Type_AE400_29795* a1, __int16 a2, __int16 a3);
 void CraterEffectTick_25670(Type_AE400_29795* a1);
 void PossessionEffectTick_25760(Type_AE400_29795* a1);
-void sub_257B0(int a1);
-void sub_258A0(int a1);
+void Class10Type13Tick_257B0(int a1);
+void Class10Type14Tick_258A0(int a1);
 int nullsub_19(_DWORD); // weak
 void EarthquakeEffectTick_25990(Type_AE400_29795* a1);
 void LavaTick_25A60(int a1);
@@ -574,12 +574,12 @@ _BOOL1 sub_264D0(unsigned __int16 a1);
 void RaiseTerrainStripYUp_26560(int a2);
 void RaiseTerrainStripYDown_26670(_WORD *a2);
 void RaiseTerrainStripX_26760(_WORD *a2);
-void sub_26890(Type_AE400_29795* event);
-void sub_26920(Type_AE400_29795* a1);
-void sub_269A0(Type_AE400_29795* a1);
-void sub_26A60(int a1);
+void Class10Type30Tick_26890(Type_AE400_29795* event);
+void Class10Type32Tick_26920(Type_AE400_29795* a1);
+void Class10Type51Tick_269A0(Type_AE400_29795* a1);
+void Class10Type34Tick_26A60(int a1);
 void sub_26C00(int a1);
-void sub_26CE0(int a1);
+void Class10Type33Tick_26CE0(int a1);
 void sub_26D20(int a1);
 void UndeadArmyEffectTick_26E90(int a1);
 void ManaBallTick_27030(Type_AE400_29795* event);
@@ -589,13 +589,13 @@ void DropManaBall_27690(_WORD *result, Type_AE400_29795* a2x);
 void MergeManaBalls_277D0(Type_AE400_29795* ev1, Type_AE400_29795* ev2);
 char sub_279D0(int a1);
 void sub_27D30(Type_AE400_29795* event);
-void sub_28200(int a1);
-char sub_285C0(int a1);
+void Class10Type41Tick_28200(int a1);
+char Class10Type42Tick_285C0(int a1);
 // int sub_28D10(int a1, int a2);
 void sub_28DC0(Type_AE400_29795* event);
 void sub_28FE0(int a1);
-void sub_293D0(Type_AE400_29795* a1);
-void sub_29540(Type_AE400_29795* a1);
+void Class10Type43Tick_293D0(Type_AE400_29795* a1);
+void Class10Type44Tick_29540(Type_AE400_29795* a1);
 int sub_29640(Type_AE400_29795* event);
 void CrabSpawnTimerTick_296A0(Type_AE400_29795* a1);
 void sub_29700(int a1);
@@ -724,25 +724,25 @@ int sub_37B80(int a1);
 int sub_37BA0(int a1);
 int CreateTree_37BC0(int a1);
 int CreateStone_37CF0(int a1);
-int sub_37D70(int a1);
+int CreateClass2Type2_37D70(int a1);
 int CreateStandingStone_37E00(int a1);
-int sub_37E80(int a1);
-int sub_37EF0(int a1);
-int sub_38030(int a1);
-int sub_38270(int a1);
-int sub_38370(int a1);
+int CreateClass2Type4_37E80(int a1);
+int CreateClass2Type5_37EF0(int a1);
+int CreateClass5Type0_38030(int a1);
+int CreateClass5Type1_38270(int a1);
+int CreateClass5Type2_38370(int a1);
 void sub_38820_38BA0(Type_AE400_29795* a1);
 int CreateCrab_38890(int a1);
-int sub_389E0(int a1);
+int CreateClass5Type6_389E0(int a1);
 int sub_38C00_38F80(int a1);
 int sub_38D09(); // weak
-int sub_38D60(int a1);
-int sub_38E70(int a1);
-int sub_38FC0(int a1);
-int sub_390D0(int a1);
-int sub_39200(int a1);
-int sub_39490(int a1);
-int sub_395B0(int a1);
+int CreateClass5Type8_38D60(int a1);
+int CreateClass5Type9_38E70(int a1);
+int CreateClass5Type10_38FC0(int a1);
+int CreateClass5Type11_390D0(int a1);
+int CreateClass5Type12_39200(int a1);
+int CreateClass5Type14_39490(int a1);
+int CreateClass5Type15_395B0(int a1);
 int CreateWyvern_396E0(int a1);
 int sub_39800(int a1);
 int sub_39820(int a1);
@@ -763,35 +763,35 @@ int CreateEarthquakeMissile_39B40(int a1);
 int CreateMeteorMissile_39BC0(int a1);
 int CreateVolcanoMissile_39C40(int a1);
 int CreateCraterMissile_39CC0(int a1);
-int sub_39D40(int a1);
+int CreateClass9Type6_39D40(int a1);
 int CreateDuelMissile_39DC0(int a1);
 int CreateStealManaMissile_39E40(int a1);
 int CreateLightningBolt_39EC0(int a1);
 int CreateHomingSpawnMissile_39F40(int a1);
 int CreateUndeadArmyMissile_39FC0(int a1);
 int CreateLightningStormMissile_3A040(int a1);
-int sub_3A0C0(int a1);
-int sub_3A1A0(int a1);
-int sub_3A210(int a1);
+int CreateClass9Type13_3A0C0(int a1);
+int CreateClass9Type14_3A1A0(int a1);
+int CreateClass9Type15_3A210(int a1);
 int CreateWallOfFireMissile_3A270(int a1);
 int CreateManaMagnetMissile_3A2F0(int a1);
 int CreateGlobalDeathMissile_3A390(int a1);
-int sub_3A410(int a1);
+int CreateClass9Type19_3A410(int a1);
 int CreateExplosion_3A490(uint16_t* a1);
 int CreateClass10Type1_3A510(uint16_t* a1);
 int CreateSpeedEffect_3A570(uint16_t* a1);
-int sub_3A5D0(uint16_t* a1);
-int sub_3A640(uint16_t* a1);
-int sub_3A6B0(uint16_t* a1);
+int CreateClass10Type3_3A5D0(uint16_t* a1);
+int CreateClass10Type4_3A640(uint16_t* a1);
+int CreateClass10Type5_3A6B0(uint16_t* a1);
 int CreateClass10Type6_3A730(uint16_t* a1);
-int sub_3A7D0(uint16_t* a1);
-int sub_3A870(uint16_t* a1);
+int CreateClass10Type7_3A7D0(uint16_t* a1);
+int CreateClass10Type8_3A870(uint16_t* a1);
 int CreateVolcanoEffect_3A8D0(uint16_t* a1);
-int sub_3A930(uint16_t* a1);
+int CreateClass10Type10_3A930(uint16_t* a1);
 int CreateCraterEffect_3A9A0(uint16_t* a1);
 int CreatePossessionEffect_3AA10(uint16_t* a1);
-int sub_3AAA0(uint16_t* a1);
-int sub_3AB40(uint16_t* a1);
+int CreateClass10Type13_3AAA0(uint16_t* a1);
+int CreateClass10Type14_3AB40(uint16_t* a1);
 int CreateEarthquakeEffect_3ABE0(uint16_t* a1);
 int CreateExplosionRing_3AC70(uint16_t* a1);
 int CreateLava_3ACC0(uint16_t* a1);
@@ -801,30 +801,30 @@ int CreateLightningEffect_3AE80(uint16_t* a1);
 int CreateStealManaEffect_3AF00(uint16_t* a1);
 int CreateDuelEffect_3AF80(uint16_t* a1);
 int CreateTerrainRaiseStep_3B000(uint16_t* a1);
-int sub_3B060(uint16_t* a1);
-Type_AE400_29795* sub_3B0C0(axis_3d* position);
-int sub_3B120(uint16_t* a1);
-int sub_3B180(uint16_t* a1);
-int sub_3B1D0(uint16_t* a1);
-int sub_3B230(uint16_t* a1);
-int sub_3B2A0(uint16_t* a1);
-int sub_3B300(uint16_t* a1);
+int CreateClass10Type28_3B060(uint16_t* a1);
+Type_AE400_29795* CreateClass10Type30_3B0C0(axis_3d* position);
+int CreateClass10Type29_3B120(uint16_t* a1);
+int CreateClass10Type32_3B180(uint16_t* a1);
+int CreateClass10Type31_3B1D0(uint16_t* a1);
+int CreateClass10Type51_3B230(uint16_t* a1);
+int CreateClass10Type50_3B2A0(uint16_t* a1);
+int CreateClass10Type34_3B300(uint16_t* a1);
 int sub_3B3D0(uint16_t* a1);
 int CreateUndeadArmyEffect_3B3E0(uint16_t* a1);
 int sub_3B460(uint16_t* a1);
-int sub_3B4D0(uint16_t* a1);
+int CreateClass10Type33_3B4D0(uint16_t* a1);
 int CreateManaBall_3B5A0(uint16_t* a1);
 int CreateDeathMarker_3B620(uint16_t* a1);
-Type_AE400_29795* sub_3B690(axis_3d* a1);
-int sub_3B6F0(uint16_t* a1);
-int sub_3B760(uint16_t* a1);
-int sub_3B7B0_3BB30(uint16_t* a1);
-int sub_3B800(uint16_t* a1);
+Type_AE400_29795* CreateClass10Type45_3B690(axis_3d* a1);
+int CreateClass10Type43_3B6F0(uint16_t* a1);
+int CreateClass10Type41_3B760(uint16_t* a1);
+int CreateClass10Type42_3B7B0_3BB30(uint16_t* a1);
+int CreateClass10Type44_3B800(uint16_t* a1);
 int CreateCrabSpawnTimer_3B860(uint16_t* a1);
 int CreateWallOfFireEffect_3B8E0(uint16_t* a1);
 int CreateManaMagnetEffect_3B970(uint16_t* a1);
 int CreateGlobalDeathEffect_3BA00(uint16_t* a1);
-int sub_3BA90(uint16_t* a1);
+int CreateClass10Type56_3BA90(uint16_t* a1);
 Type_AE400_29795* CreateSwitch_3BB20(axis_3d* position, char a2, char a3);
 
 Type_AE400_29795* CreateSwitch00_3BB70(axis_3d* position);
@@ -885,10 +885,10 @@ int CreateWallOfFireSpell_3C3F0(int a1);
 int CreateReverseSpeedSpell_3C420(int a1);
 int CreateGlobalDeathSpell_3C450(int a1);
 int CreateRapidFireballSpell_3C480(int a1);
-int sub_3C4B0(int a1);
-int sub_3C4E0(int a1);
-int sub_3C510(int a1);
-int sub_3C540(int a1);
+int CreateClass13Type0_3C4B0(int a1);
+int CreateClass13Type1_3C4E0(int a1);
+int CreateClass13Type2_3C510(int a1);
+int CreateClass13Type3_3C540(int a1);
 void InitMusicFromSetup_3C570();
 void sub_3C800_sub_3CB40();
 void sub_3C9D0_3CD10();
@@ -1054,7 +1054,7 @@ void TreeTick_49890_49BD0(int a1);
 int sub_499C0_49D00(int a1);
 void sub_49A50_49D90(_WORD* a1);
 int StoneTick_49AA0_49DE0(int a1);
-int sub_49AD0_49E10(int a1);
+int Class2Type2Tick_49AD0_49E10(int a1);
 int StandingStoneTick_49B50_49E90(int a1);
 void sub_4A980_4ACC0();
 void MainMenuStep_4AB20_4AE60();
@@ -1151,7 +1151,7 @@ __int16 LightningBoltTick_535E0_53920(unsigned int a1);
 void UpdateHomingSpawnMissile_53980_53CC0(int a1);
 char UpdateSpawningMissile_53B50_53E90(int a1);
 char LightningStormMissileTick_53DC0_54100(int a1);
-void sub_54180_544D0(int a1);
+void Class9Type13Tick_54180_544D0(int a1);
 void sub_54290_545E0(int a1);
 char ManaMagnetMissileTick_542B0_54640(int a1);
 void GlobalDeathMissileTick_54480_54810(int a1);
@@ -1224,39 +1224,39 @@ void sub_59560_59A70(Type_99974* a1);
 void sub_59720_59C30();
 void sub_59750(int16 a1, int16 a2);
 void Blit_599B0_59EC0(__int16 a1);
-void sub_59A80_59F90(uint16_t* a1);
-void sub_59AB0_59FC0(uint16_t* a1);
-void sub_59AE0_59FF0(uint16_t* a1);
-void sub_59B30_5A040(uint16_t* a1);
-int sub_59B80_5A090(uint16_t* a1);
-void sub_59C40_5A150(uint16_t* a1);
-int sub_59C70_5A180(uint16_t* a1);
-void sub_59CA0_5A1B0(uint16_t* a1);
-void sub_59CF0_5A200(uint16_t* a1);
-void sub_59D40_5A250(uint16_t* a1);
-int sub_59D70_5A280(uint16_t* a1);
-void sub_59DA0_5A2B0(uint16_t* a1);
-void sub_59DF0_5A300(uint16_t* a1);
+void Switch00Tick_59A80_59F90(uint16_t* a1);
+void Switch01Tick_59AB0_59FC0(uint16_t* a1);
+void Switch02Tick_59AE0_59FF0(uint16_t* a1);
+void Switch03Tick_59B30_5A040(uint16_t* a1);
+int Switch04Tick_59B80_5A090(uint16_t* a1);
+void Switch05Tick_59C40_5A150(uint16_t* a1);
+int Switch06Tick_59C70_5A180(uint16_t* a1);
+void Switch07Tick_59CA0_5A1B0(uint16_t* a1);
+void Switch08Tick_59CF0_5A200(uint16_t* a1);
+void Switch09Tick_59D40_5A250(uint16_t* a1);
+int Switch10Tick_59D70_5A280(uint16_t* a1);
+void Switch11Tick_59DA0_5A2B0(uint16_t* a1);
+void Switch12Tick_59DF0_5A300(uint16_t* a1);
 void sub_59E40_5A350(int a1, int a2);
-void sub_59F60_5A470(uint16_t* a1);
-void sub_59F70_5A480(uint16_t* a1);
-void sub_59F80_5A490(uint16_t* a1);
-void sub_59F90_5A4A0(uint16_t* a1);
-void sub_59FA0_5A4B0(uint16_t* a1);
-void sub_59FB0_5A4C0(uint16_t* a1);
-void sub_59FC0_5A4D0(uint16_t* a1);
-void sub_59FD0_5A4E0(uint16_t* a1);
-void sub_59FE0_5A4F0(uint16_t* a1);
-void sub_59FF0_5A500(uint16_t* a1);
-void sub_5A000_5A510(uint16_t* a1);
-void sub_5A010_5A520(uint16_t* a1);
-void sub_5A020_5A530(uint16_t* a1);
-void sub_5A030_5A540(uint16_t* a1);
-void sub_5A040_5A550(uint16_t* a1);
-void sub_5A050_5A560(uint16_t* a1);
-void sub_5A060_5A570(uint16_t* a1);
-void sub_5A070_5A580(uint16_t* a1);
-int sub_5A080(uint16_t* a1);
+void Switch13Tick_59F60_5A470(uint16_t* a1);
+void Switch14Tick_59F70_5A480(uint16_t* a1);
+void Switch15Tick_59F80_5A490(uint16_t* a1);
+void Switch16Tick_59F90_5A4A0(uint16_t* a1);
+void Switch17Tick_59FA0_5A4B0(uint16_t* a1);
+void Switch18Tick_59FB0_5A4C0(uint16_t* a1);
+void Switch19Tick_59FC0_5A4D0(uint16_t* a1);
+void Switch20Tick_59FD0_5A4E0(uint16_t* a1);
+void Switch21Tick_59FE0_5A4F0(uint16_t* a1);
+void Switch22Tick_59FF0_5A500(uint16_t* a1);
+void Switch23Tick_5A000_5A510(uint16_t* a1);
+void Switch24Tick_5A010_5A520(uint16_t* a1);
+void Switch25Tick_5A020_5A530(uint16_t* a1);
+void Switch26Tick_5A030_5A540(uint16_t* a1);
+void Switch27Tick_5A040_5A550(uint16_t* a1);
+void Switch28Tick_5A050_5A560(uint16_t* a1);
+void Switch29Tick_5A060_5A570(uint16_t* a1);
+void Switch30Tick_5A070_5A580(uint16_t* a1);
+int Switch31Tick_5A080(uint16_t* a1);
 int sub_5A090_5A5A0(int a1, int a2);
 int sub_5A120_5A630(int a1, int a2);
 void DrawText_5A180_5A690(char* text, int posX, int posY, uint8 color);
@@ -3445,8 +3445,8 @@ Type_96902;
 #pragma pack (16)
 
 int NullConstructor_39A00(uint16_t* a1);
-int sub_39340(uint16_t* a1);
-int sub_38C60(uint16_t* a1);
+int CreateClass5Type13_39340(uint16_t* a1);
+int CreateClass5Type7_38C60(uint16_t* a1);
 int CreateGuard_386E0(uint16_t* a1);
 int CreateWorm_384B0(uint16_t* a1);
 
@@ -3467,10 +3467,10 @@ Type_254A34 str_254A34[] = {
 Type_254A34 str_254D48[] = {
 { 0x002548F4, 0x0000, PORT_FN(CreateTree_37BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0001, PORT_FN(CreateStone_37CF0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(sub_37D70, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(CreateClass2Type2_37D70, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0003, PORT_FN(CreateStandingStone_37E00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(sub_37E80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(sub_37EF0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(CreateClass2Type4_37E80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(CreateClass2Type5_37EF0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_254B84[] = {
@@ -3528,22 +3528,22 @@ Type_254A34 str_254DBC[] = {//broken data in original
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_255478[] = {
-{ 0x002548F4, 0x0000, PORT_FN(sub_38030, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_38270, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(sub_38370, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(CreateClass5Type0_38030, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(CreateClass5Type1_38270, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(CreateClass5Type2_38370, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0003, PORT_FN(CreateWorm_384B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0004, PORT_FN(CreateGuard_386E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000},
 { 0x002548F4, 0x0005, PORT_FN(CreateCrab_38890, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, PORT_FN(sub_389E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, PORT_FN(sub_38C60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0008, PORT_FN(sub_38D60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0009, PORT_FN(sub_38E70, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, PORT_FN(sub_38FC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000B, PORT_FN(sub_390D0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000C, PORT_FN(sub_39200, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000D, PORT_FN(sub_39340, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000E, PORT_FN(sub_39490, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000F, PORT_FN(sub_395B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, PORT_FN(CreateClass5Type6_389E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, PORT_FN(CreateClass5Type7_38C60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0008, PORT_FN(CreateClass5Type8_38D60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0009, PORT_FN(CreateClass5Type9_38E70, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, PORT_FN(CreateClass5Type10_38FC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000B, PORT_FN(CreateClass5Type11_390D0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000C, PORT_FN(CreateClass5Type12_39200, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000D, PORT_FN(CreateClass5Type13_39340, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000E, PORT_FN(CreateClass5Type14_39490, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000F, PORT_FN(CreateClass5Type15_395B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0010, PORT_FN(CreateWyvern_396E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
@@ -3576,38 +3576,38 @@ Type_254A34 str_255870[] = {
 { 0x002548F4, 0x0003, PORT_FN(CreateMeteorMissile_39BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0004, PORT_FN(CreateVolcanoMissile_39C40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0005, PORT_FN(CreateCraterMissile_39CC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, PORT_FN(sub_39D40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, PORT_FN(CreateClass9Type6_39D40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0007, PORT_FN(CreateDuelMissile_39DC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0008, PORT_FN(CreateStealManaMissile_39E40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0009, PORT_FN(CreateLightningBolt_39EC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000A, PORT_FN(CreateHomingSpawnMissile_39F40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000B, PORT_FN(CreateUndeadArmyMissile_39FC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000C, PORT_FN(CreateLightningStormMissile_3A040, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000D, PORT_FN(sub_3A0C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000E, PORT_FN(sub_3A1A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000F, PORT_FN(sub_3A210, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000D, PORT_FN(CreateClass9Type13_3A0C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000E, PORT_FN(CreateClass9Type14_3A1A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000F, PORT_FN(CreateClass9Type15_3A210, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0010, PORT_FN(CreateWallOfFireMissile_3A270, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0011, PORT_FN(CreateManaMagnetMissile_3A2F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0012, PORT_FN(CreateGlobalDeathMissile_3A390, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0013, PORT_FN(sub_3A410, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0013, PORT_FN(CreateClass9Type19_3A410, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x0000, PORT_FN(CreateExplosion_3A490, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0001, PORT_FN(CreateClass10Type1_3A510, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0002, PORT_FN(CreateSpeedEffect_3A570, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_3A5D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(sub_3A640, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(sub_3A6B0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(CreateClass10Type3_3A5D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(CreateClass10Type4_3A640, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(CreateClass10Type5_3A6B0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0006, PORT_FN(CreateClass10Type6_3A730, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, PORT_FN(sub_3A7D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0008, PORT_FN(sub_3A870, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, PORT_FN(CreateClass10Type7_3A7D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0008, PORT_FN(CreateClass10Type8_3A870, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0009, PORT_FN(CreateVolcanoEffect_3A8D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, PORT_FN(sub_3A930, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, PORT_FN(CreateClass10Type10_3A930, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000B, PORT_FN(CreateCraterEffect_3A9A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000C, PORT_FN(CreatePossessionEffect_3AA10, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000D, PORT_FN(sub_3AAA0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000E, PORT_FN(sub_3AB40, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000D, PORT_FN(CreateClass10Type13_3AAA0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000E, PORT_FN(CreateClass10Type14_3AB40, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000F, PORT_FN(CreateEarthquakeEffect_3ABE0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0010, PORT_FN(CreateLava_3ACC0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0011, PORT_FN(CreateExplosionRing_3AC70, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
@@ -3621,35 +3621,35 @@ Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x0019, PORT_FN(CreateStealManaEffect_3AF00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x001A, PORT_FN(CreateDuelEffect_3AF80, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x001B, PORT_FN(CreateTerrainRaiseStep_3B000, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x001C, PORT_FN(sub_3B060, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x001D, PORT_FN(sub_3B120, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x001E, (Type_AE400_29795 * (*)(axis_3d*))sub_3B0C0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001F, PORT_FN(sub_3B1D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0020, PORT_FN(sub_3B180, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0021, PORT_FN(sub_3B4D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0022, PORT_FN(sub_3B300, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001C, PORT_FN(CreateClass10Type28_3B060, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001D, PORT_FN(CreateClass10Type29_3B120, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001E, (Type_AE400_29795 * (*)(axis_3d*))CreateClass10Type30_3B0C0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001F, PORT_FN(CreateClass10Type31_3B1D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0020, PORT_FN(CreateClass10Type32_3B180, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0021, PORT_FN(CreateClass10Type33_3B4D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0022, PORT_FN(CreateClass10Type34_3B300, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0023, PORT_FN(sub_3B3D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0024, PORT_FN(CreateUndeadArmyEffect_3B3E0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0026, PORT_FN(sub_3B460, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0027, PORT_FN(CreateManaBall_3B5A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0028, PORT_FN(CreateDeathMarker_3B620, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0029, PORT_FN(sub_3B760, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x002A, PORT_FN(sub_3B7B0_3BB30, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x002B, PORT_FN(sub_3B6F0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x002C, PORT_FN(sub_3B800, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x002D, (Type_AE400_29795 * (*)(axis_3d*))sub_3B690, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0029, PORT_FN(CreateClass10Type41_3B760, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x002A, PORT_FN(CreateClass10Type42_3B7B0_3BB30, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x002B, PORT_FN(CreateClass10Type43_3B6F0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x002C, PORT_FN(CreateClass10Type44_3B800, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x002D, (Type_AE400_29795 * (*)(axis_3d*))CreateClass10Type45_3B690, 0x0001, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0032, PORT_FN(sub_3B2A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0033, PORT_FN(sub_3B230, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0032, PORT_FN(CreateClass10Type50_3B2A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0033, PORT_FN(CreateClass10Type51_3B230, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0034, PORT_FN(CreateCrabSpawnTimer_3B860, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0035, PORT_FN(CreateWallOfFireEffect_3B8E0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0036, PORT_FN(CreateManaMagnetEffect_3B970, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0037, PORT_FN(CreateGlobalDeathEffect_3BA00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0038, PORT_FN(sub_3BA90, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0038, PORT_FN(CreateClass10Type56_3BA90, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 
@@ -3716,10 +3716,10 @@ Type_254A34 str_2567D8[] = {
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_256980[] = {
-{ 0x002548F4, 0x0000, PORT_FN(sub_3C4B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_3C4E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(sub_3C510, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_3C540, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(CreateClass13Type0_3C4B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(CreateClass13Type1_3C4E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(CreateClass13Type2_3C510, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(CreateClass13Type3_3C540, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 /// Empty entity state handler (original 0x25980 is a bare ret).
@@ -3787,7 +3787,7 @@ Type_254A34x str_254C3C[] = {
 { 0x002548F4,0x0003,PORT_FN(StoneTick_49AA0_49DE0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))EmptyStateHandler_49AC0,0x0001,0x0000 },
 { 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))EmptyStateHandler_49AC0,0x0001,0x0000 },
-{ 0x002548F4,0x0006,PORT_FN(sub_49AD0_49E10, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0006,PORT_FN(Class2Type2Tick_49AD0_49E10, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B40,0x0001,0x0000 },
 { 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B40,0x0001,0x0000 },
 { 0x002548F4,0x0009,PORT_FN(StandingStoneTick_49B50_49E90, void(Type_AE400_29795*)),0x0001,0x0000 },
@@ -3823,19 +3823,19 @@ Type_254A34x str_254DAC[] = {
 
 Type_254A34x str_254DCC[] = {//254DCC
 { 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))sub_1B060, 0x0001, 0x0000 },
-{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))sub_1B070,0x0001,0x0000 },
+{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))Class5Type0Tick_1B070,0x0001,0x0000 },
 { 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))sub_1B090,0x0001,0x0000 },
 { 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))sub_1B0E0,0x0001,0x0000 },
 { 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))sub_1B100,0x0001,0x0000 },
 { 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))sub_1B110,0x0001,0x0000 },
 { 0x002548F4,0x0006,(void (*)(Type_AE400_29795*))sub_1B160,0x0001,0x0000 },
-{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))sub_1B200,0x0001,0x0000 },
+{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))Class5Type1Tick_1B200,0x0001,0x0000 },
 { 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))sub_1B2D0,0x0001,0x0000 },
 { 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))sub_1B320,0x0001,0x0000 },
 { 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))sub_1B330,0x0001,0x0000 },
 { 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))sub_1B340,0x0001,0x0000 },
 { 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))sub_1B350,0x0001,0x0000 },
-{ 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))sub_1B370,0x0001,0x0000 },
+{ 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))Class5Type2Tick_1B370,0x0001,0x0000 },
 { 0x002548F4, 0x000E, (void (*)(Type_AE400_29795*))sub_1B3C0, 0x0001, 0x0000 },
 { 0x002548F4, 0x000F, (void (*)(Type_AE400_29795*))sub_1B4C0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0010, (void (*)(Type_AE400_29795*))sub_1B4E0, 0x0001, 0x0000 },
@@ -3859,61 +3859,61 @@ Type_254A34x str_254DCC[] = {//254DCC
 { 0x002548F4, 0x0022, (void (*)(Type_AE400_29795*))sub_1C3C0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0023, (void (*)(Type_AE400_29795*))sub_1C3D0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0024, (void (*)(Type_AE400_29795*))sub_1C490, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0025, (void (*)(Type_AE400_29795*))sub_1C4A0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0025, (void (*)(Type_AE400_29795*))Class5Type6Tick_1C4A0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0026, (void (*)(Type_AE400_29795*))sub_1C4F0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0027, (void (*)(Type_AE400_29795*))sub_1C880, 0x0001, 0x0000 },
 { 0x002548F4, 0x0028, (void (*)(Type_AE400_29795*))sub_1C8D0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0029, (void (*)(Type_AE400_29795*))sub_1C8E0, 0x0001, 0x0000 },
 { 0x002548F4, 0x002A, (void (*)(Type_AE400_29795*))sub_1C8F0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002B, (void (*)(Type_AE400_29795*))sub_1C900, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002B, (void (*)(Type_AE400_29795*))Class5Type7Tick_1C900, 0x0001, 0x0000 },
 { 0x002548F4, 0x002C, (void (*)(Type_AE400_29795*))sub_1C960, 0x0001, 0x0000 },
 { 0x002548F4, 0x002D, (void (*)(Type_AE400_29795*))sub_1CA00, 0x0001, 0x0000 },
 { 0x002548F4, 0x002E, (void (*)(Type_AE400_29795*))sub_1CA20, 0x0001, 0x0000 },
 { 0x002548F4, 0x002F, (void (*)(Type_AE400_29795*))sub_1CA30, 0x0001, 0x0000 },
 { 0x002548F4, 0x0030, (void (*)(Type_AE400_29795*))sub_1CA40, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0031, (void (*)(Type_AE400_29795*))sub_1CA50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0031, (void (*)(Type_AE400_29795*))Class5Type8Tick_1CA50, 0x0001, 0x0000 },
 { 0x002548F4, 0x0032, (void (*)(Type_AE400_29795*))sub_1CE30, 0x0001, 0x0000 },
 { 0x002548F4, 0x0033, (void (*)(Type_AE400_29795*))sub_1CF50, 0x0001, 0x0000 },
 { 0x002548F4, 0x0034, (void (*)(Type_AE400_29795*))sub_1CF60, 0x0001, 0x0000 },
 { 0x002548F4, 0x0035, (void (*)(Type_AE400_29795*))sub_1CFE0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0036, (void (*)(Type_AE400_29795*))sub_1CFF0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0036, (void (*)(Type_AE400_29795*))Class5Type9Tick_1CFF0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0037, (void (*)(Type_AE400_29795*))sub_1D060, 0x0001, 0x0000 },
 { 0x002548F4, 0x0038, (void (*)(Type_AE400_29795*))sub_1DA60, 0x0001, 0x0000 },
 { 0x002548F4, 0x0039, (void (*)(Type_AE400_29795*))sub_1DC80, 0x0001, 0x0000 },
 { 0x002548F4, 0x003A, (void (*)(Type_AE400_29795*))sub_1DCB0, 0x0001, 0x0000 },
 { 0x002548F4, 0x003B, (void (*)(Type_AE400_29795*))sub_1DCC0, 0x0001, 0x0000 },
 { 0x002548F4, 0x003C, (void (*)(Type_AE400_29795*))sub_1DDD0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003D, (void (*)(Type_AE400_29795*))sub_1DDE0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003D, (void (*)(Type_AE400_29795*))Class5Type10Tick_1DDE0, 0x0001, 0x0000 },
 { 0x002548F4, 0x003E, (void (*)(Type_AE400_29795*))sub_1DDF0, 0x0001, 0x0000 },
 { 0x002548F4, 0x003F, (void (*)(Type_AE400_29795*))sub_1DE10, 0x0001, 0x0000 },
 { 0x002548F4, 0x0040, (void (*)(Type_AE400_29795*))sub_1DE20, 0x0001, 0x0000 },
 { 0x002548F4, 0x0041, (void (*)(Type_AE400_29795*))sub_1DE30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0042, (void (*)(Type_AE400_29795*))sub_1DE40, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0042, (void (*)(Type_AE400_29795*))Class5Type11Tick_1DE40, 0x0001, 0x0000 },
 { 0x002548F4, 0x0043, (void (*)(Type_AE400_29795*))sub_1DFE0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0044, (void (*)(Type_AE400_29795*))sub_1E380, 0x0001, 0x0000 },
 { 0x002548F4, 0x0045, (void (*)(Type_AE400_29795*))sub_1E6F0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0046, (void (*)(Type_AE400_29795*))sub_1E700, 0x0001, 0x0000 },
 { 0x002548F4, 0x0047, (void (*)(Type_AE400_29795*))sub_1E710, 0x0001, 0x0000 },
 { 0x002548F4, 0x0048, (void (*)(Type_AE400_29795*))sub_1EA40, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0049, (void (*)(Type_AE400_29795*))sub_1EED0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0049, (void (*)(Type_AE400_29795*))Class5Type12Tick_1EED0, 0x0001, 0x0000 },
 { 0x002548F4, 0x004A, (void (*)(Type_AE400_29795*))sub_1F120, 0x0001, 0x0000 },
 { 0x002548F4, 0x004B, (void (*)(Type_AE400_29795*))sub_1F390, 0x0001, 0x0000 },
 { 0x002548F4, 0x004C, (void (*)(Type_AE400_29795*))sub_1F5A0, 0x0001, 0x0000 },
 { 0x002548F4, 0x004D, (void (*)(Type_AE400_29795*))sub_1F5B0, 0x0001, 0x0000 },
 { 0x002548F4, 0x004E, (void (*)(Type_AE400_29795*))EmptyStateHandler_1F630, 0x0001, 0x0000 },
-{ 0x002548F4, 0x004F, (void (*)(Type_AE400_29795*))sub_1F640, 0x0001, 0x0000 },
+{ 0x002548F4, 0x004F, (void (*)(Type_AE400_29795*))Class5Type13Tick_1F640, 0x0001, 0x0000 },
 { 0x002548F4, 0x0050, (void (*)(Type_AE400_29795*))EmptyStateHandler_1F9F0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0051, (void (*)(Type_AE400_29795*))EmptyStateHandler_1F9F0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0052, (void (*)(Type_AE400_29795*))sub_1FA00, 0x0001, 0x0000 },
 { 0x002548F4, 0x0053, (void (*)(Type_AE400_29795*))sub_1FAA0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0054, (void (*)(Type_AE400_29795*))EmptyStateHandler_1FAB0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0055, (void (*)(Type_AE400_29795*))sub_1FAC0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0055, (void (*)(Type_AE400_29795*))Class5Type14Tick_1FAC0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0056, (void (*)(Type_AE400_29795*))EmptyStateHandler_1FE80, 0x0001, 0x0000 },
 { 0x002548F4, 0x0057, (void (*)(Type_AE400_29795*))EmptyStateHandler_1FE80, 0x0001, 0x0000 },
 { 0x002548F4, 0x0058, (void (*)(Type_AE400_29795*))sub_1FE90, 0x0001, 0x0000 },
 { 0x002548F4, 0x0059, (void (*)(Type_AE400_29795*))sub_1FEC0, 0x0001, 0x0000 },
 { 0x002548F4, 0x005A, (void (*)(Type_AE400_29795*))sub_1FF50, 0x0001, 0x0000 },
-{ 0x002548F4, 0x005B, (void (*)(Type_AE400_29795*))sub_1FF60, 0x0001, 0x0000 },
+{ 0x002548F4, 0x005B, (void (*)(Type_AE400_29795*))Class5Type15Tick_1FF60, 0x0001, 0x0000 },
 { 0x002548F4, 0x005C, (void (*)(Type_AE400_29795*))sub_201D0, 0x0001, 0x0000 },
 { 0x002548F4, 0x005D, (void (*)(Type_AE400_29795*))sub_203E0, 0x0001, 0x0000 },
 { 0x002548F4, 0x005E, (void (*)(Type_AE400_29795*))sub_203F0, 0x0001, 0x0000 },
@@ -3986,7 +3986,7 @@ Type_254A34x str_25573C[] = {
 { 0x002548F4,0x000A,PORT_FN(UpdateHomingSpawnMissile_53980_53CC0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000B,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000C,PORT_FN(LightningStormMissileTick_53DC0_54100, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000D,PORT_FN(sub_54180_544D0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000D,PORT_FN(Class9Type13Tick_54180_544D0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000E,PORT_FN(sub_54290_545E0, void(Type_AE400_29795*)),0x0001,0x0000 }, // PORT: see below
 { 0x002548F4,0x000F,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0010,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
@@ -4001,18 +4001,18 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))ExplosionTick_24F60,0x0001,0x0000 },
 { 0x002548F4,0x0001,PORT_FN(Class10Type1Tick_25130, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0002,PORT_FN(SpeedEffectTick_252B0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0003,PORT_FN(sub_253F0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0003,PORT_FN(Class10Type3Tick_253F0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))EmptyStateHandler_25980,0x0001,0x0000 },
-{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))sub_25410,0x0001,0x0000 },
+{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))Class10Type5Tick_25410,0x0001,0x0000 },
 { 0x002548F4,0x0006,PORT_FN(Class10Type6Tick_252D0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0007,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0008,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))VolcanoEffectTick_25470,0x0001,0x0000 },
-{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))sub_25570,0x0001,0x0000 },
+{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))Class10Type10Tick_25570,0x0001,0x0000 },
 { 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))CraterEffectTick_25670,0x0001,0x0000 },
 { 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))PossessionEffectTick_25760,0x0001,0x0000 },
-{ 0x002548F4,0x000D,PORT_FN(sub_257B0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000E,PORT_FN(sub_258A0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000D,PORT_FN(Class10Type13Tick_257B0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000E,PORT_FN(Class10Type14Tick_258A0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))EarthquakeEffectTick_25990,0x0001,0x0000 },
 { 0x002548F4,0x0010,PORT_FN(LavaTick_25A60, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))ExplosionRingTick_25CE0,0x0001,0x0000 },
@@ -4030,21 +4030,21 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x001D,(void (*)(Type_AE400_29795*))RaiseTerrainStripX_26760,0x0001,0x0000 },
 { 0x002548F4,0x001E,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x001F,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0020,(void (*)(Type_AE400_29795*))sub_26890,0x0001,0x0000 },
+{ 0x002548F4,0x0020,(void (*)(Type_AE400_29795*))Class10Type30Tick_26890,0x0001,0x0000 },
 { 0x002548F4,0x0021,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0022,(void (*)(Type_AE400_29795*))sub_26920,0x0001,0x0000 },
-{ 0x002548F4,0x0023,PORT_FN(sub_26CE0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0024,PORT_FN(sub_26A60, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0022,(void (*)(Type_AE400_29795*))Class10Type32Tick_26920,0x0001,0x0000 },
+{ 0x002548F4,0x0023,PORT_FN(Class10Type33Tick_26CE0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0024,PORT_FN(Class10Type34Tick_26A60, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0025,PORT_FN(sub_26C00, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0026,PORT_FN(UndeadArmyEffectTick_26E90, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 },
 { 0x002548F4,0x0028,PORT_FN(sub_26D20, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0029,ManaBallTick_27030,0x0001,0x0000 },
 { 0x002548F4,0x002A,(void (*)(Type_AE400_29795*))DeathMarkerTick_275C0,0x0001,0x0000 },
-{ 0x002548F4,0x002B,PORT_FN(sub_28200, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x002C,PORT_FN(sub_285C0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x002D,(void (*)(Type_AE400_29795*))sub_293D0,0x0001,0x0000 },
-{ 0x002548F4,0x002E,(void (*)(Type_AE400_29795*))sub_29540,0x0000,0x0000 },
+{ 0x002548F4,0x002B,PORT_FN(Class10Type41Tick_28200, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x002C,PORT_FN(Class10Type42Tick_285C0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x002D,(void (*)(Type_AE400_29795*))Class10Type43Tick_293D0,0x0001,0x0000 },
+{ 0x002548F4,0x002E,(void (*)(Type_AE400_29795*))Class10Type44Tick_29540,0x0000,0x0000 },
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 },
 { 0x002548F4,0x0030,(void (*)(Type_AE400_29795*))sub_27D30,0x0001,0x0000 },
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 },
@@ -4053,7 +4053,7 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x0034,sub_28DC0,0x0001,0x0000 },
 { 0x002548F4,0x0035,PORT_FN(sub_28FE0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0036,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0037,(void (*)(Type_AE400_29795*))sub_269A0,0x0001,0x0000 },
+{ 0x002548F4,0x0037,(void (*)(Type_AE400_29795*))Class10Type51Tick_269A0,0x0001,0x0000 },
 { 0x002548F4,0x0038,(void (*)(Type_AE400_29795*))CrabSpawnTimerTick_296A0,0x0001,0x0000 },
 { 0x002548F4,0x0039,PORT_FN(sub_29700, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x003A,(void (*)(Type_AE400_29795*))WallOfFireEffectTick_29780,0x0001,0x0000 },
@@ -4063,38 +4063,38 @@ Type_254A34x str_255998[] = {
 { 0x00000000,0x0000,nullptr,0x0000,0x0000 }
 };
 Type_254A34x str_256038[] = {
-{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))sub_59A80_59F90,0x0001,0x0000 },
-{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))sub_59AB0_59FC0,0x0001,0x0000 },
-{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))sub_59AE0_59FF0,0x0001,0x0000 },
-{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))sub_59B30_5A040,0x0001,0x0000 },
-{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))sub_59B80_5A090,0x0001,0x0000 },
-{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))sub_59C40_5A150,0x0001,0x0000 },
-{ 0x002548F4,0x0006,(void (*)(Type_AE400_29795*))sub_59C70_5A180,0x0001,0x0000 },
-{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))sub_59CA0_5A1B0,0x0001,0x0000 },
-{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))sub_59CF0_5A200,0x0001,0x0000 },
-{ 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))sub_59D40_5A250,0x0001,0x0000 },
-{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))sub_59D70_5A280,0x0001,0x0000 },
-{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))sub_59DA0_5A2B0,0x0001,0x0000 },
-{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))sub_59DF0_5A300,0x0001,0x0000 },
-{ 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))sub_59F60_5A470,0x0001,0x0000 },
-{ 0x002548F4,0x000E,(void (*)(Type_AE400_29795*))sub_59F70_5A480,0x0001,0x0000 },
-{ 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))sub_59F80_5A490,0x0001,0x0000 },
-{ 0x002548F4,0x0010,(void (*)(Type_AE400_29795*))sub_59F90_5A4A0,0x0001,0x0000 },
-{ 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))sub_59FA0_5A4B0,0x0001,0x0000 },
-{ 0x002548F4,0x0012,(void (*)(Type_AE400_29795*))sub_59FB0_5A4C0,0x0001,0x0000 },
-{ 0x002548F4,0x0013,(void (*)(Type_AE400_29795*))sub_59FC0_5A4D0,0x0001,0x0000 },
-{ 0x002548F4,0x0014,(void (*)(Type_AE400_29795*))sub_59FD0_5A4E0,0x0001,0x0000 },
-{ 0x002548F4,0x0015,(void (*)(Type_AE400_29795*))sub_59FE0_5A4F0,0x0001,0x0000 },
-{ 0x002548F4,0x0016,(void (*)(Type_AE400_29795*))sub_59FF0_5A500,0x0001,0x0000 },
-{ 0x002548F4,0x0017,(void (*)(Type_AE400_29795*))sub_5A000_5A510,0x0001,0x0000 },
-{ 0x002548F4,0x0018,(void (*)(Type_AE400_29795*))sub_5A010_5A520,0x0001,0x0000 },
-{ 0x002548F4,0x0019,(void (*)(Type_AE400_29795*))sub_5A020_5A530,0x0001,0x0000 },
-{ 0x002548F4,0x001A,(void (*)(Type_AE400_29795*))sub_5A030_5A540,0x0001,0x0000 },
-{ 0x002548F4,0x001B,(void (*)(Type_AE400_29795*))sub_5A040_5A550,0x0001,0x0000 },
-{ 0x002548F4,0x001C,(void (*)(Type_AE400_29795*))sub_5A050_5A560,0x0001,0x0000 },
-{ 0x002548F4,0x001D,(void (*)(Type_AE400_29795*))sub_5A060_5A570,0x0001,0x0000 },
-{ 0x002548F4,0x001E,(void (*)(Type_AE400_29795*))sub_5A070_5A580,0x0001,0x0000 },
-{ 0x002548F4,0x001F,(void (*)(Type_AE400_29795*))sub_5A080,0x0001,0x0000 },
+{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))Switch00Tick_59A80_59F90,0x0001,0x0000 },
+{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))Switch01Tick_59AB0_59FC0,0x0001,0x0000 },
+{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))Switch02Tick_59AE0_59FF0,0x0001,0x0000 },
+{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))Switch03Tick_59B30_5A040,0x0001,0x0000 },
+{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))Switch04Tick_59B80_5A090,0x0001,0x0000 },
+{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))Switch05Tick_59C40_5A150,0x0001,0x0000 },
+{ 0x002548F4,0x0006,(void (*)(Type_AE400_29795*))Switch06Tick_59C70_5A180,0x0001,0x0000 },
+{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))Switch07Tick_59CA0_5A1B0,0x0001,0x0000 },
+{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))Switch08Tick_59CF0_5A200,0x0001,0x0000 },
+{ 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))Switch09Tick_59D40_5A250,0x0001,0x0000 },
+{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))Switch10Tick_59D70_5A280,0x0001,0x0000 },
+{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))Switch11Tick_59DA0_5A2B0,0x0001,0x0000 },
+{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))Switch12Tick_59DF0_5A300,0x0001,0x0000 },
+{ 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))Switch13Tick_59F60_5A470,0x0001,0x0000 },
+{ 0x002548F4,0x000E,(void (*)(Type_AE400_29795*))Switch14Tick_59F70_5A480,0x0001,0x0000 },
+{ 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))Switch15Tick_59F80_5A490,0x0001,0x0000 },
+{ 0x002548F4,0x0010,(void (*)(Type_AE400_29795*))Switch16Tick_59F90_5A4A0,0x0001,0x0000 },
+{ 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))Switch17Tick_59FA0_5A4B0,0x0001,0x0000 },
+{ 0x002548F4,0x0012,(void (*)(Type_AE400_29795*))Switch18Tick_59FB0_5A4C0,0x0001,0x0000 },
+{ 0x002548F4,0x0013,(void (*)(Type_AE400_29795*))Switch19Tick_59FC0_5A4D0,0x0001,0x0000 },
+{ 0x002548F4,0x0014,(void (*)(Type_AE400_29795*))Switch20Tick_59FD0_5A4E0,0x0001,0x0000 },
+{ 0x002548F4,0x0015,(void (*)(Type_AE400_29795*))Switch21Tick_59FE0_5A4F0,0x0001,0x0000 },
+{ 0x002548F4,0x0016,(void (*)(Type_AE400_29795*))Switch22Tick_59FF0_5A500,0x0001,0x0000 },
+{ 0x002548F4,0x0017,(void (*)(Type_AE400_29795*))Switch23Tick_5A000_5A510,0x0001,0x0000 },
+{ 0x002548F4,0x0018,(void (*)(Type_AE400_29795*))Switch24Tick_5A010_5A520,0x0001,0x0000 },
+{ 0x002548F4,0x0019,(void (*)(Type_AE400_29795*))Switch25Tick_5A020_5A530,0x0001,0x0000 },
+{ 0x002548F4,0x001A,(void (*)(Type_AE400_29795*))Switch26Tick_5A030_5A540,0x0001,0x0000 },
+{ 0x002548F4,0x001B,(void (*)(Type_AE400_29795*))Switch27Tick_5A040_5A550,0x0001,0x0000 },
+{ 0x002548F4,0x001C,(void (*)(Type_AE400_29795*))Switch28Tick_5A050_5A560,0x0001,0x0000 },
+{ 0x002548F4,0x001D,(void (*)(Type_AE400_29795*))Switch29Tick_5A060_5A570,0x0001,0x0000 },
+{ 0x002548F4,0x001E,(void (*)(Type_AE400_29795*))Switch30Tick_5A070_5A580,0x0001,0x0000 },
+{ 0x002548F4,0x001F,(void (*)(Type_AE400_29795*))Switch31Tick_5A080,0x0001,0x0000 },
 { 0x00000000,0x0000,nullptr,0x0000,0x0000 }
 };
 
@@ -4202,11 +4202,11 @@ Type_96902 dword_96902[] = {//254902
 /// Constructor that creates nothing (original 0x39A00 is "xor eax,eax; ret"); class 10 types 20-22 and 24.
 int NullConstructor_39A00(uint16_t* a1) { return 0; };
 /*int (*off_97D12[])(int) = {
-CreateExplosion_3A490, CreateClass10Type1_3A510, CreateSpeedEffect_3A570, sub_3A5D0, sub_3A640, sub_3A6B0, CreateClass10Type6_3A730, sub_3A7D0,
-sub_3A870, CreateVolcanoEffect_3A8D0, sub_3A930, CreateCraterEffect_3A9A0, CreatePossessionEffect_3AA10, sub_3AAA0, sub_3AB40, CreateEarthquakeEffect_3ABE0,
+CreateExplosion_3A490, CreateClass10Type1_3A510, CreateSpeedEffect_3A570, CreateClass10Type3_3A5D0, CreateClass10Type4_3A640, CreateClass10Type5_3A6B0, CreateClass10Type6_3A730, CreateClass10Type7_3A7D0,
+CreateClass10Type8_3A870, CreateVolcanoEffect_3A8D0, CreateClass10Type10_3A930, CreateCraterEffect_3A9A0, CreatePossessionEffect_3AA10, CreateClass10Type13_3AAA0, CreateClass10Type14_3AB40, CreateEarthquakeEffect_3ABE0,
 CreateLava_3ACC0, CreateExplosionRing_3AC70, CreateVolcanoEruption_3ADB0, CreateClass10Type19_3AE00, loc_39A00, loc_39A00, loc_39A00, CreateLightningEffect_3AE80,
-loc_39A00, CreateStealManaEffect_3AF00, CreateDuelEffect_3AF80, CreateTerrainRaiseStep_3B000, sub_3B060, sub_3B120, sub_3B0C0, sub_3B1D0,
-sub_3B180, sub_3B4D0, sub_3B300, sub_3B3D0, CreateUndeadArmyEffect_3B3E0 };*/
+loc_39A00, CreateStealManaEffect_3AF00, CreateDuelEffect_3AF80, CreateTerrainRaiseStep_3B000, CreateClass10Type28_3B060, CreateClass10Type29_3B120, CreateClass10Type30_3B0C0, CreateClass10Type31_3B1D0,
+CreateClass10Type32_3B180, CreateClass10Type33_3B4D0, CreateClass10Type34_3B300, sub_3B3D0, CreateUndeadArmyEffect_3B3E0 };*/
 #pragma pack (1)
 typedef struct {
     Type_AE400_29795*(*adress)(axis_3d*);
@@ -4221,18 +4221,18 @@ Type_97D12 off_97D12[] = {
 { PORT_FN(CreateExplosion_3A490, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 1 },
 { PORT_FN(CreateClass10Type1_3A510, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 2 },
 { PORT_FN(CreateSpeedEffect_3A570, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 3 },
-{ PORT_FN(sub_3A5D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 4 },
-{ PORT_FN(sub_3A640, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
-{ PORT_FN(sub_3A6B0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 6 },
+{ PORT_FN(CreateClass10Type3_3A5D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 4 },
+{ PORT_FN(CreateClass10Type4_3A640, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
+{ PORT_FN(CreateClass10Type5_3A6B0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 6 },
 { PORT_FN(CreateClass10Type6_3A730, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
-{ PORT_FN(sub_3A7D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 8 },
-{ PORT_FN(sub_3A870, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 9 },
+{ PORT_FN(CreateClass10Type7_3A7D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 8 },
+{ PORT_FN(CreateClass10Type8_3A870, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 9 },
 { PORT_FN(CreateVolcanoEffect_3A8D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 10 },
-{ PORT_FN(sub_3A930, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
+{ PORT_FN(CreateClass10Type10_3A930, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
 { PORT_FN(CreateCraterEffect_3A9A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 12 },
 { PORT_FN(CreatePossessionEffect_3AA10, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 13 },
-{ PORT_FN(sub_3AAA0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 14 },
-{ PORT_FN(sub_3AB40, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 15 },
+{ PORT_FN(CreateClass10Type13_3AAA0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 14 },
+{ PORT_FN(CreateClass10Type14_3AB40, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 15 },
 { PORT_FN(CreateEarthquakeEffect_3ABE0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 16 },
 { PORT_FN(CreateLava_3ACC0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 17 },
 { PORT_FN(CreateExplosionRing_3AC70, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 18 },
@@ -4246,68 +4246,68 @@ Type_97D12 off_97D12[] = {
 { PORT_FN(CreateStealManaEffect_3AF00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 26 },
 { PORT_FN(CreateDuelEffect_3AF80, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 27 },
 { PORT_FN(CreateTerrainRaiseStep_3B000, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 28 },
-{ PORT_FN(sub_3B060, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 29 },
-{ PORT_FN(sub_3B120, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 30 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_3B0C0, 1, 0x002548F4, 31 },
-{ PORT_FN(sub_3B1D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 32 },
-{ PORT_FN(sub_3B180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 33 },
-{ PORT_FN(sub_3B4D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 34 },
-{ PORT_FN(sub_3B300, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 35 },
+{ PORT_FN(CreateClass10Type28_3B060, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 29 },
+{ PORT_FN(CreateClass10Type29_3B120, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 30 },
+{ (Type_AE400_29795* (*)(axis_3d*))&CreateClass10Type30_3B0C0, 1, 0x002548F4, 31 },
+{ PORT_FN(CreateClass10Type31_3B1D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 32 },
+{ PORT_FN(CreateClass10Type32_3B180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 33 },
+{ PORT_FN(CreateClass10Type33_3B4D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 34 },
+{ PORT_FN(CreateClass10Type34_3B300, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 35 },
 { PORT_FN(sub_3B3D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 36 },
 { PORT_FN(CreateUndeadArmyEffect_3B3E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 38 },
 { PORT_FN(sub_3B460, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 39 },
 { PORT_FN(CreateManaBall_3B5A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 40 },
 { PORT_FN(CreateDeathMarker_3B620, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 41 },
-{ PORT_FN(sub_3B760, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 42 },
-{ PORT_FN(sub_3B7B0_3BB30, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 43 },
-{ PORT_FN(sub_3B6F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 44 },
-{ PORT_FN(sub_3B800, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 45 },
-{ &sub_3B690, 1, 0x002548F4, 0 },
+{ PORT_FN(CreateClass10Type41_3B760, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 42 },
+{ PORT_FN(CreateClass10Type42_3B7B0_3BB30, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 43 },
+{ PORT_FN(CreateClass10Type43_3B6F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 44 },
+{ PORT_FN(CreateClass10Type44_3B800, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 45 },
+{ &CreateClass10Type45_3B690, 1, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 50 },
-{ PORT_FN(sub_3B2A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 51 },
-{ PORT_FN(sub_3B230, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 52 },
+{ PORT_FN(CreateClass10Type50_3B2A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 51 },
+{ PORT_FN(CreateClass10Type51_3B230, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 52 },
 { PORT_FN(CreateCrabSpawnTimer_3B860, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 53 },
 { PORT_FN(CreateWallOfFireEffect_3B8E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 54 },
 { PORT_FN(CreateManaMagnetEffect_3B970, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 55 },
 { PORT_FN(CreateGlobalDeathEffect_3BA00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 56 },
-{ PORT_FN(sub_3BA90, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 },
+{ PORT_FN(CreateClass10Type56_3BA90, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 },
 { nullptr, 0, 0x002548F4, 0 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59A80_59F90, 1, 0x002548F4, 1 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59AB0_59FC0, 1, 0x002548F4, 2 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59AE0_59FF0, 1, 0x002548F4, 3 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59B30_5A040, 1, 0x002548F4, 4 },
-{ PORT_FN(sub_59B80_5A090, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59C40_5A150, 1, 0x002548F4, 6 },
-{ PORT_FN(sub_59C70_5A180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59CA0_5A1B0, 1, 0x002548F4, 8 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59CF0_5A200, 1, 0x002548F4, 9 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59D40_5A250, 1, 0x002548F4, 10 },
-{ PORT_FN(sub_59D70_5A280, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59DA0_5A2B0, 1, 0x002548F4, 12 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59DF0_5A300, 1, 0x002548F4, 13 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59F60_5A470, 1, 0x002548F4, 14 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59F70_5A480, 1, 0x002548F4, 15 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59F80_5A490, 1, 0x002548F4, 16 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59F90_5A4A0, 1, 0x002548F4, 17 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59FA0_5A4B0, 1, 0x002548F4, 18 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59FB0_5A4C0, 1, 0x002548F4, 19 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59FC0_5A4D0, 1, 0x002548F4, 20 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59FD0_5A4E0, 1, 0x002548F4, 21 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59FE0_5A4F0, 1, 0x002548F4, 22 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59FF0_5A500, 1, 0x002548F4, 23 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_5A000_5A510, 1, 0x002548F4, 24 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_5A010_5A520, 1, 0x002548F4, 25 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_5A020_5A530, 1, 0x002548F4, 26 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_5A030_5A540, 1, 0x002548F4, 27 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_5A040_5A550, 1, 0x002548F4, 28 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_5A050_5A560, 1, 0x002548F4, 29 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_5A060_5A570, 1, 0x002548F4, 30 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_5A070_5A580, 1, 0x002548F4, 31 },
-{ PORT_FN(sub_5A080, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 } };
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch00Tick_59A80_59F90, 1, 0x002548F4, 1 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch01Tick_59AB0_59FC0, 1, 0x002548F4, 2 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch02Tick_59AE0_59FF0, 1, 0x002548F4, 3 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch03Tick_59B30_5A040, 1, 0x002548F4, 4 },
+{ PORT_FN(Switch04Tick_59B80_5A090, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch05Tick_59C40_5A150, 1, 0x002548F4, 6 },
+{ PORT_FN(Switch06Tick_59C70_5A180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch07Tick_59CA0_5A1B0, 1, 0x002548F4, 8 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch08Tick_59CF0_5A200, 1, 0x002548F4, 9 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch09Tick_59D40_5A250, 1, 0x002548F4, 10 },
+{ PORT_FN(Switch10Tick_59D70_5A280, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch11Tick_59DA0_5A2B0, 1, 0x002548F4, 12 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch12Tick_59DF0_5A300, 1, 0x002548F4, 13 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch13Tick_59F60_5A470, 1, 0x002548F4, 14 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch14Tick_59F70_5A480, 1, 0x002548F4, 15 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch15Tick_59F80_5A490, 1, 0x002548F4, 16 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch16Tick_59F90_5A4A0, 1, 0x002548F4, 17 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch17Tick_59FA0_5A4B0, 1, 0x002548F4, 18 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch18Tick_59FB0_5A4C0, 1, 0x002548F4, 19 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch19Tick_59FC0_5A4D0, 1, 0x002548F4, 20 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch20Tick_59FD0_5A4E0, 1, 0x002548F4, 21 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch21Tick_59FE0_5A4F0, 1, 0x002548F4, 22 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch22Tick_59FF0_5A500, 1, 0x002548F4, 23 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch23Tick_5A000_5A510, 1, 0x002548F4, 24 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch24Tick_5A010_5A520, 1, 0x002548F4, 25 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch25Tick_5A020_5A530, 1, 0x002548F4, 26 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch26Tick_5A030_5A540, 1, 0x002548F4, 27 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch27Tick_5A040_5A550, 1, 0x002548F4, 28 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch28Tick_5A050_5A560, 1, 0x002548F4, 29 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch29Tick_5A060_5A570, 1, 0x002548F4, 30 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch30Tick_5A070_5A580, 1, 0x002548F4, 31 },
+{ PORT_FN(Switch31Tick_5A080, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 } };
 
 Type_97D12 off_987DE[] = {
 { PORT_FN(CreateFireballSpell_3C090, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 1 },
@@ -21108,7 +21108,9 @@ void sub_1B060(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B070(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 0).
+/// Per-tick handler of class 5 state 1, the initial state of type 0.
+void Class5Type0Tick_1B070(Type_AE400_29795* a1x)
 {
   sub_19D70(a1x, 0);
   sub_1B120(a1x);
@@ -21185,7 +21187,9 @@ void sub_1B160(Type_AE400_29795* a1x)
 }
 
 //SYNCHONIZED WITH REMC1
-void sub_1B200(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 1).
+/// Per-tick handler of class 5 state 7, the initial state of type 1.
+void Class5Type1Tick_1B200(Type_AE400_29795* a1x)
 {
   //int v1; // esi
   unsigned int result; // eax
@@ -21260,7 +21264,9 @@ void sub_1B350(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B370(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 2).
+/// Per-tick handler of class 5 state 13, the initial state of type 2.
+void Class5Type2Tick_1B370(Type_AE400_29795* a1x)
 {
   sub_19D70(a1x, 12);
   if (a1x->var_u8_29865_70 == 14 )
@@ -22050,7 +22056,9 @@ void sub_1C490(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED EITH REMC1
-void sub_1C4A0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 6).
+/// Per-tick handler of class 5 state 37, the initial state of type 6.
+void Class5Type6Tick_1C4A0(Type_AE400_29795* a1x)
 {
   sub_19D70(a1x, 36);
   if (a1x->var_u8_29865_70 == 38 )
@@ -22239,7 +22247,9 @@ void sub_1C8F0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1C900(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 7).
+/// Per-tick handler of class 5 state 43, the initial state of type 7.
+void Class5Type7Tick_1C900(Type_AE400_29795* a1x)
 {
   bool v1; // eax
   int v2; // esi
@@ -22324,7 +22334,9 @@ void sub_1CA40(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1CA50(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 8).
+/// Per-tick handler of class 5 state 49, the initial state of type 8.
+void Class5Type8Tick_1CA50(Type_AE400_29795* a1x)
 {
   unsigned int v1; // ebp
   __int16 v2; // ax
@@ -22530,7 +22542,9 @@ void sub_1CFE0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED REMC1
-void sub_1CFF0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 9).
+/// Per-tick handler of class 5 state 54, the initial state of type 9.
+void Class5Type9Tick_1CFF0(Type_AE400_29795* a1x)
 {
   __int16 v1; // dx
   __int16 v2; // cx
@@ -23226,7 +23240,9 @@ void sub_1DDD0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DDE0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 10).
+/// Per-tick handler of class 5 state 61, the initial state of type 10.
+void Class5Type10Tick_1DDE0(Type_AE400_29795* a1x)
 {
   sub_19D70(a1x, 60);
 }
@@ -23256,7 +23272,9 @@ void sub_1DE30(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DE40(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 11).
+/// Per-tick handler of class 5 state 66, the initial state of type 11.
+void Class5Type11Tick_1DE40(Type_AE400_29795* a1x)
 {
   __int16 v1; // dx
   __int16 result; // ax
@@ -23933,7 +23951,9 @@ LABEL_10:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1EED0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 12).
+/// Per-tick handler of class 5 state 73, the initial state of type 12.
+void Class5Type12Tick_1EED0(Type_AE400_29795* a1x)
 {
   int v1; // esi
   unsigned int v2; // edi
@@ -24235,7 +24255,9 @@ void sub_1F5B0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1F640(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 13).
+/// Per-tick handler of class 5 state 79, the initial state of type 13.
+void Class5Type13Tick_1F640(Type_AE400_29795* a1x)
 {
   int v1; // edi
   unsigned int v2; // esi
@@ -24411,7 +24433,9 @@ void sub_1FAA0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1FAC0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 14).
+/// Per-tick handler of class 5 state 85, the initial state of type 14.
+void Class5Type14Tick_1FAC0(Type_AE400_29795* a1x)
 {
   int v1; // edi
   unsigned int v2; // esi
@@ -24602,7 +24626,9 @@ void sub_1FF40(char a1, Type_AE400_29795* a2x, char a3, int a4, int a5)
 // 1FF41: variable 'v6' is possibly undefined
 
 //SYNCHRONIZED WITH REMC1
-void sub_1FF60(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 15).
+/// Per-tick handler of class 5 state 91, the initial state of type 15.
+void Class5Type15Tick_1FF60(Type_AE400_29795* a1x)
 {
   unsigned int v1; // ebp
   __int16 v2; // ax
@@ -27255,7 +27281,9 @@ void RemoveSelfTick_253E0(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_253F0(int a1)
+/// TODO: rename when the entity is identified (class 10 type 3).
+/// Per-tick handler of class 10 state 3, the initial state of type 3.
+void Class10Type3Tick_253F0(int a1)
 {
   int result; // eax
 
@@ -27266,7 +27294,9 @@ void sub_253F0(int a1)
 }
 
 //SYNCHRONIZE WITH REMC1
-void sub_25410(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 10 type 5).
+/// Per-tick handler of class 10 state 5, the initial state of type 5.
+void Class10Type5Tick_25410(Type_AE400_29795* a1x)
 {
   int v1; // edx
   int v2; // eax
@@ -27322,7 +27352,9 @@ void VolcanoEffectTick_25470(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZE WITH REMC1
-void sub_25570(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 10 type 10).
+/// Per-tick handler of class 10 state 10, the initial state of type 10.
+void Class10Type10Tick_25570(Type_AE400_29795* a1x)
 {
   unsigned int v1; // eax
 
@@ -27435,7 +27467,9 @@ void PossessionEffectTick_25760(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_257B0(int a1)
+/// TODO: rename when the entity is identified (class 10 type 13).
+/// Per-tick handler of class 10 state 13, the initial state of type 13.
+void Class10Type13Tick_257B0(int a1)
 {
   int v1; // eax
   __int16 v3; // dx
@@ -27482,7 +27516,9 @@ void sub_257B0(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_258A0(int a1)
+/// TODO: rename when the entity is identified (class 10 type 14).
+/// Per-tick handler of class 10 state 14, the initial state of type 14.
+void Class10Type14Tick_258A0(int a1)
 {
 	int v1; // eax
 	__int16 v3; // dx
@@ -28148,7 +28184,9 @@ void RaiseTerrainStripX_26760(_WORD *a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_26890(Type_AE400_29795* event)
+/// TODO: rename when the entity is identified (class 10 type 30).
+/// Per-tick handler of class 10 state 32, the initial state of type 30.
+void Class10Type30Tick_26890(Type_AE400_29795* event)
 {
   uaxis_2d axis2d;
   // PORT: (__int16) - the original sign-extends x/y here (movsx); axis_3d has them unsigned (tools/audit_signedness.py)
@@ -28165,7 +28203,9 @@ void sub_26890(Type_AE400_29795* event)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_26920(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 10 type 32).
+/// Per-tick handler of class 10 state 34, the initial state of type 32.
+void Class10Type32Tick_26920(Type_AE400_29795* a1x)
 {
   int v1; // eax
   int v3; // eax
@@ -28190,7 +28230,9 @@ void sub_26920(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_269A0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 10 type 51).
+/// Per-tick handler of class 10 state 55, the initial state of type 51.
+void Class10Type51Tick_269A0(Type_AE400_29795* a1x)
 {
   int v1; // eax
   unsigned int v3; // eax
@@ -28213,7 +28255,9 @@ void sub_269A0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_26A60(int a1)
+/// TODO: rename when the entity is identified (class 10 type 34).
+/// Per-tick handler of class 10 state 36, the initial state of type 34.
+void Class10Type34Tick_26A60(int a1)
 {
   int v1; // eax
   int v2; // edx
@@ -28301,7 +28345,9 @@ void sub_26C00(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_26CE0(int a1)
+/// TODO: rename when the entity is identified (class 10 type 33).
+/// Per-tick handler of class 10 state 35, the initial state of type 33.
+void Class10Type33Tick_26CE0(int a1)
 {
     int result; // eax
     int v2; // edx
@@ -29337,7 +29383,9 @@ void sub_27D30(Type_AE400_29795* event)//1F8D30_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_28200(int a1)
+/// TODO: rename when the entity is identified (class 10 type 41).
+/// Per-tick handler of class 10 state 43, the initial state of type 41.
+void Class10Type41Tick_28200(int a1)
 {
   char v1; // cl
   char v2; // ch
@@ -29498,7 +29546,9 @@ void sub_28200(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-char sub_285C0(int a1)
+/// TODO: rename when the entity is identified (class 10 type 42).
+/// Per-tick handler of class 10 state 44, the initial state of type 42.
+char Class10Type42Tick_285C0(int a1)
 {
   __int16 v1; // ax
   __int16 v2; // dx
@@ -30062,7 +30112,9 @@ LABEL_45:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_293D0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 10 type 43).
+/// Per-tick handler of class 10 state 45, the initial state of type 43.
+void Class10Type43Tick_293D0(Type_AE400_29795* a1x)
 {
   int v1; // eax
   int v2; // edx
@@ -30097,7 +30149,9 @@ void sub_293D0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_29540(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 10 type 44).
+/// Per-tick handler of class 10 state 46, the initial state of type 44.
+void Class10Type44Tick_29540(Type_AE400_29795* a1x)
 {
   //int v1; // eax
   __int16 v2; // ax
@@ -43653,7 +43707,9 @@ int CreateStone_37CF0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00037D70) --------------------------------------------------------
-int sub_37D70(int a1)
+/// TODO: rename when the entity is identified (class 2 type 2).
+/// Constructor of class 2 type 2 (initial state 6).
+int CreateClass2Type2_37D70(int a1)
 {
   int result; // eax
   _WORD *v2; // ebx
@@ -43703,7 +43759,9 @@ int CreateStandingStone_37E00(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00037E80) --------------------------------------------------------
-int sub_37E80(int a1)
+/// TODO: rename when the entity is identified (class 2 type 4).
+/// Constructor of class 2 type 4 (initial state 12).
+int CreateClass2Type4_37E80(int a1)
 {
   int result; // eax
   _WORD *v2; // ebx
@@ -43726,7 +43784,9 @@ int sub_37E80(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00037EF0) --------------------------------------------------------
-int sub_37EF0(int a1)
+/// TODO: rename when the entity is identified (class 2 type 5).
+/// Constructor of class 2 type 5 (initial state 15).
+int CreateClass2Type5_37EF0(int a1)
 {
   int result; // eax
   _WORD *v2; // ebx
@@ -43749,7 +43809,9 @@ int sub_37EF0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00038030) --------------------------------------------------------
-int sub_38030(int a1)
+/// TODO: rename when the entity is identified (class 5 type 0).
+/// Constructor of class 5 type 0 (initial state 1).
+int CreateClass5Type0_38030(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -43843,7 +43905,9 @@ int sub_38030(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00038270) --------------------------------------------------------
-int sub_38270(int a1)
+/// TODO: rename when the entity is identified (class 5 type 1).
+/// Constructor of class 5 type 1 (initial state 7).
+int CreateClass5Type1_38270(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -43888,7 +43952,9 @@ int sub_38270(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00038370) --------------------------------------------------------
-int sub_38370(int a1)
+/// TODO: rename when the entity is identified (class 5 type 2).
+/// Constructor of class 5 type 2 (initial state 13).
+int CreateClass5Type2_38370(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -44196,7 +44262,9 @@ int CreateCrab_38890(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (000389E0) --------------------------------------------------------
-int sub_389E0(int a1)
+/// TODO: rename when the entity is identified (class 5 type 6).
+/// Constructor of class 5 type 6 (initial state 37).
+int CreateClass5Type6_389E0(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -44305,7 +44373,9 @@ int sub_38C00_38F80(int a1)
 }
 
 //int unk_99198;//fix
-int sub_38C60(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 5 type 7).
+/// Constructor of class 5 type 7 (initial state 43).
+int CreateClass5Type7_38C60(uint16_t* a1)
 {
     int result; // eax
     int v2; // ebx
@@ -44376,7 +44446,9 @@ int sub_38D09(/*int a1@<eax>, __int16 a2@<dx>, int a3@<ecx>, int a4@<ebx>, int a
 }
 
 //----- (00038D60) --------------------------------------------------------
-int sub_38D60(int a1)
+/// TODO: rename when the entity is identified (class 5 type 8).
+/// Constructor of class 5 type 8 (initial state 49).
+int CreateClass5Type8_38D60(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -44429,7 +44501,9 @@ int sub_38D60(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00038E70) --------------------------------------------------------
-int sub_38E70(int a1)
+/// TODO: rename when the entity is identified (class 5 type 9).
+/// Constructor of class 5 type 9 (initial state 54); raised by the Undead Army spell (UndeadArmyEffectTick_26E90).
+int CreateClass5Type9_38E70(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -44480,7 +44554,9 @@ int sub_38E70(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00038FC0) --------------------------------------------------------
-int sub_38FC0(int a1)
+/// TODO: rename when the entity is identified (class 5 type 10).
+/// Constructor of class 5 type 10 (initial state 61).
+int CreateClass5Type10_38FC0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -44533,7 +44609,9 @@ int sub_38FC0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (000390D0) --------------------------------------------------------
-int sub_390D0(int a1)
+/// TODO: rename when the entity is identified (class 5 type 11).
+/// Constructor of class 5 type 11 (initial state 66).
+int CreateClass5Type11_390D0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -44590,7 +44668,9 @@ int sub_390D0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00039200) --------------------------------------------------------
-int sub_39200(int a1)
+/// TODO: rename when the entity is identified (class 5 type 12).
+/// Constructor of class 5 type 12 (initial state 73).
+int CreateClass5Type12_39200(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -44643,7 +44723,9 @@ int sub_39200(int a1)
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
 
-int sub_39340(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 5 type 13).
+/// Constructor of class 5 type 13 (initial state 79).
+int CreateClass5Type13_39340(uint16_t* a1)
 {
     int result; // eax
     int v2; // ebx
@@ -44718,7 +44800,9 @@ int sub_39340(uint16_t* a1)
 }
 
 //----- (00039490) --------------------------------------------------------
-int sub_39490(int a1)
+/// TODO: rename when the entity is identified (class 5 type 14).
+/// Constructor of class 5 type 14 (initial state 85).
+int CreateClass5Type14_39490(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -44772,7 +44856,9 @@ int sub_39490(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (000395B0) --------------------------------------------------------
-int sub_395B0(int a1)
+/// TODO: rename when the entity is identified (class 5 type 15).
+/// Constructor of class 5 type 15 (initial state 91).
+int CreateClass5Type15_395B0(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -45233,7 +45319,9 @@ int CreateCraterMissile_39CC0(int a1)
 }
 
 //----- (00039D40) --------------------------------------------------------
-int sub_39D40(int a1)
+/// TODO: rename when the entity is identified (class 9 type 6).
+/// Constructor of class 9 type 6 (initial state 6).
+int CreateClass9Type6_39D40(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45451,7 +45539,9 @@ int CreateLightningStormMissile_3A040(int a1)
 }
 
 //----- (0003A0C0) --------------------------------------------------------
-int sub_3A0C0(int a1)
+/// TODO: rename when the entity is identified (class 9 type 13).
+/// Constructor of class 9 type 13 (initial state 13).
+int CreateClass9Type13_3A0C0(int a1)
 {
   int result; // eax
   _WORD *v2; // ebx
@@ -45476,7 +45566,9 @@ int sub_3A0C0(int a1)
 }
 
 //----- (0003A1A0) --------------------------------------------------------
-int sub_3A1A0(int a1)
+/// TODO: rename when the entity is identified (class 9 type 14).
+/// Constructor of class 9 type 14 (initial state 15).
+int CreateClass9Type14_3A1A0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45501,7 +45593,9 @@ int sub_3A1A0(int a1)
 }
 
 //----- (0003A210) --------------------------------------------------------
-int sub_3A210(int a1)
+/// TODO: rename when the entity is identified (class 9 type 15).
+/// Constructor of class 9 type 15 (initial state 16).
+int CreateClass9Type15_3A210(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -45621,7 +45715,9 @@ int CreateGlobalDeathMissile_3A390(int a1)
 // 98FD8: using guessed type void *off_98FD8;
 
 //----- (0003A410) --------------------------------------------------------
-int sub_3A410(int a1)
+/// TODO: rename when the entity is identified (class 9 type 19).
+/// Constructor of class 9 type 19 (initial state 20).
+int CreateClass9Type19_3A410(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45735,7 +45831,9 @@ int CreateSpeedEffect_3A570(uint16_t* a1)
 }
 
 //----- (0003A5D0) --------------------------------------------------------
-int sub_3A5D0(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 3).
+/// Constructor of class 10 type 3 (initial state 3).
+int CreateClass10Type3_3A5D0(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -45764,7 +45862,9 @@ int sub_3A5D0(uint16_t* a1)
 }
 
 //----- (0003A640) --------------------------------------------------------
-int sub_3A640(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 4).
+/// Constructor of class 10 type 4 (initial state 4).
+int CreateClass10Type4_3A640(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -45792,7 +45892,9 @@ int sub_3A640(uint16_t* a1)
 }
 
 //----- (0003A6B0) --------------------------------------------------------
-int sub_3A6B0(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 5).
+/// Constructor of class 10 type 5 (initial state 5).
+int CreateClass10Type5_3A6B0(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -45854,7 +45956,9 @@ int CreateClass10Type6_3A730(uint16_t* a1)
 }
 
 //----- (0003A7D0) --------------------------------------------------------
-int sub_3A7D0(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 7).
+/// Constructor of class 10 type 7 (initial state 7).
+int CreateClass10Type7_3A7D0(uint16_t* a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45890,7 +45994,9 @@ int sub_3A7D0(uint16_t* a1)
 }
 
 //----- (0003A870) --------------------------------------------------------
-int sub_3A870(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 8).
+/// Constructor of class 10 type 8 (initial state 8).
+int CreateClass10Type8_3A870(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -45941,7 +46047,9 @@ int CreateVolcanoEffect_3A8D0(uint16_t* a1)
 }
 
 //----- (0003A930) --------------------------------------------------------
-int sub_3A930(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 10).
+/// Constructor of class 10 type 10 (initial state 10).
+int CreateClass10Type10_3A930(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -46024,7 +46132,9 @@ int CreatePossessionEffect_3AA10(uint16_t* a1)
 }
 
 //----- (0003AAA0) --------------------------------------------------------
-int sub_3AAA0(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 13).
+/// Constructor of class 10 type 13 (initial state 13).
+int CreateClass10Type13_3AAA0(uint16_t* a1)
 {
   int result; // eax
   int v2; // ebx
@@ -46067,7 +46177,9 @@ int sub_3AAA0(uint16_t* a1)
 }
 
 //----- (0003AB40) --------------------------------------------------------
-int sub_3AB40(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 14).
+/// Constructor of class 10 type 14 (initial state 14).
+int CreateClass10Type14_3AB40(uint16_t* a1)
 {
   int result; // eax
   int v2; // ebx
@@ -46384,7 +46496,9 @@ int CreateTerrainRaiseStep_3B000(uint16_t* a1)
 }
 
 //----- (0003B060) --------------------------------------------------------
-int sub_3B060(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 28).
+/// Constructor of class 10 type 28 (initial state 30).
+int CreateClass10Type28_3B060(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46407,7 +46521,9 @@ int sub_3B060(uint16_t* a1)
 }
 
 //----- (0003B0C0) --------------------------------------------------------
-Type_AE400_29795* sub_3B0C0(axis_3d* position)
+/// TODO: rename when the entity is identified (class 10 type 30).
+/// Constructor of class 10 type 30 (initial state 32).
+Type_AE400_29795* CreateClass10Type30_3B0C0(axis_3d* position)
 {
 	Type_AE400_29795* event = NewEvent_372C0_37680();
 	if (event)
@@ -46425,7 +46541,9 @@ Type_AE400_29795* sub_3B0C0(axis_3d* position)
 }
 
 //----- (0003B120) --------------------------------------------------------
-int sub_3B120(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 29).
+/// Constructor of class 10 type 29 (initial state 31).
+int CreateClass10Type29_3B120(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46448,7 +46566,9 @@ int sub_3B120(uint16_t* a1)
 }
 
 //----- (0003B180) --------------------------------------------------------
-int sub_3B180(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 32).
+/// Constructor of class 10 type 32 (initial state 34).
+int CreateClass10Type32_3B180(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46473,7 +46593,9 @@ int sub_3B180(uint16_t* a1)
 }
 
 //----- (0003B1D0) --------------------------------------------------------
-int sub_3B1D0(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 31).
+/// Constructor of class 10 type 31 (initial state 33).
+int CreateClass10Type31_3B1D0(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46496,7 +46618,9 @@ int sub_3B1D0(uint16_t* a1)
 }
 
 //----- (0003B230) --------------------------------------------------------
-int sub_3B230(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 51).
+/// Constructor of class 10 type 51 (initial state 55).
+int CreateClass10Type51_3B230(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46523,7 +46647,9 @@ int sub_3B230(uint16_t* a1)
 }
 
 //----- (0003B2A0) --------------------------------------------------------
-int sub_3B2A0(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 50).
+/// Constructor of class 10 type 50 (initial state 54).
+int CreateClass10Type50_3B2A0(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46546,7 +46672,9 @@ int sub_3B2A0(uint16_t* a1)
 }
 
 //----- (0003B300) --------------------------------------------------------
-int sub_3B300(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 34).
+/// Constructor of class 10 type 34 (initial state 36).
+int CreateClass10Type34_3B300(uint16_t* a1)
 {
   int result; // eax
   int v2; // ebx
@@ -46639,7 +46767,9 @@ int sub_3B460(uint16_t* a1)
 }
 
 //----- (0003B4D0) --------------------------------------------------------
-int sub_3B4D0(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 33).
+/// Constructor of class 10 type 33 (initial state 35).
+int CreateClass10Type33_3B4D0(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -46721,7 +46851,9 @@ int CreateDeathMarker_3B620(uint16_t* a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (0003B690) --------------------------------------------------------
-Type_AE400_29795* sub_3B690(axis_3d* position)//20C690_
+/// TODO: rename when the entity is identified (class 10 type 45).
+/// Constructor of class 10 type 45 (initial state 51).
+Type_AE400_29795* CreateClass10Type45_3B690(axis_3d* position)//20C690_
 {
   Type_AE400_29795* event = NewEvent_372C0_37680();
   if (event)
@@ -46741,7 +46873,9 @@ Type_AE400_29795* sub_3B690(axis_3d* position)//20C690_
 }
 
 //----- (0003B6F0) --------------------------------------------------------
-int sub_3B6F0(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 43).
+/// Constructor of class 10 type 43 (initial state 45).
+int CreateClass10Type43_3B6F0(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -46765,7 +46899,9 @@ int sub_3B6F0(uint16_t* a1)
 }
 
 //----- (0003B760) --------------------------------------------------------
-int sub_3B760(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 41).
+/// Constructor of class 10 type 41 (initial state 43).
+int CreateClass10Type41_3B760(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46787,7 +46923,9 @@ int sub_3B760(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_3B7B0_3BB30(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 42).
+/// Constructor of class 10 type 42 (initial state 44).
+int CreateClass10Type42_3B7B0_3BB30(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46810,7 +46948,9 @@ int sub_3B7B0_3BB30(uint16_t* a1)
 }
 
 //----- (0003B800) --------------------------------------------------------
-int sub_3B800(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 44).
+/// Constructor of class 10 type 44 (initial state 46).
+int CreateClass10Type44_3B800(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46962,7 +47102,9 @@ int CreateGlobalDeathEffect_3BA00(uint16_t* a1)
 }
 
 //----- (0003BA90) --------------------------------------------------------
-int sub_3BA90(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 56).
+/// Constructor of class 10 type 56 (initial state 61).
+int CreateClass10Type56_3BA90(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -47446,7 +47588,9 @@ int CreateRapidFireballSpell_3C480(int a1)
 }
 
 //----- (0003C4B0) --------------------------------------------------------
-int sub_3C4B0(int a1)
+/// TODO: rename when the entity is identified (class 13 type 0).
+/// Constructor of class 13 type 0 (initial state 0).
+int CreateClass13Type0_3C4B0(int a1)
 {
   int v0; // eax
   int v1; // ebx
@@ -47467,7 +47611,9 @@ int sub_3C4B0(int a1)
 }
 
 //----- (0003C4E0) --------------------------------------------------------
-int sub_3C4E0(int a1)
+/// TODO: rename when the entity is identified (class 13 type 1).
+/// Constructor of class 13 type 1 (initial state 1).
+int CreateClass13Type1_3C4E0(int a1)
 {
   int v0; // eax
   int v1; // ebx
@@ -47488,7 +47634,9 @@ int sub_3C4E0(int a1)
 }
 
 //----- (0003C510) --------------------------------------------------------
-int sub_3C510(int a1)
+/// TODO: rename when the entity is identified (class 13 type 2).
+/// Constructor of class 13 type 2 (initial state 2).
+int CreateClass13Type2_3C510(int a1)
 {
   int v0; // eax
   int v1; // ebx
@@ -47509,7 +47657,9 @@ int sub_3C510(int a1)
 }
 
 //----- (0003C540) --------------------------------------------------------
-int sub_3C540(int a1)
+/// TODO: rename when the entity is identified (class 13 type 3).
+/// Constructor of class 13 type 3 (initial state 3).
+int CreateClass13Type3_3C540(int a1)
 {
   int v0; // eax
   int v1; // ebx
@@ -55979,7 +56129,7 @@ char sub_47960_47CA0(int a1)
   int v4; // ecx
   __int16 v6; // [esp-4h] [ebp-10h]
 
-  v1 = sub_3B7B0_3BB30((uint16_t*)PTR(a1 + 150));
+  v1 = CreateClass10Type42_3B7B0_3BB30((uint16_t*)PTR(a1 + 150));
   v2 = v1;
   if ( v1 )
   {
@@ -57302,7 +57452,9 @@ int StoneTick_49AA0_49DE0(int a1)
 }
 
 //----- (00049AD0) --------------------------------------------------------
-int sub_49AD0_49E10(int a1)
+/// TODO: rename when the entity is identified (class 2 type 2).
+/// Per-tick handler of class 2 state 6, the initial state of type 2.
+int Class2Type2Tick_49AD0_49E10(int a1)
 {
   unsigned __int16 v1; // di
   int v2; // esi
@@ -63381,7 +63533,9 @@ LABEL_25_26:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_54180_544D0(int a1)
+/// TODO: rename when the entity is identified (class 9 type 13).
+/// Per-tick handler of class 9 state 13, the initial state of type 13.
+void Class9Type13Tick_54180_544D0(int a1)
 {
   int v1; // eax
   int v2; // edi
@@ -66879,7 +67033,8 @@ void Blit_599B0_59EC0(__int16 a1)//22A9B0_
 // 12EFF4: using guessed type int dword_12EFF4;
 
 //SYNCHRONIZED WITH REMC1
-void sub_59A80_59F90(uint16_t* a1)
+/// Per-tick handler of switch type 0 (class 11 state 0, set by CreateSwitch00).
+void Switch00Tick_59A80_59F90(uint16_t* a1)
 {
   int result; // eax
 
@@ -66892,7 +67047,8 @@ void sub_59A80_59F90(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59AB0_59FC0(uint16_t* a1)
+/// Per-tick handler of switch type 1 (class 11 state 1, set by CreateSwitch01).
+void Switch01Tick_59AB0_59FC0(uint16_t* a1)
 {
   int result; // eax
 
@@ -66905,7 +67061,8 @@ void sub_59AB0_59FC0(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59AE0_59FF0(uint16_t* a1)
+/// Per-tick handler of switch type 2 (class 11 state 2, set by CreateSwitch02).
+void Switch02Tick_59AE0_59FF0(uint16_t* a1)
 {
   int result; // eax
 
@@ -66927,7 +67084,8 @@ void sub_59AE0_59FF0(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59B30_5A040(uint16_t* a1)
+/// Per-tick handler of switch type 3 (class 11 state 3, set by CreateSwitch03).
+void Switch03Tick_59B30_5A040(uint16_t* a1)
 {
   int result; // eax
 
@@ -66949,7 +67107,8 @@ void sub_59B30_5A040(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_59B80_5A090(uint16_t* a1)
+/// Per-tick handler of switch type 4 (class 11 state 4, set by CreateSwitch04).
+int Switch04Tick_59B80_5A090(uint16_t* a1)
 {
   int v1; // esi
   int v2; // eax
@@ -66974,7 +67133,8 @@ int sub_59B80_5A090(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59C40_5A150(uint16_t* a1)
+/// Per-tick handler of switch type 5 (class 11 state 5, set by CreateSwitch05).
+void Switch05Tick_59C40_5A150(uint16_t* a1)
 {
   int result; // eax
 
@@ -66987,7 +67147,8 @@ void sub_59C40_5A150(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_59C70_5A180(uint16_t* a1)
+/// Per-tick handler of switch type 6 (class 11 state 6, set by CreateSwitch06).
+int Switch06Tick_59C70_5A180(uint16_t* a1)
 {
   int result; // eax
 
@@ -67001,7 +67162,8 @@ int sub_59C70_5A180(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59CA0_5A1B0(uint16_t* a1)
+/// Per-tick handler of switch type 7 (class 11 state 7, set by CreateSwitch07).
+void Switch07Tick_59CA0_5A1B0(uint16_t* a1)
 {
   int result; // eax
 
@@ -67023,7 +67185,8 @@ void sub_59CA0_5A1B0(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59CF0_5A200(uint16_t* a1)
+/// Per-tick handler of switch type 8 (class 11 state 8, set by CreateSwitch08).
+void Switch08Tick_59CF0_5A200(uint16_t* a1)
 {
   int result; // eax
 
@@ -67045,7 +67208,8 @@ void sub_59CF0_5A200(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59D40_5A250(uint16_t* a1)
+/// Per-tick handler of switch type 9 (class 11 state 9, set by CreateSwitch09).
+void Switch09Tick_59D40_5A250(uint16_t* a1)
 {
   int result; // eax
 
@@ -67058,7 +67222,8 @@ void sub_59D40_5A250(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_59D70_5A280(uint16_t* a1)
+/// Per-tick handler of switch type 10 (class 11 state 10, set by CreateSwitch10).
+int Switch10Tick_59D70_5A280(uint16_t* a1)
 {
   int result; // eax
 
@@ -67072,7 +67237,8 @@ int sub_59D70_5A280(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59DA0_5A2B0(uint16_t* a1)
+/// Per-tick handler of switch type 11 (class 11 state 11, set by CreateSwitch11).
+void Switch11Tick_59DA0_5A2B0(uint16_t* a1)
 {
   int result; // eax
 
@@ -67094,7 +67260,8 @@ void sub_59DA0_5A2B0(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59DF0_5A300(uint16_t* a1)
+/// Per-tick handler of switch type 12 (class 11 state 12, set by CreateSwitch12).
+void Switch12Tick_59DF0_5A300(uint16_t* a1)
 {
   int result; // eax
 
@@ -67175,114 +67342,133 @@ LABEL_6:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59F60_5A470(uint16_t* a1)
+/// Per-tick handler of switch type 13 (class 11 state 13, set by CreateSwitch13).
+void Switch13Tick_59F60_5A470(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 0);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59F70_5A480(uint16_t* a1)
+/// Per-tick handler of switch type 14 (class 11 state 14, set by CreateSwitch14).
+void Switch14Tick_59F70_5A480(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 1);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59F80_5A490(uint16_t* a1)
+/// Per-tick handler of switch type 15 (class 11 state 15, set by CreateSwitch15).
+void Switch15Tick_59F80_5A490(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 2);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59F90_5A4A0(uint16_t* a1)
+/// Per-tick handler of switch type 16 (class 11 state 16, set by CreateSwitch16).
+void Switch16Tick_59F90_5A4A0(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 3);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59FA0_5A4B0(uint16_t* a1)
+/// Per-tick handler of switch type 17 (class 11 state 17, set by CreateSwitch17).
+void Switch17Tick_59FA0_5A4B0(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 4);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59FB0_5A4C0(uint16_t* a1)
+/// Per-tick handler of switch type 18 (class 11 state 18, set by CreateSwitch18).
+void Switch18Tick_59FB0_5A4C0(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 5);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59FC0_5A4D0(uint16_t* a1)
+/// Per-tick handler of switch type 19 (class 11 state 19, set by CreateSwitch19).
+void Switch19Tick_59FC0_5A4D0(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 6);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59FD0_5A4E0(uint16_t* a1)
+/// Per-tick handler of switch type 20 (class 11 state 20, set by CreateSwitch20).
+void Switch20Tick_59FD0_5A4E0(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 7);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59FE0_5A4F0(uint16_t* a1)
+/// Per-tick handler of switch type 21 (class 11 state 21, set by CreateSwitch21).
+void Switch21Tick_59FE0_5A4F0(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 8);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59FF0_5A500(uint16_t* a1)
+/// Per-tick handler of switch type 22 (class 11 state 22, set by CreateSwitch22).
+void Switch22Tick_59FF0_5A500(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 9);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_5A000_5A510(uint16_t* a1)
+/// Per-tick handler of switch type 23 (class 11 state 23, set by CreateSwitch23).
+void Switch23Tick_5A000_5A510(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 10);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_5A010_5A520(uint16_t* a1)
+/// Per-tick handler of switch type 24 (class 11 state 24, set by CreateSwitch24).
+void Switch24Tick_5A010_5A520(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 11);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_5A020_5A530(uint16_t* a1)
+/// Per-tick handler of switch type 25 (class 11 state 25, set by CreateSwitch25).
+void Switch25Tick_5A020_5A530(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 12);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_5A030_5A540(uint16_t* a1)
+/// Per-tick handler of switch type 26 (class 11 state 26, set by CreateSwitch26).
+void Switch26Tick_5A030_5A540(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 13);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_5A040_5A550(uint16_t* a1)
+/// Per-tick handler of switch type 27 (class 11 state 27, set by CreateSwitch27).
+void Switch27Tick_5A040_5A550(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 14);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_5A050_5A560(uint16_t* a1)
+/// Per-tick handler of switch type 28 (class 11 state 28, set by CreateSwitch28).
+void Switch28Tick_5A050_5A560(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 15);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_5A060_5A570(uint16_t* a1)
+/// Per-tick handler of switch type 29 (class 11 state 29, set by CreateSwitch29).
+void Switch29Tick_5A060_5A570(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 16);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_5A070_5A580(uint16_t* a1)
+/// Per-tick handler of switch type 30 (class 11 state 30, set by CreateSwitch30).
+void Switch30Tick_5A070_5A580(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), -1);
 }
 
-int sub_5A080(uint16_t* a1)
+/// Per-tick handler of switch type 31 (class 11 state 31, set by CreateSwitch31).
+int Switch31Tick_5A080(uint16_t* a1)
 {
     return 0;
 }

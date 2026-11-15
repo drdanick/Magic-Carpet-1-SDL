@@ -1089,7 +1089,7 @@ How the level's actors work (useful for "X never spawns" reports):
   `data_8 == 0` records are created at load (`sub_37560_37920`), `0xFFFF` class-10 records are features
   (`GenerateFeatures_36430_367F0`), other values are trigger groups spawned by `sub_37440_37800(group)`
   when the human wizard (model 0 in the wizard list) touches the matching trigger entity
-  (`sub_59A80_59F90` & co., `sub_5A090_5A5A0`).
+  (`Switch00Tick_59A80_59F90` & co., `sub_5A090_5A5A0`).
 - Class 3 types 4..11 only store wizard start positions; wizards are created per player
   (`sub_44D30_45070`): model 0 = human, model 1 = computer (state 1, `ComputerWizardTick_13170` AI, mode byte at
   player+415).
