@@ -431,7 +431,7 @@ typedef struct _Type_AE400_29795 {// len 164
 	int32 manaDelta_29927_132;//132 per-tick mana change: regeneration, or minus a spell's cost
 	int32 manaMax_29931_136;//136 mana capacity
 	int32 mana_29935_140;//140 current mana
-	uint16 var_u16_29939_144;//144
+	uint16 manaOwner_29939_144;//144 entity whose max mana (+136) this entity's mana counts towards (AddManaToOwner_48340_48680)
 	uint16 var_u16_29941_146;//146 //index entity
 	uint8_t stub4[2];
 	axis_3du var_u32_150;
@@ -541,13 +541,13 @@ typedef struct {//size 232713
 	uint32 var_u32_32;
 	uint16 var_u16_36;
 	uint16 var_u16_38;
-	int32 var_u32_40;
+	int32 freeListTop_40; // top of freeList_593 (-1 = empty)
 	uint8 var_u8_44[532];
 	un16_32 var_u32_576;
 	uint8 var_u8_580;
 	uint32 var_u32_581;
 	uint8 stub4b[8];
-	ptr32<Type_AE400_29795> var_u32_593[1000];
+	ptr32<Type_AE400_29795> freeList_593[1000]; // free entity slots, used as a stack (FreeEntity_41E90_421D0)
 	int32 var_u32_4593;
 	ptr32<Type_AE400_29795> var_u32_4597[1000];
 
@@ -596,7 +596,7 @@ typedef struct {//size 36478
 	uint16 var_u16_15;
 	uint16 var_u16_17;
 	uint8 stuba[3];
-	int8 var_u8_22;
+	int8 spellMenuHover_22; // spell-menu slot under the mouse, set while the menu is drawn (-1 = none)
 	uint8 var_u8_23;
 	uint8 var_u8_24;
 	uint32 var_u32_25;

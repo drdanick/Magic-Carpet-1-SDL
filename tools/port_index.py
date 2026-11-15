@@ -101,6 +101,6 @@ if __name__ == '__main__':
     idx = PortIndex(sys.argv[1] if len(sys.argv) > 1 else 'sub_main.cpp')
     with_addr = [n for n, f in idx.funcs.items() if f['addr'] is not None]
     print(len(idx.funcs), 'functions,', len(with_addr), 'with addresses')
-    for n in ('UpdateEntities_41780_41AC0', 'sub_13170', 'DrawSky_30730_30770', 'sub_416B0'):
+    for n in ('UpdateEntities_41780_41AC0', 'ComputerWizardTick_13170', 'DrawSky_30730_30770', 'sub_416B0'):
         f = idx.funcs.get(n)
         print(n, hex(f['addr']) if f and f['addr'] is not None else f and f['addr'], f and f['line'])

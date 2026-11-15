@@ -260,7 +260,7 @@ simulation state: random seed + live entities, `Port_GameStateHash`). A replay c
 `DESYNC at frame N` at the first mismatch - check for it before trusting what a replay shows.
 Headless replays skip the 3D view (`--no-render`): the game state never depends on `DrawWorld_30D90`.
 The rest of the frame draw does run and can matter: the spell menu works out which spell is under the
-mouse while it draws (`var_u8_22` of `str_AE408_AE3F8`), as in the original, so skipping all of
+mouse while it draws (`spellMenuHover_22` of `str_AE408_AE3F8`), as in the original, so skipping all of
 `DrawGameFrame_20FB0` desyncs at the first spell pick.
 Frame dumps still draw every frame: the renderer keeps animation/texture state across frames, so drawing
 only from N frames before a dump does not give the same image (tested up to 300 frames of warm-up), and
@@ -367,7 +367,7 @@ Differential execution (Unicorn and capstone, from the venv in §4):
    blit) and cannot be compared. If a snapshot's `image_base` is below 0x200000, ASLR put the exe where
    the harness maps CARPET.EXE - copy the exe to a new directory (new base) and take it again.
    Open finding: in 640x480 (`<data>/recording.txt`, `--snapshot-what draw --snapshot-frame 4500`)
-   the sprite blitter `sub_2C410_2C450` draws horizontal streaks (pixel 201) that the original does not
+   the sprite blitter `BlitSprite_2C410_2C450` draws horizontal streaks (pixel 201) that the original does not
    (`diff_step.py D 0x2C410`: 4th call, a1 = 0). Every 320x200 draw/frame snapshot of the 21 recordings
    matches except level-start frames that load files. The renderer is the place where port globals are members of
    structs (`strPal.fog_B7934`): the harness maps address-named struct members too.
@@ -452,6 +452,8 @@ dev-info*.txt             upstream author's scratch notes (Czech/English) — ad
   definition. Field names are not unique across structs - rename through the access path
   (`var_u32_29951_156->v_14`) or the struct block, never with a global `\bv_14\b`, then rerun
   `tools/gen_layout_tests.py` (the layout tests use field names). Guesses go in comments, not names.
+  Its output has drifted from the committed `tests/generated/*.inc` (2026-11-15: even an unchanged
+  `Basic.h` drops dozens of cases), so for a rename edit the matching lines of the `.inc` files instead.
 - `//SYNCHRONIZED WITH REMC1` marks functions the upstream author verified against DOSBox.
 - `str_AE400_AE3F0` is the big game-state struct (`Type_str_AE400_AE3F0`), `str_AE408_AE3F8` the
   settings struct; `str_AE400_AE3F0->str_29795[1000]` is the entity array (164 bytes each).
@@ -467,7 +469,7 @@ Entity record (`str_29795[i]`, game state + 29795 + 164*i; entity 0 unused): +8 
 +16 flags dword (`var_29811_16`), +24 id, +42 owner entity (spells: the wizard holding them), +52/+54
 leader/follower (worm segments), +64 class, +65 type (called model in places), +70 state, +72 position
 (`axis_3d`, x/y in 1/256 tile, z), +132 mana delta, +136/+140 mana max/current, +160 wizard data
-(`Type_1103`). Free list top: game state +40 (`var_u32_40`); recycle list top `var_u32_4593`.
+(`Type_1103`). Free list top: game state +40 (`freeListTop_40`); recycle list top `var_u32_4593`.
 Game state +36 / +38: the active volcano eruption (10/18) and its 10/19 entity (both can be stale,
 original-bugs #11).
 
@@ -493,11 +495,12 @@ class, type)`). The state index is global within a class, not per type.
 | 10 | 1 | created with the mana ball when a creature dies | `sub_1A800` |
 | 10 | 6 | spawned when a spell-7 jar in state 3t+2 is picked up | `SpellJarSpawnTick_55D30_56260` |
 | 10 | 16 | lava from a volcano eruption | created by 10/18 |
-| 10 | 17 | expanding explosion ring: one 10/0 explosion per ring point per tick | `sub_25CE0` |
-| 10 | 18 | volcano eruption emitter (128 ticks, then removes itself) | `sub_25EC0` |
+| 10 | 17 | expanding explosion ring: one 10/0 explosion per ring point per tick | `ExplosionRingTick_25CE0` |
+| 10 | 18 | volcano eruption emitter (128 ticks, then removes itself) | `VolcanoEruptionTick_25EC0` |
 | 10 | 19 | created by each eruption start, index in game state +38 | |
 | 10 | 27 | terrain-raising level-build step | `RaiseTerrainStrip*` |
-| 10 | 39 | mana ball | mana at +140 |
+| 10 | 39 | mana ball | mana at +140; +144 = owner (adds its mana to the owner's +136 every tick) |
+| 10 | 40 | death marker of a wizard: holds its mana balls until it respawns (state 42) | `DeathMarkerTick_275C0`, original-bugs #12 |
 | 10 | 52 | crab spawn timer (state 0x38) | |
 | 11 | 2 | trigger (marked by standing stones on level 26; not recyclable) | life 300 |
 | 12 | 0..23 | spell, type = spell number (0 fireball, 2 speed, 16 castle) | states below |
@@ -524,7 +527,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
    start and `FIX_MOUSE` pins the mouse to the centre — both must stay off for normal play.
 5. **Live x86 inline asm / port I/O.** `in al,dx` etc. fault with "privileged instruction". Search
    `__asm` and `inp(`/`outp(`; DOS hardware is to be emulated in `portability/`, not executed.
-6. **Busy-waits on counters written by the timer thread.** E.g. `while (dword_AC5D4_AC5C4 < x) {}`.
+6. **Busy-waits on counters written by the timer thread.** E.g. `while (timerTicks_AC5D4_AC5C4 < x) {}`.
    The counter must be `volatile` and the loop must call `PortTimer_Yield()` (otherwise deterministic
    mode hangs and real-time mode burns a core). The watchdog (`--watchdog`) pinpoints these.
 7. **One DOS object split into several C globals.** IDA names every address it sees; code that walks
@@ -575,7 +578,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     byte objects, so any new instance fails to compile - fix by naming the field (`.x`).
 23. **Missing timer registration with sound on.** With a sound driver present the game registers its
     120 Hz clock (`HmiTimerTick_357A0`) with the HMI timer service instead of the PIT ISR. That call
-    was commented out, so `dword_AC5D4_AC5C4` never advanced with sound enabled and every wait on it
+    was commented out, so `timerTicks_AC5D4_AC5C4` never advanced with sound enabled and every wait on it
     (post-level info FMV) hung. Now `PortTimer_Start(1193182/120, HmiTimerTick_357A0)`.
 24. **Signed fields declared unsigned in structs.** `axis_4d` (entity collision box at +78) had its
     z offset as `uint16_t`; castles use -8192, so the box test compared against z+57344 and nothing
@@ -656,7 +659,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     position multiplies by 8 (`sub_59750`). The port feeds pixels, so `MouseEvents` scales by 8 in that
     mode and `VGA_Set_mouse` is given pixels. Without it the cursor was stuck in the top-left 80x60 and
     mouse steering died after pressing R.
-42. **Guards commented out during cleanup.** `sub_2C410_2C450` had its `if ( a1 != 2 )` around the
+42. **Guards commented out during cleanup.** `BlitSprite_2C410_2C450` had its `if ( a1 != 2 )` around the
     rolled-sprite path commented out, so pass 2 ran it and wrote outside the screen buffer (crash in
     640x480; a few stray pixels in 320x200). When a decompiled condition is commented out, check the
     asm/remc2 (`DrawSprite_41BD3`) before trusting the edit.
@@ -670,7 +673,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     one switch case created the entity into `v4` but set its state through `result` (null on that
     path), crashing in level 4 when an entity spawned that creature type (after the player died and the
     level reloaded). Watch for `if ( vN ) other->...` right after a create.
-45. **Writes the original's memory layout absorbed.** The rotated-sprite path of `sub_2C410_2C450` starts
+45. **Writes the original's memory layout absorbed.** The rotated-sprite path of `BlitSprite_2C410_2C450` starts
     rows up to a view width above/below the screen and clips them with tables in the BScreen scratch
     area (36960/45920/59360). A sprite right in front of the camera in 640x480 overruns those tables,
     so rows are drawn outside the screen; in DOS that hit neighbouring pool blocks. The port gives
@@ -695,7 +698,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
 49. **Wrong field width/sign in a struct.** Entity +132/+136/+140 (mana delta, capacity, current) are
     signed dwords (signed compares, `idiv`), the port had uint16 + stub and two uint32: a spell's
     negative cost was added as ~65000 and a mana value below 0 wrapped and was clamped to the capacity,
-    so mana never ran out. Also: `sub_55E80_563B0` had lost the store of the spell cost into +132.
+    so mana never ran out. Also: `ChargeSpellCost_55E80_563B0` had lost the store of the spell cost into +132.
 50. **Unsigned struct fields the original sign-extends.** `axis_3d.x/.y` are `uint16_t`, but the
     original loads entity x/y with `movsx` 75 times and `movzx` once. Wherever the value feeds something
     sign-sensitive the port differs for positions >= 0x8000 - half of every map: `abs(x1 - x2) < 256`
@@ -733,7 +736,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     `|= 0x100000` / `0x10000..0x80000` and tested `& 0x100000` - all no-ops; the asm sets bits of the
     byte at +39 (`or byte [+27h], 10h` = 0x1000). Tiles of the `byte_90168` terrain types never took
     their own render path. Grep for flag constants that cannot fit the field's type.
-56. **Hand-narrowed branch conditions.** The sprite blitter `sub_2C410_2C450` took its rotated path for
+56. **Hand-narrowed branch conditions.** The sprite blitter `BlitSprite_2C410_2C450` took its rotated path for
     `!byte_B5D3E && a1 != 2`; the asm takes it for every a1 when `byte_B5D3E == 0`, with a1 == 2 sharing
     the a1 == 0 offset - billboard sprites (`DrawSprite_2FC50`, a1 = 2) were not rotated with the carpet's
     roll. Found with `tools/diff_step.py` (see §4).
@@ -747,7 +750,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     write pointer started uninitialised (asm 0x23BCB: row pointer and write pointer are one register).
     To list candidates build once with `/w14701 /w14703` added to `remc1_options` (CMakeLists.txt):
     ~90 sites, mostly false positives (`result` on unused paths, `_old` copies, DOS runtime code).
-59. **Bugs of the original that DOS forgave.** The rotated sprite path of `sub_2C410_2C450` does not clip
+59. **Bugs of the original that DOS forgave.** The rotated sprite path of `BlitSprite_2C410_2C450` does not clip
     rows at the screen bottom: in 640x480 with a strong roll a sprite far below the view (yRot 1536) is
     drawn ~1000 rows past the frame buffer. The emulated original writes the same address (diff harness),
     so it is not a port bug - DOS4GW let it scribble over other memory, the port crashed (level 6,
@@ -757,7 +760,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     README): symptom, cause with function names/offsets, the observation that proved it (recording,
     frames, harness result), a possible fix, and its status (kept / worked around / fixed). Keep that
     table current when a status changes. Ask the user before changing original behaviour ("fixed").
-60. **Wrong operator in a hand edit.** `sub_277D0` (two mana balls merge) had `mana *= other` in two
+60. **Wrong operator in a hand edit.** `MergeManaBalls_277D0` (two mana balls merge) had `mana *= other` in two
     branches; the asm adds. A merged ball reached 917M mana, its owner's capacity (+136, rebuilt every
     tick as the sum of everything owned) wrapped negative and the owner's mana was clamped to it: "mana
     ran out and would not regenerate" (level 7, `level_6_7_mana_bug.txt`, frame 24369).
@@ -791,7 +794,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     - The same `memset(..., 48)` beside it gave it away: 8 x 6 = 48.
     - Check: an array's element size (`sizeof(T)` x count) against the original's index arithmetic
       (`imul`/`lea` scale) and any memset/memcpy of the whole array.
-65. **Flag constant ORed into one byte of a flag dword.** `sub_25CE0` and `sub_29780` had
+65. **Flag constant ORed into one byte of a flag dword.** `ExplosionRingTick_25CE0` and `sub_29780` had
     `var_29811_16.byte[0] |= 0x10002u` where the original does `or dword ptr [ebx+0x10], 0x10002`:
     the byte store kept the 0x2 and dropped the 0x10000 (+18 bit 0). Found as a lone one-byte
     `diff_tick` difference (`entity N +18: orig 1 port 0`). Grep for `byte[k] |= 0x` / `&= ~0x` with
@@ -813,9 +816,19 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     already negative. Found by `diff_funcs` (`entity 720 +132: original 24 port 15`) after a 2-byte
     `diff_tick` difference in the player's mana. Grep for `//fix` / commented-out assignments and check
     them against `tools/orig_disasm.py`.
+69. **Stray semicolon after `while (...)`.** `BlitSprite_2C410_2C450` cases 6 and 7 (rotated sprites with
+    fog and transparency) read `while (tempPointB);` followed by the loop body in braces: an endless
+    empty loop whenever the count was not 0 (`level50-freeze.recording` froze). The original is
+    `do { } while (--count)`. Find them with an awk over the sources for a `while/if/for (...);` line
+    followed by a line holding only `{` (only these two existed, 2026-11-15).
+70. **Busy-wait on the timer turned into `while (1);`.** `PlayOutroAndQuit_4D560_4D8A0` (after the ending FMV) waits
+    until `timerTicks_AC5D4` has advanced 480 ticks (`mov edx,[AC5D4]` once, then `mov eax,[AC5D4]; sub; cmp
+    eax,1E0h; jb` at 0x4D662-0x4D674). Hex-Rays saw no write to the counter inside the loop and emitted
+    `while ( 1 ) ;`, so the game hung after the outro. Port tick waits call `PortTimer_Yield()` in the
+    loop. No other `while ( 1 ) ;` is left (2026-11-15).
 
 The MC2 renderer in remc2 (`GameRenderOriginal.cpp`, e.g. `DrawSprite_41BD3`) is structurally the
-same code as MC1's `sub_2C410_2C450`/`DrawSprite_*` and uses the same scratch offsets in the BScreen
+same code as MC1's `BlitSprite_2C410_2C450`/`DrawSprite_*` and uses the same scratch offsets in the BScreen
 (36960, 45920, 59360) — use it as the reference for renderer fixes.
 
 ### 6.3 DOS → platform mapping
@@ -1062,7 +1075,7 @@ How the level's actors work (useful for "X never spawns" reports):
   when the human wizard (model 0 in the wizard list) touches the matching trigger entity
   (`sub_59A80_59F90` & co., `sub_5A090_5A5A0`).
 - Class 3 types 4..11 only store wizard start positions; wizards are created per player
-  (`sub_44D30_45070`): model 0 = human, model 1 = computer (state 1, `sub_13170` AI, mode byte at
+  (`sub_44D30_45070`): model 0 = human, model 1 = computer (state 1, `ComputerWizardTick_13170` AI, mode byte at
   player+415).
 - Class 10 type 39 = mana ball (mana at +140); class 5 type 5 creatures (state 31, `sub_1BD20`) seek mana
   balls and turn mana into class 10 type 52 spawn timers (state 0x38) that raise another type 5.
@@ -1146,6 +1159,15 @@ Known open issues:
   entity's max mana 0. The port now skips stale entries (first triggers at tick 9127 of the recording,
   so the recording replays exactly only up to there). Also pattern #65 (flag OR truncated to a byte)
   and the harmless `JUMPOUT(0x36079)` in `sub_36080_36440` (a shared epilogue) removed.
+- Fixed 2026-11-15: hang after the ending FMV (`level50-end-freeze.recording`, pattern #70). As in the
+  original, finishing level 50 plays the outro, waits 4 s, sets the quit flag (+13327 of the player's
+  `str_13323` entry) and the game exits.
+- Fixed 2026-11-15: freeze at the end of `level50-freeze.recording`: the rotated-sprite blitter's fog +
+  transparency cases looped forever (pattern #69). The frame's `DrawWorld` now matches the original.
+- Fixed 2026-11-15: computer wizards chose other mana balls than the original (pattern #50):
+  `AiChooseManaToPossess_15080` and `AiFindRivalWizard_145B0` compare `50000 - maxMana/10*k/255` signed (`idiv`, `jge`/`jle`), the
+  port unsigned via `_DWORD`, so targets owned by a wizard with a lot of mana took the other branch.
+  Found in `possession_spell_bug.recording` (frames 56995, 59853), which now desyncs from frame 18360.
 - Fixed 2026-11-04: the heal spell cost no mana while the caster's mana delta was not negative (pattern
   #68; `level30.recording`, frame 46500).
 - Fixed 2026-11-04: flaky access violations when a replay or game ended with AdLib music: only realtime

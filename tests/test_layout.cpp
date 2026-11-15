@@ -28,7 +28,7 @@ TEST(Layout, GameStateStructOffsets)
 	EXPECT_EQ(offsetof(T, str_12), 12u);
 	EXPECT_EQ(offsetof(T, var_u32_32), 32u);
 	EXPECT_EQ(offsetof(T, var_u32_576), 576u);
-	EXPECT_EQ(offsetof(T, var_u32_593), 593u);
+	EXPECT_EQ(offsetof(T, freeList_593), 593u);
 	EXPECT_EQ(offsetof(T, var_u32_4593), 4593u);
 	EXPECT_EQ(offsetof(T, var_u32_4597), 4597u);
 	EXPECT_EQ(offsetof(T, playerStart_9177), 9177u);
@@ -53,7 +53,7 @@ TEST(Layout, ResetFieldSizes)
 	EXPECT_EQ(sizeof(A::var_u32_32), 4u);
 	EXPECT_EQ(sizeof(A::var_u16_36), 2u);
 	EXPECT_EQ(sizeof(A::var_u16_38), 2u);
-	EXPECT_EQ(sizeof(A::var_u32_40), 4u);
+	EXPECT_EQ(sizeof(A::freeListTop_40), 4u);
 	EXPECT_EQ(sizeof(A::str_232607), 106u);
 	EXPECT_EQ(sizeof(A::playerStart_9177), 48u);
 	EXPECT_EQ(sizeof(A::str_29795), 164000u);
