@@ -785,7 +785,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     `!byte_B5D3E && a1 != 2`; the asm takes it for every a1 when `byte_B5D3E == 0`, with a1 == 2 sharing
     the a1 == 0 offset - billboard sprites (`DrawSprite_2FC50`, a1 = 2) were not rotated with the carpet's
     roll. Found with `tools/diff_step.py` (see §4).
-57. **Statements left commented out.** `sub_590D0_595E0` had the flag reset `//*result = v3 & 0xF7;` as
+57. **Statements left commented out.** `AdvanceTextureAnims_590D0_595E0` had the flag reset `//*result = v3 & 0xF7;` as
     a comment: the sprite drawers set bit 8 on a sprite when they draw it and this per-frame pass clears
     it and advances the animation of the drawn ones - without the reset every sprite drawn once kept
     animating forever. Commented-out assignments inside decompiled bodies deserve a look at the asm.

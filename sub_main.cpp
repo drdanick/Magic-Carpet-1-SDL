@@ -388,7 +388,7 @@ _BOOL1 AiHasAttackSpell_16920(int a1);
 char sub_16990();
 void ReadMouseSteering_169E0();
 void ProcessKeys_16B00();
-// char sub_17C20(__int16 a1, __int16 a2, __int16 a3);
+// char ReadLocalPlayerControls_17C20(__int16 a1, __int16 a2, __int16 a3);
 void MakeControlCommand_188A0(char a1, char a2);
 // void RunCpuid_192D8(char a1, _BOOL1 a2, char a3, char a4, __int16 a5);
 int CpuidProbe_192F3();
@@ -891,7 +891,7 @@ int CreateClass13Type2_3C510(int a1);
 int CreateClass13Type3_3C540(int a1);
 void InitMusicFromSetup_3C570();
 void sub_3C800_sub_3CB40();
-void sub_3C9D0_3CD10();
+void ExecutePlayerInputs_3C9D0_3CD10();
 void sub_3DC90_3DFD0(TypeStrAE400_13323* a1, char a2);
 void sub_3DD10_3E050();
 void sub_3DD50_3E090();
@@ -1210,7 +1210,7 @@ void sub_58F00_59410();
 void CloseTmapsFile_58F70_59480();
 void sub_58F90_594A0();
 bool CacheTmapGroup_59050_59560(unsigned __int16 a1);
-void sub_590D0_595E0();
+void AdvanceTextureAnims_590D0_595E0();
 void sub_59140_59650();
 void sub_59160_59670(unsigned __int16 a1, unsigned __int16 a2, signed __int16 a3);
 void sub_591E0(unsigned __int16 a1);
@@ -19232,7 +19232,8 @@ void ProcessKeys_16B00()//1E7B00_
 }
 
 //----- (00017C20) --------------------------------------------------------
-void sub_17C20()
+/// Turns the local player's keys and mouse into control commands (ProcessKeys_16B00, MakeControlCommand_188A0).
+void ReadLocalPlayerControls_17C20()
 {
   int v3; // eax
   int v4; // edx
@@ -40932,10 +40933,10 @@ void DrawAndEventsInGame_34530_348F0()//205530_
 	if (!str_AE400_AE3F0->set.mod3D_8603)
 		UpdatePaletteEffects_34690_34A50();
 	if ((str_AE408_AE3F8->var_u8_2 & 1) == 0)
-		SNAP_CALL(0x590D0, sub_590D0_595E0())
+		SNAP_CALL(0x590D0, AdvanceTextureAnims_590D0_595E0())
 	if ((str_AE408_AE3F8->var_u8_0 & 4) == 0)
-		SNAP_CALL(0x17C20, sub_17C20())
-	SNAP_CALL(0x3C9D0, sub_3C9D0_3CD10())
+		SNAP_CALL(0x17C20, ReadLocalPlayerControls_17C20())
+	SNAP_CALL(0x3C9D0, ExecutePlayerInputs_3C9D0_3CD10())
 	if ((str_AE408_AE3F8->var_u8_2 & 1) == 0)
 		SNAP_CALL(0x415C0, sub_415C0_41900())
 	switch (str_AE408_AE3F8->gameSpeed_150)
@@ -47956,7 +47957,8 @@ void sub_3C800_sub_3CB40()
 // CC1BC: using guessed type int dword_CC1BC;
 
 //SYNCHRONIZED WITH REMC1
-void sub_3C9D0_3CD10()//20D9D0_
+/// Per frame, for every player: records/plays back its 10-byte input packet (MovieInputPacket_3E9D0_3ED10) and executes the packet's commands (bytes 0 and 1: player state, spell selection, cheats, ...).
+void ExecutePlayerInputs_3C9D0_3CD10()//20D9D0_
 {
 	//int v0; // ebx
 	//_BYTE *v1; // ebp
@@ -66680,7 +66682,8 @@ bool CacheTmapGroup_59050_59560(unsigned __int16 a1)//22A050_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_590D0_595E0()//22A0D0_
+/// Advances the animation of every animated texture map drawn since the last call (flag 8, which is cleared) by one frame.
+void AdvanceTextureAnims_590D0_595E0()//22A0D0_
 {
   //unsigned __int16 i; // bx
   //char *result; // eax
