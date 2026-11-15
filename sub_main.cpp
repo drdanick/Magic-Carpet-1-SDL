@@ -310,7 +310,7 @@ void sub_10F10(Type_sub_AE3E0* a1);
 Type_sub_AE3E0* sub_10FD0(Type_AE3E0* a1, __int16 a2);
 void FreeAnimSequences_11010(Type_AE3E0** a1);
 bool sub_11050();
-void sub_111B0(int a1, int a2);
+void RunFmvCommands_111B0(int a1, int a2);
 int BeginRingIter_11410(int a1, int a2);
 void EndRingIter_11490(int a1);
 int NextRingOffset_114B0(int a1, _DWORD *a2, _DWORD *a3);
@@ -537,11 +537,11 @@ void sub_23CF0(__int16 a1, __int16 a2, int a3);
 void DrawSpellIconWithCharges_23D40(int a1, int a2, Type_AE400_29795* a3x, char a4);
 void DrawSpellMenuIcon_24230(__int16 a1, __int16 a2, unsigned int a3, char a4);
 void sub_247C0(int result, int a2, __int16 a3, __int16 a4, int a5, unsigned __int8 a6);
-void sub_24AB0();
-void sub_24B50(char* a1);
-int sub_24B80();
-void sub_24BB0();
-void sub_24BF0(unsigned __int8 a1);
+void OpenFmvCaptions_24AB0();
+void ShowFmvCaption_24B50(char* a1);
+int ClearFmvCaption_24B80();
+void CloseFmvCaptions_24BB0();
+void SetFmvCaptionColour_24BF0(unsigned __int8 a1);
 void sub_24C20(int a1, int a2, int a3, int a4, unsigned __int16 a5);
 void sub_24CA0(int a1, int a2, int a3, int a4, unsigned __int16 a5);
 void DrawRectCheckedLowRes_24D20(int a1, int a2, int a3, int a4, unsigned __int16 a5);
@@ -688,18 +688,18 @@ void RefillLife_36DE0_371A0(Type_AE400_29795* event);
 void sub_36DF0_371B0(Type_AE400_29795* event, unsigned __int16 a2);
 int SetManaToHalfMaxLife_36F90_37350(int a1);
 void SetSprite_36FA0_37360(Type_AE400_29795* event, __int16 a2);
-void sub_37030_373F0(Type_AE400_29795* a1, __int16 a2);
-void sub_370A0_37460(Type_AE400_29795* a1, __int16 a2);
-void sub_370E0_374A0(Type_AE400_29795* a1, __int16 a2);
+void SetSpriteAndBox_37030_373F0(Type_AE400_29795* a1, __int16 a2);
+void SetSpriteDoubleBox_370A0_37460(Type_AE400_29795* a1, __int16 a2);
+void SetSpriteHalfBox_370E0_374A0(Type_AE400_29795* a1, __int16 a2);
 void SetCollisionBox_37130_374F0(Type_AE400_29795* a1, __int16 a2, __int16 a3);
 void SetCollisionBoxFromBuild_37150_37510(Type_AE400_29795* event, __int16 a2);
-void sub_371C0_37580();
+void InitFreeList_371C0_37580();
 void RebuildFreeLists_37220_375E0();
 Type_AE400_29795* NewEvent_372C0_37680();
 Type_AE400_29795* CreateEntity_373F0_377B0(axis_3d* a1, int a2, int a3);
 void sub_37440_37800(int a1, char a2);
 void sub_37560_37920(Type_1090* type1090);
-int sub_37710_37AD0();
+int FreeEntityCount_37710_37AD0();
 int SetPlayerStart0_37720_37AE0(int a1);
 int SetPlayerStart1_37740_37B00(int a1);
 int SetPlayerStart2_37760_37B20(int a1);
@@ -712,16 +712,16 @@ Type_AE400_29795* CreatePlayerWizard_37820_37BE0(axis_3d* position);
 int CreateComputerWizard_378A0_37C60(int a1);
 int CreateCastle_37920_37CE0(int a1);
 int CreateBalloon_37A00_37DC0(int a1);
-int sub_37A80(int a1);
-int sub_37AA0(int a1);
-int sub_37AC0(int a1);
-int sub_37AE0(int a1);
-int sub_37B00(int a1);
-int sub_37B20(int a1);
-int sub_37B40(int a1);
-int sub_37B60(int a1);
-int sub_37B80(int a1);
-int sub_37BA0(int a1);
+int Placeholder1_1_37A80(int a1);
+int Placeholder1_2_37AA0(int a1);
+int Placeholder1_3_37AC0(int a1);
+int Placeholder1_4_37AE0(int a1);
+int Placeholder1_5_37B00(int a1);
+int Placeholder1_6_37B20(int a1);
+int Placeholder1_7_37B40(int a1);
+int Placeholder1_8_37B60(int a1);
+int Placeholder1_9_37B80(int a1);
+int Placeholder1_10_37BA0(int a1);
 int CreateTree_37BC0(int a1);
 int CreateStone_37CF0(int a1);
 int CreateDolmen_37D70(int a1);
@@ -744,19 +744,19 @@ int CreateVillagerType12_39200(int a1);
 int CreateVillagerType14_39490(int a1);
 int CreateClass5Type15_395B0(int a1);
 int CreateWyvern_396E0(int a1);
-int sub_39800(int a1);
-int sub_39820(int a1);
-int sub_39840(int a1);
-int sub_39860(int a1);
-int sub_39880(int a1);
-int sub_398A0(int a1);
-int sub_398C0(int a1);
-int sub_39940(int a1);
-int sub_39960(int a1);
-int sub_39980(int a1);
-int sub_399A0(int a1);
-int sub_399C0(int a1);
-int sub_399E0(int a1);
+int Placeholder6_0_39800(int a1);
+int Placeholder6_1_39820(int a1);
+int Placeholder7_0_39840(int a1);
+int Placeholder7_1_39860(int a1);
+int Placeholder7_2_39880(int a1);
+int Placeholder7_3_398A0(int a1);
+int CreateClass7Type4_398C0(int a1);
+int Placeholder8_0_39940(int a1);
+int Placeholder8_1_39960(int a1);
+int Placeholder8_2_39980(int a1);
+int Placeholder8_3_399A0(int a1);
+int Placeholder8_4_399C0(int a1);
+int Placeholder8_5_399E0(int a1);
 int CreateFireball_39A10(int a1);
 int CreatePossessionMissile_39A90(int a1);
 int CreateEarthquakeMissile_39B40(int a1);
@@ -1016,10 +1016,10 @@ void sub_44C90_44FD0(Type_AE400_29795* event);
 void SpawnWizard_44D30_45070(TypeStrAE400_13323* a1, Type_AE400_29795* event);
 int sub_45410_45750(Type_AE400_29795* a1);
 void sub_455D0_45910(Type_AE400_29795* a1);
-void sub_45C10_45F50(Type_AE400_29795* a1);
+void RebuildSpellIndex_45C10_45F50(Type_AE400_29795* a1);
 void PlayerWizardTick_45C90_45FD0(Type_AE400_29795* a1);
 int WizardDyingTick_45FC0_46300(int a1);
-void sub_463B0_466F0(int a1);
+void TurnTowardsKiller_463B0_466F0(int a1);
 void WizardDeadTick_46480_467C0(int a1);
 void sub_46520_46860(Type_AE400_29795* a1);
 int sub_46540_46880(Type_AE400_29795* a1);
@@ -1865,7 +1865,7 @@ __int16 word_4A130[] = {
 0x0000,0x0000,0x0000
 }; //fix it!!!*/
 // PORT: exact bytes of CARPET.EXE 0x4a17c..0x4a1fc (+16 bytes of what followed in DOS memory).
-// The decompiled tables were truncated to 8 bytes; the FMV command reader (sub_111B0, 7-byte entries)
+// The decompiled tables were truncated to 8 bytes; the FMV command reader (RunFmvCommands_111B0, 7-byte entries)
 // walks past them. Regenerate with: python tools/exe_data.py --exe CARPET.EXE carray 0x4a17c 0x90
 uint8_t fmvTables_4A17C[0x90] = {
     0x00, 0x00, 0x41, 0x01, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x72,
@@ -2011,7 +2011,7 @@ uint8_t dword_4A1FC_4A53C[] = {
 
 
 // PORT: exact bytes of CARPET.EXE 0x4a568..0x4a66c (+16 bytes of what followed in DOS memory).
-// The decompiled tables were truncated to 8 bytes; the FMV command reader (sub_111B0, 7-byte entries)
+// The decompiled tables were truncated to 8 bytes; the FMV command reader (RunFmvCommands_111B0, 7-byte entries)
 // walks past them. Regenerate with: python tools/exe_data.py --exe CARPET.EXE carray 0x4a568 0x114
 uint8_t fmvTables_4A568[0x114] = {
     0x00, 0x00, 0x41, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x45, 0x0A, 0x00, 0x00, 0x00, 0x02, 0x00,
@@ -3452,16 +3452,16 @@ int CreateWorm_384B0(uint16_t* a1);
 
 Type_254A34 str_254A34[] = {
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_37A80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(sub_37AA0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_37AC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(sub_37AE0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(sub_37B00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, PORT_FN(sub_37B20, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, PORT_FN(sub_37B40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0008, PORT_FN(sub_37B60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0009, PORT_FN(sub_37B80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, PORT_FN(sub_37BA0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(Placeholder1_1_37A80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(Placeholder1_2_37AA0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(Placeholder1_3_37AC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(Placeholder1_4_37AE0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(Placeholder1_5_37B00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, PORT_FN(Placeholder1_6_37B20, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, PORT_FN(Placeholder1_7_37B40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0008, PORT_FN(Placeholder1_8_37B60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0009, PORT_FN(Placeholder1_9_37B80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, PORT_FN(Placeholder1_10_37BA0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_254D48[] = {
@@ -3548,25 +3548,25 @@ Type_254A34 str_255478[] = {
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_2555A0[] = {
-{ 0x002548F4, 0x0000, PORT_FN(sub_39800, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_39820, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(Placeholder6_0_39800, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(Placeholder6_1_39820, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_255620[] = {
-{ 0x002548F4, 0x0000, PORT_FN(sub_39840, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_39860, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(sub_39880, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_398A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(sub_398C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(Placeholder7_0_39840, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(Placeholder7_1_39860, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(Placeholder7_2_39880, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(Placeholder7_3_398A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(CreateClass7Type4_398C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_2556D8[] = {
-{ 0x002548F4, 0x0000, PORT_FN(sub_39940, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_39960, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(sub_39980, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_399A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(sub_399C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(sub_399E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(Placeholder8_0_39940, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(Placeholder8_1_39960, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(Placeholder8_2_39980, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(Placeholder8_3_399A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(Placeholder8_4_399C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(Placeholder8_5_399E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_255870[] = {
@@ -4637,7 +4637,7 @@ Pathstruct pathStrArray[] =
     { "data/blk0-1.dat", &begBlkDat_AE3F0_26C3F0_26C3E0, 0, 0, 0 },
     { "data/sky.dat", &begSky_AE3D8_AE3C8_26C3D8_26C3C8, 0, 0, 0 },
     { "", 0, 0, 0, 0 },
-    { "*WScreen", &begWscreen_2ECFF4_2ECFE4, 0, 76800, 0 },// PORT: was 71040 (320x222); FMV subtitles (sub_24B80) clear lines 180..240. In DOS the overrun hit the next pool block.
+    { "*WScreen", &begWscreen_2ECFF4_2ECFE4, 0, 76800, 0 },// PORT: was 71040 (320x222); FMV subtitles (ClearFmvCaption_24B80) clear lines 180..240. In DOS the overrun hit the next pool block.
     { "*BScreen", &begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, 0, 70000, 0 },
     { "data/mspr0-0.dat", &begSprDat_26C444_26C434, 0, 0, 0 },
     { "data/mspr0-0.tab", (uint8_t**)&begSprTab_AE42C_AE41C_26C42C_26C41C, (uint8_t**)&endSprTab_AE434_26C424, 0, 0 },
@@ -14159,7 +14159,7 @@ _DWORD outtext(char* text)
 //void qmemcpy(int a, int b, char c) {};
 template <class... A> _DWORD segread(A...) { return 0; }
 _DWORD settextposition(_DWORD a, _DWORD b) { return 0; };// weak
-//void sub_111B0(int a1, int a2) {};
+//void RunFmvCommands_111B0(int a1, int a2) {};
 //void sub_193EE(__int16 a1) {};
 //_WORD * DropManaBall_27690(_WORD *result, int a2) { return 0; };
 //void sub_10000() {}; // weak
@@ -14983,7 +14983,7 @@ void DecodeFliFrame_104D0()
     {
       SetPalette_319A0_319E0(colorBuffer_AC2B8_AC2A8);
       v20 = FindNearestColour_5CC70_5D180(colorBuffer_AC2B8_AC2A8, 0x3Fu, 0x3Fu, 0x3Fu);
-      sub_24BF0(v20);
+      SetFmvCaptionColour_24BF0(v20);
     }
   }
   if ( byte_90091 )
@@ -15018,7 +15018,7 @@ void PlayInfoFmv_107C0_107C0(__int16 a1, __int16 a2, int a3)//1E17C0_
   {
     if (word_AC5E0_AC5D0x >= str_AC5C8_AC5B8.word_AC5CE_AC5BE - 1 )
       break;
-    sub_111B0((int)0, (int)a3);
+    RunFmvCommands_111B0((int)0, (int)a3);
     ReadFliFrame_103F0();
     DecodeFliFrame_104D0();
   }
@@ -15400,7 +15400,8 @@ bool sub_11050()
 // 11050: using guessed type int var_C[3];
 
 //SYNCHRONIZED WITH REMC1
-void sub_111B0(int a1, int a2)
+/// Runs the commands of FMV command table a2 (7-byte entries: frame, letter, argument) that are due at the current frame (word_AC5E0_AC5D0x): music, sounds, captions, ...
+void RunFmvCommands_111B0(int a1, int a2)
 {
   int v2; // eax
   __int16 v3; // bx
@@ -15439,7 +15440,7 @@ void sub_111B0(int a1, int a2)
         ++a1;
         continue;
       case 10:
-        sub_24B80();
+        ClearFmvCaption_24B80();
         LOWORD(a1) = word_90030;
         ++a1;
         continue;
@@ -15459,17 +15460,17 @@ LABEL_9:
       case 14:
         if ( !byte_90090 )
           goto LABEL_26;
-        sub_24AB0();
+        OpenFmvCaptions_24AB0();
         LOWORD(a1) = word_90030;
         ++a1;
         continue;
       case 15:
-        sub_24BB0();
+        CloseFmvCaptions_24BB0();
         LOWORD(a1) = word_90030;
         ++a1;
         continue;
       case 16:
-        sub_24B50(dword_AE238_AE228[v3]);
+        ShowFmvCaption_24B50(dword_AE238_AE228[v3]);
         LOWORD(a1) = word_90030;
         ++a1;
         continue;
@@ -16840,7 +16841,7 @@ int sub_132B0(int a1)
         *(_WORD *)PTR(v13 + 460) = 24607;
     }
   }
-  sub_45C10_45F50((Type_AE400_29795*)PTR(a1));
+  RebuildSpellIndex_45C10_45F50((Type_AE400_29795*)PTR(a1));
   v14 = *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50);
   if ( v14 && EntitiesCollide_11950((Type_AE400_29795*)PTR(a1), (Type_AE400_29795*)PTR(164 * v14 + dword_AE400_AE3F0() + 29795)) )
     v29 = 1;
@@ -20881,7 +20882,7 @@ int sub_1A990(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
     v4 = a1x->sClass_29861_66;
     *(_WORD *)PTR(v3 + 44) = 250;
     *(_BYTE *)PTR(v3 + 66) = v4;
-    sub_370A0_37460((Type_AE400_29795*)(_WORD *)PTR(v3), 195);
+    SetSpriteDoubleBox_370A0_37460((Type_AE400_29795*)(_WORD *)PTR(v3), 195);
     return 1;
   }
   return v6;
@@ -20914,7 +20915,7 @@ void CreatureShootAt_1AA40(Type_AE400_29795* a1x, int a2)
       *(_WORD *)PTR(v3 + 44) = 600;
     else
       *(_WORD *)PTR(v3 + 44) = 400;
-    sub_370A0_37460((Type_AE400_29795*)(_WORD *)PTR(v3), 203);
+    SetSpriteDoubleBox_370A0_37460((Type_AE400_29795*)(_WORD *)PTR(v3), 203);
   }
 }
 
@@ -26990,7 +26991,8 @@ void sub_247C0(int result, int a2, __int16 a3, __int16 a4, int a5, unsigned __in
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_24AB0()//1F5AB0_
+/// FMV command: enables the caption overlay (loads data/screens/sfont1, text window 10,180 300x50, white text).
+void OpenFmvCaptions_24AB0()//1F5AB0_
 {
   if ( !byte_9009E )
   {
@@ -27002,22 +27004,24 @@ void sub_24AB0()//1F5AB0_
     byte_AE460_AE450.var8_6 = FindNearestColour_5CC70_5D180(begPalDat_AE428_AE418_26C428_26C418, 0x3Fu, 0x3Fu, 0x3Fu);
     word_B329C_B328C = 19200;
     dword_B3294_B3284 = (int)OFF(begWscreen_2ECFF4_2ECFE4) + 57600;
-    sub_24B80();
+    ClearFmvCaption_24B80();
   }
 }
 
-void sub_24B50(char* a1)
+/// FMV command: shows caption text a1 (game text string) while captions are enabled.
+void ShowFmvCaption_24B50(char* a1)
 {
   if ( byte_9009E )
   {
-    sub_24B80();
+    ClearFmvCaption_24B80();
     DrawText_51560_518A0((uint8*)&byte_AE460_AE450, 0, 0, a1);
     dword_900A0 = a1;
   }
 }
 
 //----- (00024B80) --------------------------------------------------------
-int sub_24B80()
+/// Clears the caption area of the screen buffer while captions are enabled.
+int ClearFmvCaption_24B80()
 {
   int result; // eax
 
@@ -27035,11 +27039,12 @@ int sub_24B80()
 // B329C: using guessed type __int16 word_B329C_B328C;
 
 //----- (00024BB0) --------------------------------------------------------
-void sub_24BB0()
+/// FMV command: clears the caption, frees its font and disables captions.
+void CloseFmvCaptions_24BB0()
 {
   if ( byte_9009E )
   {
-    sub_24B80();
+    ClearFmvCaption_24B80();
     FreePathFiles_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreenssfont1dat]);
     byte_90091 = 0;
     byte_9009E = 0;
@@ -27051,13 +27056,14 @@ void sub_24BB0()
 // 900A0: using guessed type int dword_900A0;
 
 //SYNCHRONIZED WITH REMC1
-void sub_24BF0(unsigned __int8 a1)
+/// Sets the caption colour to a1 and redraws the current caption.
+void SetFmvCaptionColour_24BF0(unsigned __int8 a1)
 {
   if ( byte_9009E )
   {
     byte_AE460_AE450.var8_6 = a1;
     if ( dword_900A0 )
-      sub_24B50(dword_900A0);
+      ShowFmvCaption_24B50(dword_900A0);
   }
 }
 
@@ -28527,7 +28533,7 @@ void UndeadArmyEffectTick_26E90(int a1)
   *(_WORD *)PTR(a1 + 44) = 10000;
   if ( *(_WORD *)PTR(a1 + 44) )
   {
-    v9 = sub_37710_37AD0();
+    v9 = FreeEntityCount_37710_37AD0();
     if ( (v9 & 0x8000u) != 0 )
       v9 = 0;
     if ( (__int16)v9 > 8 )
@@ -28791,7 +28797,7 @@ LABEL_15:
   {
     SetSprite_36FA0_37360(event, v1 + i);
     if ( i )
-      sub_370E0_374A0(event, v1 + i);
+      SetSpriteHalfBox_370E0_374A0(event, v1 + i);
   }
 }
 
@@ -43028,7 +43034,8 @@ void SetSprite_36FA0_37360(Type_AE400_29795* event, __int16 a2)//207FA0_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_37030_373F0(Type_AE400_29795* a1x, __int16 a2)
+/// SetSprite_36FA0_37360, then sets the collision radii from the descriptor again (same values).
+void SetSpriteAndBox_37030_373F0(Type_AE400_29795* a1x, __int16 a2)
 {
   SetSprite_36FA0_37360(a1x, a2);
   a1x->collisionBox_29873_78.radiusX_29875_80 = word_99BA6[7 * a2] / 2;
@@ -43037,7 +43044,8 @@ void sub_37030_373F0(Type_AE400_29795* a1x, __int16 a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_370A0_37460(Type_AE400_29795* a1x, __int16 a2)
+/// SetSprite_36FA0_37360 with the collision radii doubled.
+void SetSpriteDoubleBox_370A0_37460(Type_AE400_29795* a1x, __int16 a2)
 {
   SetSprite_36FA0_37360(a1x, a2);
   a1x->collisionBox_29873_78.radiusX_29875_80 *= 2;
@@ -43046,7 +43054,8 @@ void sub_370A0_37460(Type_AE400_29795* a1x, __int16 a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_370E0_374A0(Type_AE400_29795* a1x, __int16 a2)
+/// SetSprite_36FA0_37360 with the collision radii halved.
+void SetSpriteHalfBox_370E0_374A0(Type_AE400_29795* a1x, __int16 a2)
 {
   SetSprite_36FA0_37360(a1x, a2);
   a1x->collisionBox_29873_78.radiusX_29875_80 /= 2;
@@ -43080,7 +43089,8 @@ void SetCollisionBoxFromBuild_37150_37510(Type_AE400_29795* event, __int16 a2)//
   event->collisionBox_29873_78.radiusZ_29879_84 = 0x4000;
 }
 
-void sub_371C0_37580()//2081C0_
+/// Puts entities 999..1 on the free list and empties the recycle list (new level).
+void InitFreeList_371C0_37580()//2081C0_
 {
   str_AE400_AE3F0->str_29795[0].var_u32_29955_160 = unk_B7330_B7320;
   str_AE400_AE3F0->freeListTop_40 = -1;
@@ -43338,7 +43348,8 @@ void sub_37560_37920(Type_1090* type1090)
 }
 
 //----- (00037710) --------------------------------------------------------
-int sub_37710_37AD0()
+/// Number of entities on the free list (game state +40 + 1).
+int FreeEntityCount_37710_37AD0()
 {
   return *(_DWORD *)PTR(dword_AE400_AE3F0() + 40) + 1;
 }
@@ -43595,7 +43606,8 @@ int CreateBalloon_37A00_37DC0(int a1)
 }
 
 //----- (00037A80) --------------------------------------------------------
-int sub_37A80(int a1)
+/// Placeholder constructor (class 1 type 1): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_1_37A80(int a1)
 {
   int v0; // eax
 
@@ -43606,7 +43618,8 @@ int sub_37A80(int a1)
 }
 
 //----- (00037AA0) --------------------------------------------------------
-int sub_37AA0(int a1)
+/// Placeholder constructor (class 1 type 2): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_2_37AA0(int a1)
 {
   int v0; // eax
 
@@ -43617,7 +43630,8 @@ int sub_37AA0(int a1)
 }
 
 //----- (00037AC0) --------------------------------------------------------
-int sub_37AC0(int a1)
+/// Placeholder constructor (class 1 type 3): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_3_37AC0(int a1)
 {
   int v0; // eax
 
@@ -43628,7 +43642,8 @@ int sub_37AC0(int a1)
 }
 
 //----- (00037AE0) --------------------------------------------------------
-int sub_37AE0(int a1)
+/// Placeholder constructor (class 1 type 4): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_4_37AE0(int a1)
 {
   int v0; // eax
 
@@ -43639,7 +43654,8 @@ int sub_37AE0(int a1)
 }
 
 //----- (00037B00) --------------------------------------------------------
-int sub_37B00(int a1)
+/// Placeholder constructor (class 1 type 5): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_5_37B00(int a1)
 {
   int v0; // eax
 
@@ -43650,7 +43666,8 @@ int sub_37B00(int a1)
 }
 
 //----- (00037B20) --------------------------------------------------------
-int sub_37B20(int a1)
+/// Placeholder constructor (class 1 type 6): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_6_37B20(int a1)
 {
   int v0; // eax
 
@@ -43661,7 +43678,8 @@ int sub_37B20(int a1)
 }
 
 //----- (00037B40) --------------------------------------------------------
-int sub_37B40(int a1)
+/// Placeholder constructor (class 1 type 7): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_7_37B40(int a1)
 {
   int v0; // eax
 
@@ -43672,7 +43690,8 @@ int sub_37B40(int a1)
 }
 
 //----- (00037B60) --------------------------------------------------------
-int sub_37B60(int a1)
+/// Placeholder constructor (class 1 type 8): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_8_37B60(int a1)
 {
   int v0; // eax
 
@@ -43683,7 +43702,8 @@ int sub_37B60(int a1)
 }
 
 //----- (00037B80) --------------------------------------------------------
-int sub_37B80(int a1)
+/// Placeholder constructor (class 1 type 9): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_9_37B80(int a1)
 {
   int v0; // eax
 
@@ -43694,7 +43714,8 @@ int sub_37B80(int a1)
 }
 
 //----- (00037BA0) --------------------------------------------------------
-int sub_37BA0(int a1)
+/// Placeholder constructor (class 1 type 10): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_10_37BA0(int a1)
 {
   int v0; // eax
 
@@ -43745,9 +43766,9 @@ int CreateTree_37BC0(int a1)
   v7 = 9377 * *(_DWORD *)PTR(v2 + 4) + 9439;
   *(_DWORD *)PTR(v2 + 4) = v7;
   if ( (v7 & 1) != 0 )
-    sub_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 84);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 84);
   else
-    sub_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 83);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 83);
   return v3;
 }
 // 37CBD: conditional instruction was optimized away because edx.4==1
@@ -43771,7 +43792,7 @@ int CreateStone_37CF0(int a1)
     *(_BYTE *)PTR(result + 65) = 1;
     AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_37030_373F0((Type_AE400_29795*)(uint16*)v2, 79);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)(uint16*)v2, 79);
     return (int)OFF(v2);
   }
   return result;
@@ -43796,7 +43817,7 @@ int CreateDolmen_37D70(int a1)
     *(_BYTE *)PTR(result + 65) = 2;
     AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_37030_373F0((Type_AE400_29795*)v2, 39);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)v2, 39);
     SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 1024, 1024);
     return (int)OFF(v2);
   }
@@ -43822,7 +43843,7 @@ int CreateStandingStone_37E00(int a1)
     *(_BYTE *)PTR(result + 65) = 3;
     AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_37030_373F0((Type_AE400_29795*)v2, 270);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)v2, 270);
     return (int)OFF(v2);
   }
   return result;
@@ -43847,7 +43868,7 @@ int CreateClass2Type4_37E80(int a1)
     *(_WORD *)PTR(result + 26) = (result - (dword_AE400_AE3F0() + 29795)) / 164 % 11;
     AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_37030_373F0((Type_AE400_29795*)v2, 48);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)v2, 48);
     return (int)OFF(v2);
   }
   return result;
@@ -43872,7 +43893,7 @@ int CreateClass2Type5_37EF0(int a1)
     *(_WORD *)PTR(result + 26) = (result - (dword_AE400_AE3F0() + 29795)) / 164 % 11;
     AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_37030_373F0((Type_AE400_29795*)v2, 48);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)v2, 48);
     return (int)OFF(v2);
   }
   return result;
@@ -43897,7 +43918,7 @@ int CreateDragon_38030(int a1)
   int v13; // [esp+8h] [ebp-18h]
   __int16 v14; // [esp+Ch] [ebp-14h]
 
-  if ( sub_37710_37AD0() < 16 )
+  if ( FreeEntityCount_37710_37AD0() < 16 )
     return 0;
   v1 = (int)OFF(NewEvent_372C0_37680());
   v2 = v1;
@@ -44344,7 +44365,7 @@ int CreateKraken_389E0(int a1)
   _DWORD *v10; // [esp+4h] [ebp-18h]
   int i; // [esp+8h] [ebp-14h]
 
-  if ( sub_37710_37AD0() < 16 )
+  if ( FreeEntityCount_37710_37AD0() < 16 )
     return 0;
   v1 = (int)OFF(NewEvent_372C0_37680());
   v2 = v1;
@@ -45023,7 +45044,8 @@ int CreateWyvern_396E0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00039800) --------------------------------------------------------
-int sub_39800(int a1)
+/// Placeholder constructor (class 6 type 0): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder6_0_39800(int a1)
 {
   int v0; // eax
 
@@ -45034,7 +45056,8 @@ int sub_39800(int a1)
 }
 
 //----- (00039820) --------------------------------------------------------
-int sub_39820(int a1)
+/// Placeholder constructor (class 6 type 1): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder6_1_39820(int a1)
 {
   int v0; // eax
 
@@ -45045,7 +45068,8 @@ int sub_39820(int a1)
 }
 
 //----- (00039840) --------------------------------------------------------
-int sub_39840(int a1)
+/// Placeholder constructor (class 7 type 0): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder7_0_39840(int a1)
 {
   int v0; // eax
 
@@ -45056,7 +45080,8 @@ int sub_39840(int a1)
 }
 
 //----- (00039860) --------------------------------------------------------
-int sub_39860(int a1)
+/// Placeholder constructor (class 7 type 1): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder7_1_39860(int a1)
 {
   int v0; // eax
 
@@ -45067,7 +45092,8 @@ int sub_39860(int a1)
 }
 
 //----- (00039880) --------------------------------------------------------
-int sub_39880(int a1)
+/// Placeholder constructor (class 7 type 2): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder7_2_39880(int a1)
 {
   int v0; // eax
 
@@ -45078,7 +45104,8 @@ int sub_39880(int a1)
 }
 
 //----- (000398A0) --------------------------------------------------------
-int sub_398A0(int a1)
+/// Placeholder constructor (class 7 type 3): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder7_3_398A0(int a1)
 {
   int v0; // eax
 
@@ -45089,7 +45116,9 @@ int sub_398A0(int a1)
 }
 
 //----- (000398C0) --------------------------------------------------------
-int sub_398C0(int a1)
+/// TODO: rename when the entity is identified (class 7 type 4).
+/// Constructor of class 7 type 4 (state 4, an empty state handler).
+int CreateClass7Type4_398C0(int a1)
 {
   int result; // eax
   int v1; // ebx
@@ -45124,7 +45153,8 @@ int sub_398C0(int a1)
 }
 
 //----- (00039940) --------------------------------------------------------
-int sub_39940(int a1)
+/// Placeholder constructor (class 8 type 0): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder8_0_39940(int a1)
 {
   int v0; // eax
 
@@ -45135,7 +45165,8 @@ int sub_39940(int a1)
 }
 
 //----- (00039960) --------------------------------------------------------
-int sub_39960(int a1)
+/// Placeholder constructor (class 8 type 1): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder8_1_39960(int a1)
 {
   int v0; // eax
 
@@ -45146,7 +45177,8 @@ int sub_39960(int a1)
 }
 
 //----- (00039980) --------------------------------------------------------
-int sub_39980(int a1)
+/// Placeholder constructor (class 8 type 2): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder8_2_39980(int a1)
 {
   int v0; // eax
 
@@ -45157,7 +45189,8 @@ int sub_39980(int a1)
 }
 
 //----- (000399A0) --------------------------------------------------------
-int sub_399A0(int a1)
+/// Placeholder constructor (class 8 type 3): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder8_3_399A0(int a1)
 {
   int v0; // eax
 
@@ -45168,7 +45201,8 @@ int sub_399A0(int a1)
 }
 
 //----- (000399C0) --------------------------------------------------------
-int sub_399C0(int a1)
+/// Placeholder constructor (class 8 type 4): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder8_4_399C0(int a1)
 {
   int v0; // eax
 
@@ -45179,7 +45213,8 @@ int sub_399C0(int a1)
 }
 
 //----- (000399E0) --------------------------------------------------------
-int sub_399E0(int a1)
+/// Placeholder constructor (class 8 type 5): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder8_5_399E0(int a1)
 {
   int v0; // eax
 
@@ -45619,7 +45654,7 @@ int CreateClass9Type13_3A0C0(int a1)
     *(_BYTE *)PTR(result + 16) &= ~8u;
     AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_370A0_37460((Type_AE400_29795*)v2, 195);
+    SetSpriteDoubleBox_370A0_37460((Type_AE400_29795*)v2, 195);
     return (int)OFF(v2);
   }
   return result;
@@ -46042,7 +46077,7 @@ int CreateClass10Type7_3A7D0(uint16_t* a1)
     *(_WORD *)PTR(v2 + 126) = v5 % 0x14 + 20;
     AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     *(_WORD *)PTR(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)(short*)a1);
-    sub_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 78);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 78);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     result = v2;
     *(_BYTE *)PTR(v2 + 16) |= 1u;
@@ -46225,7 +46260,7 @@ int CreateSmoke_3AAA0(uint16_t* a1)
     *(_WORD *)PTR(v2 + 126) = v8 + 51;
     *(_BYTE *)PTR(v2 + 18) = BYTE1(v6);
     AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
-    sub_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 67);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 67);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     return v2;
   }
@@ -46269,7 +46304,7 @@ int CreateDarkSmoke_3AB40(uint16_t* a1)
     *(_WORD *)PTR(v2 + 126) = v8 + 51;
     *(_BYTE *)PTR(v2 + 18) = BYTE1(v6);
     AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
-    sub_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 9);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 9);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     return v2;
   }
@@ -46896,7 +46931,7 @@ int CreateDeathMarker_3B620(uint16_t* a1)
     *(_WORD *)PTR(result + 28) = 2;
     AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_37030_373F0((Type_AE400_29795*)v2, 65);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)v2, 65);
     return (int)OFF(v2);
   }
   return result;
@@ -51093,7 +51128,7 @@ void LoadAndInitLevel_407A0_40AE0()//2117A0_
 #ifdef debug1
   //add_compare(0x211817, true);
 #endif debug1
-  sub_371C0_37580();
+  InitFreeList_371C0_37580();
   //debug
 #ifdef debug1
   //add_compare(0x21181F, true);
@@ -51145,7 +51180,7 @@ void sub_408D0_40C10()
   LoadLevel_3E100_3E440(str_AE408_AE3F8->var_u16_17, (void *)&str_AE400_AE3F0->str_193795);
   str_AE400_AE3F0->var_u16_10 = str_AE400_AE3F0->str_193795.var_u16_232597_38802;
   sub_31AA0_31AE0((int)OFF(&str_AE400_AE3F0->str_193795));
-  sub_371C0_37580();
+  InitFreeList_371C0_37580();
   GenerateFeatures_36430_367F0(&str_AE400_AE3F0->str_193795);
   memset(&word_AE454_AE444, 0, 6);
   RebuildFreeLists_37220_375E0();
@@ -54676,7 +54711,7 @@ void SpawnWizard_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//
     //add_compare(0x216003, true);
 #endif debug1
     //debug
-    sub_45C10_45F50(v2x);
+    RebuildSpellIndex_45C10_45F50(v2x);
     if (a1x->var_u8_13332_9 == 1 )
     {
       v2x->var_u32_29955_160->u16_522 = str_AE400_AE3F0->str_193795.str_230867_37072[v2x->var_u32_29955_160->var_48].var_230871;
@@ -54747,7 +54782,7 @@ void SpawnWizard_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//
   v26 = v2x->manaMax_29931_136;
   v2x->mana_29935_140 = v26;
   v2x->var_u32_29955_160->u32_322 = v26;
-  sub_45C10_45F50(v2x);
+  RebuildSpellIndex_45C10_45F50(v2x);
   v28 = v2x->var_u32_29955_160->var_50;
   if ( v28 )
     sub_47DD0_48110(&str_AE400_AE3F0->str_29795[v28]);
@@ -55018,7 +55053,8 @@ void sub_455D0_45910(Type_AE400_29795* a1x)//2165D0_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_45C10_45F50(Type_AE400_29795* a1x)
+/// Rebuilds the wizard's spell-by-type index (wizard data +676) from its 24 spell slots (+532).
+void RebuildSpellIndex_45C10_45F50(Type_AE400_29795* a1x)
 {
   //int result; // eax
   //int v2; // ebx
@@ -55057,7 +55093,7 @@ void PlayerWizardTick_45C90_45FD0(Type_AE400_29795* a1x)
 
   bool bool1 = false;
   if ( (str_AE408_AE3F8->var_u8_2 & 1) == 0 )
-    sub_45C10_45F50(a1x);
+    RebuildSpellIndex_45C10_45F50(a1x);
   a1x->actSpeed_29923_128 = dword_93A90;
   if ( (str_AE408_AE3F8->var_u8_2 & 1) == 0 )
   {
@@ -55291,7 +55327,8 @@ int WizardDyingTick_45FC0_46300(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_463B0_466F0(int a1)
+/// Turns a dead player's wizard (heading/pitch) towards its killer (+38); used by WizardDeadTick_46480_467C0.
+void TurnTowardsKiller_463B0_466F0(int a1)
 {
   _WORD *v1; // edi
   int result; // eax
@@ -55310,7 +55347,7 @@ void sub_463B0_466F0(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Per-tick handler of a dead wizard (class 3 state 3): a computer wizard that still has a castle respawns (SpawnWizard_44D30_45070) once +26 has counted down; the player goes through sub_463B0_466F0.
+/// Per-tick handler of a dead wizard (class 3 state 3): a computer wizard that still has a castle respawns (SpawnWizard_44D30_45070) once +26 has counted down; the player goes through TurnTowardsKiller_463B0_466F0.
 void WizardDeadTick_46480_467C0(int a1)
 {
   int v1; // ecx
@@ -55346,7 +55383,7 @@ void WizardDeadTick_46480_467C0(int a1)
   else
   {
     sub_44BE0_44F20((Type_AE400_29795*)PTR(a1), 7);
-    sub_463B0_466F0(a1);
+    TurnTowardsKiller_463B0_466F0(a1);
   }
 }
 
@@ -55860,7 +55897,7 @@ int sub_470E0(int a1)
 {
   int result; // eax
 
-  result = sub_37710_37AD0();
+  result = FreeEntityCount_37710_37AD0();
   if ( result )
   {
     sub_47A70_47DB0(a1);
@@ -55912,9 +55949,9 @@ int sub_47130_47470(int a1)
   if ( v3 > 0 )
   {
     v4 = v3 / 1000;
-    v21 = sub_37710_37AD0();
+    v21 = FreeEntityCount_37710_37AD0();
     if ( v21
-      || (RebuildFreeLists_37220_375E0(), result = sub_37710_37AD0(), v4 = 8, v21 = result, str_AE400_AE3F0->var_u32_4593 = -1, (_WORD)result) )
+      || (RebuildFreeLists_37220_375E0(), result = FreeEntityCount_37710_37AD0(), v4 = 8, v21 = result, str_AE400_AE3F0->var_u32_4593 = -1, (_WORD)result) )
     {
       if ( v4 < 1 )
         v4 = 1;
@@ -57463,11 +57500,11 @@ int sub_499C0_49D00(int a1)
     {
       if ( v2 <= 0x53u )
       {
-        sub_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(a1), 226);
+        SetSpriteAndBox_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(a1), 226);
       }
       else if ( v2 == 84 )
       {
-        sub_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(a1), 227);
+        SetSpriteAndBox_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(a1), 227);
       }
     }
   }
@@ -59067,7 +59104,7 @@ void PlayIntroAnim_4D3B0_4D6F0()//21E3B0_
     PlayInfoFmv_107C0_107C0(0, 1, (int)OFF(dword_4A1FC_4A53C));
   }
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
-  sub_24BB0();
+  CloseFmvCaptions_24BB0();
   sub_5D010_5D520();
   StopMusic_20E60_20E60();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -67883,7 +67920,7 @@ void DrawVersionInfo_5A560_5AA70()
     v18 = GetLetterY_5A3B0_5A8C0() + v17;
     DrawText_5A180_5A690((char*)"Thing", 320, v18, byte_AD167_AD157[3841]);
     v19 = GetLetterY_5A3B0_5A8C0() + v18;
-    v20 = sub_37710_37AD0();
+    v20 = FreeEntityCount_37710_37AD0();
     sprintf(v32, "Thing %d, Active %d", 164, 1000 - v20);
     DrawText_5A180_5A690(v32, 320, v19, byte_AD167_AD157[16]);
     v21 = GetLetterY_5A3B0_5A8C0() + v19;
