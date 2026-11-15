@@ -122,7 +122,7 @@ around; just before, two of the player's castle balloons have disappeared.
 
 **Cause:** the game has 999 entity slots. When the free list is empty, `NewEvent_372C0_37680` takes a
 slot from a second list of "recyclable" entities (flags `0x20400`) and overwrites it. That list is
-only rebuilt now and then (`sub_37220_375E0`: level start, wizard rebirth, castle code). In between,
+only rebuilt now and then (`RebuildFreeLists_37220_375E0`: level start, wizard rebirth, castle code). In between,
 listed entities die and their slots get reused by entities that must not be recycled. The original
 recycles them anyway. On level 19 the list held both slots of the player's balloons (class 3
 model 3), a mana ball (class 10 model 39) and other live entities. A lightning bolt
