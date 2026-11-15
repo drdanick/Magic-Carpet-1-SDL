@@ -544,8 +544,8 @@ void sub_24BB0();
 void sub_24BF0(unsigned __int8 a1);
 void sub_24C20(int a1, int a2, int a3, int a4, unsigned __int16 a5);
 void sub_24CA0(int a1, int a2, int a3, int a4, unsigned __int16 a5);
-void sub_24D20(int a1, int a2, int a3, int a4, unsigned __int16 a5);
-void sub_24DA0(int a1, int a2, int a3, int a4, unsigned __int16 a5);
+void DrawRectCheckedLowRes_24D20(int a1, int a2, int a3, int a4, unsigned __int16 a5);
+void DrawRectCheckedHighRes_24DA0(int a1, int a2, int a3, int a4, unsigned __int16 a5);
 int nullsub_2(void); // weak
 void ExplosionTick_24F60(Type_AE400_29795* a1x);
 void Class10Type1Tick_25130(int a1);
@@ -950,7 +950,7 @@ void sub_416B0();
 void UpdateEntities_41780_41AC0();
 void sub_41B20_41E60(TypeStrAE400_13323* a1, Type_AE400_29795* a2);
 int MoveEntity_41C70_41FB0(Type_AE400_29795* event, axis_3d* position);
-// int sub_41CC0_42000(__int16 a1, int a2, int a3);
+// int RelinkEntity_41CC0_42000(__int16 a1, int a2, int a3);
 void AddEntityToMap_41CF0_42030(Type_AE400_29795* event, axis_3d* position);
 void RemoveEntityFromMap_41DD0_42110(Type_AE400_29795* event);
 void MarkEntityForRemoval_41E80_421C0(Type_AE400_29795* event);
@@ -966,7 +966,7 @@ int TurnDirection_42240_42580(int a1, __int16 a2);
 int TurnStep_422A0_425E0(unsigned __int16 a1, __int16 a2, int a3, unsigned __int16 a4);
 int sub_42300_42640(_WORD *a1, _WORD *a2);
 unsigned int Distance3D_42340_42680(axis_3d* a1, axis_3d* a2);
-int sub_42390_426D0(_WORD *a1, _WORD *a2);
+int DistanceSquared3D_42390_426D0(_WORD *a1, _WORD *a2);
 unsigned int Distance2D_423D0_42710(axis_3d* a1, axis_3d* a2);
 int DistanceSquared2D_42410_42750(_WORD *a1, _WORD *a2);
 void SetEntityState_424F0_42830(Type_AE400_29795* a1, unsigned __int8 a2);
@@ -1006,7 +1006,7 @@ void InitMusicDriver_43B20_43E60(unsigned int a2);
 char *LoadFileAlloc_43E50(const char *a1);
 void sub_43EC0_44200();
 void LoadOrBuildTables_44470_447B0();
-void sub_44700_44A40(char* a1, char** a2, int a3);
+void BuildStringTable_44700_44A40(char* a1, char** a2, int a3);
 void sub_44730_44A70();
 void sub_44840_44B80();
 int sub_448E0_44C20();
@@ -1111,12 +1111,12 @@ int sub_504A0_507E0();
 bool ReadSoundSetup_505A0_508E0();
 void sub_50770_50AB0();
 bool sub_50D40_51080(int a1, __int16 a2, __int16 a3, char *a4, char *a5, char a6, int a7, void (*a8)(void), char a9, int a10);
-char *sub_512D0_51610(char *a1, const char *a2);
-int sub_51330_51670(int a1, __int16 a2);
-void sub_51360_516A0(int a1, int a2, int a3, int a4);
-_DWORD *sub_513A0_516E0(_DWORD *a1);
-void sub_513E0_51720();
-void sub_51400_51740();
+char *StrInsert_512D0_51610(char *a1, const char *a2);
+int StrDelete_51330_51670(int a1, __int16 a2);
+void SetTextWindow_51360_516A0(int a1, int a2, int a3, int a4);
+_DWORD *GetTextWindow_513A0_516E0(_DWORD *a1);
+void SaveTextWindow_513E0_51720();
+void RestoreTextWindow_51400_51740();
 int sub_51420_51760(_DWORD *a1, char *a2);
 void sub_51480_517C0(Type_dword_96884* a1, TypeStrFont* a2, TColor* colorBuffer);
 void DrawText_51560_518A0(_BYTE *a1, int a2, __int16 a3, char* text);
@@ -1207,7 +1207,7 @@ void sub_58B30_59040(unsigned __int16 a1);
 int GetAllSumaSpriteSizes_58C30_59140(unsigned int a1);
 void sub_58E70_59380();
 void sub_58F00_59410();
-void sub_58F70_59480();
+void CloseTmapsFile_58F70_59480();
 void sub_58F90_594A0();
 bool sub_59050_59560(unsigned __int16 a1);
 void sub_590D0_595E0();
@@ -1370,12 +1370,12 @@ void DrawBitmap_60D18_61228(__int16 a1, __int16 a2, TypeTab* a3);
 void sub_60D50_61260(TypeTabDimm a1, int a2, int a3, uint8_t* sprite, unsigned __int8 a5, char a6);
 void DrawBitmap_60D65_61275(TypeTabDimm a1, int a2, int a3, uint8_t* sprite, unsigned __int8 a5, char a6);
 int sub_61594_61AA4(unsigned __int16 a1, unsigned __int16 a2, __int16 a3);
-int sub_615D4_61AE4(unsigned __int16 a1, unsigned __int16 a2, __int16 a3);
+int PutPixel640_615D4_61AE4(unsigned __int16 a1, unsigned __int16 a2, __int16 a3);
 void FreePathFiles_61610_61B20(Pathstruct* pathstruct);
 void sub_61640(unsigned __int16 a1, unsigned __int16 a2, unsigned __int16 a3, unsigned __int16 a4, unsigned __int16 a5);
 void sub_616C0(unsigned __int16 a1, unsigned __int16 a2, unsigned __int16 a3, __int16 a4, unsigned __int16 a5);
-int sub_61740(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5);
-int sub_61810(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5);
+int DrawRectLowRes_61740(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5);
+int DrawRectHighRes_61810(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5);
 int sub_618E0_61DF0(__int16 a1);
 int sub_619B8_61EC8(__int16 a1);
 void sub_61A1C_61F2C(__int16 a1);
@@ -1626,8 +1626,8 @@ void sub_6A62D();
 unsigned __int8 sub_6A640(unsigned __int8 a1, unsigned __int8 a2);
 // _DWORD fstrcpy(_DWORD, _DWORD, _DWORD, _DWORD); weak
 __int16 sub_6A737(void (*a1)(_DWORD), unsigned int a2, int a3, int a4, __int16 a5);
-int sub_6B260(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6);
-int sub_6B378(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6);
+int DrawLineLowRes_6B260(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6);
+int DrawLineHighRes_6B378(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6);
 void sub_6B47C_6B98C(TColor* palette);
 // _DWORD tolower(_DWORD); weak
 int sub_6B87A();
@@ -26069,7 +26069,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 			if ((typeResolution_12F02E_12F01E & 1) == 0)
 			{
 			LABEL_125:
-				sub_24DA0(locMouseX, locMouseY, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.x, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.y, byte_AE167_AE157);
+				DrawRectCheckedHighRes_24DA0(locMouseX, locMouseY, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.x, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.y, byte_AE167_AE157);
 				goto LABEL_126;
 			}
 			goto LABEL_118;
@@ -26109,7 +26109,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 	if ((typeResolution_12F02E_12F01E & 1) == 0)
 		goto LABEL_125;
 LABEL_118:
-	sub_24D20(locMouseX, locMouseY, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.x, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.y, byte_AE167_AE157);
+	DrawRectCheckedLowRes_24D20(locMouseX, locMouseY, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.x, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.y, byte_AE167_AE157);
 	goto LABEL_126;
 }
 
@@ -26852,7 +26852,7 @@ void DrawSpellIconWithCharges_23D40(int a1, int a2, Type_AE400_29795* a3x, char 
             if ( (typeResolution_12F02E_12F01E & 1) != 0 )
               sub_61594_61AA4(v24, v12, v25);
             else
-              sub_615D4_61AE4(v24, v12, v25);
+              PutPixel640_615D4_61AE4(v24, v12, v25);
             v12 += 2;
             ++v13;
             --v10;
@@ -27047,7 +27047,7 @@ void sub_24AB0()//1F5AB0_
     byte_9009E = 1;
     byte_90091 = 1;
     LoadPathFiles_40440_40780(&pathStrArray_F1EF0[PSF1datascreenssfont1dat]);
-    sub_51360_516A0(10, 180, 300, 50);
+    SetTextWindow_51360_516A0(10, 180, 300, 50);
     sub_51480_517C0(&byte_AE460_AE450, &sFont1Tab_271288_B3278, begPalDat_AE428_AE418_26C428_26C418);
     byte_AE460_AE450.var8_6 = FindNearestColour_5CC70_5D180(begPalDat_AE428_AE418_26C428_26C418, 0x3Fu, 0x3Fu, 0x3Fu);
     word_B329C_B328C = 19200;
@@ -27144,7 +27144,8 @@ void sub_24CA0(int a1, int a2, int a3, int a4, unsigned __int16 a5)
 }
 
 //----- (00024D20) --------------------------------------------------------
-void sub_24D20(int a1, int a2, int a3, int a4, unsigned __int16 a5)
+/// DrawRectLowRes_61740 if the rectangle is at least 2x2 and inside 640x400.
+void DrawRectCheckedLowRes_24D20(int a1, int a2, int a3, int a4, unsigned __int16 a5)
 {
   if ( a3 >= 2
     && a4 >= 2
@@ -27155,12 +27156,13 @@ void sub_24D20(int a1, int a2, int a3, int a4, unsigned __int16 a5)
     && a2 + a4 < 400
     && (a2 + a4 >= 0 || a2 < 400) )
   {
-    sub_61740(a1, a2, a3, a4, a5);
+    DrawRectLowRes_61740(a1, a2, a3, a4, a5);
   }
 }
 
 //----- (00024DA0) --------------------------------------------------------
-void sub_24DA0(int a1, int a2, int a3, int a4, unsigned __int16 a5)
+/// DrawRectHighRes_61810 if the rectangle is at least 2x2 and inside 640x480.
+void DrawRectCheckedHighRes_24DA0(int a1, int a2, int a3, int a4, unsigned __int16 a5)
 {
   if ( a3 >= 2
     && a4 >= 2
@@ -27171,7 +27173,7 @@ void sub_24DA0(int a1, int a2, int a3, int a4, unsigned __int16 a5)
     && a2 + a4 < 480
     && (a2 + a4 >= 0 || a2 < 480) )
   {
-    sub_61810(a1, a2, a3, a4, a5);
+    DrawRectHighRes_61810(a1, a2, a3, a4, a5);
   }
 }
 
@@ -40792,7 +40794,7 @@ void TopProcedure_340B0_34470(int argc, const char** argv)//2050B0_205470
       musicAvailable_939CC = 0;
       byte_939E4 = 0;
       LoadPathFiles_40440_40780(&pathStrArray[PSdataftextdat]);
-      sub_44700_44A40((char*)begTextDat_AE41C_AE40C_26C41C_26C40C, dword_AE238_AE228, 80);
+      BuildStringTable_44700_44A40((char*)begTextDat_AE41C_AE40C_26C41C_26C40C, dword_AE238_AE228, 80);
     }
     else
     {
@@ -52203,7 +52205,8 @@ int MoveEntity_41C70_41FB0(Type_AE400_29795* event, axis_3d* position)
 }
 
 //----- (00041CC0) --------------------------------------------------------
-int sub_41CC0_42000(__int16 a1, int a2, int a3)
+/// Moves entity a2 to position a3, always relinking it on the map (RemoveEntityFromMap + AddEntityToMap); returns 1.
+int RelinkEntity_41CC0_42000(__int16 a1, int a2, int a3)
 {
   RemoveEntityFromMap_41DD0_42110((Type_AE400_29795*)PTR(a2));
   AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(a2), (axis_3d*)PTR(a3));
@@ -52485,7 +52488,8 @@ unsigned int Distance3D_42340_42680(axis_3d* a1x, axis_3d* a2x)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_42390_426D0(_WORD *a1, _WORD *a2)
+/// Squared x/y/z distance between two positions.
+int DistanceSquared3D_42390_426D0(_WORD *a1, _WORD *a2)
 {
   int v2; // edx
 
@@ -54313,7 +54317,8 @@ void LoadOrBuildTables_44470_447B0()//215470_
 }
 
 //----- (00044700) --------------------------------------------------------
-void sub_44700_44A40(char* a1, char** a2, int a3)//215700_
+/// Fills a2[0..a3) with pointers to the a3 consecutive NUL-terminated strings starting at a1.
+void BuildStringTable_44700_44A40(char* a1, char** a2, int a3)//215700_
 {
     for (int i = 0; i < a3; i++)
     {
@@ -55718,7 +55723,7 @@ unsigned int sub_46CA0_46FE0(int a1, int a2, int a3)
   {
     if ( *(_BYTE *)PTR(i + 65) == 39 && *(unsigned __int16 *)PTR(i + 144) == *(__int16 *)PTR(a1 + 24) && i != a2 && i != a3 )
     {
-      v6 = sub_42390_426D0((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
+      v6 = DistanceSquared3D_42390_426D0((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
       if ( v6 < v3 )
       {
         v4 = i;
@@ -57495,7 +57500,7 @@ void TreeTick_49890_49BD0(int a1)
         BYTE4(v5) = *(_BYTE *)PTR(a1 + 18);
         *(_BYTE *)PTR(a1 + 70) = 1;
         *(_BYTE *)PTR(a1 + 18) = BYTE4(v5) | 2;
-        sub_41CC0_42000((unsigned int)v5 / 0x3C, a1, a1 + 72);
+        RelinkEntity_41CC0_42000((unsigned int)v5 / 0x3C, a1, a1 + 72);
       }
     }
     *(_WORD *)PTR(a1 + 94) = 0;
@@ -58038,8 +58043,8 @@ void sub_4B560_4B8A0()//21C560_
 {
   char** v0; // eax
 
-  sub_513E0_51720();
-  sub_51360_516A0(56, 64, 90, 78);
+  SaveTextWindow_513E0_51720();
+  SetTextWindow_51360_516A0(56, 64, 90, 78);
   v0 = sub_4B6A0_4B9E0();
   if ( v0 )
     sub_4B6F0_4BA30(v0);
@@ -58052,7 +58057,7 @@ void sub_4B560_4B8A0()//21C560_
     else
       DrawBitmap_60D18_61228(554, 224, &begGcSprTab_12CAF8_2EAAF8_2EAAE8[11]);
   }
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
   if ((typeResolution_12F02E_12F01E & 1) != 0)
     DrawBitmap_60CE0_611F0(
           2 * word_4A8BE_4ABFE[4 * (unsigned __int8)byte_12CBD3_12CBC3 + 0],
@@ -58164,15 +58169,15 @@ void sub_4B6F0_4BA30(char** texts)//21C6F0_
       sub_4B8D0_4BC10(16);
     if ( (unsigned __int8)settingPage_12CBC9_12CBB9 < 7u )
     {
-      sub_513E0_51720();
-      sub_51360_516A0(66, 43, 84, 14);
+      SaveTextWindow_513E0_51720();
+      SetTextWindow_51360_516A0(66, 43, 84, 14);
       str_96884.var8_6 = v4;
       DrawText_51560_518A0(
           (uint8*)&str_96884,
         1,
         1,
         dword_AE238_AE228[(unsigned __int16)word_968B4[(unsigned __int8)settingPage_12CBC9_12CBB9]]);
-      sub_51400_51740();
+      RestoreTextWindow_51400_51740();
     }
   }
 }
@@ -58200,7 +58205,7 @@ void sub_4B8D0_4BC10(__int16 a1)//21C8D0_
 	//fix
 
 	v1 = str_96884.next->dim.y;
-	sub_513A0_516E0((uint32*)&v13);
+	GetTextWindow_513A0_516E0((uint32*)&v13);
 	str_96884.var8_6 = FindNearestColour_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x1Eu, 0x18u, 0x11u);
 	sprintf(v12, "%s :", dword_AE238_AE228[17]);
 	DrawText_51560_518A0((uint8*)&str_96884, 0, a1, v12);
@@ -58917,8 +58922,8 @@ int sub_4CCA0_4CFE0(int a1)
   dword_AC5C4_AC5B4 = 0;
   if ( !byte_90B23 )
     SetMouseCursor_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
-  sub_513E0_51720();
-  sub_51360_516A0(80, 73, 159, 48);
+  SaveTextWindow_513E0_51720();
+  SetTextWindow_51360_516A0(80, 73, 159, 48);
   v4 = strcmp((char*)off_96864[dword_4A12C_4A46C[byte_12CBC6_12CBB6].var-1], "--");
   if ( !v4 )
     LOWORD(v4) = sub_4D0F0_4D430();
@@ -59000,7 +59005,7 @@ int sub_4CCA0_4CFE0(int a1)
       Blit_599B0_59EC0(480);
     ++v2;
   }
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     CopyScreen_62FA8_634B8(begScreenBackup_12CBA4_2EABA4_2EAB94, begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, 0xC8u);
   else
@@ -59085,15 +59090,15 @@ void sub_4D300_4D640()//21E300_
   __int64 v1; // rax
 
   str_9688C.var8_6 = FindNearestColour_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x3Fu, 0x3Fu, 0);
-  sub_513E0_51720();
+  SaveTextWindow_513E0_51720();
   for ( int i = 0; i < 6; i++ )
   {
     //v0 = 4 * i;
-    sub_51360_516A0(dword_4A7EC_4AB2C[i][0], dword_4A7EC_4AB2C[i][1], dword_4A7EC_4AB2C[i][2], dword_4A7EC_4AB2C[i][3]);
+    SetTextWindow_51360_516A0(dword_4A7EC_4AB2C[i][0], dword_4A7EC_4AB2C[i][1], dword_4A7EC_4AB2C[i][2], dword_4A7EC_4AB2C[i][3]);
     v1 = dword_4A7EC_4AB2C[i][3] - str_9688C.next->dim.y;
     DrawText_51560_518A0((uint8*)&str_9688C, 4, ((int)v1 - HIDWORD(v1)) >> 1, off_96864[i]);
   }
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -59348,12 +59353,12 @@ void sub_4D680_4D9C0()
         byte_12CBD5_12CBC5 |= 0x10u;
         byte_12CBD2_12CBC2 = 6;
         sub_4DCC0_4E000();
-        sub_513E0_51720();
-        sub_51360_516A0(173, 42, 90, 15);
+        SaveTextWindow_513E0_51720();
+        SetTextWindow_51360_516A0(173, 42, 90, 15);
         v32 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
         v10 = sub_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
         DrawText_51560_518A0((uint8*)&str_9688C, (__int16)((90 - v10) / 2), 1, (char*)v32);
-        sub_51400_51740();
+        RestoreTextWindow_51400_51740();
         if ( (typeResolution_12F02E_12F01E & 1) != 0 )
           Blit_5CDA0_5D2B0();
         else
@@ -59386,12 +59391,12 @@ void sub_4D680_4D9C0()
     byte_12CAE4_12CAD4 &= 0xBEu;
   }
   sub_4DCC0_4E000();
-  sub_513E0_51720();
-  sub_51360_516A0(173, 42, 90, 15);
+  SaveTextWindow_513E0_51720();
+  SetTextWindow_51360_516A0(173, 42, 90, 15);
   v33 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
   v26 = 90 - sub_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
   DrawText_51560_518A0((uint8*)&str_9688C, (__int16)(v26 / 2), 1, (char*)v33);
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
   if ( (byte_90B23 & 0x23) != 0 )
   {
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -59464,9 +59469,9 @@ char sub_4DCC0_4E000()
     CopyScreen_62FA8_634B8(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0xC8u);
   else
     CopyScreen_62FC4_634D4(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0x1E0u);
-  sub_513E0_51720();
+  SaveTextWindow_513E0_51720();
   v2 = 0;
-  sub_51360_516A0(0, 0, 320, 200);
+  SetTextWindow_51360_516A0(0, 0, 320, 200);
   do
   {
     if ( byte_9689C[3 * v2] || byte_9689D[3 * v2] )
@@ -59541,7 +59546,7 @@ char sub_4DCC0_4E000()
     ++v2;
   }
   while ( v2 < 8u );
-  sub_51360_516A0(173, 72, 90, 61);
+  SetTextWindow_51360_516A0(173, 72, 90, 61);
   v6 = 0;
   v13 = FindNearestColour_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x3Fu, 0x3Fu, 0x3Fu);
   v7 = FindNearestColour_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x1Au, 0x12u, 0xDu);
@@ -59560,7 +59565,7 @@ char sub_4DCC0_4E000()
     ++v8;
     v6 += str_9688C.var8_5 - 2;
   }
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
   result = v14;
   str_9688C.var8_6 = v14;
   return result;
@@ -59642,12 +59647,12 @@ void sub_4E320_4E660()
   }
   while ( v0 < 8u );
   sub_4DCC0_4E000();
-  sub_513E0_51720();
-  sub_51360_516A0(173, 42, 90, 15);
+  SaveTextWindow_513E0_51720();
+  SetTextWindow_51360_516A0(173, 42, 90, 15);
   v2 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
   v1 = 90 - sub_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
   DrawText_51560_518A0((uint8*)&str_9688C, (__int16)(v1 / 2), 1, (char*)v2);
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -59663,12 +59668,12 @@ void sub_4E3D0_4E710(unsigned __int8 a1)
   byte_9689E[3 * a1] = 1;
   ++dword_12CBB0_12CBA0;
   sub_4DCC0_4E000();
-  sub_513E0_51720();
-  sub_51360_516A0(173, 42, 90, 15);
+  SaveTextWindow_513E0_51720();
+  SetTextWindow_51360_516A0(173, 42, 90, 15);
   v2 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
   v1 = 90 - sub_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
   DrawText_51560_518A0((uint8*)&str_9688C, (__int16)(v1 / 2), 1, (char*)v2);
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -59684,12 +59689,12 @@ void sub_4E470_4E7B0(unsigned __int8 a1)
   byte_9689E[3 * a1] = 2;
   ++dword_12CBB0_12CBA0;
   sub_4DCC0_4E000();
-  sub_513E0_51720();
-  sub_51360_516A0(173, 42, 90, 15);
+  SaveTextWindow_513E0_51720();
+  SetTextWindow_51360_516A0(173, 42, 90, 15);
   v2 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
   v1 = 90 - sub_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
   DrawText_51560_518A0((uint8*)&str_9688C, (__int16)(v1 / 2), 1, (char*)v2);
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -59705,12 +59710,12 @@ void sub_4E510(unsigned __int8 a1)
   byte_9689E[3 * a1] = 0;
   ++dword_12CBB0_12CBA0;
   sub_4DCC0_4E000();
-  sub_513E0_51720();
-  sub_51360_516A0(173, 42, 90, 15);
+  SaveTextWindow_513E0_51720();
+  SetTextWindow_51360_516A0(173, 42, 90, 15);
   v2 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
   v1 = 90 - sub_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
   DrawText_51560_518A0((uint8*)&str_9688C, (__int16)(v1 / 2), 1, (char*)v2);
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -59848,7 +59853,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
     FadeInOut_61CC0_621D0(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x20u, 0);
     pressedKeys_12EEF0_12EEE0[1] = 0;//byte_12EEF1_12EEE1 ESC
     byte_12CAE4_12CAD4 &= ~1u;
-    sub_51360_516A0(0, 0, 320, 200);
+    SetTextWindow_51360_516A0(0, 0, 320, 200);
     v7 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(dword_AE400_AE3F0() + 2049 * str_AE400_AE3F0->var_u16_8 + 13333);
     v19 = timerTicks_AC5D4_AC5C4 + 360;
     v22 = timerTicks_AC5D4_AC5C4 + 300;
@@ -60307,7 +60312,7 @@ void SelectLanguage_4F3F0_4F730()//2203F0_
 		break;
 	}
 	FreePathFiles_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreenslangsprdat]);
-	sub_44700_44A40((char*)begTextDat_AE41C_AE40C_26C41C_26C40C, dword_AE238_AE228, 80);
+	BuildStringTable_44700_44A40((char*)begTextDat_AE41C_AE40C_26C41C_26C40C, dword_AE238_AE228, 80);
 	mainMenuSelector_12CBCE_12CBBE = 1;
 	byte_12CBD5_12CBC5 &= ~1u;
 }
@@ -60353,8 +60358,8 @@ int sub_4F8D0_4FC10(int a1, void (*a2)())
   dword_AC5C4_AC5B4 = 0;
   if ( !byte_90B23 )
     SetMouseCursor_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
-  sub_513E0_51720();
-  sub_51360_516A0(80, 73, 159, 48);
+  SaveTextWindow_513E0_51720();
+  SetTextWindow_51360_516A0(80, 73, 159, 48);
   do
   {
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -60414,7 +60419,7 @@ int sub_4F8D0_4FC10(int a1, void (*a2)())
     ++v3;
   }
   while ( !v2 );
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     CopyScreen_62FA8_634B8(begScreenBackup_12CBA4_2EABA4_2EAB94, begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, 0xC8u);
   else
@@ -60545,7 +60550,7 @@ void sub_4FFE0_50320()
   char* v1; // [esp-4h] [ebp-1Ch]
   _DWORD v2[6]; // [esp+0h] [ebp-18h] BYREF
 
-  sub_513A0_516E0(v2);
+  GetTextWindow_513A0_516E0(v2);
   v1 = dword_AE238_AE228[36];
   v0 = sub_51420_51760((uint32*)&str_9688C, dword_AE238_AE228[36]);
   DrawText_51560_518A0((uint8*)&str_9688C, (__int16)((v2[4] - v0) / 2), 12, (char*)v1);
@@ -60575,8 +60580,8 @@ void sub_50030_50370()//221030_
   if ( !byte_90B23 )
     SetMouseCursor_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
   dword_AC5C4_AC5B4 = 0;
-  sub_513E0_51720();
-  sub_51360_516A0(70, 73, 179, 48);
+  SaveTextWindow_513E0_51720();
+  SetTextWindow_51360_516A0(70, 73, 179, 48);
   sub_50D40_51080(8, 25, 30, 0, str_AE408_AE3F8->var_u8_29, 255, 0, sub_50350_50690, 1, (int)OFF(&str_9688C));
   byte_12CBD5_12CBC5 |= 0x20u;
   pressedKeys_12EEF0_12EEE0[28] = 0;//byte_12EF0C Enter
@@ -60609,7 +60614,7 @@ void sub_50030_50370()//221030_
     Blit_5CDA0_5D2B0();
   else
     Blit_599B0_59EC0(480);
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -60619,7 +60624,7 @@ void sub_50350_50690()
   char* v1; // [esp-4h] [ebp-28h]
   _DWORD v2[9]; // [esp+0h] [ebp-24h] BYREF
 
-  sub_513A0_516E0(v2);
+  GetTextWindow_513A0_516E0(v2);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     CopyScreen_62FA8_634B8(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0xC8u);
   else
@@ -60636,7 +60641,7 @@ void sub_503E0_50720()
   char* v1; // [esp-4h] [ebp-28h]
   _DWORD v2[9]; // [esp+0h] [ebp-24h] BYREF
 
-  sub_513A0_516E0(v2);
+  GetTextWindow_513A0_516E0(v2);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     CopyScreen_62FA8_634B8(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0xC8u);
   else
@@ -61054,7 +61059,7 @@ bool sub_50D40_51080(//221D40_
   v38 = 0;
   mouseRightButton_12EFDC_12EFCC = 0;
   mouseLeftButton_12EFDE_12EFCE = 0;
-  sub_513A0_516E0((uint32*)v33);
+  GetTextWindow_513A0_516E0((uint32*)v33);
   if ( a4 )
     v37 = sub_51420_51760((_DWORD *)PTR(a10), a4);
   v37 += a1;
@@ -61081,7 +61086,7 @@ LABEL_71:
             --v10;
 LABEL_72:
             --v11;
-            sub_51330_51670((int)OFF(v10), 1);
+            StrDelete_51330_51670((int)OFF(v10), 1);
             goto LABEL_73;
           }
         }
@@ -61167,7 +61172,7 @@ LABEL_72:
         v36[1] = 0;
         if ( v39 )
         {
-          sub_512D0_51610(v10, v36);
+          StrInsert_512D0_51610(v10, v36);
           if ( (unsigned int)OFF(v10) < v35 )
           {
             ++v10;
@@ -61258,7 +61263,8 @@ LABEL_73:
 }
 
 //----- (000512D0) --------------------------------------------------------
-char *sub_512D0_51610(char *a1, const char *a2)
+/// Inserts string a2 at the start of string a1; returns a1.
+char *StrInsert_512D0_51610(char *a1, const char *a2)
 {
   __int16 v2; // si
 
@@ -61270,14 +61276,16 @@ char *sub_512D0_51610(char *a1, const char *a2)
 // 660B5: using guessed type _DWORD memmove(_DWORD, _DWORD, _DWORD);
 
 //----- (00051330) --------------------------------------------------------
-int sub_51330_51670(int a1, __int16 a2)
+/// Removes the first a2 characters of string a1.
+int StrDelete_51330_51670(int a1, __int16 a2)
 {
   return (int)OFF(memmove((void*)PTR(a1), (void*)PTR(a1 + a2), strlen((const char *)PTR(a1 + a2)) + 1));
 }
 // 660B5: using guessed type _DWORD memmove(_DWORD, _DWORD, _DWORD);
 
 //----- (00051360) --------------------------------------------------------
-void sub_51360_516A0(int a1, int a2, int a3, int a4)
+/// Sets the text window (array_12C970: x0, x1, y0, y1, width, height) to x a1, y a2, width a3, height a4; DrawText_51560_518A0 draws relative to it and clips to it.
+void SetTextWindow_51360_516A0(int a1, int a2, int a3, int a4)
 {
   array_12C970[0] = a1;
   array_12C970[3] = a2 + a4;
@@ -61294,7 +61302,8 @@ void sub_51360_516A0(int a1, int a2, int a3, int a4)
 // 12C984: using guessed type int dword_12C984;
 
 //----- (000513A0) --------------------------------------------------------
-_DWORD *sub_513A0_516E0(_DWORD *a1)
+/// Copies the text window (array_12C970, 6 ints) to a1; returns a1.
+_DWORD *GetTextWindow_513A0_516E0(_DWORD *a1)
 {
   _DWORD *result; // eax
 
@@ -61315,7 +61324,8 @@ _DWORD *sub_513A0_516E0(_DWORD *a1)
 // 12C984: using guessed type int dword_12C984;
 
 //----- (000513E0) --------------------------------------------------------
-void sub_513E0_51720()//2223E0_
+/// Saves the text window (array_12C970) to string_12C988.
+void SaveTextWindow_513E0_51720()//2223E0_
 {
   dword_12CA78 = 0;
   qmemcpy(string_12C988, array_12C970, 0x18u);
@@ -61324,7 +61334,8 @@ void sub_513E0_51720()//2223E0_
 // 12CA78: using guessed type int dword_12CA78;
 
 //----- (00051400) --------------------------------------------------------
-void sub_51400_51740()
+/// Restores the text window saved by SaveTextWindow_513E0_51720.
+void RestoreTextWindow_51400_51740()
 {
   dword_12CA78 = 0;
   qmemcpy(array_12C970, string_12C988, 0x18u);
@@ -66588,11 +66599,12 @@ void sub_58F00_59410()//229F00
   memset(dword_12D748_12D738, 0, sizeof(dword_12D748_12D738));
   memset(dword_12CF00_12CEF0, 0, sizeof(dword_12CF00_12CEF0));
   byte_968E8 = 0;
-  sub_58F70_59480();//fix
+  CloseTmapsFile_58F70_59480();//fix
 }
 
 //----- (00058F70) --------------------------------------------------------
-void sub_58F70_59480()
+/// Closes the texture map file opened by OpenTmapsFile_587E0_58CF0.
+void CloseTmapsFile_58F70_59480()
 {
   if ( dword_968EC != nullptr )
   {
@@ -66643,7 +66655,7 @@ void sub_58F90_594A0()//229F90_
     v0x->var_12 = *(_BYTE *)(v1 + 1);
     v0x++;
   }
-  sub_58F70_59480();
+  CloseTmapsFile_58F70_59480();
 }
 // 12EFF4: using guessed type int dword_12EFF4;
 
@@ -72569,7 +72581,8 @@ int sub_61594_61AA4(unsigned __int16 a1, unsigned __int16 a2, __int16 a3)
 // 12EFF4: using guessed type int dword_12EFF4;
 
 //----- (000615D4) --------------------------------------------------------
-int sub_615D4_61AE4(unsigned __int16 a1, unsigned __int16 a2, __int16 a3)
+/// Sets pixel (a1, a2) of the 640x480 screen buffer to colour a3 (ignored outside the screen).
+int PutPixel640_615D4_61AE4(unsigned __int16 a1, unsigned __int16 a2, __int16 a3)
 {
   int v4; // [esp+4h] [ebp-4h]
 
@@ -72696,31 +72709,33 @@ void sub_616C0(unsigned __int16 a1, unsigned __int16 a2, unsigned __int16 a3, __
 // 12EFF4: using guessed type int dword_12EFF4;
 
 //----- (00061740) --------------------------------------------------------
-int sub_61740(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5)
+/// Draws the outline of rectangle (a1, a2, width a3, height a4) in colour a5 (DrawLineLowRes_6B260).
+int DrawRectLowRes_61740(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5)
 {
   __int16 v6; // [esp+1Ch] [ebp+1Ch]
   __int16 v7; // [esp+20h] [ebp+20h]
 
   v6 = a3 - 1;
   v7 = a4 - 1;
-  sub_6B260(a1, a2, v6 + a1, a2, a5, 0);
-  sub_6B260(v6 + a1, a2, v6 + a1, v7 + a2 + 1, a5, 0);
-  sub_6B260(a1, v7 + a2, v6 + a1 + 1, v7 + a2, a5, 0);
-  return sub_6B260(a1, a2, a1, v7 + a2, a5, 0);
+  DrawLineLowRes_6B260(a1, a2, v6 + a1, a2, a5, 0);
+  DrawLineLowRes_6B260(v6 + a1, a2, v6 + a1, v7 + a2 + 1, a5, 0);
+  DrawLineLowRes_6B260(a1, v7 + a2, v6 + a1 + 1, v7 + a2, a5, 0);
+  return DrawLineLowRes_6B260(a1, a2, a1, v7 + a2, a5, 0);
 }
 
 //----- (00061810) --------------------------------------------------------
-int sub_61810(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5)
+/// Draws the outline of rectangle (a1, a2, width a3, height a4) in colour a5 (DrawLineHighRes_6B378).
+int DrawRectHighRes_61810(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5)
 {
   __int16 v6; // [esp+1Ch] [ebp+1Ch]
   __int16 v7; // [esp+20h] [ebp+20h]
 
   v6 = a3 - 1;
   v7 = a4 - 1;
-  sub_6B378(a1, a2, v6 + a1, a2, a5, 0);
-  sub_6B378(v6 + a1, a2, v6 + a1, v7 + a2 + 1, a5, 0);
-  sub_6B378(a1, v7 + a2, v6 + a1 + 1, v7 + a2, a5, 0);
-  return sub_6B378(a1, a2, a1, v7 + a2, a5, 0);
+  DrawLineHighRes_6B378(a1, a2, v6 + a1, a2, a5, 0);
+  DrawLineHighRes_6B378(v6 + a1, a2, v6 + a1, v7 + a2 + 1, a5, 0);
+  DrawLineHighRes_6B378(a1, v7 + a2, v6 + a1 + 1, v7 + a2, a5, 0);
+  return DrawLineHighRes_6B378(a1, a2, a1, v7 + a2, a5, 0);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -77978,7 +77993,8 @@ __int16 sub_6A737(void (*a1)(_DWORD), unsigned int a2, int a3, int a4, __int16 a
 // 6A737: using guessed type unsigned int arg_4;
 
 //----- (0006B260) --------------------------------------------------------
-int sub_6B260(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6)
+/// Draws a line from (a1, a2) to (a3, a4) in colour a5, clipped to the viewport (320x200 mode: coordinates and viewport doubled).
+int DrawLineLowRes_6B260(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6)
 {
   __int16 v6; // bx
   __int16 v7; // cx
@@ -78074,7 +78090,8 @@ int sub_6B260(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a
 // 12F024: using guessed type int dword_12F024_12F014;
 
 //----- (0006B378) --------------------------------------------------------
-int sub_6B378(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6)
+/// Draws a line from (a1, a2) to (a3, a4) in colour a5, clipped to the viewport (640x480 mode).
+int DrawLineHighRes_6B378(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6)
 {
   _BYTE *v7; // edi
   int v8; // eax
