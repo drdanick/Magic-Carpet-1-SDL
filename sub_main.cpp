@@ -712,17 +712,17 @@ Type_AE400_29795* InitPlayerFlyer_37820_37BE0(axis_3d* position);
 int InitPlayerComputerFlyer_378A0_37C60(int a1);
 int InitPlayerCastle_37920_37CE0(int a1);
 int InitPlayerBalloon_37A00_37DC0(int a1);
-int Placeholder1_1_37A80(int a1);
-int Placeholder1_2_37AA0(int a1);
-int Placeholder1_3_37AC0(int a1);
-int Placeholder1_4_37AE0(int a1);
-int Placeholder1_5_37B00(int a1);
-int Placeholder1_6_37B20(int a1);
-int Placeholder1_7_37B40(int a1);
-int Placeholder1_8_37B60(int a1);
-int Placeholder1_9_37B80(int a1);
-int Placeholder1_10_37BA0(int a1);
-int CreateTree_37BC0(int a1);
+int InitCommandAttack_37A80(int a1);
+int InitCommandWander_37AA0(int a1);
+int InitCommandGoto_37AC0(int a1);
+int InitCommandGetObject_37AE0(int a1);
+int InitCommandDropObject_37B00(int a1);
+int InitCommandFollow_37B20(int a1);
+int InitCommandWaitForTime_37B40(int a1);
+int InitCommandWaitForPerson_37B60(int a1);
+int InitCommandWaitForTrig_37B80(int a1);
+int InitCommandWaitForDeath_37BA0(int a1);
+int InitSceneryTree_37BC0(int a1);
 int InitSceneryStandingStone_37CF0(int a1);
 int InitSceneryDolmen_37D70(int a1);
 int InitSceneryHut_37E00(int a1);
@@ -751,12 +751,12 @@ int InitWeatherRainCloud_39860(int a1);
 int InitWeatherThunderCloud_39880(int a1);
 int InitWeatherThermals_398A0(int a1);
 int InitWeatherWind_398C0(int a1);
-int Placeholder8_0_39940(int a1);
-int Placeholder8_1_39960(int a1);
-int Placeholder8_2_39980(int a1);
-int Placeholder8_3_399A0(int a1);
-int Placeholder8_4_399C0(int a1);
-int Placeholder8_5_399E0(int a1);
+int InitPowerupSpeedUp_39940(int a1);
+int InitPowerupPulse_39960(int a1);
+int InitPowerupShield_39980(int a1);
+int InitPowerupFloater_399A0(int a1);
+int InitPowerupArmour_399C0(int a1);
+int InitPowerupRainProofing_399E0(int a1);
 int InitShotFireball_39A10(int a1);
 int InitShotPocession_39A90(int a1);
 int InitShotEarthquake_39B40(int a1);
@@ -3452,20 +3452,20 @@ int InitCreature03_384B0(uint16_t* a1);
 
 Type_254A34 str_254A34[] = {
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(Placeholder1_1_37A80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(Placeholder1_2_37AA0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(Placeholder1_3_37AC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(Placeholder1_4_37AE0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(Placeholder1_5_37B00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, PORT_FN(Placeholder1_6_37B20, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, PORT_FN(Placeholder1_7_37B40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0008, PORT_FN(Placeholder1_8_37B60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0009, PORT_FN(Placeholder1_9_37B80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, PORT_FN(Placeholder1_10_37BA0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(InitCommandAttack_37A80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(InitCommandWander_37AA0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(InitCommandGoto_37AC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(InitCommandGetObject_37AE0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(InitCommandDropObject_37B00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, PORT_FN(InitCommandFollow_37B20, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, PORT_FN(InitCommandWaitForTime_37B40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0008, PORT_FN(InitCommandWaitForPerson_37B60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0009, PORT_FN(InitCommandWaitForTrig_37B80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, PORT_FN(InitCommandWaitForDeath_37BA0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_254D48[] = {
-{ 0x002548F4, 0x0000, PORT_FN(CreateTree_37BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(InitSceneryTree_37BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0001, PORT_FN(InitSceneryStandingStone_37CF0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0002, PORT_FN(InitSceneryDolmen_37D70, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0003, PORT_FN(InitSceneryHut_37E00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
@@ -3561,12 +3561,12 @@ Type_254A34 str_255620[] = {
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_2556D8[] = {
-{ 0x002548F4, 0x0000, PORT_FN(Placeholder8_0_39940, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(Placeholder8_1_39960, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(Placeholder8_2_39980, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(Placeholder8_3_399A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(Placeholder8_4_399C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(Placeholder8_5_399E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(InitPowerupSpeedUp_39940, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(InitPowerupPulse_39960, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(InitPowerupShield_39980, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(InitPowerupFloater_399A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(InitPowerupArmour_399C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(InitPowerupRainProofing_399E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_255870[] = {
@@ -4206,6 +4206,8 @@ Type_96902 dword_96902[] = {//254902
 };
 //int (*off_97D12)(int) = PORT_FN(CreateExplosion_3A490, int(int)); // weak
 /// Constructor that creates nothing (original 0x39A00 is "xor eax,eax; ret"); class 10 types 20-22 and 24.
+/// Original names (one function, four symbols in the map): init_effect_rain_of_fire, init_effect_whirl_wind, init_effect_whirl_pool, init_effect_tidel_wave - the unimplemented effects class 10 types 20, 21, 22 and 24.
+/// Name is a guess (not in the Hidden Worlds linker map).
 int NullConstructor_39A00(uint16_t* a1) { return 0; };
 /*int (*off_97D12[])(int) = {
 CreateExplosion_3A490, CreateClass10Type1_3A510, CreateSpeedEffect_3A570, CreateClass10Type3_3A5D0, CreateClass10Type4_3A640, CreateWaterSplash_3A6B0, CreateFire_3A730, CreateClass10Type7_3A7D0,
@@ -44025,8 +44027,8 @@ int InitPlayerBalloon_37A00_37DC0(int a1)
 
 //----- (00037A80) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 1): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder1_1_37A80(int a1)
+/// Original name: init_command_attack (INIT.C), Hidden Worlds linker map (placed by order: the map has the same number of 0x20-byte functions between init_player_balloon/init_weather_wind and init_scenery_tree/init_shot_fireball). Class 1 = commands.
+int InitCommandAttack_37A80(int a1)
 {
   int v0; // eax
 
@@ -44038,8 +44040,8 @@ int Placeholder1_1_37A80(int a1)
 
 //----- (00037AA0) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 2): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder1_2_37AA0(int a1)
+/// Original name: init_command_wander (INIT.C), Hidden Worlds linker map (placed by order: the map has the same number of 0x20-byte functions between init_player_balloon/init_weather_wind and init_scenery_tree/init_shot_fireball). Class 1 = commands.
+int InitCommandWander_37AA0(int a1)
 {
   int v0; // eax
 
@@ -44051,8 +44053,8 @@ int Placeholder1_2_37AA0(int a1)
 
 //----- (00037AC0) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 3): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder1_3_37AC0(int a1)
+/// Original name: init_command_goto (INIT.C), Hidden Worlds linker map (placed by order: the map has the same number of 0x20-byte functions between init_player_balloon/init_weather_wind and init_scenery_tree/init_shot_fireball). Class 1 = commands.
+int InitCommandGoto_37AC0(int a1)
 {
   int v0; // eax
 
@@ -44064,8 +44066,8 @@ int Placeholder1_3_37AC0(int a1)
 
 //----- (00037AE0) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 4): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder1_4_37AE0(int a1)
+/// Original name: init_command_get_object (INIT.C), Hidden Worlds linker map (placed by order: the map has the same number of 0x20-byte functions between init_player_balloon/init_weather_wind and init_scenery_tree/init_shot_fireball). Class 1 = commands.
+int InitCommandGetObject_37AE0(int a1)
 {
   int v0; // eax
 
@@ -44077,8 +44079,8 @@ int Placeholder1_4_37AE0(int a1)
 
 //----- (00037B00) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 5): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder1_5_37B00(int a1)
+/// Original name: init_command_drop_object (INIT.C), Hidden Worlds linker map (placed by order: the map has the same number of 0x20-byte functions between init_player_balloon/init_weather_wind and init_scenery_tree/init_shot_fireball). Class 1 = commands.
+int InitCommandDropObject_37B00(int a1)
 {
   int v0; // eax
 
@@ -44090,8 +44092,8 @@ int Placeholder1_5_37B00(int a1)
 
 //----- (00037B20) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 6): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder1_6_37B20(int a1)
+/// Original name: init_command_follow (INIT.C), Hidden Worlds linker map (placed by order: the map has the same number of 0x20-byte functions between init_player_balloon/init_weather_wind and init_scenery_tree/init_shot_fireball). Class 1 = commands.
+int InitCommandFollow_37B20(int a1)
 {
   int v0; // eax
 
@@ -44103,8 +44105,8 @@ int Placeholder1_6_37B20(int a1)
 
 //----- (00037B40) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 7): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder1_7_37B40(int a1)
+/// Original name: init_command_wait_for_time (INIT.C), Hidden Worlds linker map (placed by order: the map has the same number of 0x20-byte functions between init_player_balloon/init_weather_wind and init_scenery_tree/init_shot_fireball). Class 1 = commands.
+int InitCommandWaitForTime_37B40(int a1)
 {
   int v0; // eax
 
@@ -44116,8 +44118,8 @@ int Placeholder1_7_37B40(int a1)
 
 //----- (00037B60) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 8): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder1_8_37B60(int a1)
+/// Original name: init_command_wait_for_person (INIT.C), Hidden Worlds linker map (placed by order: the map has the same number of 0x20-byte functions between init_player_balloon/init_weather_wind and init_scenery_tree/init_shot_fireball). Class 1 = commands.
+int InitCommandWaitForPerson_37B60(int a1)
 {
   int v0; // eax
 
@@ -44129,8 +44131,8 @@ int Placeholder1_8_37B60(int a1)
 
 //----- (00037B80) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 9): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder1_9_37B80(int a1)
+/// Original name: init_command_wait_for_trig (INIT.C), Hidden Worlds linker map (placed by order: the map has the same number of 0x20-byte functions between init_player_balloon/init_weather_wind and init_scenery_tree/init_shot_fireball). Class 1 = commands.
+int InitCommandWaitForTrig_37B80(int a1)
 {
   int v0; // eax
 
@@ -44142,8 +44144,8 @@ int Placeholder1_9_37B80(int a1)
 
 //----- (00037BA0) --------------------------------------------------------
 /// Placeholder constructor (class 1 type 10): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder1_10_37BA0(int a1)
+/// Original name: init_command_wait_for_death (INIT.C), Hidden Worlds linker map (placed by order: the map has the same number of 0x20-byte functions between init_player_balloon/init_weather_wind and init_scenery_tree/init_shot_fireball). Class 1 = commands.
+int InitCommandWaitForDeath_37BA0(int a1)
 {
   int v0; // eax
 
@@ -44155,8 +44157,8 @@ int Placeholder1_10_37BA0(int a1)
 
 //----- (00037BC0) --------------------------------------------------------
 /// Constructor of a tree (class 2 type 0, state 0).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateTree_37BC0(int a1)
+/// Original name: init_scenery_tree (INIT.C), Hidden Worlds linker map (placed by order: the map has the same number of 0x20-byte functions between init_player_balloon/init_weather_wind and init_scenery_tree/init_shot_fireball).
+int InitSceneryTree_37BC0(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -45611,8 +45613,8 @@ int InitWeatherWind_398C0(int a1)
 
 //----- (00039940) --------------------------------------------------------
 /// Placeholder constructor (class 8 type 0): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder8_0_39940(int a1)
+/// Original name: init_powerup_speed_up (INIT.C), Hidden Worlds linker map (placed by order: the map has the same number of 0x20-byte functions between init_player_balloon/init_weather_wind and init_scenery_tree/init_shot_fireball). Class 8 = power-ups.
+int InitPowerupSpeedUp_39940(int a1)
 {
   int v0; // eax
 
@@ -45624,8 +45626,8 @@ int Placeholder8_0_39940(int a1)
 
 //----- (00039960) --------------------------------------------------------
 /// Placeholder constructor (class 8 type 1): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder8_1_39960(int a1)
+/// Original name: init_powerup_pulse (INIT.C), Hidden Worlds linker map (placed by order: the map has the same number of 0x20-byte functions between init_player_balloon/init_weather_wind and init_scenery_tree/init_shot_fireball). Class 8 = power-ups.
+int InitPowerupPulse_39960(int a1)
 {
   int v0; // eax
 
@@ -45637,8 +45639,8 @@ int Placeholder8_1_39960(int a1)
 
 //----- (00039980) --------------------------------------------------------
 /// Placeholder constructor (class 8 type 2): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder8_2_39980(int a1)
+/// Original name: init_powerup_shield (INIT.C), Hidden Worlds linker map (placed by order: the map has the same number of 0x20-byte functions between init_player_balloon/init_weather_wind and init_scenery_tree/init_shot_fireball). Class 8 = power-ups.
+int InitPowerupShield_39980(int a1)
 {
   int v0; // eax
 
@@ -45650,8 +45652,8 @@ int Placeholder8_2_39980(int a1)
 
 //----- (000399A0) --------------------------------------------------------
 /// Placeholder constructor (class 8 type 3): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder8_3_399A0(int a1)
+/// Original name: init_powerup_floater (INIT.C), Hidden Worlds linker map (placed by order: the map has the same number of 0x20-byte functions between init_player_balloon/init_weather_wind and init_scenery_tree/init_shot_fireball). Class 8 = power-ups.
+int InitPowerupFloater_399A0(int a1)
 {
   int v0; // eax
 
@@ -45663,8 +45665,8 @@ int Placeholder8_3_399A0(int a1)
 
 //----- (000399C0) --------------------------------------------------------
 /// Placeholder constructor (class 8 type 4): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder8_4_399C0(int a1)
+/// Original name: init_powerup_armour (INIT.C), Hidden Worlds linker map (placed by order: the map has the same number of 0x20-byte functions between init_player_balloon/init_weather_wind and init_scenery_tree/init_shot_fireball). Class 8 = power-ups.
+int InitPowerupArmour_399C0(int a1)
 {
   int v0; // eax
 
@@ -45676,8 +45678,8 @@ int Placeholder8_4_399C0(int a1)
 
 //----- (000399E0) --------------------------------------------------------
 /// Placeholder constructor (class 8 type 5): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Placeholder8_5_399E0(int a1)
+/// Original name: init_powerup_rain_proofing (INIT.C), Hidden Worlds linker map (placed by order: the map has the same number of 0x20-byte functions between init_player_balloon/init_weather_wind and init_scenery_tree/init_shot_fireball). Class 8 = power-ups.
+int InitPowerupRainProofing_399E0(int a1)
 {
   int v0; // eax
 
@@ -58141,7 +58143,7 @@ int DrawMinimap_49300_49640(int a1, int a2, int a3, int a4, int a5, int a6, __in
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //SYNCHRONIZED WITH REMC1
-/// Per-tick handler of a tree (class 2 state 0, set by CreateTree_37BC0).
+/// Per-tick handler of a tree (class 2 state 0, set by InitSceneryTree_37BC0).
 /// Original name: fn_scenery_tree (SCENERY.C), Hidden Worlds linker map.
 void FnSceneryTree_49890_49BD0(int a1)
 {

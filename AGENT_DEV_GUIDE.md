@@ -538,6 +538,9 @@ class, type)`). The state index is global within a class, not per type.
 | 10 | 17 | expanding explosion ring: one 10/0 explosion per ring point per tick | `FnEffectMeteor_25CE0` |
 | 10 | 18 | volcano eruption emitter (128 ticks, then removes itself) | `FnEffectVolcanoAfterMath_25EC0` |
 | 10 | 19 | volcano fire, created by each eruption start, index in game state +38 | `FnEffectFireColumn_26140` |
+| 1 | 1-10 | commands: attack, wander, goto, get/drop object, follow, wait for time/person/trigger/death (`init_command_*`; placeholder constructors) | linker map |
+| 8 | 0-5 | power-ups: speed up, pulse, shield, floater, armour, rain proofing (`init_powerup_*`; placeholder constructors) | linker map |
+| 10 | 20-22, 24 | unimplemented effects rain of fire, whirl wind, whirl pool, tidal wave (one null constructor, `NullConstructor_39A00`) | linker map |
 | 6 | 0, 1 | familiars: raven, sprite (`init_familiar_*`; placeholder constructors in this build) | linker map |
 | 7 | 0-4 | weather: tornado, rain cloud, thunder cloud, thermals, wind (`init_weather_*`) | linker map |
 | 10 | 3 | blood (`fn_effect_blood`) | linker map |
