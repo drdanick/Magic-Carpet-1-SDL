@@ -532,7 +532,7 @@ class, type)`). The state index is global within a class, not per type.
 | 9 | 3 | missile that starts an explosion ring (10/17) when it lands | `InitEffectMeteor_3AC70` called from 0x52AAA |
 | 9 | 9 | lightning bolt piece | `FnShotLightning_535E0_53920` |
 | 10 | 0 | explosion | `FnEffectExplosion_24F60` |
-| 10 | 1 | created with the mana ball when a creature dies | `KillCreature_1A800` |
+| 10 | 1 | created with the mana ball when a creature dies | `FnCreatureDead_1A800` |
 | 10 | 6 | fire (named from its sprite by the user); spawned by Wall of Fire and when a spell-7 jar in state 3t+2 is picked up | `FnEffectFire_252D0` |
 | 10 | 16 | lava from a volcano eruption | created by 10/18 |
 | 10 | 17 | expanding explosion ring: one 10/0 explosion per ring point per tick | `FnEffectMeteor_25CE0` |
@@ -586,7 +586,7 @@ creates that entity on impact (`Create<Spell>Effect_*`, class 10). Example: Volc
 
 Creatures (class 5), type t: states 6t..6t+5 = idle (`FnCreatureStand_19B10`), the type's own main state
 (the constructor's), attack (`FnCreatureAttack_1A120` or a type-specific routine), follow a same-type leader
-(`FnCreatureFlock_1A390`), dying (`CreatureDying_1A6C0`: kill credit for the player) and dead (`KillCreature_1A800`).
+(`FnCreatureFlock_1A390`), dying (`FnCreatureDying_1A6C0`: kill credit for the player) and dead (`FnCreatureDead_1A800`).
 Types 9 and 11 start in their +0 state and differ; state 120 = body segments (`FnCreatureTail_19550`).
 
 Spells (class 12), spell t: state 3t = owned, handler = the spell's cast routine (`CastFireball_56090`,
@@ -1203,7 +1203,7 @@ Known open issues:
   never changes again. `diff_tick` (ticks 36216-36218, 36480-36650) and `diff_call` (draw at 36600) match
   CARPET.EXE exactly; `diff_tick --watch 58401` (entity 174 +70) shows the original writing 0x14 at
   eip 0x424F8 via 0x1A52B (UpdateFollower) <- 0x19614 (`FnCreatureTail_19550`) <- 0x1B57C (`FnCreature03Flock_1B570`).
-  Replay needs a build *without* the `CreatureShootAt_1AA40` fix (that fix changes level 15 from frame
+  Replay needs a build *without* the `CreatureFlameArrowShot_1AA40` fix (that fix changes level 15 from frame
   660): check out `sub_main.cpp` from before commit "Fix skeletons shooting into empty space", build,
   copy `build/win-x64/RelWithDebInfo` elsewhere and pass `--exe` / `REMC1_PORT_EXE`.
   **To fix later:** in `FnCreatureFlock_1A390`, before touching `v3x`, require `v3x->var_u8_29859_64 ==
@@ -1213,7 +1213,7 @@ Known open issues:
   status in `docs/original-bugs.md`, and expect `diff_tick` to show that one difference in such ticks.
 - **Bug recordings are bundles** (`<name>.recording/` = `input.txt` + `saves/`, `tools/rec.py record|play`,
   `docs/recordings.md`). Replays of a bundle start from the saves the session started with.
-- Fixed 2026-10-18: `CreatureShootAt_1AA40` aimed shots from the shooter to itself (heading/pitch 0) instead
+- Fixed 2026-10-18: `CreatureFlameArrowShot_1AA40` aimed shots from the shooter to itself (heading/pitch 0) instead
   of at target `a2` (asm `ebp = a2 + 48h`): level 14 skeletons fired into empty space. Stepwise-only
   differences in tile-list links (+20/+22, `FnShotFireball_52B30_52E70`) after it were a stepwise artifact:
   the whole tick matched end to end.
@@ -1240,7 +1240,7 @@ Known open issues:
   (`level22.recording`, entity 995, frame 12270) dropped no mana. Original bug, `docs/original-bugs.md`
   #9: its own lightning filled the entity table (277 class 9 type 9 bolt pieces, 66 new ones that
   tick), so the death code's `CreateEntity` calls (mana ball from `CreateManaBalls_27690` 0x276E5, class 10 type 1
-  from `KillCreature_1A800` 0x1A836) got null from `InitAThing_372C0_37680` and the mana was lost. Ticks
+  from `FnCreatureDead_1A800` 0x1A836) got null from `InitAThing_372C0_37680` and the mana was lost. Ticks
   12269-12274 match the original byte for byte. Method worth reusing: when something "should have
   spawned", hook `InitModel_373F0_377B0` (0x373F0) in the emulator and print its return value at
   the caller's return address; hook `NewEvent` (0x372C0) to count new entities per caller.

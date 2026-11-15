@@ -402,15 +402,15 @@ void FnCreatureStand_19B10(Type_AE400_29795* a1, char a2);
 void FnCreatureWander_19D70(Type_AE400_29795* a1, char a2);
 int FnCreatureAttack_1A120(Type_AE400_29795* a1, char a2, unsigned __int16 (*a3)(Type_AE400_29795*, int));
 void FnCreatureFlock_1A390(Type_AE400_29795* a1, unsigned __int16 a2);
-void CreatureDying_1A6C0(Type_AE400_29795* a1, char a2);
-void KillCreature_1A800(Type_AE400_29795* a1);
-int sub_1A8E0(Type_AE400_29795* a1, Type_AE400_29795* a2);
-int sub_1A990(Type_AE400_29795* a1, Type_AE400_29795* a2);
-void CreatureShootAt_1AA40(Type_AE400_29795* a1, int a2);
-int CreatureMeleeHit_1AB10(Type_AE400_29795* a1, int a2);
-int sub_1AB70(Type_AE400_29795* a1, Type_AE400_29795* a2);
-int sub_1AE30(Type_AE400_29795* a1, Type_AE400_29795* a2);
-int sub_1AEE0(Type_AE400_29795* a1, Type_AE400_29795* a2);
+void FnCreatureDying_1A6C0(Type_AE400_29795* a1, char a2);
+void FnCreatureDead_1A800(Type_AE400_29795* a1);
+int CreatureFireBallShot_1A8E0(Type_AE400_29795* a1, Type_AE400_29795* a2);
+int CreatureArrowShot_1A990(Type_AE400_29795* a1, Type_AE400_29795* a2);
+void CreatureFlameArrowShot_1AA40(Type_AE400_29795* a1, int a2);
+int CreatureStingShot_1AB10(Type_AE400_29795* a1, int a2);
+int CreatureCrabShot_1AB70(Type_AE400_29795* a1, Type_AE400_29795* a2);
+int CreatureRockShot_1AE30(Type_AE400_29795* a1, Type_AE400_29795* a2);
+int CreatureKrakenShot_1AEE0(Type_AE400_29795* a1, Type_AE400_29795* a2);
 void FnCreature00Stand_1B060(Type_AE400_29795* a1);
 void FnCreature00Wander_1B070(Type_AE400_29795* a1);
 void FnCreature00Attack_1B090(Type_AE400_29795* a1);
@@ -20918,8 +20918,8 @@ LABEL_24:
 
 //SYNCHRONIZED WITH REMC1
 /// Dying state (a2 + 4) of a class 5 creature: puts its followers (+54 chain) and itself into a2 + 5 (dead) and, when the killer (+38) is the player's wizard (class 3 type 0), counts the kill (wizard data +359; not for types 9 and 12-15).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void CreatureDying_1A6C0(Type_AE400_29795* a1x, char a2)
+/// Original name: fn_creature_dying (CREATURE.C), Hidden Worlds linker map. Placed by the size sequence after fn_creature_flock in the map (every size equal) and its behaviour.
+void FnCreatureDying_1A6C0(Type_AE400_29795* a1x, char a2)
 {
   Type_AE400_29795* ix; // ebx
   __int16 v3; // cx
@@ -20955,8 +20955,8 @@ void CreatureDying_1A6C0(Type_AE400_29795* a1x, char a2)
 
 //SYNCHRONIZED WITH REMC1
 /// Creature death: drops its mana ball (CreateManaBalls_27690), creates the 10/1 entity and removes the creature.
-/// Name is a guess (not in the Hidden Worlds linker map).
-void KillCreature_1A800(Type_AE400_29795* a1x)
+/// Original name: fn_creature_dead (CREATURE.C), Hidden Worlds linker map. Placed by the size sequence after fn_creature_flock in the map (every size equal) and its behaviour.
+void FnCreatureDead_1A800(Type_AE400_29795* a1x)
 {
   _WORD *v1; // eax
   int v2; // eax
@@ -20975,7 +20975,8 @@ void KillCreature_1A800(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_1A8E0(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
+/// Original name: creature_fire_ball_shot (CREATURE.C), Hidden Worlds linker map. Placed by the size sequence after fn_creature_flock in the map (every size equal) and its behaviour. Fires a fireball (9/0).
+int CreatureFireBallShot_1A8E0(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 {
   axis_3d* v2x; // edi
   int v3; // eax
@@ -21008,7 +21009,8 @@ int sub_1A8E0(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_1A990(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
+/// Original name: creature_arrow_shot (CREATURE.C), Hidden Worlds linker map. Placed by the size sequence after fn_creature_flock in the map (every size equal) and its behaviour. Fires an arrow (9/13).
+int CreatureArrowShot_1A990(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 {
   axis_3d* v2x; // edi
   int v3; // ebx
@@ -21038,8 +21040,8 @@ int sub_1A990(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 //SYNCHRONIZED WITH REMC1
 /// Creature a1x fires a projectile (9/13, sprite 203) at entity a2: aimed at a2's position, speed
 /// +44 = 600 when a1x has +144 set, else 400.
-/// Name is a guess (not in the Hidden Worlds linker map).
-void CreatureShootAt_1AA40(Type_AE400_29795* a1x, int a2)
+/// Original name: creature_flame_arrow_shot (CREATURE.C), Hidden Worlds linker map. Placed by the size sequence after fn_creature_flock in the map (every size equal) and its behaviour.
+void CreatureFlameArrowShot_1AA40(Type_AE400_29795* a1x, int a2)
 {
   axis_3d* v2x; // edi
   int v3; // ebx
@@ -21069,8 +21071,8 @@ void CreatureShootAt_1AA40(Type_AE400_29795* a1x, int a2)
 
 //SYNCHRONIZED WITH REMC1
 /// Attack routine for FnCreatureAttack_1A120: when target a2 is closer than 1024, deals the creature's damage (+44) to it (AffectThingDirect_12B50) and returns 1.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreatureMeleeHit_1AB10(Type_AE400_29795* a1x, int a2)
+/// Original name: creature_sting_shot (CREATURE.C), Hidden Worlds linker map. Placed by the size sequence after fn_creature_flock in the map (every size equal) and its behaviour. The bee's sting.
+int CreatureStingShot_1AB10(Type_AE400_29795* a1x, int a2)
 {
   int v2; // ebx
 
@@ -21084,7 +21086,8 @@ int CreatureMeleeHit_1AB10(Type_AE400_29795* a1x, int a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_1AB70(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
+/// Original name: creature_crab_shot (CREATURE.C), Hidden Worlds linker map. Placed by the size sequence after fn_creature_flock in the map (every size equal) and its behaviour.
+int CreatureCrabShot_1AB70(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 {
   unsigned int v2; // eax
   int v3; // edi
@@ -21209,7 +21212,8 @@ int sub_1AB70(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_1AE30(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
+/// Original name: creature_rock_shot (CREATURE.C), Hidden Worlds linker map. Placed by the size sequence after fn_creature_flock in the map (every size equal) and its behaviour. Throws a rock (9/14).
+int CreatureRockShot_1AE30(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 {
   axis_3d* v2x; // edi
   int v3; // eax
@@ -21242,7 +21246,8 @@ int sub_1AE30(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_1AEE0(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
+/// Original name: creature_kraken_shot (CREATURE.C), Hidden Worlds linker map. Placed by the size sequence after fn_creature_flock in the map (every size equal) and its behaviour. Fires lightning (9/9).
+int CreatureKrakenShot_1AEE0(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 {
   axis_3d* v2x; // esi
   int v3; // edi
@@ -21295,7 +21300,7 @@ void FnCreature00Wander_1B070(Type_AE400_29795* a1x)
 /// Original name: fn_creature_00_attack (CREAT_00.C), by the map's state convention (state 2 = 6*0+2); this name is listed in the map.
 void FnCreature00Attack_1B090(Type_AE400_29795* a1x)
 {
-  if ( (unsigned __int16)FnCreatureAttack_1A120(a1x, 0, PORT_FN(sub_1A8E0, unsigned __int16(Type_AE400_29795*, int))) )
+  if ( (unsigned __int16)FnCreatureAttack_1A120(a1x, 0, PORT_FN(CreatureFireBallShot_1A8E0, unsigned __int16(Type_AE400_29795*, int))) )
     PlayASample_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 8);
   BobAboveGround_1B120(a1x);
 }
@@ -21310,19 +21315,19 @@ void FnCreature00Flock_1B0E0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Dragon (class 5 type 0) dying state: CreatureDying_1A6C0(a1x, 0) (state 4). Identified from its decoded sprite (confirmed by the user).
+/// Dragon (class 5 type 0) dying state: FnCreatureDying_1A6C0(a1x, 0) (state 4). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_00_dying (CREAT_00.C), by the map's state convention (state 4 = 6*0+4); this name is listed in the map.
 void FnCreature00Dying_1B100(Type_AE400_29795* a1x)
 {
-  CreatureDying_1A6C0(a1x, 0);
+  FnCreatureDying_1A6C0(a1x, 0);
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Dragon (class 5 type 0) dead state: KillCreature_1A800 (state 5). Identified from its decoded sprite (confirmed by the user).
+/// Dragon (class 5 type 0) dead state: FnCreatureDead_1A800 (state 5). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_00_dead (CREAT_00.C), by the map's state convention (state 5 = 6*0+5); this name is listed in the map.
 void FnCreature00Dead_1B110(Type_AE400_29795* a1x)
 {
-  KillCreature_1A800(a1x);
+  FnCreatureDead_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21421,7 +21426,7 @@ void FnCreature01Wander_1B200(Type_AE400_29795* a1x)
 /// Original name: fn_creature_01_attack (CREAT_01.C), by the map's state convention (state 8 = 6*1+2); this name is listed in the map.
 void FnCreature01Attack_1B2D0(Type_AE400_29795* a1x)
 {
-  if ( (unsigned __int16)FnCreatureAttack_1A120(a1x, 6, (unsigned __int16 (*)(Type_AE400_29795*, int))CreatureMeleeHit_1AB10) )
+  if ( (unsigned __int16)FnCreatureAttack_1A120(a1x, 6, (unsigned __int16 (*)(Type_AE400_29795*, int))CreatureStingShot_1AB10) )
     PlayASample_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 7);
 }
 
@@ -21434,19 +21439,19 @@ void FnCreature01Flock_1B320(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Vulture (class 5 type 1) dying state: CreatureDying_1A6C0(a1x, 6) (state 10). Identified from its decoded sprite (confirmed by the user).
+/// Vulture (class 5 type 1) dying state: FnCreatureDying_1A6C0(a1x, 6) (state 10). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_01_dying (CREAT_01.C), by the map's state convention (state 10 = 6*1+4); this name is listed in the map.
 void FnCreature01Dying_1B330(Type_AE400_29795* a1x)
 {
-  CreatureDying_1A6C0(a1x, 6);
+  FnCreatureDying_1A6C0(a1x, 6);
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Vulture (class 5 type 1) dead state: KillCreature_1A800 (state 11). Identified from its decoded sprite (confirmed by the user).
+/// Vulture (class 5 type 1) dead state: FnCreatureDead_1A800 (state 11). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_01_dead (CREAT_01.C), by the map's state convention (state 11 = 6*1+5); this name is listed in the map.
 void FnCreature01Dead_1B340(Type_AE400_29795* a1x)
 {
-  KillCreature_1A800(a1x);
+  FnCreatureDead_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21495,7 +21500,7 @@ void FnCreature02Attack_1B3C0(Type_AE400_29795* a1x)
   else
     LOWORD(v3) = 0;
   a1x->var_u32_29867_72.z += v3 * a1x->var_u32_29951_156->vertSpeed_14;
-  result = FnCreatureAttack_1A120(a1x, 12, (unsigned __int16 (*)(Type_AE400_29795*, int))CreatureMeleeHit_1AB10);
+  result = FnCreatureAttack_1A120(a1x, 12, (unsigned __int16 (*)(Type_AE400_29795*, int))CreatureStingShot_1AB10);
   if ( result )
   {
     PlayASample_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 13);
@@ -21521,19 +21526,19 @@ void FnCreature02Flock_1B4C0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Bee (class 5 type 2) dying state: CreatureDying_1A6C0(a1x, 12) (state 16). Identified from its decoded sprite (confirmed by the user).
+/// Bee (class 5 type 2) dying state: FnCreatureDying_1A6C0(a1x, 12) (state 16). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_02_dying (CREAT_02.C), by the map's state convention (state 16 = 6*2+4); this name is listed in the map.
 void FnCreature02Dying_1B4E0(Type_AE400_29795* a1x)
 {
-  CreatureDying_1A6C0(a1x, 12);
+  FnCreatureDying_1A6C0(a1x, 12);
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Bee (class 5 type 2) dead state: KillCreature_1A800 (state 17). Identified from its decoded sprite (confirmed by the user).
+/// Bee (class 5 type 2) dead state: FnCreatureDead_1A800 (state 17). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_02_dead (CREAT_02.C), by the map's state convention (state 17 = 6*2+5); this name is listed in the map.
 void FnCreature02Dead_1B4F0(Type_AE400_29795* a1x)
 {
-  KillCreature_1A800(a1x);
+  FnCreatureDead_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21557,7 +21562,7 @@ void FnCreature03Wander_1B510(Type_AE400_29795* a1x)
 /// Original name: fn_creature_03_attack (CREAT_03.C), by the map's state convention (state 20 = 6*3+2); this name is listed in the map.
 void FnCreature03Attack_1B520(Type_AE400_29795* a1x)
 {
-  if ( (unsigned __int16)FnCreatureAttack_1A120(a1x, 18, PORT_FN(sub_1A8E0, unsigned __int16(Type_AE400_29795*, int))) )
+  if ( (unsigned __int16)FnCreatureAttack_1A120(a1x, 18, PORT_FN(CreatureFireBallShot_1A8E0, unsigned __int16(Type_AE400_29795*, int))) )
     PlayASample_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 8);
 }
 
@@ -21570,19 +21575,19 @@ void FnCreature03Flock_1B570(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Class 5 type 3 dying state: CreatureDying_1A6C0(a1x, 18) (state 22).
+/// Class 5 type 3 dying state: FnCreatureDying_1A6C0(a1x, 18) (state 22).
 /// Original name: fn_creature_03_dying (CREAT_03.C), by the map's state convention (state 22 = 6*3+4); this name is listed in the map.
 void FnCreature03Dying_1B580(Type_AE400_29795* a1x)
 {
-  CreatureDying_1A6C0(a1x, 18);
+  FnCreatureDying_1A6C0(a1x, 18);
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Class 5 type 3 dead state: KillCreature_1A800 (state 23).
+/// Class 5 type 3 dead state: FnCreatureDead_1A800 (state 23).
 /// Original name: fn_creature_03_dead (CREAT_03.C), by the map's state convention (state 23 = 6*3+5); this name is listed in the map.
 void FnCreature03Dead_1B590(Type_AE400_29795* a1x)
 {
-  KillCreature_1A800(a1x);
+  FnCreatureDead_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21862,7 +21867,7 @@ void FnCreature04Attack_1BB20(Type_AE400_29795* a1x)
 {
   int result; // eax
 
-  FnCreatureAttack_1A120(a1x, 24, PORT_FN(sub_1A990, unsigned __int16(Type_AE400_29795*, int)));
+  FnCreatureAttack_1A120(a1x, 24, PORT_FN(CreatureArrowShot_1A990, unsigned __int16(Type_AE400_29795*, int)));
   if (a1x->var_u8_29865_70 != 26)
   {
       sub_1BCE0(a1x);
@@ -21895,22 +21900,22 @@ void FnCreature04Flock_1BBE0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Class 5 type 4 dying state: CreatureDying_1A6C0(a1x, 24) (state 28).
+/// Class 5 type 4 dying state: FnCreatureDying_1A6C0(a1x, 24) (state 28).
 /// Original name: fn_creature_04_dying (CREAT_04.C), by the map's state convention (state 28 = 6*4+4); this name is listed in the map.
 void FnCreature04Dying_1BC10(Type_AE400_29795* a1x)
 {
   if (a1x->var_u16_29821_26)
     DeleteThing_41E80_421C0(a1x);
   else
-    CreatureDying_1A6C0(a1x, 24);
+    FnCreatureDying_1A6C0(a1x, 24);
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Class 5 type 4 dead state: KillCreature_1A800 (state 29).
+/// Class 5 type 4 dead state: FnCreatureDead_1A800 (state 29).
 /// Original name: fn_creature_04_dead (CREAT_04.C), by the map's state convention (state 29 = 6*4+5); this name is listed in the map.
 void FnCreature04Dead_1BC40(Type_AE400_29795* a1x)
 {
-  KillCreature_1A800(a1x);
+  FnCreatureDead_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -22150,7 +22155,7 @@ void FnCreature05Attack_1C110(Type_AE400_29795* a1x)
   int result; // eax
   int v2; // edx
 
-  if ( (unsigned __int16)FnCreatureAttack_1A120(a1x, 30, PORT_FN(sub_1AB70, unsigned __int16(Type_AE400_29795*, int))) )
+  if ( (unsigned __int16)FnCreatureAttack_1A120(a1x, 30, PORT_FN(CreatureCrabShot_1AB70, unsigned __int16(Type_AE400_29795*, int))) )
     PlayASample_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 32);
   result = a1x->actLife_29807_12;
   v2 = a1x->maxLife_29803_8;
@@ -22270,19 +22275,19 @@ void FnCreature05Flock_1C170(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Class 5 type 5 dying state: CreatureDying_1A6C0(a1x, 30) (state 34).
+/// Class 5 type 5 dying state: FnCreatureDying_1A6C0(a1x, 30) (state 34).
 /// Original name: fn_creature_05_dying (CREAT_05.C), by the map's state convention (state 34 = 6*5+4); this name is listed in the map.
 void FnCreature05Dying_1C3C0(Type_AE400_29795* a1x)
 {
-  CreatureDying_1A6C0(a1x, 30);
+  FnCreatureDying_1A6C0(a1x, 30);
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Class 5 type 5 dead state: KillCreature_1A800 (state 35).
+/// Class 5 type 5 dead state: FnCreatureDead_1A800 (state 35).
 /// Original name: fn_creature_05_dead (CREAT_05.C), by the map's state convention (state 35 = 6*5+5); this name is listed in the map.
 void FnCreature05Dead_1C3D0(Type_AE400_29795* a1x)
 {
-  KillCreature_1A800(a1x);
+  FnCreatureDead_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -22471,19 +22476,19 @@ void FnCreature06Flock_1C880(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Kraken (class 5 type 6) dying state: CreatureDying_1A6C0(a1x, 36) (state 40). Identified from its decoded sprite (confirmed by the user).
+/// Kraken (class 5 type 6) dying state: FnCreatureDying_1A6C0(a1x, 36) (state 40). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_06_dying (CREAT_06.C), by the map's state convention (state 40 = 6*6+4); this name is listed in the map.
 void FnCreature06Dying_1C8D0(Type_AE400_29795* a1x)
 {
-  CreatureDying_1A6C0(a1x, 36);
+  FnCreatureDying_1A6C0(a1x, 36);
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Kraken (class 5 type 6) dead state: KillCreature_1A800 (state 41). Identified from its decoded sprite (confirmed by the user).
+/// Kraken (class 5 type 6) dead state: FnCreatureDead_1A800 (state 41). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_06_dead (CREAT_06.C), by the map's state convention (state 41 = 6*6+5); this name is listed in the map.
 void FnCreature06Dead_1C8E0(Type_AE400_29795* a1x)
 {
-  KillCreature_1A800(a1x);
+  FnCreatureDead_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -22533,7 +22538,7 @@ void FnCreature07Attack_1C960(Type_AE400_29795* a1x)
       a1x->actSpeed_29921_126 = a1x->actSpeed_29923_128;
     }
   }
-  result = FnCreatureAttack_1A120(a1x, 42, PORT_FN(sub_1AE30, unsigned __int16(Type_AE400_29795*, int)));
+  result = FnCreatureAttack_1A120(a1x, 42, PORT_FN(CreatureRockShot_1AE30, unsigned __int16(Type_AE400_29795*, int)));
   if ( (_BYTE)result )
   {
     result = a1x->var_u16_29881_86;
@@ -22568,19 +22573,19 @@ void FnCreature07Flock_1CA00(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Troll or ape (class 5 type 7) dying state: CreatureDying_1A6C0(a1x, 42) (state 46). Identified from its decoded sprite (confirmed by the user).
+/// Troll or ape (class 5 type 7) dying state: FnCreatureDying_1A6C0(a1x, 42) (state 46). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_07_dying (CREAT_07.C), by the map's state convention (state 46 = 6*7+4); this name is listed in the map.
 void FnCreature07Dying_1CA20(Type_AE400_29795* a1x)
 {
-  CreatureDying_1A6C0(a1x, 42);
+  FnCreatureDying_1A6C0(a1x, 42);
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Troll or ape (class 5 type 7) dead state: KillCreature_1A800 (state 47). Identified from its decoded sprite (confirmed by the user).
+/// Troll or ape (class 5 type 7) dead state: FnCreatureDead_1A800 (state 47). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_07_dead (CREAT_07.C), by the map's state convention (state 47 = 6*7+5); this name is listed in the map.
 void FnCreature07Dead_1CA30(Type_AE400_29795* a1x)
 {
-  KillCreature_1A800(a1x);
+  FnCreatureDead_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -22764,7 +22769,7 @@ void FnCreature08Attack_1CE30(Type_AE400_29795* a1x)
   if (a1x->var_u16_29821_26)
     a1x->actSpeed_29921_126 = a1x->actSpeed_29923_128;
   a1x->var_29811_16.byte[1] |= 0x80u;
-  if ( (unsigned __int16)FnCreatureAttack_1A120(a1x, 48, PORT_FN(sub_1AEE0, unsigned __int16(Type_AE400_29795*, int))) )
+  if ( (unsigned __int16)FnCreatureAttack_1A120(a1x, 48, PORT_FN(CreatureKrakenShot_1AEE0, unsigned __int16(Type_AE400_29795*, int))) )
   {
     PlayASample_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 38);
     v1 = 164 * a1x->var_u16_29941_146;
@@ -22787,7 +22792,7 @@ void FnCreature08Flock_1CF50(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED REMC1
-/// Griffin (class 5 type 8) dying state: CreatureDying_1A6C0(a1x, 48) (state 52). Identified from its decoded sprite (confirmed by the user).
+/// Griffin (class 5 type 8) dying state: FnCreatureDying_1A6C0(a1x, 48) (state 52). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_08_dying (CREAT_08.C), by the map's state convention (state 52 = 6*8+4); this name is listed in the map.
 void FnCreature08Dying_1CF60(Type_AE400_29795* a1x)
 {
@@ -22796,15 +22801,15 @@ void FnCreature08Dying_1CF60(Type_AE400_29795* a1x)
   v1 = 164 * a1x->var_u16_29833_38;
   if ( v1 + dword_AE400_AE3F0() + 29795 && *(_BYTE *)PTR(dword_AE400_AE3F0() + v1 + 29860) <= 1u )
     *(_WORD *)PTR(*(_DWORD *)PTR(dword_AE400_AE3F0() + 164 * a1x->var_u16_29833_38 + 29955) + 528) = 200;
-  CreatureDying_1A6C0(a1x, 48);
+  FnCreatureDying_1A6C0(a1x, 48);
 }
 
 //SYNCHRONIZED REMC1
-/// Griffin (class 5 type 8) dead state: KillCreature_1A800 (state 53). Identified from its decoded sprite (confirmed by the user).
+/// Griffin (class 5 type 8) dead state: FnCreatureDead_1A800 (state 53). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_08_dead (CREAT_08.C), by the map's state convention (state 53 = 6*8+5); this name is listed in the map.
 void FnCreature08Dead_1CFE0(Type_AE400_29795* a1x)
 {
-  KillCreature_1A800(a1x);
+  FnCreatureDead_1A800(a1x);
 }
 
 //SYNCHRONIZED REMC1
@@ -23428,7 +23433,7 @@ LABEL_29:
       v11 += *(__int16 *)PTR(v9 + 80);
     if ( GetDistance_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v9 + 72)) < v11 )
     {
-      CreatureShootAt_1AA40(a1x, v9);
+      CreatureFlameArrowShot_1AA40(a1x, v9);
       goto LABEL_31;
     }
     goto LABEL_29;
@@ -23449,19 +23454,19 @@ void FnCreature09Flock_1DC80(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Skeleton (class 5 type 9) dying state: CreatureDying_1A6C0(a1x, 54) (state 58).
+/// Skeleton (class 5 type 9) dying state: FnCreatureDying_1A6C0(a1x, 54) (state 58).
 /// Original name: fn_creature_09_dying (CREAT_09.C), by the map's state convention (state 58 = 6*9+4); this name is listed in the map.
 void FnCreature09Dying_1DCB0(Type_AE400_29795* a1x)
 {
-  CreatureDying_1A6C0(a1x, 54);
+  FnCreatureDying_1A6C0(a1x, 54);
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Skeleton (class 5 type 9) dead state: KillCreature_1A800 (state 59).
+/// Skeleton (class 5 type 9) dead state: FnCreatureDead_1A800 (state 59).
 /// Original name: fn_creature_09_dead (CREAT_09.C), by the map's state convention (state 59 = 6*9+5); this name is listed in the map.
 void FnCreature09Dead_1DCC0(Type_AE400_29795* a1x)
 {
-  KillCreature_1A800(a1x);
+  FnCreatureDead_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -23530,7 +23535,7 @@ void FnCreature10Wander_1DDE0(Type_AE400_29795* a1x)
 /// Original name: fn_creature_10_attack (CREAT_10.C), by the map's state convention (state 62 = 6*10+2); this name is listed in the map.
 int FnCreature10Attack_1DDF0(Type_AE400_29795* a1x)
 {
-  return FnCreatureAttack_1A120(a1x, 60, PORT_FN(sub_1A990, unsigned __int16(Type_AE400_29795*, int)));
+  return FnCreatureAttack_1A120(a1x, 60, PORT_FN(CreatureArrowShot_1A990, unsigned __int16(Type_AE400_29795*, int)));
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -23542,19 +23547,19 @@ void FnCreature10Flock_1DE10(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Emu rider (class 5 type 10) dying state: CreatureDying_1A6C0(a1x, 60) (state 64). Identified from its decoded sprite (confirmed by the user).
+/// Emu rider (class 5 type 10) dying state: FnCreatureDying_1A6C0(a1x, 60) (state 64). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_10_dying (CREAT_10.C), by the map's state convention (state 64 = 6*10+4); this name is listed in the map.
 void FnCreature10Dying_1DE20(Type_AE400_29795* a1x)
 {
-  CreatureDying_1A6C0(a1x, 60);
+  FnCreatureDying_1A6C0(a1x, 60);
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Emu rider (class 5 type 10) dead state: KillCreature_1A800 (state 65). Identified from its decoded sprite (confirmed by the user).
+/// Emu rider (class 5 type 10) dead state: FnCreatureDead_1A800 (state 65). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_10_dead (CREAT_10.C), by the map's state convention (state 65 = 6*10+5); this name is listed in the map.
 void FnCreature10Dead_1DE30(Type_AE400_29795* a1x)
 {
-  KillCreature_1A800(a1x);
+  FnCreatureDead_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -23960,19 +23965,19 @@ void FnCreature11Flock_1E6F0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Genie (class 5 type 11) dying state: CreatureDying_1A6C0(a1x, 66) (state 70).
+/// Genie (class 5 type 11) dying state: FnCreatureDying_1A6C0(a1x, 66) (state 70).
 /// Original name: fn_creature_11_dying (CREAT_11.C), by the map's state convention (state 70 = 6*11+4); this name is listed in the map.
 void FnCreature11Dying_1E700(Type_AE400_29795* a1x)
 {
-  CreatureDying_1A6C0(a1x, 66);
+  FnCreatureDying_1A6C0(a1x, 66);
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Genie (class 5 type 11) dead state: KillCreature_1A800 (state 71).
+/// Genie (class 5 type 11) dead state: FnCreatureDead_1A800 (state 71).
 /// Original name: fn_creature_11_dead (CREAT_11.C), by the map's state convention (state 71 = 6*11+5); this name is listed in the map.
 void FnCreature11Dead_1E710(Type_AE400_29795* a1x)
 {
-  KillCreature_1A800(a1x);
+  FnCreatureDead_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -24541,15 +24546,15 @@ LABEL_28:
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Villager (class 5 type 12) dying state: CreatureDying_1A6C0(a1x, 72) (state 76). Identified from its decoded sprite (confirmed by the user).
+/// Villager (class 5 type 12) dying state: FnCreatureDying_1A6C0(a1x, 72) (state 76). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_12_dying (CREAT_12.C), Hidden Worlds linker map.
 void FnCreature12Dying_1F5A0(Type_AE400_29795* a1x)
 {
-  CreatureDying_1A6C0(a1x, 72);
+  FnCreatureDying_1A6C0(a1x, 72);
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Villager (class 5 type 12) dead state: KillCreature_1A800 (state 77). Identified from its decoded sprite (confirmed by the user).
+/// Villager (class 5 type 12) dead state: FnCreatureDead_1A800 (state 77). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_12_dead (CREAT_12.C), by the map's state convention (state 77 = 6*12+5); this name is listed in the map.
 void FnCreature12Dead_1F5B0(Type_AE400_29795* a1x)
 {
@@ -24558,7 +24563,7 @@ void FnCreature12Dead_1F5B0(Type_AE400_29795* a1x)
   v1 = 164 * a1x->var_u16_29833_38;
   if ( v1 + dword_AE400_AE3F0() + 29795 && *(_BYTE *)PTR(dword_AE400_AE3F0() + v1 + 29860) <= 1u )
     *(_WORD *)PTR(*(_DWORD *)PTR(dword_AE400_AE3F0() + 164 * a1x->var_u16_29833_38 + 29955) + 528) = 200;
-  KillCreature_1A800(a1x);
+  FnCreatureDead_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -24715,7 +24720,7 @@ LABEL_36:
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Villager (class 5 type 13) dying state: CreatureDying_1A6C0(a1x, 78) (state 82). Identified from its decoded sprite (confirmed by the user).
+/// Villager (class 5 type 13) dying state: FnCreatureDying_1A6C0(a1x, 78) (state 82). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_13_dying (CREAT_13.C), Hidden Worlds linker map.
 void FnCreature13Dying_1FA00(Type_AE400_29795* a1x)
 {
@@ -24731,16 +24736,16 @@ void FnCreature13Dying_1FA00(Type_AE400_29795* a1x)
           if (*(_BYTE*)PTR(dword_AE400_AE3F0() + v2 + 29860) <= 1u)
               *(_WORD*)PTR(*(_DWORD*)PTR(164 * a1x->var_u16_29833_38 + dword_AE400_AE3F0() + 29955) + 528) = 200;
       }
-      CreatureDying_1A6C0(a1x, 78);
+      FnCreatureDying_1A6C0(a1x, 78);
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Villager (class 5 type 13) dead state: KillCreature_1A800 (state 83). Identified from its decoded sprite (confirmed by the user).
+/// Villager (class 5 type 13) dead state: FnCreatureDead_1A800 (state 83). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_13_dead (CREAT_13.C), by the map's state convention (state 83 = 6*13+5); this name is listed in the map.
 void FnCreature13Dead_1FAA0(Type_AE400_29795* a1x)
 {
-  KillCreature_1A800(a1x);
+  FnCreatureDead_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -24897,18 +24902,18 @@ LABEL_37:
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Villager (class 5 type 14) dying state: CreatureDying_1A6C0(a1x, 84) (state 88). Identified from its decoded sprite (confirmed by the user).
+/// Villager (class 5 type 14) dying state: FnCreatureDying_1A6C0(a1x, 84) (state 88). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_14_dying (CREAT_14.C), Hidden Worlds linker map.
 void FnCreature14Dying_1FE90(Type_AE400_29795* a1x)
 {
   if (a1x->var_u16_29821_26)
     DeleteThing_41E80_421C0(a1x);
   else
-    CreatureDying_1A6C0(a1x, 84);
+    FnCreatureDying_1A6C0(a1x, 84);
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Villager (class 5 type 14) dead state: KillCreature_1A800 (state 89). Identified from its decoded sprite (confirmed by the user).
+/// Villager (class 5 type 14) dead state: FnCreatureDead_1A800 (state 89). Identified from its decoded sprite (confirmed by the user).
 /// Original name: fn_creature_14_dead (CREAT_14.C), by the map's state convention (state 89 = 6*14+5); this name is listed in the map.
 void FnCreature14Dead_1FEC0(Type_AE400_29795* a1x)
 {
@@ -24917,7 +24922,7 @@ void FnCreature14Dead_1FEC0(Type_AE400_29795* a1x)
   v1 = 164 * a1x->var_u16_29833_38;
   if ( v1 + dword_AE400_AE3F0() + 29795 && *(_BYTE *)PTR(dword_AE400_AE3F0() + v1 + 29860) <= 1u )
     *(_WORD *)PTR(*(_DWORD *)PTR(dword_AE400_AE3F0() + 164 * a1x->var_u16_29833_38 + 29955) + 528) = 200;
-  KillCreature_1A800(a1x);
+  FnCreatureDead_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -25158,19 +25163,19 @@ void FnCreature15Flock_203E0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Class 5 type 15 dying state: CreatureDying_1A6C0(a1x, 90) (state 94).
+/// Class 5 type 15 dying state: FnCreatureDying_1A6C0(a1x, 90) (state 94).
 /// Original name: fn_creature_15_dying (CREAT_15.C), by the map's state convention (state 94 = 6*15+4); this name is listed in the map.
 void FnCreature15Dying_203F0(Type_AE400_29795* a1x)
 {
-  CreatureDying_1A6C0(a1x, 90);
+  FnCreatureDying_1A6C0(a1x, 90);
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Class 5 type 15 dead state: KillCreature_1A800 (state 95).
+/// Class 5 type 15 dead state: FnCreatureDead_1A800 (state 95).
 /// Original name: fn_creature_15_dead (CREAT_15.C), by the map's state convention (state 95 = 6*15+5); this name is listed in the map.
 void FnCreature15Dead_20400(Type_AE400_29795* a1x)
 {
-  KillCreature_1A800(a1x);
+  FnCreatureDead_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -25504,19 +25509,19 @@ void FnCreature16Flock_20B60(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Class 5 type 16 dying state: CreatureDying_1A6C0(a1x, 96) (state 100).
+/// Class 5 type 16 dying state: FnCreatureDying_1A6C0(a1x, 96) (state 100).
 /// Original name: fn_creature_16_dying (CREAT_16.C), by the map's state convention (state 100 = 6*16+4); this name is listed in the map.
 void FnCreature16Dying_20B70(Type_AE400_29795* a1x)
 {
-  CreatureDying_1A6C0(a1x, 96);
+  FnCreatureDying_1A6C0(a1x, 96);
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Class 5 type 16 dead state: KillCreature_1A800 (state 101).
+/// Class 5 type 16 dead state: FnCreatureDead_1A800 (state 101).
 /// Original name: fn_creature_16_dead (CREAT_16.C), by the map's state convention (state 101 = 6*16+5); this name is listed in the map.
 void FnCreature16Dead_20B80(Type_AE400_29795* a1x)
 {
-  KillCreature_1A800(a1x);
+  FnCreatureDead_1A800(a1x);
 }
 
 //----- (00020BD0) --------------------------------------------------------
@@ -46365,7 +46370,7 @@ int InitEffectExplosion_3A490(uint16_t* a1)
 }
 
 //----- (0003A510) --------------------------------------------------------
-/// Constructor of class 10 type 1 (state 1); created together with the mana ball when a creature dies (KillCreature_1A800).
+/// Constructor of class 10 type 1 (state 1); created together with the mana ball when a creature dies (FnCreatureDead_1A800).
 /// Original name: init_effect_big_explosion (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
 int InitEffectBigExplosion_3A510(uint16_t* a1)
 {
