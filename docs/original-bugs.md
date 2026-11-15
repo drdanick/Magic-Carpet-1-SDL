@@ -13,7 +13,7 @@ Status:
 | # | Bug | Where | Status |
 |---|-----|-------|--------|
 | 1 | Stuck explosion after a worm segment dies | `UpdateFollower_1A390` | kept |
-| 2 | Rotated sprites drawn outside the frame buffer | `sub_2C410_2C450` | worked around |
+| 2 | Rotated sprites drawn outside the frame buffer | `BlitSprite_2C410_2C450` | worked around |
 | 3 | AI wizard measures its distance to a missing target | `AiApproachTarget_15470` | worked around |
 | 4 | Reads/writes through null or stale pointers | several (see below) | worked around |
 | 5 | Level performance screen draws with a freed font | `ShowLevelPerformance_4E5B0_4E8F0` | worked around |
@@ -22,8 +22,8 @@ Status:
 | 8 | Full entity table recycles live entities (balloons vanish, HUD divides by zero) | `NewEvent_372C0_37680` | fixed |
 | 9 | A creature dying while the entity table is full drops no mana | `sub_1A800`, `sub_27690` | kept |
 | 10 | Big explosions recycle all trees and standing stones; their triggers stay | `NewEvent_372C0_37680` | kept |
-| 11 | A volcano eruption removes whatever now holds its old 10/19 slot (castle balloon: HUD divides by zero) | `sub_25EC0` | fixed |
-| 12 | A possessed death marker strands the dead wizard's mana balls; their mana inflates whatever takes the slot (spell with 0 charges) | `sub_275C0`, `sub_48340_48680` | kept |
+| 11 | A volcano eruption removes whatever now holds its old 10/19 slot (castle balloon: HUD divides by zero) | `VolcanoEruptionTick_25EC0` | fixed |
+| 12 | A possessed death marker strands the dead wizard's mana balls; their mana inflates whatever takes the slot (spell with 0 charges) | `DeathMarkerTick_275C0`, `AddManaToOwner_48340_48680` | kept |
 
 ## 1. Stuck explosion after a worm segment dies (kept)
 
@@ -51,7 +51,7 @@ the `switch` on the leader's state. Mark the change as a deliberate deviation wi
 
 ## 2. Rotated sprites drawn outside the frame buffer (worked around)
 
-The rotated-sprite path of the sprite blitter (`sub_2C410_2C450`) does not clip rows against the
+The rotated-sprite path of the sprite blitter (`BlitSprite_2C410_2C450`) does not clip rows against the
 frame buffer when a sprite is very close to the camera in 640x480, and writes outside the screen
 buffer. DOS4GW let this scribble over neighbouring memory; in the port it crashed (levels 5 and 6).
 The screen buffers have guard bands (`MallocGuarded`) and the blitter's frame accesses (`FbPut` /
@@ -164,7 +164,7 @@ disappears together with every other tree and stone on the map. The triggers the
 
 **Cause:** scenery (class 2: trees, stones) is on the recycle list. When the entity table is full,
 `NewEvent_372C0_37680` takes new slots from that list (see #8) and overwrites them for good. An expanding
-explosion ring (class 10 type 17, `sub_25CE0`, started by a class 9 type 3 missile) creates one explosion
+explosion ring (class 10 type 17, `ExplosionRingTick_25CE0`, started by a class 9 type 3 missile) creates one explosion
 (10/0) per point of a growing ring every tick. Three of them at once, all from the player's wizard,
 made 120-130 explosions per tick. With the table full, those took the scenery slots: 359 trees
 (class 2 type 0), 93 standing stones (type 3) and 56 type 1 stones were all gone within five ticks.
@@ -180,9 +180,9 @@ and 48 type 1 stones, then 127 trees.
 
 **Symptom:** at the end of level 30 the game crashes (integer divide by zero) in the HUD.
 
-**Cause:** the eruption emitter (class 10 type 18, `sub_25EC0`) keeps the index of the class 10 type 19
+**Cause:** the eruption emitter (class 10 type 18, `VolcanoEruptionTick_25EC0`) keeps the index of the class 10 type 19
 entity it creates in game state +38. When the next eruption starts, it removes that entity
-(`sub_41E80_421C0`, 0x26035) without checking that the slot still holds it. The 10/19 entity ends on
+(`MarkEntityForRemoval_41E80_421C0`, 0x26035) without checking that the slot still holds it. The 10/19 entity ends on
 its own, and in `level30.recording` most eruption starts find the slot already free; in between, anything
 can take it. At the crash it held the third balloon of the player's castle. The eruption removed the
 balloon, an explosion ring (10/17) took the slot in the next tick, and the castle's balloon slot
@@ -196,7 +196,7 @@ at the start of tick 46884; in that tick the original removes entity 620 from th
 entity 988, class 10 type 18), and in tick 46885 an explosion ring takes the slot. Both ticks match the
 original byte for byte.
 
-**Fix:** `sub_25EC0` only removes a live entity named by +38 if it is still class 10 type 19; free slots
+**Fix:** `VolcanoEruptionTick_25EC0` only removes a live entity named by +38 if it is still class 10 type 19; free slots
 are passed on as in the original (`// PORT:`). The recording now replays exactly up to frame 29760 (the
 mana ball) and no longer crashes (since the heal spell fix of 2026-11-04 it desyncs from frame 5640, the
 first heal; the recording was made with a port that healed for free).
@@ -209,18 +209,18 @@ spell near the end of `possession_spell_bug.recording`, a user recording).
 **Cause:** when a wizard dies, its death routine creates a death marker (class 10 type 40) and points
 every mana ball the wizard owned (+144 of each 10/39) at the marker. Computer wizards can cast
 possession on a marker like on a mana ball, which sets the marker's own +144 to them. When the dead
-wizard respawns, the marker's handler (`sub_275C0`, state 42) hands the balls back only if the marker is
+wizard respawns, the marker's handler (`DeathMarkerTick_275C0`, state 42) hands the balls back only if the marker is
 unpossessed (`+144 == 0`), then removes the marker either way. A possessed marker leaves its balls
-pointing at a free slot. `sub_48230_48570` adds every ball's mana to +136 of the entity its +144 names,
+pointing at a free slot. `TallyOwnedMana_48230_48570` adds every ball's mana to +136 of the entity its +144 names,
 every tick; for wizards +136 is reset each tick, for anything else it only grows. Whatever takes the
 slot next accumulates the stranded balls' mana in +136: here a 10/6, a 10/16 and others, then two of
 the player's spells after a later death, where +136 is the spell's cost. The possession spell's cost
 went from 50 to 67 million, so its charges (owner's mana / cost) dropped to 0; spell 15 the same.
 
 **Confirmed:** `possession_spell_bug.recording`: marker 15 (the player's, entity 569) is taken over by
-wizard 620 in frame 56995, and removed in frame 59853 with 8 balls still pointing at it. `sub_275C0`
+wizard 620 in frame 56995, and removed in frame 59853 with 8 balls still pointing at it. `DeathMarkerTick_275C0`
 matches the original instruction for instruction, and both ticks match the original byte for byte
-(after fixing the AI signedness bug that the comparison also turned up, `sub_15080`/`sub_145B0`, which
+(after fixing the AI signedness bug that the comparison also turned up, `AiChooseManaToPossess_15080`/`AiFindRivalWizard_145B0`, which
 makes the recording desync from frame 18360 now).
 
 **Kept** (user decision 2026-11-15). A fix would clear +144 of the balls still pointing at a marker when
