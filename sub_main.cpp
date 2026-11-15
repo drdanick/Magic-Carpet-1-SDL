@@ -547,7 +547,7 @@ void sub_24CA0(int a1, int a2, int a3, int a4, unsigned __int16 a5);
 void sub_24D20(int a1, int a2, int a3, int a4, unsigned __int16 a5);
 void sub_24DA0(int a1, int a2, int a3, int a4, unsigned __int16 a5);
 int nullsub_2(void); // weak
-void sub_24F60(Type_AE400_29795* a1x);
+void ExplosionTick_24F60(Type_AE400_29795* a1x);
 void sub_25130(int a1);
 void sub_252B0(int a1);
 int sub_252D0(int a1);
@@ -563,7 +563,7 @@ void sub_257B0(int a1);
 void sub_258A0(int a1);
 int nullsub_19(_DWORD); // weak
 void sub_25990(Type_AE400_29795* a1);
-void sub_25A60(int a1);
+void LavaTick_25A60(int a1);
 void ExplosionRingTick_25CE0(Type_AE400_29795* a1);
 void VolcanoEruptionTick_25EC0(int a1);
 void sub_26140(Type_AE400_29795* a1);
@@ -582,7 +582,7 @@ void sub_26C00(int a1);
 void sub_26CE0(int a1);
 void sub_26D20(int a1);
 void sub_26E90(int a1);
-void sub_27030(Type_AE400_29795* event);
+void ManaBallTick_27030(Type_AE400_29795* event);
 void sub_274D0(Type_AE400_29795* event);
 void DeathMarkerTick_275C0(__int16 *a1);
 void sub_27690(_WORD *result, Type_AE400_29795* a2x);
@@ -597,7 +597,7 @@ void sub_28FE0(int a1);
 void sub_293D0(Type_AE400_29795* a1);
 void sub_29540(Type_AE400_29795* a1);
 int sub_29640(Type_AE400_29795* event);
-void sub_296A0(Type_AE400_29795* a1);
+void CrabSpawnTimerTick_296A0(Type_AE400_29795* a1);
 void sub_29700(int a1);
 void sub_29780(Type_AE400_29795* a1);
 
@@ -777,7 +777,7 @@ int sub_3A270(int a1);
 int sub_3A2F0(int a1);
 int sub_3A390(int a1);
 int sub_3A410(int a1);
-int sub_3A490(uint16_t* a1);
+int CreateExplosion_3A490(uint16_t* a1);
 int sub_3A510(uint16_t* a1);
 int sub_3A570(uint16_t* a1);
 int sub_3A5D0(uint16_t* a1);
@@ -793,9 +793,9 @@ int sub_3AA10(uint16_t* a1);
 int sub_3AAA0(uint16_t* a1);
 int sub_3AB40(uint16_t* a1);
 int sub_3ABE0(uint16_t* a1);
-int sub_3AC70(uint16_t* a1);
-int sub_3ACC0(uint16_t* a1);
-int sub_3ADB0(uint16_t* a1);
+int CreateExplosionRing_3AC70(uint16_t* a1);
+int CreateLava_3ACC0(uint16_t* a1);
+int CreateVolcanoEruption_3ADB0(uint16_t* a1);
 int sub_3AE00(uint16_t* a1);
 int sub_3AE80(uint16_t* a1);
 int sub_3AF00(uint16_t* a1);
@@ -813,14 +813,14 @@ int sub_3B3D0(uint16_t* a1);
 int sub_3B3E0(uint16_t* a1);
 int sub_3B460(uint16_t* a1);
 int sub_3B4D0(uint16_t* a1);
-int sub_3B5A0(uint16_t* a1);
-int sub_3B620(uint16_t* a1);
+int CreateManaBall_3B5A0(uint16_t* a1);
+int CreateDeathMarker_3B620(uint16_t* a1);
 Type_AE400_29795* sub_3B690(axis_3d* a1);
 int sub_3B6F0(uint16_t* a1);
 int sub_3B760(uint16_t* a1);
 int sub_3B7B0_3BB30(uint16_t* a1);
 int sub_3B800(uint16_t* a1);
-int sub_3B860(uint16_t* a1);
+int CreateCrabSpawnTimer_3B860(uint16_t* a1);
 int sub_3B8E0(uint16_t* a1);
 int sub_3B970(uint16_t* a1);
 int sub_3BA00(uint16_t* a1);
@@ -3593,7 +3593,7 @@ Type_254A34 str_255870[] = {
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_255D0C[] = {
-{ 0x002548F4, 0x0000, PORT_FN(sub_3A490, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(CreateExplosion_3A490, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0001, PORT_FN(sub_3A510, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0002, PORT_FN(sub_3A570, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0003, PORT_FN(sub_3A5D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
@@ -3609,9 +3609,9 @@ Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x000D, PORT_FN(sub_3AAA0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000E, PORT_FN(sub_3AB40, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000F, PORT_FN(sub_3ABE0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0010, PORT_FN(sub_3ACC0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0011, PORT_FN(sub_3AC70, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0012, PORT_FN(sub_3ADB0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0010, PORT_FN(CreateLava_3ACC0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0011, PORT_FN(CreateExplosionRing_3AC70, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0012, PORT_FN(CreateVolcanoEruption_3ADB0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0013, PORT_FN(sub_3AE00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0014, PORT_FN(sub_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0015, PORT_FN(sub_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
@@ -3632,8 +3632,8 @@ Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x0024, PORT_FN(sub_3B3E0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0026, PORT_FN(sub_3B460, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0027, PORT_FN(sub_3B5A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0028, PORT_FN(sub_3B620, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0027, PORT_FN(CreateManaBall_3B5A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0028, PORT_FN(CreateDeathMarker_3B620, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0029, PORT_FN(sub_3B760, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x002A, PORT_FN(sub_3B7B0_3BB30, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x002B, PORT_FN(sub_3B6F0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
@@ -3645,7 +3645,7 @@ Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0032, PORT_FN(sub_3B2A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0033, PORT_FN(sub_3B230, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0034, PORT_FN(sub_3B860, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0034, PORT_FN(CreateCrabSpawnTimer_3B860, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0035, PORT_FN(sub_3B8E0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0036, PORT_FN(sub_3B970, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0037, PORT_FN(sub_3BA00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
@@ -3975,7 +3975,7 @@ Type_254A34x str_25573C[] = {
 };
 
 Type_254A34x str_255998[] = {
-{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))sub_24F60,0x0001,0x0000 },
+{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))ExplosionTick_24F60,0x0001,0x0000 },
 { 0x002548F4,0x0001,PORT_FN(sub_25130, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0002,PORT_FN(sub_252B0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0003,PORT_FN(sub_253F0, void(Type_AE400_29795*)),0x0001,0x0000 },
@@ -3991,7 +3991,7 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x000D,PORT_FN(sub_257B0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000E,PORT_FN(sub_258A0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))sub_25990,0x0001,0x0000 },
-{ 0x002548F4,0x0010,PORT_FN(sub_25A60, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0010,PORT_FN(LavaTick_25A60, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))ExplosionRingTick_25CE0,0x0001,0x0000 },
 { 0x002548F4,0x0012,PORT_FN(VolcanoEruptionTick_25EC0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0013,(void (*)(Type_AE400_29795*))sub_26140,0x0001,0x0000 },
@@ -4016,7 +4016,7 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x0026,PORT_FN(sub_26E90, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 },
 { 0x002548F4,0x0028,PORT_FN(sub_26D20, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0029,sub_27030,0x0001,0x0000 },
+{ 0x002548F4,0x0029,ManaBallTick_27030,0x0001,0x0000 },
 { 0x002548F4,0x002A,(void (*)(Type_AE400_29795*))DeathMarkerTick_275C0,0x0001,0x0000 },
 { 0x002548F4,0x002B,PORT_FN(sub_28200, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x002C,PORT_FN(sub_285C0, void(Type_AE400_29795*)),0x0001,0x0000 },
@@ -4031,7 +4031,7 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x0035,PORT_FN(sub_28FE0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0036,PORT_FN(sub_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0037,(void (*)(Type_AE400_29795*))sub_269A0,0x0001,0x0000 },
-{ 0x002548F4,0x0038,(void (*)(Type_AE400_29795*))sub_296A0,0x0001,0x0000 },
+{ 0x002548F4,0x0038,(void (*)(Type_AE400_29795*))CrabSpawnTimerTick_296A0,0x0001,0x0000 },
 { 0x002548F4,0x0039,PORT_FN(sub_29700, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x003A,(void (*)(Type_AE400_29795*))sub_29780,0x0001,0x0000 },
 { 0x002548F4,0x003B,PORT_FN(sub_29920_29960, void(Type_AE400_29795*)),0x0001,0x0000 },
@@ -4175,12 +4175,12 @@ Type_96902 dword_96902[] = {//254902
 { str_2563D8, str_2567D8, 0x002548F4, 0x000D, 0x00000000},//c
 { str_256938, str_256980, 0x00000000, 0x0000, 0x00000000}//d
 };
-//int (*off_97D12)(int) = PORT_FN(sub_3A490, int(int)); // weak
+//int (*off_97D12)(int) = PORT_FN(CreateExplosion_3A490, int(int)); // weak
 int sub_39A00(uint16_t* a1) { return 0; };
 /*int (*off_97D12[])(int) = {
-sub_3A490, sub_3A510, sub_3A570, sub_3A5D0, sub_3A640, sub_3A6B0, sub_3A730, sub_3A7D0,
+CreateExplosion_3A490, sub_3A510, sub_3A570, sub_3A5D0, sub_3A640, sub_3A6B0, sub_3A730, sub_3A7D0,
 sub_3A870, sub_3A8D0, sub_3A930, sub_3A9A0, sub_3AA10, sub_3AAA0, sub_3AB40, sub_3ABE0,
-sub_3ACC0, sub_3AC70, sub_3ADB0, sub_3AE00, loc_39A00, loc_39A00, loc_39A00, sub_3AE80,
+CreateLava_3ACC0, CreateExplosionRing_3AC70, CreateVolcanoEruption_3ADB0, sub_3AE00, loc_39A00, loc_39A00, loc_39A00, sub_3AE80,
 loc_39A00, sub_3AF00, sub_3AF80, sub_3B000, sub_3B060, sub_3B120, sub_3B0C0, sub_3B1D0,
 sub_3B180, sub_3B4D0, sub_3B300, sub_3B3D0, sub_3B3E0 };*/
 #pragma pack (1)
@@ -4194,7 +4194,7 @@ Type_97D12;
 #pragma pack (16)
 
 Type_97D12 off_97D12[] = {
-{ PORT_FN(sub_3A490, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 1 },
+{ PORT_FN(CreateExplosion_3A490, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 1 },
 { PORT_FN(sub_3A510, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 2 },
 { PORT_FN(sub_3A570, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 3 },
 { PORT_FN(sub_3A5D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 4 },
@@ -4210,9 +4210,9 @@ Type_97D12 off_97D12[] = {
 { PORT_FN(sub_3AAA0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 14 },
 { PORT_FN(sub_3AB40, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 15 },
 { PORT_FN(sub_3ABE0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 16 },
-{ PORT_FN(sub_3ACC0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 17 },
-{ PORT_FN(sub_3AC70, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 18 },
-{ PORT_FN(sub_3ADB0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 19 },
+{ PORT_FN(CreateLava_3ACC0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 17 },
+{ PORT_FN(CreateExplosionRing_3AC70, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 18 },
+{ PORT_FN(CreateVolcanoEruption_3ADB0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 19 },
 { PORT_FN(sub_3AE00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 20 },
 { PORT_FN(sub_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 21 },
 { PORT_FN(sub_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 22 },
@@ -4233,8 +4233,8 @@ Type_97D12 off_97D12[] = {
 { PORT_FN(sub_3B3E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 38 },
 { PORT_FN(sub_3B460, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 39 },
-{ PORT_FN(sub_3B5A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 40 },
-{ PORT_FN(sub_3B620, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 41 },
+{ PORT_FN(CreateManaBall_3B5A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 40 },
+{ PORT_FN(CreateDeathMarker_3B620, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 41 },
 { PORT_FN(sub_3B760, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 42 },
 { PORT_FN(sub_3B7B0_3BB30, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 43 },
 { PORT_FN(sub_3B6F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 44 },
@@ -4246,7 +4246,7 @@ Type_97D12 off_97D12[] = {
 { nullptr, 0, 0x002548F4, 50 },
 { PORT_FN(sub_3B2A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 51 },
 { PORT_FN(sub_3B230, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 52 },
-{ PORT_FN(sub_3B860, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 53 },
+{ PORT_FN(CreateCrabSpawnTimer_3B860, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 53 },
 { PORT_FN(sub_3B8E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 54 },
 { PORT_FN(sub_3B970, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 55 },
 { PORT_FN(sub_3BA00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 56 },
@@ -26993,7 +26993,8 @@ void sub_24DA0(int a1, int a2, int a3, int a4, unsigned __int16 a5)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_24F60(Type_AE400_29795* a1x)
+/// Per-tick handler of an explosion (class 10 state 0, set by CreateExplosion_3A490).
+void ExplosionTick_24F60(Type_AE400_29795* a1x)
 {
   int v1; // eax
   char v2; // dl
@@ -27520,7 +27521,8 @@ void sub_25990(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_25A60(int a1)
+/// Per-tick handler of volcano lava (class 10 state 16, set by CreateLava_3ACC0).
+void LavaTick_25A60(int a1)
 {
   int v1; // eax
   int result; // eax
@@ -28407,7 +28409,8 @@ void sub_26E90(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_27030(Type_AE400_29795* event)//1F8030_
+/// Per-tick handler of a mana ball (class 10 state 41, set by CreateManaBall_3B5A0).
+void ManaBallTick_27030(Type_AE400_29795* event)//1F8030_
 {
   //__int16 v1; // dx
   //unsigned __int16 v2; // si
@@ -30095,7 +30098,8 @@ int sub_29640(Type_AE400_29795* event)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_296A0(Type_AE400_29795* a1x)
+/// Per-tick handler of a crab spawn timer (class 10 state 56, set by CreateCrabSpawnTimer_3B860).
+void CrabSpawnTimerTick_296A0(Type_AE400_29795* a1x)
 {
   int v1; // eax
   __int16 result; // ax
@@ -45562,7 +45566,8 @@ int sub_3A410(int a1)
 // 98FD8: using guessed type void *off_98FD8;
 
 //----- (0003A490) --------------------------------------------------------
-int sub_3A490(uint16_t* a1)
+/// Constructor of an explosion (class 10 type 0, state 0) at a1 (dispatch table dword_96902[10].str_4[0]).
+int CreateExplosion_3A490(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -46043,7 +46048,8 @@ int sub_3ABE0(uint16_t* a1)
 }
 
 //----- (0003AC70) --------------------------------------------------------
-int sub_3AC70(uint16_t* a1)
+/// Constructor of an expanding explosion ring (class 10 type 17, state 17) at a1.
+int CreateExplosionRing_3AC70(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46066,7 +46072,8 @@ int sub_3AC70(uint16_t* a1)
 }
 
 //----- (0003ACC0) --------------------------------------------------------
-int sub_3ACC0(uint16_t* a1)
+/// Constructor of volcano lava (class 10 type 16, state 16) at a1.
+int CreateLava_3ACC0(uint16_t* a1)
 {
   int result; // eax
   int v2; // ebx
@@ -46116,7 +46123,8 @@ int sub_3ACC0(uint16_t* a1)
 }
 
 //----- (0003ADB0) --------------------------------------------------------
-int sub_3ADB0(uint16_t* a1)
+/// Constructor of a volcano eruption emitter (class 10 type 18, state 18) at a1.
+int CreateVolcanoEruption_3ADB0(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46551,7 +46559,8 @@ int sub_3B4D0(uint16_t* a1)
 }
 
 //----- (0003B5A0) --------------------------------------------------------
-int sub_3B5A0(uint16_t* a1)//20C5A0_
+/// Constructor of a mana ball (class 10 type 39, state 41) at a1.
+int CreateManaBall_3B5A0(uint16_t* a1)//20C5A0_
 {
   int result; // eax
   int v2; // ebx
@@ -46585,7 +46594,8 @@ int sub_3B5A0(uint16_t* a1)//20C5A0_
 // AE408: using guessed type int dword_AE408_AE3F8();
 
 //----- (0003B620) --------------------------------------------------------
-int sub_3B620(uint16_t* a1)
+/// Constructor of a wizard's death marker (class 10 type 40, state 42) at a1.
+int CreateDeathMarker_3B620(uint16_t* a1)
 {
   int result; // eax
   _WORD *v2; // ebx
@@ -46721,7 +46731,8 @@ int sub_3B800(uint16_t* a1)
 }
 
 //----- (0003B860) --------------------------------------------------------
-int sub_3B860(uint16_t* a1)
+/// Constructor of a crab spawn timer (class 10 type 52, state 56) at a1.
+int CreateCrabSpawnTimer_3B860(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx

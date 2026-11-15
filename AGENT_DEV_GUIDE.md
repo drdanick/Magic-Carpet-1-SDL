@@ -489,9 +489,9 @@ class, type)`). The state index is global within a class, not per type.
 | 5 | 3 | worm segment | chain via +52/+54, original-bugs #1 |
 | 5 | 5 | crab (big ones shoot lightning) | seeks mana balls, raises more through 10/52 |
 | 5 | 16 | wyvern | life 100000, mana 50000 (level 26) |
-| 9 | 3 | missile that starts an explosion ring (10/17) when it lands | `sub_3AC70` called from 0x52AAA |
+| 9 | 3 | missile that starts an explosion ring (10/17) when it lands | `CreateExplosionRing_3AC70` called from 0x52AAA |
 | 9 | 9 | lightning bolt piece | `LightningBoltTick_535E0_53920` |
-| 10 | 0 | explosion | `sub_24F60` |
+| 10 | 0 | explosion | `ExplosionTick_24F60` |
 | 10 | 1 | created with the mana ball when a creature dies | `sub_1A800` |
 | 10 | 6 | spawned when a spell-7 jar in state 3t+2 is picked up | `SpellJarSpawnTick_55D30_56260` |
 | 10 | 16 | lava from a volcano eruption | created by 10/18 |
@@ -721,7 +721,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     stores |dy| in entity +48 - Hex-Rays showed the caller's stale edx (the player index).
     `tools/audit_clobber.py` lists call sites that read a register the callee overwrote; in game code
     this was the only real one (the rest: far pointers returned in dx, joystick asm, DOS calls).
-52. **Hand-"fixed" idioms.** `sub_27030` had `-((v - __CFSHL__(v >> 31, 2) + (v >> 31)) >> 2)` - someone's
+52. **Hand-"fixed" idioms.** `ManaBallTick_27030` had `-((v - __CFSHL__(v >> 31, 2) + (v >> 31)) >> 2)` - someone's
     rewrite of the signed division idiom that computes `(v - 2) >> 2` for v < 0 instead of `v / 4`.
     Write such divisions as plain C `v / 4` (truncates toward zero, same as the `sbb` idiom).
 53. **Wrong list / wrong field in a hand-converted loop.** `sub_16540` (missile hits feeding the wizard
@@ -1107,7 +1107,7 @@ Known open issues:
   drops below 0 (or it is hit by a wizard, damager class 3) it sets `v3x+146`, clears `v3x+52` and calls
   `sub_424F0_42830(v3x, a2 + 2)` (state 20). If the real leader died earlier its slot can already hold
   another entity: in `stuck_explosion_sprite.txt` (level 15) segment 174 dies at frame 36216, an explosion
-  (10/0, `sub_24F60`) reuses slot 174 at 36217, and at 36218 segment 157 (still +52 = 174) dies and puts
+  (10/0, `ExplosionTick_24F60`) reuses slot 174 at 36217, and at 36218 segment 157 (still +52 = 174) dies and puts
   the explosion into class-10 state 20 = handler 0x262C0, a bare `ret` (port: `sub_262C0`). The sprite
   never changes again. `diff_tick` (ticks 36216-36218, 36480-36650) and `diff_call` (draw at 36600) match
   CARPET.EXE exactly; `diff_tick --watch 58401` (entity 174 +70) shows the original writing 0x14 at
