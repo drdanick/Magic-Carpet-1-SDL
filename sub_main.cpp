@@ -38,7 +38,7 @@ bool IsHiddenWord = false;
 0x26C450
 code DOSBOX 234585
 code 63585
-sub_634E0_639F0
+LoadPathFile_634E0_639F0
 
 26C3F4->061220 *search
 
@@ -296,8 +296,8 @@ __int16 sub_101A1();
 int sub_10254();
 void sub_10300();
 void sub_103C0(void *a1, unsigned int a2);
-int sub_103F0();
-void sub_104D0();
+int ReadFliFrame_103F0();
+void DecodeFliFrame_104D0();
 void PlayInfoFmv_107C0_107C0(__int16 a1, __int16 a2, int a3);
 void sub_108C0();
 void sub_10960();
@@ -314,7 +314,7 @@ void sub_111B0(int a1, int a2);
 int BeginRingIter_11410(int a1, int a2);
 void EndRingIter_11490(int a1);
 int NextRingOffset_114B0(int a1, _DWORD *a2, _DWORD *a3);
-void sub_11540();
+void LoadSearchData_11540();
 int IsMoveBlocked_11640(Type_AE400_29795* a1, axis_3d* a2, char a3);
 int sub_11760(axis_3d* a1);
 int sub_11810(axis_3d* a1);
@@ -644,20 +644,20 @@ void sub_33B90_33F80(uaxis_2d a1, uaxis_2d a2);
 char sub_33E10_34200(unsigned __int16 a1, __int16 a2);
 unsigned __int16 sub_34070();
 // int TopProcedure_340B0_34470(int a1, __int16 a2, __int16 a3, unsigned __int16 a4, int a5);
-int sub_34460_34820();
-void sub_344F0();
+int ShowTitlePicture_34460_34820();
+void LoadGamePalette_344F0();
 // void DrawAndEventsInGame_34530_348F0(__int16 a1, __int16 a2, __int16 a3);
 void GameLoop_34610_349D0();
 void UpdatePaletteEffects_34690_34A50();
-void sub_34B00_34EC0();
-void sub_34B40_34F00();
+void LoadAllDataFiles_34B00_34EC0();
+void LoadDataAndColourLookup_34B40_34F00();
 void sub_34C60_35020();
 void sub_34C80_35040();
 int ProcessCommandLine_34DD0_35190(int argc, char** argv);
 int FlvInitSet_356E0_35AA0();
 int sub_35710_35AD0();
 void HmiTimerTick_357A0();
-// void sub_357C0_35B80(__int16 a1, int a2, unsigned __int16 a3, unsigned __int16 a4);
+// void InitSound_357C0_35B80(__int16 a1, int a2, unsigned __int16 a3, unsigned __int16 a4);
 void sub_358A0_35C60();
 int sub_358D0_35C90(__int16 a1, __int16 a2, __int16 a3);
 int sub_35900_35CC0(__int16 a1, int a2, char a3, char a4);
@@ -896,23 +896,23 @@ void sub_3DC90_3DFD0(TypeStrAE400_13323* a1, char a2);
 void sub_3DD10_3E050();
 void sub_3DD50_3E090();
 void LoadLevel_3E100_3E440(int level, void* buffer);
-char sub_3E350_3E690(__int16 a1);
-void sub_3E410_3E750(__int16 a1);
-char sub_3E460(__int16 a1);
-char sub_3E4B0_3E7F0(__int16 a1);
-char sub_3E580_3E8C0(__int16 a1);
-char sub_3E640(__int16 a1);
-char sub_3E690_3E9D0(__int16 a1);
-void sub_3E750_3EA90(__int16 a1);
-char sub_3E7A0(__int16 a1);
-char sub_3E7F0_3EB30(__int16 a1);
-char sub_3E8C0_3EC00(__int16 a1);
-char sub_3E980(__int16 a1);
-void sub_3E9D0_3ED10(char a1[10]);
+char LoadMovieGameState_3E350_3E690(__int16 a1);
+void SaveMovieGameState_3E410_3E750(__int16 a1);
+char MovieGameStateExists_3E460(__int16 a1);
+char LoadMovieMapState_3E4B0_3E7F0(__int16 a1);
+char SaveMovieMapState_3E580_3E8C0(__int16 a1);
+char MovieMapStateExists_3E640(__int16 a1);
+char LoadGameState_3E690_3E9D0(__int16 a1);
+void SaveGameState_3E750_3EA90(__int16 a1);
+char GameStateFileExists_3E7A0(__int16 a1);
+char LoadMapState_3E7F0_3EB30(__int16 a1);
+char SaveMapState_3E8C0_3EC00(__int16 a1);
+char MapStateFileExists_3E980(__int16 a1);
+void MovieInputPacket_3E9D0_3ED10(char a1[10]);
 _BYTE *sub_3EC50_3EF90();
 int access_3EC80_3EFC0(char* a1);
 void CreateGameDir_3EC90_3EFD0(uint8_t diskChar, char* dir1, char* dir2);
-int sub_3EEA0_3F1E0(char* path, uint8_t* buffer);
+int LoadFile_3EEA0_3F1E0(char* path, uint8_t* buffer);
 int sub_3EF20_3F260();
 bool access_3EF30_3F270(char* a1);
 char sub_3EF50_3F290(char *a1, char *a2, const char *a3);
@@ -927,9 +927,9 @@ void InitDigijoy_3F7D0_3FB10(char* textBuffer);
 void InitAnojoy_3F820_sub_3FB60(__int16 a2, int a3, int a4, int a5, char a6);
 void sub_3FB30_3FE70(__int16 a1, __int16 a2, char* a3);
 char sub_3FCA0_3FFE0(char a5, __int16 a6, __int16 a7, __int16 a8, __int16 a9, __int16 a10, __int16 a11);
-void sub_40440_40780(Pathstruct* pathstruct);
+void LoadPathFiles_40440_40780(Pathstruct* pathstruct);
 void sub_40550_40890();
-void sub_407A0_40AE0();
+void LoadAndInitLevel_407A0_40AE0();
 void sub_408D0_40C10();
 _BOOL1 sub_409E0_40D20(unsigned __int16 a1);
 char AddTileHeight_40A10_40D50(__int16 a1, __int16 a2, __int16 a3, char a4);
@@ -1005,7 +1005,7 @@ void sub_43930_43C70(uint8* a1[8], unsigned int size);
 void InitMusicDriver_43B20_43E60(unsigned int a2);
 char *LoadFileAlloc_43E50(const char *a1);
 void sub_43EC0_44200();
-void sub_44470_447B0();
+void LoadOrBuildTables_44470_447B0();
 void sub_44700_44A40(char* a1, char** a2, int a3);
 void sub_44730_44A70();
 void sub_44840_44B80();
@@ -1066,7 +1066,7 @@ void sub_4B560_4B8A0();
 char **sub_4B6A0_4B9E0();
 void sub_4B6F0_4BA30(char** texts);
 void sub_4B8D0_4BC10(__int16 a1);
-void sub_4BB20_4BE60();
+void InitConfigScreen_4BB20_4BE60();
 void sub_4BC90_4BFD0();
 void sub_4BD60_4C0A0();
 int sub_4C580_4C8C0();
@@ -1074,7 +1074,7 @@ bool sub_4C640_4C980();
 bool sub_4C670_4C9B0();
 bool sub_4C6A0_4C9E0();
 void sub_4C6F0_4CA30();
-void sub_4C7E0_4CB20();
+void InitMainMenuScreen_4C7E0_4CB20();
 void sub_4CAC0_4CE00();
 void sub_4CB70_4CEB0();
 void sub_4CC00_4CF40(); // weak
@@ -1082,7 +1082,7 @@ int sub_4CCA0_4CFE0(int a1);
 bool sub_4D0F0_4D430();
 void sub_4D190_4D4D0();
 void sub_4D300_4D640();
-void sub_4D3B0_4D6F0();
+void PlayIntroAnim_4D3B0_4D6F0();
 void PlayOutroAndQuit_4D560_4D8A0();
 void sub_4D680_4D9C0();
 char sub_4DCC0_4E000();
@@ -1093,11 +1093,11 @@ void sub_4E3D0_4E710(unsigned __int8 a1);
 void sub_4E470_4E7B0(unsigned __int8 a1);
 void sub_4E510(unsigned __int8 a1);
 int ShowLevelPerformance_4E5B0_4E8F0();
-void sub_4EE70_4F1B0();
-void sub_4EFC0_4F300();
+void PlayLogoAnim_4EE70_4F1B0();
+void PlayIntelAnim_4EFC0_4F300();
 void sub_4F120_4F460();
-void sub_4F1E0_4F520();
-void sub_4F3F0_4F730();
+void PlayTitleAnim_4F1E0_4F520();
+void SelectLanguage_4F3F0_4F730();
 int sub_4F8D0_4FC10(int a1, void (*a2)());
 void sub_4FD20_50060();
 void sub_4FE00_50140();
@@ -1108,7 +1108,7 @@ void sub_50350_50690();
 void sub_503E0_50720();
 _BYTE *sub_50470_507B0();
 int sub_504A0_507E0();
-bool sub_505A0_508E0();
+bool ReadSoundSetup_505A0_508E0();
 void sub_50770_50AB0();
 bool sub_50D40_51080(int a1, __int16 a2, __int16 a3, char *a4, char *a5, char a6, int a7, void (*a8)(void), char a9, int a10);
 char *sub_512D0_51610(char *a1, const char *a2);
@@ -1122,7 +1122,7 @@ void sub_51480_517C0(Type_dword_96884* a1, TypeStrFont* a2, TColor* colorBuffer)
 void DrawText_51560_518A0(_BYTE *a1, int a2, __int16 a3, char* text);
 __int16 sub_51650_51990(int a1, int a2, __int16 a3, int a4);
 void RelocateFontGlyphs_519E0_51D20(TypeStrFont* a1);
-void sub_51A10_51D50();
+void ReadSaveGameNames_51A10_51D50();
 int LoadGame_51AF0_51E30(char a1);
 int SaveGame_51C90_51FD0(char a1);
 void sub_51DF0_52130(char a1);
@@ -1198,8 +1198,8 @@ void CastReverseSpeed_57F00_58410(int a1);
 int CastGlobalDeath_580A0_585B0(int a1);
 int CastRapidFireball_58240_58750(int a1);
 void DrawBitmap_58768_58C78(__int16 a1, __int16 a2, TypeTab* a3, unsigned __int8 a4);
-void sub_587E0_58CF0();
-int sub_58860_58D70(unsigned __int16 a1, uint8_t* a2);
+void OpenTmapsFile_587E0_58CF0();
+int LoadTmap_58860_58D70(unsigned __int16 a1, uint8_t* a2);
 char sub_58910_58E20(unsigned __int16 a1);
 char sub_58A00_58F10(unsigned __int16 a1);
 int GetSumaSpriteSizes_58AD0_58FE0(unsigned __int16 a1);
@@ -1266,7 +1266,7 @@ void sub_5A3C0_5A8D0(int fontIndex);
 // void sub_5A3E3(int a1, int a2, int a3, int a4, int a5, int a6, int a7);
 void sub_5A459_5A969();
 void sub_5A4EA_5A9FA();
-void sub_5A560_5AA70();
+void DrawVersionInfo_5A560_5AA70();
 void DrawStartGameTexts_5ACA0_5B1B0();
 void DrawTextLine_5AD10_5B220(char* text);
 int sub_5AD30_5B240();
@@ -1316,7 +1316,7 @@ void Blit_5CDA0_5D2B0();
 int LoadMusicSet_5CEF0_5D400(unsigned __int16 a1);
 unsigned int FixMusicTabOffsets_5CFA4();
 void sub_5D010_5D520();
-int sub_5D070_5D580(unsigned __int8 a1);
+int LoadSoundBank_5D070_5D580(unsigned __int8 a1);
 unsigned int sub_5D138();
 int sub_5D1A0(int a1, int a2, unsigned int a3);
 int sub_5D230_5D740(int a1, int a2, int a3);
@@ -1408,7 +1408,7 @@ uint32 sub_62CF4_63204(uint8_t** a1);
 __int16 HufRead_62CFD_6320D(uint16* a0, __int16 *a1, uint8_t** a2);
 __int16 BitRead_62D40_63250(uint16* a0, uint8 a1, uint8** a2);
 void ReadHuftable_62DC3_632D3(uint16* a0x, __int16* a0, uint8_t** a1);
-void sub_62E60_63370(char* name, uint8* buffer, int size);
+void WriteFile_62E60_63370(char* name, uint8* buffer, int size);
 size_t FileWrite_62ED0_633E0(FILE* descriptor, uint8_t* buffer, uint32_t count);
 // _DWORD access(_DWORD, _DWORD); weak
 // _DWORD mkdir(_DWORD); weak
@@ -1419,8 +1419,8 @@ int sub_62FF0(int a1);
 void sub_63010_63520();
 void sub_63338_63848();
 int sub_6342C_6393C(unsigned int a1);
-void sub_634A0_639B0(Pathstruct* pathstruct);
-int sub_634E0_639F0(Pathstruct* pathstruct);
+void FreePathFile_634A0_639B0(Pathstruct* pathstruct);
+int LoadPathFile_634E0_639F0(Pathstruct* pathstruct);
 // _DWORD gets(_DWORD); weak
 // _DWORD segread(_DWORD); weak
 // _DWORD int386x(_DWORD, _DWORD, _DWORD, _DWORD); weak
@@ -14176,8 +14176,8 @@ _DWORD settextposition(_DWORD a, _DWORD b) { return 0; };// weak
 //void MainMenuStep_4AB20_4AE60(__int16 a1, const char *a2, const char *a3, __int16 a4, __int16 a5) {};
 //void sub_4AC70_4AFB0(const char *a1, const char *a2) {};
 //int sub_4CC00_4CF40() { return 0; };// weak	
-//void sub_4EFC0_4F300(__int16 a1) {};
-//void sub_4F3F0_4F730(__int16 a1) {};
+//void PlayIntelAnim_4EFC0_4F300(__int16 a1) {};
+//void SelectLanguage_4F3F0_4F730(__int16 a1) {};
 //char sub_50770_50AB0(__int16 a1, __int16 a2, __int16 a3, __int16 a4) { return 0; };
 //void sub_60D50_61260(__int16 a1, int a2, int a3, char *a4, unsigned __int8 a5, char a6) {};
 //void sub_60D65_61275(__int16 a1, int a2, int a3, char *a4, unsigned __int8 a5, char a6) {};
@@ -14777,7 +14777,8 @@ void sub_103C0(void *a1, unsigned int a2)
 // AC5BC: using guessed type int dword_AC5BC_AC5AC;
 
 //SYNCHRONIZED WITH REMC1
-int sub_103F0()
+/// Reads the next FLI frame (16-byte header, type 0xF1FA) of the open animation into the BScreen.
+int ReadFliFrame_103F0()
 {
   int result; // eax
 
@@ -14799,7 +14800,8 @@ typedef struct {
 } Type_v21;
 
 //SYNCHRONIZED WITH REMC1
-void sub_104D0()
+/// Reads the next FLI frame (ReadFliFrame_103F0) and applies its chunks (COLOUR256, SS2, COLOUR, LC, BLACK, BRUN, COPY, PSTAMP).
+void DecodeFliFrame_104D0()
 {
   int v0; // eax
   int v1; // eax
@@ -14838,10 +14840,10 @@ void sub_104D0()
   if (str_AC1A0_AC190.word_AC1A4_AC194 == 0xF100/*-3840*/)
   {
     sub_103C0(0, str_AC1A0_AC190.dword_AC1A0_AC190 - 16);
-    v1 = sub_103F0();
-    //v0 = sub_104D0(v1);
+    v1 = ReadFliFrame_103F0();
+    //v0 = DecodeFliFrame_104D0(v1);
     //fix !!!
-    sub_104D0();
+    DecodeFliFrame_104D0();
     //fix !!!
   }
   else if (str_AC1A0_AC190.word_AC1A4_AC194 == 0xF1FA/*-3590*/)
@@ -15012,8 +15014,8 @@ void PlayInfoFmv_107C0_107C0(__int16 a1, __int16 a2, int a3)//1E17C0_
     if (word_AC5E0_AC5D0x >= str_AC5C8_AC5B8.word_AC5CE_AC5BE - 1 )
       break;
     sub_111B0((int)0, (int)a3);
-    sub_103F0();
-    sub_104D0();
+    ReadFliFrame_103F0();
+    DecodeFliFrame_104D0();
   }
   DataFileIO::Close(file_AC5C0_AC5B0);
 }
@@ -15427,7 +15429,7 @@ void sub_111B0(int a1, int a2)
       case 4:
       case 36:
         sub_5D010_5D520();
-        sub_5D070_5D580(v3);
+        LoadSoundBank_5D070_5D580(v3);
         LOWORD(a1) = word_90030;
         ++a1;
         continue;
@@ -15624,13 +15626,14 @@ int NextRingOffset_114B0(int a1, _DWORD *a2, _DWORD *a3)//1E24B0_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_11540()//1E2540_
+/// Loads data/search.dat (a 32x32 order map) and builds the search/ring offset tables from it.
+void LoadSearchData_11540()//1E2540_
 {
   uint8_t* v1; // edx
   char v8; // [esp+4h] [ebp-14h]
   char v9; // [esp+8h] [ebp-10h]
 
-  sub_3EEA0_3F1E0((char*)"data/search.dat", begWscreen_2ECFF4_2ECFE4);
+  LoadFile_3EEA0_3F1E0((char*)"data/search.dat", begWscreen_2ECFF4_2ECFE4);
   for ( int i = 1; i < 100; i++)
     ringIters_AC5F0_AC5E0[i].ring_8 = -1;
   v1 = begSearch_AE3F4_26C3F4_26C3E4;
@@ -18887,8 +18890,8 @@ void ProcessKeys_16B00()//1E7B00_
 				sub_593B0_598C0();
 				str_AE400_AE3F0->str_232607.var_u16_232707 = str_AE408_AE3F8->var_u16_17;
 				str_AE400_AE3F0->str_232607.var_u32_232709 = timerTicks_AC5D4_AC5C4;
-				sub_3E750_3EA90(199);
-				sub_3E8C0_3EC00(199);
+				SaveGameState_3E750_3EA90(199);
+				SaveMapState_3E8C0_3EC00(199);
 				sub_37220_375E0();
 				str_AE400_AE3F0->var_u32_4593 = -1;
 				str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].messages_13351_28[str_AE400_AE3F0->var_u16_8].periods_13415 = 100;
@@ -18900,8 +18903,8 @@ void ProcessKeys_16B00()//1E7B00_
 		case 0x26:// 'l' load
 			if ((str_AE408_AE3F8->var_u8_0 & 0x10) == 0)
 			{
-				sub_3E690_3E9D0(199);
-				sub_3E7F0_3EB30(199);
+				LoadGameState_3E690_3E9D0(199);
+				LoadMapState_3E7F0_3EB30(199);
 				str_AE408_AE3F8->var_u16_17 = str_AE400_AE3F0->str_232607.var_u16_232707;
 				timerTicks_AC5D4_AC5C4 = str_AE400_AE3F0->str_232607.var_u32_232709;
 				sub_59420_59930();
@@ -26891,7 +26894,7 @@ void sub_24AB0()//1F5AB0_
   {
     byte_9009E = 1;
     byte_90091 = 1;
-    sub_40440_40780(&pathStrArray_F1EF0[PSF1datascreenssfont1dat]);
+    LoadPathFiles_40440_40780(&pathStrArray_F1EF0[PSF1datascreenssfont1dat]);
     sub_51360_516A0(10, 180, 300, 50);
     sub_51480_517C0(&byte_AE460_AE450, &sFont1Tab_271288_B3278, begPalDat_AE428_AE418_26C428_26C418);
     byte_AE460_AE450.var8_6 = sub_5CC70_5D180(begPalDat_AE428_AE418_26C428_26C418, 0x3Fu, 0x3Fu, 0x3Fu);
@@ -38384,7 +38387,7 @@ void sub_31AA0_31AE0(int a1)//202AA0_
 {
   pseudoRand_12C1E0_12C1D0 = *(_WORD *)PTR(a1 + 4);
   str_AE400_AE3F0->rand_4 = *(_DWORD *)PTR(a1 + 4);
-  if ( sub_3EEA0_3F1E0((char*)"c:/carpet.cd/save/scanned.rmd", (uint8_t*)mapHeightmap_DC1E0_DC1D0) != 0x10000 )
+  if ( LoadFile_3EEA0_3F1E0((char*)"c:/carpet.cd/save/scanned.rmd", (uint8_t*)mapHeightmap_DC1E0_DC1D0) != 0x10000 )
   {
       //202AF1
         //debug
@@ -40589,7 +40592,7 @@ void TopProcedure_340B0_34470(int argc, const char** argv)//2050B0_205470
 
   if ( ProcessCommandLine_34DD0_35190(argc, (char**)argv) == -1 )
     return;
-  sub_34B40_34F00();
+  LoadDataAndColourLookup_34B40_34F00();
   if ( (str_AE408_AE3F8->var_u8_0 & 8) != 0 )
   {
     nullsub_2();
@@ -40607,7 +40610,7 @@ void TopProcedure_340B0_34470(int argc, const char** argv)//2050B0_205470
       byte_939E5 = 0;
       musicAvailable_939CC = 0;
       byte_939E4 = 0;
-      sub_40440_40780(&pathStrArray[PSdataftextdat]);
+      LoadPathFiles_40440_40780(&pathStrArray[PSdataftextdat]);
       sub_44700_44A40((char*)begTextDat_AE41C_AE40C_26C41C_26C40C, dword_AE238_AE228, 80);
     }
     else
@@ -40643,14 +40646,14 @@ void TopProcedure_340B0_34470(int argc, const char** argv)//2050B0_205470
         FadeInOut_61CC0_621D0(0, 0x10u, 0);
         sub_5C05C_5C56C(&begPointersTab_AE450_AE440_26C450_26C440[0]);
         if ( !str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u8_13327 )
-          sub_34460_34820();
-        sub_34B00_34EC0();//find here 205241
+          ShowTitlePicture_34460_34820();
+        LoadAllDataFiles_34B00_34EC0();//find here 205241
         sub_61610_61B20(&pathStrArray_258E00[PS25datasnds00dat]);
         sub_61610_61B20(&pathStrArray_258E00[PS25datamusic00dat]);
         sub_41540_41880();
         if ( !str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u8_13327 )
         {
-          sub_5D070_5D580(0);
+          LoadSoundBank_5D070_5D580(0);
           LoadMusicSet_5CEF0_5D400(0);
         }
         if ( (str_AE408_AE3F8->var_u8_0 & 4) == 0 )
@@ -40665,7 +40668,7 @@ void TopProcedure_340B0_34470(int argc, const char** argv)//2050B0_205470
       if ( !str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u8_13327 )
       {
         pseudoRand = str_AE408_AE3F8->var_u16_17;
-        sub_407A0_40AE0();
+        LoadAndInitLevel_407A0_40AE0();
         if ( typeResolution_12F02E_12F01E == 1 && !blurBuffer_AE404_AE3F4 )
           blurBuffer_AE404_AE3F4 = (uint8*)malloc_42540_42880(64000);
       }
@@ -40717,16 +40720,17 @@ void TopProcedure_340B0_34470(int argc, const char** argv)//2050B0_205470
 }
 
 //----- (00034460) --------------------------------------------------------
-int sub_34460_34820()//205460_
+/// Shows data/smatitle.dat with its palette (smatitle.pal), fading it in.
+int ShowTitlePicture_34460_34820()//205460_
 {
   int result; // eax
 
-  sub_3EEA0_3F1E0((char*)"data/smatitle.dat", (uint8_t*)begWscreen_2ECFF4_2ECFE4);
+  LoadFile_3EEA0_3F1E0((char*)"data/smatitle.dat", (uint8_t*)begWscreen_2ECFF4_2ECFE4);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
     Blit_599B0_59EC0(480);
-  sub_3EEA0_3F1E0((char*)"data/smatitle.pal", (uint8_t*)begPalDat_AE428_AE418_26C428_26C418);
+  LoadFile_3EEA0_3F1E0((char*)"data/smatitle.pal", (uint8_t*)begPalDat_AE428_AE418_26C428_26C418);
   FadeInOut_61CC0_621D0(begPalDat_AE428_AE418_26C428_26C418, 0x20u, 0);
   result = dword_AE400_AE3F0();
   *(_DWORD *)PTR(dword_AE400_AE3F0() + 581) = 1;
@@ -40740,11 +40744,12 @@ int sub_34460_34820()//205460_
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //----- (000344F0) --------------------------------------------------------
-void sub_344F0()
+/// Fades to black and loads the game palette data/pal0-0.dat.
+void LoadGamePalette_344F0()
 {
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
   str_AE400_AE3F0->var_u32_581 = 0;
-  sub_3EEA0_3F1E0((char*)"data/pal0-0.dat", (uint8*)begPalDat_AE428_AE418_26C428_26C418);
+  LoadFile_3EEA0_3F1E0((char*)"data/pal0-0.dat", (uint8*)begPalDat_AE428_AE418_26C428_26C418);
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
 // AE428: using guessed type int begPalDat_AE428_AE418_26C428_26C418;
@@ -40815,7 +40820,7 @@ void DrawAndEventsInGame_34530_348F0()//205530_
 #endif debug1
 	//debug
 	str_AE408_AE3F8->var_u32_153 = timerTicks_AC5D4_AC5C4 - str_AE408_AE3F8->var_u32_153;
-	SNAP_CALL(0x5A560, sub_5A560_5AA70())
+	SNAP_CALL(0x5A560, DrawVersionInfo_5A560_5AA70())
 	//2055F4
 	    //debug
 #ifdef debug1
@@ -40900,7 +40905,7 @@ void UpdatePaletteEffects_34690_34A50()
   //LOBYTE(v1) = str_AE408_AE3F8->var_u8_23;
   if (str_AE408_AE3F8->var_u8_23 < 2u )
   {
-    sub_344F0();
+    LoadGamePalette_344F0();
     //LOBYTE(v1) = dword_AE408_AE3F8();
     str_AE408_AE3F8->var_u8_23++;
   }
@@ -41041,22 +41046,24 @@ LABEL_61:
 // B7310: using guessed type int dword_B7310;
 
 //SYNCHRONIZED WITH REMC1
-void sub_34B00_34EC0()//205b00_205EC0
+/// Loads the main data files (search buffer, screen, ...) and the search table (LoadSearchData_11540).
+void LoadAllDataFiles_34B00_34EC0()//205b00_205EC0
 {
-  sub_40440_40780(&pathStrArray[PSSearchD]);
+  LoadPathFiles_40440_40780(&pathStrArray[PSSearchD]);
   if ( typeResolution_12F02E_12F01E == 1 )
-    sub_40440_40780(&pathStrArray[PSWScreen]);
+    LoadPathFiles_40440_40780(&pathStrArray[PSWScreen]);
   else
-    sub_40440_40780(&pathStrArray[PSWScreen2]);
+    LoadPathFiles_40440_40780(&pathStrArray[PSWScreen2]);
   sub_59500_59A10(off_99974);
-  sub_11540();
+  LoadSearchData_11540();
 }
 
-void sub_34B40_34F00()//205B40_205F00
+/// Start-up step: "Load all data files" (LoadAllDataFiles_34B00_34EC0), then "Initialise Colour Lookup".
+void LoadDataAndColourLookup_34B40_34F00()//205B40_205F00
 {
 	DrawStartGameTexts_5ACA0_5B1B0();
 	DrawTextLine_5AD10_5B220((char*)"Load all data files");
-	sub_34B00_34EC0();
+	LoadAllDataFiles_34B00_34EC0();
 	DrawTextLine_5AD10_5B220((char*)"Initialise Colour Lookup");
     int index1 = 0;
     uint8_t indexB1 = 3;
@@ -41106,14 +41113,14 @@ void sub_34C80_35040()//205C80_
   {
     sub_61610_61B20(&pathStrArray[PSWScreen]);
     typeResolution_12F02E_12F01E = 8;
-    sub_40440_40780(&pathStrArray[PSWScreen2]);
+    LoadPathFiles_40440_40780(&pathStrArray[PSWScreen2]);
     blurBuffer_AE404_AE3F4 = (uint8*)malloc_42540_42880(307200);
   }
   else
   {
     sub_61610_61B20(&pathStrArray[PSWScreen2]);//735a98 clean begWscreen_2ECFF4_2ECFE4
     typeResolution_12F02E_12F01E = 1;
-    sub_40440_40780(&pathStrArray[PSWScreen]);//735a98 set begWscreen_2ECFF4_2ECFE4
+    LoadPathFiles_40440_40780(&pathStrArray[PSWScreen]);//735a98 set begWscreen_2ECFF4_2ECFE4
     blurBuffer_AE404_AE3F4 = (uint8*)malloc_42540_42880(64000);
   }
   sub_59500_59A10(off_99974);
@@ -41502,7 +41509,8 @@ int sub_35710_35AD0()
 // 12EFE4: using guessed type __int16 mouseLeftButton2_12EFE4_12EFD4;
 
 //----- (000357C0) --------------------------------------------------------
-void sub_357C0_35B80()
+/// Start-up step "Initialise Sound" / "Initialise Music" (or "Sound Disabled").
+void InitSound_357C0_35B80()
 {
   if ( !byte_90AD4 )
   {
@@ -41564,7 +41572,7 @@ void sub_357C0_35B80()
 
 //----- (000357A0) --------------------------------------------------------
 /// Game clock tick used when a sound driver is active: registered with the HMI timer service at
-/// 120 Hz (sub_357C0_35B80) in place of the PIT ISR sub_5A3E3. Original: `inc dword_AC5D4; retf`.
+/// 120 Hz (InitSound_357C0_35B80) in place of the PIT ISR sub_5A3E3. Original: `inc dword_AC5D4; retf`.
 void HmiTimerTick_357A0()
 {
   timerTicks_AC5D4_AC5C4++;
@@ -41577,7 +41585,7 @@ void sub_358A0_35C60()
         sub_5A4EA_5A9FA();
     else
     {
-        PortTimer_Stop(); // PORT: counterpart of the HMI timer registration in sub_357C0_35B80
+        PortTimer_Stop(); // PORT: counterpart of the HMI timer registration in InitSound_357C0_35B80
         RemoveTimerEvent_5DC91(dword_80010);
         sub_61F90();
         sub_62020();
@@ -47868,7 +47876,7 @@ void sub_3C9D0_3CD10()//20D9D0_
 	for (; v108 < str_AE400_AE3F0->var_u16_10;)
 	{
 		actEvent = &str_AE400_AE3F0->str_29795[str_AE400_AE3F0->str_13323[v106x].playIndex_13333];
-		sub_3E9D0_3ED10(str_AE400_AE3F0->var_29715[v102x]);
+		MovieInputPacket_3E9D0_3ED10(str_AE400_AE3F0->var_29715[v102x]);
 		str_AE400_AE3F0->str_13323[v106x].var_14422_1099 = 0;
 		switch (str_AE400_AE3F0->var_29715[v102x][0])
 		{
@@ -47910,11 +47918,11 @@ void sub_3C9D0_3CD10()//20D9D0_
 			goto LABEL_150;
 		case 0xA:
 			if ((str_AE408_AE3F8->var_u8_0 & 0x10) == 0)
-				sub_3E410_3E750(10000);
+				SaveMovieGameState_3E410_3E750(10000);
 			goto LABEL_150;
 		case 0xB:
 			if ((str_AE408_AE3F8->var_u8_0 & 0x10) == 0)
-				sub_3E350_3E690(10000);
+				LoadMovieGameState_3E350_3E690(10000);
 			goto LABEL_150;
 		case 0xC:
 			if ((str_AE408_AE3F8->var_u8_0 & 0x20) == 0 && v108 == str_AE400_AE3F0->var_u16_8)
@@ -48640,7 +48648,8 @@ void LoadLevel_3E100_3E440(int level, void* buffer)
 }
 
 //----- (0003E350) --------------------------------------------------------
-char sub_3E350_3E690(__int16 saveSlot)//20F350_
+/// Loads a movie's start state from movie/gam<slot>.dat (the game's own demo recorder).
+char LoadMovieGameState_3E350_3E690(__int16 saveSlot)//20F350_
 {
   char result; // al
   //int v2; // ebx
@@ -48657,7 +48666,7 @@ char sub_3E350_3E690(__int16 saveSlot)//20F350_
   //int v13; // [esp+5Ch] [ebp-14h]
   //int v14; // [esp+60h] [ebp-10h]
 
-  result = sub_3E460(saveSlot);
+  result = MovieGameStateExists_3E460(saveSlot);
   if ( result )
   {
     sprintf(pathBuffer, "%s/gam%05d.dat", "movie", saveSlot);
@@ -48676,7 +48685,7 @@ char sub_3E350_3E690(__int16 saveSlot)//20F350_
     v6 = *(_DWORD *)(dword_AE400_AE3F0() + 8621);
     v7 = *(_DWORD *)(dword_AE400_AE3F0() + 8625);
     v8 = *(_DWORD *)(dword_AE400_AE3F0() + 8629);*/
-    sub_3EEA0_3F1E0(pathBuffer, (uint8_t*)str_AE400_AE3F0);
+    LoadFile_3EEA0_3F1E0(pathBuffer, (uint8_t*)str_AE400_AE3F0);
     str_AE400_AE3F0->var_0 = temp0;
     str_AE400_AE3F0->set = tempSet;
     /*
@@ -48701,15 +48710,17 @@ char sub_3E350_3E690(__int16 saveSlot)//20F350_
 }
 
 //----- (0003E410) --------------------------------------------------------
-void sub_3E410_3E750(__int16 saveSlot)
+/// Saves a movie's start state to movie/gam<slot>.dat.
+void SaveMovieGameState_3E410_3E750(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "%s/gam%05d.dat", "movie", saveSlot);
-  sub_62E60_63370(pathBuffer, (uint8*)str_AE400_AE3F0, sizeof(Type_str_AE400_AE3F0)); // PORT: was sizeof(str_AE400_AE3F0), the pointer (8 bytes); the original writes 0x38D09 (0x3E430)
+  WriteFile_62E60_63370(pathBuffer, (uint8*)str_AE400_AE3F0, sizeof(Type_str_AE400_AE3F0)); // PORT: was sizeof(str_AE400_AE3F0), the pointer (8 bytes); the original writes 0x38D09 (0x3E430)
 }
 
 //----- (0003E460) --------------------------------------------------------
-char sub_3E460(__int16 saveSlot)
+/// Returns 1 if movie/gam<slot>.dat exists.
+char MovieGameStateExists_3E460(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "%s/gam%05d.dat", "movie", saveSlot);
@@ -48721,11 +48732,12 @@ char sub_3E460(__int16 saveSlot)
 }
 
 //----- (0003E4B0) --------------------------------------------------------
-char sub_3E4B0_3E7F0(__int16 saveSlot)
+/// Loads a movie's map arrays from movie/map<slot>.dat.
+char LoadMovieMapState_3E4B0_3E7F0(__int16 saveSlot)
 {
   char result;
   char pathBuffer[512];
-  result = sub_3E640(saveSlot);
+  result = MovieMapStateExists_3E640(saveSlot);
   if ( result )
   {
     sprintf(pathBuffer, "%s/map%05d.dat", "movie", saveSlot);
@@ -48743,7 +48755,8 @@ char sub_3E4B0_3E7F0(__int16 saveSlot)
 }
 
 //----- (0003E580) --------------------------------------------------------
-char sub_3E580_3E8C0(__int16 saveSlot)
+/// Saves a movie's map arrays to movie/map<slot>.dat.
+char SaveMovieMapState_3E580_3E8C0(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "%s/map%05d.dat", "movie", saveSlot);
@@ -48759,7 +48772,8 @@ char sub_3E580_3E8C0(__int16 saveSlot)
 }
 
 //----- (0003E640) --------------------------------------------------------
-char sub_3E640(__int16 saveSlot)
+/// Returns 1 if movie/map<slot>.dat exists.
+char MovieMapStateExists_3E640(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "%s/map%05d.dat", "movie", saveSlot);
@@ -48771,7 +48785,8 @@ char sub_3E640(__int16 saveSlot)
 }
 
 //----- (0003E690) --------------------------------------------------------
-char sub_3E690_3E9D0(__int16 saveSlot)//20F690_
+/// Loads the game state from save/gam<slot>.dat (Alt+L quick load uses slot 199).
+char LoadGameState_3E690_3E9D0(__int16 saveSlot)//20F690_
 {
   char result; // al
   //int v2; // ebx
@@ -48788,7 +48803,7 @@ char sub_3E690_3E9D0(__int16 saveSlot)//20F690_
   //int v13; // [esp+5Ch] [ebp-14h]
   //int v14; // [esp+60h] [ebp-10h]
 
-  result = sub_3E7A0(saveSlot);
+  result = GameStateFileExists_3E7A0(saveSlot);
   if ( result )
   {
     sprintf(pathBuffer, "c:/CARPET.CD/%s/gam%05d.dat", "save", saveSlot);
@@ -48804,7 +48819,7 @@ char sub_3E690_3E9D0(__int16 saveSlot)//20F690_
     v6 = *(_DWORD *)(dword_AE400_AE3F0() + 8621);
     v7 = *(_DWORD *)(dword_AE400_AE3F0() + 8625);
     v8 = *(_DWORD *)(dword_AE400_AE3F0() + 8629);*/
-    sub_3EEA0_3F1E0(pathBuffer, (uint8_t*)str_AE400_AE3F0);
+    LoadFile_3EEA0_3F1E0(pathBuffer, (uint8_t*)str_AE400_AE3F0);
     //v3 = (_DWORD *)dword_AE400_AE3F0();
     //v4 = (_DWORD *)(dword_AE400_AE3F0() + 8597);
     str_AE400_AE3F0->var_0 = temp0;
@@ -48837,15 +48852,17 @@ char sub_3E690_3E9D0(__int16 saveSlot)//20F690_
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (0003E750) --------------------------------------------------------
-void sub_3E750_3EA90(__int16 saveSlot)
+/// Saves the game state to save/gam<slot>.dat (Alt+S quick save uses slot 199).
+void SaveGameState_3E750_3EA90(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "c:/CARPET.CD/%s/gam%05d.dat", "save", saveSlot);
-  sub_62E60_63370(pathBuffer, (uint8*)str_AE400_AE3F0, sizeof(Type_str_AE400_AE3F0));
+  WriteFile_62E60_63370(pathBuffer, (uint8*)str_AE400_AE3F0, sizeof(Type_str_AE400_AE3F0));
 }
 
 //----- (0003E7A0) --------------------------------------------------------
-char sub_3E7A0(__int16 saveSlot)
+/// Returns 1 if save/gam<slot>.dat exists.
+char GameStateFileExists_3E7A0(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "c:/CARPET.CD/%s/gam%05d.dat", "save", saveSlot);
@@ -48857,10 +48874,11 @@ char sub_3E7A0(__int16 saveSlot)
 }
 
 //----- (0003E7F0) --------------------------------------------------------
-char sub_3E7F0_3EB30(__int16 saveSlot)
+/// Loads the map arrays from save/map<slot>.dat (quick load).
+char LoadMapState_3E7F0_3EB30(__int16 saveSlot)
 {
   char pathBuffer[512];
-  char result = sub_3E980(saveSlot);
+  char result = MapStateFileExists_3E980(saveSlot);
   if ( result )
   {
     sprintf(pathBuffer, "c:/CARPET.CD/%s/map%05d.dat", "save", saveSlot);
@@ -48878,7 +48896,8 @@ char sub_3E7F0_3EB30(__int16 saveSlot)
 }
 
 //----- (0003E8C0) --------------------------------------------------------
-char sub_3E8C0_3EC00(__int16 saveSlot)
+/// Saves the map arrays to save/map<slot>.dat (quick save).
+char SaveMapState_3E8C0_3EC00(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "c:/CARPET.CD/%s/map%05d.dat", "save", saveSlot);
@@ -48894,7 +48913,8 @@ char sub_3E8C0_3EC00(__int16 saveSlot)
 }
 
 //----- (0003E980) --------------------------------------------------------
-char sub_3E980(__int16 saveSlot)
+/// Returns 1 if save/map<slot>.dat exists.
+char MapStateFileExists_3E980(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "c:/CARPET.CD/%s/map%05d.dat", "save", saveSlot);
@@ -48906,7 +48926,8 @@ char sub_3E980(__int16 saveSlot)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_3E9D0_3ED10(char a1[10])
+/// The game's own movie recorder: plays back (flag 4) or records (flag 2) the 10-byte input packet a1 from/to movie/mvi<slot>.dat, saving/loading the start state on the first packet.
+void MovieInputPacket_3E9D0_3ED10(char a1[10])
 {
   char pathBuffer[512];
   if ( (str_AE408_AE3F8->var_u8_0 & 4) != 0 )
@@ -48921,8 +48942,8 @@ void sub_3E9D0_3ED10(char a1[10])
         str_AE408_AE3F8->var_u8_0 &= 0xFB;
         return;
       }
-      sub_3E350_3E690(str_AE408_AE3F8->var_u16_13);
-      sub_3E4B0_3E7F0(str_AE408_AE3F8->var_u16_13);
+      LoadMovieGameState_3E350_3E690(str_AE408_AE3F8->var_u16_13);
+      LoadMovieMapState_3E4B0_3E7F0(str_AE408_AE3F8->var_u16_13);
       sub_59420_59930();
       FlvInitSet_356E0_35AA0();
     }
@@ -48964,8 +48985,8 @@ void sub_3E9D0_3ED10(char a1[10])
         return;
       }
       sub_593B0_598C0();
-      sub_3E410_3E750(str_AE408_AE3F8->var_u16_13);
-      sub_3E580_3E8C0(str_AE408_AE3F8->var_u16_13);
+      SaveMovieGameState_3E410_3E750(str_AE408_AE3F8->var_u16_13);
+      SaveMovieMapState_3E580_3E8C0(str_AE408_AE3F8->var_u16_13);
       sub_37220_375E0();
       str_AE400_AE3F0->var_u32_4593 = -1;
       str_AE408_AE3F8->var_u8_161 = 3;
@@ -49037,7 +49058,8 @@ void CreateGameDir_3EC90_3EFD0(uint8_t diskChar, char* dir1, char* dir2)
 
 int counter_3EEA0_3F1E0 = 0;
 //----- (0003EEA0) --------------------------------------------------------
-int sub_3EEA0_3F1E0(char* path, uint8_t* buffer)//20FEA0_
+/// Reads the whole file `path` into `buffer` and RNC-unpacks it in place if packed; returns the (unpacked) size, -1 if the file is missing, -2 if unpacking fails ("ERROR decompressing").
+int LoadFile_3EEA0_3F1E0(char* path, uint8_t* buffer)//20FEA0_
 {
     if (dword_12DF8C_12DF7C[0xfb] != 0)
     {
@@ -50122,20 +50144,21 @@ char sub_3FCA0_3FFE0(
 // 12EFE4: using guessed type __int16 mouseLeftButton2_12EFE4_12EFD4;
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
-void sub_40440_40780(Pathstruct* pathstruct)//211440_211780
+/// Loads every entry of a Pathstruct list (LoadPathFile_634E0_639F0); prints "ERROR: File/Allocation" and waits for return on failure.
+void LoadPathFiles_40440_40780(Pathstruct* pathstruct)//211440_211780
 {
 	char input[20];
 	sub_63010_63520();
 	if (pathstruct->colorPalette_var28)
 	{
 		for (int i = 0; pathstruct[i].colorPalette_var28; i++)
-			sub_634A0_639B0(&pathstruct[i]);
+			FreePathFile_634A0_639B0(&pathstruct[i]);
 	}
 	if (pathstruct->colorPalette_var28)
 	{
 		for (int i = 0; pathstruct[i].colorPalette_var28; i++)
 		{
-			int compVar = sub_634E0_639F0(&pathstruct[i]);
+			int compVar = LoadPathFile_634E0_639F0(&pathstruct[i]);
 			if (compVar < 0)
 			{
 				SetPalette_319A0_319E0(begPalDat_AE428_AE418_26C428_26C418);
@@ -50835,7 +50858,8 @@ void sub_40550_40890()//211550_
 // 10C1E0: using guessed type __int16 mapEntityIndex_10C1E0_10C1D0[7953];
 
 //SYNCHRONIZED WITH REMC1
-void sub_407A0_40AE0()//2117A0_
+/// Loads and sets up a level: "Load Level", "Generate map", "Generate features", "Initialise Models".
+void LoadAndInitLevel_407A0_40AE0()//2117A0_
 {
     //debug
 #ifdef debug1
@@ -51347,14 +51371,14 @@ void sub_41230_41570()//212230_
 		{
 			if (str_AE400_AE3F0->set.var_u8_8608 <= 0x10u)
 			{
-				sub_40440_40780(&pathStrArray[PSdatablk0dat]);
+				LoadPathFiles_40440_40780(&pathStrArray[PSdatablk0dat]);
 			}
 			else if (str_AE400_AE3F0->set.var_u8_8608 == 32)
 			{
-				sub_40440_40780(&pathStrArray[PSdatablk1dat]);
+				LoadPathFiles_40440_40780(&pathStrArray[PSdatablk1dat]);
 			}
 		}
-		sub_44470_447B0();
+		LoadOrBuildTables_44470_447B0();
 		free_426E0_42A20(testAlloc);
 	}
 }
@@ -53634,7 +53658,7 @@ char *LoadFileAlloc_43E50(const char *a1)
     v1 = v5;
     if ( v5 )
     {
-      if ( sub_3EEA0_3F1E0((char*)a1, (uint8_t*)v5) != v4 )
+      if ( LoadFile_3EEA0_3F1E0((char*)a1, (uint8_t*)v5) != v4 )
       {
         free_426E0_42A20((void*)PTR(v6));
         v1 = (char *)PTR(v6 ^ (unsigned int)OFF(v1));
@@ -53892,7 +53916,8 @@ LABEL_63:
 // CC1BC: using guessed type int dword_CC1BC;
 // CC1C4: using guessed type __int16 word_CC1C4;
 
-void sub_44470_447B0()//215470_
+/// Sets up the block pointers, then loads data/tables.dat into strPal; if it is missing, computes the tables and writes the file.
+void LoadOrBuildTables_44470_447B0()//215470_
 {
   int v4; // edx
   int v6; // esi
@@ -53943,7 +53968,7 @@ void sub_44470_447B0()//215470_
   }
   if ( !byte_90B48 )
   {
-    if (sub_3EEA0_3F1E0((char*)"data/tables.dat", (uint8_t*)&strPal) <= 0 )
+    if (LoadFile_3EEA0_3F1E0((char*)"data/tables.dat", (uint8_t*)&strPal) <= 0 )
       byte_90B48 = 1;
   }
   if ( byte_90B48 )
@@ -53990,7 +54015,7 @@ void sub_44470_447B0()//215470_
       strPal.byte_CBC34_CBC24[i] = Distance_410CE_4140E(0x10000 - i * i);
     }
     strPal.byte_CBC34_CBC24[0] = -1;
-    sub_62E60_63370((char*)"data/tables.dat", (uint8*)&strPal, sizeof(strPal));
+    WriteFile_62E60_63370((char*)"data/tables.dat", (uint8*)&strPal, sizeof(strPal));
   }
 }
 
@@ -57298,7 +57323,7 @@ void sub_4A980_4ACC0()
     char tempPath[40];
     FILE* file;
 
-    if (sub_505A0_508E0())
+    if (ReadSoundSetup_505A0_508E0())
         settingPage_12CBC9_12CBB9 = 7;
     else
         settingPage_12CBC9_12CBB9 = 0;
@@ -57348,7 +57373,7 @@ void MainMenuStep_4AB20_4AE60()//21BB20_21BE60
 {
   if (bool_12CA7C_12CA6C)
   {
-    sub_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenssptrsdat]);
+    LoadPathFiles_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenssptrsdat]);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     {
       sub_65D70_66280(begSptrsTab_12CAEC_2EAAEC_2EAADC, endSptrsTab_12CAF0_2EAAF0_2EAAE0, begSptrsDat_12CB64_2EAB64_2EAAE4);
@@ -57363,7 +57388,7 @@ void MainMenuStep_4AB20_4AE60()//21BB20_21BE60
   switch ( mainMenuSelector_12CBCE_12CBBE )
   {
     case 0:
-      sub_4D3B0_4D6F0();//intro2
+      PlayIntroAnim_4D3B0_4D6F0();//intro2
       break;
     case 1:
       sub_4AC70_4AFB0();//sound joystick
@@ -57378,16 +57403,16 @@ void MainMenuStep_4AB20_4AE60()//21BB20_21BE60
       ShowLevelPerformance_4E5B0_4E8F0();
       break;
     case 6:
-      sub_4F3F0_4F730();//language
+      SelectLanguage_4F3F0_4F730();//language
       break;
     case 7:
-      sub_4EFC0_4F300();//?
+      PlayIntelAnim_4EFC0_4F300();//?
       break;
     case 8:
-      sub_4F1E0_4F520();//intro3
+      PlayTitleAnim_4F1E0_4F520();//intro3
       break;
     case 9:
-      sub_4EE70_4F1B0();//intro1
+      PlayLogoAnim_4EE70_4F1B0();//intro1
       break;
     case 10:
       PlayOutroAndQuit_4D560_4D8A0();
@@ -57415,7 +57440,7 @@ void sub_4AC70_4AFB0()//21BC70_
 	bool bool1 = false;
 	bool bool2 = false;
 	if ((byte_12CBD5_12CBC5 & 1) == 0)
-		sub_4BB20_4BE60();
+		InitConfigScreen_4BB20_4BE60();
 	if (pressedKeys_12EEF0_12EEE0[1])//byte_12EEF1_12EEE1 ESC
 	{
 		pressedKeys_12EEF0_12EEE0[1] = 0;//byte_12EEF1_12EEE1 ESC
@@ -57620,7 +57645,7 @@ void sub_4AC70_4AFB0()//21BC70_
 		sub_4BC90_4BFD0();
 		if (byte_12CBD5_12CBC5 >= 0)
 		{
-			sub_357C0_35B80();
+			InitSound_357C0_35B80();
 			byte_12CBD5_12CBC5 |= 0x80u;
 		}
 		if ((byte_12CBD5_12CBC5 & 2) != 0 && (byte_12CBD5_12CBC5 & 4) != 0 && (byte_12CAE4_12CAD4 & 0x40) == 0 || bool2)
@@ -57914,12 +57939,13 @@ void sub_4B8D0_4BC10(__int16 a1)//21C8D0_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4BB20_4BE60()
+/// Loads the setup/config screen: data/screens/gconfig.dat/.pal, its sprites and font.
+void InitConfigScreen_4BB20_4BE60()
 {
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
-  sub_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenssfont0dat]);
-  sub_3EEA0_3F1E0((char*)"data/screens/gconfig.dat", begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
-  sub_3EEA0_3F1E0((char*)"data\\screens\\gconfig.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
+  LoadPathFiles_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenssfont0dat]);
+  LoadFile_3EEA0_3F1E0((char*)"data/screens/gconfig.dat", begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
+  LoadFile_3EEA0_3F1E0((char*)"data\\screens\\gconfig.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     sub_65D70_66280(begGcSprTab_12CAF8_2EAAF8_2EAAE8, endGcSprTab_12CAFC_2EAAFC_2EAAEC, begGcSprDat_12CB00_2EAB00_2EAAF0);
   else
@@ -57990,7 +58016,7 @@ void sub_4BD60_4C0A0()//21CD60_
   v1 = 0;
   v2 = 0;
   if ( (byte_12CBD5_12CBC5 & 1) == 0 )
-    sub_4C7E0_4CB20();
+    InitMainMenuScreen_4C7E0_4CB20();
   sub_4C6F0_4CA30();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     CopyScreen_62FA8_634B8(begScreenBackup2_12CBA8_2EABA8_2EAB98, begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, 0xC8u);
@@ -58418,7 +58444,8 @@ void sub_4C6F0_4CA30()//21D6F0_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4C7E0_4CB20()
+/// Loads the main menu screen: data/screens/mainmenu.dat/.pal, its sprites, sounds and music.
+void InitMainMenuScreen_4C7E0_4CB20()
 {
   //int v0; // ecx
   //const void *v1; // edi
@@ -58427,23 +58454,23 @@ void sub_4C7E0_4CB20()
 
   sub_10010(320, 0);
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
-  sub_5D070_5D580(0xDu);
+  LoadSoundBank_5D070_5D580(0xDu);
   LoadMusicSet_5CEF0_5D400(0);
-  sub_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreensmmsprdat]);
+  LoadPathFiles_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreensmmsprdat]);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     sub_65D70_66280(begMmSprTab_12CB04_2EAB04_2EAAF4, endMmSprTab_12CB08_2EAB08_2EAAF8, begMmSprDat_12CB0C_2EAB0C_2EAAFC);
   else
     sub_65DC0_662D0(begMmSprTab_12CB04_2EAB04_2EAAF4, endMmSprTab_12CB08_2EAB08_2EAAF8, begMmSprDat_12CB0C_2EAB0C_2EAAFC);
   sub_51480_517C0(&str_9688C, &sFont1Tab_12CB34_2EAB34_2EAB24, begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
   str_9688C.var8_4 &= ~2u;
-  sub_3EEA0_3F1E0((char*)"data\\screens\\mainmenu.dat", (uint8_t*)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
+  LoadFile_3EEA0_3F1E0((char*)"data\\screens\\mainmenu.dat", (uint8_t*)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     CopyScreen_62FA8_634B8(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begScreenBackup2_12CBA8_2EABA8_2EAB98, 0xC8u);
   else
     CopyScreen_62FC4_634D4(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begScreenBackup2_12CBA8_2EABA8_2EAB98, 0x1E0u);
-  sub_3EEA0_3F1E0((char*)"data\\screens\\mainmenu.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
+  LoadFile_3EEA0_3F1E0((char*)"data\\screens\\mainmenu.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
   sub_504A0_507E0();
-  sub_51A10_51D50();
+  ReadSaveGameNames_51A10_51D50();
   uint8_t* bufferTemp = begBscreen_AE3FC_AE3EC_26C3FC_26C3EC;
   begBscreen_AE3FC_AE3EC_26C3FC_26C3EC = begWscreen_2ECFF4_2ECFE4;
   begWscreen_2ECFF4_2ECFE4 = bufferTemp;
@@ -58770,7 +58797,8 @@ void sub_4D300_4D640()//21E300_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4D3B0_4D6F0()//21E3B0_
+/// Plays intro/intro.dat.
+void PlayIntroAnim_4D3B0_4D6F0()//21E3B0_
 {
   int v1; // eax
 
@@ -59245,15 +59273,15 @@ char sub_4E0E0_4E420()
 
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
   StopMusic_20E60_20E60();
-  sub_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenspmultsprdat]);
+  LoadPathFiles_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenspmultsprdat]);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     sub_65D70_66280(begPMultSprTab_12CB10_2EAB10_2EAB00, endPMultSprTab_12CB14_2EAB14_2EAB04, begPMultSprDat_12CB18_2EAB18_2EAB08);
   else
     sub_65DC0_662D0(begPMultSprTab_12CB10_2EAB10_2EAB00, endPMultSprTab_12CB14_2EAB14_2EAB04, begPMultSprDat_12CB18_2EAB18_2EAB08);
   sub_51480_517C0(&str_9688C, &sFont1Tab_12CB34_2EAB34_2EAB24, begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
   str_9688C.var8_4 &= ~2u;
-  sub_3EEA0_3F1E0((char*)"data\\screens\\pmulti.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
-  sub_3EEA0_3F1E0((char*)"data\\screens\\pmulti.dat", (uint8_t*)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
+  LoadFile_3EEA0_3F1E0((char*)"data\\screens\\pmulti.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
+  LoadFile_3EEA0_3F1E0((char*)"data\\screens\\pmulti.dat", (uint8_t*)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     CopyScreen_62FA8_634B8(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0xC8u);
   else
@@ -59491,7 +59519,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
       else
         Blit_599B0_59EC0(480);
     }
-    sub_5D070_5D580(0xDu);
+    LoadSoundBank_5D070_5D580(0xDu);
     LoadMusicSet_5CEF0_5D400(0);
     PlayMusicTrack_5D290_5D7A0(1);
     word_12EFDA_12EFCA = 0;
@@ -59499,7 +59527,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
     mouseLeftButton_12EFDE_12EFCE = 0;
     lastPressedKey_12EF70_12EF60 = 0;
     mainMenuSelector_12CBCE_12CBBE = 2;
-    sub_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenssfont2dat]);
+    LoadPathFiles_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenssfont2dat]);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       sub_65D70_66280(begSFont2Tab_12CB40_2EAB40_2EAB30, endSFont2Tab_12CB44_2EAB44_2EAB34, begSFont2Dat_12CB48_2EAB48_2EAB38);
     else
@@ -59507,8 +59535,8 @@ int ShowLevelPerformance_4E5B0_4E8F0()
     perfFont_96894.var8_4 = 16;
     perfFont_96894.var8_5 = 0;
     perfFont_96894.next = &begSFont2Tab_12CB40_2EAB40_2EAB30[1];
-    sub_3EEA0_3F1E0((char*)"data/screens/pperf.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
-    sub_3EEA0_3F1E0((char*)"data\\screens\\pperf.dat", (uint8_t*)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
+    LoadFile_3EEA0_3F1E0((char*)"data/screens/pperf.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
+    LoadFile_3EEA0_3F1E0((char*)"data\\screens\\pperf.dat", (uint8_t*)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       CopyScreen_62FA8_634B8(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0xC8u);
     else
@@ -59644,7 +59672,8 @@ int ShowLevelPerformance_4E5B0_4E8F0()
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4EE70_4F1B0()//21FE70_
+/// Plays intro/logo.dat.
+void PlayLogoAnim_4EE70_4F1B0()//21FE70_
 {
   int v1; // eax
 
@@ -59686,7 +59715,8 @@ void sub_4EE70_4F1B0()//21FE70_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4EFC0_4F300()
+/// Plays intro/intel.dat.
+void PlayIntelAnim_4EFC0_4F300()
 {
   //int v1; // eax
   int v2; // eax
@@ -59765,7 +59795,8 @@ void sub_4F120_4F460()
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4F1E0_4F520()
+/// Plays the title animations intro/title-01..04.dat.
+void PlayTitleAnim_4F1E0_4F520()
 {
   int v1; // eax
 
@@ -59789,7 +59820,7 @@ void sub_4F1E0_4F520()
     Blit_599B0_59EC0(480);
   if ( *(_BYTE *)PTR(dword_AE400_AE3F0() + 8608) == 32 )
   {
-    sub_40440_40780(&pathStrArray_21AB80_21AEC0[tempIntroIndex2_4]);
+    LoadPathFiles_40440_40780(&pathStrArray_21AB80_21AEC0[tempIntroIndex2_4]);
     dword_12CB6C_12CB5C = begTitle02Dat_12CB64_2EAB64_2EAB54;
     dword_12CB68_12CB58 = 0;
     word_12CB70_12CB60 = 0;
@@ -59833,7 +59864,8 @@ void sub_4F1E0_4F520()
   byte_12CBD6_12CBC6 &= ~2u;
 }
 
-void sub_4F3F0_4F730()//2203F0_
+/// Language selection: uses language.inf if present, otherwise shows the language screen (data/screens/language.dat) and writes it.
+void SelectLanguage_4F3F0_4F730()//2203F0_
 {
 	char filename[56];
 	sprintf(filename, "%s%s\\language.inf", "C:", "\\carpet.cd");
@@ -59852,9 +59884,9 @@ void sub_4F3F0_4F730()//2203F0_
 	else
 	{
 		dword_12CBB0_12CBA0 = 0;
-		sub_3EEA0_3F1E0((char*)"data\\screens\\language.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
-		sub_3EEA0_3F1E0((char*)"data\\screens\\language.dat", begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
-		sub_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenslangsprdat]);
+		LoadFile_3EEA0_3F1E0((char*)"data\\screens\\language.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
+		LoadFile_3EEA0_3F1E0((char*)"data\\screens\\language.dat", begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
+		LoadPathFiles_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenslangsprdat]);
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 		{
 			sub_65D70_66280(begLangSprTab_12CB58_2EAB58_2EAB48, endLangSprTab_12CB5C_2EAB5C_2EAB4C, begLangSprDat_12CB60_2EAB60_2EAB50);
@@ -59960,16 +59992,16 @@ void sub_4F3F0_4F730()//2203F0_
 	switch (str_AE408_AE3F8->var_u8_151)
 	{
 	case 0:
-		sub_40440_40780(&pathStrArray[PSdataetextdat]);
+		LoadPathFiles_40440_40780(&pathStrArray[PSdataetextdat]);
 		break;
 	case 1:
-		sub_40440_40780(&pathStrArray[PSdataftextdat]);
+		LoadPathFiles_40440_40780(&pathStrArray[PSdataftextdat]);
 		break;
 	case 2:
-		sub_40440_40780(&pathStrArray[PSdatagtextdat]);
+		LoadPathFiles_40440_40780(&pathStrArray[PSdatagtextdat]);
 		break;
 	case 3:
-		sub_40440_40780(&pathStrArray[PSdataitextdat]);
+		LoadPathFiles_40440_40780(&pathStrArray[PSdataitextdat]);
 		break;
 	default:
 		break;
@@ -60376,7 +60408,8 @@ int sub_504A0_507E0()
 // 12CBAC: using guessed type int begBrightTable_12CBAC_2EABAC_2EAB9C;
 
 //SYNCHRONIZED WITH REMC1
-bool sub_505A0_508E0()
+/// Reads the sound/music card settings from sndsetup.inf.
+bool ReadSoundSetup_505A0_508E0()
 {
   char pathBuffer[48];
 
@@ -61484,7 +61517,8 @@ void RelocateFontGlyphs_519E0_51D20(TypeStrFont* a1x)//2229E0_
   }
 }
 
-void sub_51A10_51D50()
+/// Reads the names of the 6 save games (save/carpdd00..05.gam) into off_96864; "--" for empty slots.
+void ReadSaveGameNames_51A10_51D50()
 {
 	char pathBuffer[40];
 	uint32 readVar = 4;
@@ -65965,7 +65999,8 @@ void DrawBitmap_58768_58C78(__int16 a1, __int16 a2, TypeTab* a3, unsigned __int8
   }
 }
 
-void sub_587E0_58CF0()
+/// Opens data/tmaps0-0.dat (from the install directory, else the current one) for LoadTmap_58860_58D70.
+void OpenTmapsFile_587E0_58CF0()
 {
   char pathTemp[64];
   sprintf(pathTemp, "%s%s/%s/%s.dat", "C:", "\\carpet.cd", "data", "tmaps0-0");
@@ -65977,7 +66012,8 @@ void sub_587E0_58CF0()
   }
 }
 
-int sub_58860_58D70(unsigned __int16 a1, uint8_t* a2)//229860_
+/// Reads texture map a1 from the open tmaps file into a2 and RNC-unpacks it; returns its size, -1/-2 on error.
+int LoadTmap_58860_58D70(unsigned __int16 a1, uint8_t* a2)//229860_
 {
   int result; // eax
 
@@ -66126,7 +66162,7 @@ void sub_58B30_59040(unsigned __int16 a1)//229B30_
 			v3x = sub_369E0_36DA0(dword_AE3EC_AE3DC, (unsigned __int16)(4 * ((unsigned int)(begTmapsTab_12D744_12D734_2EB744_2EB734x[i].var_0 + 13) >> 2)), i);
 			if (v3x)
 			{
-				if (sub_58860_58D70(i, (uint8_t*)v3x->var_u32_0) != -1)
+				if (LoadTmap_58860_58D70(i, (uint8_t*)v3x->var_u32_0) != -1)
 				{
 					dword_12D748_12D738[i] = v3x;
 					dword_12DF8C_12DF7C[i] = v3x;
@@ -66231,7 +66267,7 @@ void sub_58E70_59380()
   dword_AE3EC_AE3DC = sub_36700_36AC0(str_AE408_AE3F8->var_u32_172, 529, str_AE408_AE3F8->var_u32_168);
   if ( dword_AE3EC_AE3DC )
     dword_AE3E0_AE3D0 = sub_10CB0(529);
-  sub_587E0_58CF0();
+  OpenTmapsFile_587E0_58CF0();
   memset(dword_12DF8C_12DF7C, 0, sizeof(dword_12DF8C_12DF7C));
   memset(dword_12D748_12D738, 0, sizeof(dword_12D748_12D738));
   memset(dword_12CF00_12CEF0, 0, sizeof(dword_12CF00_12CEF0));
@@ -66271,7 +66307,7 @@ void sub_58F90_594A0()//229F90_
   Type_99BA0* v0x; // ebx
   uint8_t* v1; // esi
 
-  sub_587E0_58CF0();
+  OpenTmapsFile_587E0_58CF0();
   v0x = unk_99BA0x;
   v1 = begWscreen_2ECFF4_2ECFE4;
   while ( v0x->var_6 || v0x->var_8)
@@ -66285,7 +66321,7 @@ void sub_58F90_594A0()//229F90_
       }
       counter_58F90_594A0++;
       //debug
-    if ( sub_58860_58D70(v0x->var_0, v1) == -1 )
+    if ( LoadTmap_58860_58D70(v0x->var_0, v1) == -1 )
     {
       *(_WORD *)(v1 + 2) = 255;
       *(_WORD *)(v1 + 4) = 255;
@@ -67476,7 +67512,8 @@ void sub_5A4EA_5A9FA()
 // 12EC04: using guessed type __int16 word_12EC04;
 
 //----- (0005A560) --------------------------------------------------------
-void sub_5A560_5AA70()
+/// Draws the product/version information page ("Magic Carpet", "Beta v8.0", "Jun 05 1995", ...).
+void DrawVersionInfo_5A560_5AA70()
 {
   __int16 v0; // bx
   __int16 v1; // bx
@@ -69177,11 +69214,11 @@ int LoadMusicSet_5CEF0_5D400(unsigned __int16 a1)
     return 1;
   sprintf(pathStrArray_258E00[PS25datamusic00dat].path, (char*)"data/music%d-%d.dat", a1, (unsigned __int8)musicVariant_CBFEE);
   sprintf(pathStrArray_258E00[PS25datamusic00tab].path, "data/music%d-%d.tab", a1, (unsigned __int8)musicVariant_CBFEE);
-  if ( sub_634E0_639F0(&pathStrArray_258E00[PS25datamusic00dat]) != 1 )
+  if ( LoadPathFile_634E0_639F0(&pathStrArray_258E00[PS25datamusic00dat]) != 1 )
     return 1;
-  if ( sub_634E0_639F0(&pathStrArray_258E00[PS25datamusic00tab]) != 1 )
+  if ( LoadPathFile_634E0_639F0(&pathStrArray_258E00[PS25datamusic00tab]) != 1 )
   {
-    sub_634A0_639B0(&pathStrArray_258E00[PS25datamusic00dat]);
+    FreePathFile_634A0_639B0(&pathStrArray_258E00[PS25datamusic00dat]);
     return 1;
   }
   FixMusicTabOffsets_5CFA4();
@@ -69236,17 +69273,18 @@ void sub_5D010_5D520()
 // CC140: using guessed type int dword_CC140;
 
 //----- (0005D070) --------------------------------------------------------
-int sub_5D070_5D580(unsigned __int8 a1)
+/// Loads sound bank a1 (data/snds<a1>-<card>.dat/.tab); returns 0 when loaded.
+int LoadSoundBank_5D070_5D580(unsigned __int8 a1)
 {
   if ( !byte_939E4 )
     return 1;
   sprintf(pathStrArray_258E00[PS25datasnds00dat].path, (char*)"data/snds%d-%d.dat", a1, (unsigned __int8)byte_939EC);
   sprintf(pathStrArray_258E00[PS25datasnds00tab].path, (char*)"data/snds%d-%d.tab", a1, (unsigned __int8)byte_939EC);
-  if ( sub_634E0_639F0(&pathStrArray_258E00[PS25datasnds00dat]) != 1 )
+  if ( LoadPathFile_634E0_639F0(&pathStrArray_258E00[PS25datasnds00dat]) != 1 )
     return 1;
-  if ( sub_634E0_639F0(&pathStrArray_258E00[PS25datasnds00tab]) != 1 )
+  if ( LoadPathFile_634E0_639F0(&pathStrArray_258E00[PS25datasnds00tab]) != 1 )
   {
-    sub_634A0_639B0(&pathStrArray_258E00[PS25datasnds00dat]);
+    FreePathFile_634A0_639B0(&pathStrArray_258E00[PS25datasnds00dat]);
     return 1;
   }
   sub_5D138();
@@ -72214,7 +72252,7 @@ void sub_61610_61B20(Pathstruct* pathstruct)//232610
   {
     if ( !pathstruct->colorPalette_var28)
       break;
-    sub_634A0_639B0(pathstruct);
+    FreePathFile_634A0_639B0(pathstruct);
     pathstruct++;
   }
 }
@@ -73889,7 +73927,8 @@ void ReadHuftable_62DC3_632D3(uint16* CX_, __int16* a0, uint8_t** a1x)//233DC3_
 }
 
 //----- (00062E60) --------------------------------------------------------
-void sub_62E60_63370(char* name, uint8* buffer, int size)
+/// Creates/overwrites file `name` with `size` bytes from `buffer`.
+void WriteFile_62E60_63370(char* name, uint8* buffer, int size)
 {
   FILE* file = DataFileIO::CreateOrOpenFile(FixPath(name), 546);
   if (file == nullptr )
@@ -74086,7 +74125,8 @@ int sub_6342C_6393C(unsigned int a1)
 }
 // 62F78: using guessed type _DWORD int386(_DWORD, _DWORD, _DWORD);
 
-void sub_634A0_639B0(Pathstruct* pathstruct)
+/// Frees a Pathstruct entry's buffer.
+void FreePathFile_634A0_639B0(Pathstruct* pathstruct)
 {
 	if (*pathstruct->colorPalette_var28)
 	{
@@ -74097,7 +74137,8 @@ void sub_634A0_639B0(Pathstruct* pathstruct)
 
 int counter_634E0_639F0 = 0;
 
-int sub_634E0_639F0(Pathstruct* pathstruct)//2344e0_
+/// Loads one Pathstruct entry: frees the old buffer, then allocates and reads the file (LoadFile_3EEA0_3F1E0); entries whose path starts with "*" only get a buffer of the given size. Returns 1, 0 (file) or -1 (allocation).
+int LoadPathFile_634E0_639F0(Pathstruct* pathstruct)//2344e0_
 {
     //debug
     if (counter_634E0_639F0 == 0x11)
@@ -74114,7 +74155,7 @@ int sub_634E0_639F0(Pathstruct* pathstruct)//2344e0_
 		mallocVar = malloc_425C0_42900;
 	else
 		mallocVar = malloc_42540_42880;
-	sub_634A0_639B0(pathstruct);
+	FreePathFile_634A0_639B0(pathstruct);
 	if (pathstruct->path[0] == '*')
 	{
 		if (strstr(pathstruct->path, "Screen")) // PORT: *WScreen/*BScreen get a guard band, see MallocGuarded
@@ -74137,7 +74178,7 @@ int sub_634E0_639F0(Pathstruct* pathstruct)//2344e0_
 			return -1;
 		memset(*pathstruct->colorPalette_var28 + pathstruct->var36_size_buffer, 0, 0x10000);
         
-		if (sub_3EEA0_3F1E0(pathstruct->path, *pathstruct->colorPalette_var28) != pathstruct->var36_size_buffer)
+		if (LoadFile_3EEA0_3F1E0(pathstruct->path, *pathstruct->colorPalette_var28) != pathstruct->var36_size_buffer)
 		{
 			*pathstruct->colorPalette_var28 = 0;
 			*pathstruct->var32_end_buffer = 0;

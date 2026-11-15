@@ -608,7 +608,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
 28. **Read-modify-write that is really a copy.** `a->speed += b->accel` was `a->speed = b->speed +
     b->accel` (worms accelerating forever and flying). When a value grows without bound, disassemble.
 29. **Texture over-reads.** The rasteriser reads up to 64 KB past a texture; loaded data files are
-    padded with zeros (`sub_634E0_639F0`) so this is defined and identical in Debug and Release - a
+    padded with zeros (`LoadPathFile_634E0_639F0`) so this is defined and identical in Debug and Release - a
     Debug/Release golden mismatch is the symptom of such reads (find them with ASan).
 30. **Operator precedence in hand-edited expressions.** `features & 0xffff >= 0` is `features & 1`
     (comparison binds tighter than `&`): every other terrain cell lost the water mode - checkerboard
