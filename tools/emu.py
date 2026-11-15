@@ -39,11 +39,11 @@ CLIP_GLOBALS = {'dword_9334C': 1024}
 LAYOUT_IGNORE_IDA = [(0x93ADA, 0x93ADC), (0x93ADE, 0x93AE0), (0xAE3B8, 0xAE3C0)]
 LAYOUT_IGNORE_PORT = ['dword_AE3B8_2']  # whole port symbols on the port side (12-byte font structs)
 # sound: the original drives the HMI/SOS driver, the port SDL_mixer - neither is game logic
-SKIP_FUNCS = ['PlayEntitySound_55370_558A0', 'sub_55890_55DC0',
+SKIP_FUNCS = ['PlayASample_55370_558A0', 'StopASample_55890_55DC0',
               # music: the HMI MIDI driver entry points (song init/start/stop/rewind/done, raw MIDI, driver
               # timer events) and the port_music / port_timer calls that replaced them inside game functions
-              'MidiLoadSong_5EE22', 'MidiStartSong_5F398', 'MidiUnloadSong_5F355', 'MidiStopSong_5F420', 'MidiRewindSong_5F529', 'MidiSongDone_5D7F0_5DD00', 'MidiSendData_5EDA0',
-              'RegisterTimerEvent_5D97B', 'RemoveTimerEvent_5DC91', 'PortMusic_Load', 'PortTimer_AddEvent', 'PortTimer_RemoveEvent',
+              'SosMIDIInitSong_5EE22', 'SosMIDIStartSong_5F398', 'SosMIDIUnInitSong_5F355', 'SosMIDIStopSong_5F420', 'SosMIDIResetSong_5F529', 'SosMIDISongDone_5D7F0_5DD00', 'SosMIDISendMIDIData_5EDA0',
+              'SosTIMERRegisterEvent_5D97B', 'SosTIMERRemoveEvent_5DC91', 'PortMusic_Load', 'PortTimer_AddEvent', 'PortTimer_RemoveEvent',
               # port-only diagnostics called from game functions (the snapshot hooks themselves)
               'MemSnapshot_Call', 'MemSnapshot_Tick']
 

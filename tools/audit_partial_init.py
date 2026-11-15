@@ -2,7 +2,7 @@
 """Locals that are read before all their bytes were written (decompilation pattern: Hex-Rays splits one register
 into two variables, e.g. `v2` and `result` both `ax`, and the second is only written byte-wise with
 LOBYTE/HIBYTE/BYTE1/LOWORD/HIWORD). The read then picks up whatever the compiler left in the other bytes:
-right by register luck in one build, garbage in another (sub_33AE0_33ED0 put terrain type 8 on random tiles
+right by register luck in one build, garbage in another (CustomArea_33AE0_33ED0 put terrain type 8 on random tiles
 in the 64-bit build).
 
 Straight-line scan of each function body in source order (control flow is ignored), so the output is a list of

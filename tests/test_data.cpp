@@ -11,9 +11,9 @@
 namespace fs = std::filesystem;
 using namespace remc1test;
 
-// RncUnpack_62B60_63070_orig: the faithful decompiled in-place decoder. RncUnpack_62B60_63070: what
+// RncUnpack_62B60_63070_orig: the faithful decompiled in-place decoder. UnpackM1_62B60_63070: what
 // the game now calls (swars decoder on a padded copy). UnpackM1: swars decoder used by the old port.
-int RncUnpack_62B60_63070(uint8_t* input, uint8_t* output);
+int UnpackM1_62B60_63070(uint8_t* input, uint8_t* output);
 int RncUnpack_62B60_63070_orig(uint8_t* input, uint8_t* output);
 long UnpackM1(unsigned char* buffer, unsigned long bufsize);
 
@@ -72,7 +72,7 @@ TEST(GameData, RncDecodersAgreeAndMatchGoldens)
 			// what the game calls: decode into an exactly-sized buffer (no head room needed any more)
 			GameBytes c(unpackedLen);
 			GameBytes in(raw.begin(), raw.end());
-			int lenC = RncUnpack_62B60_63070(in.data(), c.data());
+			int lenC = UnpackM1_62B60_63070(in.data(), c.data());
 			ASSERT_EQ((uint32_t)lenC, unpackedLen) << key << " (port decoder)";
 			ASSERT_EQ(0, memcmp(a.data(), c.data(), unpackedLen)) << key << ": port decoder differs from original";
 

@@ -3,7 +3,7 @@
 snapshot memory (tools/emu.py) and compare every byte they write and their return values.
 
     python tools/diff_funcs.py SNAPDIR                 # all class/state handlers on matching live entities
-    python tools/diff_funcs.py SNAPDIR --func SegmentFollowTick_19550 [--entity 447]
+    python tools/diff_funcs.py SNAPDIR --func FnCreatureTail_19550 [--entity 447]
 
 A mismatch means the port's function (or something it calls) behaves differently from the original
 on real game data. Writes to original-addressed globals are compared with the port's global of the

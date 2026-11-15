@@ -19,7 +19,7 @@
 namespace fs = std::filesystem;
 using namespace remc1test;
 
-int RncUnpack_62B60_63070(uint8_t* input, uint8_t* output);
+int UnpackM1_62B60_63070(uint8_t* input, uint8_t* output);
 
 namespace {
 
@@ -155,7 +155,7 @@ TEST(GameData, MusicSongsParse)
 			return raw;
 		const uint32_t size = (uint32_t(raw[4]) << 24) | (uint32_t(raw[5]) << 16) | (uint32_t(raw[6]) << 8) | raw[7];
 		GameBytes in(raw.begin(), raw.end()), out(size);
-		EXPECT_EQ((uint32_t)RncUnpack_62B60_63070(in.data(), out.data()), size) << p;
+		EXPECT_EQ((uint32_t)UnpackM1_62B60_63070(in.data(), out.data()), size) << p;
 		return std::vector<uint8_t>(out.begin(), out.end());
 	};
 	int songs = 0;

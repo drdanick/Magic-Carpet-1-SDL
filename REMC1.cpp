@@ -30,7 +30,7 @@ static void ConfigureCrashReporting()
 #endif
 }
 
-int RncUnpack_62B60_63070(uint8_t* input, uint8_t* output);
+int UnpackM1_62B60_63070(uint8_t* input, uint8_t* output);
 
 // Developer utility: remc1 --unpack <in> <out> writes the RNC-decompressed file (or a copy if not packed).
 static int UnpackFile(const char* in, const char* out)
@@ -47,7 +47,7 @@ static int UnpackFile(const char* in, const char* out)
     if (data.size() >= 18 && memcmp(data.data(), "RNC\x01", 4) == 0) {
         uint32_t len = (data[4] << 24) | (data[5] << 16) | (data[6] << 8) | data[7];
         result.assign(len, 0);
-        if (RncUnpack_62B60_63070(data.data(), result.data()) != (int)len) { fprintf(stderr, "decode failed\n"); return 1; }
+        if (UnpackM1_62B60_63070(data.data(), result.data()) != (int)len) { fprintf(stderr, "decode failed\n"); return 1; }
     }
     FILE* o = fopen(out, "wb");
     if (!o) { fprintf(stderr, "cannot write %s\n", out); return 1; }
