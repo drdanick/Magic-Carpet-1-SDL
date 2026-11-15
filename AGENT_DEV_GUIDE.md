@@ -41,6 +41,18 @@ Open items: §9 "Known open issues" and the README's "Remaining work".
 for these, and once it exists default W/A/S/D = arrows and Tab = Enter (testing conveniences, on today)
 back to the original controls.
 
+**Stereo rendering (TODO after the renames; user note 2026-11-15):** the original has a stereogram mode and a
+red/blue (anaglyph) mode, toggled with F10 (`set.mod3D_8603` cycles 0 off -> 1 -> 2), plus VFX1 headset stereo. The
+red/blue mode does not work in the port yet. Pieces found so far: `InitStereoMode_31600_31640` (`init_stereo_mode`),
+`StereoModeOff_315C0_31600` (`stereo_mode_off`), `EnsureMonoMode_31A00_31A40` (`ensure_mono_mode`; turns stereo off
+around menus), `sub_31A60_31AA0` (probably `restore_possible_stereo_mode`, restores `byte_90754` = `stereo_mode_was`),
+the map's `superstereolorescopy`/`superstereohirescopy` (graph_text; likely among `sub_79906`, `sub_79A1B`,
+`sub_79B2D`, which `EngineShowScreen_30B30_30B70` calls when a mode is on), the mode-1 column blend in
+`EngineShowScreen_30B30_30B70`, the mode-2 branch in `Engine_30D90_30DD0`, and VFX.C: `headset_stereo_on`/`off`
+(the upstream-named `ClearScr_5B500_5BA10`/`ClearScr_5B560` called by `InitStereoMode`/`EnsureMonoMode`, not
+confirmed by the map match), `PutVFX1Palette_5B310_5B820`, `SetupVFX1_5AF50_5B460`. With a headset
+(`set.var_u8_8606`) `Engine` draws the landscape twice, offset left/right, side by side.
+
 **Audit against CARPET.EXE (2026-10-17):** §4 "Comparing with the original executable" is the main
 verification tool now. Entity tick: 130/130 sweep snapshots (21 recordings) identical; `DrawWorld` and
 whole-frame snapshots identical in 320x200 except level-start frames that load files; per-frame calls
