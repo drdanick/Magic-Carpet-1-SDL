@@ -486,8 +486,19 @@ class, type)`). The state index is global within a class, not per type.
 | 3 | 2 | castle | inferred (level 26: life 40000, owner = wizard) |
 | 3 | 3 | balloon | original-bugs #8 |
 | 3 | 4..11 | wizard start positions only | `SpawnWizard_44D30_45070` |
+| 5 | 0 | dragon (head; body segments in state 120 reuse the worm sprites) | sprites decoded from tmaps0-0, names confirmed by the user (2026-11-15) |
+| 5 | 1 | vulture | |
+| 5 | 2 | bee | |
 | 5 | 3 | worm segment | chain via +52/+54, original-bugs #1 |
 | 5 | 5 | crab (big ones shoot lightning) | seeks mana balls, raises more through 10/52 |
+| 5 | 6 | kraken (submerged and risen sprites) | |
+| 5 | 7 | troll or ape, by the parity of +63 (`ChooseTrollOrApe_38C00_38F80`) | +71 = 1 troll, 2 ape |
+| 5 | 8 | griffin | |
+| 5 | 9 | skeleton (rises from the ground; raised by Undead Army) | |
+| 5 | 10 | emu rider | |
+| 5 | 11 | genie | |
+| 5 | 12, 13, 14 | villagers (three kinds) | |
+| 5 | 15 | not identified (uses the guard's sprite 0) | |
 | 5 | 16 | wyvern | life 100000, mana 50000 (level 26) |
 | 9 | 3 | missile that starts an explosion ring (10/17) when it lands | `CreateExplosionRing_3AC70` called from 0x52AAA |
 | 9 | 9 | lightning bolt piece | `LightningBoltTick_535E0_53920` |
@@ -513,6 +524,11 @@ balloon (8, 9 and 13 share `sub_13DC0`). Not identified yet: 2/5 (no-op), 4, 11 
 castle), 12, 13. Target entity +146, its tag +148 (`EntityTag_15420`: id + type + 128*class, so `AiTargetValid_15440` notices
 when the slot has been reused). Class-3 entities (wizards, castles, balloons) are in the
 list at `str_AE408_AE3F8` +36462.
+
+Sprites: an entity's +86 indexes `unk_99BA0x`; its `var_0` is the first texture map in data/tmaps0-0 (TAB: 10-byte
+entries, offset at +4, frame group at +8; each DAT entry RNC-packed: 6-byte header flag/?/width/height, raw
+width*height pixels; flag bit 0 = FLC deltas follow (frame count u16, then 0xF1FA frames with SS2/BRUN chunks,
+`sub_10D40`/`sub_10EB0`/`sub_1002D`)). Palette data/pal0-0.dat (6-bit).
 
 Spell numbers (from the spell-menu icons `begSprTab[6 + t]` of `hspr0-0`/`mspr0-0`, names confirmed by the
 user): 0 Fireball, 1 Heal, 2 Speed, 3 Possession, 4 Shield, 5 Beyond Sight, 6 Earthquake, 7 Meteor, 8 Volcano,
