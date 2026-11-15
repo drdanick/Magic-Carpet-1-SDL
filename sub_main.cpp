@@ -452,7 +452,7 @@ void CrabDyingTick_1C3C0(Type_AE400_29795* a1);
 void CrabDeadTick_1C3D0(Type_AE400_29795* a1);
 void KrakenIdleTick_1C490(Type_AE400_29795* a1);
 void KrakenTick_1C4A0(Type_AE400_29795* a1);
-void sub_1C4F0(Type_AE400_29795* a1);
+void KrakenAttackTick_1C4F0(Type_AE400_29795* a1);
 void KrakenFollowTick_1C880(Type_AE400_29795* a1);
 void KrakenDyingTick_1C8D0(Type_AE400_29795* a1);
 void KrakenDeadTick_1C8E0(Type_AE400_29795* a1);
@@ -471,7 +471,7 @@ void GriffinDeadTick_1CFE0(Type_AE400_29795* a1);
 void SkeletonTick_1CFF0(Type_AE400_29795* a1);
 void sub_1D060(Type_AE400_29795* a1);
 void sub_1D6D0(Type_AE400_29795* a1);
-void sub_1DA60(Type_AE400_29795* a1);
+void SkeletonAttackTick_1DA60(Type_AE400_29795* a1);
 void SkeletonFollowTick_1DC80(Type_AE400_29795* a1);
 void SkeletonDyingTick_1DCB0(Type_AE400_29795* a1);
 void SkeletonDeadTick_1DCC0(Type_AE400_29795* a1);
@@ -487,7 +487,7 @@ void EmuRiderDyingTick_1DE20(Type_AE400_29795* a1);
 void EmuRiderDeadTick_1DE30(Type_AE400_29795* a1);
 void GenieTick_1DE40(Type_AE400_29795* a1);
 void sub_1DFE0(Type_AE400_29795* a1);
-void sub_1E380(Type_AE400_29795* a1);
+void GenieAttackTick_1E380(Type_AE400_29795* a1);
 void GenieFollowTick_1E6F0(Type_AE400_29795* a1);
 void GenieDyingTick_1E700(Type_AE400_29795* a1);
 void GenieDeadTick_1E710(Type_AE400_29795* a1);
@@ -510,7 +510,7 @@ void VillagerType14DyingTick_1FE90(Type_AE400_29795* a1);
 void VillagerType14DeadTick_1FEC0(Type_AE400_29795* a1);
 // void sub_1FF40(char a1, int a2, char a3, int a4, int a5);
 void Class5Type15Tick_1FF60(Type_AE400_29795* a1);
-void sub_201D0(Type_AE400_29795* a1);
+void Class5Type15AttackTick_201D0(Type_AE400_29795* a1);
 void Class5Type15FollowTick_203E0(Type_AE400_29795* a1);
 void Class5Type15DyingTick_203F0(Type_AE400_29795* a1);
 void Class5Type15DeadTick_20400(Type_AE400_29795* a1);
@@ -519,7 +519,7 @@ void sub_20450(Type_AE400_29795* a1);
 void sub_20480(Type_AE400_29795* a1);
 void WyvernIdleTick_20700(Type_AE400_29795* a1);
 void WyvernTick_20710(Type_AE400_29795* a1);
-void sub_207E0(Type_AE400_29795* a1);
+void WyvernAttackTick_207E0(Type_AE400_29795* a1);
 void WyvernFollowTick_20B60(Type_AE400_29795* a1);
 void WyvernDyingTick_20B70(Type_AE400_29795* a1);
 void WyvernDeadTick_20B80(Type_AE400_29795* a1);
@@ -3862,7 +3862,7 @@ Type_254A34x str_254DCC[] = {//254DCC
 { 0x002548F4, 0x0023, (void (*)(Type_AE400_29795*))CrabDeadTick_1C3D0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0024, (void (*)(Type_AE400_29795*))KrakenIdleTick_1C490, 0x0001, 0x0000 },
 { 0x002548F4, 0x0025, (void (*)(Type_AE400_29795*))KrakenTick_1C4A0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0026, (void (*)(Type_AE400_29795*))sub_1C4F0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0026, (void (*)(Type_AE400_29795*))KrakenAttackTick_1C4F0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0027, (void (*)(Type_AE400_29795*))KrakenFollowTick_1C880, 0x0001, 0x0000 },
 { 0x002548F4, 0x0028, (void (*)(Type_AE400_29795*))KrakenDyingTick_1C8D0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0029, (void (*)(Type_AE400_29795*))KrakenDeadTick_1C8E0, 0x0001, 0x0000 },
@@ -3880,7 +3880,7 @@ Type_254A34x str_254DCC[] = {//254DCC
 { 0x002548F4, 0x0035, (void (*)(Type_AE400_29795*))GriffinDeadTick_1CFE0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0036, (void (*)(Type_AE400_29795*))SkeletonTick_1CFF0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0037, (void (*)(Type_AE400_29795*))sub_1D060, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0038, (void (*)(Type_AE400_29795*))sub_1DA60, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0038, (void (*)(Type_AE400_29795*))SkeletonAttackTick_1DA60, 0x0001, 0x0000 },
 { 0x002548F4, 0x0039, (void (*)(Type_AE400_29795*))SkeletonFollowTick_1DC80, 0x0001, 0x0000 },
 { 0x002548F4, 0x003A, (void (*)(Type_AE400_29795*))SkeletonDyingTick_1DCB0, 0x0001, 0x0000 },
 { 0x002548F4, 0x003B, (void (*)(Type_AE400_29795*))SkeletonDeadTick_1DCC0, 0x0001, 0x0000 },
@@ -3892,7 +3892,7 @@ Type_254A34x str_254DCC[] = {//254DCC
 { 0x002548F4, 0x0041, (void (*)(Type_AE400_29795*))EmuRiderDeadTick_1DE30, 0x0001, 0x0000 },
 { 0x002548F4, 0x0042, (void (*)(Type_AE400_29795*))GenieTick_1DE40, 0x0001, 0x0000 },
 { 0x002548F4, 0x0043, (void (*)(Type_AE400_29795*))sub_1DFE0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0044, (void (*)(Type_AE400_29795*))sub_1E380, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0044, (void (*)(Type_AE400_29795*))GenieAttackTick_1E380, 0x0001, 0x0000 },
 { 0x002548F4, 0x0045, (void (*)(Type_AE400_29795*))GenieFollowTick_1E6F0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0046, (void (*)(Type_AE400_29795*))GenieDyingTick_1E700, 0x0001, 0x0000 },
 { 0x002548F4, 0x0047, (void (*)(Type_AE400_29795*))GenieDeadTick_1E710, 0x0001, 0x0000 },
@@ -3916,13 +3916,13 @@ Type_254A34x str_254DCC[] = {//254DCC
 { 0x002548F4, 0x0059, (void (*)(Type_AE400_29795*))VillagerType14DeadTick_1FEC0, 0x0001, 0x0000 },
 { 0x002548F4, 0x005A, (void (*)(Type_AE400_29795*))Class5Type15IdleTick_1FF50, 0x0001, 0x0000 },
 { 0x002548F4, 0x005B, (void (*)(Type_AE400_29795*))Class5Type15Tick_1FF60, 0x0001, 0x0000 },
-{ 0x002548F4, 0x005C, (void (*)(Type_AE400_29795*))sub_201D0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x005C, (void (*)(Type_AE400_29795*))Class5Type15AttackTick_201D0, 0x0001, 0x0000 },
 { 0x002548F4, 0x005D, (void (*)(Type_AE400_29795*))Class5Type15FollowTick_203E0, 0x0001, 0x0000 },
 { 0x002548F4, 0x005E, (void (*)(Type_AE400_29795*))Class5Type15DyingTick_203F0, 0x0001, 0x0000 },
 { 0x002548F4, 0x005F, (void (*)(Type_AE400_29795*))Class5Type15DeadTick_20400, 0x0001, 0x0000 },
 { 0x002548F4, 0x0060, (void (*)(Type_AE400_29795*))WyvernIdleTick_20700, 0x0001, 0x0000 },
 { 0x002548F4, 0x0061, (void (*)(Type_AE400_29795*))WyvernTick_20710, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0062, (void (*)(Type_AE400_29795*))sub_207E0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0062, (void (*)(Type_AE400_29795*))WyvernAttackTick_207E0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0063, (void (*)(Type_AE400_29795*))WyvernFollowTick_20B60, 0x0001, 0x0000 },
 { 0x002548F4, 0x0064, (void (*)(Type_AE400_29795*))WyvernDyingTick_20B70, 0x0001, 0x0000 },
 { 0x002548F4, 0x0065, (void (*)(Type_AE400_29795*))WyvernDeadTick_20B80, 0x0001, 0x0000 },
@@ -22133,7 +22133,8 @@ void KrakenTick_1C4A0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED EITH REMC1
-void sub_1C4F0(Type_AE400_29795* a1x)
+/// Kraken (class 5 type 6) attack state (state 38): shoots lightning bolt pieces (9/9) at its target (+146).
+void KrakenAttackTick_1C4F0(Type_AE400_29795* a1x)
 {
   int v1; // ebp
   unsigned int v2; // esi
@@ -23149,7 +23150,8 @@ LABEL_50:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DA60(Type_AE400_29795* a1x)
+/// Skeleton (class 5 type 9) attack state (state 56): attacks its target (+146).
+void SkeletonAttackTick_1DA60(Type_AE400_29795* a1x)
 {
   int v1; // esi
   unsigned int v2; // edi
@@ -23593,7 +23595,8 @@ LABEL_53:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1E380(Type_AE400_29795* a1x)
+/// Genie (class 5 type 11) attack state (state 68): shoots Steal Mana missiles (9/8) at its target (+146).
+void GenieAttackTick_1E380(Type_AE400_29795* a1x)
 {
   int v1; // ebp
   unsigned int v2; // esi
@@ -24825,7 +24828,9 @@ LABEL_34:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_201D0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 15).
+/// Class 5 type 15 attack state (state 92): shoots class 9 type 13 missiles at its target (+146).
+void Class5Type15AttackTick_201D0(Type_AE400_29795* a1x)
 {
   int v1; // esi
   unsigned int v2; // edi
@@ -25127,7 +25132,8 @@ void WyvernTick_20710(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_207E0(Type_AE400_29795* a1x)
+/// Wyvern (class 5 type 16) attack state (state 98): shoots fireballs (9/0) at its target (+146).
+void WyvernAttackTick_207E0(Type_AE400_29795* a1x)
 {
   int v1; // edi
   int v2; // eax
