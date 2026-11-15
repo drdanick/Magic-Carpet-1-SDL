@@ -411,86 +411,86 @@ int CreatureMeleeHit_1AB10(Type_AE400_29795* a1, int a2);
 int sub_1AB70(Type_AE400_29795* a1, Type_AE400_29795* a2);
 int sub_1AE30(Type_AE400_29795* a1, Type_AE400_29795* a2);
 int sub_1AEE0(Type_AE400_29795* a1, Type_AE400_29795* a2);
-void DragonIdleTick_1B060(Type_AE400_29795* a1);
-void DragonTick_1B070(Type_AE400_29795* a1);
-void DragonAttackTick_1B090(Type_AE400_29795* a1);
-void DragonFollowTick_1B0E0(Type_AE400_29795* a1);
-void DragonDyingTick_1B100(Type_AE400_29795* a1);
-void DragonDeadTick_1B110(Type_AE400_29795* a1);
+void FnCreature00Stand_1B060(Type_AE400_29795* a1);
+void FnCreature00Wander_1B070(Type_AE400_29795* a1);
+void FnCreature00Attack_1B090(Type_AE400_29795* a1);
+void FnCreature00Flock_1B0E0(Type_AE400_29795* a1);
+void FnCreature00Dying_1B100(Type_AE400_29795* a1);
+void FnCreature00Dead_1B110(Type_AE400_29795* a1);
 void BobAboveGround_1B120(Type_AE400_29795* a1);
-void VultureIdleTick_1B160(Type_AE400_29795* a1);
-void VultureTick_1B200(Type_AE400_29795* a1);
-void VultureAttackTick_1B2D0(Type_AE400_29795* a1);
-void VultureFollowTick_1B320(Type_AE400_29795* a1);
-void VultureDyingTick_1B330(Type_AE400_29795* a1);
-void VultureDeadTick_1B340(Type_AE400_29795* a1);
-void BeeIdleTick_1B350(Type_AE400_29795* a1);
-void BeeTick_1B370(Type_AE400_29795* a1);
-void BeeAttackTick_1B3C0(Type_AE400_29795* a1);
-void BeeFollowTick_1B4C0(Type_AE400_29795* a1);
-void BeeDyingTick_1B4E0(Type_AE400_29795* a1);
-void BeeDeadTick_1B4F0(Type_AE400_29795* a1);
-void WormIdleTick_1B500(Type_AE400_29795* a1);
-void WormTick_1B510(Type_AE400_29795* a1);
-void WormAttackTick_1B520(Type_AE400_29795* a1);
-void WormFollowTick_1B570(Type_AE400_29795* a1);
-void WormDyingTick_1B580(Type_AE400_29795* a1);
-void WormDeadTick_1B590(Type_AE400_29795* a1);
-void GuardIdleTick_1B5A0(Type_AE400_29795* a1);
-void GuardTick_1B5D0(Type_AE400_29795* a1);
-void GuardAttackTick_1BB20(Type_AE400_29795* a1);
-void GuardFollowTick_1BBE0(Type_AE400_29795* a1);
-void GuardDyingTick_1BC10(Type_AE400_29795* a1);
-void GuardDeadTick_1BC40(Type_AE400_29795* a1);
+void FnCreature01Stand_1B160(Type_AE400_29795* a1);
+void FnCreature01Wander_1B200(Type_AE400_29795* a1);
+void FnCreature01Attack_1B2D0(Type_AE400_29795* a1);
+void FnCreature01Flock_1B320(Type_AE400_29795* a1);
+void FnCreature01Dying_1B330(Type_AE400_29795* a1);
+void FnCreature01Dead_1B340(Type_AE400_29795* a1);
+void FnCreature02Stand_1B350(Type_AE400_29795* a1);
+void FnCreature02Wander_1B370(Type_AE400_29795* a1);
+void FnCreature02Attack_1B3C0(Type_AE400_29795* a1);
+void FnCreature02Flock_1B4C0(Type_AE400_29795* a1);
+void FnCreature02Dying_1B4E0(Type_AE400_29795* a1);
+void FnCreature02Dead_1B4F0(Type_AE400_29795* a1);
+void FnCreature03Stand_1B500(Type_AE400_29795* a1);
+void FnCreature03Wander_1B510(Type_AE400_29795* a1);
+void FnCreature03Attack_1B520(Type_AE400_29795* a1);
+void FnCreature03Flock_1B570(Type_AE400_29795* a1);
+void FnCreature03Dying_1B580(Type_AE400_29795* a1);
+void FnCreature03Dead_1B590(Type_AE400_29795* a1);
+void FnCreature04Stand_1B5A0(Type_AE400_29795* a1);
+void FnCreature04Wander_1B5D0(Type_AE400_29795* a1);
+void FnCreature04Attack_1BB20(Type_AE400_29795* a1);
+void FnCreature04Flock_1BBE0(Type_AE400_29795* a1);
+void FnCreature04Dying_1BC10(Type_AE400_29795* a1);
+void FnCreature04Dead_1BC40(Type_AE400_29795* a1);
 void sub_1BC50(Type_AE400_29795* a1);
 void sub_1BCE0(Type_AE400_29795* a1);
-void CrabIdleTick_1BD10(Type_AE400_29795* a1);
-void CrabTick_1BD20(Type_AE400_29795* a1);
-void CrabAttackTick_1C110(Type_AE400_29795* a1);
-void sub_1C170(Type_AE400_29795* a1);
-void CrabDyingTick_1C3C0(Type_AE400_29795* a1);
-void CrabDeadTick_1C3D0(Type_AE400_29795* a1);
-void KrakenIdleTick_1C490(Type_AE400_29795* a1);
-void KrakenTick_1C4A0(Type_AE400_29795* a1);
-void KrakenAttackTick_1C4F0(Type_AE400_29795* a1);
-void KrakenFollowTick_1C880(Type_AE400_29795* a1);
-void KrakenDyingTick_1C8D0(Type_AE400_29795* a1);
-void KrakenDeadTick_1C8E0(Type_AE400_29795* a1);
-void TrollOrApeIdleTick_1C8F0(Type_AE400_29795* a1);
-void TrollOrApeTick_1C900(Type_AE400_29795* a1);
-void TrollOrApeAttackTick_1C960(Type_AE400_29795* a1);
-void TrollOrApeFollowTick_1CA00(Type_AE400_29795* a1);
-void TrollOrApeDyingTick_1CA20(Type_AE400_29795* a1);
-void TrollOrApeDeadTick_1CA30(Type_AE400_29795* a1);
-void GriffinIdleTick_1CA40(Type_AE400_29795* a1);
-void GriffinTick_1CA50(Type_AE400_29795* a1);
-void GriffinAttackTick_1CE30(Type_AE400_29795* a1);
-void GriffinFollowTick_1CF50(Type_AE400_29795* a1);
-void GriffinDyingTick_1CF60(Type_AE400_29795* a1);
-void GriffinDeadTick_1CFE0(Type_AE400_29795* a1);
-void SkeletonTick_1CFF0(Type_AE400_29795* a1);
-void sub_1D060(Type_AE400_29795* a1);
+void FnCreature05Stand_1BD10(Type_AE400_29795* a1);
+void FnCreature05Wander_1BD20(Type_AE400_29795* a1);
+void FnCreature05Attack_1C110(Type_AE400_29795* a1);
+void FnCreature05Flock_1C170(Type_AE400_29795* a1);
+void FnCreature05Dying_1C3C0(Type_AE400_29795* a1);
+void FnCreature05Dead_1C3D0(Type_AE400_29795* a1);
+void FnCreature06Stand_1C490(Type_AE400_29795* a1);
+void FnCreature06Wander_1C4A0(Type_AE400_29795* a1);
+void FnCreature06Attack_1C4F0(Type_AE400_29795* a1);
+void FnCreature06Flock_1C880(Type_AE400_29795* a1);
+void FnCreature06Dying_1C8D0(Type_AE400_29795* a1);
+void FnCreature06Dead_1C8E0(Type_AE400_29795* a1);
+void FnCreature07Stand_1C8F0(Type_AE400_29795* a1);
+void FnCreature07Wander_1C900(Type_AE400_29795* a1);
+void FnCreature07Attack_1C960(Type_AE400_29795* a1);
+void FnCreature07Flock_1CA00(Type_AE400_29795* a1);
+void FnCreature07Dying_1CA20(Type_AE400_29795* a1);
+void FnCreature07Dead_1CA30(Type_AE400_29795* a1);
+void FnCreature08Stand_1CA40(Type_AE400_29795* a1);
+void FnCreature08Wander_1CA50(Type_AE400_29795* a1);
+void FnCreature08Attack_1CE30(Type_AE400_29795* a1);
+void FnCreature08Flock_1CF50(Type_AE400_29795* a1);
+void FnCreature08Dying_1CF60(Type_AE400_29795* a1);
+void FnCreature08Dead_1CFE0(Type_AE400_29795* a1);
+void FnCreature09Stand_1CFF0(Type_AE400_29795* a1);
+void FnCreature09Wander_1D060(Type_AE400_29795* a1);
 void sub_1D6D0(Type_AE400_29795* a1);
-void SkeletonAttackTick_1DA60(Type_AE400_29795* a1);
-void SkeletonFollowTick_1DC80(Type_AE400_29795* a1);
-void SkeletonDyingTick_1DCB0(Type_AE400_29795* a1);
-void SkeletonDeadTick_1DCC0(Type_AE400_29795* a1);
+void FnCreature09Attack_1DA60(Type_AE400_29795* a1);
+void FnCreature09Flock_1DC80(Type_AE400_29795* a1);
+void FnCreature09Dying_1DCB0(Type_AE400_29795* a1);
+void FnCreature09Dead_1DCC0(Type_AE400_29795* a1);
 void sub_1DCD0(Type_AE400_29795* a1);
 void sub_1DD50(Type_AE400_29795* a1);
 void sub_1DD90(Type_AE400_29795* a1);
 void sub_1DDB0(Type_AE400_29795* a1);
-void EmuRiderIdleTick_1DDD0(Type_AE400_29795* a1);
-void EmuRiderTick_1DDE0(Type_AE400_29795* a1);
-int EmuRiderAttackTick_1DDF0(Type_AE400_29795* a1);
-void EmuRiderFollowTick_1DE10(Type_AE400_29795* a1);
-void EmuRiderDyingTick_1DE20(Type_AE400_29795* a1);
-void EmuRiderDeadTick_1DE30(Type_AE400_29795* a1);
-void GenieTick_1DE40(Type_AE400_29795* a1);
-void sub_1DFE0(Type_AE400_29795* a1);
+void FnCreature10Stand_1DDD0(Type_AE400_29795* a1);
+void FnCreature10Wander_1DDE0(Type_AE400_29795* a1);
+int FnCreature10Attack_1DDF0(Type_AE400_29795* a1);
+void FnCreature10Flock_1DE10(Type_AE400_29795* a1);
+void FnCreature10Dying_1DE20(Type_AE400_29795* a1);
+void FnCreature10Dead_1DE30(Type_AE400_29795* a1);
+void FnCreature11Stand_1DE40(Type_AE400_29795* a1);
+void FnCreature11Wander_1DFE0(Type_AE400_29795* a1);
 void FnCreature11Attack_1E380(Type_AE400_29795* a1);
-void GenieFollowTick_1E6F0(Type_AE400_29795* a1);
-void GenieDyingTick_1E700(Type_AE400_29795* a1);
-void GenieDeadTick_1E710(Type_AE400_29795* a1);
+void FnCreature11Flock_1E6F0(Type_AE400_29795* a1);
+void FnCreature11Dying_1E700(Type_AE400_29795* a1);
+void FnCreature11Dead_1E710(Type_AE400_29795* a1);
 void GenieTeleportOut_1E720(Type_AE400_29795* a1);
 void GenieTeleportIn_1E770(Type_AE400_29795* a1);
 void GenieTryForMana_1E810(Type_AE400_29795* a1);
@@ -501,28 +501,28 @@ void FnCreature12Wander_1EED0(Type_AE400_29795* a1);
 void FnCreature12Attack_1F120(Type_AE400_29795* a1);
 void FnCreature12Flock_1F390(Type_AE400_29795* a1);
 void FnCreature12Dying_1F5A0(Type_AE400_29795* a1);
-void VillagerType12DeadTick_1F5B0(Type_AE400_29795* a1);
-void VillagerType13Tick_1F640(Type_AE400_29795* a1);
+void FnCreature12Dead_1F5B0(Type_AE400_29795* a1);
+void FnCreature13Wander_1F640(Type_AE400_29795* a1);
 void FnCreature13Dying_1FA00(Type_AE400_29795* a1);
-void VillagerType13DeadTick_1FAA0(Type_AE400_29795* a1);
-void VillagerType14Tick_1FAC0(Type_AE400_29795* a1);
+void FnCreature13Dead_1FAA0(Type_AE400_29795* a1);
+void FnCreature14Wander_1FAC0(Type_AE400_29795* a1);
 void FnCreature14Dying_1FE90(Type_AE400_29795* a1);
-void VillagerType14DeadTick_1FEC0(Type_AE400_29795* a1);
+void FnCreature14Dead_1FEC0(Type_AE400_29795* a1);
 // void sub_1FF40(char a1, int a2, char a3, int a4, int a5);
 void FnCreature15Wander_1FF60(Type_AE400_29795* a1);
 void FnCreature15Attack_201D0(Type_AE400_29795* a1);
-void Class5Type15FollowTick_203E0(Type_AE400_29795* a1);
-void Class5Type15DyingTick_203F0(Type_AE400_29795* a1);
-void Class5Type15DeadTick_20400(Type_AE400_29795* a1);
+void FnCreature15Flock_203E0(Type_AE400_29795* a1);
+void FnCreature15Dying_203F0(Type_AE400_29795* a1);
+void FnCreature15Dead_20400(Type_AE400_29795* a1);
 void CastleArcherBeginAttack_20410(Type_AE400_29795* a1);
 void sub_20450(Type_AE400_29795* a1);
 void MoveCastleArcher_20480(Type_AE400_29795* a1);
-void WyvernIdleTick_20700(Type_AE400_29795* a1);
+void FnCreature16Stand_20700(Type_AE400_29795* a1);
 void FnCreature16Wander_20710(Type_AE400_29795* a1);
 void FnCreature16Attack_207E0(Type_AE400_29795* a1);
-void WyvernFollowTick_20B60(Type_AE400_29795* a1);
-void WyvernDyingTick_20B70(Type_AE400_29795* a1);
-void WyvernDeadTick_20B80(Type_AE400_29795* a1);
+void FnCreature16Flock_20B60(Type_AE400_29795* a1);
+void FnCreature16Dying_20B70(Type_AE400_29795* a1);
+void FnCreature16Dead_20B80(Type_AE400_29795* a1);
 int Cbfadedangermusic_20BD0();
 void Fadedangermusic_20D00(char a1);
 void StopMusic_20E60_20E60();
@@ -3758,18 +3758,20 @@ int EmptyStateHandler_26350() { return 0; };
 int EmptyStateHandler_29B70() { return 0; };
 
 /// Empty entity state handler (original 0x1F630 is a bare ret).
-int EmptyStateHandler_1F630() { return 0; };
+/// Original name: fn_creature_13_stand (CREAT_13.C), by the map's state convention (state 78 = 6*13+0); this name is listed in the map.
+int FnCreature13Stand_1F630() { return 0; };
 /// Empty entity state handler (original 0x1F9F0 is a bare ret).
 int EmptyStateHandler_1F9F0() { return 0; };
 /// Empty entity state handler (original 0x1FAB0 is a bare ret).
-int EmptyStateHandler_1FAB0() { return 0; };
+/// Original name: fn_creature_14_stand (CREAT_14.C), by the map's state convention (state 84 = 6*14+0); this name is listed in the map.
+int FnCreature14Stand_1FAB0() { return 0; };
 /// Empty entity state handler (original 0x1FE80 is a bare ret).
 int EmptyStateHandler_1FE80() { return 0; };
 // PORT: was "int sub_1FF50() { return 0; };//?" - IDA took the code-segment table at 0x1FF40 for code and lost this
 // function; the original (0x1FF50) is "push 5Ah; push a1; call sub_19B10" (FnCreatureStand_19B10), like the other 6t state handlers.
-/// TODO: rename when the entity is identified (class 5 type 15).
 /// Idle state of class 5 type 15 (state 90): FnCreatureStand_19B10(a1x, 90).
-void Class5Type15IdleTick_1FF50(Type_AE400_29795* a1x) { FnCreatureStand_19B10(a1x, 90); }
+/// Original name: fn_creature_15_stand (CREAT_15.C), by the map's state convention (state 90 = 6*15+0); this name is listed in the map.
+void FnCreature15Stand_1FF50(Type_AE400_29795* a1x) { FnCreatureStand_19B10(a1x, 90); }
 /// Empty entity state handler (original 0x20B90 is a bare ret).
 int EmptyStateHandler_20B90() { return 0; };
 /// Empty entity state handler (original 0x20BA0 is a bare ret).
@@ -3824,108 +3826,108 @@ Type_254A34x str_254DAC[] = {
 };
 
 Type_254A34x str_254DCC[] = {//254DCC
-{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))DragonIdleTick_1B060, 0x0001, 0x0000 },
-{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))DragonTick_1B070,0x0001,0x0000 },
-{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))DragonAttackTick_1B090,0x0001,0x0000 },
-{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))DragonFollowTick_1B0E0,0x0001,0x0000 },
-{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))DragonDyingTick_1B100,0x0001,0x0000 },
-{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))DragonDeadTick_1B110,0x0001,0x0000 },
-{ 0x002548F4,0x0006,(void (*)(Type_AE400_29795*))VultureIdleTick_1B160,0x0001,0x0000 },
-{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))VultureTick_1B200,0x0001,0x0000 },
-{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))VultureAttackTick_1B2D0,0x0001,0x0000 },
-{ 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))VultureFollowTick_1B320,0x0001,0x0000 },
-{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))VultureDyingTick_1B330,0x0001,0x0000 },
-{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))VultureDeadTick_1B340,0x0001,0x0000 },
-{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))BeeIdleTick_1B350,0x0001,0x0000 },
-{ 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))BeeTick_1B370,0x0001,0x0000 },
-{ 0x002548F4, 0x000E, (void (*)(Type_AE400_29795*))BeeAttackTick_1B3C0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000F, (void (*)(Type_AE400_29795*))BeeFollowTick_1B4C0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0010, (void (*)(Type_AE400_29795*))BeeDyingTick_1B4E0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0011, (void (*)(Type_AE400_29795*))BeeDeadTick_1B4F0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0012, (void (*)(Type_AE400_29795*))WormIdleTick_1B500, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0013, (void (*)(Type_AE400_29795*))WormTick_1B510, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0014, (void (*)(Type_AE400_29795*))WormAttackTick_1B520, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0015, (void (*)(Type_AE400_29795*))WormFollowTick_1B570, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0016, (void (*)(Type_AE400_29795*))WormDyingTick_1B580, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0017, (void (*)(Type_AE400_29795*))WormDeadTick_1B590, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0018, (void (*)(Type_AE400_29795*))GuardIdleTick_1B5A0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0019, (void (*)(Type_AE400_29795*))GuardTick_1B5D0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001A, (void (*)(Type_AE400_29795*))GuardAttackTick_1BB20, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001B, (void (*)(Type_AE400_29795*))GuardFollowTick_1BBE0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001C, (void (*)(Type_AE400_29795*))GuardDyingTick_1BC10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001D, (void (*)(Type_AE400_29795*))GuardDeadTick_1BC40, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001E, (void (*)(Type_AE400_29795*))CrabIdleTick_1BD10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001F, (void (*)(Type_AE400_29795*))CrabTick_1BD20, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0020, (void (*)(Type_AE400_29795*))CrabAttackTick_1C110, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0021, (void (*)(Type_AE400_29795*))sub_1C170, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0022, (void (*)(Type_AE400_29795*))CrabDyingTick_1C3C0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0023, (void (*)(Type_AE400_29795*))CrabDeadTick_1C3D0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0024, (void (*)(Type_AE400_29795*))KrakenIdleTick_1C490, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0025, (void (*)(Type_AE400_29795*))KrakenTick_1C4A0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0026, (void (*)(Type_AE400_29795*))KrakenAttackTick_1C4F0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0027, (void (*)(Type_AE400_29795*))KrakenFollowTick_1C880, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0028, (void (*)(Type_AE400_29795*))KrakenDyingTick_1C8D0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0029, (void (*)(Type_AE400_29795*))KrakenDeadTick_1C8E0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002A, (void (*)(Type_AE400_29795*))TrollOrApeIdleTick_1C8F0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002B, (void (*)(Type_AE400_29795*))TrollOrApeTick_1C900, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002C, (void (*)(Type_AE400_29795*))TrollOrApeAttackTick_1C960, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002D, (void (*)(Type_AE400_29795*))TrollOrApeFollowTick_1CA00, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002E, (void (*)(Type_AE400_29795*))TrollOrApeDyingTick_1CA20, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002F, (void (*)(Type_AE400_29795*))TrollOrApeDeadTick_1CA30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0030, (void (*)(Type_AE400_29795*))GriffinIdleTick_1CA40, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0031, (void (*)(Type_AE400_29795*))GriffinTick_1CA50, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0032, (void (*)(Type_AE400_29795*))GriffinAttackTick_1CE30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0033, (void (*)(Type_AE400_29795*))GriffinFollowTick_1CF50, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0034, (void (*)(Type_AE400_29795*))GriffinDyingTick_1CF60, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0035, (void (*)(Type_AE400_29795*))GriffinDeadTick_1CFE0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0036, (void (*)(Type_AE400_29795*))SkeletonTick_1CFF0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0037, (void (*)(Type_AE400_29795*))sub_1D060, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0038, (void (*)(Type_AE400_29795*))SkeletonAttackTick_1DA60, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0039, (void (*)(Type_AE400_29795*))SkeletonFollowTick_1DC80, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003A, (void (*)(Type_AE400_29795*))SkeletonDyingTick_1DCB0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003B, (void (*)(Type_AE400_29795*))SkeletonDeadTick_1DCC0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003C, (void (*)(Type_AE400_29795*))EmuRiderIdleTick_1DDD0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003D, (void (*)(Type_AE400_29795*))EmuRiderTick_1DDE0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003E, (void (*)(Type_AE400_29795*))EmuRiderAttackTick_1DDF0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003F, (void (*)(Type_AE400_29795*))EmuRiderFollowTick_1DE10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0040, (void (*)(Type_AE400_29795*))EmuRiderDyingTick_1DE20, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0041, (void (*)(Type_AE400_29795*))EmuRiderDeadTick_1DE30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0042, (void (*)(Type_AE400_29795*))GenieTick_1DE40, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0043, (void (*)(Type_AE400_29795*))sub_1DFE0, 0x0001, 0x0000 },
+{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))FnCreature00Stand_1B060, 0x0001, 0x0000 },
+{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))FnCreature00Wander_1B070,0x0001,0x0000 },
+{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))FnCreature00Attack_1B090,0x0001,0x0000 },
+{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))FnCreature00Flock_1B0E0,0x0001,0x0000 },
+{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))FnCreature00Dying_1B100,0x0001,0x0000 },
+{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))FnCreature00Dead_1B110,0x0001,0x0000 },
+{ 0x002548F4,0x0006,(void (*)(Type_AE400_29795*))FnCreature01Stand_1B160,0x0001,0x0000 },
+{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))FnCreature01Wander_1B200,0x0001,0x0000 },
+{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))FnCreature01Attack_1B2D0,0x0001,0x0000 },
+{ 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))FnCreature01Flock_1B320,0x0001,0x0000 },
+{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))FnCreature01Dying_1B330,0x0001,0x0000 },
+{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))FnCreature01Dead_1B340,0x0001,0x0000 },
+{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))FnCreature02Stand_1B350,0x0001,0x0000 },
+{ 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))FnCreature02Wander_1B370,0x0001,0x0000 },
+{ 0x002548F4, 0x000E, (void (*)(Type_AE400_29795*))FnCreature02Attack_1B3C0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000F, (void (*)(Type_AE400_29795*))FnCreature02Flock_1B4C0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0010, (void (*)(Type_AE400_29795*))FnCreature02Dying_1B4E0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0011, (void (*)(Type_AE400_29795*))FnCreature02Dead_1B4F0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0012, (void (*)(Type_AE400_29795*))FnCreature03Stand_1B500, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0013, (void (*)(Type_AE400_29795*))FnCreature03Wander_1B510, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0014, (void (*)(Type_AE400_29795*))FnCreature03Attack_1B520, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0015, (void (*)(Type_AE400_29795*))FnCreature03Flock_1B570, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0016, (void (*)(Type_AE400_29795*))FnCreature03Dying_1B580, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0017, (void (*)(Type_AE400_29795*))FnCreature03Dead_1B590, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0018, (void (*)(Type_AE400_29795*))FnCreature04Stand_1B5A0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0019, (void (*)(Type_AE400_29795*))FnCreature04Wander_1B5D0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001A, (void (*)(Type_AE400_29795*))FnCreature04Attack_1BB20, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001B, (void (*)(Type_AE400_29795*))FnCreature04Flock_1BBE0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001C, (void (*)(Type_AE400_29795*))FnCreature04Dying_1BC10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001D, (void (*)(Type_AE400_29795*))FnCreature04Dead_1BC40, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001E, (void (*)(Type_AE400_29795*))FnCreature05Stand_1BD10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001F, (void (*)(Type_AE400_29795*))FnCreature05Wander_1BD20, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0020, (void (*)(Type_AE400_29795*))FnCreature05Attack_1C110, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0021, (void (*)(Type_AE400_29795*))FnCreature05Flock_1C170, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0022, (void (*)(Type_AE400_29795*))FnCreature05Dying_1C3C0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0023, (void (*)(Type_AE400_29795*))FnCreature05Dead_1C3D0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0024, (void (*)(Type_AE400_29795*))FnCreature06Stand_1C490, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0025, (void (*)(Type_AE400_29795*))FnCreature06Wander_1C4A0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0026, (void (*)(Type_AE400_29795*))FnCreature06Attack_1C4F0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0027, (void (*)(Type_AE400_29795*))FnCreature06Flock_1C880, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0028, (void (*)(Type_AE400_29795*))FnCreature06Dying_1C8D0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0029, (void (*)(Type_AE400_29795*))FnCreature06Dead_1C8E0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002A, (void (*)(Type_AE400_29795*))FnCreature07Stand_1C8F0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002B, (void (*)(Type_AE400_29795*))FnCreature07Wander_1C900, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002C, (void (*)(Type_AE400_29795*))FnCreature07Attack_1C960, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002D, (void (*)(Type_AE400_29795*))FnCreature07Flock_1CA00, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002E, (void (*)(Type_AE400_29795*))FnCreature07Dying_1CA20, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002F, (void (*)(Type_AE400_29795*))FnCreature07Dead_1CA30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0030, (void (*)(Type_AE400_29795*))FnCreature08Stand_1CA40, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0031, (void (*)(Type_AE400_29795*))FnCreature08Wander_1CA50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0032, (void (*)(Type_AE400_29795*))FnCreature08Attack_1CE30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0033, (void (*)(Type_AE400_29795*))FnCreature08Flock_1CF50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0034, (void (*)(Type_AE400_29795*))FnCreature08Dying_1CF60, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0035, (void (*)(Type_AE400_29795*))FnCreature08Dead_1CFE0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0036, (void (*)(Type_AE400_29795*))FnCreature09Stand_1CFF0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0037, (void (*)(Type_AE400_29795*))FnCreature09Wander_1D060, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0038, (void (*)(Type_AE400_29795*))FnCreature09Attack_1DA60, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0039, (void (*)(Type_AE400_29795*))FnCreature09Flock_1DC80, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003A, (void (*)(Type_AE400_29795*))FnCreature09Dying_1DCB0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003B, (void (*)(Type_AE400_29795*))FnCreature09Dead_1DCC0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003C, (void (*)(Type_AE400_29795*))FnCreature10Stand_1DDD0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003D, (void (*)(Type_AE400_29795*))FnCreature10Wander_1DDE0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003E, (void (*)(Type_AE400_29795*))FnCreature10Attack_1DDF0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003F, (void (*)(Type_AE400_29795*))FnCreature10Flock_1DE10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0040, (void (*)(Type_AE400_29795*))FnCreature10Dying_1DE20, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0041, (void (*)(Type_AE400_29795*))FnCreature10Dead_1DE30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0042, (void (*)(Type_AE400_29795*))FnCreature11Stand_1DE40, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0043, (void (*)(Type_AE400_29795*))FnCreature11Wander_1DFE0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0044, (void (*)(Type_AE400_29795*))FnCreature11Attack_1E380, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0045, (void (*)(Type_AE400_29795*))GenieFollowTick_1E6F0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0046, (void (*)(Type_AE400_29795*))GenieDyingTick_1E700, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0047, (void (*)(Type_AE400_29795*))GenieDeadTick_1E710, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0045, (void (*)(Type_AE400_29795*))FnCreature11Flock_1E6F0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0046, (void (*)(Type_AE400_29795*))FnCreature11Dying_1E700, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0047, (void (*)(Type_AE400_29795*))FnCreature11Dead_1E710, 0x0001, 0x0000 },
 { 0x002548F4, 0x0048, (void (*)(Type_AE400_29795*))FnCreature12Stand_1EA40, 0x0001, 0x0000 },
 { 0x002548F4, 0x0049, (void (*)(Type_AE400_29795*))FnCreature12Wander_1EED0, 0x0001, 0x0000 },
 { 0x002548F4, 0x004A, (void (*)(Type_AE400_29795*))FnCreature12Attack_1F120, 0x0001, 0x0000 },
 { 0x002548F4, 0x004B, (void (*)(Type_AE400_29795*))FnCreature12Flock_1F390, 0x0001, 0x0000 },
 { 0x002548F4, 0x004C, (void (*)(Type_AE400_29795*))FnCreature12Dying_1F5A0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x004D, (void (*)(Type_AE400_29795*))VillagerType12DeadTick_1F5B0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x004E, (void (*)(Type_AE400_29795*))EmptyStateHandler_1F630, 0x0001, 0x0000 },
-{ 0x002548F4, 0x004F, (void (*)(Type_AE400_29795*))VillagerType13Tick_1F640, 0x0001, 0x0000 },
+{ 0x002548F4, 0x004D, (void (*)(Type_AE400_29795*))FnCreature12Dead_1F5B0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x004E, (void (*)(Type_AE400_29795*))FnCreature13Stand_1F630, 0x0001, 0x0000 },
+{ 0x002548F4, 0x004F, (void (*)(Type_AE400_29795*))FnCreature13Wander_1F640, 0x0001, 0x0000 },
 { 0x002548F4, 0x0050, (void (*)(Type_AE400_29795*))EmptyStateHandler_1F9F0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0051, (void (*)(Type_AE400_29795*))EmptyStateHandler_1F9F0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0052, (void (*)(Type_AE400_29795*))FnCreature13Dying_1FA00, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0053, (void (*)(Type_AE400_29795*))VillagerType13DeadTick_1FAA0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0054, (void (*)(Type_AE400_29795*))EmptyStateHandler_1FAB0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0055, (void (*)(Type_AE400_29795*))VillagerType14Tick_1FAC0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0053, (void (*)(Type_AE400_29795*))FnCreature13Dead_1FAA0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0054, (void (*)(Type_AE400_29795*))FnCreature14Stand_1FAB0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0055, (void (*)(Type_AE400_29795*))FnCreature14Wander_1FAC0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0056, (void (*)(Type_AE400_29795*))EmptyStateHandler_1FE80, 0x0001, 0x0000 },
 { 0x002548F4, 0x0057, (void (*)(Type_AE400_29795*))EmptyStateHandler_1FE80, 0x0001, 0x0000 },
 { 0x002548F4, 0x0058, (void (*)(Type_AE400_29795*))FnCreature14Dying_1FE90, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0059, (void (*)(Type_AE400_29795*))VillagerType14DeadTick_1FEC0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x005A, (void (*)(Type_AE400_29795*))Class5Type15IdleTick_1FF50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0059, (void (*)(Type_AE400_29795*))FnCreature14Dead_1FEC0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x005A, (void (*)(Type_AE400_29795*))FnCreature15Stand_1FF50, 0x0001, 0x0000 },
 { 0x002548F4, 0x005B, (void (*)(Type_AE400_29795*))FnCreature15Wander_1FF60, 0x0001, 0x0000 },
 { 0x002548F4, 0x005C, (void (*)(Type_AE400_29795*))FnCreature15Attack_201D0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x005D, (void (*)(Type_AE400_29795*))Class5Type15FollowTick_203E0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x005E, (void (*)(Type_AE400_29795*))Class5Type15DyingTick_203F0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x005F, (void (*)(Type_AE400_29795*))Class5Type15DeadTick_20400, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0060, (void (*)(Type_AE400_29795*))WyvernIdleTick_20700, 0x0001, 0x0000 },
+{ 0x002548F4, 0x005D, (void (*)(Type_AE400_29795*))FnCreature15Flock_203E0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x005E, (void (*)(Type_AE400_29795*))FnCreature15Dying_203F0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x005F, (void (*)(Type_AE400_29795*))FnCreature15Dead_20400, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0060, (void (*)(Type_AE400_29795*))FnCreature16Stand_20700, 0x0001, 0x0000 },
 { 0x002548F4, 0x0061, (void (*)(Type_AE400_29795*))FnCreature16Wander_20710, 0x0001, 0x0000 },
 { 0x002548F4, 0x0062, (void (*)(Type_AE400_29795*))FnCreature16Attack_207E0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0063, (void (*)(Type_AE400_29795*))WyvernFollowTick_20B60, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0064, (void (*)(Type_AE400_29795*))WyvernDyingTick_20B70, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0065, (void (*)(Type_AE400_29795*))WyvernDeadTick_20B80, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0063, (void (*)(Type_AE400_29795*))FnCreature16Flock_20B60, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0064, (void (*)(Type_AE400_29795*))FnCreature16Dying_20B70, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0065, (void (*)(Type_AE400_29795*))FnCreature16Dead_20B80, 0x0001, 0x0000 },
 { 0x002548F4, 0x0066, (void (*)(Type_AE400_29795*))EmptyStateHandler_20B90, 0x0000, 0x0000 },
 { 0x002548F4, 0x0067, (void (*)(Type_AE400_29795*))EmptyStateHandler_20B90, 0x0000, 0x0000 },
 { 0x002548F4, 0x0068, (void (*)(Type_AE400_29795*))EmptyStateHandler_20B90, 0x0000, 0x0000 },
@@ -21231,14 +21233,16 @@ int sub_1AEE0(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 
 //SYNCHRONIZED WITH REMC1
 /// Idle state of the dragon (head; the body segments reuse the worm sprites) (class 5 type 0) (state 0): FnCreatureStand_19B10(a1x, 0). Identified from its decoded sprite (confirmed by the user).
-void DragonIdleTick_1B060(Type_AE400_29795* a1x)
+/// Original name: fn_creature_00_stand (CREAT_00.C), by the map's state convention (state 0 = 6*0+0); this name is listed in the map.
+void FnCreature00Stand_1B060(Type_AE400_29795* a1x)
 {
   FnCreatureStand_19B10(a1x, 0);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of class 5 state 1, the initial state of the dragon (type 0). Identified from its decoded sprite (confirmed by the user).
-void DragonTick_1B070(Type_AE400_29795* a1x)
+/// Original name: fn_creature_00_wander (CREAT_00.C), by the map's state convention (state 1 = 6*0+1); this name is listed in the map.
+void FnCreature00Wander_1B070(Type_AE400_29795* a1x)
 {
   sub_19D70(a1x, 0);
   BobAboveGround_1B120(a1x);
@@ -21246,7 +21250,8 @@ void DragonTick_1B070(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Dragon (class 5 type 0) attack state: FnCreatureAttack_1A120(a1x, 0, ...) (state 2). Identified from its decoded sprite (confirmed by the user).
-void DragonAttackTick_1B090(Type_AE400_29795* a1x)
+/// Original name: fn_creature_00_attack (CREAT_00.C), by the map's state convention (state 2 = 6*0+2); this name is listed in the map.
+void FnCreature00Attack_1B090(Type_AE400_29795* a1x)
 {
   if ( (unsigned __int16)FnCreatureAttack_1A120(a1x, 0, PORT_FN(sub_1A8E0, unsigned __int16(Type_AE400_29795*, int))) )
     PlayASample_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 8);
@@ -21255,7 +21260,8 @@ void DragonAttackTick_1B090(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Dragon (class 5 type 0) follow state: FnCreatureFlock_1A390(a1x, 0) (state 3). Identified from its decoded sprite (confirmed by the user).
-void DragonFollowTick_1B0E0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_00_flock (CREAT_00.C), by the map's state convention (state 3 = 6*0+3); this name is listed in the map.
+void FnCreature00Flock_1B0E0(Type_AE400_29795* a1x)
 {
   FnCreatureFlock_1A390(a1x, 0);
   BobAboveGround_1B120(a1x);
@@ -21263,14 +21269,16 @@ void DragonFollowTick_1B0E0(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Dragon (class 5 type 0) dying state: CreatureDying_1A6C0(a1x, 0) (state 4). Identified from its decoded sprite (confirmed by the user).
-void DragonDyingTick_1B100(Type_AE400_29795* a1x)
+/// Original name: fn_creature_00_dying (CREAT_00.C), by the map's state convention (state 4 = 6*0+4); this name is listed in the map.
+void FnCreature00Dying_1B100(Type_AE400_29795* a1x)
 {
   CreatureDying_1A6C0(a1x, 0);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Dragon (class 5 type 0) dead state: KillCreature_1A800 (state 5). Identified from its decoded sprite (confirmed by the user).
-void DragonDeadTick_1B110(Type_AE400_29795* a1x)
+/// Original name: fn_creature_00_dead (CREAT_00.C), by the map's state convention (state 5 = 6*0+5); this name is listed in the map.
+void FnCreature00Dead_1B110(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
@@ -21294,7 +21302,8 @@ void BobAboveGround_1B120(Type_AE400_29795* a1x)
 
 //SYNCHONIZED WITH REMC1
 /// Idle state of the vulture (class 5 type 1) (state 6): FnCreatureStand_19B10(a1x, 6). Identified from its decoded sprite (confirmed by the user).
-void VultureIdleTick_1B160(Type_AE400_29795* a1x)
+/// Original name: fn_creature_01_stand (CREAT_01.C), by the map's state convention (state 6 = 6*1+0); this name is listed in the map.
+void FnCreature01Stand_1B160(Type_AE400_29795* a1x)
 {
   //__int16 result; // ax
   int v2; // eax
@@ -21322,7 +21331,8 @@ void VultureIdleTick_1B160(Type_AE400_29795* a1x)
 
 //SYNCHONIZED WITH REMC1
 /// Per-tick handler of class 5 state 7, the initial state of the vulture (type 1). Identified from its decoded sprite (confirmed by the user).
-void VultureTick_1B200(Type_AE400_29795* a1x)
+/// Original name: fn_creature_01_wander (CREAT_01.C), by the map's state convention (state 7 = 6*1+1); this name is listed in the map.
+void FnCreature01Wander_1B200(Type_AE400_29795* a1x)
 {
   //int v1; // esi
   unsigned int result; // eax
@@ -21365,7 +21375,8 @@ void VultureTick_1B200(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Vulture (class 5 type 1) attack state: FnCreatureAttack_1A120(a1x, 6, ...) (state 8). Identified from its decoded sprite (confirmed by the user).
-void VultureAttackTick_1B2D0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_01_attack (CREAT_01.C), by the map's state convention (state 8 = 6*1+2); this name is listed in the map.
+void FnCreature01Attack_1B2D0(Type_AE400_29795* a1x)
 {
   if ( (unsigned __int16)FnCreatureAttack_1A120(a1x, 6, (unsigned __int16 (*)(Type_AE400_29795*, int))CreatureMeleeHit_1AB10) )
     PlayASample_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 7);
@@ -21373,28 +21384,32 @@ void VultureAttackTick_1B2D0(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Vulture (class 5 type 1) follow state: FnCreatureFlock_1A390(a1x, 6) (state 9). Identified from its decoded sprite (confirmed by the user).
-void VultureFollowTick_1B320(Type_AE400_29795* a1x)
+/// Original name: fn_creature_01_flock (CREAT_01.C), by the map's state convention (state 9 = 6*1+3); this name is listed in the map.
+void FnCreature01Flock_1B320(Type_AE400_29795* a1x)
 {
   FnCreatureFlock_1A390(a1x, 6u);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Vulture (class 5 type 1) dying state: CreatureDying_1A6C0(a1x, 6) (state 10). Identified from its decoded sprite (confirmed by the user).
-void VultureDyingTick_1B330(Type_AE400_29795* a1x)
+/// Original name: fn_creature_01_dying (CREAT_01.C), by the map's state convention (state 10 = 6*1+4); this name is listed in the map.
+void FnCreature01Dying_1B330(Type_AE400_29795* a1x)
 {
   CreatureDying_1A6C0(a1x, 6);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Vulture (class 5 type 1) dead state: KillCreature_1A800 (state 11). Identified from its decoded sprite (confirmed by the user).
-void VultureDeadTick_1B340(Type_AE400_29795* a1x)
+/// Original name: fn_creature_01_dead (CREAT_01.C), by the map's state convention (state 11 = 6*1+5); this name is listed in the map.
+void FnCreature01Dead_1B340(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Idle state of the bee (class 5 type 2) (state 12): FnCreatureStand_19B10(a1x, 12). Identified from its decoded sprite (confirmed by the user).
-void BeeIdleTick_1B350(Type_AE400_29795* a1x)
+/// Original name: fn_creature_02_stand (CREAT_02.C), by the map's state convention (state 12 = 6*2+0); this name is listed in the map.
+void FnCreature02Stand_1B350(Type_AE400_29795* a1x)
 {
   FnCreatureStand_19B10(a1x, 12);
   if (a1x->var_u8_29865_70 == 14 )
@@ -21403,7 +21418,8 @@ void BeeIdleTick_1B350(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of class 5 state 13, the initial state of the bee (type 2). Identified from its decoded sprite (confirmed by the user).
-void BeeTick_1B370(Type_AE400_29795* a1x)
+/// Original name: fn_creature_02_wander (CREAT_02.C), by the map's state convention (state 13 = 6*2+1); this name is listed in the map.
+void FnCreature02Wander_1B370(Type_AE400_29795* a1x)
 {
   sub_19D70(a1x, 12);
   if (a1x->var_u8_29865_70 == 14 )
@@ -21415,7 +21431,8 @@ void BeeTick_1B370(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Bee (class 5 type 2) attack state: FnCreatureAttack_1A120(a1x, 12, ...) (state 14). Identified from its decoded sprite (confirmed by the user).
-void BeeAttackTick_1B3C0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_02_attack (CREAT_02.C), by the map's state convention (state 14 = 6*2+2); this name is listed in the map.
+void FnCreature02Attack_1B3C0(Type_AE400_29795* a1x)
 {
   __int16 v1; // dx
   int v2; // ecx
@@ -21452,7 +21469,8 @@ void BeeAttackTick_1B3C0(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Bee (class 5 type 2) follow state: FnCreatureFlock_1A390(a1x, 12) (state 15). Identified from its decoded sprite (confirmed by the user).
-void BeeFollowTick_1B4C0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_02_flock (CREAT_02.C), by the map's state convention (state 15 = 6*2+3); this name is listed in the map.
+void FnCreature02Flock_1B4C0(Type_AE400_29795* a1x)
 {
   FnCreatureFlock_1A390(a1x, 0xCu);
   if (a1x->var_u8_29865_70 == 14 )
@@ -21461,35 +21479,40 @@ void BeeFollowTick_1B4C0(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Bee (class 5 type 2) dying state: CreatureDying_1A6C0(a1x, 12) (state 16). Identified from its decoded sprite (confirmed by the user).
-void BeeDyingTick_1B4E0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_02_dying (CREAT_02.C), by the map's state convention (state 16 = 6*2+4); this name is listed in the map.
+void FnCreature02Dying_1B4E0(Type_AE400_29795* a1x)
 {
   CreatureDying_1A6C0(a1x, 12);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Bee (class 5 type 2) dead state: KillCreature_1A800 (state 17). Identified from its decoded sprite (confirmed by the user).
-void BeeDeadTick_1B4F0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_02_dead (CREAT_02.C), by the map's state convention (state 17 = 6*2+5); this name is listed in the map.
+void FnCreature02Dead_1B4F0(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Idle state of class 5 type 3 (state 18): FnCreatureStand_19B10(a1x, 18).
-void WormIdleTick_1B500(Type_AE400_29795* a1x)
+/// Original name: fn_creature_03_stand (CREAT_03.C), by the map's state convention (state 18 = 6*3+0); this name is listed in the map.
+void FnCreature03Stand_1B500(Type_AE400_29795* a1x)
 {
   FnCreatureStand_19B10(a1x, 18);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of a worm head (class 5 state 19, set by InitCreature03_384B0).
-void WormTick_1B510(Type_AE400_29795* a1x)
+/// Original name: fn_creature_03_wander (CREAT_03.C), by the map's state convention (state 19 = 6*3+1); this name is listed in the map.
+void FnCreature03Wander_1B510(Type_AE400_29795* a1x)
 {
   sub_19D70(a1x, 18);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Class 5 type 3 attack state: FnCreatureAttack_1A120(a1x, 18, ...) (state 20).
-void WormAttackTick_1B520(Type_AE400_29795* a1x)
+/// Original name: fn_creature_03_attack (CREAT_03.C), by the map's state convention (state 20 = 6*3+2); this name is listed in the map.
+void FnCreature03Attack_1B520(Type_AE400_29795* a1x)
 {
   if ( (unsigned __int16)FnCreatureAttack_1A120(a1x, 18, PORT_FN(sub_1A8E0, unsigned __int16(Type_AE400_29795*, int))) )
     PlayASample_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 8);
@@ -21497,28 +21520,32 @@ void WormAttackTick_1B520(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Class 5 type 3 follow state: FnCreatureFlock_1A390(a1x, 18) (state 21).
-void WormFollowTick_1B570(Type_AE400_29795* a1x)
+/// Original name: fn_creature_03_flock (CREAT_03.C), by the map's state convention (state 21 = 6*3+3); this name is listed in the map.
+void FnCreature03Flock_1B570(Type_AE400_29795* a1x)
 {
   FnCreatureFlock_1A390(a1x, 0x12u);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Class 5 type 3 dying state: CreatureDying_1A6C0(a1x, 18) (state 22).
-void WormDyingTick_1B580(Type_AE400_29795* a1x)
+/// Original name: fn_creature_03_dying (CREAT_03.C), by the map's state convention (state 22 = 6*3+4); this name is listed in the map.
+void FnCreature03Dying_1B580(Type_AE400_29795* a1x)
 {
   CreatureDying_1A6C0(a1x, 18);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Class 5 type 3 dead state: KillCreature_1A800 (state 23).
-void WormDeadTick_1B590(Type_AE400_29795* a1x)
+/// Original name: fn_creature_03_dead (CREAT_03.C), by the map's state convention (state 23 = 6*3+5); this name is listed in the map.
+void FnCreature03Dead_1B590(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Idle state of class 5 type 4 (state 24): FnCreatureStand_19B10(a1x, 24).
-void GuardIdleTick_1B5A0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_04_stand (CREAT_04.C), by the map's state convention (state 24 = 6*4+0); this name is listed in the map.
+void FnCreature04Stand_1B5A0(Type_AE400_29795* a1x)
 {
   FnCreatureStand_19B10(a1x, 24);
   if (a1x->var_u8_29865_70 == 26 )
@@ -21527,7 +21554,8 @@ void GuardIdleTick_1B5A0(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of a guard (class 5 state 25, set by InitCreature04_386E0).
-void GuardTick_1B5D0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_04_wander (CREAT_04.C), by the map's state convention (state 25 = 6*4+1); this name is listed in the map.
+void FnCreature04Wander_1B5D0(Type_AE400_29795* a1x)
 {
   unsigned int v1; // edx
   __int16 v2; // ax
@@ -21786,7 +21814,8 @@ void GuardTick_1B5D0(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Class 5 type 4 attack state: FnCreatureAttack_1A120(a1x, 24, ...) (state 26).
-void GuardAttackTick_1BB20(Type_AE400_29795* a1x)
+/// Original name: fn_creature_04_attack (CREAT_04.C), by the map's state convention (state 26 = 6*4+2); this name is listed in the map.
+void FnCreature04Attack_1BB20(Type_AE400_29795* a1x)
 {
   int result; // eax
 
@@ -21814,7 +21843,8 @@ void GuardAttackTick_1BB20(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Class 5 type 4 follow state: FnCreatureFlock_1A390(a1x, 24) (state 27).
-void GuardFollowTick_1BBE0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_04_flock (CREAT_04.C), by the map's state convention (state 27 = 6*4+3); this name is listed in the map.
+void FnCreature04Flock_1BBE0(Type_AE400_29795* a1x)
 {
   FnCreatureFlock_1A390(a1x, 0x18u);
   if (a1x->var_u8_29865_70 == 26 )
@@ -21823,7 +21853,8 @@ void GuardFollowTick_1BBE0(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Class 5 type 4 dying state: CreatureDying_1A6C0(a1x, 24) (state 28).
-void GuardDyingTick_1BC10(Type_AE400_29795* a1x)
+/// Original name: fn_creature_04_dying (CREAT_04.C), by the map's state convention (state 28 = 6*4+4); this name is listed in the map.
+void FnCreature04Dying_1BC10(Type_AE400_29795* a1x)
 {
   if (a1x->var_u16_29821_26)
     DeleteThing_41E80_421C0(a1x);
@@ -21833,7 +21864,8 @@ void GuardDyingTick_1BC10(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Class 5 type 4 dead state: KillCreature_1A800 (state 29).
-void GuardDeadTick_1BC40(Type_AE400_29795* a1x)
+/// Original name: fn_creature_04_dead (CREAT_04.C), by the map's state convention (state 29 = 6*4+5); this name is listed in the map.
+void FnCreature04Dead_1BC40(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
@@ -21870,15 +21902,17 @@ void sub_1BCE0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Crab idle state (class 5 state 30): switches straight to the main state 31 (CrabTick_1BD20).
-void CrabIdleTick_1BD10(Type_AE400_29795* a1x)
+/// Crab idle state (class 5 state 30): switches straight to the main state 31 (FnCreature05Wander_1BD20).
+/// Original name: fn_creature_05_stand (CREAT_05.C), by the map's state convention (state 30 = 6*5+0); this name is listed in the map.
+void FnCreature05Stand_1BD10(Type_AE400_29795* a1x)
 {
   SetState_424F0_42830(a1x, 0x1Fu);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of a crab (class 5 state 31, set by InitCreature05_38890).
-void CrabTick_1BD20(Type_AE400_29795* a1x)
+/// Original name: fn_creature_05_wander (CREAT_05.C), by the map's state convention (state 31 = 6*5+1); this name is listed in the map.
+void FnCreature05Wander_1BD20(Type_AE400_29795* a1x)
 {
   unsigned int v1; // edi
   __int16 v2; // ax
@@ -22067,7 +22101,8 @@ void CrabTick_1BD20(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Class 5 type 5 attack state: FnCreatureAttack_1A120(a1x, 30, ...) (state 32).
-void CrabAttackTick_1C110(Type_AE400_29795* a1x)
+/// Original name: fn_creature_05_attack (CREAT_05.C), by the map's state convention (state 32 = 6*5+2); this name is listed in the map.
+void FnCreature05Attack_1C110(Type_AE400_29795* a1x)
 {
   int result; // eax
   int v2; // edx
@@ -22084,7 +22119,8 @@ void CrabAttackTick_1C110(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1C170(Type_AE400_29795* a1x)
+/// Original name: fn_creature_05_flock (CREAT_05.C), by the map's state convention (state 33 = 6*5+3); this name is listed in the map.
+void FnCreature05Flock_1C170(Type_AE400_29795* a1x)
 {
   int v1; // esi
   unsigned int v2; // edi
@@ -22192,28 +22228,32 @@ void sub_1C170(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Class 5 type 5 dying state: CreatureDying_1A6C0(a1x, 30) (state 34).
-void CrabDyingTick_1C3C0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_05_dying (CREAT_05.C), by the map's state convention (state 34 = 6*5+4); this name is listed in the map.
+void FnCreature05Dying_1C3C0(Type_AE400_29795* a1x)
 {
   CreatureDying_1A6C0(a1x, 30);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Class 5 type 5 dead state: KillCreature_1A800 (state 35).
-void CrabDeadTick_1C3D0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_05_dead (CREAT_05.C), by the map's state convention (state 35 = 6*5+5); this name is listed in the map.
+void FnCreature05Dead_1C3D0(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Idle state of the kraken (class 5 type 6) (state 36): FnCreatureStand_19B10(a1x, 36). Identified from its decoded sprite (confirmed by the user).
-void KrakenIdleTick_1C490(Type_AE400_29795* a1x)
+/// Original name: fn_creature_06_stand (CREAT_06.C), by the map's state convention (state 36 = 6*6+0); this name is listed in the map.
+void FnCreature06Stand_1C490(Type_AE400_29795* a1x)
 {
   FnCreatureStand_19B10(a1x, 36);
 }
 
 //SYNCHRONIZED EITH REMC1
 /// Per-tick handler of class 5 state 37, the initial state of the kraken (type 6). Identified from its decoded sprite (confirmed by the user).
-void KrakenTick_1C4A0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_06_wander (CREAT_06.C), by the map's state convention (state 37 = 6*6+1); this name is listed in the map.
+void FnCreature06Wander_1C4A0(Type_AE400_29795* a1x)
 {
   sub_19D70(a1x, 36);
   if (a1x->var_u8_29865_70 == 38 )
@@ -22223,7 +22263,8 @@ void KrakenTick_1C4A0(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED EITH REMC1
 /// Kraken (class 5 type 6) attack state (state 38): shoots lightning bolt pieces (9/9) at its target (+146).
-void KrakenAttackTick_1C4F0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_06_attack (CREAT_06.C), by the map's state convention (state 38 = 6*6+2); this name is listed in the map.
+void FnCreature06Attack_1C4F0(Type_AE400_29795* a1x)
 {
   int v1; // ebp
   unsigned int v2; // esi
@@ -22374,7 +22415,8 @@ LABEL_30:
 
 //SYNCHRONIZED EITH REMC1
 /// Kraken (class 5 type 6) follow state: FnCreatureFlock_1A390(a1x, 36) (state 39). Identified from its decoded sprite (confirmed by the user).
-void KrakenFollowTick_1C880(Type_AE400_29795* a1x)
+/// Original name: fn_creature_06_flock (CREAT_06.C), by the map's state convention (state 39 = 6*6+3); this name is listed in the map.
+void FnCreature06Flock_1C880(Type_AE400_29795* a1x)
 {
   char v1; // ah
 
@@ -22387,28 +22429,32 @@ void KrakenFollowTick_1C880(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Kraken (class 5 type 6) dying state: CreatureDying_1A6C0(a1x, 36) (state 40). Identified from its decoded sprite (confirmed by the user).
-void KrakenDyingTick_1C8D0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_06_dying (CREAT_06.C), by the map's state convention (state 40 = 6*6+4); this name is listed in the map.
+void FnCreature06Dying_1C8D0(Type_AE400_29795* a1x)
 {
   CreatureDying_1A6C0(a1x, 36);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Kraken (class 5 type 6) dead state: KillCreature_1A800 (state 41). Identified from its decoded sprite (confirmed by the user).
-void KrakenDeadTick_1C8E0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_06_dead (CREAT_06.C), by the map's state convention (state 41 = 6*6+5); this name is listed in the map.
+void FnCreature06Dead_1C8E0(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Idle state of the troll or ape (ConfigureATroll_38C00_38F80) (class 5 type 7) (state 42): FnCreatureStand_19B10(a1x, 42). Identified from its decoded sprite (confirmed by the user).
-void TrollOrApeIdleTick_1C8F0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_07_stand (CREAT_07.C), by the map's state convention (state 42 = 6*7+0); this name is listed in the map.
+void FnCreature07Stand_1C8F0(Type_AE400_29795* a1x)
 {
   FnCreatureStand_19B10(a1x, 42);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of class 5 state 43, the initial state of the troll or ape (type 7). Identified from its decoded sprite (confirmed by the user).
-void TrollOrApeTick_1C900(Type_AE400_29795* a1x)
+/// Original name: fn_creature_07_wander (CREAT_07.C), by the map's state convention (state 43 = 6*7+1); this name is listed in the map.
+void FnCreature07Wander_1C900(Type_AE400_29795* a1x)
 {
   bool v1; // eax
   int v2; // esi
@@ -22428,7 +22474,8 @@ void TrollOrApeTick_1C900(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Troll or ape (class 5 type 7) attack state: FnCreatureAttack_1A120(a1x, 42, ...) (state 44). Identified from its decoded sprite (confirmed by the user).
-void TrollOrApeAttackTick_1C960(Type_AE400_29795* a1x)
+/// Original name: fn_creature_07_attack (CREAT_07.C), by the map's state convention (state 44 = 6*7+2); this name is listed in the map.
+void FnCreature07Attack_1C960(Type_AE400_29795* a1x)
 {
   __int16 v1; // dx
   __int16 result; // ax
@@ -22469,7 +22516,8 @@ void TrollOrApeAttackTick_1C960(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Troll or ape (class 5 type 7) follow state: FnCreatureFlock_1A390(a1x, 42) (state 45). Identified from its decoded sprite (confirmed by the user).
-void TrollOrApeFollowTick_1CA00(Type_AE400_29795* a1x)
+/// Original name: fn_creature_07_flock (CREAT_07.C), by the map's state convention (state 45 = 6*7+3); this name is listed in the map.
+void FnCreature07Flock_1CA00(Type_AE400_29795* a1x)
 {
   FnCreatureFlock_1A390(a1x, 0x2Au);
   if (a1x->var_u8_29865_70 == 44 )
@@ -22478,28 +22526,32 @@ void TrollOrApeFollowTick_1CA00(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Troll or ape (class 5 type 7) dying state: CreatureDying_1A6C0(a1x, 42) (state 46). Identified from its decoded sprite (confirmed by the user).
-void TrollOrApeDyingTick_1CA20(Type_AE400_29795* a1x)
+/// Original name: fn_creature_07_dying (CREAT_07.C), by the map's state convention (state 46 = 6*7+4); this name is listed in the map.
+void FnCreature07Dying_1CA20(Type_AE400_29795* a1x)
 {
   CreatureDying_1A6C0(a1x, 42);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Troll or ape (class 5 type 7) dead state: KillCreature_1A800 (state 47). Identified from its decoded sprite (confirmed by the user).
-void TrollOrApeDeadTick_1CA30(Type_AE400_29795* a1x)
+/// Original name: fn_creature_07_dead (CREAT_07.C), by the map's state convention (state 47 = 6*7+5); this name is listed in the map.
+void FnCreature07Dead_1CA30(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Idle state of the griffin (class 5 type 8) (state 48): FnCreatureStand_19B10(a1x, 48). Identified from its decoded sprite (confirmed by the user).
-void GriffinIdleTick_1CA40(Type_AE400_29795* a1x)
+/// Original name: fn_creature_08_stand (CREAT_08.C), by the map's state convention (state 48 = 6*8+0); this name is listed in the map.
+void FnCreature08Stand_1CA40(Type_AE400_29795* a1x)
 {
   FnCreatureStand_19B10(a1x, 48);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of class 5 state 49, the initial state of the griffin (type 8). Identified from its decoded sprite (confirmed by the user).
-void GriffinTick_1CA50(Type_AE400_29795* a1x)
+/// Original name: fn_creature_08_wander (CREAT_08.C), by the map's state convention (state 49 = 6*8+1); this name is listed in the map.
+void FnCreature08Wander_1CA50(Type_AE400_29795* a1x)
 {
   unsigned int v1; // ebp
   __int16 v2; // ax
@@ -22661,7 +22713,8 @@ void GriffinTick_1CA50(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Griffin (class 5 type 8) attack state: FnCreatureAttack_1A120(a1x, 48, ...) (state 50). Identified from its decoded sprite (confirmed by the user).
-void GriffinAttackTick_1CE30(Type_AE400_29795* a1x)
+/// Original name: fn_creature_08_attack (CREAT_08.C), by the map's state convention (state 50 = 6*8+2); this name is listed in the map.
+void FnCreature08Attack_1CE30(Type_AE400_29795* a1x)
 {
   int v1; // eax
 
@@ -22684,14 +22737,16 @@ void GriffinAttackTick_1CE30(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Griffin (class 5 type 8) follow state: FnCreatureFlock_1A390(a1x, 48) (state 51). Identified from its decoded sprite (confirmed by the user).
-void GriffinFollowTick_1CF50(Type_AE400_29795* a1x)
+/// Original name: fn_creature_08_flock (CREAT_08.C), by the map's state convention (state 51 = 6*8+3); this name is listed in the map.
+void FnCreature08Flock_1CF50(Type_AE400_29795* a1x)
 {
   FnCreatureFlock_1A390(a1x, 0x30u);
 }
 
 //SYNCHRONIZED REMC1
 /// Griffin (class 5 type 8) dying state: CreatureDying_1A6C0(a1x, 48) (state 52). Identified from its decoded sprite (confirmed by the user).
-void GriffinDyingTick_1CF60(Type_AE400_29795* a1x)
+/// Original name: fn_creature_08_dying (CREAT_08.C), by the map's state convention (state 52 = 6*8+4); this name is listed in the map.
+void FnCreature08Dying_1CF60(Type_AE400_29795* a1x)
 {
   int v1; // eax
 
@@ -22703,14 +22758,16 @@ void GriffinDyingTick_1CF60(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED REMC1
 /// Griffin (class 5 type 8) dead state: KillCreature_1A800 (state 53). Identified from its decoded sprite (confirmed by the user).
-void GriffinDeadTick_1CFE0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_08_dead (CREAT_08.C), by the map's state convention (state 53 = 6*8+5); this name is listed in the map.
+void FnCreature08Dead_1CFE0(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED REMC1
 /// Per-tick handler of class 5 state 54, the initial state of the skeleton (type 9). Identified from its decoded sprite (confirmed by the user).
-void SkeletonTick_1CFF0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_09_stand (CREAT_09.C), by the map's state convention (state 54 = 6*9+0); this name is listed in the map.
+void FnCreature09Stand_1CFF0(Type_AE400_29795* a1x)
 {
   __int16 v1; // dx
   __int16 v2; // cx
@@ -22746,7 +22803,8 @@ void SkeletonTick_1CFF0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1D060(Type_AE400_29795* a1x)
+/// Original name: fn_creature_09_wander (CREAT_09.C), by the map's state convention (state 55 = 6*9+1); this name is listed in the map.
+void FnCreature09Wander_1D060(Type_AE400_29795* a1x)
 {
   __int16 v1; // cx
   char v2; // al
@@ -23240,7 +23298,8 @@ LABEL_50:
 
 //SYNCHRONIZED WITH REMC1
 /// Skeleton (class 5 type 9) attack state (state 56): attacks its target (+146).
-void SkeletonAttackTick_1DA60(Type_AE400_29795* a1x)
+/// Original name: fn_creature_09_attack (CREAT_09.C), by the map's state convention (state 56 = 6*9+2); this name is listed in the map.
+void FnCreature09Attack_1DA60(Type_AE400_29795* a1x)
 {
   int v1; // esi
   unsigned int v2; // edi
@@ -23337,7 +23396,8 @@ LABEL_31:
 
 //SYNCHRONIZED WITH REMC1
 /// Skeleton (class 5 type 9) follow state: FnCreatureFlock_1A390(a1x, 54) (state 57).
-void SkeletonFollowTick_1DC80(Type_AE400_29795* a1x)
+/// Original name: fn_creature_09_flock (CREAT_09.C), by the map's state convention (state 57 = 6*9+3); this name is listed in the map.
+void FnCreature09Flock_1DC80(Type_AE400_29795* a1x)
 {
   FnCreatureFlock_1A390(a1x, 0x36u);
   if ( a1x->var_u8_29865_70 == 56 )
@@ -23346,14 +23406,16 @@ void SkeletonFollowTick_1DC80(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Skeleton (class 5 type 9) dying state: CreatureDying_1A6C0(a1x, 54) (state 58).
-void SkeletonDyingTick_1DCB0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_09_dying (CREAT_09.C), by the map's state convention (state 58 = 6*9+4); this name is listed in the map.
+void FnCreature09Dying_1DCB0(Type_AE400_29795* a1x)
 {
   CreatureDying_1A6C0(a1x, 54);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Skeleton (class 5 type 9) dead state: KillCreature_1A800 (state 59).
-void SkeletonDeadTick_1DCC0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_09_dead (CREAT_09.C), by the map's state convention (state 59 = 6*9+5); this name is listed in the map.
+void FnCreature09Dead_1DCC0(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
@@ -23405,49 +23467,56 @@ void sub_1DDB0(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Idle state of the emu rider (class 5 type 10) (state 60): FnCreatureStand_19B10(a1x, 60). Identified from its decoded sprite (confirmed by the user).
-void EmuRiderIdleTick_1DDD0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_10_stand (CREAT_10.C), by the map's state convention (state 60 = 6*10+0); this name is listed in the map.
+void FnCreature10Stand_1DDD0(Type_AE400_29795* a1x)
 {
   FnCreatureStand_19B10(a1x, 60);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of class 5 state 61, the initial state of the emu rider (type 10). Identified from its decoded sprite (confirmed by the user).
-void EmuRiderTick_1DDE0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_10_wander (CREAT_10.C), by the map's state convention (state 61 = 6*10+1); this name is listed in the map.
+void FnCreature10Wander_1DDE0(Type_AE400_29795* a1x)
 {
   sub_19D70(a1x, 60);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Emu rider (class 5 type 10) attack state: FnCreatureAttack_1A120(a1x, 60, ...) (state 62). Identified from its decoded sprite (confirmed by the user).
-int EmuRiderAttackTick_1DDF0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_10_attack (CREAT_10.C), by the map's state convention (state 62 = 6*10+2); this name is listed in the map.
+int FnCreature10Attack_1DDF0(Type_AE400_29795* a1x)
 {
   return FnCreatureAttack_1A120(a1x, 60, PORT_FN(sub_1A990, unsigned __int16(Type_AE400_29795*, int)));
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Emu rider (class 5 type 10) follow state: FnCreatureFlock_1A390(a1x, 60) (state 63). Identified from its decoded sprite (confirmed by the user).
-void EmuRiderFollowTick_1DE10(Type_AE400_29795* a1x)
+/// Original name: fn_creature_10_flock (CREAT_10.C), by the map's state convention (state 63 = 6*10+3); this name is listed in the map.
+void FnCreature10Flock_1DE10(Type_AE400_29795* a1x)
 {
   FnCreatureFlock_1A390(a1x, 0x3Cu);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Emu rider (class 5 type 10) dying state: CreatureDying_1A6C0(a1x, 60) (state 64). Identified from its decoded sprite (confirmed by the user).
-void EmuRiderDyingTick_1DE20(Type_AE400_29795* a1x)
+/// Original name: fn_creature_10_dying (CREAT_10.C), by the map's state convention (state 64 = 6*10+4); this name is listed in the map.
+void FnCreature10Dying_1DE20(Type_AE400_29795* a1x)
 {
   CreatureDying_1A6C0(a1x, 60);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Emu rider (class 5 type 10) dead state: KillCreature_1A800 (state 65). Identified from its decoded sprite (confirmed by the user).
-void EmuRiderDeadTick_1DE30(Type_AE400_29795* a1x)
+/// Original name: fn_creature_10_dead (CREAT_10.C), by the map's state convention (state 65 = 6*10+5); this name is listed in the map.
+void FnCreature10Dead_1DE30(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of class 5 state 66, the initial state of the genie (type 11). Identified from its decoded sprite (confirmed by the user).
-void GenieTick_1DE40(Type_AE400_29795* a1x)
+/// Original name: fn_creature_11_stand (CREAT_11.C), by the map's state convention (state 66 = 6*11+0); this name is listed in the map.
+void FnCreature11Stand_1DE40(Type_AE400_29795* a1x)
 {
   __int16 v1; // dx
   __int16 result; // ax
@@ -23518,7 +23587,8 @@ void GenieTick_1DE40(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DFE0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_11_wander (CREAT_11.C), by the map's state convention (state 67 = 6*11+1); this name is listed in the map.
+void FnCreature11Wander_1DFE0(Type_AE400_29795* a1x)
 {
   unsigned int v1; // edi
   __int16 v2; // ax
@@ -23839,21 +23909,24 @@ LABEL_38:
 
 //SYNCHRONIZED WITH REMC1
 /// Genie (class 5 type 11) follow state: FnCreatureFlock_1A390(a1x, 66) (state 69).
-void GenieFollowTick_1E6F0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_11_flock (CREAT_11.C), by the map's state convention (state 69 = 6*11+3); this name is listed in the map.
+void FnCreature11Flock_1E6F0(Type_AE400_29795* a1x)
 {
   FnCreatureFlock_1A390(a1x, 0x42u);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Genie (class 5 type 11) dying state: CreatureDying_1A6C0(a1x, 66) (state 70).
-void GenieDyingTick_1E700(Type_AE400_29795* a1x)
+/// Original name: fn_creature_11_dying (CREAT_11.C), by the map's state convention (state 70 = 6*11+4); this name is listed in the map.
+void FnCreature11Dying_1E700(Type_AE400_29795* a1x)
 {
   CreatureDying_1A6C0(a1x, 66);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Genie (class 5 type 11) dead state: KillCreature_1A800 (state 71).
-void GenieDeadTick_1E710(Type_AE400_29795* a1x)
+/// Original name: fn_creature_11_dead (CREAT_11.C), by the map's state convention (state 71 = 6*11+5); this name is listed in the map.
+void FnCreature11Dead_1E710(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
@@ -24433,7 +24506,8 @@ void FnCreature12Dying_1F5A0(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Villager (class 5 type 12) dead state: KillCreature_1A800 (state 77). Identified from its decoded sprite (confirmed by the user).
-void VillagerType12DeadTick_1F5B0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_12_dead (CREAT_12.C), by the map's state convention (state 77 = 6*12+5); this name is listed in the map.
+void FnCreature12Dead_1F5B0(Type_AE400_29795* a1x)
 {
   int v1; // eax
 
@@ -24445,7 +24519,8 @@ void VillagerType12DeadTick_1F5B0(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of class 5 state 79, the initial state of the villager (type 13). Identified from its decoded sprite (confirmed by the user).
-void VillagerType13Tick_1F640(Type_AE400_29795* a1x)
+/// Original name: fn_creature_13_wander (CREAT_13.C), by the map's state convention (state 79 = 6*13+1); this name is listed in the map.
+void FnCreature13Wander_1F640(Type_AE400_29795* a1x)
 {
   int v1; // edi
   unsigned int v2; // esi
@@ -24618,14 +24693,16 @@ void FnCreature13Dying_1FA00(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Villager (class 5 type 13) dead state: KillCreature_1A800 (state 83). Identified from its decoded sprite (confirmed by the user).
-void VillagerType13DeadTick_1FAA0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_13_dead (CREAT_13.C), by the map's state convention (state 83 = 6*13+5); this name is listed in the map.
+void FnCreature13Dead_1FAA0(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of class 5 state 85, the initial state of the villager (type 14). Identified from its decoded sprite (confirmed by the user).
-void VillagerType14Tick_1FAC0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_14_wander (CREAT_14.C), by the map's state convention (state 85 = 6*14+1); this name is listed in the map.
+void FnCreature14Wander_1FAC0(Type_AE400_29795* a1x)
 {
   int v1; // edi
   unsigned int v2; // esi
@@ -24788,7 +24865,8 @@ void FnCreature14Dying_1FE90(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Villager (class 5 type 14) dead state: KillCreature_1A800 (state 89). Identified from its decoded sprite (confirmed by the user).
-void VillagerType14DeadTick_1FEC0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_14_dead (CREAT_14.C), by the map's state convention (state 89 = 6*14+5); this name is listed in the map.
+void FnCreature14Dead_1FEC0(Type_AE400_29795* a1x)
 {
   int v1; // eax
 
@@ -25028,25 +25106,25 @@ LABEL_25:
 }
 
 //SYNCHRONIZED WITH REMC1
-/// TODO: rename when the entity is identified (class 5 type 15).
 /// Class 5 type 15 follow state: FnCreatureFlock_1A390(a1x, 90) (state 93).
-void Class5Type15FollowTick_203E0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_15_flock (CREAT_15.C), by the map's state convention (state 93 = 6*15+3); this name is listed in the map.
+void FnCreature15Flock_203E0(Type_AE400_29795* a1x)
 {
   FnCreatureFlock_1A390(a1x, 0x5Au);
 }
 
 //SYNCHRONIZED WITH REMC1
-/// TODO: rename when the entity is identified (class 5 type 15).
 /// Class 5 type 15 dying state: CreatureDying_1A6C0(a1x, 90) (state 94).
-void Class5Type15DyingTick_203F0(Type_AE400_29795* a1x)
+/// Original name: fn_creature_15_dying (CREAT_15.C), by the map's state convention (state 94 = 6*15+4); this name is listed in the map.
+void FnCreature15Dying_203F0(Type_AE400_29795* a1x)
 {
   CreatureDying_1A6C0(a1x, 90);
 }
 
 //SYNCHRONIZED WITH REMC1
-/// TODO: rename when the entity is identified (class 5 type 15).
 /// Class 5 type 15 dead state: KillCreature_1A800 (state 95).
-void Class5Type15DeadTick_20400(Type_AE400_29795* a1x)
+/// Original name: fn_creature_15_dead (CREAT_15.C), by the map's state convention (state 95 = 6*15+5); this name is listed in the map.
+void FnCreature15Dead_20400(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
@@ -25188,7 +25266,8 @@ void MoveCastleArcher_20480(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Idle state of class 5 type 16 (state 96): FnCreatureStand_19B10(a1x, 96).
-void WyvernIdleTick_20700(Type_AE400_29795* a1x)
+/// Original name: fn_creature_16_stand (CREAT_16.C), by the map's state convention (state 96 = 6*16+0); this name is listed in the map.
+void FnCreature16Stand_20700(Type_AE400_29795* a1x)
 {
   FnCreatureStand_19B10(a1x, 96);
 }
@@ -25373,21 +25452,24 @@ void FnCreature16Attack_207E0(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Class 5 type 16 follow state: FnCreatureFlock_1A390(a1x, 96) (state 99).
-void WyvernFollowTick_20B60(Type_AE400_29795* a1x)
+/// Original name: fn_creature_16_flock (CREAT_16.C), by the map's state convention (state 99 = 6*16+3); this name is listed in the map.
+void FnCreature16Flock_20B60(Type_AE400_29795* a1x)
 {
   FnCreatureFlock_1A390(a1x, 0x60u);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Class 5 type 16 dying state: CreatureDying_1A6C0(a1x, 96) (state 100).
-void WyvernDyingTick_20B70(Type_AE400_29795* a1x)
+/// Original name: fn_creature_16_dying (CREAT_16.C), by the map's state convention (state 100 = 6*16+4); this name is listed in the map.
+void FnCreature16Dying_20B70(Type_AE400_29795* a1x)
 {
   CreatureDying_1A6C0(a1x, 96);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Class 5 type 16 dead state: KillCreature_1A800 (state 101).
-void WyvernDeadTick_20B80(Type_AE400_29795* a1x)
+/// Original name: fn_creature_16_dead (CREAT_16.C), by the map's state convention (state 101 = 6*16+5); this name is listed in the map.
+void FnCreature16Dead_20B80(Type_AE400_29795* a1x)
 {
   KillCreature_1A800(a1x);
 }
