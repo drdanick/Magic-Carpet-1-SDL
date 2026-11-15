@@ -720,7 +720,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     *address* of the global (and usually nulls it: `mov [ebx], 0`). Hex-Rays sometimes types it as the
     value, so the global dangles after the free (`HeapDone_36C10_36FD0`,
     `FreeAnimSequences_11010`). Check the caller's push in the disassembly.
-37. **Statement order around a move.** `FreeSpriteCacheBlock_36A90_36E50` compacts the sprite cache by
+37. **Statement order around a move.** `HeapDelete_36A90_36E50` compacts the sprite cache by
     sliding blocks down; the asm loads the old data pointer (`mov esi,[eax]`) *before* storing the new
     one, the C stored first and then copied the block onto itself. Every sprite moved by compaction
     kept stale bytes - mostly-transparent worm segments in level 2 after playing level 1 (a loaded save
@@ -787,7 +787,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     original loads entity x/y with `movsx` 75 times and `movzx` once. Wherever the value feeds something
     sign-sensitive the port differs for positions >= 0x8000 - half of every map: `abs(x1 - x2) < 256`
     neighbour tests with an `(__int16)` other side (`FnCreatureFlock_1A390`, `MoveCastleArcher_20480`), signed
-    divisions by 256 (`AffectMapwho_120B0`, `sub_127E0`: scanned a window one cell off), `(x + 128) >> 8` passed
+    divisions by 256 (`AffectMapwho_120B0`, `AffectMapwhoChangeInAltitude_127E0`: scanned a window one cell off), `(x + 128) >> 8` passed
     on as an int (`sub_40A10` tests `!a1`). Fixed with `(__int16)` casts at those sites; the type itself
     stays unsigned (map indexing like `x >> 8` relies on it). `tools/audit_signedness.py` lists, per
     8/16-bit entity field, the functions whose original widens it with the other signedness; only x/y
@@ -795,7 +795,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     **Variant: sign tests on unsigned byte arrays.** The original tests a flag bit with `test b, 80h`;
     Hex-Rays writes that as `arr[i] < 0` / `>= 0`, which is constant once the port declares the array
     `uint8_t`. `mapAngle_FC1E0_FC1D0` bit 0x80 = impassable tile: `IsCastleSiteFree_12F70`,
-    `CastleOkToExtend_12D10` and `AddTileHeight_40A10_40D50` never saw walls (castles built on and grew into
+    `CastleOkToExtend_12D10` and `AdjustPoint_40A10_40D50` never saw walls (castles built on and grew into
     walls, level 12). Fixed with `(arr[i] & 0x80)`. MSVC C4296 does NOT catch these (the byte is
     promoted to int); scan with a script for `NAME[...] < 0` / `>= 0` where NAME is declared unsigned
     (done 2026-10-19: no other sites).
@@ -1266,7 +1266,7 @@ Known open issues:
   `ClosestManaBall_15080` and `IShouldAttackOpponentsFlyer_145B0` compare `50000 - maxMana/10*k/255` signed (`idiv`, `jge`/`jle`), the
   port unsigned via `_DWORD`, so targets owned by a wizard with a lot of mana took the other branch.
   Found in `possession_spell_bug.recording` (frames 56995, 59853), which now desyncs from frame 18360.
-  Fixed again 2026-11-15 in the two sibling checks of `ActionInitialise_136C0` (`IShouldAttackOpponentsCastle_143A0`, `AiFindRivalBalloon_147E0`): the
+  Fixed again 2026-11-15 in the two sibling checks of `ActionInitialise_136C0` (`IShouldAttackOpponentsCastle_143A0`, `IShouldAttackOpponentsBalloon_147E0`): the
   same `50000 - ...` comparison plus a mana comparison each (`idiv`/`jge` in the original). `grep "50000 -"`
   finds every copy.
 - Fixed 2026-11-04: the heal spell cost no mana while the caster's mana delta was not negative (pattern

@@ -325,12 +325,12 @@ int PocessionColideThing_11AC0(_WORD *a1);
 int PocessionColideThing2_11C00(__int16 *a1);
 Type_AE400_29795* TouchingThing_11D10(Type_AE400_29795* event);
 int CheckForMapwhoCellForSame_11E50(__int16 *a1, char a2, char a3);
-int GetTerrainHeight_11F50(axis_3d* position);
+int AltitudePoint_11F50(axis_3d* position);
 void AffectMapwho_120B0(Type_AE400_29795* a1x, unsigned __int8 a2, unsigned __int16 a3);
-int sub_124F0(int a1, char a2, unsigned __int16 a3);
-int sub_127E0(Type_AE400_29795* a1, char a2, unsigned __int16 a3);
-int DealDamage_12B50(Type_AE400_29795* a1, int a2, unsigned __int8 a3, unsigned __int16 a4);
-void sub_12C50(_WORD *a1);
+int AffectMapwhoWithFire_124F0(int a1, char a2, unsigned __int16 a3);
+int AffectMapwhoChangeInAltitude_127E0(Type_AE400_29795* a1, char a2, unsigned __int16 a3);
+int AffectThingDirect_12B50(Type_AE400_29795* a1, int a2, unsigned __int8 a3, unsigned __int16 a4);
+void CastleClearAllBuildings_12C50(_WORD *a1);
 char CastleOkToExtend_12D10(_WORD *a1);
 _BOOL1 IsCastleSiteFree_12F70(_WORD *a1);
 int FnPlayerComputerFlyer_13170(int a1);
@@ -346,21 +346,21 @@ bool ActionCollectMana_13BA0(int a1);
 bool ActionAttackOpponentsCastle_13CA0(int a1);
 bool ActionAttackOpponentsFlyer_13DC0(int a1);
 bool ActionAttackTarget_13DD0(int a1);
-int AiChooseCastleSite_13F00(int a1);
+int IShouldBuildMyCastle_13F00(int a1);
 int IShouldUpgradeMyCastle_14120(int a1);
 unsigned int IShouldCollectMana_14230(int a1);
 int IShouldRunaway_14310(int a1);
 int IShouldAttackOpponentsCastle_143A0(int a1);
 int IShouldAttackOpponentsFlyer_145B0(int a1);
-int AiFindRivalBalloon_147E0(int a1);
-int sub_14B10(int a1);
-int AiStartCastleUpgrade_14C40(int a1);
-int AiStartBuildCastle_14C80(int a1);
-int AiStartPossession_14CE0(int a1);
-int AiStartAttackCastle_14D00(int a1);
-int sub_14D20(int a1);
-int AiStartAttackBalloon_14D40(int a1);
-int AiStartAttackWizard_14D60(int a1);
+int IShouldAttackOpponentsBalloon_147E0(int a1);
+int IShouldAttackCreature_14B10(int a1);
+int UpgradeMyCastle_14C40(int a1);
+int BuildMyCastle_14C80(int a1);
+int CollectMana_14CE0(int a1);
+int AttackOpponentsCastle_14D00(int a1);
+int AttackCreature_14D20(int a1);
+int AttackOpponentsBalloon_14D40(int a1);
+int AttackOpponentsFlyer_14D60(int a1);
 int Runaway_14DA0(int a1);
 int Defaults_14DC0(int a1);
 unsigned int SearchForSpell_14E60(int a1, unsigned __int8 a2);
@@ -373,7 +373,7 @@ __int16 TargetChecksum_15420(int a1);
 bool ValidTarget_15440(int a1, int a2);
 int ComputerPlayersSpeed_15470(int a1, int a2, signed int a3, signed int a4);
 int UseSpell_155F0(int a1, unsigned __int8 a2);
-int AiSpellReady_15A00(int a1, unsigned __int8 a2);
+int ICanUseSpell_15A00(int a1, unsigned __int8 a2);
 bool IAmUsingSpell_15E60(int a1, unsigned __int8 a2);
 bool MaximumManaEnough_15E90(int a1, unsigned __int8 a2);
 void CopyHumanPlayersSpells_15EC0(int a1);
@@ -535,8 +535,8 @@ void sub_23940(__int16 a1, __int16 a2, TypeTab* a3);
 void sub_23AE0(__int16 a1, __int16 a2, TypeTab* a3, unsigned __int8 a4);
 void sub_23CF0(__int16 a1, __int16 a2, int a3);
 void DrawSpell_23D40(int a1, int a2, Type_AE400_29795* a3x, char a4);
-void DrawSpellMenuIcon_24230(__int16 a1, __int16 a2, unsigned int a3, char a4);
-void sub_247C0(int result, int a2, __int16 a3, __int16 a4, int a5, unsigned __int8 a6);
+void DrawSpellShort_24230(__int16 a1, __int16 a2, unsigned int a3, char a4);
+void DrawDarkBox_247C0(int result, int a2, __int16 a3, __int16 a4, int a5, unsigned __int8 a6);
 void SetupIntroText_24AB0();
 void DrawIntroText_24B50(char* a1);
 int ClearIntroTextArea_24B80();
@@ -569,7 +569,7 @@ void FnEffectVolcanoAfterMath_25EC0(int a1);
 void FnEffectFireColumn_26140(Type_AE400_29795* a1);
 void FnEffectLightning_262D0(Type_AE400_29795* a1);
 void FnEffectStealMana_26360(Type_AE400_29795* a1);
-void DuelEffectTick_263C0(Type_AE400_29795* a1);
+void FnEffectRubberBand_263C0(Type_AE400_29795* a1);
 _BOOL1 OkToRaiseWallPoint_264D0(unsigned __int16 a1);
 void FnEffectWallSectionS_26560(int a2);
 void FnEffectWallSectionN_26670(_WORD *a2);
@@ -578,7 +578,7 @@ void FnEffectPath_26890(Type_AE400_29795* event);
 void FnEffectCanyon_26920(Type_AE400_29795* a1);
 void FnEffectRidge_269A0(Type_AE400_29795* a1);
 void FnEffectTeleport_26A60(int a1);
-void sub_26C00(int a1);
+void FnEffectCircleBall_26C00(int a1);
 void FnEffectBlindness_26CE0(int a1);
 void FnEffectAlliance_26D20(int a1);
 void FnEffectSkeleton_26E90(int a1);
@@ -631,10 +631,10 @@ unsigned __int16 EnsureNoWaterOrGrassMeetsDesert_32300();
 char PickBlocks_32560();
 void ShadeMap_329C0();
 int ScaleMap_32A50();
-unsigned __int16 sub_32AE0(int a1, unsigned __int8 a2);
+unsigned __int16 MakeWater_32AE0(int a1, unsigned __int8 a2);
 unsigned __int16 sub_32B90_sub_32F80(int a1, int a2);
 unsigned __int8 MakeBeaches_32D00(unsigned __int8 a1, unsigned __int8 a2);
-char sub_32EB0(unsigned __int8 a1, unsigned __int8 a2);
+char MakeArid_32EB0(unsigned __int8 a1, unsigned __int8 a2);
 unsigned __int16 MakeRocks_33180(unsigned __int8 a1);
 unsigned __int16 FlattenWater_33500();
 // char Orislope_33640_33A30(char a1, char a2, unsigned __int16 a3);
@@ -669,8 +669,8 @@ unsigned int DifferenceOnPerimeter_35EA0_36260(char a1, char a2, char a3, char a
 char SmoothOnPerimeter_35F30_362F0(int a1, char a2, char a3, int a4, int a5, unsigned __int8 a6);
 void SmoothArea_36080_36440(unsigned __int8 a1, char a2, int a3, int a4);
 int SmoothPoint_360C0_36480(int a1);
-uint16_t sub_361C0_36580(uint8_t a1, uint8_t a2, uint8_t a3, uint8_t a4);
-void sub_362C0_36680(Type_AE400_193795* a1, Type_1090* a2);
+uint16_t AverageOnPerimeter_361C0_36580(uint8_t a1, uint8_t a2, uint8_t a3, uint8_t a4);
+void BuildLinkedThing_362C0_36680(Type_AE400_193795* a1, Type_1090* a2);
 void PreprocessFeatures_36430_367F0(Type_AE400_193795* a1);
 void DoEffect_36480_36840(Type_AE400_193795* a1, Type_1090* a2);
 _WORD *ResetLinkThings_365C0_36980(int a1);
@@ -679,7 +679,7 @@ Type_sub168* sub_36700_36AC0(int a1, unsigned __int16 a2, Type_168* a3);
 int sub_36850_36C10(Type_sub168* a1);
 // _DWORD ios::failure::cause(_DWORD); weak
 Type_sub168_2* HeapCreate_369E0_36DA0(Type_sub168* a1, unsigned int a2, __int16 a3);
-void FreeSpriteCacheBlock_36A90_36E50(Type_sub168* a1, Type_sub168_2* a2);
+void HeapDelete_36A90_36E50(Type_sub168* a1, Type_sub168_2* a2);
 void HeapDone_36C10_36FD0(Type_sub168** a1);
 // void KInt_36C65(int a1, int a2, int a3, int a4, int a5, int a6, int a7);
 void OpenIKeyboard_36D83();
@@ -727,7 +727,7 @@ int InitSceneryStandingStone_37CF0(int a1);
 int InitSceneryDolmen_37D70(int a1);
 int InitSceneryHut_37E00(int a1);
 int InitSceneryHouse_37E80(int a1);
-int CreateClass2Type5_37EF0(int a1);
+int InitSceneryTower_37EF0(int a1);
 int InitCreature00_38030(int a1);
 int InitCreature01_38270(int a1);
 int InitCreature02_38370(int a1);
@@ -760,36 +760,36 @@ int InitPowerupRainProofing_399E0(int a1);
 int InitShotFireball_39A10(int a1);
 int InitShotPocession_39A90(int a1);
 int InitShotEarthquake_39B40(int a1);
-int CreateMeteorMissile_39BC0(int a1);
-int CreateVolcanoMissile_39C40(int a1);
-int CreateCraterMissile_39CC0(int a1);
-int CreateClass9Type6_39D40(int a1);
-int CreateDuelMissile_39DC0(int a1);
-int CreateStealManaMissile_39E40(int a1);
-int CreateLightningBolt_39EC0(int a1);
-int CreateHomingSpawnMissile_39F40(int a1);
-int CreateUndeadArmyMissile_39FC0(int a1);
+int InitShotMeteor_39BC0(int a1);
+int InitShotVolcano_39C40(int a1);
+int InitShotCrater_39CC0(int a1);
+int InitShotTeleport_39D40(int a1);
+int InitShotRubberBand_39DC0(int a1);
+int InitShotStealMana_39E40(int a1);
+int InitShotLightning_39EC0(int a1);
+int InitShotCastle_39F40(int a1);
+int InitShotSkeleton_39FC0(int a1);
 int CreateLightningStormMissile_3A040(int a1);
-int CreateClass9Type13_3A0C0(int a1);
+int InitShotArrow_3A0C0(int a1);
 int InitShotRock_3A1A0(int a1);
 int InitShotBlindness_3A210(int a1);
 int InitShotExtra1_3A270(int a1);
 int InitShotExtra2_3A2F0(int a1);
-int CreateGlobalDeathMissile_3A390(int a1);
-int CreateClass9Type19_3A410(int a1);
-int CreateExplosion_3A490(uint16_t* a1);
-int CreateClass10Type1_3A510(uint16_t* a1);
-int CreateSpeedEffect_3A570(uint16_t* a1);
-int CreateClass10Type3_3A5D0(uint16_t* a1);
-int CreateClass10Type4_3A640(uint16_t* a1);
-int CreateWaterSplash_3A6B0(uint16_t* a1);
-int CreateFire_3A730(uint16_t* a1);
-int CreateClass10Type7_3A7D0(uint16_t* a1);
-int CreateClass10Type8_3A870(uint16_t* a1);
-int CreateVolcanoEffect_3A8D0(uint16_t* a1);
-int CreateClass10Type10_3A930(uint16_t* a1);
-int CreateCraterEffect_3A9A0(uint16_t* a1);
-int CreatePossessionEffect_3AA10(uint16_t* a1);
+int InitShotExtra3_3A390(int a1);
+int InitShotExtra4_3A410(int a1);
+int InitEffectExplosion_3A490(uint16_t* a1);
+int InitEffectBigExplosion_3A510(uint16_t* a1);
+int InitEffectDust_3A570(uint16_t* a1);
+int InitEffectBlood_3A5D0(uint16_t* a1);
+int InitEffectSpark_3A640(uint16_t* a1);
+int InitEffectSplash_3A6B0(uint16_t* a1);
+int InitEffectFire_3A730(uint16_t* a1);
+int InitEffectFreeze_3A7D0(uint16_t* a1);
+int InitEffectMiniVolcano_3A870(uint16_t* a1);
+int InitEffectVolcano_3A8D0(uint16_t* a1);
+int InitEffectMiniCrater_3A930(uint16_t* a1);
+int InitEffectCrater_3A9A0(uint16_t* a1);
+int InitEffectPocession_3AA10(uint16_t* a1);
 int InitEffectWhiteSmoke_3AAA0(uint16_t* a1);
 int InitEffectBlackSmoke_3AB40(uint16_t* a1);
 int InitEffectEarthquake_3ABE0(uint16_t* a1);
@@ -827,38 +827,38 @@ int InitEffectExtra3_3BA00(uint16_t* a1);
 int InitEffectExtra4_3BA90(uint16_t* a1);
 Type_AE400_29795* InitSwitch_3BB20(axis_3d* position, char a2, char a3);
 
-Type_AE400_29795* CreateSwitch00_3BB70(axis_3d* position);
-Type_AE400_29795* CreateSwitch01_3BB90(axis_3d* position);
-Type_AE400_29795* CreateSwitch02_3BBB0(axis_3d* position);
-Type_AE400_29795* CreateSwitch03_3BBD0(axis_3d* position);
-Type_AE400_29795* CreateSwitch04_3BBF0(axis_3d* position);
-Type_AE400_29795* CreateSwitch05_3BC10(axis_3d* position);
-Type_AE400_29795* CreateSwitch06_3BC30(axis_3d* position);
-Type_AE400_29795* CreateSwitch07_3BC50(axis_3d* position);
-Type_AE400_29795* CreateSwitch08_3BC70(axis_3d* position);
-Type_AE400_29795* CreateSwitch09_3BC90(axis_3d* position);
-Type_AE400_29795* CreateSwitch10_3BCB0(axis_3d* position);
-Type_AE400_29795* CreateSwitch11_3BCD0(axis_3d* position);
-Type_AE400_29795* CreateSwitch12_3BCF0(axis_3d* position);
-Type_AE400_29795* CreateSwitch13_3BD10(axis_3d* position);
-Type_AE400_29795* CreateSwitch14_3BD30(axis_3d* position);
-Type_AE400_29795* CreateSwitch15_3BD50(axis_3d* position);
-Type_AE400_29795* CreateSwitch16_3BD70(axis_3d* position);
-Type_AE400_29795* CreateSwitch17_3BD90(axis_3d* position);
-Type_AE400_29795* CreateSwitch18_3BDB0(axis_3d* position);
-Type_AE400_29795* CreateSwitch19_3BDD0(axis_3d* position);
-Type_AE400_29795* CreateSwitch20_3BDF0(axis_3d* position);
-Type_AE400_29795* CreateSwitch21_3BE10(axis_3d* position);
-Type_AE400_29795* CreateSwitch22_3BE30(axis_3d* position);
-Type_AE400_29795* CreateSwitch23_3BE50(axis_3d* position);
-Type_AE400_29795* CreateSwitch24_3BE70(axis_3d* position);
-Type_AE400_29795* CreateSwitch25_3BE90(axis_3d* position);
-Type_AE400_29795* CreateSwitch26_3BEB0(axis_3d* position);
-Type_AE400_29795* CreateSwitch27_3BED0(axis_3d* position);
-Type_AE400_29795* CreateSwitch28_3BEF0(axis_3d* position);
-Type_AE400_29795* CreateSwitch29_3BF10(axis_3d* position);
-Type_AE400_29795* CreateSwitch30_3BF30(axis_3d* position);
-Type_AE400_29795* CreateSwitch31_3BF50(axis_3d* position);
+Type_AE400_29795* InitSwitchHiddenInside_3BB70(axis_3d* position);
+Type_AE400_29795* InitSwitchHiddenOutside_3BB90(axis_3d* position);
+Type_AE400_29795* InitSwitchHiddenInsideRe_3BBB0(axis_3d* position);
+Type_AE400_29795* InitSwitchHiddenOutsideRe_3BBD0(axis_3d* position);
+Type_AE400_29795* InitSwitchOnVictory_3BBF0(axis_3d* position);
+Type_AE400_29795* InitSwitchDeathInside_3BC10(axis_3d* position);
+Type_AE400_29795* InitSwitchDeathOutside_3BC30(axis_3d* position);
+Type_AE400_29795* InitSwitchDeathInsideRe_3BC50(axis_3d* position);
+Type_AE400_29795* InitSwitchDeathOutsideRe_3BC70(axis_3d* position);
+Type_AE400_29795* InitSwitchObviousInside_3BC90(axis_3d* position);
+Type_AE400_29795* InitSwitchObviousOutside_3BCB0(axis_3d* position);
+Type_AE400_29795* InitSwitchObviousInsideRe_3BCD0(axis_3d* position);
+Type_AE400_29795* InitSwitchObviousOutsideRe_3BCF0(axis_3d* position);
+Type_AE400_29795* InitSwitchCreature00_3BD10(axis_3d* position);
+Type_AE400_29795* InitSwitchCreature01_3BD30(axis_3d* position);
+Type_AE400_29795* InitSwitchCreature02_3BD50(axis_3d* position);
+Type_AE400_29795* InitSwitchCreature03_3BD70(axis_3d* position);
+Type_AE400_29795* InitSwitchCreature04_3BD90(axis_3d* position);
+Type_AE400_29795* InitSwitchCreature05_3BDB0(axis_3d* position);
+Type_AE400_29795* InitSwitchCreature06_3BDD0(axis_3d* position);
+Type_AE400_29795* InitSwitchCreature07_3BDF0(axis_3d* position);
+Type_AE400_29795* InitSwitchCreature08_3BE10(axis_3d* position);
+Type_AE400_29795* InitSwitchCreature09_3BE30(axis_3d* position);
+Type_AE400_29795* InitSwitchCreature10_3BE50(axis_3d* position);
+Type_AE400_29795* InitSwitchCreature11_3BE70(axis_3d* position);
+Type_AE400_29795* InitSwitchCreature12_3BE90(axis_3d* position);
+Type_AE400_29795* InitSwitchCreature13_3BEB0(axis_3d* position);
+Type_AE400_29795* InitSwitchCreature14_3BED0(axis_3d* position);
+Type_AE400_29795* InitSwitchCreature15_3BEF0(axis_3d* position);
+Type_AE400_29795* InitSwitchCreature16_3BF10(axis_3d* position);
+Type_AE400_29795* InitSwitchCreatureAll_3BF30(axis_3d* position);
+Type_AE400_29795* InitSwitchExitLevel_3BF50(axis_3d* position);
 
 int InitSpell_3BF70(int a1, char a2, char a3, int a4, __int16 a5, char a6, char a7, int a8, __int16 a9);
 int InitSpellPocession_3C040(int a1);
@@ -896,18 +896,18 @@ void SetControlMode_3DC90_3DFD0(TypeStrAE400_13323* a1, char a2);
 void CheckCd_3DD10_3E050();
 void SetupPlayers_3DD50_3E090();
 void LoadLevel_3E100_3E440(int level, void* buffer);
-char LoadMovieGameState_3E350_3E690(__int16 a1);
-void SaveMovieGameState_3E410_3E750(__int16 a1);
-char MovieGameStateExists_3E460(__int16 a1);
-char LoadMovieMapState_3E4B0_3E7F0(__int16 a1);
-char SaveMovieMapState_3E580_3E8C0(__int16 a1);
-char MovieMapStateExists_3E640(__int16 a1);
-char LoadGameState_3E690_3E9D0(__int16 a1);
-void SaveGameState_3E750_3EA90(__int16 a1);
-char GameStateFileExists_3E7A0(__int16 a1);
-char LoadMapState_3E7F0_3EB30(__int16 a1);
-char SaveMapState_3E8C0_3EC00(__int16 a1);
-char MapStateFileExists_3E980(__int16 a1);
+char LoadGame_3E350_3E690(__int16 a1);
+void SaveGame_3E410_3E750(__int16 a1);
+char VerifyGame_3E460(__int16 a1);
+char LoadMap_3E4B0_3E7F0(__int16 a1);
+char SaveMap_3E580_3E8C0(__int16 a1);
+char VerifyMap_3E640(__int16 a1);
+char LoadGameC_3E690_3E9D0(__int16 a1);
+void SaveGameC_3E750_3EA90(__int16 a1);
+char VerifyGameC_3E7A0(__int16 a1);
+char LoadMapC_3E7F0_3EB30(__int16 a1);
+char SaveMapC_3E8C0_3EC00(__int16 a1);
+char VerifyMapC_3E980(__int16 a1);
 void TapePackets_3E9D0_3ED10(char a1[10]);
 _BYTE *CloseTape_3EC50_3EF90();
 int FileExist_3EC80_3EFC0(char* a1);
@@ -932,14 +932,14 @@ void SetDefaultLevelSettings_40550_40890();
 void SetupMap_407A0_40AE0();
 void ResetMap_408D0_40C10();
 _BOOL1 CheckPoint_409E0_40D20(unsigned __int16 a1);
-char AddTileHeight_40A10_40D50(__int16 a1, __int16 a2, __int16 a3, char a4);
+char AdjustPoint_40A10_40D50(__int16 a1, __int16 a2, __int16 a3, char a4);
 int AdjustPoints_40D30_41070(Type_AE400_29795* a1, __int16 a2, __int16 a3, __int16 a4, char a5);
 int nullsub_3(_DWORD); // weak
 int DeleteUnwantedMapwhoCells_40E20_41160(unsigned __int16 a1, unsigned __int16 a2);
 char MakeFadeTable_40EDC_4121C(_BYTE *a1, _BYTE *a2, char a3, char a4, char a5, __int16 a6, __int16 a7, __int16 a8);
 __int16 Arctan_40F87_412C7(__int16 a1, __int16 a2);
-unsigned int Distance_410CE_4140E(unsigned int a1);
-void sub_41144(unsigned __int8 a1, unsigned __int8 a2, unsigned __int8 a3, unsigned __int8 a4);
+unsigned int Sqrl_410CE_4140E(unsigned int a1);
+void SetColour_41144(unsigned __int8 a1, unsigned __int8 a2, unsigned __int8 a3, unsigned __int8 a4);
 int ClearScreenMCGA_411D7_41517(void *a2, unsigned __int16 a3, char a4);
 int ClearScreen640_411FD_4153D(void *a2, unsigned __int16 a3, char a4);
 void ExamineMemory_41230_41570();
@@ -958,9 +958,9 @@ void DoDeleteThing_41E90_421D0(Type_AE400_29795* event);
 void DisplacementXyz_41EC0_42200(axis_3d* a1, unsigned __int16 a2, __int16 a3, __int16 a4);
 void SlopeDisplacement_41F50_42290(axis_3d* pos1, axis_3d* pos2);
 int Gravity_42000_42340(axis_3d* a1, int a2, int a3, int a4, int a5);
-int sub_42090_423D0(axis_3d* a1, int a2, int a3, int a4, int a5);
-__int16 HeadingTo_42150_42490(axis_3d* a1, axis_3d* a2);
-__int16 PitchTo_42180_424C0(axis_3d* a1, axis_3d* a2);
+int GravityAndSink_42090_423D0(axis_3d* a1, int a2, int a3, int a4, int a5);
+__int16 GetAngleXy_42150_42490(axis_3d* a1, axis_3d* a2);
+__int16 GetAngleZy_42180_424C0(axis_3d* a1, axis_3d* a2);
 int GetAngleDifference_42210_42550(__int16 a1, __int16 a2);
 int GetAngleSign_42240_42580(int a1, __int16 a2);
 int GetAngleIncrement_422A0_425E0(unsigned __int16 a1, __int16 a2, int a3, unsigned __int16 a4);
@@ -968,7 +968,7 @@ int GetRoughDistance_42300_42640(_WORD *a1, _WORD *a2);
 unsigned int GetDistance_42340_42680(axis_3d* a1, axis_3d* a2);
 int GetDistanceSquared_42390_426D0(_WORD *a1, _WORD *a2);
 unsigned int GetDistanceXy_423D0_42710(axis_3d* a1, axis_3d* a2);
-int DistanceSquared2D_42410_42750(_WORD *a1, _WORD *a2);
+int GetDistanceXySquared_42410_42750(_WORD *a1, _WORD *a2);
 void SetState_424F0_42830(Type_AE400_29795* a1, unsigned __int8 a2);
 int AdvanceAnimFrame_42510_42850(Type_AE400_29795* a1);
 void sub_42530_42870(char a1);
@@ -989,7 +989,7 @@ int NETHangUp_42DE0(_BYTE *a1);
 int NETListen_42E10(__int16 a1);
 int NetReceive_42F30(unsigned int a1, void *a2);
 int NETReceive_42FB0(unsigned int a1, char *a2, unsigned int a3);
-int sub_43010(unsigned int a1, int a2, unsigned __int16 a3);
+int NetReceiveNowait_43010(unsigned int a1, int a2, unsigned __int16 a3);
 int NetSend_43080(unsigned int a1, const void *a2, unsigned int a3);
 int NETSend_430F0(unsigned int a1, char *a2, unsigned int a3);
 int NETUpdateStatus_43150();
@@ -1053,7 +1053,7 @@ int DrawMinimap_49300_49640(int a1, int a2, int a3, int a4, int a5, int a6, __in
 void FnSceneryTree_49890_49BD0(int a1);
 int FnSceneryTreeBurning_499C0_49D00(int a1);
 void FnSceneryTreeDead_49A50_49D90(_WORD* a1);
-int StoneTick_49AA0_49DE0(int a1);
+int FnSceneryStandingStone_49AA0_49DE0(int a1);
 int FnSceneryDolmen_49AD0_49E10(int a1);
 int StandingStoneTick_49B50_49E90(int a1);
 void sub_4A980_4ACC0();
@@ -1164,7 +1164,7 @@ void sub_55100_55630();
 void PlayASample_55370_558A0(__int16 a1, __int16 a2, __int16 a3);
 bool NearVolume_55870(int a1, int a2);
 void StopASample_55890_55DC0(int a1, __int16 a2, __int16 a3);
-int sub_558F0();
+int Cbfadeoutmusic_558F0();
 int StopFadeOutMusic_55960();
 int sub_559A0();
 int PickupSpell_55A40_55F70(Type_AE400_29795* a1x, char a2, char a3);
@@ -1238,25 +1238,25 @@ int FnSwitchObviousOutside_59D70_5A280(uint16_t* a1);
 void FnSwitchObviousInsideRe_59DA0_5A2B0(uint16_t* a1);
 void FnSwitchObviousOutsideRe_59DF0_5A300(uint16_t* a1);
 void SwitchOnCreature_59E40_5A350(int a1, int a2);
-void Switch13Tick_59F60_5A470(uint16_t* a1);
-void Switch14Tick_59F70_5A480(uint16_t* a1);
-void Switch15Tick_59F80_5A490(uint16_t* a1);
-void Switch16Tick_59F90_5A4A0(uint16_t* a1);
-void Switch17Tick_59FA0_5A4B0(uint16_t* a1);
-void Switch18Tick_59FB0_5A4C0(uint16_t* a1);
-void Switch19Tick_59FC0_5A4D0(uint16_t* a1);
-void Switch20Tick_59FD0_5A4E0(uint16_t* a1);
-void Switch21Tick_59FE0_5A4F0(uint16_t* a1);
-void Switch22Tick_59FF0_5A500(uint16_t* a1);
-void Switch23Tick_5A000_5A510(uint16_t* a1);
-void Switch24Tick_5A010_5A520(uint16_t* a1);
-void Switch25Tick_5A020_5A530(uint16_t* a1);
-void Switch26Tick_5A030_5A540(uint16_t* a1);
-void Switch27Tick_5A040_5A550(uint16_t* a1);
-void Switch28Tick_5A050_5A560(uint16_t* a1);
-void Switch29Tick_5A060_5A570(uint16_t* a1);
-void Switch30Tick_5A070_5A580(uint16_t* a1);
-int Switch31Tick_5A080(uint16_t* a1);
+void FnSwitchCreature00_59F60_5A470(uint16_t* a1);
+void FnSwitchCreature01_59F70_5A480(uint16_t* a1);
+void FnSwitchCreature02_59F80_5A490(uint16_t* a1);
+void FnSwitchCreature03_59F90_5A4A0(uint16_t* a1);
+void FnSwitchCreature04_59FA0_5A4B0(uint16_t* a1);
+void FnSwitchCreature05_59FB0_5A4C0(uint16_t* a1);
+void FnSwitchCreature06_59FC0_5A4D0(uint16_t* a1);
+void FnSwitchCreature07_59FD0_5A4E0(uint16_t* a1);
+void FnSwitchCreature08_59FE0_5A4F0(uint16_t* a1);
+void FnSwitchCreature09_59FF0_5A500(uint16_t* a1);
+void FnSwitchCreature10_5A000_5A510(uint16_t* a1);
+void FnSwitchCreature11_5A010_5A520(uint16_t* a1);
+void FnSwitchCreature12_5A020_5A530(uint16_t* a1);
+void FnSwitchCreature13_5A030_5A540(uint16_t* a1);
+void FnSwitchCreature14_5A040_5A550(uint16_t* a1);
+void FnSwitchCreature15_5A050_5A560(uint16_t* a1);
+void FnSwitchCreature16_5A060_5A570(uint16_t* a1);
+void FnSwitchCreatureAll_5A070_5A580(uint16_t* a1);
+int FnSwitchExitLevel_5A080(uint16_t* a1);
 int TriggerSwitch_5A090_5A5A0(int a1, int a2);
 int CouldTriggerSwitch_5A120_5A630(int a1, int a2);
 void DrawText_5A180_5A690(char* text, int posX, int posY, uint8 color);
@@ -1267,7 +1267,7 @@ void SetUserfont_5A3C0_5A8D0(int fontIndex);
 void OpenTimerInterrupt_5A459_5A969();
 void sub_5A4EA_5A9FA();
 void VersionRequested_5A560_5AA70();
-void DrawStartGameTexts_5ACA0_5B1B0();
+void CopyrightRequested_5ACA0_5B1B0();
 void SetupPrint_5AD10_5B220(char* text);
 int SenseStatus_5AD30_5B240();
 int SenseGetConfiguration_5ADB0_5B2C0(int a1, int32_t* a2, char* a3);
@@ -1290,15 +1290,15 @@ void MouseScreenBackup_5B650_5BB60();
 void MouseWorkScreenBackup_5B95C_5BE6C();
 void MouseScreenUndraw_5BB60_5C070();
 int MouseWorkScreenUndraw_5BD40();
-void sub_5BDF8_5C308();
+void PlaceMouse_5BDF8_5C308();
 void RemoveMouse_5BE50_5C360();
 void SetPointer_5C05C_5C56C(TypeTab* a1);
 int SetupMouse_5C214_5C724();
 void ResizeScr_5C468_5C978();
 __int16 DecodeFRAMECHUNK_5C76B();
-__int16 sub_5C82E();
-int sub_5C891();
-int sub_5C8AF();
+__int16 DecodeFILEHEADER_5C82E();
+int DecodeCOPY_5C891();
+int DecodeUnknown_5C8AF();
 int DecodeCOLOUR256_5C8CD();
 void DoPalette_5C8F4();
 __int16 DecodeSS2_5C969();
@@ -1505,7 +1505,7 @@ void sub_674FA();
 void SosFillSampleStructs_67527(int a1, int a2, __int16 a3);
 int SosGetPhysicalAddr_67557_67A67(__int16 a1, int a2, int a3);
 int SosMAKEProtectedPtr_67582();
-__int16 sub_675C8(int a1, _DWORD *a2);
+__int16 SosRealAlloc_675C8(int a1, _DWORD *a2);
 int SosDetDRVGetCapsInfo_6765C_67B6C(const void *a1, int (*a2)(_DWORD), char a3, __int16 a4, char *a5, __int16 a6);
 // int SosDRVGetCapsPtr_676B0(int a1, int (*a2)(_DWORD), char a3, __int16 a4, int a5, __int16 a6);
 int SosDRVStop_676E5(int (*a1)(_DWORD));
@@ -1673,14 +1673,14 @@ unsigned int __stdcall AWE32REGW_6E65B(unsigned __int16 a1, unsigned __int16 a2)
 int __stdcall AWE32REGRW_6E6BF(unsigned __int16 a1);
 void __stdcall AWE32REGDW_6E727(unsigned __int16 a1, unsigned __int16 a2);
 int __stdcall AWE32REGRDW_6E7A0(unsigned __int16 a1);
-void __stdcall sub_6E822(int a1, __int16 a2, __int16 a3);
+void __stdcall AWE32ALLOCGCHANNEL_6E822(int a1, __int16 a2, __int16 a3);
 int __stdcall sub_6E976(unsigned __int16 a1, unsigned __int16 a2);
 int __stdcall sub_6E9A4(int a1, unsigned __int16 a2, unsigned __int16 a3);
 int __stdcall sub_6EA0F(unsigned __int16 a1, unsigned __int16 a2, unsigned __int16 a3, unsigned __int16 a4);
 int __stdcall sub_6ED47(unsigned __int16 a1);
 int __stdcall sub_6ED75(__int16 a1);
 int sub_6EDD0(int a1, int a2, int a3, int a4, unsigned __int16 a5, int a6, int a7);
-void __stdcall sub_6F3B3(int a1, __int16 a2, unsigned __int16 a3);
+void __stdcall AWE32NOTEOFF_6F3B3(int a1, __int16 a2, unsigned __int16 a3);
 void sub_6F4CB(int a1, int a2, int a3, int a4, unsigned __int16 a5, unsigned __int16 a6, unsigned __int16 a7);
 void __stdcall sub_6F502(__int16 a1, unsigned __int16 a2);
 void __stdcall sub_6F536(__int16 a1, unsigned __int16 a2);
@@ -3446,7 +3446,7 @@ Type_96902;
 
 int NullConstructor_39A00(uint16_t* a1);
 int InitCreature13_39340(uint16_t* a1);
-int CreateTrollOrApe_38C60(uint16_t* a1);
+int InitCreature07_38C60(uint16_t* a1);
 int InitCreature04_386E0(uint16_t* a1);
 int InitCreature03_384B0(uint16_t* a1);
 
@@ -3470,7 +3470,7 @@ Type_254A34 str_254D48[] = {
 { 0x002548F4, 0x0002, PORT_FN(InitSceneryDolmen_37D70, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0003, PORT_FN(InitSceneryHut_37E00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0004, PORT_FN(InitSceneryHouse_37E80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(CreateClass2Type5_37EF0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(InitSceneryTower_37EF0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_254B84[] = {
@@ -3535,7 +3535,7 @@ Type_254A34 str_255478[] = {
 { 0x002548F4, 0x0004, PORT_FN(InitCreature04_386E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000},
 { 0x002548F4, 0x0005, PORT_FN(InitCreature05_38890, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0006, PORT_FN(InitCreature06_389E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, PORT_FN(CreateTrollOrApe_38C60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, PORT_FN(InitCreature07_38C60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0008, PORT_FN(InitCreature08_38D60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0009, PORT_FN(InitCreature09_38E70, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000A, PORT_FN(InitCreature10_38FC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
@@ -3573,39 +3573,39 @@ Type_254A34 str_255870[] = {
 { 0x002548F4, 0x0000, PORT_FN(InitShotFireball_39A10, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0001, PORT_FN(InitShotPocession_39A90, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0002, PORT_FN(InitShotEarthquake_39B40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(CreateMeteorMissile_39BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(CreateVolcanoMissile_39C40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(CreateCraterMissile_39CC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, PORT_FN(CreateClass9Type6_39D40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, PORT_FN(CreateDuelMissile_39DC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0008, PORT_FN(CreateStealManaMissile_39E40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0009, PORT_FN(CreateLightningBolt_39EC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, PORT_FN(CreateHomingSpawnMissile_39F40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000B, PORT_FN(CreateUndeadArmyMissile_39FC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(InitShotMeteor_39BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(InitShotVolcano_39C40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(InitShotCrater_39CC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, PORT_FN(InitShotTeleport_39D40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, PORT_FN(InitShotRubberBand_39DC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0008, PORT_FN(InitShotStealMana_39E40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0009, PORT_FN(InitShotLightning_39EC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, PORT_FN(InitShotCastle_39F40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000B, PORT_FN(InitShotSkeleton_39FC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000C, PORT_FN(CreateLightningStormMissile_3A040, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000D, PORT_FN(CreateClass9Type13_3A0C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000D, PORT_FN(InitShotArrow_3A0C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000E, PORT_FN(InitShotRock_3A1A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000F, PORT_FN(InitShotBlindness_3A210, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0010, PORT_FN(InitShotExtra1_3A270, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0011, PORT_FN(InitShotExtra2_3A2F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0012, PORT_FN(CreateGlobalDeathMissile_3A390, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0013, PORT_FN(CreateClass9Type19_3A410, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0012, PORT_FN(InitShotExtra3_3A390, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0013, PORT_FN(InitShotExtra4_3A410, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_255D0C[] = {
-{ 0x002548F4, 0x0000, PORT_FN(CreateExplosion_3A490, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(CreateClass10Type1_3A510, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(CreateSpeedEffect_3A570, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(CreateClass10Type3_3A5D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(CreateClass10Type4_3A640, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(CreateWaterSplash_3A6B0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, PORT_FN(CreateFire_3A730, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, PORT_FN(CreateClass10Type7_3A7D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0008, PORT_FN(CreateClass10Type8_3A870, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0009, PORT_FN(CreateVolcanoEffect_3A8D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, PORT_FN(CreateClass10Type10_3A930, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000B, PORT_FN(CreateCraterEffect_3A9A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000C, PORT_FN(CreatePossessionEffect_3AA10, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(InitEffectExplosion_3A490, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(InitEffectBigExplosion_3A510, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(InitEffectDust_3A570, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(InitEffectBlood_3A5D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(InitEffectSpark_3A640, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(InitEffectSplash_3A6B0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, PORT_FN(InitEffectFire_3A730, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, PORT_FN(InitEffectFreeze_3A7D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0008, PORT_FN(InitEffectMiniVolcano_3A870, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0009, PORT_FN(InitEffectVolcano_3A8D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, PORT_FN(InitEffectMiniCrater_3A930, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000B, PORT_FN(InitEffectCrater_3A9A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000C, PORT_FN(InitEffectPocession_3AA10, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000D, PORT_FN(InitEffectWhiteSmoke_3AAA0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000E, PORT_FN(InitEffectBlackSmoke_3AB40, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000F, PORT_FN(InitEffectEarthquake_3ABE0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
@@ -3654,38 +3654,38 @@ Type_254A34 str_255D0C[] = {
 
 
 Type_254A34 str_256208[] = {
-{ 0x002548F4, 0x0000, CreateSwitch00_3BB70, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, CreateSwitch01_3BB90, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, CreateSwitch02_3BBB0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, CreateSwitch03_3BBD0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, CreateSwitch04_3BBF0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, CreateSwitch05_3BC10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, CreateSwitch06_3BC30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, CreateSwitch07_3BC50, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0008, CreateSwitch08_3BC70, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0009, CreateSwitch09_3BC90, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, CreateSwitch10_3BCB0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000B, CreateSwitch11_3BCD0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000C, CreateSwitch12_3BCF0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000D, CreateSwitch13_3BD10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000E, CreateSwitch14_3BD30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000F, CreateSwitch15_3BD50, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0010, CreateSwitch16_3BD70, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0011, CreateSwitch17_3BD90, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0012, CreateSwitch18_3BDB0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0013, CreateSwitch19_3BDD0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0014, CreateSwitch20_3BDF0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0015, CreateSwitch21_3BE10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0016, CreateSwitch22_3BE30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0017, CreateSwitch23_3BE50, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0018, CreateSwitch24_3BE70, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0019, CreateSwitch25_3BE90, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001A, CreateSwitch26_3BEB0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001B, CreateSwitch27_3BED0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001C, CreateSwitch28_3BEF0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001D, CreateSwitch29_3BF10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001E, CreateSwitch30_3BF30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001F, CreateSwitch31_3BF50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, InitSwitchHiddenInside_3BB70, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, InitSwitchHiddenOutside_3BB90, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, InitSwitchHiddenInsideRe_3BBB0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, InitSwitchHiddenOutsideRe_3BBD0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, InitSwitchOnVictory_3BBF0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, InitSwitchDeathInside_3BC10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, InitSwitchDeathOutside_3BC30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, InitSwitchDeathInsideRe_3BC50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0008, InitSwitchDeathOutsideRe_3BC70, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0009, InitSwitchObviousInside_3BC90, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, InitSwitchObviousOutside_3BCB0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000B, InitSwitchObviousInsideRe_3BCD0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000C, InitSwitchObviousOutsideRe_3BCF0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000D, InitSwitchCreature00_3BD10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000E, InitSwitchCreature01_3BD30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000F, InitSwitchCreature02_3BD50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0010, InitSwitchCreature03_3BD70, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0011, InitSwitchCreature04_3BD90, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0012, InitSwitchCreature05_3BDB0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0013, InitSwitchCreature06_3BDD0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0014, InitSwitchCreature07_3BDF0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0015, InitSwitchCreature08_3BE10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0016, InitSwitchCreature09_3BE30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0017, InitSwitchCreature10_3BE50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0018, InitSwitchCreature11_3BE70, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0019, InitSwitchCreature12_3BE90, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001A, InitSwitchCreature13_3BEB0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001B, InitSwitchCreature14_3BED0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001C, InitSwitchCreature15_3BEF0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001D, InitSwitchCreature16_3BF10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001E, InitSwitchCreatureAll_3BF30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001F, InitSwitchExitLevel_3BF50, 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_2567D8[] = {
@@ -3790,7 +3790,7 @@ Type_254A34x str_254C3C[] = {
 { 0x002548F4,0x0000,PORT_FN(FnSceneryTree_49890_49BD0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4,0x0001,PORT_FN(FnSceneryTreeBurning_499C0_49D00, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))FnSceneryTreeDead_49A50_49D90,0x0001,0x0000 },
-{ 0x002548F4,0x0003,PORT_FN(StoneTick_49AA0_49DE0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0003,PORT_FN(FnSceneryStandingStone_49AA0_49DE0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))EmptyStateHandler_49AC0,0x0001,0x0000 },
 { 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))EmptyStateHandler_49AC0,0x0001,0x0000 },
 { 0x002548F4,0x0006,PORT_FN(FnSceneryDolmen_49AD0_49E10, void(Type_AE400_29795*)),0x0001,0x0000 },
@@ -4030,7 +4030,7 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x0017,(void (*)(Type_AE400_29795*))FnEffectLightning_262D0,0x0001,0x0000 },
 { 0x002548F4,0x0018,(void (*)(Type_AE400_29795*))EmptyStateHandler_26350,0x0001,0x0000 },
 { 0x002548F4,0x0019,(void (*)(Type_AE400_29795*))FnEffectStealMana_26360,0x0001,0x0000 },
-{ 0x002548F4,0x001A,(void (*)(Type_AE400_29795*))DuelEffectTick_263C0,0x0001,0x0000 },
+{ 0x002548F4,0x001A,(void (*)(Type_AE400_29795*))FnEffectRubberBand_263C0,0x0001,0x0000 },
 { 0x002548F4,0x001B,(void (*)(Type_AE400_29795*))FnEffectWallSectionN_26670,0x0001,0x0000 },
 { 0x002548F4,0x001C,PORT_FN(FnEffectWallSectionS_26560, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x001D,(void (*)(Type_AE400_29795*))FnEffectWallSectionE_26760,0x0001,0x0000 },
@@ -4041,7 +4041,7 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x0022,(void (*)(Type_AE400_29795*))FnEffectCanyon_26920,0x0001,0x0000 },
 { 0x002548F4,0x0023,PORT_FN(FnEffectBlindness_26CE0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0024,PORT_FN(FnEffectTeleport_26A60, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0025,PORT_FN(sub_26C00, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0025,PORT_FN(FnEffectCircleBall_26C00, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0026,PORT_FN(FnEffectSkeleton_26E90, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 },
 { 0x002548F4,0x0028,PORT_FN(FnEffectAlliance_26D20, void(Type_AE400_29795*)),0x0001,0x0000 },
@@ -4082,25 +4082,25 @@ Type_254A34x str_256038[] = {
 { 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))FnSwitchObviousOutside_59D70_5A280,0x0001,0x0000 },
 { 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))FnSwitchObviousInsideRe_59DA0_5A2B0,0x0001,0x0000 },
 { 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))FnSwitchObviousOutsideRe_59DF0_5A300,0x0001,0x0000 },
-{ 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))Switch13Tick_59F60_5A470,0x0001,0x0000 },
-{ 0x002548F4,0x000E,(void (*)(Type_AE400_29795*))Switch14Tick_59F70_5A480,0x0001,0x0000 },
-{ 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))Switch15Tick_59F80_5A490,0x0001,0x0000 },
-{ 0x002548F4,0x0010,(void (*)(Type_AE400_29795*))Switch16Tick_59F90_5A4A0,0x0001,0x0000 },
-{ 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))Switch17Tick_59FA0_5A4B0,0x0001,0x0000 },
-{ 0x002548F4,0x0012,(void (*)(Type_AE400_29795*))Switch18Tick_59FB0_5A4C0,0x0001,0x0000 },
-{ 0x002548F4,0x0013,(void (*)(Type_AE400_29795*))Switch19Tick_59FC0_5A4D0,0x0001,0x0000 },
-{ 0x002548F4,0x0014,(void (*)(Type_AE400_29795*))Switch20Tick_59FD0_5A4E0,0x0001,0x0000 },
-{ 0x002548F4,0x0015,(void (*)(Type_AE400_29795*))Switch21Tick_59FE0_5A4F0,0x0001,0x0000 },
-{ 0x002548F4,0x0016,(void (*)(Type_AE400_29795*))Switch22Tick_59FF0_5A500,0x0001,0x0000 },
-{ 0x002548F4,0x0017,(void (*)(Type_AE400_29795*))Switch23Tick_5A000_5A510,0x0001,0x0000 },
-{ 0x002548F4,0x0018,(void (*)(Type_AE400_29795*))Switch24Tick_5A010_5A520,0x0001,0x0000 },
-{ 0x002548F4,0x0019,(void (*)(Type_AE400_29795*))Switch25Tick_5A020_5A530,0x0001,0x0000 },
-{ 0x002548F4,0x001A,(void (*)(Type_AE400_29795*))Switch26Tick_5A030_5A540,0x0001,0x0000 },
-{ 0x002548F4,0x001B,(void (*)(Type_AE400_29795*))Switch27Tick_5A040_5A550,0x0001,0x0000 },
-{ 0x002548F4,0x001C,(void (*)(Type_AE400_29795*))Switch28Tick_5A050_5A560,0x0001,0x0000 },
-{ 0x002548F4,0x001D,(void (*)(Type_AE400_29795*))Switch29Tick_5A060_5A570,0x0001,0x0000 },
-{ 0x002548F4,0x001E,(void (*)(Type_AE400_29795*))Switch30Tick_5A070_5A580,0x0001,0x0000 },
-{ 0x002548F4,0x001F,(void (*)(Type_AE400_29795*))Switch31Tick_5A080,0x0001,0x0000 },
+{ 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))FnSwitchCreature00_59F60_5A470,0x0001,0x0000 },
+{ 0x002548F4,0x000E,(void (*)(Type_AE400_29795*))FnSwitchCreature01_59F70_5A480,0x0001,0x0000 },
+{ 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))FnSwitchCreature02_59F80_5A490,0x0001,0x0000 },
+{ 0x002548F4,0x0010,(void (*)(Type_AE400_29795*))FnSwitchCreature03_59F90_5A4A0,0x0001,0x0000 },
+{ 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))FnSwitchCreature04_59FA0_5A4B0,0x0001,0x0000 },
+{ 0x002548F4,0x0012,(void (*)(Type_AE400_29795*))FnSwitchCreature05_59FB0_5A4C0,0x0001,0x0000 },
+{ 0x002548F4,0x0013,(void (*)(Type_AE400_29795*))FnSwitchCreature06_59FC0_5A4D0,0x0001,0x0000 },
+{ 0x002548F4,0x0014,(void (*)(Type_AE400_29795*))FnSwitchCreature07_59FD0_5A4E0,0x0001,0x0000 },
+{ 0x002548F4,0x0015,(void (*)(Type_AE400_29795*))FnSwitchCreature08_59FE0_5A4F0,0x0001,0x0000 },
+{ 0x002548F4,0x0016,(void (*)(Type_AE400_29795*))FnSwitchCreature09_59FF0_5A500,0x0001,0x0000 },
+{ 0x002548F4,0x0017,(void (*)(Type_AE400_29795*))FnSwitchCreature10_5A000_5A510,0x0001,0x0000 },
+{ 0x002548F4,0x0018,(void (*)(Type_AE400_29795*))FnSwitchCreature11_5A010_5A520,0x0001,0x0000 },
+{ 0x002548F4,0x0019,(void (*)(Type_AE400_29795*))FnSwitchCreature12_5A020_5A530,0x0001,0x0000 },
+{ 0x002548F4,0x001A,(void (*)(Type_AE400_29795*))FnSwitchCreature13_5A030_5A540,0x0001,0x0000 },
+{ 0x002548F4,0x001B,(void (*)(Type_AE400_29795*))FnSwitchCreature14_5A040_5A550,0x0001,0x0000 },
+{ 0x002548F4,0x001C,(void (*)(Type_AE400_29795*))FnSwitchCreature15_5A050_5A560,0x0001,0x0000 },
+{ 0x002548F4,0x001D,(void (*)(Type_AE400_29795*))FnSwitchCreature16_5A060_5A570,0x0001,0x0000 },
+{ 0x002548F4,0x001E,(void (*)(Type_AE400_29795*))FnSwitchCreatureAll_5A070_5A580,0x0001,0x0000 },
+{ 0x002548F4,0x001F,(void (*)(Type_AE400_29795*))FnSwitchExitLevel_5A080,0x0001,0x0000 },
 { 0x00000000,0x0000,nullptr,0x0000,0x0000 }
 };
 
@@ -4204,14 +4204,14 @@ Type_96902 dword_96902[] = {//254902
 { str_2563D8, str_2567D8, 0x002548F4, 0x000D, 0x00000000},//c
 { str_256938, str_256980, 0x00000000, 0x0000, 0x00000000}//d
 };
-//int (*off_97D12)(int) = PORT_FN(CreateExplosion_3A490, int(int)); // weak
+//int (*off_97D12)(int) = PORT_FN(InitEffectExplosion_3A490, int(int)); // weak
 /// Constructor that creates nothing (original 0x39A00 is "xor eax,eax; ret"); class 10 types 20-22 and 24.
 /// Original names (one function, four symbols in the map): init_effect_rain_of_fire, init_effect_whirl_wind, init_effect_whirl_pool, init_effect_tidel_wave - the unimplemented effects class 10 types 20, 21, 22 and 24.
 /// Name is a guess (not in the Hidden Worlds linker map).
 int NullConstructor_39A00(uint16_t* a1) { return 0; };
 /*int (*off_97D12[])(int) = {
-CreateExplosion_3A490, CreateClass10Type1_3A510, CreateSpeedEffect_3A570, CreateClass10Type3_3A5D0, CreateClass10Type4_3A640, CreateWaterSplash_3A6B0, CreateFire_3A730, CreateClass10Type7_3A7D0,
-CreateClass10Type8_3A870, CreateVolcanoEffect_3A8D0, CreateClass10Type10_3A930, CreateCraterEffect_3A9A0, CreatePossessionEffect_3AA10, InitEffectWhiteSmoke_3AAA0, InitEffectBlackSmoke_3AB40, InitEffectEarthquake_3ABE0,
+InitEffectExplosion_3A490, InitEffectBigExplosion_3A510, InitEffectDust_3A570, InitEffectBlood_3A5D0, InitEffectSpark_3A640, InitEffectSplash_3A6B0, InitEffectFire_3A730, InitEffectFreeze_3A7D0,
+InitEffectMiniVolcano_3A870, InitEffectVolcano_3A8D0, InitEffectMiniCrater_3A930, InitEffectCrater_3A9A0, InitEffectPocession_3AA10, InitEffectWhiteSmoke_3AAA0, InitEffectBlackSmoke_3AB40, InitEffectEarthquake_3ABE0,
 InitEffectSummonFire_3ACC0, InitEffectMeteor_3AC70, InitEffectVolcanoAfterMath_3ADB0, InitEffectFireColumn_3AE00, loc_39A00, loc_39A00, loc_39A00, InitEffectLightning_3AE80,
 loc_39A00, InitEffectStealMana_3AF00, InitEffectRubberBand_3AF80, InitEffectWallSection_3B000, InitEffectWallNode_3B060, InitEffectPathNode_3B120, InitEffectPath_3B0C0, InitEffectCanyonNode_3B1D0,
 InitEffectCanyon_3B180, CreateClass10Type33_3B4D0, InitEffectTeleport_3B300, InitEffectCircleBall_3B3D0, InitEffectSkeleton_3B3E0 };*/
@@ -4226,19 +4226,19 @@ Type_97D12;
 #pragma pack (16)
 
 Type_97D12 off_97D12[] = {
-{ PORT_FN(CreateExplosion_3A490, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 1 },
-{ PORT_FN(CreateClass10Type1_3A510, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 2 },
-{ PORT_FN(CreateSpeedEffect_3A570, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 3 },
-{ PORT_FN(CreateClass10Type3_3A5D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 4 },
-{ PORT_FN(CreateClass10Type4_3A640, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
-{ PORT_FN(CreateWaterSplash_3A6B0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 6 },
-{ PORT_FN(CreateFire_3A730, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
-{ PORT_FN(CreateClass10Type7_3A7D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 8 },
-{ PORT_FN(CreateClass10Type8_3A870, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 9 },
-{ PORT_FN(CreateVolcanoEffect_3A8D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 10 },
-{ PORT_FN(CreateClass10Type10_3A930, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
-{ PORT_FN(CreateCraterEffect_3A9A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 12 },
-{ PORT_FN(CreatePossessionEffect_3AA10, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 13 },
+{ PORT_FN(InitEffectExplosion_3A490, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 1 },
+{ PORT_FN(InitEffectBigExplosion_3A510, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 2 },
+{ PORT_FN(InitEffectDust_3A570, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 3 },
+{ PORT_FN(InitEffectBlood_3A5D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 4 },
+{ PORT_FN(InitEffectSpark_3A640, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
+{ PORT_FN(InitEffectSplash_3A6B0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 6 },
+{ PORT_FN(InitEffectFire_3A730, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
+{ PORT_FN(InitEffectFreeze_3A7D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 8 },
+{ PORT_FN(InitEffectMiniVolcano_3A870, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 9 },
+{ PORT_FN(InitEffectVolcano_3A8D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 10 },
+{ PORT_FN(InitEffectMiniCrater_3A930, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
+{ PORT_FN(InitEffectCrater_3A9A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 12 },
+{ PORT_FN(InitEffectPocession_3AA10, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 13 },
 { PORT_FN(InitEffectWhiteSmoke_3AAA0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 14 },
 { PORT_FN(InitEffectBlackSmoke_3AB40, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 15 },
 { PORT_FN(InitEffectEarthquake_3ABE0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 16 },
@@ -4297,25 +4297,25 @@ Type_97D12 off_97D12[] = {
 { PORT_FN(FnSwitchObviousOutside_59D70_5A280, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
 { (Type_AE400_29795* (*)(axis_3d*))&FnSwitchObviousInsideRe_59DA0_5A2B0, 1, 0x002548F4, 12 },
 { (Type_AE400_29795* (*)(axis_3d*))&FnSwitchObviousOutsideRe_59DF0_5A300, 1, 0x002548F4, 13 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch13Tick_59F60_5A470, 1, 0x002548F4, 14 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch14Tick_59F70_5A480, 1, 0x002548F4, 15 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch15Tick_59F80_5A490, 1, 0x002548F4, 16 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch16Tick_59F90_5A4A0, 1, 0x002548F4, 17 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch17Tick_59FA0_5A4B0, 1, 0x002548F4, 18 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch18Tick_59FB0_5A4C0, 1, 0x002548F4, 19 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch19Tick_59FC0_5A4D0, 1, 0x002548F4, 20 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch20Tick_59FD0_5A4E0, 1, 0x002548F4, 21 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch21Tick_59FE0_5A4F0, 1, 0x002548F4, 22 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch22Tick_59FF0_5A500, 1, 0x002548F4, 23 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch23Tick_5A000_5A510, 1, 0x002548F4, 24 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch24Tick_5A010_5A520, 1, 0x002548F4, 25 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch25Tick_5A020_5A530, 1, 0x002548F4, 26 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch26Tick_5A030_5A540, 1, 0x002548F4, 27 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch27Tick_5A040_5A550, 1, 0x002548F4, 28 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch28Tick_5A050_5A560, 1, 0x002548F4, 29 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch29Tick_5A060_5A570, 1, 0x002548F4, 30 },
-{ (Type_AE400_29795* (*)(axis_3d*))&Switch30Tick_5A070_5A580, 1, 0x002548F4, 31 },
-{ PORT_FN(Switch31Tick_5A080, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 } };
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchCreature00_59F60_5A470, 1, 0x002548F4, 14 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchCreature01_59F70_5A480, 1, 0x002548F4, 15 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchCreature02_59F80_5A490, 1, 0x002548F4, 16 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchCreature03_59F90_5A4A0, 1, 0x002548F4, 17 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchCreature04_59FA0_5A4B0, 1, 0x002548F4, 18 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchCreature05_59FB0_5A4C0, 1, 0x002548F4, 19 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchCreature06_59FC0_5A4D0, 1, 0x002548F4, 20 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchCreature07_59FD0_5A4E0, 1, 0x002548F4, 21 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchCreature08_59FE0_5A4F0, 1, 0x002548F4, 22 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchCreature09_59FF0_5A500, 1, 0x002548F4, 23 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchCreature10_5A000_5A510, 1, 0x002548F4, 24 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchCreature11_5A010_5A520, 1, 0x002548F4, 25 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchCreature12_5A020_5A530, 1, 0x002548F4, 26 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchCreature13_5A030_5A540, 1, 0x002548F4, 27 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchCreature14_5A040_5A550, 1, 0x002548F4, 28 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchCreature15_5A050_5A560, 1, 0x002548F4, 29 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchCreature16_5A060_5A570, 1, 0x002548F4, 30 },
+{ (Type_AE400_29795* (*)(axis_3d*))&FnSwitchCreatureAll_5A070_5A580, 1, 0x002548F4, 31 },
+{ PORT_FN(FnSwitchExitLevel_5A080, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 } };
 
 Type_97D12 off_987DE[] = {
 { PORT_FN(InitSpellFireball_3C090, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 1 },
@@ -15733,17 +15733,17 @@ int Colide_11640(Type_AE400_29795* a1x, axis_3d* a2x, char a3)
   if ( (a3 & 2) != 0 )
   {
     v3 = a1x->var_u32_29951_156->minHeight_12;
-    if ( a2x->z < v3 + (__int16)GetTerrainHeight_11F50(a2x) )
+    if ( a2x->z < v3 + (__int16)AltitudePoint_11F50(a2x) )
       return 1;
     v5 = a1x->var_u32_29951_156->maxHeight_10;
-    if (a2x->z > v5 + (__int16)GetTerrainHeight_11F50(a2x) )
+    if (a2x->z > v5 + (__int16)AltitudePoint_11F50(a2x) )
       return 1;
   }
   if ( (a3 & 1) == 0 || (v6 = a1x->var_u32_29951_156->v_20, (result = ~v6 & TerrainBlock_11810(a2x)) == 0) )
   {
     if ( (a3 & 4) != 0 )
     {
-      v7 = PitchTo_42180_424C0(&a1x->var_u32_29867_72, a2x);
+      v7 = GetAngleZy_42180_424C0(&a1x->var_u32_29867_72, a2x);
       v8 = GetAngleSign_42240_42580(0, v7);
       if ( v8 < 0 )
       {
@@ -16140,8 +16140,8 @@ LABEL_13:
 
 //----- (00011F50) --------------------------------------------------------
 /// Terrain (ground) height at position->x/y (fixed point, 256 units per map tile).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int GetTerrainHeight_11F50(axis_3d* position)
+/// Original name: altitude_point (COLIDE.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int AltitudePoint_11F50(axis_3d* position)
 {
   return sub_724C0_729D0(position->x, position->y);
 }
@@ -16314,7 +16314,8 @@ void AffectMapwho_120B0(Type_AE400_29795* a1x, unsigned __int8 a2, unsigned __in
 }
 
 //----- (000124F0) --------------------------------------------------------
-int sub_124F0(int a1, char a2, unsigned __int16 a3)
+/// Original name: affect_mapwho_with_fire (COLIDE.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int AffectMapwhoWithFire_124F0(int a1, char a2, unsigned __int16 a3)
 {
   int result; // eax
   unsigned int i; // ebx
@@ -16417,7 +16418,8 @@ int sub_124F0(int a1, char a2, unsigned __int16 a3)
 // 10C1E0: using guessed type __int16 mapEntityIndex_10C1E0_10C1D0[7953];
 
 //SYNCHRONIZED WITH REMC1
-int sub_127E0(Type_AE400_29795* a1x, char a2, unsigned __int16 a3)
+/// Original name: affect_mapwho_change_in_altitude (COLIDE.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int AffectMapwhoChangeInAltitude_127E0(Type_AE400_29795* a1x, char a2, unsigned __int16 a3)
 {
   int result; // eax
   unsigned int i; // ebx
@@ -16518,8 +16520,8 @@ int sub_127E0(Type_AE400_29795* a1x, char a2, unsigned __int16 a3)
 
 //SYNCHRONIZED WITH REMC1
 /// Records damage a4 from attacker a1x on entity a2 in damage slot a3 (+90 + 6*a3 amount, +94 attacker id; a pending slot is overwritten, else added to); the target's state handler applies it.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int DealDamage_12B50(Type_AE400_29795* a1x, int a2, unsigned __int8 a3, unsigned __int16 a4)
+/// Original name: affect_thing_direct (COLIDE.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int AffectThingDirect_12B50(Type_AE400_29795* a1x, int a2, unsigned __int8 a3, unsigned __int16 a4)
 {
   int v4; // eax
   int result; // eax
@@ -16535,7 +16537,8 @@ int DealDamage_12B50(Type_AE400_29795* a1x, int a2, unsigned __int8 a3, unsigned
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_12C50(_WORD *a1)
+/// Original name: castle_clear_all_buildings (COLIDE.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void CastleClearAllBuildings_12C50(_WORD *a1)
 {
   unsigned int v1; // ebx
   __int16 v2; // di
@@ -16971,7 +16974,7 @@ int ActionGeneric_132B0(int a1)
     if ( *(_DWORD *)PTR(a1 + 12) < *(_DWORD *)PTR(a1 + 8) )
       UseSpell_155F0(a1, 1u);
   }
-  v25 = (__int16)GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+  v25 = (__int16)AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
   v26 = *(_DWORD *)PTR(a1 + 156);
   if ( *(__int16 *)PTR(a1 + 76) > v25 + *(__int16 *)PTR(v26 + 10) )
     *(_WORD *)PTR(a1 + 76) = *(_WORD *)PTR(v26 + 10) + v25;
@@ -16991,9 +16994,9 @@ int ActionInitialise_136C0(int a1)
 {
   int v2; // eax
 
-  if ( AiChooseCastleSite_13F00(a1) )
+  if ( IShouldBuildMyCastle_13F00(a1) )
   {
-    AiStartBuildCastle_14C80(a1);
+    BuildMyCastle_14C80(a1);
     return 1;
   }
   else if ( IShouldRunaway_14310(a1) )
@@ -17010,33 +17013,33 @@ int ActionInitialise_136C0(int a1)
     }
     else if ( IShouldUpgradeMyCastle_14120(a1) )
     {
-      AiStartCastleUpgrade_14C40(a1);
+      UpgradeMyCastle_14C40(a1);
       return 1;
     }
     else if ( IShouldAttackOpponentsCastle_143A0(a1) )
     {
-      AiStartAttackCastle_14D00(a1);
+      AttackOpponentsCastle_14D00(a1);
       return 1;
     }
     else if ( IShouldAttackOpponentsFlyer_145B0(a1) )
     {
-      AiStartAttackWizard_14D60(a1);
+      AttackOpponentsFlyer_14D60(a1);
       return 1;
     }
-    else if ( AiFindRivalBalloon_147E0(a1) )
+    else if ( IShouldAttackOpponentsBalloon_147E0(a1) )
     {
-      AiStartAttackBalloon_14D40(a1);
+      AttackOpponentsBalloon_14D40(a1);
       return 1;
     }
     else if ( IShouldCollectMana_14230(a1) )
     {
-      AiStartPossession_14CE0(a1);
+      CollectMana_14CE0(a1);
       return 1;
     }
     else
     {
-      if ( sub_14B10(a1) )
-        sub_14D20(a1);
+      if ( IShouldAttackCreature_14B10(a1) )
+        AttackCreature_14D20(a1);
       else
         Defaults_14DC0(a1);
       return 1;
@@ -17058,7 +17061,7 @@ bool ActionUpgradeMyCastle_13800(int a1)
   result = ValidTarget_15440(a1, v1);
   if ( result )
   {
-    *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v1 + 72));
+    *(_WORD *)PTR(a1 + 34) = GetAngleXy_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v1 + 72));
     if ( ComputerPlayersSpeed_15470(a1, v1, 512, 2048) )
     {
       if ( UseSpell_155F0(a1, 0x10u) )
@@ -17093,7 +17096,7 @@ int ActionBuildMyCastle_138F0(int a1)
   int v2; // ebx
   int v3; // eax
 
-  *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a1 + 150));
+  *(_WORD *)PTR(a1 + 34) = GetAngleXy_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a1 + 150));
   result = ComputerPlayersSpeed_15470(a1, 0, 2048, 3072);
   if ( result )
   {
@@ -17126,7 +17129,7 @@ bool ActionProtectMyCastle_13990(_WORD *a1)
   result = ValidTarget_15440((int)OFF(a1), v1);
   if ( result )
   {
-    a1[17] = HeadingTo_42150_42490((axis_3d*)(a1 + 36), (axis_3d*)(_WORD *)PTR(v1 + 72));
+    a1[17] = GetAngleXy_42150_42490((axis_3d*)(a1 + 36), (axis_3d*)(_WORD *)PTR(v1 + 72));
     return ComputerPlayersSpeed_15470((int)OFF(a1), v1, 256, 2048) == 0;
   }
   return result;
@@ -17139,7 +17142,7 @@ int ActionWander_13A10(int a1)
 {
   if ( !IAmUsingSpell_15E60(a1, 2u) )
   {
-    if ( AiSpellReady_15A00(a1, 2u) )
+    if ( ICanUseSpell_15A00(a1, 2u) )
     {
       UseSpell_155F0(a1, 2u);
       return 0;
@@ -17159,11 +17162,11 @@ bool ActionRunaway_13A70(int a1)
   v1 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 50);
   if ( v1 <= dword_AE400_AE3F0() + 29795 )
   {
-    if ( AiSpellReady_15A00(a1, 0xCu) )
+    if ( ICanUseSpell_15A00(a1, 0xCu) )
       UseSpell_155F0(a1, 0xCu);
     if ( !IAmUsingSpell_15E60(a1, 2u) )
     {
-      if ( AiSpellReady_15A00(a1, 2u) )
+      if ( ICanUseSpell_15A00(a1, 2u) )
       {
         UseSpell_155F0(a1, 2u);
         return 0;
@@ -17173,12 +17176,12 @@ bool ActionRunaway_13A70(int a1)
     }
     return 0;
   }
-  if ( DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(v1 + 72)) > 104857600 && UseSpell_155F0(a1, 0x13u) )
+  if ( GetDistanceXySquared_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(v1 + 72)) > 104857600 && UseSpell_155F0(a1, 0x13u) )
     return 1;
   UseSpell_155F0(a1, 0xCu);
   if ( !ValidTarget_15440(a1, v1) )
     return 0;
-  *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v1 + 72));
+  *(_WORD *)PTR(a1 + 34) = GetAngleXy_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v1 + 72));
   return !ComputerPlayersSpeed_15470(a1, v1, 256, 2048);
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -17198,12 +17201,12 @@ bool ActionCollectMana_13BA0(int a1)
   result = ValidTarget_15440(a1, (int)OFF(v1));
   if ( result )
   {
-    *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(v1 + 36)); // PORT: was ((uint8_t*)v1) + 36 - v1 is _WORD*, the target's position is at byte 72 (asm lea edi,[esi+48h])
+    *(_WORD *)PTR(a1 + 34) = GetAngleXy_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(v1 + 36)); // PORT: was ((uint8_t*)v1) + 36 - v1 is _WORD*, the target's position is at byte 72 (asm lea edi,[esi+48h])
     if ( ComputerPlayersSpeed_15470(a1, (int)OFF(v1), 1024, 3072) )
     {
       if ( UseSpell_155F0(a1, 3u) )
       {
-        v3 = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(v1 + 36));
+        v3 = GetAngleXy_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(v1 + 36));
         if ( (unsigned __int16)GetAngleDifference_42210_42550(*(_WORD *)PTR(a1 + 30), v3) < 0x1Cu )
           v1[72] = *(_WORD *)PTR(a1 + 24);
       }
@@ -17236,7 +17239,7 @@ bool ActionAttackOpponentsCastle_13CA0(int a1)
   result = ValidTarget_15440(a1, v1);
   if ( result )
   {
-    *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v1 + 72));
+    *(_WORD *)PTR(a1 + 34) = GetAngleXy_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v1 + 72));
     if ( ComputerPlayersSpeed_15470(a1, v1, 2048, 3584) )
     {
       v3 = *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 526);
@@ -17280,11 +17283,11 @@ bool ActionAttackTarget_13DD0(int a1)
   result = ValidTarget_15440(a1, v1);
   if ( !result )
     return result;
-  *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v1 + 72));
+  *(_WORD *)PTR(a1 + 34) = GetAngleXy_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v1 + 72));
   if ( !ComputerPlayersSpeed_15470(a1, v1, 3072, 4096) || *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 404) < 0 )
     return 1;
   v3 = GetBestAttackSpell_16030(a1);
-  if ( v3 == -1 || (v4 = v3, !AiSpellReady_15A00(a1, v3)) || !UseSpell_155F0(a1, v4) )
+  if ( v3 == -1 || (v4 = v3, !ICanUseSpell_15A00(a1, v3)) || !UseSpell_155F0(a1, v4) )
   {
     v5 = *(__int16 *)PTR(a1 + 76) - (*(__int16 *)PTR(v1 + 76) + 512);
     if ( v5 )
@@ -17306,8 +17309,8 @@ bool ActionAttackTarget_13DD0(int a1)
 /// the first one with no other wizard's castle within 12288 units (ClosestPlayer_15260). Entity 0
 /// serves as the probe. This is how castles end up in walls (original-bugs.md #7); verified against the
 /// original with tools/diff_funcs.py.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int AiChooseCastleSite_13F00(int a1)
+/// Original name: i_should_build_my_castle (COMPUTER.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int IShouldBuildMyCastle_13F00(int a1)
 {
   _WORD *v1; // esi
   __int16 v2; // bx
@@ -17486,11 +17489,11 @@ int IShouldAttackOpponentsCastle_143A0(int a1)
     {
       if ( (v2 = 164 * *(__int16 *)PTR(i + 24),
             50000 - *(int *)PTR(dword_AE400_AE3F0() + v2 + 29931) / 10 * *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522) / 255 < (int)*(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 8 * *(__int16 *)PTR(*(_DWORD *)PTR(dword_AE400_AE3F0() + v2 + 29955) + 48) + 460)) // PORT: signed (idiv/jge at 0x14458-0x1447C); _DWORD made it unsigned
-        && DistanceSquared2D_42410_42750((_WORD *)PTR(dword_AE400_AE3F0() + 29795 + v2 + 72), (_WORD *)PTR(i + 72)) > 58982400
+        && GetDistanceXySquared_42410_42750((_WORD *)PTR(dword_AE400_AE3F0() + 29795 + v2 + 72), (_WORD *)PTR(i + 72)) > 58982400
         && !OverlapThing_11950((Type_AE400_29795*)PTR(dword_AE400_AE3F0() + 29795 + 164 * *(__int16 *)PTR(i + 24)), (Type_AE400_29795*)PTR(i))
         || *(int *)PTR(i + 140) + 640 * (255 - *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522)) < *(int *)PTR(164 * *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) + dword_AE400_AE3F0() + 29935) ) // PORT: signed (jge at 0x144FF)
       {
-        v3 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
+        v3 = GetDistanceXySquared_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
         if ( v3 < v7 )
         {
           v6 = i;
@@ -17502,7 +17505,7 @@ int IShouldAttackOpponentsCastle_143A0(int a1)
   if ( !v6 )
     return 0;
   v4 = *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 156) + 28);
-  if ( DistanceSquared2D_42410_42750((_WORD *)PTR(v6 + 72), (_WORD *)PTR(a1 + 72)) >= v4 * v4 )
+  if ( GetDistanceXySquared_42410_42750((_WORD *)PTR(v6 + 72), (_WORD *)PTR(a1 + 72)) >= v4 * v4 )
     return 0;
   *(_WORD *)PTR(a1 + 146) = (v6 - (dword_AE400_AE3F0() + 29795)) / 164;
   *(_WORD *)PTR(a1 + 148) = TargetChecksum_15420(v6);
@@ -17548,7 +17551,7 @@ int IShouldAttackOpponentsFlyer_145B0(int a1)
         && SearchForSpell_14E60(i, 0x10u)
         && *(_DWORD *)PTR(i + 140) + 32 * (255 - *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522)) < *(_DWORD *)PTR(a1 + 140) )
       {
-        v7 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
+        v7 = GetDistanceXySquared_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
         if ( v7 < v1 )
         {
           v9 = i;
@@ -17560,7 +17563,7 @@ int IShouldAttackOpponentsFlyer_145B0(int a1)
   if ( !v9 )
     return 0;
   v8 = *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 156) + 28) + 10;
-  if ( DistanceSquared2D_42410_42750((_WORD *)PTR(v9 + 72), (_WORD *)PTR(a1 + 72)) >= v8 * v8 )
+  if ( GetDistanceXySquared_42410_42750((_WORD *)PTR(v9 + 72), (_WORD *)PTR(a1 + 72)) >= v8 * v8 )
     return 0;
   *(_WORD *)PTR(a1 + 146) = (v9 - (dword_AE400_AE3F0() + 29795)) / 164;
   *(_WORD *)PTR(a1 + 148) = TargetChecksum_15420(v9);
@@ -17571,8 +17574,8 @@ int IShouldAttackOpponentsFlyer_145B0(int a1)
 
 //----- (000147E0) --------------------------------------------------------
 /// AI check: the nearest rival balloon (class 3 type 3 in the class-3 list) carrying enough mana; targets it (+146/+148).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int AiFindRivalBalloon_147E0(int a1)
+/// Original name: i_should_attack_opponents_balloon (COMPUTER.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int IShouldAttackOpponentsBalloon_147E0(int a1)
 {
   unsigned int i; // ebx
   int v2; // edx
@@ -17604,7 +17607,7 @@ int AiFindRivalBalloon_147E0(int a1)
         && 10 * (275 - v5) < *(int *)PTR(i + 140) // PORT: signed (jge at 0x148B8)
         && !OverlapThing_11950((Type_AE400_29795*)PTR(i), (Type_AE400_29795*)PTR(dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(v3 + 50))) )
       {
-        v6 = DistanceSquared2D_42410_42750(v9, (_WORD *)PTR(i + 72));
+        v6 = GetDistanceXySquared_42410_42750(v9, (_WORD *)PTR(i + 72));
         if ( v6 < v10 )
         {
           v12 = i;
@@ -17616,7 +17619,7 @@ int AiFindRivalBalloon_147E0(int a1)
   if ( !v12 )
     return 0;
   v7 = *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 156) + 28);
-  if ( DistanceSquared2D_42410_42750((_WORD *)PTR(v12 + 72), v9) >= v7 * v7 )
+  if ( GetDistanceXySquared_42410_42750((_WORD *)PTR(v12 + 72), v9) >= v7 * v7 )
     return 0;
   *(_WORD *)PTR(a1 + 146) = (v12 - (dword_AE400_AE3F0() + 29795)) / 164;
   *(_WORD *)PTR(a1 + 148) = TargetChecksum_15420(v12);
@@ -17626,7 +17629,8 @@ int AiFindRivalBalloon_147E0(int a1)
 // AE408: using guessed type int dword_AE408_AE3F8();
 
 //----- (00014B10) --------------------------------------------------------
-int sub_14B10(int a1)
+/// Original name: i_should_attack_creature (COMPUTER.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int IShouldAttackCreature_14B10(int a1)
 {
   unsigned int v1; // esi
   int v2; // ebp
@@ -17650,7 +17654,7 @@ int sub_14B10(int a1)
     {
       if ( *(_WORD *)PTR(j + 24) != *(_WORD *)PTR(a1 + 24) && *(int *)PTR(j + 140) > 0 )
       {
-        v5 = DistanceSquared2D_42410_42750(v8, (_WORD *)PTR(j + 72));
+        v5 = GetDistanceXySquared_42410_42750(v8, (_WORD *)PTR(j + 72));
         if ( v5 < v1 )
         {
           v2 = j;
@@ -17670,17 +17674,17 @@ int sub_14B10(int a1)
 
 //----- (00014C40) --------------------------------------------------------
 /// sets the AI mode (wizard data +415) to 1, castle upgrade (after IShouldUpgradeMyCastle_14120).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int AiStartCastleUpgrade_14C40(int a1)
+/// Original name: upgrade_my_castle (COMPUTER.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int UpgradeMyCastle_14C40(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 1;
   return 1;
 }
 
 //----- (00014C80) --------------------------------------------------------
-/// sets the AI mode (wizard data +415) to 3, build a castle (after AiChooseCastleSite_13F00; mode handler ActionBuildMyCastle_138F0).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int AiStartBuildCastle_14C80(int a1)
+/// sets the AI mode (wizard data +415) to 3, build a castle (after IShouldBuildMyCastle_13F00; mode handler ActionBuildMyCastle_138F0).
+/// Original name: build_my_castle (COMPUTER.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int BuildMyCastle_14C80(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 3;
   return 1;
@@ -17688,8 +17692,8 @@ int AiStartBuildCastle_14C80(int a1)
 
 //----- (00014CE0) --------------------------------------------------------
 /// AI: switches the wizard to AI mode 6 (possession; FnPlayerComputerFlyer_13170 then runs ActionCollectMana_13BA0).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int AiStartPossession_14CE0(int a1)
+/// Original name: collect_mana (COMPUTER.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int CollectMana_14CE0(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 6;
   return 1;
@@ -17697,24 +17701,25 @@ int AiStartPossession_14CE0(int a1)
 
 //----- (00014D00) --------------------------------------------------------
 /// sets the AI mode (wizard data +415) to 7, attack a castle (after IShouldAttackOpponentsCastle_143A0).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int AiStartAttackCastle_14D00(int a1)
+/// Original name: attack_opponents_castle (COMPUTER.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int AttackOpponentsCastle_14D00(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 7;
   return 1;
 }
 
 //----- (00014D20) --------------------------------------------------------
-int sub_14D20(int a1)
+/// Original name: attack_creature (COMPUTER.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int AttackCreature_14D20(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 13;
   return 1;
 }
 
 //----- (00014D40) --------------------------------------------------------
-/// sets the AI mode (wizard data +415) to 9, attack a balloon (after AiFindRivalBalloon_147E0).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int AiStartAttackBalloon_14D40(int a1)
+/// sets the AI mode (wizard data +415) to 9, attack a balloon (after IShouldAttackOpponentsBalloon_147E0).
+/// Original name: attack_opponents_balloon (COMPUTER.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int AttackOpponentsBalloon_14D40(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 9;
   return 1;
@@ -17722,8 +17727,8 @@ int AiStartAttackBalloon_14D40(int a1)
 
 //----- (00014D60) --------------------------------------------------------
 /// sets the AI mode (wizard data +415) to 8, attack a wizard (after IShouldAttackOpponentsFlyer_145B0).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int AiStartAttackWizard_14D60(int a1)
+/// Original name: attack_opponents_flyer (COMPUTER.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int AttackOpponentsFlyer_14D60(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 8;
   return 1;
@@ -17806,7 +17811,7 @@ int MoveComputerPlayer_14EB0(int a1)//1E5EB0_
   v23 = v1[7];
   v22 = v1[5];
   v21 = v1[6];
-  v2 = GetTerrainHeight_11F50(&word_AE454_AE444);
+  v2 = AltitudePoint_11F50(&word_AE454_AE444);
   Gravity_42000_42340(&word_AE454_AE444, v2, v21, v22, v23);
   DisplacementXyz_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), 0, *(_WORD *)PTR(a1 + 126));
   v3 = *(_WORD *)PTR(a1 + 30);
@@ -17885,7 +17890,7 @@ unsigned int ClosestManaBall_15080(int a1)
     v4 = 164 * (unsigned __int16)v3 + dword_AE400_AE3F0();
     if ( *(_BYTE *)PTR(v4 + 29859) != 3 )
     {
-      v5 = DistanceSquared2D_42410_42750(v10, (_WORD *)PTR(v2 + 72));
+      v5 = GetDistanceXySquared_42410_42750(v10, (_WORD *)PTR(v2 + 72));
       if ( v5 >= v1 )
         goto LABEL_19;
       goto LABEL_18;
@@ -17896,7 +17901,7 @@ unsigned int ClosestManaBall_15080(int a1)
     // (a target owned by a wizard with a lot of mana) it took the other branch (computer wizards picked other mana balls; possession_spell_bug.recording)
     if ( 50000 - *(int *)PTR(v4 + 29931) / 10 * *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522) / 255 < (int)*(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 8 * *(__int16 *)PTR(*(_DWORD *)PTR(v4 + 29955) + 48) + 460) )
     {
-      v5 = DistanceSquared2D_42410_42750((_WORD *)PTR(v9 + 72), (_WORD *)PTR(v2 + 72));
+      v5 = GetDistanceXySquared_42410_42750((_WORD *)PTR(v9 + 72), (_WORD *)PTR(v2 + 72));
       if ( v5 >= v1 )
         goto LABEL_19;
 LABEL_18:
@@ -17909,10 +17914,10 @@ LABEL_18:
     {
       v6 = dword_AE400_AE3F0() + 29795 >= v9 ? ClosestPlayer_15260(v2, 2u) : ClosestCastleExcluding_153B0(v2, v9);
       v7 = v6;
-      if ( (*(_WORD *)PTR(a1 + 24) == *(_WORD *)PTR(v11 + 24) || DistanceSquared2D_42410_42750((_WORD *)PTR(v2 + 72), (_WORD *)PTR(v11 + 72)) > 26214400)
+      if ( (*(_WORD *)PTR(a1 + 24) == *(_WORD *)PTR(v11 + 24) || GetDistanceXySquared_42410_42750((_WORD *)PTR(v2 + 72), (_WORD *)PTR(v11 + 72)) > 26214400)
         && (!v7 || !OverlapThing_11950((Type_AE400_29795*)PTR(v2), (Type_AE400_29795*)PTR(v7))) )
       {
-        v5 = DistanceSquared2D_42410_42750(v10, (_WORD *)PTR(v2 + 72));
+        v5 = GetDistanceXySquared_42410_42750(v10, (_WORD *)PTR(v2 + 72));
         if ( v5 < v1 )
           goto LABEL_18;
       }
@@ -17954,7 +17959,7 @@ unsigned int ClosestPlayer_15260(int a1, unsigned __int8 a2)
       {
         if ( *(_WORD *)PTR(i + 24) != *(_WORD *)PTR(a1 + 24) )
         {
-          v5 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
+          v5 = GetDistanceXySquared_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
           if ( v5 < v2 )
           {
             v3 = i;
@@ -17969,7 +17974,7 @@ unsigned int ClosestPlayer_15260(int a1, unsigned __int8 a2)
   {
     if ( *(_WORD *)PTR(j + 24) != *(_WORD *)PTR(a1 + 24) && *(char *)PTR(j + 65) == a2 )
     {
-      v7 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(j + 72));
+      v7 = GetDistanceXySquared_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(j + 72));
       if ( v7 < v2 )
       {
         v3 = j;
@@ -17999,7 +18004,7 @@ unsigned int ClosestPlayerExcluding_15340(int a1, int a2)
     v5 = *(_WORD *)PTR(i + 24);
     if ( v5 != *(_WORD *)PTR(a1 + 24) && v5 != *(_WORD *)PTR(a2 + 24) && *(_BYTE *)PTR(i + 65) <= 1u )
     {
-      v6 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
+      v6 = GetDistanceXySquared_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
       if ( v6 < v2 )
       {
         v3 = i;
@@ -18029,7 +18034,7 @@ unsigned int ClosestCastleExcluding_153B0(int a1, int a2)
     v5 = *(_WORD *)PTR(i + 24);
     if ( v5 != *(_WORD *)PTR(a1 + 24) && v5 != *(_WORD *)PTR(a2 + 24) && *(_BYTE *)PTR(i + 65) == 2 )
     {
-      v6 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
+      v6 = GetDistanceXySquared_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
       if ( v6 < v2 )
       {
         v3 = i;
@@ -18079,7 +18084,7 @@ int ComputerPlayersSpeed_15470(int a1, int a2, signed int a3, signed int a4)
     {
       if ( IAmUsingSpell_15E60(a1, 2u) )
         return 0;
-      if ( v5 > a4 && AiSpellReady_15A00(a1, 2u) )
+      if ( v5 > a4 && ICanUseSpell_15A00(a1, 2u) )
       {
         UseSpell_155F0(a1, 2u);
         return 0;
@@ -18097,7 +18102,7 @@ LABEL_8:
     goto LABEL_8;
   if ( !IAmUsingSpell_15E60(a1, 2u) )
   {
-    if ( v6 > a4 && AiSpellReady_15A00(a1, 2u) )
+    if ( v6 > a4 && ICanUseSpell_15A00(a1, 2u) )
     {
       UseSpell_155F0(a1, 2u);
       return 0;
@@ -18124,7 +18129,7 @@ int UseSpell_155F0(int a1, unsigned __int8 a2)
   unsigned int v9; // eax
   unsigned int v10; // eax
 
-  if ( !AiSpellReady_15A00(a1, a2) )
+  if ( !ICanUseSpell_15A00(a1, a2) )
     return 0;
   *(_BYTE *)PTR(a1 + 17) &= ~1u;
   switch ( a2 )
@@ -18140,7 +18145,7 @@ int UseSpell_155F0(int a1, unsigned __int8 a2)
         return 0;
       }
       *(_WORD *)PTR(2 * a2 + *(_DWORD *)PTR(a1 + 160) + 724) = word_90034[a2];
-      *(_WORD *)PTR(a1 + 32) = PitchTo_42180_424C0(
+      *(_WORD *)PTR(a1 + 32) = GetAngleZy_42180_424C0(
           (axis_3d*)(_WORD *)PTR(a1 + 72),
           (axis_3d*)(_WORD *)PTR(164 * *(unsigned __int16 *)PTR(a1 + 146) + dword_AE400_AE3F0() + 29795 + 72));
       *(_WORD *)PTR(v2 + 48) = *(_WORD *)PTR(v2 + 50);
@@ -18188,7 +18193,7 @@ int UseSpell_155F0(int a1, unsigned __int8 a2)
         return 0;
       }
       *(_WORD *)PTR(2 * a2 + *(_DWORD *)PTR(a1 + 160) + 724) = word_90034[a2];
-      *(_WORD *)PTR(a1 + 32) = PitchTo_42180_424C0(
+      *(_WORD *)PTR(a1 + 32) = GetAngleZy_42180_424C0(
           (axis_3d*)(_WORD *)PTR(a1 + 72),
           (axis_3d*)(_WORD *)PTR(dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(a1 + 146) + 72));
       *(_WORD *)PTR(v5 + 48) = *(_WORD *)PTR(v5 + 50);
@@ -18236,8 +18241,8 @@ int UseSpell_155F0(int a1, unsigned __int8 a2)
 
 //----- (00015A00) --------------------------------------------------------
 /// AI: returns whether the wizard can cast spell a2 now: it owns the spell, has the mana, the spell is not active/blocked and, for aimed spells, it faces the target (+30 vs +34) within an angle that depends on its skill (wizard data +524).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int AiSpellReady_15A00(int a1, unsigned __int8 a2)
+/// Original name: i_can_use_spell (COMPUTER.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int ICanUseSpell_15A00(int a1, unsigned __int8 a2)
 {
   unsigned int v2; // eax
   int result; // eax
@@ -18519,14 +18524,14 @@ LABEL_9:
   {
     if ( !SearchForSpell_14E60(a1, 0x11u) )
       goto LABEL_50;
-    if ( AiSpellReady_15A00(a1, 0x11u) )
+    if ( ICanUseSpell_15A00(a1, 0x11u) )
       return 17;
     if ( !MaximumManaEnough_15E90(a1, 0x11u) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 758) )
     {
 LABEL_50:
       if ( !SearchForSpell_14E60(a1, 8u) )
         goto LABEL_49;
-      if ( AiSpellReady_15A00(a1, 8u) )
+      if ( ICanUseSpell_15A00(a1, 8u) )
         return 8;
       if ( !MaximumManaEnough_15E90(a1, 8u) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 740) )
       {
@@ -18536,7 +18541,7 @@ LABEL_49:
         {
           if ( SearchForSpell_14E60(a1, 0xFu) )
           {
-            if ( AiSpellReady_15A00(a1, 0xFu) )
+            if ( ICanUseSpell_15A00(a1, 0xFu) )
               return 15;
             if ( MaximumManaEnough_15E90(a1, 0xFu) )
               return -1;
@@ -18546,28 +18551,28 @@ LABEL_49:
         {
           if ( !SearchForSpell_14E60(a1, 7u) )
             goto LABEL_52;
-          if ( AiSpellReady_15A00(a1, 7u) )
+          if ( ICanUseSpell_15A00(a1, 7u) )
             return 7;
           if ( !MaximumManaEnough_15E90(a1, 7u) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 738) )
           {
 LABEL_52:
             if ( !SearchForSpell_14E60(a1, 0x14u) )
               goto LABEL_53;
-            if ( AiSpellReady_15A00(a1, 0x14u) )
+            if ( ICanUseSpell_15A00(a1, 0x14u) )
               return 20;
             if ( !MaximumManaEnough_15E90(a1, 0x14u) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 764) )
             {
 LABEL_53:
               if ( !SearchForSpell_14E60(a1, 0) )
                 goto LABEL_51;
-              if ( AiSpellReady_15A00(a1, 0) )
+              if ( ICanUseSpell_15A00(a1, 0) )
                 return 0;
               if ( !MaximumManaEnough_15E90(a1, 0) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 724) )
               {
 LABEL_51:
                 if ( SearchForSpell_14E60(a1, 0xFu) )
                 {
-                  if ( AiSpellReady_15A00(a1, 0xFu) )
+                  if ( ICanUseSpell_15A00(a1, 0xFu) )
                     return 15;
                   MaximumManaEnough_15E90(a1, 0xFu);
                 }
@@ -18619,42 +18624,42 @@ LABEL_9:
   {
     if ( !SearchForSpell_14E60((int)OFF(a1), 0x11u) )
       goto LABEL_46;
-    if ( AiSpellReady_15A00((int)OFF(a1), 0x11u) )
+    if ( ICanUseSpell_15A00((int)OFF(a1), 0x11u) )
       return 17;
     if ( !MaximumManaEnough_15E90((int)OFF(a1), 0x11u) || *(_WORD *)PTR(a1[40] + 758) )
     {
 LABEL_46:
       if ( !SearchForSpell_14E60((int)OFF(a1), 8u) )
         goto LABEL_45;
-      if ( AiSpellReady_15A00((int)OFF(a1), 8u) )
+      if ( ICanUseSpell_15A00((int)OFF(a1), 8u) )
         return 8;
       if ( !MaximumManaEnough_15E90((int)OFF(a1), 8u) || *(_WORD *)PTR(a1[40] + 740) )
       {
 LABEL_45:
         if ( !SearchForSpell_14E60((int)OFF(a1), 7u) )
           goto LABEL_44;
-        if ( AiSpellReady_15A00((int)OFF(a1), 7u) )
+        if ( ICanUseSpell_15A00((int)OFF(a1), 7u) )
           return 7;
         if ( !MaximumManaEnough_15E90((int)OFF(a1), 7u) || *(_WORD *)PTR(a1[40] + 738) )
         {
 LABEL_44:
           if ( !SearchForSpell_14E60((int)OFF(a1), 0x14u) )
             goto LABEL_43;
-          if ( AiSpellReady_15A00((int)OFF(a1), 0x14u) )
+          if ( ICanUseSpell_15A00((int)OFF(a1), 0x14u) )
             return 20;
           if ( !MaximumManaEnough_15E90((int)OFF(a1), 0x14u) || *(_WORD *)PTR(a1[40] + 764) )
           {
 LABEL_43:
             if ( !SearchForSpell_14E60((int)OFF(a1), 0) )
               goto LABEL_42;
-            if ( AiSpellReady_15A00((int)OFF(a1), 0) )
+            if ( ICanUseSpell_15A00((int)OFF(a1), 0) )
               return 0;
             if ( !MaximumManaEnough_15E90((int)OFF(a1), 0) || *(_WORD *)PTR(a1[40] + 724) )
             {
 LABEL_42:
               if ( SearchForSpell_14E60((int)OFF(a1), 0xFu) )
               {
-                if ( AiSpellReady_15A00((int)OFF(a1), 0xFu) )
+                if ( ICanUseSpell_15A00((int)OFF(a1), 0xFu) )
                   return 15;
                 MaximumManaEnough_15E90((int)OFF(a1), 0xFu);
               }
@@ -18821,7 +18826,7 @@ unsigned int IShouldDodge_16800(unsigned int a1, int a2)
   {
     if ( *(unsigned __int16 *)PTR(i + 146) == *(__int16 *)PTR(a2 + 24) )
     {
-      v4 = DistanceSquared2D_42410_42750((_WORD *)PTR(a2 + 72), (_WORD *)PTR(i + 72));
+      v4 = GetDistanceXySquared_42410_42750((_WORD *)PTR(a2 + 72), (_WORD *)PTR(i + 72));
       if ( v4 < v2 )
       {
         v2 = v4;
@@ -18854,7 +18859,7 @@ char Defend_16890(int a1, int a2)
 {
   int v2; // eax
 
-  v2 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(a2 + 72));
+  v2 = GetDistanceXySquared_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(a2 + 72));
   if ( v2 < 0x100000 )
   {
     LOBYTE(v2) = *(_BYTE *)PTR(a2 + 65);
@@ -18863,12 +18868,12 @@ char Defend_16890(int a1, int a2)
       if ( !(_BYTE)v2 || (_BYTE)v2 == 3 )
       {
 LABEL_10:
-        if ( AiSpellReady_15A00(a1, 0xEu) )
+        if ( ICanUseSpell_15A00(a1, 0xEu) )
         {
           LOBYTE(v2) = UseSpell_155F0(a1, 0xEu);
           return v2;
         }
-        v2 = AiSpellReady_15A00(a1, 4u);
+        v2 = ICanUseSpell_15A00(a1, 4u);
         if ( !v2 )
           return v2;
 LABEL_15:
@@ -18888,7 +18893,7 @@ LABEL_15:
           goto LABEL_10;
         }
 LABEL_14:
-        v2 = AiSpellReady_15A00(a1, 4u);
+        v2 = ICanUseSpell_15A00(a1, 4u);
         if ( !v2 )
           return v2;
         goto LABEL_15;
@@ -19033,8 +19038,8 @@ void ControlAllModes_16B00()//1E7B00_
 				StoreTmapConfiguration_593B0_598C0();
 				str_AE400_AE3F0->str_232607.var_u16_232707 = str_AE408_AE3F8->var_u16_17;
 				str_AE400_AE3F0->str_232607.var_u32_232709 = timerTicks_AC5D4_AC5C4;
-				SaveGameState_3E750_3EA90(199);
-				SaveMapState_3E8C0_3EC00(199);
+				SaveGameC_3E750_3EA90(199);
+				SaveMapC_3E8C0_3EC00(199);
 				RemakeFreeThings_37220_375E0();
 				str_AE400_AE3F0->var_u32_4593 = -1;
 				str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].messages_13351_28[str_AE400_AE3F0->var_u16_8].periods_13415 = 100;
@@ -19046,8 +19051,8 @@ void ControlAllModes_16B00()//1E7B00_
 		case 0x26:// 'l' load
 			if ((str_AE408_AE3F8->var_u8_0 & 0x10) == 0)
 			{
-				LoadGameState_3E690_3E9D0(199);
-				LoadMapState_3E7F0_3EB30(199);
+				LoadGameC_3E690_3E9D0(199);
+				LoadMapC_3E7F0_3EB30(199);
 				str_AE408_AE3F8->var_u16_17 = str_AE400_AE3F0->str_232607.var_u16_232707;
 				timerTicks_AC5D4_AC5C4 = str_AE400_AE3F0->str_232607.var_u32_232709;
 				RestoreTmapConfiguration_59420_59930();
@@ -20190,8 +20195,8 @@ __int16 FnCreatureTail_19550(int a1)
     DeleteThing_41E80_421C0((Type_AE400_29795*)PTR(a1));
   if ( *(_BYTE *)PTR(a1 + 58) )
   {
-    *(_WORD *)PTR(a1 + 30) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v2 + 72));
-    *(_WORD *)PTR(a1 + 32) = PitchTo_42180_424C0((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v2 + 72));
+    *(_WORD *)PTR(a1 + 30) = GetAngleXy_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v2 + 72));
+    *(_WORD *)PTR(a1 + 32) = GetAngleZy_42180_424C0((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v2 + 72));
     v3 = v2 + 72;
     *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(v3);
     word_AE454_AE444.z = *(_WORD *)PTR(v3 + 4);
@@ -20298,7 +20303,7 @@ void MoveCreature_196E0(Type_AE400_29795* a1x)
   v27 = a1x->var_u32_29951_156->vertSpeed_14;
   v23 = a1x->var_u32_29951_156->maxHeight_10;
   v19 = a1x->var_u32_29951_156->minHeight_12;
-  v2 = GetTerrainHeight_11F50(&word_AE454_AE444);
+  v2 = AltitudePoint_11F50(&word_AE454_AE444);
   Gravity_42000_42340(&word_AE454_AE444, v2, v19, v23, v27);
   DisplacementXyz_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if (a1x->var_u32_29867_72.x >> 8 == word_AE454_AE444.x >> 8 )
@@ -20324,7 +20329,7 @@ void MoveCreature_196E0(Type_AE400_29795* a1x)
   v28 = a1x->var_u32_29951_156->vertSpeed_14;
   v24 = a1x->var_u32_29951_156->maxHeight_10;
   v20 = a1x->var_u32_29951_156->minHeight_12;
-  v9 = GetTerrainHeight_11F50(&word_AE454_AE444);
+  v9 = AltitudePoint_11F50(&word_AE454_AE444);
   Gravity_42000_42340(&word_AE454_AE444, v9, v20, v24, v28);
   DisplacementXyz_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if ( !Colide_11640(a1x, &word_AE454_AE444, 1) )
@@ -20343,7 +20348,7 @@ void MoveCreature_196E0(Type_AE400_29795* a1x)
   v29 = a1x->var_u32_29951_156->vertSpeed_14;
   v25 = a1x->var_u32_29951_156->maxHeight_10;
   v21 = a1x->var_u32_29951_156->minHeight_12;
-  v13 = GetTerrainHeight_11F50(&word_AE454_AE444);
+  v13 = AltitudePoint_11F50(&word_AE454_AE444);
   Gravity_42000_42340(&word_AE454_AE444, v13, v21, v25, v29);
   DisplacementXyz_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if ( !Colide_11640(a1x, &word_AE454_AE444, 1) )
@@ -20362,7 +20367,7 @@ void MoveCreature_196E0(Type_AE400_29795* a1x)
   v30 = a1x->var_u32_29951_156->vertSpeed_14;
   v26 = a1x->var_u32_29951_156->maxHeight_10;
   v22 = a1x->var_u32_29951_156->minHeight_12;
-  v17 = GetTerrainHeight_11F50(&word_AE454_AE444);
+  v17 = AltitudePoint_11F50(&word_AE454_AE444);
   Gravity_42000_42340(&word_AE454_AE444, v17, v22, v26, v30);
   DisplacementXyz_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if ( Colide_11640(a1x, &word_AE454_AE444, 1)
@@ -20479,7 +20484,7 @@ void FnCreatureStand_19B10(Type_AE400_29795* a1x, char a2)
         if ( v13 <= v15 )
         {
           v16 = a1x->var_u32_29951_156->v_30;
-          v14 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, &v9x->var_u32_29867_72);
+          v14 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, &v9x->var_u32_29867_72);
           if ( (unsigned __int16)GetAngleDifference_42210_42550(a1x->var_u16_29825_30, v14) < v16 && v13 < v10 )
           {
             v17x = v9x;
@@ -20607,7 +20612,7 @@ void FnCreatureWander_19D70(Type_AE400_29795* a1x, char a2)
         if ( v14 <= v22 && (*(_BYTE *)PTR(j + 16) & 0x20) == 0 )
         {
           v23 = a1x->var_u32_29951_156->v_30;
-          v15 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(j + 72));
+          v15 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(j + 72));
           if ( (unsigned __int16)GetAngleDifference_42210_42550(a1x->var_u16_29825_30, v15) < v23 && v14 < v11 )
           {
             v26 = j;
@@ -20639,7 +20644,7 @@ LABEL_42:
           if ( v20 <= v25 )
           {
             v24 = a1x->var_u32_29951_156->v_30;
-            v21 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v18 + 72));
+            v21 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v18 + 72));
             if ( (unsigned __int16)GetAngleDifference_42210_42550(a1x->var_u16_29825_30, v21) < v24 && v20 < v17 )
             {
               v27 = v18;
@@ -20739,7 +20744,7 @@ int FnCreatureAttack_1A120(Type_AE400_29795* a1x, char a2, unsigned __int16 (*a3
   MoveCreature_196E0(a1x);
   v12 = dword_AE400_AE3F0() + 29795 + 164 * a1x->var_u16_29941_146;
   if ( (a1x->var_u8_29858_63 & 3) == 0 )
-      a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v12 + 72));
+      a1x->var_u16_29829_34 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v12 + 72));
   if ( *(int *)PTR(v12 + 12) < 0 || (*(_BYTE *)PTR(v12 + 17) & 4) != 0 )
   {
 LABEL_26:
@@ -20876,7 +20881,7 @@ LABEL_35:
         case 3:
             a1x->var_u16_29847_52 = v3x->var_u16_29847_52;
 LABEL_24:
-            a1x->var_u16_29829_34 = HeadingTo_42150_42490(
+            a1x->var_u16_29829_34 = GetAngleXy_42150_42490(
               &a1x->var_u32_29867_72,
               (axis_3d*)(_WORD *)PTR(164 * a1x->var_u16_29847_52 + dword_AE400_AE3F0() + 29795 + 72));
           v13 = *(_DWORD *)PTR(dword_AE408_AE3F8() + 4 * a1x->var_u8_29860_65 + 36382);
@@ -20897,7 +20902,7 @@ LABEL_24:
             v15 = (__int16)a1x->var_u32_29867_72.y - *(__int16 *)PTR(v13 + 74);
             if ( (int)((HIDWORD(v15) ^ v15) - HIDWORD(v15)) < 256 )
             {
-              a1x->var_u16_29829_34 = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(v13 + 72), &a1x->var_u32_29867_72);
+              a1x->var_u16_29829_34 = GetAngleXy_42150_42490((axis_3d*)(_WORD *)PTR(v13 + 72), &a1x->var_u32_29867_72);
               break;
             }
           }
@@ -20987,8 +20992,8 @@ int sub_1A8E0(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
     *(_BYTE *)PTR(v3 + 68) = 10;
     *(_BYTE *)PTR(v3 + 69) = 0;
     *(_WORD *)PTR(v3 + 24) = a1x->id_29819_24;
-    *(_WORD *)PTR(v3 + 30) = HeadingTo_42150_42490(v2x, &a2x->var_u32_29867_72);
-    *(_WORD *)PTR(v4 + 32) = PitchTo_42180_424C0(v2x, &a2x->var_u32_29867_72);
+    *(_WORD *)PTR(v3 + 30) = GetAngleXy_42150_42490(v2x, &a2x->var_u32_29867_72);
+    *(_WORD *)PTR(v4 + 32) = GetAngleZy_42180_424C0(v2x, &a2x->var_u32_29867_72);
     *(_WORD *)PTR(v4 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
     v5 = a1x->var_u16_29941_146;
     *(_DWORD *)PTR(v4 + 156) = (uint32)OFF(&creatureTypes_98F38[6]);
@@ -21016,8 +21021,8 @@ int sub_1A990(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
   if ( v3 )
   {
     *(_WORD *)PTR(v3 + 24) = a1x->id_29819_24;
-    *(_WORD *)PTR(v3 + 30) = HeadingTo_42150_42490(v2x, &a2x->var_u32_29867_72);
-    *(_WORD *)PTR(v3 + 32) = PitchTo_42180_424C0(v2x, &a2x->var_u32_29867_72);
+    *(_WORD *)PTR(v3 + 30) = GetAngleXy_42150_42490(v2x, &a2x->var_u32_29867_72);
+    *(_WORD *)PTR(v3 + 32) = GetAngleZy_42180_424C0(v2x, &a2x->var_u32_29867_72);
     *(_WORD *)PTR(v3 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
     *(_WORD *)PTR(v3 + 146) = a1x->var_u16_29941_146;
     *(_BYTE *)PTR(v3 + 67) = a1x->sModel_29862_67;
@@ -21048,8 +21053,8 @@ void CreatureShootAt_1AA40(Type_AE400_29795* a1x, int a2)
     *(_WORD *)PTR(v3 + 24) = a1x->id_29819_24;
     // PORT: aim at the target a2 (asm: ebp = a2 + 48h); was the shooter's own position, so every shot
     // left with heading/pitch 0 - skeletons fired into empty space
-    *(_WORD *)PTR(v3 + 30) = HeadingTo_42150_42490(v2x, (axis_3d*)PTR(a2 + 72));
-    *(_WORD *)PTR(v3 + 32) = PitchTo_42180_424C0(v2x, (axis_3d*)PTR(a2 + 72));
+    *(_WORD *)PTR(v3 + 30) = GetAngleXy_42150_42490(v2x, (axis_3d*)PTR(a2 + 72));
+    *(_WORD *)PTR(v3 + 32) = GetAngleZy_42180_424C0(v2x, (axis_3d*)PTR(a2 + 72));
     *(_WORD *)PTR(v3 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
     *(_WORD *)PTR(v3 + 146) = a1x->var_u16_29941_146;
     *(_BYTE *)PTR(v3 + 67) = a1x->sModel_29862_67;
@@ -21063,7 +21068,7 @@ void CreatureShootAt_1AA40(Type_AE400_29795* a1x, int a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Attack routine for FnCreatureAttack_1A120: when target a2 is closer than 1024, deals the creature's damage (+44) to it (DealDamage_12B50) and returns 1.
+/// Attack routine for FnCreatureAttack_1A120: when target a2 is closer than 1024, deals the creature's damage (+44) to it (AffectThingDirect_12B50) and returns 1.
 /// Name is a guess (not in the Hidden Worlds linker map).
 int CreatureMeleeHit_1AB10(Type_AE400_29795* a1x, int a2)
 {
@@ -21073,7 +21078,7 @@ int CreatureMeleeHit_1AB10(Type_AE400_29795* a1x, int a2)
   if ( (int)GetDistance_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(a2 + 72)) < 1024 )
   {
     v2 = 1;
-    DealDamage_12B50(a1x, a2, 0, a1x->var_u16_29839_44);
+    AffectThingDirect_12B50(a1x, a2, 0, a1x->var_u16_29839_44);
   }
   return v2;
 }
@@ -21104,8 +21109,8 @@ int sub_1AB70(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 
   v20 = a1x->id_29819_24;
   v17 = 0;
-  v19 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, &a2x->var_u32_29867_72);
-  v21 = PitchTo_42180_424C0(&a1x->var_u32_29867_72, &a2x->var_u32_29867_72);
+  v19 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, &a2x->var_u32_29867_72);
+  v21 = GetAngleZy_42180_424C0(&a1x->var_u32_29867_72, &a2x->var_u32_29867_72);
   v16 = a1x->collisionBox_29873_78.radiusZ_29879_84;
   v15 = a1x->var_u16_29941_146;
   v18 = a1x->sModel_29862_67;
@@ -21221,8 +21226,8 @@ int sub_1AE30(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
     *(_BYTE *)PTR(v3 + 68) = 10;
     *(_BYTE *)PTR(v3 + 69) = 0;
     *(_WORD *)PTR(v3 + 24) = a1x->id_29819_24;
-    *(_WORD *)PTR(v3 + 30) = HeadingTo_42150_42490(v2x, &a2x->var_u32_29867_72);
-    *(_WORD *)PTR(v4 + 32) = PitchTo_42180_424C0(v2x, &a2x->var_u32_29867_72);
+    *(_WORD *)PTR(v3 + 30) = GetAngleXy_42150_42490(v2x, &a2x->var_u32_29867_72);
+    *(_WORD *)PTR(v4 + 32) = GetAngleZy_42180_424C0(v2x, &a2x->var_u32_29867_72);
     *(_WORD *)PTR(v4 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
     v5 = a1x->var_u16_29941_146;
     *(_DWORD *)PTR(v4 + 156) = (uint32)OFF(&creatureTypes_98F38[6]);
@@ -21254,8 +21259,8 @@ int sub_1AEE0(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
     *(_BYTE *)PTR(v4 + 68) = 10;
     *(_BYTE *)PTR(v4 + 69) = 23;
     *(_WORD *)PTR(v4 + 24) = a1x->id_29819_24;
-    *(_WORD *)PTR(v4 + 30) = HeadingTo_42150_42490(v2x, &a2x->var_u32_29867_72);
-    *(_WORD *)PTR(v5 + 32) = PitchTo_42180_424C0(v2x, &a2x->var_u32_29867_72);
+    *(_WORD *)PTR(v4 + 30) = GetAngleXy_42150_42490(v2x, &a2x->var_u32_29867_72);
+    *(_WORD *)PTR(v5 + 32) = GetAngleZy_42180_424C0(v2x, &a2x->var_u32_29867_72);
     *(_WORD *)PTR(v5 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
     *(_WORD *)PTR(v5 + 146) = a1x->var_u16_29941_146;
     *(_DWORD *)PTR(v5 + 156) = (uint32)OFF(&creatureTypes_98F38[6]);
@@ -21330,7 +21335,7 @@ void BobAboveGround_1B120(Type_AE400_29795* a1x)
   int result; // eax
 
   a1x->var_u32_29867_72.z += a1x->var_u16_29821_26;
-  v1 = GetTerrainHeight_11F50(&a1x->var_u32_29867_72);
+  v1 = AltitudePoint_11F50(&a1x->var_u32_29867_72);
   v2 = a1x->var_u32_29867_72.z;
   result = v1 + 256;
   a1x->var_u16_29821_26 -= 5;
@@ -21356,7 +21361,7 @@ void FnCreature01Stand_1B160(Type_AE400_29795* a1x)
       v2 = 164 * a1x->var_u16_29941_146 + dword_AE400_AE3F0() + 29795;
       if ( *(_BYTE *)PTR(v2 + 64) )
       {
-        a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD*)PTR(v2 + 72));
+        a1x->var_u16_29829_34 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD*)PTR(v2 + 72));
       }
       else
       {
@@ -21712,8 +21717,8 @@ void FnCreature04Wander_1B5D0(Type_AE400_29795* a1x)
         {
           if ( GetDistance_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v36 + 72)) > 0x1000 )
           {
-            //LOWORD(v7) = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v36 + 72));
-            a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD*)PTR(v36 + 72));
+            //LOWORD(v7) = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)(v36 + 72));
+            a1x->var_u16_29829_34 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD*)PTR(v36 + 72));
           }
           else
           {
@@ -21758,7 +21763,7 @@ void FnCreature04Wander_1B5D0(Type_AE400_29795* a1x)
             if ( v18 <= v43 && (*(_BYTE *)PTR(v16 + 16) & 0x20) == 0 )
             {
               v39 = a1x->var_u32_29951_156->v_30;
-              v19 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v16 + 72));
+              v19 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v16 + 72));
               if ( (unsigned __int16)GetAngleDifference_42210_42550(a1x->var_u16_29825_30, v19) < v39 && v18 < v15 )
               {
                 v38 = v16;
@@ -21826,7 +21831,7 @@ void FnCreature04Wander_1B5D0(Type_AE400_29795* a1x)
                 if ( v34 <= v42 )
                 {
                   v40 = a1x->var_u32_29951_156->v_30;
-                  v35 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, &v30x->var_u32_29867_72);
+                  v35 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, &v30x->var_u32_29867_72);
                   if ( (unsigned __int16)GetAngleDifference_42210_42550(a1x->var_u16_29825_30, v35) < v40 && v34 < v31 )
                   {
                     v41x = v30x;
@@ -22058,7 +22063,7 @@ void FnCreature05Wander_1BD20(Type_AE400_29795* a1x)
         if ( v11 <= v30 && (*(_BYTE *)PTR(v8 + 16) & 0x20) == 0 )
         {
           v27 = a1x->var_u32_29951_156->v_30;
-          v12 = HeadingTo_42150_42490(v28x, (axis_3d*)(_WORD *)PTR(v8 + 72));
+          v12 = GetAngleXy_42150_42490(v28x, (axis_3d*)(_WORD *)PTR(v8 + 72));
           if ( (unsigned __int16)GetAngleDifference_42210_42550(a1x->var_u16_29825_30, v12) < v27 && v11 < v7 )
           {
             v29 = v8;
@@ -22082,7 +22087,7 @@ void FnCreature05Wander_1BD20(Type_AE400_29795* a1x)
           v17 = a1x->actSpeed_29923_128 << 7;
           if ( GetDistanceXy_423D0_42710(v28x, (axis_3d*)(_WORD *)PTR(v15 + 72)) > v17 )
           {
-             a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v16);
+             a1x->var_u16_29829_34 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v16);
           }
           else
           {
@@ -22242,7 +22247,7 @@ void FnCreature05Flock_1C170(Type_AE400_29795* a1x)
         {
           if ( v10 <= 20 * v11 )
               a1x->var_u16_29821_26 = 3;
-          result = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v9 + 72));
+          result = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v9 + 72));
           a1x->var_u16_29829_34 = result;
         }
         else
@@ -22390,7 +22395,7 @@ void FnCreature06Attack_1C4F0(Type_AE400_29795* a1x)
   MoveCreature_196E0(a1x);
   v10 = 164 * a1x->var_u16_29941_146 + dword_AE400_AE3F0() + 29795;
   if ( (a1x->var_u8_29858_63 & 3) == 0 )
-    a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v10 + 72));
+    a1x->var_u16_29829_34 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v10 + 72));
   if ( *(int *)PTR(v10 + 12) < 0 || (*(_BYTE *)PTR(v10 + 17) & 4) != 0 )
   {
 LABEL_30:
@@ -22405,7 +22410,7 @@ LABEL_30:
   if ( a1x->var_u16_29821_26 > 0 )
   {
     dword_AE400_AE3F0(v12);
-    v13 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v10 + 72));
+    v13 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v10 + 72));
     HIBYTE(v13) = (HIBYTE(v13) + 4) & 7;
     *(_WORD *)PTR(*(_DWORD *)PTR(v10 + 160) + 24) = v13;
     *(_WORD *)PTR(*(_DWORD *)PTR(v10 + 160) + 26) = 256;
@@ -22437,8 +22442,8 @@ LABEL_30:
       *(_BYTE *)PTR(v19 + 68) = 10;
       *(_BYTE *)PTR(v19 + 69) = 23;
       *(_WORD *)PTR(v19 + 24) = a1x->id_29819_24;
-      *(_WORD *)PTR(v19 + 30) = HeadingTo_42150_42490(v22x, (axis_3d*)(_WORD *)PTR(v10 + 72));
-      *(_WORD *)PTR(v20 + 32) = PitchTo_42180_424C0(v22x, (axis_3d*)(_WORD *)PTR(v10 + 72));
+      *(_WORD *)PTR(v19 + 30) = GetAngleXy_42150_42490(v22x, (axis_3d*)(_WORD *)PTR(v10 + 72));
+      *(_WORD *)PTR(v20 + 32) = GetAngleZy_42180_424C0(v22x, (axis_3d*)(_WORD *)PTR(v10 + 72));
       *(_WORD *)PTR(v20 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
       v21 = a1x->var_u16_29941_146;
       *(_DWORD *)PTR(v20 + 156) = (uint32)OFF(&creatureTypes_98F38[6]);
@@ -22696,7 +22701,7 @@ void FnCreature08Wander_1CA50(Type_AE400_29795* a1x)
           if ( v12 <= v23 )
           {
             v20 = a1x->var_u32_29951_156->v_30;
-            v13 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(j + 72));
+            v13 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(j + 72));
             if ( (unsigned __int16)GetAngleDifference_42210_42550(a1x->var_u16_29825_30, v13) < v20 && v12 < v9 )
             {
               v25 = j;
@@ -22728,7 +22733,7 @@ void FnCreature08Wander_1CA50(Type_AE400_29795* a1x)
               if ( v18 <= v22 )
               {
                 v21 = a1x->var_u32_29951_156->v_30;
-                v19 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, &v16x->var_u32_29867_72);
+                v19 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, &v16x->var_u32_29867_72);
                 if ( (unsigned __int16)GetAngleDifference_42210_42550(a1x->var_u16_29825_30, v19) < v21 && v18 < v15 )
                 {
                   v24x = v16x;
@@ -22985,7 +22990,7 @@ void FnCreature09Wander_1D060(Type_AE400_29795* a1x)
     v46 = v52;
     if ( v52 )
     {
-      a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v52 + 72));
+      a1x->var_u16_29829_34 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v52 + 72));
       v42 = *(__int16 *)PTR(v52 + 80) + a1x->var_u32_29951_156->v_28;
       if ( GetDistance_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v52 + 72)) > v42 )
       {
@@ -23031,7 +23036,7 @@ void FnCreature09Wander_1D060(Type_AE400_29795* a1x)
             if ( v20 <= v48 && (*(_BYTE *)PTR(k + 16) & 0x20) == 0 )
             {
               v43 = a1x->var_u32_29951_156->v_30;
-              v21 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(k + 72));
+              v21 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(k + 72));
               if ( (unsigned __int16)GetAngleDifference_42210_42550(a1x->var_u16_29825_30, v21) < v43 && v20 < v44 )
               {
                 v41 = k;
@@ -23318,7 +23323,7 @@ LABEL_50:
     if ( v28 )
     {
       v25 = (__int16)(v28[36] - a1x->var_u32_29867_72.x);
-      if ( Distance_410CE_4140E(
+      if ( Sqrl_410CE_4140E(
              (__int16)(v28[37] - a1x->var_u32_29867_72.y) * (__int16)(v28[37] - a1x->var_u32_29867_72.y)
            + v25 * v25
            + (__int16)(v28[38] - a1x->var_u32_29867_72.z) * (__int16)(v28[38] - a1x->var_u32_29867_72.z)) <= 0x600 )
@@ -23414,7 +23419,7 @@ LABEL_29:
     goto LABEL_31;
   }
   if ( !(a1x->var_u8_29858_63 % 10) )
-      a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v9 + 72));
+      a1x->var_u16_29829_34 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v9 + 72));
   if ( !(a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26) )
   {
     v11 = a1x->var_u32_29951_156->v_28;
@@ -23734,7 +23739,7 @@ LABEL_53:
             if ( v13 <= v23 && (*(_BYTE *)PTR(j + 16) & 0x20) == 0 )
             {
               v22 = a1x->var_u32_29951_156->v_30;
-              v14 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(j + 72));
+              v14 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(j + 72));
               if ( (unsigned __int16)GetAngleDifference_42210_42550(a1x->var_u16_29825_30, v14) < v22 && v13 < v10 )
               {
                 v21 = j;
@@ -23879,7 +23884,7 @@ void FnCreature11Attack_1E380(Type_AE400_29795* a1x)
     if ( *(int *)PTR(v9 + 12) >= 0 && (*(_BYTE *)PTR(v9 + 17) & 4) == 0 && *(_BYTE *)PTR(v9 + 64) )
     {
       if ( (a1x->var_u8_29858_63 & 7) == 0 )
-        a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v9 + 72));
+        a1x->var_u16_29829_34 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v9 + 72));
     }
     else
     {
@@ -23936,8 +23941,8 @@ LABEL_38:
       *(_WORD *)PTR(v15 + 76) = v16 + v17;
       v18 = (_WORD *)PTR(v9 + 72);
       *(_WORD *)PTR(v15 + 146) = a1x->var_u16_29941_146;
-      *(_WORD *)PTR(v15 + 30) = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v18);
-      v19 = PitchTo_42180_424C0(&a1x->var_u32_29867_72, (axis_3d*)v18);
+      *(_WORD *)PTR(v15 + 30) = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v18);
+      v19 = GetAngleZy_42180_424C0(&a1x->var_u32_29867_72, (axis_3d*)v18);
       //v20 = a1 - (dword_AE400_AE3F0() + 29795);
       *(_WORD *)PTR(v15 + 32) = v19;
       PlayASample_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 9);
@@ -24431,7 +24436,7 @@ void FnCreature12Attack_1F120(Type_AE400_29795* a1x)
         SetState_424F0_42830(a1x, 0x49u);
       }
       v11 = (_WORD *)PTR(v9 + 72);
-      a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v11);
+      a1x->var_u16_29829_34 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v11);
       if ( GetDistance_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)v11) < 0xA00 )
       {
         a1x->var_u16_29821_26 = 0;
@@ -24654,7 +24659,7 @@ void FnCreature13Wander_1F640(Type_AE400_29795* a1x)
           goto LABEL_36;
         if ( GetDistance_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v16 + 72)) > 0x800 )
         {
-          LOWORD(j) = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v16 + 72));
+          LOWORD(j) = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v16 + 72));
           a1x->var_u16_29829_34 = j;
           return;
         }
@@ -24836,7 +24841,7 @@ void FnCreature14Wander_1FAC0(Type_AE400_29795* a1x)
           goto LABEL_37;
         if ( GetDistance_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v16 + 72)) > 0x800 )
         {
-          LOWORD(j) = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v16 + 72));
+          LOWORD(j) = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v16 + 72));
           a1x->var_u16_29829_34 = j;
           return;
         }
@@ -25023,7 +25028,7 @@ void FnCreature15Wander_1FF60(Type_AE400_29795* a1x)
         if ( v12 <= v14 && (*(_BYTE *)PTR(j + 16) & 0x20) == 0 )
         {
           v15 = a1x->var_u32_29951_156->v_30;
-          v13 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(j + 72));
+          v13 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(j + 72));
           if ( (unsigned __int16)GetAngleDifference_42210_42550(a1x->var_u16_29825_30, v13) < v15 && v12 < v9 )
           {
             v16 = j;
@@ -25110,7 +25115,7 @@ void FnCreature15Attack_201D0(Type_AE400_29795* a1x)
   }
   v8 = v1 + 29795 + 164 * a1x->var_u16_29941_146;
   if ( (a1x->var_u8_29858_63 & 3) == 0 )
-    a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v8 + 72));
+    a1x->var_u16_29829_34 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v8 + 72));
   if ( *(int *)PTR(v8 + 12) < 0 || (*(_BYTE *)PTR(v8 + 17) & 4) != 0 )
     goto LABEL_22;
   //v9 = *(_DWORD *)(a1 + 156);
@@ -25130,8 +25135,8 @@ LABEL_22:
     if ( v10 )
     {
       *(_WORD *)PTR(v10 + 24) = a1x->id_29819_24;
-      *(_WORD *)PTR(v10 + 30) = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v13);
-      *(_WORD *)PTR(v11 + 32) = PitchTo_42180_424C0(&a1x->var_u32_29867_72, (axis_3d*)v13);
+      *(_WORD *)PTR(v10 + 30) = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v13);
+      *(_WORD *)PTR(v11 + 32) = GetAngleZy_42180_424C0(&a1x->var_u32_29867_72, (axis_3d*)v13);
       *(_WORD *)PTR(v11 + 76) += a1x->collisionBox_29873_78.radiusZ_29879_84;
       *(_WORD *)PTR(v11 + 146) = a1x->var_u16_29941_146;
       *(_BYTE *)PTR(v11 + 67) = a1x->sModel_29862_67;
@@ -25283,7 +25288,7 @@ void MoveCastleArcher_20480(Type_AE400_29795* a1x)
         v8 = (__int16)a1x->var_u32_29867_72.y - *(__int16 *)PTR(i + 74);
         if ( (int)((HIDWORD(v8) ^ v8) - HIDWORD(v8)) < 256 )
         {
-            a1x->var_u16_29829_34 = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(i + 72), &a1x->var_u32_29867_72);
+            a1x->var_u16_29829_34 = GetAngleXy_42150_42490((axis_3d*)(_WORD *)PTR(i + 72), &a1x->var_u32_29867_72);
           break;
         }
       }
@@ -25297,7 +25302,7 @@ void MoveCastleArcher_20480(Type_AE400_29795* a1x)
     v17 = a1x->var_u32_29951_156->vertSpeed_14;
     v16 = a1x->var_u32_29951_156->maxHeight_10;
     v15 = a1x->var_u32_29951_156->minHeight_12;
-    v12 = GetTerrainHeight_11F50(&word_AE454_AE444);
+    v12 = AltitudePoint_11F50(&word_AE454_AE444);
     v13 = Gravity_42000_42340(&word_AE454_AE444, v12, v15, v16, v17);
     MoveMapwho_41C70_41FB0(a1x, &word_AE454_AE444);
   }
@@ -25445,7 +25450,7 @@ void FnCreature16Attack_207E0(Type_AE400_29795* a1x)
   if ( (a1x->var_u8_29858_63 & 7) == 0
     && (*(_BYTE *)PTR(v11 + 64) == 3 || GetDistance_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v11 + 72)) >= 0x200) )
   {
-    a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v11 + 72));
+    a1x->var_u16_29829_34 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v11 + 72));
   }
   if ( *(int *)PTR(v11 + 12) < 0 || (*(_BYTE *)PTR(v11 + 17) & 4) != 0 )
     return SetState_424F0_42830(a1x, 0x61u);
@@ -25464,8 +25469,8 @@ void FnCreature16Attack_207E0(Type_AE400_29795* a1x)
       *(_BYTE *)PTR(v13 + 67) = a1x->sModel_29862_67;
       *(_BYTE *)PTR(v13 + 66) = a1x->sClass_29861_66;
       *(_WORD *)PTR(v13 + 24) = a1x->id_29819_24;
-      *(_WORD *)PTR(v13 + 30) = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v11 + 72));
-      *(_WORD *)PTR(v14 + 32) = PitchTo_42180_424C0(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v11 + 72));
+      *(_WORD *)PTR(v13 + 30) = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v11 + 72));
+      *(_WORD *)PTR(v14 + 32) = GetAngleZy_42180_424C0(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v11 + 72));
       *(_WORD *)PTR(v14 + 76) += 4 * a1x->collisionBox_29873_78.radiusZ_29879_84;
       v15 = a1x->var_u16_29941_146;
       *(_WORD *)PTR(v14 + 44) = 3000;
@@ -25482,7 +25487,7 @@ void FnCreature16Attack_207E0(Type_AE400_29795* a1x)
       return SetState_424F0_42830(a1x, 0x61u);
     if ( !(a1x->var_u8_29858_63 % (2 * a1x->var_u32_29951_156->v_26)) )
       PlayASample_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 39);
-    v17 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v11 + 72));
+    v17 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v11 + 72));
     result = GetAngleDifference_42210_42550(a1x->var_u16_29825_30, v17);
     if ( result < 0xE3u )
       a1x->var_u16_29821_26 = 15;
@@ -26269,7 +26274,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 			|| mouse_9AD90.y < locMouseY
 			|| mouse_9AD90.y >= locMouseY + begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.y)
 		{
-			DrawSpellMenuIcon_24230(locMouseX, locMouseY, (unsigned int)OFF(&str_AE400_AE3F0->str_29795[index295]), 0);
+			DrawSpellShort_24230(locMouseX, locMouseY, (unsigned int)OFF(&str_AE400_AE3F0->str_29795[index295]), 0);
 			if (!byte_B7700_B76F0)
 				goto LABEL_126;
 			if (mouse_9AD90.x < locMouseX)
@@ -27117,7 +27122,7 @@ LABEL_48:
         {
           v19 = *(_WORD *)PTR(*(_DWORD *)PTR(v21 + 160) + 50);
           if ( !v19 || (v18 > *(_DWORD *)PTR(164 * v19 + dword_AE400_AE3F0() + 29935)) )
-            sub_247C0(
+            DrawDarkBox_247C0(
                            (__int16)a1,
                            (__int16)a1,
                            a2,
@@ -27133,8 +27138,8 @@ LABEL_48:
 //SYNCHRONIZED WITH REMC1
 /// Draws a spell icon in the spell-menu grid (no charges): frame, picture, hotkey number and the "cannot
 /// afford" overlay; a4 selects how the frame is drawn.
-/// Name is a guess (not in the Hidden Worlds linker map).
-void DrawSpellMenuIcon_24230(__int16 a1, __int16 a2, unsigned int a3, char a4)
+/// Original name: draw_spell_short (DRAW.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void DrawSpellShort_24230(__int16 a1, __int16 a2, unsigned int a3, char a4)
 {
   TypeTab* v4; // eax
   unsigned int v5; // ebp
@@ -27214,7 +27219,7 @@ LABEL_29:
           if ( !*(_WORD *)PTR(v12 + 50)
             || (*(_DWORD *)PTR(a3 + 132) > *(_DWORD *)PTR(dword_AE400_AE3F0() + 4 * (41 * *(unsigned __int16*)PTR(v12 + 50)) + 29935)) )
           {
-            sub_247C0(
+            DrawDarkBox_247C0(
                            a1,
                            a1,
                            a2,
@@ -27229,7 +27234,8 @@ LABEL_29:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_247C0(int result, int a2, __int16 a3, __int16 a4, int a5, unsigned __int8 a6)
+/// Original name: draw_dark_box (DRAW.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void DrawDarkBox_247C0(int result, int a2, __int16 a3, __int16 a4, int a5, unsigned __int8 a6)
 {
   int v6; // edi
   int v7; // eax
@@ -27409,7 +27415,7 @@ void DrawRectCheckedHighRes_24DA0(int a1, int a2, int a3, int a4, unsigned __int
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Per-tick handler of an explosion (class 10 state 0, set by CreateExplosion_3A490).
+/// Per-tick handler of an explosion (class 10 state 0, set by InitEffectExplosion_3A490).
 /// Original name: fn_effect_explosion (EFFECT.C), Hidden Worlds linker map.
 void FnEffectExplosion_24F60(Type_AE400_29795* a1x)
 {
@@ -27436,7 +27442,7 @@ void FnEffectExplosion_24F60(Type_AE400_29795* a1x)
     {
       v2 = a1x->var_29811_16.byte[0] & 0xFE;
       a1x->var_29811_16.byte[0] = v2;
-      v3 = (__int16)GetTerrainHeight_11F50(&a1x->var_u32_29867_72);
+      v3 = (__int16)AltitudePoint_11F50(&a1x->var_u32_29867_72);
       if ( (a1x->var_29811_16.byte[0] & 2) == 0 )
       {
         LOBYTE(v10) = (unsigned __int16)(a1x->var_u32_29867_72.x + 128) >> 8;
@@ -27491,7 +27497,7 @@ void FnEffectExplosion_24F60(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Per-tick handler of class 10 state 1 (set by CreateClass10Type1_3A510).
+/// Per-tick handler of class 10 state 1 (set by InitEffectBigExplosion_3A510).
 /// Original name: fn_effect_big_explosion (EFFECT.C), Hidden Worlds linker map.
 void FnEffectBigExplosion_25130(int a1)
 {
@@ -27620,13 +27626,13 @@ int FnEffectFire_252D0(int a1)
     ++*(_WORD *)PTR(a1 + 86);
     *(_WORD *)PTR(a1 + 26) = v2;
   }
-  *(_WORD *)PTR(a1 + 76) = *(_WORD *)PTR(a1 + 46) + GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+  *(_WORD *)PTR(a1 + 76) = *(_WORD *)PTR(a1 + 46) + AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
   result = TerrainBlock_11810((axis_3d*)(__int16 *)PTR(a1 + 72));
   if ( result == 1 )
 LABEL_11:
     DeleteThing_41E80_421C0((Type_AE400_29795*)PTR(a1));
   if ( (*(_BYTE *)PTR(a1 + 18) & 1) == 0 )
-    return sub_124F0(a1, 0, *(_WORD *)PTR(a1 + 44));
+    return AffectMapwhoWithFire_124F0(a1, 0, *(_WORD *)PTR(a1 + 44));
   return result;
 }
 
@@ -27697,7 +27703,7 @@ void FnEffectVolcano_25470(Type_AE400_29795* a1x)
     AdjustPoints_40D30_41070(a1x, 0, 0, -40, 0);
     word_AE454_AE444 = a1x->var_u32_29867_72;
     //word_AE454_AE444.z = *(_WORD *)(a1 + 76);
-    word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
+    word_AE454_AE444.z = AltitudePoint_11F50(&word_AE454_AE444);
     v3 = (int)OFF(InitModel_373F0_377B0(&word_AE454_AE444, 10, 18));
     if ( v3 )
       *(_WORD *)PTR(v3 + 24) = a1x->id_29819_24;
@@ -27705,7 +27711,7 @@ void FnEffectVolcano_25470(Type_AE400_29795* a1x)
   }
   else
   {
-    sub_127E0(a1x, 0, a1x->var_u16_29839_44);
+    AffectMapwhoChangeInAltitude_127E0(a1x, 0, a1x->var_u16_29839_44);
     PlayASample_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 10);
   }
 }
@@ -27755,7 +27761,7 @@ void CreateRing_255D0(Type_AE400_29795* a1x, __int16 a2, __int16 a3)
   if ( result )
   {
     while ( NextSearch_114B0(v7, (uint32*)v9, (uint32*)&v8) == 1 )
-      AddTileHeight_40A10_40D50(v4 + LOWORD(v9[0]), v5 + v8, -3, 0);
+      AdjustPoint_40A10_40D50(v4 + LOWORD(v9[0]), v5 + v8, -3, 0);
     StopSearch_11490(v7);
   }
 }
@@ -27784,7 +27790,7 @@ void FnEffectCrater_25670(Type_AE400_29795* a1x)
       v2 = a1x->var_u16_29839_44 / 25;
     else
       LOWORD(v2) = a1x->var_u16_29839_44;
-    sub_127E0(a1x, 0, v2);
+    AffectMapwhoChangeInAltitude_127E0(a1x, 0, v2);
     LOWORD(v3) = a1x->var_u16_29821_26;
     if ( (__int16)v3 > ((int)(a1x->collisionBox_29873_78.radiusX_29875_80
                             - (__CFSHL__((unsigned __int64)a1x->collisionBox_29873_78.radiusX_29875_80 >> 32, 8)
@@ -27855,7 +27861,7 @@ void FnEffectWhiteSmoke_257B0(int a1)
       if (*(__int16*)PTR(a1 + 126) > 128 )
         *(_WORD*)PTR(a1 + 126) = 128;
       word_AE454_AE444.z += *(_WORD*)PTR(a1 + 126);
-      v4 = GetTerrainHeight_11F50((axis_3d*)(__int16*)PTR(a1 + 72));
+      v4 = AltitudePoint_11F50((axis_3d*)(__int16*)PTR(a1 + 72));
       if ( word_AE454_AE444.z < v4 )
         word_AE454_AE444.z = v4;
       v5 = *(_WORD*)PTR(a1 + 26) + 1;
@@ -27904,7 +27910,7 @@ void FnEffectBlackSmoke_258A0(int a1)
 		if (*(__int16*)PTR(a1 + 126) > 128)
 			*(_WORD*)PTR(a1 + 126) = 128;
 		word_AE454_AE444.z += *(_WORD*)PTR(a1 + 126);
-		v4 = GetTerrainHeight_11F50((axis_3d*)(__int16*)PTR(a1 + 72));
+		v4 = AltitudePoint_11F50((axis_3d*)(__int16*)PTR(a1 + 72));
 		if (word_AE454_AE444.z < v4)
 			word_AE454_AE444.z = v4;
 		v5 = *(_WORD*)PTR(a1 + 26) + 1;
@@ -28013,7 +28019,7 @@ void FnEffectSummonFire_25A60(int a1)
           *(_WORD*)PTR(a1 + 46) = -384;
       if (*(__int16*)PTR(a1 + 46) > 256)
           *(_WORD*)PTR(a1 + 46) = 256;
-      v6 = GetTerrainHeight_11F50(&word_AE454_AE444);
+      v6 = AltitudePoint_11F50(&word_AE454_AE444);
       v7 = v6;
       if (v6 > word_AE454_AE444.z)
       {
@@ -28170,7 +28176,7 @@ void FnEffectVolcanoAfterMath_25EC0(int a1)
     if ( !(v1 % 0x64) && !*(_WORD *)PTR(dword_AE400_AE3F0() + 36) )
     {
       v2 = *(_WORD *)PTR(a1 + 76);
-      v3 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+      v3 = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
       *(_WORD *)PTR(a1 + 76) = v3;
       if ( v2 != v3 )
       {
@@ -28187,7 +28193,7 @@ LABEL_5:
     || !*(_WORD *)PTR(a1 + 26) )
   {
     v5 = *(_WORD *)PTR(a1 + 76);
-    v6 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+    v6 = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
     *(_WORD *)PTR(a1 + 76) = v6;
     if ( v5 != v6 )
       goto LABEL_5;
@@ -28240,7 +28246,7 @@ LABEL_5:
         *(_DWORD *)PTR(v15 + 150) = *(_DWORD *)PTR(a1 + 72);
         *(_WORD *)PTR(v15 + 154) = *(_WORD *)PTR(a1 + 76);
         DisplacementXyz_41EC0_42200((axis_3d*)(_WORD *)PTR(v15 + 150), *(_WORD *)PTR(v15 + 30), 0, 1536);
-        *(_WORD *)PTR(v15 + 154) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v15 + 150));
+        *(_WORD *)PTR(v15 + 154) = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(v15 + 150));
       }
     }
     if ( *(__int16 *)PTR(a1 + 26) >= 127 )
@@ -28308,7 +28314,7 @@ void FnEffectFireColumn_26140(Type_AE400_29795* a1x)
       }
       StopSearch_11490(v2);
     }
-    a1x->var_u32_29867_72.z = GetTerrainHeight_11F50(&a1x->var_u32_29867_72);
+    a1x->var_u32_29867_72.z = AltitudePoint_11F50(&a1x->var_u32_29867_72);
   }
   else
   {
@@ -28374,8 +28380,8 @@ void FnEffectStealMana_26360(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of the Duel spell's effect (class 10 state 26).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void DuelEffectTick_263C0(Type_AE400_29795* a1x)
+/// Original name: fn_effect_rubber_band (EFFECT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnEffectRubberBand_263C0(Type_AE400_29795* a1x)
 {
   int v1; // eax
 
@@ -28668,11 +28674,11 @@ void FnEffectTeleport_26A60(int a1)
       v4 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(v3 + 10);
       if ( OverlapThing_11950((Type_AE400_29795*)PTR(a1), (Type_AE400_29795*)PTR(v4)) )
       {
-        v5 = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(v4 + 72), (axis_3d*)(uint16*)v8);
+        v5 = GetAngleXy_42150_42490((axis_3d*)(_WORD *)PTR(v4 + 72), (axis_3d*)(uint16*)v8);
         if ( (unsigned __int16)GetAngleDifference_42210_42550(*(_WORD *)PTR(v4 + 30), v5) < 0xAAu )
         {
           v7 = *(_DWORD *)PTR(a1 + 156);
-          *(_WORD *)PTR(a1 + 154) = *(_WORD *)PTR(v7 + 12) + GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 150));
+          *(_WORD *)PTR(a1 + 154) = *(_WORD *)PTR(v7 + 12) + AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 150));
           PlayASample_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 22);
           MoveMapwho_41C70_41FB0((Type_AE400_29795*)PTR(v4), (axis_3d*)PTR(a1 + 150));
           SetPlayerPalette_44BE0_44F20((Type_AE400_29795*)PTR(v4), 6);
@@ -28681,12 +28687,13 @@ void FnEffectTeleport_26A60(int a1)
       v3 += 2049;
       ++v9;
     }
-    *(_WORD *)PTR(a1 + 76) = GetTerrainHeight_11F50((axis_3d*)v8);
+    *(_WORD *)PTR(a1 + 76) = AltitudePoint_11F50((axis_3d*)v8);
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_26C00(int a1)
+/// Original name: fn_effect_circle_ball (EFFECT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnEffectCircleBall_26C00(int a1)
 {
   int result; // eax
   unsigned int v2; // esi
@@ -28709,7 +28716,7 @@ void sub_26C00(int a1)
       v4 = *(_WORD *)PTR(a1 + 30) + 45;
       HIBYTE(v4) &= 7u;
       *(_WORD *)PTR(a1 + 30) = v4;
-      v5 = GetTerrainHeight_11F50(&word_AE454_AE444);
+      v5 = AltitudePoint_11F50(&word_AE454_AE444);
       ++HIBYTE(v5);
       word_AE454_AE444.z = v5;
       MoveMapwho_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
@@ -28759,7 +28766,7 @@ void FnEffectAlliance_26D20(int a1)
   int i; // [esp+4h] [ebp-14h]
 
   v1 = 0;
-  v2 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+  v2 = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
   if ( *(__int16 *)PTR(a1 + 76) < v2 + 1024 )
   {
     v1 = 1;
@@ -28921,7 +28928,7 @@ void FnEffectManaBall_27030(Type_AE400_29795* event)//1F8030_
   //v2 = event->str_29885_90.var_u16_29913_118;
   if (event->str_29885_90.var_u16_29913_118)
   {
-    event->var_u16_29825_30 = HeadingTo_42150_42490(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->str_29885_90.var_u16_29913_118].var_u32_29867_72);
+    event->var_u16_29825_30 = GetAngleXy_42150_42490(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->str_29885_90.var_u16_29913_118].var_u32_29867_72);
     //v18 = event->var_u16_29825_30;
     word_AE454_AE444.x = 0;
     word_AE454_AE444.y = 0;
@@ -28941,8 +28948,8 @@ void FnEffectManaBall_27030(Type_AE400_29795* event)//1F8030_
     {
       //v19 = str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72;
       event->var_u16_29841_46 = 128;
-      //v5 = HeadingTo_42150_42490(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72);
-      event->var_u16_29825_30 = HeadingTo_42150_42490(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72);
+      //v5 = GetAngleXy_42150_42490(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72);
+      event->var_u16_29825_30 = GetAngleXy_42150_42490(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72);
       //v6 = event->var_u16_29941_146;
       int tempV7 = GetDistanceXy_423D0_42710(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72);
       if (tempV7 <= 1024 )
@@ -28971,7 +28978,7 @@ void FnEffectManaBall_27030(Type_AE400_29795* event)//1F8030_
             word_AE454_AE444.z += 32;
           }
         }
-        int16_t tempV10 = GetTerrainHeight_11F50(&word_AE454_AE444);
+        int16_t tempV10 = AltitudePoint_11F50(&word_AE454_AE444);
         if (tempV10 > word_AE454_AE444.z )
           word_AE454_AE444.z = tempV10;
         MoveMapwho_41C70_41FB0(event, &word_AE454_AE444);
@@ -29006,7 +29013,7 @@ void FnEffectManaBall_27030(Type_AE400_29795* event)//1F8030_
     event->var_u16_29841_46 -= 16;
     if (event->var_u16_29841_46 < -128 )
         event->var_u16_29841_46 = -128;
-    int16 tempV13 = GetTerrainHeight_11F50(&word_AE454_AE444);
+    int16 tempV13 = AltitudePoint_11F50(&word_AE454_AE444);
     //v14 = tempV13;
     if (tempV13 > word_AE454_AE444.z )
     {
@@ -29118,7 +29125,7 @@ void FnEffectRip_275C0(__int16 *a1)
   int v3; // edi
   unsigned int i; // ebx
 
-  result = GetTerrainHeight_11F50((axis_3d*)(a1 + 36));
+  result = AltitudePoint_11F50((axis_3d*)(a1 + 36));
   v2 = a1[50];
   a1[38] = result;
   if ( v2 )
@@ -29168,7 +29175,7 @@ void CreateManaBalls_27690(_WORD *result, Type_AE400_29795* a2x)
       v2[76] = 0;
       v2[63] = (9377 * v5 + 9439) % 0x30u + 16;
       v6 = a2x->var_u32_29867_72.z;
-      v7 = GetTerrainHeight_11F50(&a2x->var_u32_29867_72);
+      v7 = AltitudePoint_11F50(&a2x->var_u32_29867_72);
       v2[23] = (1024 - (v6 - v7) - (__CFSHL__((1024 - (v6 - v7)) >> 31, 3) + 8 * ((1024 - (v6 - v7)) >> 31))) >> 3;
       DisplacementXyz_41EC0_42200((axis_3d*)(v2 + 75), v2[15], 0, v2[63]);
     }
@@ -29757,7 +29764,7 @@ void FnEffectTweenBuilding_27D30(Type_AE400_29795* event)//1F8D30_
 				event->actLife_29807_12 = event->var_u16_29839_44;
 				event->var_29811_16.byte[0] |= 1u;
 				event->var_u8_29865_70 = 52;
-				event->var_u32_29867_72.z = GetTerrainHeight_11F50(&event->var_u32_29867_72);
+				event->var_u32_29867_72.z = AltitudePoint_11F50(&event->var_u32_29867_72);
 				v26 = (unsigned __int16)(v29 >> 1);
 				SmoothOnPerimeter_35F30_362F0(v38, v35, v38, v26, (unsigned __int16)v32, 2u);
 				LOBYTE(v16) = SmoothOnPerimeter_35F30_362F0(v38, v35, v38, v26, (unsigned __int16)v32, 5u);
@@ -29919,7 +29926,7 @@ void FnEffectCastleAdjust_28200(int a1)
     *(_BYTE *)PTR(a1 + 16) = v6 | 2;
     *(_WORD *)PTR(a1 + 26) = 10;
     *(_WORD *)PTR(a1 + 48) = *(__int16 *)PTR(a1 + 76) >> 5;
-    v8 = sub_361C0_36580(v29 - 1, HIBYTE(v29) - 1, v5 + 2, v4 + 2);
+    v8 = AverageOnPerimeter_361C0_36580(v29 - 1, HIBYTE(v29) - 1, v5 + 2, v4 + 2);
     *(_WORD *)PTR(a1 + 44) = v8;
     if ( (unsigned __int16)v8 > 0xDCu )
       *(_WORD *)PTR(a1 + 44) = 220;
@@ -30370,7 +30377,7 @@ void FnEffectDestroyBuilding_28FE0(int a1)
   LOBYTE(v26) = ((unsigned __int16)(*(_WORD *)PTR(a1 + 72) + 128) >> 8) - (v24 >> 1);
   BYTE1(v26) = ((unsigned __int16)(*(_WORD *)PTR(a1 + 74) + 128) >> 8) - (v23 >> 1);
   if ( *(_BYTE *)PTR(a1 + 65) )
-    LOWORD(v4) = sub_361C0_36580(v26, SBYTE1(v26), v23, v24);
+    LOWORD(v4) = AverageOnPerimeter_361C0_36580(v26, SBYTE1(v26), v23, v24);
   else
     v4 = *(__int16 *)PTR(a1 + 76) >> 5;
   v5 = v26;
@@ -30516,7 +30523,7 @@ void FnEffectCastle_293D0(Type_AE400_29795* a1x)
     if ( (a1x->var_29811_16.byte[0] & 2) == 0 )
     {
       a1x->var_29811_16.byte[0] |= 2u;
-      GetTerrainHeight_11F50(&a1x->var_u32_29867_72);
+      AltitudePoint_11F50(&a1x->var_u32_29867_72);
       if ( OverlapThing_11950(
           a1x,
           (Type_AE400_29795*)PTR(dword_AE400_AE3F0()
@@ -30558,7 +30565,7 @@ void FnEffectRollingRock_29540(Type_AE400_29795* a1x)
   v2 = a1x->var_u32_150.y;
   word_AE454_AE444.x += a1x->var_u32_150.x;
   word_AE454_AE444.y += v2;
-  word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
+  word_AE454_AE444.z = AltitudePoint_11F50(&word_AE454_AE444);
   MoveMapwho_41C70_41FB0(a1x, &word_AE454_AE444);
   AffectMapwho_120B0(a1x, 0, a1x->var_u16_29839_44);
 }
@@ -30599,7 +30606,7 @@ void FnEffectCrabEgg_296A0(Type_AE400_29795* a1x)
   int v1; // eax
   __int16 result; // ax
 
-  a1x->var_u32_29867_72.z = GetTerrainHeight_11F50(&a1x->var_u32_29867_72);
+  a1x->var_u32_29867_72.z = AltitudePoint_11F50(&a1x->var_u32_29867_72);
   v1 = a1x->actLife_29807_12;
   a1x->actLife_29807_12 = v1 - 1;
   if (v1 < 0)
@@ -30623,7 +30630,7 @@ void FnEffectCrabEggHatch_29700(int a1)
   int v1; // ebx
   int v2; // eax
 
-  *(_WORD *)PTR(a1 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+  *(_WORD *)PTR(a1 + 76) = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
   *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
   v1 = (int)OFF(InitModel_373F0_377B0(&word_AE454_AE444, 5, 5));
@@ -30754,7 +30761,7 @@ void FnEffectExtra2_29920_29960(int a1)
 			result = dword_AE400_AE3F0() + 29795;
 			if (i <= dword_AE400_AE3F0() + 29795)
 				break;
-			if (*(_BYTE*)PTR(i + 65) == 39 && DistanceSquared2D_42410_42750((_WORD*)PTR(a1 + 72), (_WORD*)PTR(i + 72)) < 12845056)
+			if (*(_BYTE*)PTR(i + 65) == 39 && GetDistanceXySquared_42410_42750((_WORD*)PTR(a1 + 72), (_WORD*)PTR(i + 72)) < 12845056)
 			{
 				v4 = (a1 - (dword_AE400_AE3F0() + 29795)) / 164;
 				*(_DWORD*)PTR(i + 114) = 100;
@@ -30800,7 +30807,7 @@ void FnEffectExtra3_299D0_29A10(Type_AE400_29795* a1x)
               break;
             case 3:
               if ( GetDistanceXy_423D0_42710(&a1x->var_u32_29867_72, (axis_3d*)v2) < 0xA00 )
-                DealDamage_12B50(a1x, i, 0, a1x->var_u16_29839_44);
+                AffectThingDirect_12B50(a1x, i, 0, a1x->var_u16_29839_44);
               break;
             case 9:
             case 0xA:
@@ -32071,7 +32078,7 @@ void DrawSkyTerrainParticles_2A700_2A740_old(int a1, __int16 a2, __int16 a3, __i
     v225 = v12;
     SetupRotateStuff_29C30_29C70(-a7 & 0x7FF);
     fowDist_B5D14_B5D04 = (a8
-        * Distance_410CE_4140E(
+        * Sqrl_410CE_4140E(
             widthViewPort_93AD8 * widthViewPort_93AD8
             + heightViewPort_93ADC * heightViewPort_93ADC)) >> 8;
     v221 = (uint8*)((char*)&yawQuartal_902B4 + 10 * v223);
@@ -33317,7 +33324,7 @@ void DrawLandscape_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw, int posZ
 	tempSin = sin_90B4C[yawAngle];
 	SetupRotateStuff_29C30_29C70(-roll & 0x7FF);
 	fowDist_B5D14_B5D04 = (fow
-		* Distance_410CE_4140E(
+		* Sqrl_410CE_4140E(
 			widthViewPort_93AD8 * widthViewPort_93AD8
 			+ heightViewPort_93ADC * heightViewPort_93ADC)) >> 8;
 	yawQuartal = yawQuartal_902B4[modYaw];
@@ -38883,7 +38890,7 @@ void CreateWorld_31AA0_31AE0(int a1)//202AA0_
   //debug
   }
   memset(mapEntityIndex_10C1E0_10C1D0, 0, 0x20000);
-  sub_32AE0(*(_DWORD *)PTR(a1 + 20), *(_WORD *)PTR(a1 + 24));
+  MakeWater_32AE0(*(_DWORD *)PTR(a1 + 20), *(_WORD *)PTR(a1 + 24));
   FlattenWater_33500();
   //debug
 #ifdef debug1
@@ -38908,7 +38915,7 @@ void CreateWorld_31AA0_31AE0(int a1)//202AA0_
   //add_compare(0x202B62, true);
 #endif debug1
   //debug
-  sub_32EB0(*(_WORD *)PTR(a1 + 36), *(_WORD *)PTR(a1 + 40));
+  MakeArid_32EB0(*(_WORD *)PTR(a1 + 36), *(_WORD *)PTR(a1 + 40));
   //debug
 #ifdef debug1
   //add_compare(0x202B71, true);
@@ -39889,7 +39896,8 @@ int ScaleMap_32A50()//203A50_
 // 10C1E0: using guessed type __int16 mapEntityIndex_10C1E0_10C1D0[7953];
 
 //----- (00032AE0) --------------------------------------------------------
-unsigned __int16 sub_32AE0(int a1, unsigned __int8 a2)
+/// Original name: make_water (FRACMAP.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+unsigned __int16 MakeWater_32AE0(int a1, unsigned __int8 a2)
 {
   unsigned __int16 v3; // si
   int v4; // ecx
@@ -40106,7 +40114,8 @@ unsigned __int8 MakeBeaches_32D00(unsigned __int8 a1, unsigned __int8 a2)
 // 10000: using guessed type void sub_10000();
 
 //----- (00032EB0) --------------------------------------------------------
-char sub_32EB0(unsigned __int8 a1, unsigned __int8 a2)
+/// Original name: make_arid (FRACMAP.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+char MakeArid_32EB0(unsigned __int8 a1, unsigned __int8 a2)
 {
   unsigned __int16 v2; // dx
   int v3; // eax
@@ -41558,7 +41567,7 @@ void LoadAllGameData_34B00_34EC0()//205b00_205EC0
 /// Original name: setup_game (GAME.C), Hidden Worlds linker map.
 void SetupGame_34B40_34F00()//205B40_205F00
 {
-	DrawStartGameTexts_5ACA0_5B1B0();
+	CopyrightRequested_5ACA0_5B1B0();
 	SetupPrint_5AD10_5B220((char*)"Load all data files");
 	LoadAllGameData_34B00_34EC0();
 	SetupPrint_5AD10_5B220((char*)"Initialise Colour Lookup");
@@ -41595,7 +41604,7 @@ void ResetGame_34C60_35020()//205C60
     ResetSspriteManager_58F00_59410();
     sub_44840_44B80();
     FreeAllData_61610_61B20(&pathStrArray[PSSearchD]);
-    DrawStartGameTexts_5ACA0_5B1B0();
+    CopyrightRequested_5ACA0_5B1B0();
 }
 
 //----- (00034C80) --------------------------------------------------------
@@ -42345,7 +42354,7 @@ int BuildCanyon_35D30_360F0(unsigned __int16 a1, unsigned __int16 a2, __int16 a3
   v7[2] = 32 * (unsigned __int8)mapHeightmap_DC1E0_DC1D0[256 * a2 + a1];
   v8[0] = a3 << 8;
   v8[1] = a4 << 8;
-  v4 = HeadingTo_42150_42490((axis_3d*)(uint16*)v7, (axis_3d*)(uint16*)v8);
+  v4 = GetAngleXy_42150_42490((axis_3d*)(uint16*)v7, (axis_3d*)(uint16*)v8);
   v5 = GetDistanceXy_423D0_42710((axis_3d*)(uint16*)v7, (axis_3d*)(uint16*)v8);
   result = (int)OFF(InitModel_373F0_377B0((axis_3d*)v7, 10, 32));
   if ( result )
@@ -42373,7 +42382,7 @@ int BuildRidge_35DE0_361A0(unsigned __int16 a1, unsigned __int16 a2, __int16 a3,
   v9[2] = 16 * (unsigned __int8)mapHeightmap_DC1E0_DC1D0[256 * a2 + a1];
   v10[0] = a3 << 8;
   v10[1] = a4 << 8;
-  v4 = HeadingTo_42150_42490((axis_3d*)(uint16*)v9, (axis_3d*)(uint16*)v10);
+  v4 = GetAngleXy_42150_42490((axis_3d*)(uint16*)v9, (axis_3d*)(uint16*)v10);
   v5 = GetDistanceXy_423D0_42710((axis_3d*)(uint16*)v9, (axis_3d*)(uint16*)v10);
   result = (int)OFF(InitModel_373F0_377B0((axis_3d*)v9, 10, 51));
   v7 = result;
@@ -42599,7 +42608,8 @@ int SmoothPoint_360C0_36480(int a1)//2070C0_
 }
 
 //----- (000361C0) --------------------------------------------------------
-uint16_t sub_361C0_36580(uint8_t a1, uint8_t a2, uint8_t a3, uint8_t a4)
+/// Original name: average_on_perimeter (GENERATE.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+uint16_t AverageOnPerimeter_361C0_36580(uint8_t a1, uint8_t a2, uint8_t a3, uint8_t a4)
 {
     uaxis_2d varA;
     varA._axis_2d.x = a1;
@@ -42615,7 +42625,8 @@ uint16_t sub_361C0_36580(uint8_t a1, uint8_t a2, uint8_t a3, uint8_t a4)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_362C0_36680(Type_AE400_193795* a1, Type_1090* a2)
+/// Original name: build_linked_thing (GENERATE.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void BuildLinkedThing_362C0_36680(Type_AE400_193795* a1, Type_1090* a2)
 {
   Type_1090* result; // eax
   unsigned __int16 v3; // di
@@ -42718,19 +42729,19 @@ void DoEffect_36480_36840(Type_AE400_193795* a1, Type_1090* a2)//207480_
 		{
 			word_AE454_AE444.x = a2->data_4 << 8;
 			word_AE454_AE444.y = a2->data_6 << 8;
-			word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
+			word_AE454_AE444.z = AltitudePoint_11F50(&word_AE454_AE444);
 			if (off_97D12[a2->data_2].adress)
 				off_97D12[a2->data_2].adress(&word_AE454_AE444);
 			return;
 		}
 		if (a2->data_12)
 		{
-			sub_362C0_36680(a1, a2);
+			BuildLinkedThing_362C0_36680(a1, a2);
 			return;
 		}
 		word_AE454_AE444.x = a2->data_4 << 8;
 		word_AE454_AE444.y = a2->data_6 << 8;
-		word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
+		word_AE454_AE444.z = AltitudePoint_11F50(&word_AE454_AE444);
 		if (off_97D12[a2->data_2].adress)
 			off_97D12[a2->data_2].adress(&word_AE454_AE444);
 		return;
@@ -42739,12 +42750,12 @@ void DoEffect_36480_36840(Type_AE400_193795* a1, Type_1090* a2)//207480_
 	{
 		if (a2->data_12)
 		{
-			sub_362C0_36680(a1, a2);
+			BuildLinkedThing_362C0_36680(a1, a2);
 			return;
 		}
 		word_AE454_AE444.x = a2->data_4 << 8;
 		word_AE454_AE444.y = a2->data_6 << 8;
-		word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
+		word_AE454_AE444.z = AltitudePoint_11F50(&word_AE454_AE444);
 		if (off_97D12[a2->data_2].adress)
 			off_97D12[a2->data_2].adress(&word_AE454_AE444);
 		return;
@@ -42753,7 +42764,7 @@ void DoEffect_36480_36840(Type_AE400_193795* a1, Type_1090* a2)//207480_
 	{
 		word_AE454_AE444.x = a2->data_4 << 8;
 		word_AE454_AE444.y = a2->data_6 << 8;
-		word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
+		word_AE454_AE444.z = AltitudePoint_11F50(&word_AE454_AE444);
 		if (off_97D12[a2->data_2].adress)
 			off_97D12[a2->data_2].adress(&word_AE454_AE444);
 		return;
@@ -42764,26 +42775,26 @@ void DoEffect_36480_36840(Type_AE400_193795* a1, Type_1090* a2)//207480_
 		{
 			word_AE454_AE444.x = a2->data_4 << 8;
 			word_AE454_AE444.y = a2->data_6 << 8;
-			word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
+			word_AE454_AE444.z = AltitudePoint_11F50(&word_AE454_AE444);
 			if (off_97D12[a2->data_2].adress)
 				off_97D12[a2->data_2].adress(&word_AE454_AE444);
 			return;
 		}
 		if (a2->data_12)
 		{
-			sub_362C0_36680(a1, a2);
+			BuildLinkedThing_362C0_36680(a1, a2);
 			return;
 		}
 		word_AE454_AE444.x = a2->data_4 << 8;
 		word_AE454_AE444.y = a2->data_6 << 8;
-		word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
+		word_AE454_AE444.z = AltitudePoint_11F50(&word_AE454_AE444);
 		if (off_97D12[a2->data_2].adress)
 			off_97D12[a2->data_2].adress(&word_AE454_AE444);
 		return;
 	}
 	word_AE454_AE444.x = a2->data_4 << 8;
 	word_AE454_AE444.y = a2->data_6 << 8;
-	word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
+	word_AE454_AE444.z = AltitudePoint_11F50(&word_AE454_AE444);
 	if (off_97D12[a2->data_2].adress)
 	{
 		Type_AE400_29795* event = off_97D12[a2->data_2].adress(&word_AE454_AE444);
@@ -43204,8 +43215,8 @@ __int16 __cdecl sub_36A90_36E50_old(int a1, int a2)
 //SYNChRONIZED WITH REMC1
 /// Frees sprite cache block a2x in cache a1x: returns its bytes to the free pool, then slides every
 /// later block down over the gap (re-pointing each descriptor) so the cache stays contiguous.
-/// Name is a guess (not in the Hidden Worlds linker map).
-void FreeSpriteCacheBlock_36A90_36E50(Type_sub168* a1x, Type_sub168_2* a2x)//207A90_
+/// Original name: HeapDelete (HEAP.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void HeapDelete_36A90_36E50(Type_sub168* a1x, Type_sub168_2* a2x)//207A90_
 {
 	Type_sub168_2_2* v7x; // ebp
 	Type_sub168_2* v12x; // eax
@@ -43295,7 +43306,7 @@ void KInt_36C65(
         byte_B7327 = lastPressedKey_12EF70_12EF60;
     if (lastPressedKey_12EF70_12EF60 == 15 && *(char*)dword_AE408 < 0)
     {
-        sub_41144(0, 63, 0, 0);
+        SetColour_41144(0, 63, 0, 0);
         byte_AE45A = 1;
     }
     if (byte_AE45A)
@@ -43397,7 +43408,7 @@ void ConfigureBuilding_36DF0_371B0(Type_AE400_29795* event, unsigned __int16 a2)
   SetBuildingColideSize_37150_37510(event, a2);
   event->actLife_29807_12 = 30;
   event->var_u16_29839_44 = 2000;
-  event->var_u32_29867_72.z = 32 * sub_361C0_36580(pomX2, pomY2, pomY, pomX);
+  event->var_u32_29867_72.z = 32 * AverageOnPerimeter_361C0_36580(pomX2, pomY2, pomY, pomX);
   event->var_u16_29823_28 |= 2;
   event->var_u8_29866_71 = a2;
 }
@@ -43699,7 +43710,7 @@ void InitSingleThing_37560_37920(Type_1090* type1090)
   {
     v5[0] = (type1090->data_4 << 8) + 128;
     v5[1] = (type1090->data_6 << 8) + 128;
-    v5[2] = GetTerrainHeight_11F50((axis_3d*)v5);
+    v5[2] = AltitudePoint_11F50((axis_3d*)v5);
     v2 = InitModel_373F0_377B0((axis_3d*)v5, type1090->data_0, type1090->data_2);
     if (v2)
     {
@@ -43980,7 +43991,7 @@ int InitPlayerCastle_37920_37CE0(int a1)
     *(_WORD *)PTR(result + 28) = 33;
     LOWORD(v3) = HIBYTE(word_AE454_AE444.x); // PORT: was HIBYTE(word_AE454_AE444) = high byte of .z once retyped as axis_3d (castle built at the wrong x)
     HIWORD(v3) = HIBYTE(word_AE454_AE444.y);
-    v4 = GetTerrainHeight_11F50(&word_AE454_AE444);
+    v4 = AltitudePoint_11F50(&word_AE454_AE444);
     if ( ((__int16)v3 + SHIWORD(v3)) % 2 )
       LOWORD(v3) = v3 + 1;
     LOWORD(v3) = (_WORD)v3 << 8;
@@ -44310,9 +44321,9 @@ int InitSceneryHouse_37E80(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00037EF0) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 2 type 5).
 /// Constructor of class 2 type 5 (initial state 15); sprite 48 is cut content (a castle texture), per the user.
-int CreateClass2Type5_37EF0(int a1)
+/// Original name: init_scenery_tower (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitSceneryTower_37EF0(int a1)
 {
   int result; // eax
   _WORD *v2; // ebx
@@ -44906,8 +44917,8 @@ int ConfigureATroll_38C00_38F80(int a1)
 
 //int unk_99198;//fix
 /// Constructor of the troll or ape (ConfigureATroll_38C00_38F80) (class 5 type 7) (initial state 43). Identified from its decoded sprite (confirmed by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateTrollOrApe_38C60(uint16_t* a1)
+/// Original name: init_creature_07 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitCreature07_38C60(uint16_t* a1)
 {
     int result; // eax
     int v2; // ebx
@@ -45077,7 +45088,7 @@ int InitCreature09_38E70(int a1)
   *(_BYTE *)PTR(v2 + 66) = 3;
   *(_WORD *)PTR(v2 + 26) = (v2 - (v5 + 29795)) / 164 % 10 + 29;
   AddMapwho_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
-  *(_WORD *)PTR(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)PTR(v2 + 72));
+  *(_WORD *)PTR(v2 + 76) = AltitudePoint_11F50((axis_3d*)PTR(v2 + 72));
   ConfigureAThing_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   SetDrawThing_36FA0_37360((Type_AE400_29795*)PTR(v2), 220);
   SetColideSize_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
@@ -45790,8 +45801,8 @@ int InitShotEarthquake_39B40(int a1)
 
 //----- (00039BC0) --------------------------------------------------------
 /// Constructor of the Meteor spell's missile (class 9 type 3, state 3), fired by FnSpellMeteor_56950_56E80.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateMeteorMissile_39BC0(int a1)
+/// Original name: init_shot_meteor (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitShotMeteor_39BC0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45822,8 +45833,8 @@ int CreateMeteorMissile_39BC0(int a1)
 
 //----- (00039C40) --------------------------------------------------------
 /// Constructor of the Volcano spell's missile (class 9 type 4, state 4), fired by FnSpellVolcano_56AF0_57020.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateVolcanoMissile_39C40(int a1)
+/// Original name: init_shot_volcano (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitShotVolcano_39C40(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45854,8 +45865,8 @@ int CreateVolcanoMissile_39C40(int a1)
 
 //----- (00039CC0) --------------------------------------------------------
 /// Constructor of the Crater spell's missile (class 9 type 5, state 5), fired by FnSpellCrater_56CA0_571D0.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateCraterMissile_39CC0(int a1)
+/// Original name: init_shot_crater (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitShotCrater_39CC0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45885,9 +45896,9 @@ int CreateCraterMissile_39CC0(int a1)
 }
 
 //----- (00039D40) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 9 type 6).
 /// Constructor of class 9 type 6 (initial state 6); its sprite looks like a cut projectile graphic, per the user.
-int CreateClass9Type6_39D40(int a1)
+/// Original name: init_shot_teleport (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitShotTeleport_39D40(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45918,8 +45929,8 @@ int CreateClass9Type6_39D40(int a1)
 
 //----- (00039DC0) --------------------------------------------------------
 /// Constructor of the Duel spell's missile (class 9 type 7, state 7), fired by FnSpellRubberBand_57040_57570.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateDuelMissile_39DC0(int a1)
+/// Original name: init_shot_rubber_band (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitShotRubberBand_39DC0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45950,8 +45961,8 @@ int CreateDuelMissile_39DC0(int a1)
 
 //----- (00039E40) --------------------------------------------------------
 /// Constructor of the Steal Mana spell's missile (class 9 type 8, state 8), fired by FnSpellStealMana_57250_57780.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateStealManaMissile_39E40(int a1)
+/// Original name: init_shot_steal_mana (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitShotStealMana_39E40(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45983,8 +45994,8 @@ int CreateStealManaMissile_39E40(int a1)
 
 //----- (00039EC0) --------------------------------------------------------
 /// Constructor of a lightning bolt piece (class 9 type 9, state 9 = FnShotLightning_535E0_53920).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateLightningBolt_39EC0(int a1)
+/// Original name: init_shot_lightning (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitShotLightning_39EC0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -46016,8 +46027,8 @@ int CreateLightningBolt_39EC0(int a1)
 
 //----- (00039F40) --------------------------------------------------------
 /// Constructor of a homing spawn missile (class 9 type 10, state 10 = FnShotCastle_53980_53CC0).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateHomingSpawnMissile_39F40(int a1)
+/// Original name: init_shot_castle (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitShotCastle_39F40(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -46048,8 +46059,8 @@ int CreateHomingSpawnMissile_39F40(int a1)
 
 //----- (00039FC0) --------------------------------------------------------
 /// Constructor of the Undead Army spell's missile (class 9 type 11, state 11), fired by FnSpellSkeleton_57800_57D30.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateUndeadArmyMissile_39FC0(int a1)
+/// Original name: init_shot_skeleton (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitShotSkeleton_39FC0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -46111,9 +46122,9 @@ int CreateLightningStormMissile_3A040(int a1)
 }
 
 //----- (0003A0C0) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 9 type 13).
 /// Constructor of class 9 type 13 (initial state 13).
-int CreateClass9Type13_3A0C0(int a1)
+/// Original name: init_shot_arrow (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitShotArrow_3A0C0(int a1)
 {
   int result; // eax
   _WORD *v2; // ebx
@@ -46258,8 +46269,8 @@ int InitShotExtra2_3A2F0(int a1)
 
 //----- (0003A390) --------------------------------------------------------
 /// Constructor of the Global Death spell's missile (class 9 type 18, state 19), fired by FnSpellExtra3_580A0_585B0.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateGlobalDeathMissile_3A390(int a1)
+/// Original name: init_shot_extra3 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitShotExtra3_3A390(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -46290,9 +46301,9 @@ int CreateGlobalDeathMissile_3A390(int a1)
 // 98FD8: using guessed type void *off_98FD8;
 
 //----- (0003A410) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 9 type 19).
 /// Constructor of class 9 type 19 (initial state 20); its sprite is the fireball graphic.
-int CreateClass9Type19_3A410(int a1)
+/// Original name: init_shot_extra4 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitShotExtra4_3A410(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -46324,8 +46335,8 @@ int CreateClass9Type19_3A410(int a1)
 
 //----- (0003A490) --------------------------------------------------------
 /// Constructor of an explosion (class 10 type 0, state 0) at a1 (dispatch table dword_96902[10].str_4[0]).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateExplosion_3A490(uint16_t* a1)
+/// Original name: init_effect_explosion (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitEffectExplosion_3A490(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -46353,9 +46364,9 @@ int CreateExplosion_3A490(uint16_t* a1)
 }
 
 //----- (0003A510) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 1).
 /// Constructor of class 10 type 1 (state 1); created together with the mana ball when a creature dies (KillCreature_1A800).
-int CreateClass10Type1_3A510(uint16_t* a1)
+/// Original name: init_effect_big_explosion (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitEffectBigExplosion_3A510(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46382,8 +46393,8 @@ int CreateClass10Type1_3A510(uint16_t* a1)
 
 //----- (0003A570) --------------------------------------------------------
 /// Constructor of the speed effect (class 10 type 2, state 2), created by FnSpellSpeedUp_56380_568B0 and FnSpellExtra2_57F00_58410.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateSpeedEffect_3A570(uint16_t* a1)
+/// Original name: init_effect_dust (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitEffectDust_3A570(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46408,9 +46419,9 @@ int CreateSpeedEffect_3A570(uint16_t* a1)
 }
 
 //----- (0003A5D0) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 3).
 /// Constructor of class 10 type 3 (initial state 3).
-int CreateClass10Type3_3A5D0(uint16_t* a1)
+/// Original name: init_effect_blood (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitEffectBlood_3A5D0(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46439,9 +46450,9 @@ int CreateClass10Type3_3A5D0(uint16_t* a1)
 }
 
 //----- (0003A640) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 4).
 /// Constructor of class 10 type 4 (initial state 4).
-int CreateClass10Type4_3A640(uint16_t* a1)
+/// Original name: init_effect_spark (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitEffectSpark_3A640(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46462,7 +46473,7 @@ int CreateClass10Type4_3A640(uint16_t* a1)
     *(_WORD *)PTR(v1 + 26) = 0;
     *(_DWORD *)PTR(v1 + 72) = *(_DWORD *)a1;
     *(_WORD *)PTR(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
-    *(_WORD *)PTR(v1 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v1 + 72));
+    *(_WORD *)PTR(v1 + 76) = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(v1 + 72));
     ConfigureAThing_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   }
   return v2;
@@ -46470,8 +46481,8 @@ int CreateClass10Type4_3A640(uint16_t* a1)
 
 //----- (0003A6B0) --------------------------------------------------------
 /// Constructor of the water splash (class 10 type 5) (initial state 5). Identified from its decoded sprite (named by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateWaterSplash_3A6B0(uint16_t* a1)
+/// Original name: init_effect_splash (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitEffectSplash_3A6B0(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46493,7 +46504,7 @@ int CreateWaterSplash_3A6B0(uint16_t* a1)
     *(_WORD *)PTR(v2 + 26) = 0;
     *(_BYTE *)PTR(v2 + 18) = v4;
     AddMapwho_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
-    *(_WORD *)PTR(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v2 + 72));
+    *(_WORD *)PTR(v2 + 76) = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(v2 + 72));
     ConfigureAThing_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     SetDrawThing_36FA0_37360((Type_AE400_29795*)PTR(v2), 244);
   }
@@ -46502,8 +46513,8 @@ int CreateWaterSplash_3A6B0(uint16_t* a1)
 
 //----- (0003A730) --------------------------------------------------------
 /// Constructor of the fire (class 10 type 6) (state 6); spawned when a spell-7 jar in state 3t+2 is picked up. Identified from its decoded sprite (named by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateFire_3A730(uint16_t* a1)
+/// Original name: init_effect_fire (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitEffectFire_3A730(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -46523,7 +46534,7 @@ int CreateFire_3A730(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 16) = v3 & 0xFFFDFFF7;
     *(_BYTE *)PTR(v1 + 18) |= 2u;
     AddMapwho_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
-    v2[38] = GetTerrainHeight_11F50((axis_3d*)(short*)a1);
+    v2[38] = AltitudePoint_11F50((axis_3d*)(short*)a1);
     ConfigureAThing_36DE0_371A0((Type_AE400_29795*)v2);
     SetDrawThing_36FA0_37360((Type_AE400_29795*)v2, 228);
     SetColideSize_37130_374F0((Type_AE400_29795*)v2, 272, 1536);
@@ -46533,9 +46544,9 @@ int CreateFire_3A730(uint16_t* a1)
 }
 
 //----- (0003A7D0) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 7).
 /// Constructor of class 10 type 7 (initial state 7).
-int CreateClass10Type7_3A7D0(uint16_t* a1)
+/// Original name: init_effect_freeze (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitEffectFreeze_3A7D0(uint16_t* a1)
 {
   int result; // eax
   int v2; // ebx
@@ -46561,7 +46572,7 @@ int CreateClass10Type7_3A7D0(uint16_t* a1)
     *(_BYTE *)PTR(v2 + 67) = 7;
     *(_WORD *)PTR(v2 + 126) = v5 % 0x14 + 20;
     AddMapwho_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
-    *(_WORD *)PTR(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)(short*)a1);
+    *(_WORD *)PTR(v2 + 76) = AltitudePoint_11F50((axis_3d*)(short*)a1);
     SetDrawThingReal_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 78);
     ConfigureAThing_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     result = v2;
@@ -46571,9 +46582,9 @@ int CreateClass10Type7_3A7D0(uint16_t* a1)
 }
 
 //----- (0003A870) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 8).
 /// Constructor of class 10 type 8 (initial state 8).
-int CreateClass10Type8_3A870(uint16_t* a1)
+/// Original name: init_effect_mini_volcano (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitEffectMiniVolcano_3A870(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46600,8 +46611,8 @@ int CreateClass10Type8_3A870(uint16_t* a1)
 
 //----- (0003A8D0) --------------------------------------------------------
 /// Constructor of the Volcano spell's effect (class 10 type 9, state 9), created where CastVolcano's missile lands (missile +68/+69).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateVolcanoEffect_3A8D0(uint16_t* a1)
+/// Original name: init_effect_volcano (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitEffectVolcano_3A8D0(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -46625,9 +46636,9 @@ int CreateVolcanoEffect_3A8D0(uint16_t* a1)
 }
 
 //----- (0003A930) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 10).
 /// Constructor of class 10 type 10 (initial state 10).
-int CreateClass10Type10_3A930(uint16_t* a1)
+/// Original name: init_effect_mini_crater (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitEffectMiniCrater_3A930(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -46655,8 +46666,8 @@ int CreateClass10Type10_3A930(uint16_t* a1)
 
 //----- (0003A9A0) --------------------------------------------------------
 /// Constructor of the Crater spell's effect (class 10 type 11, state 11), created where CastCrater's missile lands (missile +68/+69). Starts a volcano eruption (10/18).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreateCraterEffect_3A9A0(uint16_t* a1)
+/// Original name: init_effect_crater (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitEffectCrater_3A9A0(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -46684,8 +46695,8 @@ int CreateCraterEffect_3A9A0(uint16_t* a1)
 
 //----- (0003AA10) --------------------------------------------------------
 /// Constructor of the Possession spell's effect (class 10 type 12, state 12), created where CastPossession's missile lands (missile +68/+69).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int CreatePossessionEffect_3AA10(uint16_t* a1)
+/// Original name: init_effect_pocession (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int InitEffectPocession_3AA10(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46903,7 +46914,7 @@ int InitEffectSummonFire_3ACC0(uint16_t* a1)
     *(_WORD *)PTR(v2 + 126) = v8 + 52;
     *(_BYTE *)PTR(v2 + 18) = BYTE1(v9) | 2;
     AddMapwho_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
-    *(_WORD *)PTR(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)a1) + 64;
+    *(_WORD *)PTR(v2 + 76) = AltitudePoint_11F50((axis_3d*)a1) + 64;
     DisplacementXyz_41EC0_42200((axis_3d*)(_WORD *)PTR(v2 + 150), *(_WORD *)PTR(v2 + 30), 0, *(_WORD *)PTR(v2 + 126));
     ConfigureAThing_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     SetDrawThing_36FA0_37360((Type_AE400_29795*)PTR(v2), 210);
@@ -47285,7 +47296,7 @@ int InitEffectTeleport_3B300(uint16_t* a1)
     SetColideSize_37130_374F0((Type_AE400_29795*)PTR(v2), 256, 256);
     ConfigureAThing_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     AddMapwho_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
-    *(_WORD *)PTR(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v2 + 72)) + 640;
+    *(_WORD *)PTR(v2 + 76) = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(v2 + 72)) + 640;
     *(_DWORD *)PTR(v2 + 150) = *(_DWORD *)PTR(v2 + 72);
     *(_WORD *)PTR(v2 + 154) = *(_WORD *)PTR(v2 + 76);
     v3 = 9377 * *(_DWORD *)PTR(v2 + 4) + 9439;
@@ -47754,256 +47765,256 @@ Type_AE400_29795* InitSwitch_3BB20(axis_3d* position, char a2, char a3)
 
 //----- (0003BB70) --------------------------------------------------------
 /// Constructor of switch type 0 (class 11 type 0, state 0) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch00_3BB70(axis_3d* position)
+/// Original name: init_switch_hidden_inside (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchHiddenInside_3BB70(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 0, 0);
 }
 
 //----- (0003BB90) --------------------------------------------------------
 /// Constructor of switch type 1 (class 11 type 1, state 1) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch01_3BB90(axis_3d* position)
+/// Original name: init_switch_hidden_outside (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchHiddenOutside_3BB90(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 1, 1);
 }
 
 //----- (0003BBB0) --------------------------------------------------------
 /// Constructor of switch type 2 (class 11 type 2, state 2) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch02_3BBB0(axis_3d* position)
+/// Original name: init_switch_hidden_inside_re (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchHiddenInsideRe_3BBB0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 2, 2);
 }
 
 //----- (0003BBD0) --------------------------------------------------------
 /// Constructor of switch type 3 (class 11 type 3, state 3) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch03_3BBD0(axis_3d* position)
+/// Original name: init_switch_hidden_outside_re (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchHiddenOutsideRe_3BBD0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 3, 3);
 }
 
 //----- (0003BBF0) --------------------------------------------------------
 /// Constructor of switch type 4 (class 11 type 4, state 4) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch04_3BBF0(axis_3d* position)
+/// Original name: init_switch_on_victory (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchOnVictory_3BBF0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 4, 4);
 }
 
 //----- (0003BC10) --------------------------------------------------------
 /// Constructor of switch type 5 (class 11 type 5, state 5) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch05_3BC10(axis_3d* position)
+/// Original name: init_switch_death_inside (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchDeathInside_3BC10(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 5, 5);
 }
 
 //----- (0003BC30) --------------------------------------------------------
 /// Constructor of switch type 6 (class 11 type 6, state 6) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch06_3BC30(axis_3d* position)
+/// Original name: init_switch_death_outside (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchDeathOutside_3BC30(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 6, 6);
 }
 
 //----- (0003BC50) --------------------------------------------------------
 /// Constructor of switch type 7 (class 11 type 7, state 7) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch07_3BC50(axis_3d* position)
+/// Original name: init_switch_death_inside_re (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchDeathInsideRe_3BC50(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 7, 7);
 }
 
 //----- (0003BC70) --------------------------------------------------------
 /// Constructor of switch type 8 (class 11 type 8, state 8) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch08_3BC70(axis_3d* position)
+/// Original name: init_switch_death_outside_re (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchDeathOutsideRe_3BC70(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 8, 8);
 }
 
 //----- (0003BC90) --------------------------------------------------------
 /// Constructor of switch type 9 (class 11 type 9, state 9) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch09_3BC90(axis_3d* position)
+/// Original name: init_switch_obvious_inside (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchObviousInside_3BC90(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 9, 9);
 }
 
 //----- (0003BCB0) --------------------------------------------------------
 /// Constructor of switch type 10 (class 11 type 10, state 10) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch10_3BCB0(axis_3d* position)
+/// Original name: init_switch_obvious_outside (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchObviousOutside_3BCB0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 10, 10);
 }
 
 //----- (0003BCD0) --------------------------------------------------------
 /// Constructor of switch type 11 (class 11 type 11, state 11) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch11_3BCD0(axis_3d* position)
+/// Original name: init_switch_obvious_inside_re (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchObviousInsideRe_3BCD0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 11, 11);
 }
 
 //----- (0003BCF0) --------------------------------------------------------
 /// Constructor of switch type 12 (class 11 type 12, state 12) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch12_3BCF0(axis_3d* position)
+/// Original name: init_switch_obvious_outside_re (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchObviousOutsideRe_3BCF0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 12, 12);
 }
 
 //----- (0003BD10) --------------------------------------------------------
 /// Constructor of switch type 13 (class 11 type 13, state 13) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch13_3BD10(axis_3d* position)
+/// Original name: init_switch_creature_00 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchCreature00_3BD10(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 13, 13);
 }
 
 //----- (0003BD30) --------------------------------------------------------
 /// Constructor of switch type 14 (class 11 type 14, state 14) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch14_3BD30(axis_3d* position)
+/// Original name: init_switch_creature_01 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchCreature01_3BD30(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 14, 14);
 }
 
 //----- (0003BD50) --------------------------------------------------------
 /// Constructor of switch type 15 (class 11 type 15, state 15) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch15_3BD50(axis_3d* position)
+/// Original name: init_switch_creature_02 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchCreature02_3BD50(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 15, 15);
 }
 
 //----- (0003BD70) --------------------------------------------------------
 /// Constructor of switch type 16 (class 11 type 16, state 16) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch16_3BD70(axis_3d* position)
+/// Original name: init_switch_creature_03 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchCreature03_3BD70(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 16, 16);
 }
 
 //----- (0003BD90) --------------------------------------------------------
 /// Constructor of switch type 17 (class 11 type 17, state 17) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch17_3BD90(axis_3d* position)
+/// Original name: init_switch_creature_04 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchCreature04_3BD90(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 17, 17);
 }
 
 //----- (0003BDB0) --------------------------------------------------------
 /// Constructor of switch type 18 (class 11 type 18, state 18) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch18_3BDB0(axis_3d* position)
+/// Original name: init_switch_creature_05 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchCreature05_3BDB0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 18, 18);
 }
 
 //----- (0003BDD0) --------------------------------------------------------
 /// Constructor of switch type 19 (class 11 type 19, state 19) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch19_3BDD0(axis_3d* position)
+/// Original name: init_switch_creature_06 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchCreature06_3BDD0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 19, 19);
 }
 
 //----- (0003BDF0) --------------------------------------------------------
 /// Constructor of switch type 20 (class 11 type 20, state 20) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch20_3BDF0(axis_3d* position)
+/// Original name: init_switch_creature_07 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchCreature07_3BDF0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 20, 20);
 }
 
 //----- (0003BE10) --------------------------------------------------------
 /// Constructor of switch type 21 (class 11 type 21, state 21) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch21_3BE10(axis_3d* position)
+/// Original name: init_switch_creature_08 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchCreature08_3BE10(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 21, 21);
 }
 
 //----- (0003BE30) --------------------------------------------------------
 /// Constructor of switch type 22 (class 11 type 22, state 22) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch22_3BE30(axis_3d* position)
+/// Original name: init_switch_creature_09 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchCreature09_3BE30(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 22, 22);
 }
 
 //----- (0003BE50) --------------------------------------------------------
 /// Constructor of switch type 23 (class 11 type 23, state 23) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch23_3BE50(axis_3d* position)
+/// Original name: init_switch_creature_10 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchCreature10_3BE50(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 23, 23);
 }
 
 //----- (0003BE70) --------------------------------------------------------
 /// Constructor of switch type 24 (class 11 type 24, state 24) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch24_3BE70(axis_3d* position)
+/// Original name: init_switch_creature_11 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchCreature11_3BE70(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 24, 24);
 }
 
 //----- (0003BE90) --------------------------------------------------------
 /// Constructor of switch type 25 (class 11 type 25, state 25) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch25_3BE90(axis_3d* position)
+/// Original name: init_switch_creature_12 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchCreature12_3BE90(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 25, 25);
 }
 
 //----- (0003BEB0) --------------------------------------------------------
 /// Constructor of switch type 26 (class 11 type 26, state 26) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch26_3BEB0(axis_3d* position)
+/// Original name: init_switch_creature_13 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchCreature13_3BEB0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 26, 26);
 }
 
 //----- (0003BED0) --------------------------------------------------------
 /// Constructor of switch type 27 (class 11 type 27, state 27) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch27_3BED0(axis_3d* position)
+/// Original name: init_switch_creature_14 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchCreature14_3BED0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 27, 27);
 }
 
 //----- (0003BEF0) --------------------------------------------------------
 /// Constructor of switch type 28 (class 11 type 28, state 28) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch28_3BEF0(axis_3d* position)
+/// Original name: init_switch_creature_15 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchCreature15_3BEF0(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 28, 28);
 }
 
 //----- (0003BF10) --------------------------------------------------------
 /// Constructor of switch type 29 (class 11 type 29, state 29) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch29_3BF10(axis_3d* position)
+/// Original name: init_switch_creature_16 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchCreature16_3BF10(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 29, 29);
 }
 
 //----- (0003BF30) --------------------------------------------------------
 /// Constructor of switch type 30 (class 11 type 30, state 30) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch30_3BF30(axis_3d* position)
+/// Original name: init_switch_creature_all (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchCreatureAll_3BF30(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 30, 30);
 }
 
 //----- (0003BF50) --------------------------------------------------------
 /// Constructor of switch type 31 (class 11 type 31, state 31) via InitSwitch_3BB20.
-/// Name is a guess (not in the Hidden Worlds linker map).
-Type_AE400_29795* CreateSwitch31_3BF50(axis_3d* position)
+/// Original name: init_switch_exit_level (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+Type_AE400_29795* InitSwitchExitLevel_3BF50(axis_3d* position)
 {
   return InitSwitch_3BB20(position, 31, 31);
 }
@@ -48731,11 +48742,11 @@ void ExecutePlayerInputs_3C9D0_3CD10()//20D9D0_
 			goto LABEL_150;
 		case 0xA:
 			if ((str_AE408_AE3F8->var_u8_0 & 0x10) == 0)
-				SaveMovieGameState_3E410_3E750(10000);
+				SaveGame_3E410_3E750(10000);
 			goto LABEL_150;
 		case 0xB:
 			if ((str_AE408_AE3F8->var_u8_0 & 0x10) == 0)
-				LoadMovieGameState_3E350_3E690(10000);
+				LoadGame_3E350_3E690(10000);
 			goto LABEL_150;
 		case 0xC:
 			if ((str_AE408_AE3F8->var_u8_0 & 0x20) == 0 && v108 == str_AE400_AE3F0->var_u16_8)
@@ -49466,8 +49477,8 @@ void LoadLevel_3E100_3E440(int level, void* buffer)
 
 //----- (0003E350) --------------------------------------------------------
 /// Loads a movie's start state from movie/gam<slot>.dat (the game's own demo recorder).
-/// Name is a guess (not in the Hidden Worlds linker map).
-char LoadMovieGameState_3E350_3E690(__int16 saveSlot)//20F350_
+/// Original name: load_game (IO.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+char LoadGame_3E350_3E690(__int16 saveSlot)//20F350_
 {
   char result; // al
   //int v2; // ebx
@@ -49484,7 +49495,7 @@ char LoadMovieGameState_3E350_3E690(__int16 saveSlot)//20F350_
   //int v13; // [esp+5Ch] [ebp-14h]
   //int v14; // [esp+60h] [ebp-10h]
 
-  result = MovieGameStateExists_3E460(saveSlot);
+  result = VerifyGame_3E460(saveSlot);
   if ( result )
   {
     sprintf(pathBuffer, "%s/gam%05d.dat", "movie", saveSlot);
@@ -49529,8 +49540,8 @@ char LoadMovieGameState_3E350_3E690(__int16 saveSlot)//20F350_
 
 //----- (0003E410) --------------------------------------------------------
 /// Saves a movie's start state to movie/gam<slot>.dat.
-/// Name is a guess (not in the Hidden Worlds linker map).
-void SaveMovieGameState_3E410_3E750(__int16 saveSlot)
+/// Original name: save_game (IO.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void SaveGame_3E410_3E750(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "%s/gam%05d.dat", "movie", saveSlot);
@@ -49539,8 +49550,8 @@ void SaveMovieGameState_3E410_3E750(__int16 saveSlot)
 
 //----- (0003E460) --------------------------------------------------------
 /// Returns 1 if movie/gam<slot>.dat exists.
-/// Name is a guess (not in the Hidden Worlds linker map).
-char MovieGameStateExists_3E460(__int16 saveSlot)
+/// Original name: verify_game (IO.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+char VerifyGame_3E460(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "%s/gam%05d.dat", "movie", saveSlot);
@@ -49553,12 +49564,12 @@ char MovieGameStateExists_3E460(__int16 saveSlot)
 
 //----- (0003E4B0) --------------------------------------------------------
 /// Loads a movie's map arrays from movie/map<slot>.dat.
-/// Name is a guess (not in the Hidden Worlds linker map).
-char LoadMovieMapState_3E4B0_3E7F0(__int16 saveSlot)
+/// Original name: load_map (IO.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+char LoadMap_3E4B0_3E7F0(__int16 saveSlot)
 {
   char result;
   char pathBuffer[512];
-  result = MovieMapStateExists_3E640(saveSlot);
+  result = VerifyMap_3E640(saveSlot);
   if ( result )
   {
     sprintf(pathBuffer, "%s/map%05d.dat", "movie", saveSlot);
@@ -49577,8 +49588,8 @@ char LoadMovieMapState_3E4B0_3E7F0(__int16 saveSlot)
 
 //----- (0003E580) --------------------------------------------------------
 /// Saves a movie's map arrays to movie/map<slot>.dat.
-/// Name is a guess (not in the Hidden Worlds linker map).
-char SaveMovieMapState_3E580_3E8C0(__int16 saveSlot)
+/// Original name: save_map (IO.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+char SaveMap_3E580_3E8C0(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "%s/map%05d.dat", "movie", saveSlot);
@@ -49595,8 +49606,8 @@ char SaveMovieMapState_3E580_3E8C0(__int16 saveSlot)
 
 //----- (0003E640) --------------------------------------------------------
 /// Returns 1 if movie/map<slot>.dat exists.
-/// Name is a guess (not in the Hidden Worlds linker map).
-char MovieMapStateExists_3E640(__int16 saveSlot)
+/// Original name: verify_map (IO.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+char VerifyMap_3E640(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "%s/map%05d.dat", "movie", saveSlot);
@@ -49609,8 +49620,8 @@ char MovieMapStateExists_3E640(__int16 saveSlot)
 
 //----- (0003E690) --------------------------------------------------------
 /// Loads the game state from save/gam<slot>.dat (Alt+L quick load uses slot 199).
-/// Name is a guess (not in the Hidden Worlds linker map).
-char LoadGameState_3E690_3E9D0(__int16 saveSlot)//20F690_
+/// Original name: load_game_c (IO.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+char LoadGameC_3E690_3E9D0(__int16 saveSlot)//20F690_
 {
   char result; // al
   //int v2; // ebx
@@ -49627,7 +49638,7 @@ char LoadGameState_3E690_3E9D0(__int16 saveSlot)//20F690_
   //int v13; // [esp+5Ch] [ebp-14h]
   //int v14; // [esp+60h] [ebp-10h]
 
-  result = GameStateFileExists_3E7A0(saveSlot);
+  result = VerifyGameC_3E7A0(saveSlot);
   if ( result )
   {
     sprintf(pathBuffer, "c:/CARPET.CD/%s/gam%05d.dat", "save", saveSlot);
@@ -49677,8 +49688,8 @@ char LoadGameState_3E690_3E9D0(__int16 saveSlot)//20F690_
 
 //----- (0003E750) --------------------------------------------------------
 /// Saves the game state to save/gam<slot>.dat (Alt+S quick save uses slot 199).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void SaveGameState_3E750_3EA90(__int16 saveSlot)
+/// Original name: save_game_c (IO.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void SaveGameC_3E750_3EA90(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "c:/CARPET.CD/%s/gam%05d.dat", "save", saveSlot);
@@ -49687,8 +49698,8 @@ void SaveGameState_3E750_3EA90(__int16 saveSlot)
 
 //----- (0003E7A0) --------------------------------------------------------
 /// Returns 1 if save/gam<slot>.dat exists.
-/// Name is a guess (not in the Hidden Worlds linker map).
-char GameStateFileExists_3E7A0(__int16 saveSlot)
+/// Original name: verify_game_c (IO.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+char VerifyGameC_3E7A0(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "c:/CARPET.CD/%s/gam%05d.dat", "save", saveSlot);
@@ -49701,11 +49712,11 @@ char GameStateFileExists_3E7A0(__int16 saveSlot)
 
 //----- (0003E7F0) --------------------------------------------------------
 /// Loads the map arrays from save/map<slot>.dat (quick load).
-/// Name is a guess (not in the Hidden Worlds linker map).
-char LoadMapState_3E7F0_3EB30(__int16 saveSlot)
+/// Original name: load_map_c (IO.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+char LoadMapC_3E7F0_3EB30(__int16 saveSlot)
 {
   char pathBuffer[512];
-  char result = MapStateFileExists_3E980(saveSlot);
+  char result = VerifyMapC_3E980(saveSlot);
   if ( result )
   {
     sprintf(pathBuffer, "c:/CARPET.CD/%s/map%05d.dat", "save", saveSlot);
@@ -49724,8 +49735,8 @@ char LoadMapState_3E7F0_3EB30(__int16 saveSlot)
 
 //----- (0003E8C0) --------------------------------------------------------
 /// Saves the map arrays to save/map<slot>.dat (quick save).
-/// Name is a guess (not in the Hidden Worlds linker map).
-char SaveMapState_3E8C0_3EC00(__int16 saveSlot)
+/// Original name: save_map_c (IO.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+char SaveMapC_3E8C0_3EC00(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "c:/CARPET.CD/%s/map%05d.dat", "save", saveSlot);
@@ -49742,8 +49753,8 @@ char SaveMapState_3E8C0_3EC00(__int16 saveSlot)
 
 //----- (0003E980) --------------------------------------------------------
 /// Returns 1 if save/map<slot>.dat exists.
-/// Name is a guess (not in the Hidden Worlds linker map).
-char MapStateFileExists_3E980(__int16 saveSlot)
+/// Original name: verify_map_c (IO.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+char VerifyMapC_3E980(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "c:/CARPET.CD/%s/map%05d.dat", "save", saveSlot);
@@ -49772,8 +49783,8 @@ void TapePackets_3E9D0_3ED10(char a1[10])
         str_AE408_AE3F8->var_u8_0 &= 0xFB;
         return;
       }
-      LoadMovieGameState_3E350_3E690(str_AE408_AE3F8->var_u16_13);
-      LoadMovieMapState_3E4B0_3E7F0(str_AE408_AE3F8->var_u16_13);
+      LoadGame_3E350_3E690(str_AE408_AE3F8->var_u16_13);
+      LoadMap_3E4B0_3E7F0(str_AE408_AE3F8->var_u16_13);
       RestoreTmapConfiguration_59420_59930();
       ResetControlChange_356E0_35AA0();
     }
@@ -49815,8 +49826,8 @@ void TapePackets_3E9D0_3ED10(char a1[10])
         return;
       }
       StoreTmapConfiguration_593B0_598C0();
-      SaveMovieGameState_3E410_3E750(str_AE408_AE3F8->var_u16_13);
-      SaveMovieMapState_3E580_3E8C0(str_AE408_AE3F8->var_u16_13);
+      SaveGame_3E410_3E750(str_AE408_AE3F8->var_u16_13);
+      SaveMap_3E580_3E8C0(str_AE408_AE3F8->var_u16_13);
       RemakeFreeThings_37220_375E0();
       str_AE400_AE3F0->var_u32_4593 = -1;
       str_AE408_AE3F8->var_u8_161 = 3;
@@ -51813,8 +51824,8 @@ _BOOL1 CheckPoint_409E0_40D20(unsigned __int16 a1)
 //SYNCHRONIZED WITH REMC1
 /// Adds a3 to the height of tile (a1, a2) (clamped to 0..200) and updates its flags. With a4 set,
 /// impassable tiles (mapAngle bit 0x80) are left alone and 1 is returned.
-/// Name is a guess (not in the Hidden Worlds linker map).
-char AddTileHeight_40A10_40D50(__int16 a1, __int16 a2, __int16 a3, char a4)
+/// Original name: adjust_point (MAP.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+char AdjustPoint_40A10_40D50(__int16 a1, __int16 a2, __int16 a3, char a4)
 {
   __int16 v4; // bx
   char v5; // al
@@ -51911,7 +51922,7 @@ int AdjustPoints_40D30_41070(Type_AE400_29795* a1x, __int16 a2, __int16 a3, __in
   {
     while ( NextSearch_114B0(v9, (uint32*)v13, (uint32*)&v12) == 1 )
     {
-      if ( AddTileHeight_40A10_40D50(v6 + LOWORD(v13[0]), v7 + v12, a4, a5) )
+      if ( AdjustPoint_40A10_40D50(v6 + LOWORD(v13[0]), v7 + v12, a4, a5) )
       {
         StopSearch_11490(v9);
         LOBYTE(v10) = 1;
@@ -52073,8 +52084,8 @@ __int16 Arctan_40F87_412C7(__int16 a1, __int16 a2)
 }
 // 9374C: using guessed type __int16 word_9374C[258];
 
-/// Name is a guess (not in the Hidden Worlds linker map).
-unsigned int Distance_410CE_4140E(unsigned int square)//2120CE_
+/// Original name: sqrl (MATHS.ASM), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+unsigned int Sqrl_410CE_4140E(unsigned int square)//2120CE_
 {
   unsigned long bitcount; // PORT: was unsigned int, written through unsigned long* (8 bytes on LP64)
   int i;
@@ -52086,7 +52097,8 @@ unsigned int Distance_410CE_4140E(unsigned int square)//2120CE_
 }
 
 //----- (00041144) --------------------------------------------------------
-void sub_41144(unsigned __int8 a1, unsigned __int8 a2, unsigned __int8 a3, unsigned __int8 a4)
+/// Original name: set_colour (MATHS.ASM), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void SetColour_41144(unsigned __int8 a1, unsigned __int8 a2, unsigned __int8 a3, unsigned __int8 a4)
 {
     FixPerifery();
 
@@ -52758,7 +52770,7 @@ void RecordCameras_41B20_41E60(TypeStrAE400_13323* a1x, Type_AE400_29795* a2x)//
 {
   if ( (str_AE408_AE3F8->var_u8_2 & 1) == 0 )
   {
-    GetTerrainHeight_11F50(&a2x->var_u32_29867_72);
+    AltitudePoint_11F50(&a2x->var_u32_29867_72);
     a1x->str_13895_572[a1x->var_u16_13339_16].axis = a2x->var_u32_29867_72;
     a1x->str_13895_572[a1x->var_u16_13339_16].yaw_6 = a2x->var_u16_29825_30;
     a1x->str_13895_572[a1x->var_u16_13339_16].fov_12 = a1x->str_13895_572[0].fov_12;
@@ -52954,7 +52966,8 @@ int Gravity_42000_42340(axis_3d* a1x, int a2, int a3, int a4, int a5)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_42090_423D0(axis_3d* a1x, int a2, int a3, int a4, int a5)
+/// Original name: gravity_and_sink (MOVE.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int GravityAndSink_42090_423D0(axis_3d* a1x, int a2, int a3, int a4, int a5)
 {
   int v5; // esi
   int v6; // ecx
@@ -52987,15 +53000,15 @@ int sub_42090_423D0(axis_3d* a1x, int a2, int a3, int a4, int a5)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Name is a guess (not in the Hidden Worlds linker map).
-__int16 HeadingTo_42150_42490(axis_3d* a1x, axis_3d* a2x)
+/// Original name: get_angle_xy (MOVE.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+__int16 GetAngleXy_42150_42490(axis_3d* a1x, axis_3d* a2x)
 {
   return Arctan_40F87_412C7(a2x->x - a1x->x, a2x->y - a1x->y);
 }
 
 //SYNCHRONIZED WITH REMC1
-/// Name is a guess (not in the Hidden Worlds linker map).
-__int16 PitchTo_42180_424C0(axis_3d* a1x, axis_3d* a2x)
+/// Original name: get_angle_zy (MOVE.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+__int16 GetAngleZy_42180_424C0(axis_3d* a1x, axis_3d* a2x)
 {
   __int16 v3; // [esp-4h] [ebp-8h]
   v3 = -(__int16)GetDistanceXy_423D0_42710(a1x, a2x);
@@ -53084,7 +53097,7 @@ int GetRoughDistance_42300_42640(_WORD *a1, _WORD *a2)
 unsigned int GetDistance_42340_42680(axis_3d* a1x, axis_3d* a2x)
 {
   int v2 = (__int16)(a2x->y - a1x->y);
-  return Distance_410CE_4140E((__int16)(a2x->x - a1x->x) * (__int16)(a2x->x - a1x->x) + v2 * v2 + (__int16)(a2x->z - a1x->z)
+  return Sqrl_410CE_4140E((__int16)(a2x->x - a1x->x) * (__int16)(a2x->x - a1x->x) + v2 * v2 + (__int16)(a2x->z - a1x->z)
                                                                       * (__int16)(a2x->z - a1x->z));
   //(x1-x2)^2+(y1-y2)^2+(z1-z2)^2
 }
@@ -53101,20 +53114,20 @@ int GetDistanceSquared_42390_426D0(_WORD *a1, _WORD *a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// x/y distance between two positions (Distance_410CE_4140E of the squared distance).
+/// x/y distance between two positions (Sqrl_410CE_4140E of the squared distance).
 /// Original name: get_distance_xy (MOVE.C), Hidden Worlds linker map.
 unsigned int GetDistanceXy_423D0_42710(axis_3d* a1x, axis_3d* a2x)
 {
   int v2; // edx
 
   v2 = (__int16)(a2x->y - a1x->y);
-  return Distance_410CE_4140E((__int16)(a2x->x - a1x->x) * (__int16)(a2x->x - a1x->x) + v2 * v2);
+  return Sqrl_410CE_4140E((__int16)(a2x->x - a1x->x) * (__int16)(a2x->x - a1x->x) + v2 * v2);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Squared x/y distance between two positions.
-/// Name is a guess (not in the Hidden Worlds linker map).
-int DistanceSquared2D_42410_42750(_WORD *a1, _WORD *a2)
+/// Original name: get_distance_xy_squared (MOVE.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int GetDistanceXySquared_42410_42750(_WORD *a1, _WORD *a2)
 {
   int v2; // edx
 
@@ -53888,7 +53901,8 @@ LABEL_4:
 
 //----- (00043010) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
-int sub_43010(unsigned int a1, int a2, unsigned __int16 a3)
+/// Original name: net_receive_nowait (NETWORK.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int NetReceiveNowait_43010(unsigned int a1, int a2, unsigned __int16 a3)
 {
   unsigned int v3; // edx
 
@@ -54945,7 +54959,7 @@ void Orgdata_44470_447B0()//215470_
     }
     for ( int i = 0; i < 256; i++ )
     {
-      strPal.byte_CBC34_CBC24[i] = Distance_410CE_4140E(0x10000 - i * i);
+      strPal.byte_CBC34_CBC24[i] = Sqrl_410CE_4140E(0x10000 - i * i);
     }
     strPal.byte_CBC34_CBC24[0] = -1;
     SaveFileAt_62E60_63370((char*)"data/tables.dat", (uint8*)&strPal, sizeof(strPal));
@@ -55275,7 +55289,7 @@ void SetupPlayer_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//
   v3 = a1x - str_AE400_AE3F0->str_13323;
   v32x = str_AE400_AE3F0->playerStart_9177[v3]; // PORT: 6-byte entries as in the original (was an 8-byte struct)
   uaxis_2d tempZ;
-  tempZ.word= GetTerrainHeight_11F50(&v32x);
+  tempZ.word= AltitudePoint_11F50(&v32x);
   tempZ._axis_2d.y++;
   v32x.z = tempZ.word;
   if (event == str_AE400_AE3F0->str_29795)
@@ -55509,8 +55523,8 @@ int PlayerMoveTo_45410_45750(Type_AE400_29795* a1x)//216410_
   v10 = 1;
   if ( TerrainBlock_11810(&word_AE454_AE444) == 256 )
   {
-    v1 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, &word_AE454_AE444);
-    v8 = PitchTo_42180_424C0(&a1x->var_u32_29867_72, &word_AE454_AE444);
+    v1 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, &word_AE454_AE444);
+    v8 = GetAngleZy_42180_424C0(&a1x->var_u32_29867_72, &word_AE454_AE444);
     v7 = GetDistance_42340_42680(&a1x->var_u32_29867_72, &word_AE454_AE444);
     word_AE454_AE444 = a1x->var_u32_29867_72;
     v9 = ((((int)v1 >> 9) + 1) << 9) & 0x7FF;
@@ -55532,7 +55546,7 @@ int PlayerMoveTo_45410_45750(Type_AE400_29795* a1x)//216410_
     }
   }
   //v4 = a1x->var_u32_29951_156->minHeight_12;
-  v5 = GetTerrainHeight_11F50(&word_AE454_AE444);
+  v5 = AltitudePoint_11F50(&word_AE454_AE444);
   if ( word_AE454_AE444.z < v5 + a1x->var_u32_29951_156->minHeight_12)
     word_AE454_AE444.z = a1x->var_u32_29951_156->minHeight_12 + v5;
   return v10;
@@ -55581,7 +55595,7 @@ void MovePlayer_455D0_45910(Type_AE400_29795* a1x)//2165D0_
   if ( v2 )
     v2 /= (int)abs32(v2);
   a1x->actSpeed_29921_126 += v2 * dword_93A88;
-  v3 = GetTerrainHeight_11F50(&word_AE454_AE444);
+  v3 = AltitudePoint_11F50(&word_AE454_AE444);
   v4 = a1x->var_u32_29951_156->maxHeight_10;
   v5 = ((word_AE454_AE444.z - v3 - v4) << 10) / v4;
   if ( v5 < -256 )
@@ -55673,7 +55687,7 @@ void MovePlayer_455D0_45910(Type_AE400_29795* a1x)//2165D0_
       v23 = 3 * a1x->actSpeed_29923_128 / -2;
     if ( (__int16)v23 > (__int16)v22 )
       LOWORD(v23) = 3 * a1x->actSpeed_29923_128 / 2;
-    v24 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v20 + 72));
+    v24 = GetAngleXy_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v20 + 72));
     v25 = a1x->var_u16_29825_30 + GetAngleIncrement_422A0_425E0(a1x->var_u16_29825_30, v24, 5, 0x82u);
     HIBYTE(v25) &= 7u;
     a1x->var_u16_29825_30 = v25;
@@ -55910,7 +55924,7 @@ int FnPlayerFlyerDying_45FC0_46300(int a1)
   if ( *(__int16 *)PTR(a1 + 46) > 0 )
     *(_WORD *)PTR(a1 + 46) = 0;
   v2 = *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 156) + 12);
-  v3 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+  v3 = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
   v4 = v3;
   if ( *(__int16 *)PTR(a1 + 76) < v3 + v2 )
     *(_WORD *)PTR(a1 + 76) = *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 156) + 12) + v3;
@@ -56019,8 +56033,8 @@ void TrackKiller_463B0_466F0(int a1)
   int result; // eax
 
   v1 = (_WORD *)PTR(dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(a1 + 38) + 72);
-  *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)v1);
-  *(_WORD *)PTR(a1 + 36) = PitchTo_42180_424C0((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)v1);
+  *(_WORD *)PTR(a1 + 34) = GetAngleXy_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)v1);
+  *(_WORD *)PTR(a1 + 36) = GetAngleZy_42180_424C0((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)v1);
   *(_WORD *)PTR(a1 + 30) += GetAngleIncrement_422A0_425E0(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34), 5, 0x16u);
   *(_BYTE *)PTR(a1 + 31) &= 7u;
   *(_WORD *)PTR(a1 + 32) += GetAngleIncrement_422A0_425E0(*(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 36), 5, 0x16u);
@@ -56156,8 +56170,8 @@ int AffectPlayer_46540_46880(Type_AE400_29795* a1x)
     if ( v13x > v12x )
     {
       v14x = &v13x->var_u32_29867_72;
-      *(_WORD *)((uint8_t*)a1x->var_u32_29955_160 + 24) = HeadingTo_42150_42490(v14x, &a1x->var_u32_29867_72);
-      *(_WORD *)((uint8_t*)a1x->var_u32_29955_160 + 26) = PitchTo_42180_424C0(v14x, &a1x->var_u32_29867_72);
+      *(_WORD *)((uint8_t*)a1x->var_u32_29955_160 + 24) = GetAngleXy_42150_42490(v14x, &a1x->var_u32_29867_72);
+      *(_WORD *)((uint8_t*)a1x->var_u32_29955_160 + 26) = GetAngleZy_42180_424C0(v14x, &a1x->var_u32_29867_72);
       *(_WORD *)((uint8_t*)a1x->var_u32_29955_160 + 22) = a1x->str_29885_90.var_u16_29885_90 / 10;
       if ( *(__int16 *)((uint8_t*)a1x->var_u32_29955_160 + 22) < 0 )
         *(_WORD *)((uint8_t*)a1x->var_u32_29955_160 + 22) = 0;
@@ -56444,7 +56458,7 @@ __int16 FnPlayerCastleStand_46DB0_470F0(int a1)
     {
       --*(_WORD *)PTR(a1 + 50);
       SetCastleSpell_46D20_47060((Type_AE400_29795*)PTR(a1), 1);
-      LOWORD(v1) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+      LOWORD(v1) = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
       *(_WORD *)PTR(a1 + 76) = v1;
     }
   }
@@ -56459,7 +56473,7 @@ __int16 FnPlayerCastleStand_46DB0_470F0(int a1)
       *(_WORD *)PTR(a1 + 48) = 0;
       *(_BYTE *)PTR(a1 + 70) = 5;
     }
-    *(_WORD *)PTR(a1 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+    *(_WORD *)PTR(a1 + 76) = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
     LOWORD(v1) = *(_WORD *)PTR(a1 + 24);
     v2 = *(_BYTE *)PTR(a1 + 63);
     *(_WORD *)PTR(a1 + 144) = v1;
@@ -56503,7 +56517,7 @@ char FnPlayerCastleBuild_46F10_47250(int a1)
   switch ( v1 )
   {
     case 0:
-      sub_12C50((_WORD *)PTR(a1));
+      CastleClearAllBuildings_12C50((_WORD *)PTR(a1));
       if ( !*(_WORD *)PTR(a1 + 26) || (LOBYTE(v1) = CastleOkToExtend_12D10((_WORD *)PTR(a1)), (_BYTE)v1) )
       {
         if ( (*(_BYTE *)PTR(a1 + 16) & 2) == 0 )
@@ -56525,7 +56539,7 @@ char FnPlayerCastleBuild_46F10_47250(int a1)
     case 1:
     case 4:
     case 6:
-      v1 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+      v1 = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
       *(_WORD *)PTR(a1 + 76) = v1;
       break;
     case 2:
@@ -56539,7 +56553,7 @@ char FnPlayerCastleBuild_46F10_47250(int a1)
       break;
     case 5:
       SetCastleSpell_46D20_47060((Type_AE400_29795*)PTR(a1), 1);
-      *(_WORD *)PTR(a1 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+      *(_WORD *)PTR(a1 + 76) = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
       LOBYTE(v1) = AdjustHeightOfCastle_47080_473C0(a1);
       break;
     default:
@@ -56676,7 +56690,7 @@ int ManaOverflow_47130_47470(int a1)
           *(_WORD *)PTR(v5 + 152) = 0;
           *(_WORD *)PTR(v5 + 126) = (9377 * v7 + 9439) % 0x30u + 16;
           v8 = *(__int16 *)PTR(a1 + 76);
-          v9 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+          v9 = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
           *(_WORD *)PTR(v6 + 46) = (1024
                                - (v8
                                 - v9)
@@ -56899,7 +56913,7 @@ LABEL_32:
             word_AE454_AE444.z = *(_WORD *)PTR(v19 + 76);
             word_AE454_AE444.x += 128;
             word_AE454_AE444.y += 640;
-            word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
+            word_AE454_AE444.z = AltitudePoint_11F50(&word_AE454_AE444);
             MoveMapwho_41C70_41FB0((Type_AE400_29795*)PTR(v19), &word_AE454_AE444);
           }
         }
@@ -57207,7 +57221,7 @@ int FnPlayerBalloonWander_47F90_482D0(int a1)
   {
     *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(a1 + 72);
     word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-    *(_WORD *)PTR(a1 + 30) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v1 + 72));
+    *(_WORD *)PTR(a1 + 30) = GetAngleXy_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v1 + 72));
     v2 = *(_BYTE *)PTR(v1 + 64);
     if ( v2 == 10 )
     {
@@ -57218,7 +57232,7 @@ LABEL_17:
         v16 = v10[7];
         v15 = v10[5];
         v14 = v10[6];
-        v11 = GetTerrainHeight_11F50(&word_AE454_AE444);
+        v11 = AltitudePoint_11F50(&word_AE454_AE444);
         v12 = Gravity_42000_42340(&word_AE454_AE444, v11, v14, v15, v16);
         MoveMapwho_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
         return AffectBalloon_481D0_48510(a1);
@@ -57259,7 +57273,7 @@ LABEL_17:
         if ( GetDistanceXy_423D0_42710((axis_3d*)(uint16*)&word_AE454_AE444, (axis_3d*)(_WORD *)PTR(v1 + 72)) <= v7 )
         {
           v8 = *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 156) + 12);
-          if ( word_AE454_AE444.z <= v8 + (__int16)GetTerrainHeight_11F50(&word_AE454_AE444) && *(__int16 *)PTR(v1 + 26) > 0 )
+          if ( word_AE454_AE444.z <= v8 + (__int16)AltitudePoint_11F50(&word_AE454_AE444) && *(__int16 *)PTR(v1 + 26) > 0 )
           {
             word_AE454_AE444.x = *(_WORD *)PTR(v1 + 72);
             v9 = *(_DWORD *)PTR(v1 + 140);
@@ -57639,7 +57653,7 @@ char RotateDots_48710_48A50(int a1, int a2, __int16 a3, __int16 a4, int a5, int 
     v24 = (__int16)(*(_WORD *)PTR(v21 + 29869) - a4);
     v25 = v58 + ((v22 * v62 - v16 * v24) >> 16);
     v63 = ((v16 * v22 + v62 * v24) >> 16) + v70;
-    v68 = Distance_410CE_4140E((v25 - v23) * (v25 - v23) + (v63 - v20) * (v63 - v20));
+    v68 = Sqrl_410CE_4140E((v25 - v23) * (v25 - v23) + (v63 - v20) * (v63 - v20));
     v66 = (unsigned __int16)Arctan_40F87_412C7(v25 - v23, v63 - v20);
     for ( i = (*(_DWORD *)PTR(dword_AE400_AE3F0() + 2049 * str_AE400_AE3F0->var_u16_8 + 13341) & 3) + 4;
           i <= v68;
@@ -58186,7 +58200,7 @@ void FnSceneryTree_49890_49BD0(int a1)
     }
     *(_WORD *)PTR(a1 + 94) = 0;
   }
-  *(_WORD *)PTR(a1 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+  *(_WORD *)PTR(a1 + 76) = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
   result = TerrainBlock_11810((axis_3d*)(__int16 *)PTR(a1 + 72));
   if ( result == 1 )
   {
@@ -58224,7 +58238,7 @@ int FnSceneryTreeBurning_499C0_49D00(int a1)
       }
     }
   }
-  *(_WORD *)PTR(a1 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+  *(_WORD *)PTR(a1 + 76) = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
   result = TerrainBlock_11810((axis_3d*)(__int16 *)PTR(a1 + 72));
   if ( result == 1 )
   {
@@ -58243,7 +58257,7 @@ void FnSceneryTreeDead_49A50_49D90(_WORD* a1)
   int result; // eax
   int v2; // eax
 
-  a1[38] = GetTerrainHeight_11F50((axis_3d*)(short*)(a1 + 36));
+  a1[38] = AltitudePoint_11F50((axis_3d*)(short*)(a1 + 36));
   result = TerrainBlock_11810((axis_3d*)(short*)(a1 + 36));
   if ( result == 1 )
   {
@@ -58256,13 +58270,13 @@ void FnSceneryTreeDead_49A50_49D90(_WORD* a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of a stone (class 2 state 3, set by InitSceneryStandingStone_37CF0).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int StoneTick_49AA0_49DE0(int a1)
+/// Original name: fn_scenery_standing_stone (SCENERY.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int FnSceneryStandingStone_49AA0_49DE0(int a1)
 {
   int result; // eax
 
   *(_BYTE *)PTR(a1 + 18) |= 2u;
-  result = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+  result = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
   *(_WORD *)PTR(a1 + 76) = result;
   return result;
 }
@@ -58287,7 +58301,7 @@ int FnSceneryDolmen_49AD0_49E10(int a1)
     v2 += 2049;
     ++v1;
   }
-  result = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+  result = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
   *(_WORD *)PTR(a1 + 76) = result;
   return result;
 }
@@ -58301,7 +58315,7 @@ int StandingStoneTick_49B50_49E90(int a1)
   int result; // eax
 
   *(_BYTE *)PTR(a1 + 18) |= 2u;
-  result = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+  result = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
   *(_WORD *)PTR(a1 + 76) = result;
   return result;
 }
@@ -63103,8 +63117,8 @@ int ResetTargetActualZpos_524E0_52820(int a1)
 int SetShotDestinationAngles_52500_52840(_WORD *a1, int a2)
 {
   SetupTargetActualZpos_524C0_52800(a2);
-  a1[17] = HeadingTo_42150_42490((axis_3d*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72));
-  a1[18] = PitchTo_42180_424C0((axis_3d*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72));
+  a1[17] = GetAngleXy_42150_42490((axis_3d*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72));
+  a1[18] = GetAngleZy_42180_424C0((axis_3d*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72));
   return ResetTargetActualZpos_524E0_52820(a2);
 }
 
@@ -63119,8 +63133,8 @@ int TrackShotToTarget_52550_52890(int a1, int a2)
   __int16 v7; // ax
 
   SetupTargetActualZpos_524C0_52800(a2);
-  *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a2 + 72));
-  v3 = PitchTo_42180_424C0((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a2 + 72));
+  *(_WORD *)PTR(a1 + 34) = GetAngleXy_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a2 + 72));
+  v3 = GetAngleZy_42180_424C0((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a2 + 72));
   v4 = *(_DWORD *)PTR(a1 + 156);
   *(_WORD *)PTR(a1 + 36) = v3;
   v5 = *(_WORD *)PTR(a1 + 30)
@@ -63145,8 +63159,8 @@ __int16 TrackShotToTargetCastle_52610_52950(int a1, int a2)
   int v6; // esi
   __int16 result; // ax
 
-  *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a2 + 72));
-  v3 = PitchTo_42180_424C0((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a2 + 72));
+  *(_WORD *)PTR(a1 + 34) = GetAngleXy_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a2 + 72));
+  v3 = GetAngleZy_42180_424C0((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a2 + 72));
   v4 = *(_DWORD *)PTR(a1 + 156);
   *(_WORD *)PTR(a1 + 36) = v3;
   v5 = *(_WORD *)PTR(a1 + 30)
@@ -63260,7 +63274,7 @@ char FnShotGeneric_52770_52AB0(int a1)
   v6 = v5;
   if ( !v5 )
   {
-    LOWORD(result) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+    LOWORD(result) = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
     v16 = *(_WORD *)PTR(a1 + 76);
     word_AE454_AE444.z = result;
     if ( (__int16)result <= v16 )
@@ -63477,7 +63491,7 @@ void FnShotFireball_52B30_52E70(int a1)
   }
   else
   {
-    result = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+    result = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
     v17 = *(_WORD *)PTR(a1 + 76);
     word_AE454_AE444.z = result;
     if ( (__int16)result <= v17 )
@@ -63564,7 +63578,7 @@ char FnShotPocession_52ED0_53210(int a1)
   *(_DWORD *)&word_AE454_AE444.x = *(_DWORD *)PTR(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
   DisplacementXyz_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
-  v4 = GetTerrainHeight_11F50(&word_AE454_AE444);
+  v4 = AltitudePoint_11F50(&word_AE454_AE444);
   if ( v4 > word_AE454_AE444.z )
     word_AE454_AE444.z = v4;
   MoveMapwho_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
@@ -63581,7 +63595,7 @@ char FnShotPocession_52ED0_53210(int a1)
   }
   else
   {
-    LOWORD(v8) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+    LOWORD(v8) = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
     v9 = *(_WORD *)PTR(a1 + 76);
     word_AE454_AE444.z = v8;
     if ( (__int16)v8 > v9 || (v10 = *(_DWORD *)PTR(a1 + 12) - 1, *(_DWORD *)PTR(a1 + 12) = v10, v10 < 0) )
@@ -63758,7 +63772,7 @@ char FnShotStealMana_530C0_53400(int a1)
   }
   else
   {
-    result = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+    result = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
     v15 = *(_WORD *)PTR(a1 + 76);
     word_AE454_AE444.z = result;
     if ( (__int16)result <= v15 )
@@ -63858,7 +63872,7 @@ char FnShotPreGeneric_534C0_53800(int a1)
   }
   else
   {
-    LOWORD(v2) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+    LOWORD(v2) = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
     v4 = *(_WORD *)PTR(a1 + 76);
     word_AE454_AE444.z = v2;
     if ( (__int16)v2 > v4 || (v5 = *(_DWORD *)PTR(a1 + 12) - 1, *(_DWORD *)PTR(a1 + 12) = v5, v5 < 0) )
@@ -64105,7 +64119,7 @@ void FnShotCastle_53980_53CC0(int a1)
     }
     else
     {
-      v3 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+      v3 = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
       v8 = *(_WORD *)PTR(a1 + 76);
       word_AE454_AE444.z = v3;
       if ( v3 > v8 || (v9 = *(_DWORD *)PTR(a1 + 12) - 1, *(_DWORD *)PTR(a1 + 12) = v9, v9 < 0) )
@@ -64167,8 +64181,8 @@ char FnFirstStageShot_53B50_53E90(int a1)
   v16 = 0;
   if ( (v1 & 2) != 0 )
   {
-    *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a1 + 150));
-    *(_WORD *)PTR(a1 + 36) = PitchTo_42180_424C0((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a1 + 150));
+    *(_WORD *)PTR(a1 + 34) = GetAngleXy_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a1 + 150));
+    *(_WORD *)PTR(a1 + 36) = GetAngleZy_42180_424C0((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a1 + 150));
     v3 = *(_WORD *)PTR(a1 + 30)
        + GetAngleIncrement_422A0_425E0(
            *(_WORD *)PTR(a1 + 30),
@@ -64204,7 +64218,7 @@ char FnFirstStageShot_53B50_53E90(int a1)
     }
     else
     {
-      LOWORD(v2) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+      LOWORD(v2) = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
       v10 = *(_WORD *)PTR(a1 + 76);
       word_AE454_AE444.z = v2;
       if ( (__int16)v2 > v10
@@ -64310,7 +64324,7 @@ char LightningStormMissileTick_53DC0_54100(int a1)
   v6 = v5;
   if ( !v5 )
   {
-    LOWORD(result) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+    LOWORD(result) = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
     v15 = *(_WORD *)PTR(a1 + 76);
     word_AE454_AE444.z = result;
     if ( (__int16)result <= v15 )
@@ -64429,7 +64443,7 @@ void FnShotArrow_54180_544D0(int a1)
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
   DisplacementXyz_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
   v2 = ColideThing_11980(a1);
-  if ( (__int16)GetTerrainHeight_11F50(&word_AE454_AE444) <= word_AE454_AE444.z )
+  if ( (__int16)AltitudePoint_11F50(&word_AE454_AE444) <= word_AE454_AE444.z )
   {
     v3 = *(_DWORD *)PTR(a1 + 12);
     *(_DWORD *)PTR(a1 + 12) = v3 - 1;
@@ -64506,7 +64520,7 @@ char FnShotExtra2_542B0_54640(int a1)
   *(_DWORD *)&word_AE454_AE444.x = *(_DWORD *)PTR(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
   DisplacementXyz_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
-  v4 = GetTerrainHeight_11F50(&word_AE454_AE444);
+  v4 = AltitudePoint_11F50(&word_AE454_AE444);
   if ( v4 > word_AE454_AE444.z )
     word_AE454_AE444.z = v4;
   MoveMapwho_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
@@ -64523,7 +64537,7 @@ char FnShotExtra2_542B0_54640(int a1)
   }
   else
   {
-    LOWORD(v8) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+    LOWORD(v8) = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
     v9 = *(_WORD *)PTR(a1 + 76);
     word_AE454_AE444.z = v8;
     if ( (__int16)v8 > v9 || (v10 = *(_DWORD *)PTR(a1 + 12) - 1, *(_DWORD *)PTR(a1 + 12) = v10, v10 < 0) )
@@ -64841,9 +64855,9 @@ int ShotTargetNumber_54A90_54FC0(__int16 *a1, int a2, unsigned __int16 a3, unsig
   unsigned __int16 v13; // [esp+4h] [ebp-14h]
 
   SetupTargetActualZpos_524C0_52800(a2);
-  v4 = HeadingTo_42150_42490((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72));
+  v4 = GetAngleXy_42150_42490((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72));
   v12 = GetAngleDifference_42210_42550(a1[15], v4);
-  if ( v12 <= a3 && (v5 = PitchTo_42180_424C0((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72)), v13 = GetAngleDifference_42210_42550(a1[16], v5), v13 <= a4) )
+  if ( v12 <= a3 && (v5 = GetAngleZy_42180_424C0((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72)), v13 = GetAngleDifference_42210_42550(a1[16], v5), v13 <= a4) )
   {
     v7 = GetDistanceXy_423D0_42710((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72));
     ResetTargetActualZpos_524E0_52820(a2);
@@ -64884,11 +64898,11 @@ int sub_54BD0_55100(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a
 
   v4 = (_WORD *)PTR(a2 + 72);
   v5 = (uint16*)(a1 + 36);
-  v6 = HeadingTo_42150_42490((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72));
+  v6 = GetAngleXy_42150_42490((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72));
   v15 = GetAngleDifference_42210_42550(a1[15], v6);
   if ( v15 > a3 )
     return -1;
-  v8 = PitchTo_42180_424C0((axis_3d*)v5, (axis_3d*)v4);
+  v8 = GetAngleZy_42180_424C0((axis_3d*)v5, (axis_3d*)v4);
   v9 = GetAngleDifference_42210_42550(a1[16], v8);
   if ( v9 > a4 )
     return -1;
@@ -64992,15 +65006,15 @@ int Seen_54F80(int a1)
     else
     {
       v4 = *(unsigned __int16 *)PTR(dword_AE400_AE3F0() + 2049 * str_AE400_AE3F0->var_u16_8 + 13333);
-      v5 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(164 * (unsigned __int16)v4 + dword_AE400_AE3F0() + 29795 + 72));
+      v5 = GetDistanceXySquared_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(164 * (unsigned __int16)v4 + dword_AE400_AE3F0() + 29795 + 72));
       v6 = dword_AE400_AE3F0();
       if ( v5 < 37748736 )
       {
-        // PORT: was Distance_410CE_4140E(v4). The asm pushes edx right after calling sub_42410 (0x54FF8),
+        // PORT: was Sqrl_410CE_4140E(v4). The asm pushes edx right after calling sub_42410 (0x54FF8),
         // which leaves dy*dy in edx (it returns dx*dx + dy*dy in eax), so +48 = |dy|, not the distance
         // (Hex-Rays assumed edx survived the call: tools/audit_clobber.py).
         int16 dy_ = (int16)(*(_WORD *)PTR(164 * (unsigned __int16)v4 + dword_AE400_AE3F0() + 29795 + 74) - *(_WORD *)PTR(a1 + 74));
-        v7 = Distance_410CE_4140E(dy_ * dy_);
+        v7 = Sqrl_410CE_4140E(dy_ * dy_);
         v8 = *(_WORD *)PTR(a1 + 54);
         *(_WORD *)PTR(a1 + 48) = v7;
         v6 = dword_AE400_AE3F0();
@@ -65119,7 +65133,7 @@ void PlayASample_55370_558A0(__int16 a1, __int16 a2, __int16 a3)
     {
       if ( *(char *)PTR(v3 + 16) < 0 )
         return;
-      if ( DistanceSquared2D_42410_42750(
+      if ( GetDistanceXySquared_42410_42750(
              (_WORD *)PTR(164 * *(unsigned __int16 *)PTR(2049 * str_AE400_AE3F0->var_u16_8 + dword_AE400_AE3F0() + 13333)
                      + dword_AE400_AE3F0()
                      + 29795
@@ -65131,7 +65145,7 @@ void PlayASample_55370_558A0(__int16 a1, __int16 a2, __int16 a3)
           + 29795;
       v15 = *(_WORD *)PTR(v3 + 24);
       v14 = GetDistanceXy_423D0_42710((axis_3d*)(_WORD *)PTR(v12 + 72), (axis_3d*)(_WORD *)PTR(v3 + 72));
-      v13 = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(v12 + 72), (axis_3d*)(_WORD *)PTR(v3 + 72));
+      v13 = GetAngleXy_42150_42490((axis_3d*)(_WORD *)PTR(v12 + 72), (axis_3d*)(_WORD *)PTR(v3 + 72));
       v4 = GetAngleDifference_42210_42550(*(_WORD *)PTR(v12 + 30), v13);
       v5 = (12288 * (512 - v4 / 2 + 512)
           - (__CFSHL__((12288 * (512 - v4 / 2 + 512)) >> 31, 10)
@@ -65333,7 +65347,8 @@ LABEL_9:
 
 //----- (000558F0) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
-int sub_558F0()
+/// Original name: cbfadeoutmusic (SOUND.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int Cbfadeoutmusic_558F0()
 {
   int v0; // eax
   void *retaddr[2]; // [esp+0h] [ebp+0h]
@@ -65415,8 +65430,8 @@ int PickupSpell_55A40_55F70(Type_AE400_29795* a1x, char a2, char a3)
       return 0;
     }
   }
-  v4 = GetTerrainHeight_11F50(&a1x->var_u32_29867_72);
-  if ( sub_42090_423D0(&a1x->var_u32_29867_72, v4, 0, 0, -128) == -1 )
+  v4 = AltitudePoint_11F50(&a1x->var_u32_29867_72);
+  if ( GravityAndSink_42090_423D0(&a1x->var_u32_29867_72, v4, 0, 0, -128) == -1 )
   {
     DeleteThing_41E80_421C0(a1x);
     return 0;
@@ -65646,7 +65661,7 @@ int HandTheSpell_55EF0_56420(__int16 a1, int a2, int a3)
     v3 = *(_WORD *)PTR(a2 + 30) - 512;
     HIBYTE(v3) &= 7u;
     DisplacementXyz_41EC0_42200((axis_3d*)(uint16*)&v12, v3, 0, 256);
-    a1 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)&v12);
+    a1 = AltitudePoint_11F50((axis_3d*)(__int16 *)&v12);
     if ( a1 > v13 )
     {
       v12 = *(_DWORD *)PTR(a3 + 72);
@@ -65669,7 +65684,7 @@ int HandTheSpell_55EF0_56420(__int16 a1, int a2, int a3)
     v7 = *(_WORD *)PTR(a2 + 30);
     HIBYTE(v7) = (HIBYTE(v7) + 2) & 7;
     DisplacementXyz_41EC0_42200((axis_3d*)(uint16*)&v12, v7, 0, 256);
-    a1 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)&v12);
+    a1 = AltitudePoint_11F50((axis_3d*)(__int16 *)&v12);
     if ( a1 > v13 )
     {
       v12 = *(_DWORD *)PTR(a3 + 72);
@@ -66047,7 +66062,7 @@ LABEL_9:
     *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
     *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
     DisplacementXyz_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), 0, 4096);
-    v6 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v4 + 150));
+    v6 = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(v4 + 150));
     v7 = dword_AE400_AE3F0() + 29795;
     *(_WORD *)PTR(v4 + 154) = v6;
     PlayASample_55370_558A0((v4 - v7) / 164, -1, 9);
@@ -66166,7 +66181,7 @@ LABEL_9:
       *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
       *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
       DisplacementXyz_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), 0, 4096);
-      *(_WORD *)PTR(v4 + 154) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v4 + 150));
+      *(_WORD *)PTR(v4 + 154) = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(v4 + 150));
       *(_WORD *)PTR(v4 + 30) = *(_WORD *)PTR(v3 + 30);
       v6 = dword_AE400_AE3F0() + 29795;
       *(_WORD *)PTR(v4 + 32) = *(_WORD *)PTR(v3 + 32);
@@ -66232,7 +66247,7 @@ LABEL_9:
       *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
       *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
       DisplacementXyz_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), 0, 4096);
-      v7 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v4 + 150));
+      v7 = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(v4 + 150));
       v8 = dword_AE400_AE3F0() + 29795;
       *(_WORD *)PTR(v4 + 154) = v7;
       PlayASample_55370_558A0((v4 - v8) / 164, -1, 15);
@@ -66606,7 +66621,7 @@ void FnSpellCastle_57610_57B40(int a1)
               *(_DWORD *)PTR(v3 + 150) = *(_DWORD *)PTR(v2 + 72);
               *(_WORD *)PTR(v3 + 154) = *(_WORD *)PTR(v2 + 76);
               DisplacementXyz_41EC0_42200((axis_3d*)(_WORD *)PTR(v3 + 150), *(_WORD *)PTR(v2 + 30), 0, 4096);
-              v6 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v3 + 150));
+              v6 = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(v3 + 150));
               *(_BYTE *)PTR(v3 + 68) = 3;
               *(_BYTE *)PTR(v3 + 69) = 2;
               *(_WORD *)PTR(v3 + 154) = v6;
@@ -67167,7 +67182,7 @@ char RemoveTmapGroupFromHeap_58910_58E20(unsigned __int16 a1)
           v5 = FindTmapAnim_10FD0(dword_AE3E0_AE3D0, v3);
           ClearTmapAnim_10F10(v5);
         }
-        FreeSpriteCacheBlock_36A90_36E50(dword_AE3EC_AE3DC, dword_12D748_12D738[v3]);
+        HeapDelete_36A90_36E50(dword_AE3EC_AE3DC, dword_12D748_12D738[v3]);
         dword_12DF8C_12DF7C[v3] = 0;
         dword_12D748_12D738[v3] = 0;
         dword_12CF00_12CEF0[v3] = 0;
@@ -67198,7 +67213,7 @@ char RemoveTmapGroupFromHeapEvenPermanent_58A00_58F10(unsigned __int16 a1)
         {
           ClearTmapAnim_10F10(FindTmapAnim_10FD0(dword_AE3E0_AE3D0, i));
         }
-        FreeSpriteCacheBlock_36A90_36E50(dword_AE3EC_AE3DC, dword_12D748_12D738[i]);
+        HeapDelete_36A90_36E50(dword_AE3EC_AE3DC, dword_12D748_12D738[i]);
         dword_12DF8C_12DF7C[i] = 0;
         dword_12D748_12D738[i] = 0;
         dword_12CF00_12CEF0[i] = 0;
@@ -67932,7 +67947,7 @@ void SwapScreensVres256_599B0_59EC0(__int16 a1)//22A9B0_
     FixPerifery((char*)"blit640");
 
     if (!byte_9AD96)
-        sub_5BDF8_5C308();
+        PlaceMouse_5BDF8_5C308();
     VGA_Blit(begWscreen_2ECFF4_2ECFE4);
     if (a1 == 400)
     {
@@ -67951,7 +67966,7 @@ void SwapScreensVres256_599B0_59EC0(__int16 a1)//22A9B0_
   char *v2; // esi
 
   if ( !byte_9AD96 )
-    sub_5BDF8_5C308();
+    PlaceMouse_5BDF8_5C308();
   VesaSetPage_61A1C_61F2C(0);
   qmemcpy(&screenBuffer_A0000, (const void *)begWscreen_2ECFF4_2ECFE4, 0x10000u);
   v1 = (char *)(begWscreen_2ECFF4_2ECFE4 + 0x10000);
@@ -68305,151 +68320,151 @@ LABEL_6:
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 13 (class 11 state 13, set by CreateSwitch13).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch13Tick_59F60_5A470(uint16_t* a1)
+/// Original name: fn_switch_creature_00 (SWITCH.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnSwitchCreature00_59F60_5A470(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 0);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 14 (class 11 state 14, set by CreateSwitch14).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch14Tick_59F70_5A480(uint16_t* a1)
+/// Original name: fn_switch_creature_01 (SWITCH.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnSwitchCreature01_59F70_5A480(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 1);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 15 (class 11 state 15, set by CreateSwitch15).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch15Tick_59F80_5A490(uint16_t* a1)
+/// Original name: fn_switch_creature_02 (SWITCH.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnSwitchCreature02_59F80_5A490(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 2);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 16 (class 11 state 16, set by CreateSwitch16).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch16Tick_59F90_5A4A0(uint16_t* a1)
+/// Original name: fn_switch_creature_03 (SWITCH.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnSwitchCreature03_59F90_5A4A0(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 3);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 17 (class 11 state 17, set by CreateSwitch17).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch17Tick_59FA0_5A4B0(uint16_t* a1)
+/// Original name: fn_switch_creature_04 (SWITCH.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnSwitchCreature04_59FA0_5A4B0(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 4);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 18 (class 11 state 18, set by CreateSwitch18).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch18Tick_59FB0_5A4C0(uint16_t* a1)
+/// Original name: fn_switch_creature_05 (SWITCH.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnSwitchCreature05_59FB0_5A4C0(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 5);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 19 (class 11 state 19, set by CreateSwitch19).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch19Tick_59FC0_5A4D0(uint16_t* a1)
+/// Original name: fn_switch_creature_06 (SWITCH.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnSwitchCreature06_59FC0_5A4D0(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 6);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 20 (class 11 state 20, set by CreateSwitch20).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch20Tick_59FD0_5A4E0(uint16_t* a1)
+/// Original name: fn_switch_creature_07 (SWITCH.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnSwitchCreature07_59FD0_5A4E0(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 7);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 21 (class 11 state 21, set by CreateSwitch21).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch21Tick_59FE0_5A4F0(uint16_t* a1)
+/// Original name: fn_switch_creature_08 (SWITCH.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnSwitchCreature08_59FE0_5A4F0(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 8);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 22 (class 11 state 22, set by CreateSwitch22).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch22Tick_59FF0_5A500(uint16_t* a1)
+/// Original name: fn_switch_creature_09 (SWITCH.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnSwitchCreature09_59FF0_5A500(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 9);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 23 (class 11 state 23, set by CreateSwitch23).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch23Tick_5A000_5A510(uint16_t* a1)
+/// Original name: fn_switch_creature_10 (SWITCH.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnSwitchCreature10_5A000_5A510(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 10);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 24 (class 11 state 24, set by CreateSwitch24).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch24Tick_5A010_5A520(uint16_t* a1)
+/// Original name: fn_switch_creature_11 (SWITCH.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnSwitchCreature11_5A010_5A520(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 11);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 25 (class 11 state 25, set by CreateSwitch25).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch25Tick_5A020_5A530(uint16_t* a1)
+/// Original name: fn_switch_creature_12 (SWITCH.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnSwitchCreature12_5A020_5A530(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 12);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 26 (class 11 state 26, set by CreateSwitch26).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch26Tick_5A030_5A540(uint16_t* a1)
+/// Original name: fn_switch_creature_13 (SWITCH.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnSwitchCreature13_5A030_5A540(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 13);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 27 (class 11 state 27, set by CreateSwitch27).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch27Tick_5A040_5A550(uint16_t* a1)
+/// Original name: fn_switch_creature_14 (SWITCH.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnSwitchCreature14_5A040_5A550(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 14);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 28 (class 11 state 28, set by CreateSwitch28).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch28Tick_5A050_5A560(uint16_t* a1)
+/// Original name: fn_switch_creature_15 (SWITCH.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnSwitchCreature15_5A050_5A560(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 15);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 29 (class 11 state 29, set by CreateSwitch29).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch29Tick_5A060_5A570(uint16_t* a1)
+/// Original name: fn_switch_creature_16 (SWITCH.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnSwitchCreature16_5A060_5A570(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), 16);
 }
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of switch type 30 (class 11 state 30, set by CreateSwitch30).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void Switch30Tick_5A070_5A580(uint16_t* a1)
+/// Original name: fn_switch_creature_all (SWITCH.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void FnSwitchCreatureAll_5A070_5A580(uint16_t* a1)
 {
   SwitchOnCreature_59E40_5A350((int)OFF(a1), -1);
 }
 
 /// Per-tick handler of switch type 31 (class 11 state 31, set by CreateSwitch31).
-/// Name is a guess (not in the Hidden Worlds linker map).
-int Switch31Tick_5A080(uint16_t* a1)
+/// Original name: fn_switch_exit_level (SWITCH.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int FnSwitchExitLevel_5A080(uint16_t* a1)
 {
     return 0;
 }
@@ -68470,7 +68485,7 @@ int TriggerSwitch_5A090_5A5A0(int a1, int a2)
         return 1;
       }
     }
-    *(_WORD *)PTR(a1 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
+    *(_WORD *)PTR(a1 + 76) = AltitudePoint_11F50((axis_3d*)(__int16 *)PTR(a1 + 72));
   }
   return 0;
 }
@@ -68859,8 +68874,8 @@ void VersionRequested_5A560_5AA70()
 // 1314A4: using guessed type int dword_1314A4;
 // 1314A8: using guessed type int dword_1314A8;
 
-/// Name is a guess (not in the Hidden Worlds linker map).
-void DrawStartGameTexts_5ACA0_5B1B0()//22bca0_
+/// Original name: copyright_requested (VERSION.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void CopyrightRequested_5ACA0_5B1B0()//22bca0_
 {
   printf("Copyright (c) 1995 Bullfrog Productions Ltd.\n");
   printf("All rights reserved.\n");
@@ -69628,7 +69643,8 @@ int MouseWorkScreenUndraw_5BD40()//22CD40_
 // 12EFF0: using guessed type int pitch_12EFF0_12EFE0;
 // 12EFF4: using guessed type int dword_12EFF4;
 
-void sub_5BDF8_5C308()
+/// Original name: PlaceMouse (MOUSE.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void PlaceMouse_5BDF8_5C308()
 {
   if ( mouseInstalled_9AD98 )
   {
@@ -69941,10 +69957,10 @@ __int16 DecodeFRAMECHUNK_5C76B()
         DecodeBRUN_5CAE7();
         break;
       case 16:
-        sub_5C891();
+        DecodeCOPY_5C891();
         break;
       default:
-        sub_5C8AF();
+        DecodeUnknown_5C8AF();
         break;
     }
   }
@@ -69958,7 +69974,8 @@ __int16 DecodeFRAMECHUNK_5C76B()
 
 //----- (0005C82E) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
-__int16 sub_5C82E()
+/// Original name: decode_FILE_HEADER (ANIM.ASM), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+__int16 DecodeFILEHEADER_5C82E()
 {
   __int16 result; // ax
 
@@ -69975,7 +69992,8 @@ __int16 sub_5C82E()
 // AE3FC: using guessed type int begBscreen_AE3FC_AE3EC_26C3FC_26C3EC;
 
 //----- (0005C891) --------------------------------------------------------
-int sub_5C891()
+/// Original name: decode_COPY (ANIM.ASM), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int DecodeCOPY_5C891()
 {
   return AniRead_5D1A0(dword_9ADC0, (int)OFF(begWscreen_2ECFF4_2ECFE4), dword_9ADA4 - 6);
 }
@@ -69984,7 +70002,8 @@ int sub_5C891()
 // 12EFF4: using guessed type int dword_12EFF4;
 
 //----- (0005C8AF) --------------------------------------------------------
-int sub_5C8AF()
+/// Original name: decode_unknown (ANIM.ASM), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+int DecodeUnknown_5C8AF()
 {
   return AniRead_5D1A0(dword_9ADC0, (int)OFF(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC), dword_9ADA4 - 6);
 }
@@ -70431,7 +70450,7 @@ void Blit_5CDA0_5D2B0()
 {
     FixPerifery((char*)"blit320");
     if (!byte_9AD96)
-        sub_5BDF8_5C308();
+        PlaceMouse_5BDF8_5C308();
     VGA_Blit(begWscreen_2ECFF4_2ECFE4);
     if (!byte_9AD96)
         RemoveMouse_5BE50_5C360();
@@ -70441,7 +70460,7 @@ void Blit_5CDA0_5D2B0()
     //tempScreenBuffer_A0000 = begWscreen_2ECFF4_2ECFE4;
     /*
   if ( !byte_9AD96 )
-    sub_5BDF8_5C308();
+    PlaceMouse_5BDF8_5C308();
   qmemcpy(&screenBuffer_A0000, (const void *)begWscreen_2ECFF4_2ECFE4, 0xFA00u);
   if ( !byte_9AD96 )
     RemoveMouse_5BE50_5C360();
@@ -76204,7 +76223,7 @@ int sub_650FF_6560F(__int16 a1, int a2, unsigned int a3, _DWORD *a4)
 
   do
   {
-    sub_675C8((a3 >> 4) + 4, (uint32*)&v5);
+    SosRealAlloc_675C8((a3 >> 4) + 4, (uint32*)&v5);
     v5 = SosGetPhysicalAddr_67557_67A67(a1, a2, v5);
     *a4 = v5;
     a1 = v5;
@@ -77109,7 +77128,8 @@ int SosMAKEProtectedPtr_67582()
 }
 
 //----- (000675C8) --------------------------------------------------------
-__int16 sub_675C8(int a1, _DWORD *a2)
+/// Original name: _sosRealAlloc (sosdrv.asm), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+__int16 SosRealAlloc_675C8(int a1, _DWORD *a2)
 {
   __int16 result; // ax
 
@@ -77986,7 +78006,7 @@ int AweSendData_68A14(int a1, int a2, int a3, unsigned int a4)
       if (v6 != 0x80)
           return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
 LABEL_14:
-    sub_6F3B3(port_readgsbyte(a4 + 2), port_readgsbyte(a4 + 1), port_readgsbyte(a4) & 0xF);
+    AWE32NOTEOFF_6F3B3(port_readgsbyte(a4 + 2), port_readgsbyte(a4 + 1), port_readgsbyte(a4) & 0xF);
     return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
   }
   if ( v6 <= 0x90u )
@@ -80752,7 +80772,8 @@ int __stdcall AWE32REGRDW_6E7A0(unsigned __int16 a1)
 // A160A: using guessed type __int16 word_A160A;
 
 //----- (0006E822) --------------------------------------------------------
-void __stdcall sub_6E822(int a1, __int16 a2, __int16 a3)
+/// Original name: __AWE32ALLOCGCHANNEL (midieng.c), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void __stdcall AWE32ALLOCGCHANNEL_6E822(int a1, __int16 a2, __int16 a3)
 {
   unsigned int v3; // kr00_4
   unsigned __int16 j; // di
@@ -81072,7 +81093,7 @@ int sub_6EDD0(int a1, int a2, int a3, int a4, unsigned __int16 a5, int a6, int a
     return 1;
   for ( i = 0; i < (__int16)v36; ++i )
   {
-    sub_6E822(0, 254, 255);
+    AWE32ALLOCGCHANNEL_6E822(0, 254, 255);
     HIWORD(a2) = v10;
     v29[i] = v11;
   }
@@ -81240,7 +81261,8 @@ LABEL_30:
 // A1B34: using guessed type __int16 word_A1B34[];
 
 //----- (0006F3B3) --------------------------------------------------------
-void __stdcall sub_6F3B3(int a1, __int16 a2, unsigned __int16 a3)
+/// Original name: AWE32NOTEOFF (midieng.c), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
+void __stdcall AWE32NOTEOFF_6F3B3(int a1, __int16 a2, unsigned __int16 a3)
 {
   unsigned __int16 i; // di
   unsigned __int16 v4; // ax
@@ -81301,7 +81323,7 @@ void sub_6F4CB(
   if ( a5 )
     sub_6EDD0(a5, a2, a3, a4, a5, a6, a7);
   else
-    sub_6F3B3(0, a6, a7);
+    AWE32NOTEOFF_6F3B3(0, a6, a7);
 }
 
 //----- (0006F502) --------------------------------------------------------
@@ -113906,7 +113928,7 @@ void sub_79B2D()
   int v14; // edx
 
   if ( !byte_9AD96 )
-    sub_5BDF8_5C308();
+    PlaceMouse_5BDF8_5C308();
   VesaSetPage_61A1C_61F2C(0);
   v0 = (char *)&tempScreenBuffer_A0000[51200];
   v1 = (char *)begWscreen_2ECFF4_2ECFE4;
