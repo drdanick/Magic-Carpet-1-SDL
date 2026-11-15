@@ -559,8 +559,8 @@ void FnEffectMiniCrater_25570(Type_AE400_29795* a1);
 void CreateRing_255D0(Type_AE400_29795* a1, __int16 a2, __int16 a3);
 void FnEffectCrater_25670(Type_AE400_29795* a1);
 void FnEffectPocession_25760(Type_AE400_29795* a1);
-void SmokeTick_257B0(int a1);
-void DarkSmokeTick_258A0(int a1);
+void FnEffectWhiteSmoke_257B0(int a1);
+void FnEffectBlackSmoke_258A0(int a1);
 int nullsub_19(_DWORD); // weak
 void FnEffectEarthquake_25990(Type_AE400_29795* a1);
 void FnEffectSummonFire_25A60(int a1);
@@ -1152,8 +1152,8 @@ void FnShotCastle_53980_53CC0(int a1);
 char FnFirstStageShot_53B50_53E90(int a1);
 char FnShotAlliance_53DC0_54100(int a1);
 void FnShotArrow_54180_544D0(int a1);
-void sub_54290_545E0(int a1);
-char ManaMagnetMissileTick_542B0_54640(int a1);
+void FnShotFollow_54290_545E0(int a1);
+char FnShotExtra2_542B0_54640(int a1);
 void FnShotExtra3_54480_54810(int a1);
 int FindMissileTarget_54520_548B0(int a1);
 int ShotTargetNumber_54A90_54FC0(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a4);
@@ -3993,11 +3993,11 @@ Type_254A34x str_25573C[] = {
 { 0x002548F4,0x000B,PORT_FN(FnShotEarthquake_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000C,PORT_FN(FnShotAlliance_53DC0_54100, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000D,PORT_FN(FnShotArrow_54180_544D0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000E,PORT_FN(sub_54290_545E0, void(Type_AE400_29795*)),0x0001,0x0000 }, // PORT: see below
+{ 0x002548F4,0x000E,PORT_FN(FnShotFollow_54290_545E0, void(Type_AE400_29795*)),0x0001,0x0000 }, // PORT: see below
 { 0x002548F4,0x000F,PORT_FN(FnShotEarthquake_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0010,PORT_FN(FnShotEarthquake_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0011,PORT_FN(FnShotEarthquake_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0012,PORT_FN(ManaMagnetMissileTick_542B0_54640, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0012,PORT_FN(FnShotExtra2_542B0_54640, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0013,PORT_FN(FnShotExtra3_54480_54810, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0014,PORT_FN(FnShotEarthquake_53060, void(Type_AE400_29795*)),0x0001,0x0000 }, // PORT: entries 14-20 were missing (sub_542B0/sub_54480 were unreachable)
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 }
@@ -4017,8 +4017,8 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))FnEffectMiniCrater_25570,0x0001,0x0000 },
 { 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))FnEffectCrater_25670,0x0001,0x0000 },
 { 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))FnEffectPocession_25760,0x0001,0x0000 },
-{ 0x002548F4,0x000D,PORT_FN(SmokeTick_257B0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000E,PORT_FN(DarkSmokeTick_258A0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000D,PORT_FN(FnEffectWhiteSmoke_257B0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000E,PORT_FN(FnEffectBlackSmoke_258A0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))FnEffectEarthquake_25990,0x0001,0x0000 },
 { 0x002548F4,0x0010,PORT_FN(FnEffectSummonFire_25A60, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))FnEffectMeteor_25CE0,0x0001,0x0000 },
@@ -27828,8 +27828,8 @@ void FnEffectPocession_25760(Type_AE400_29795* a1x)
 
 //SYNCHRONIZED WITH REMC1
 /// Smoke cloud: Per-tick handler of class 10 state 13, the initial state of type 13. Identified from its decoded sprite (named by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void SmokeTick_257B0(int a1)
+/// Original name: fn_effect_white_smoke (EFFECT.C), Hidden Worlds linker map (placed by function order between two matches).
+void FnEffectWhiteSmoke_257B0(int a1)
 {
   int v1; // eax
   __int16 v3; // dx
@@ -27877,8 +27877,8 @@ void SmokeTick_257B0(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Dark smoke cloud: Per-tick handler of class 10 state 14, the initial state of type 14. Identified from its decoded sprite (named by the user).
-/// Name is a guess (not in the Hidden Worlds linker map).
-void DarkSmokeTick_258A0(int a1)
+/// Original name: fn_effect_black_smoke (EFFECT.C), Hidden Worlds linker map (placed by function order between two matches).
+void FnEffectBlackSmoke_258A0(int a1)
 {
 	int v1; // eax
 	__int16 v3; // dx
@@ -64450,7 +64450,8 @@ void FnShotArrow_54180_544D0(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_54290_545E0(int a1)
+/// Original name: fn_shot_follow (SHOT.C), Hidden Worlds linker map (placed by function order between two matches).
+void FnShotFollow_54290_545E0(int a1)
 {
   int result; // eax
 
@@ -64462,8 +64463,8 @@ void sub_54290_545E0(int a1)
 
 //SYNCHRONIZED WITH REMC1
 /// Per-tick handler of the Mana Magnet spell's missile (class 9 state 18).
-/// Name is a guess (not in the Hidden Worlds linker map).
-char ManaMagnetMissileTick_542B0_54640(int a1)
+/// Original name: fn_shot_extra2 (SHOT.C), Hidden Worlds linker map (placed by function order between two matches).
+char FnShotExtra2_542B0_54640(int a1)
 {
   unsigned __int16 v1; // si
   unsigned int v2; // ebp
