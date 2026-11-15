@@ -38,7 +38,7 @@ bool IsHiddenWord = false;
 0x26C450
 code DOSBOX 234585
 code 63585
-sub_634E0_639F0
+LoadPathFile_634E0_639F0
 
 26C3F4->061220 *search
 
@@ -88,7 +88,7 @@ off_987DE
 
 &word_AE454_AE444 0x26C454
 MoveCreature_196E0
-sub_41EC0_42200
+MoveAlongHeading_41EC0_42200
 
 addprocedurestop(0x205367, 0x0, true, true, 0x26C454, 0x12345678);
 
@@ -287,34 +287,34 @@ char* FixPath(char* inPath)
 //!!!!!!!!!!!!!! all arrays with 9999 size is stub !!!!!!!!!!!!!!!!
 
 //void sub_10000(); // weak
-void sub_10010(__int16 a1, __int16 a2);
-uint8_t* sub_1002D(uint8_t* a1, uint8_t* a2);
-__int16 sub_100B8();
-__int16 sub_10166();
-int sub_10190();
-__int16 sub_101A1();
-int sub_10254();
+void SetFlcSize_10010(__int16 a1, __int16 a2);
+uint8_t* ApplyFlcFrame_1002D(uint8_t* a1, uint8_t* a2);
+__int16 DecodeFlcChunks_100B8();
+__int16 ReadFlcPrefixChunk_10166();
+int SkipFlcChunk_10190();
+__int16 DecodeFlcSs2_101A1();
+int DecodeFlcBrun_10254();
 void sub_10300();
-void sub_103C0(void *a1, unsigned int a2);
-int sub_103F0();
-void sub_104D0();
+void ReadFliData_103C0(void *a1, unsigned int a2);
+int ReadFliFrame_103F0();
+void DecodeFliFrame_104D0();
 void PlayInfoFmv_107C0_107C0(__int16 a1, __int16 a2, int a3);
 void sub_108C0();
 void sub_10960();
 void sub_10AB0();
 __int16 sub_10BD0();
 Type_AE3E0* sub_10CB0(unsigned __int16 a1);
-void sub_10D40(Type_AE3E0* a1, Type_sub168_2* a2, __int16 a3);
-void sub_10EB0(Type_sub_AE3E0* a1);
-void sub_10F10(Type_sub_AE3E0* a1);
-Type_sub_AE3E0* sub_10FD0(Type_AE3E0* a1, __int16 a2);
+void RegisterTmapAnim_10D40(Type_AE3E0* a1, Type_sub168_2* a2, __int16 a3);
+void AdvanceTmapAnim_10EB0(Type_sub_AE3E0* a1);
+void ClearTmapAnim_10F10(Type_sub_AE3E0* a1);
+Type_sub_AE3E0* FindTmapAnim_10FD0(Type_AE3E0* a1, __int16 a2);
 void FreeAnimSequences_11010(Type_AE3E0** a1);
 bool sub_11050();
-void sub_111B0(int a1, int a2);
+void RunFmvCommands_111B0(int a1, int a2);
 int BeginRingIter_11410(int a1, int a2);
 void EndRingIter_11490(int a1);
 int NextRingOffset_114B0(int a1, _DWORD *a2, _DWORD *a3);
-void sub_11540();
+void LoadSearchData_11540();
 int IsMoveBlocked_11640(Type_AE400_29795* a1, axis_3d* a2, char a3);
 int sub_11760(axis_3d* a1);
 int sub_11810(axis_3d* a1);
@@ -329,38 +329,38 @@ int GetTerrainHeight_11F50(axis_3d* position);
 void sub_120B0(Type_AE400_29795* a1x, unsigned __int8 a2, unsigned __int16 a3);
 int sub_124F0(int a1, char a2, unsigned __int16 a3);
 int sub_127E0(Type_AE400_29795* a1, char a2, unsigned __int16 a3);
-int sub_12B50(Type_AE400_29795* a1, int a2, unsigned __int8 a3, unsigned __int16 a4);
+int DealDamage_12B50(Type_AE400_29795* a1, int a2, unsigned __int8 a3, unsigned __int16 a4);
 void sub_12C50(_WORD *a1);
 char CanCastleGrow_12D10(_WORD *a1);
 _BOOL1 IsCastleSiteFree_12F70(_WORD *a1);
 int ComputerWizardTick_13170(int a1);
 int sub_132B0(int a1);
 int AiChooseAction_136C0(int a1);
-bool sub_13800(int a1);
-int sub_138E0();
+bool AiCastleUpgradeMode_13800(int a1);
+int AiNoopMode_138E0();
 int AiBuildCastle_138F0(int a1);
 bool sub_13990(_WORD *a1);
 int sub_13A10(int a1);
 bool sub_13A70(int a1);
-bool sub_13BA0(int a1);
-bool sub_13CA0(int a1);
+bool AiPossessionMode_13BA0(int a1);
+bool AiAttackCastleMode_13CA0(int a1);
 bool sub_13DC0(int a1);
 bool sub_13DD0(int a1);
 int AiChooseCastleSite_13F00(int a1);
-int sub_14120(int a1);
+int AiPlanCastleUpgrade_14120(int a1);
 unsigned int AiPlanPossession_14230(int a1);
 int sub_14310(int a1);
-int sub_143A0(int a1);
+int AiFindRivalCastle_143A0(int a1);
 int AiFindRivalWizard_145B0(int a1);
-int sub_147E0(int a1);
+int AiFindRivalBalloon_147E0(int a1);
 int sub_14B10(int a1);
-int sub_14C40(int a1);
-int sub_14C80(int a1);
+int AiStartCastleUpgrade_14C40(int a1);
+int AiStartBuildCastle_14C80(int a1);
 int AiStartPossession_14CE0(int a1);
-int sub_14D00(int a1);
+int AiStartAttackCastle_14D00(int a1);
 int sub_14D20(int a1);
-int sub_14D40(int a1);
-int sub_14D60(int a1);
+int AiStartAttackBalloon_14D40(int a1);
+int AiStartAttackWizard_14D60(int a1);
 int sub_14DA0(int a1);
 int sub_14DC0(int a1);
 unsigned int GetWizardSpell_14E60(int a1, unsigned __int8 a2);
@@ -369,13 +369,13 @@ unsigned int AiChooseManaToPossess_15080(int a1);
 unsigned int FindNearestRival_15260(int a1, unsigned __int8 a2);
 unsigned int sub_15340(int a1, int a2);
 unsigned int sub_153B0(int a1, int a2);
-__int16 sub_15420(int a1);
-bool sub_15440(int a1, int a2);
+__int16 EntityTag_15420(int a1);
+bool AiTargetValid_15440(int a1, int a2);
 int AiApproachTarget_15470(int a1, int a2, signed int a3, signed int a4);
 int AiCastSpell_155F0(int a1, unsigned __int8 a2);
-int sub_15A00(int a1, unsigned __int8 a2);
+int AiSpellReady_15A00(int a1, unsigned __int8 a2);
 bool sub_15E60(int a1, unsigned __int8 a2);
-bool sub_15E90(int a1, unsigned __int8 a2);
+bool SpellWithinMaxMana_15E90(int a1, unsigned __int8 a2);
 void sub_15EC0(int a1);
 unsigned int sub_16000(int a1, unsigned __int8 a2);
 char sub_16030(int a1);
@@ -384,145 +384,145 @@ void sub_16540();
 unsigned int sub_16800(unsigned int a1, int a2);
 int sub_16870(int a1);
 char sub_16890(int a1, int a2);
-_BOOL1 sub_16920(int a1);
+_BOOL1 AiHasAttackSpell_16920(int a1);
 char sub_16990();
-void sub_169E0();
+void ReadMouseSteering_169E0();
 void ProcessKeys_16B00();
-// char sub_17C20(__int16 a1, __int16 a2, __int16 a3);
+// char ReadLocalPlayerControls_17C20(__int16 a1, __int16 a2, __int16 a3);
 void MakeControlCommand_188A0(char a1, char a2);
-// void sub_192D8(char a1, _BOOL1 a2, char a3, char a4, __int16 a5);
-int sub_192F3();
+// void RunCpuid_192D8(char a1, _BOOL1 a2, char a3, char a4, __int16 a5);
+int CpuidProbe_192F3();
 void sub_193EE(__int16 a1);
-// int sub_19470(__int16 a1);
+// int DetectCpu_19470(__int16 a1);
 int sub_194F0_194F0();
-__int16 sub_19550(int a1);
+__int16 SegmentFollowTick_19550(int a1);
 signed int TerrainSlope_19650(axis_3d* a1);
 void MoveCreature_196E0(Type_AE400_29795* a1);
-void sub_19B10(Type_AE400_29795* a1, char a2);
+void CreatureIdleTick_19B10(Type_AE400_29795* a1, char a2);
 void sub_19D70(Type_AE400_29795* a1, char a2);
-int sub_1A120(Type_AE400_29795* a1, char a2, unsigned __int16 (*a3)(Type_AE400_29795*, int));
+int CreatureAttackTick_1A120(Type_AE400_29795* a1, char a2, unsigned __int16 (*a3)(Type_AE400_29795*, int));
 void UpdateFollower_1A390(Type_AE400_29795* a1, unsigned __int16 a2);
-void sub_1A6C0(Type_AE400_29795* a1, char a2);
-void sub_1A800(Type_AE400_29795* a1);
+void CreatureDying_1A6C0(Type_AE400_29795* a1, char a2);
+void KillCreature_1A800(Type_AE400_29795* a1);
 int sub_1A8E0(Type_AE400_29795* a1, Type_AE400_29795* a2);
 int sub_1A990(Type_AE400_29795* a1, Type_AE400_29795* a2);
 void CreatureShootAt_1AA40(Type_AE400_29795* a1, int a2);
-int sub_1AB10(Type_AE400_29795* a1, int a2);
+int CreatureMeleeHit_1AB10(Type_AE400_29795* a1, int a2);
 int sub_1AB70(Type_AE400_29795* a1, Type_AE400_29795* a2);
 int sub_1AE30(Type_AE400_29795* a1, Type_AE400_29795* a2);
 int sub_1AEE0(Type_AE400_29795* a1, Type_AE400_29795* a2);
-void sub_1B060(Type_AE400_29795* a1);
-void sub_1B070(Type_AE400_29795* a1);
-void sub_1B090(Type_AE400_29795* a1);
-void sub_1B0E0(Type_AE400_29795* a1);
-void sub_1B100(Type_AE400_29795* a1);
-void sub_1B110(Type_AE400_29795* a1);
-void sub_1B120(Type_AE400_29795* a1);
-void sub_1B160(Type_AE400_29795* a1);
-void sub_1B200(Type_AE400_29795* a1);
-void sub_1B2D0(Type_AE400_29795* a1);
-void sub_1B320(Type_AE400_29795* a1);
-void sub_1B330(Type_AE400_29795* a1);
-void sub_1B340(Type_AE400_29795* a1);
-void sub_1B350(Type_AE400_29795* a1);
-void sub_1B370(Type_AE400_29795* a1);
-void sub_1B3C0(Type_AE400_29795* a1);
-void sub_1B4C0(Type_AE400_29795* a1);
-void sub_1B4E0(Type_AE400_29795* a1);
-void sub_1B4F0(Type_AE400_29795* a1);
-void sub_1B500(Type_AE400_29795* a1);
-void sub_1B510(Type_AE400_29795* a1);
-void sub_1B520(Type_AE400_29795* a1);
-void sub_1B570(Type_AE400_29795* a1);
-void sub_1B580(Type_AE400_29795* a1);
-void sub_1B590(Type_AE400_29795* a1);
-void sub_1B5A0(Type_AE400_29795* a1);
-void sub_1B5D0(Type_AE400_29795* a1);
-void sub_1BB20(Type_AE400_29795* a1);
-void sub_1BBE0(Type_AE400_29795* a1);
-void sub_1BC10(Type_AE400_29795* a1);
-void sub_1BC40(Type_AE400_29795* a1);
+void DragonIdleTick_1B060(Type_AE400_29795* a1);
+void DragonTick_1B070(Type_AE400_29795* a1);
+void DragonAttackTick_1B090(Type_AE400_29795* a1);
+void DragonFollowTick_1B0E0(Type_AE400_29795* a1);
+void DragonDyingTick_1B100(Type_AE400_29795* a1);
+void DragonDeadTick_1B110(Type_AE400_29795* a1);
+void BobAboveGround_1B120(Type_AE400_29795* a1);
+void VultureIdleTick_1B160(Type_AE400_29795* a1);
+void VultureTick_1B200(Type_AE400_29795* a1);
+void VultureAttackTick_1B2D0(Type_AE400_29795* a1);
+void VultureFollowTick_1B320(Type_AE400_29795* a1);
+void VultureDyingTick_1B330(Type_AE400_29795* a1);
+void VultureDeadTick_1B340(Type_AE400_29795* a1);
+void BeeIdleTick_1B350(Type_AE400_29795* a1);
+void BeeTick_1B370(Type_AE400_29795* a1);
+void BeeAttackTick_1B3C0(Type_AE400_29795* a1);
+void BeeFollowTick_1B4C0(Type_AE400_29795* a1);
+void BeeDyingTick_1B4E0(Type_AE400_29795* a1);
+void BeeDeadTick_1B4F0(Type_AE400_29795* a1);
+void WormIdleTick_1B500(Type_AE400_29795* a1);
+void WormTick_1B510(Type_AE400_29795* a1);
+void WormAttackTick_1B520(Type_AE400_29795* a1);
+void WormFollowTick_1B570(Type_AE400_29795* a1);
+void WormDyingTick_1B580(Type_AE400_29795* a1);
+void WormDeadTick_1B590(Type_AE400_29795* a1);
+void GuardIdleTick_1B5A0(Type_AE400_29795* a1);
+void GuardTick_1B5D0(Type_AE400_29795* a1);
+void GuardAttackTick_1BB20(Type_AE400_29795* a1);
+void GuardFollowTick_1BBE0(Type_AE400_29795* a1);
+void GuardDyingTick_1BC10(Type_AE400_29795* a1);
+void GuardDeadTick_1BC40(Type_AE400_29795* a1);
 void sub_1BC50(Type_AE400_29795* a1);
 void sub_1BCE0(Type_AE400_29795* a1);
-void sub_1BD10(Type_AE400_29795* a1);
-void sub_1BD20(Type_AE400_29795* a1);
-void sub_1C110(Type_AE400_29795* a1);
+void CrabIdleTick_1BD10(Type_AE400_29795* a1);
+void CrabTick_1BD20(Type_AE400_29795* a1);
+void CrabAttackTick_1C110(Type_AE400_29795* a1);
 void sub_1C170(Type_AE400_29795* a1);
-void sub_1C3C0(Type_AE400_29795* a1);
-void sub_1C3D0(Type_AE400_29795* a1);
-void sub_1C490(Type_AE400_29795* a1);
-void sub_1C4A0(Type_AE400_29795* a1);
-void sub_1C4F0(Type_AE400_29795* a1);
-void sub_1C880(Type_AE400_29795* a1);
-void sub_1C8D0(Type_AE400_29795* a1);
-void sub_1C8E0(Type_AE400_29795* a1);
-void sub_1C8F0(Type_AE400_29795* a1);
-void sub_1C900(Type_AE400_29795* a1);
-void sub_1C960(Type_AE400_29795* a1);
-void sub_1CA00(Type_AE400_29795* a1);
-void sub_1CA20(Type_AE400_29795* a1);
-void sub_1CA30(Type_AE400_29795* a1);
-void sub_1CA40(Type_AE400_29795* a1);
-void sub_1CA50(Type_AE400_29795* a1);
-void sub_1CE30(Type_AE400_29795* a1);
-void sub_1CF50(Type_AE400_29795* a1);
-void sub_1CF60(Type_AE400_29795* a1);
-void sub_1CFE0(Type_AE400_29795* a1);
-void sub_1CFF0(Type_AE400_29795* a1);
+void CrabDyingTick_1C3C0(Type_AE400_29795* a1);
+void CrabDeadTick_1C3D0(Type_AE400_29795* a1);
+void KrakenIdleTick_1C490(Type_AE400_29795* a1);
+void KrakenTick_1C4A0(Type_AE400_29795* a1);
+void KrakenAttackTick_1C4F0(Type_AE400_29795* a1);
+void KrakenFollowTick_1C880(Type_AE400_29795* a1);
+void KrakenDyingTick_1C8D0(Type_AE400_29795* a1);
+void KrakenDeadTick_1C8E0(Type_AE400_29795* a1);
+void TrollOrApeIdleTick_1C8F0(Type_AE400_29795* a1);
+void TrollOrApeTick_1C900(Type_AE400_29795* a1);
+void TrollOrApeAttackTick_1C960(Type_AE400_29795* a1);
+void TrollOrApeFollowTick_1CA00(Type_AE400_29795* a1);
+void TrollOrApeDyingTick_1CA20(Type_AE400_29795* a1);
+void TrollOrApeDeadTick_1CA30(Type_AE400_29795* a1);
+void GriffinIdleTick_1CA40(Type_AE400_29795* a1);
+void GriffinTick_1CA50(Type_AE400_29795* a1);
+void GriffinAttackTick_1CE30(Type_AE400_29795* a1);
+void GriffinFollowTick_1CF50(Type_AE400_29795* a1);
+void GriffinDyingTick_1CF60(Type_AE400_29795* a1);
+void GriffinDeadTick_1CFE0(Type_AE400_29795* a1);
+void SkeletonTick_1CFF0(Type_AE400_29795* a1);
 void sub_1D060(Type_AE400_29795* a1);
 void sub_1D6D0(Type_AE400_29795* a1);
-void sub_1DA60(Type_AE400_29795* a1);
-void sub_1DC80(Type_AE400_29795* a1);
-void sub_1DCB0(Type_AE400_29795* a1);
-void sub_1DCC0(Type_AE400_29795* a1);
+void SkeletonAttackTick_1DA60(Type_AE400_29795* a1);
+void SkeletonFollowTick_1DC80(Type_AE400_29795* a1);
+void SkeletonDyingTick_1DCB0(Type_AE400_29795* a1);
+void SkeletonDeadTick_1DCC0(Type_AE400_29795* a1);
 void sub_1DCD0(Type_AE400_29795* a1);
 void sub_1DD50(Type_AE400_29795* a1);
 void sub_1DD90(Type_AE400_29795* a1);
 void sub_1DDB0(Type_AE400_29795* a1);
-void sub_1DDD0(Type_AE400_29795* a1);
-void sub_1DDE0(Type_AE400_29795* a1);
-int sub_1DDF0(Type_AE400_29795* a1);
-void sub_1DE10(Type_AE400_29795* a1);
-void sub_1DE20(Type_AE400_29795* a1);
-void sub_1DE30(Type_AE400_29795* a1);
-void sub_1DE40(Type_AE400_29795* a1);
+void EmuRiderIdleTick_1DDD0(Type_AE400_29795* a1);
+void EmuRiderTick_1DDE0(Type_AE400_29795* a1);
+int EmuRiderAttackTick_1DDF0(Type_AE400_29795* a1);
+void EmuRiderFollowTick_1DE10(Type_AE400_29795* a1);
+void EmuRiderDyingTick_1DE20(Type_AE400_29795* a1);
+void EmuRiderDeadTick_1DE30(Type_AE400_29795* a1);
+void GenieTick_1DE40(Type_AE400_29795* a1);
 void sub_1DFE0(Type_AE400_29795* a1);
-void sub_1E380(Type_AE400_29795* a1);
-void sub_1E6F0(Type_AE400_29795* a1);
-void sub_1E700(Type_AE400_29795* a1);
-void sub_1E710(Type_AE400_29795* a1);
+void GenieAttackTick_1E380(Type_AE400_29795* a1);
+void GenieFollowTick_1E6F0(Type_AE400_29795* a1);
+void GenieDyingTick_1E700(Type_AE400_29795* a1);
+void GenieDeadTick_1E710(Type_AE400_29795* a1);
 void sub_1E720(Type_AE400_29795* a1);
 void sub_1E770(Type_AE400_29795* a1);
 void sub_1E810(Type_AE400_29795* a1);
 _BOOL1 sub_1E920(_WORD *a1, unsigned __int16 a2, unsigned __int16 a3, unsigned __int16 a4);
 _WORD *sub_1E9B0(unsigned __int16 a1, _WORD *a2, _WORD *a3);
 void sub_1EA40(Type_AE400_29795* a1);
-void sub_1EED0(Type_AE400_29795* a1);
+void VillagerType12Tick_1EED0(Type_AE400_29795* a1);
 void sub_1F120(Type_AE400_29795* a1);
 void sub_1F390(Type_AE400_29795* a1);
-void sub_1F5A0(Type_AE400_29795* a1);
-void sub_1F5B0(Type_AE400_29795* a1);
-void sub_1F640(Type_AE400_29795* a1);
-void sub_1FA00(Type_AE400_29795* a1);
-void sub_1FAA0(Type_AE400_29795* a1);
-void sub_1FAC0(Type_AE400_29795* a1);
-void sub_1FE90(Type_AE400_29795* a1);
-void sub_1FEC0(Type_AE400_29795* a1);
+void VillagerType12DyingTick_1F5A0(Type_AE400_29795* a1);
+void VillagerType12DeadTick_1F5B0(Type_AE400_29795* a1);
+void VillagerType13Tick_1F640(Type_AE400_29795* a1);
+void VillagerType13DyingTick_1FA00(Type_AE400_29795* a1);
+void VillagerType13DeadTick_1FAA0(Type_AE400_29795* a1);
+void VillagerType14Tick_1FAC0(Type_AE400_29795* a1);
+void VillagerType14DyingTick_1FE90(Type_AE400_29795* a1);
+void VillagerType14DeadTick_1FEC0(Type_AE400_29795* a1);
 // void sub_1FF40(char a1, int a2, char a3, int a4, int a5);
-void sub_1FF60(Type_AE400_29795* a1);
-void sub_201D0(Type_AE400_29795* a1);
-void sub_203E0(Type_AE400_29795* a1);
-void sub_203F0(Type_AE400_29795* a1);
-void sub_20400(Type_AE400_29795* a1);
+void Class5Type15Tick_1FF60(Type_AE400_29795* a1);
+void Class5Type15AttackTick_201D0(Type_AE400_29795* a1);
+void Class5Type15FollowTick_203E0(Type_AE400_29795* a1);
+void Class5Type15DyingTick_203F0(Type_AE400_29795* a1);
+void Class5Type15DeadTick_20400(Type_AE400_29795* a1);
 void sub_20410(Type_AE400_29795* a1);
 void sub_20450(Type_AE400_29795* a1);
 void sub_20480(Type_AE400_29795* a1);
-void sub_20700(Type_AE400_29795* a1);
-void sub_20710(Type_AE400_29795* a1);
-void sub_207E0(Type_AE400_29795* a1);
-void sub_20B60(Type_AE400_29795* a1);
-void sub_20B70(Type_AE400_29795* a1);
-void sub_20B80(Type_AE400_29795* a1);
+void WyvernIdleTick_20700(Type_AE400_29795* a1);
+void WyvernTick_20710(Type_AE400_29795* a1);
+void WyvernAttackTick_207E0(Type_AE400_29795* a1);
+void WyvernFollowTick_20B60(Type_AE400_29795* a1);
+void WyvernDyingTick_20B70(Type_AE400_29795* a1);
+void WyvernDeadTick_20B80(Type_AE400_29795* a1);
 int DangerMusicFadeStep_20BD0();
 void UpdateDangerMusic_20D00(char a1);
 void StopMusic_20E60_20E60();
@@ -537,72 +537,72 @@ void sub_23CF0(__int16 a1, __int16 a2, int a3);
 void DrawSpellIconWithCharges_23D40(int a1, int a2, Type_AE400_29795* a3x, char a4);
 void DrawSpellMenuIcon_24230(__int16 a1, __int16 a2, unsigned int a3, char a4);
 void sub_247C0(int result, int a2, __int16 a3, __int16 a4, int a5, unsigned __int8 a6);
-void sub_24AB0();
-void sub_24B50(char* a1);
-int sub_24B80();
-void sub_24BB0();
-void sub_24BF0(unsigned __int8 a1);
+void OpenFmvCaptions_24AB0();
+void ShowFmvCaption_24B50(char* a1);
+int ClearFmvCaption_24B80();
+void CloseFmvCaptions_24BB0();
+void SetFmvCaptionColour_24BF0(unsigned __int8 a1);
 void sub_24C20(int a1, int a2, int a3, int a4, unsigned __int16 a5);
 void sub_24CA0(int a1, int a2, int a3, int a4, unsigned __int16 a5);
-void sub_24D20(int a1, int a2, int a3, int a4, unsigned __int16 a5);
-void sub_24DA0(int a1, int a2, int a3, int a4, unsigned __int16 a5);
+void DrawRectCheckedLowRes_24D20(int a1, int a2, int a3, int a4, unsigned __int16 a5);
+void DrawRectCheckedHighRes_24DA0(int a1, int a2, int a3, int a4, unsigned __int16 a5);
 int nullsub_2(void); // weak
 void ExplosionTick_24F60(Type_AE400_29795* a1x);
-void sub_25130(int a1);
-void sub_252B0(int a1);
-int sub_252D0(int a1);
-void sub_253E0(int a1);
-void sub_253F0(int a1);
-void sub_25410(Type_AE400_29795* a1);
-void sub_25470(Type_AE400_29795* a1);
-void sub_25570(Type_AE400_29795* a1);
+void Class10Type1Tick_25130(int a1);
+void SpeedEffectTick_252B0(int a1);
+int FireTick_252D0(int a1);
+void RemoveSelfTick_253E0(int a1);
+void Class10Type3Tick_253F0(int a1);
+void WaterSplashTick_25410(Type_AE400_29795* a1);
+void VolcanoEffectTick_25470(Type_AE400_29795* a1);
+void Class10Type10Tick_25570(Type_AE400_29795* a1);
 void sub_255D0(Type_AE400_29795* a1, __int16 a2, __int16 a3);
-void sub_25670(Type_AE400_29795* a1);
-void sub_25760(Type_AE400_29795* a1);
-void sub_257B0(int a1);
-void sub_258A0(int a1);
+void CraterEffectTick_25670(Type_AE400_29795* a1);
+void PossessionEffectTick_25760(Type_AE400_29795* a1);
+void SmokeTick_257B0(int a1);
+void DarkSmokeTick_258A0(int a1);
 int nullsub_19(_DWORD); // weak
-void sub_25990(Type_AE400_29795* a1);
+void EarthquakeEffectTick_25990(Type_AE400_29795* a1);
 void LavaTick_25A60(int a1);
 void ExplosionRingTick_25CE0(Type_AE400_29795* a1);
 void VolcanoEruptionTick_25EC0(int a1);
-void sub_26140(Type_AE400_29795* a1);
-void sub_262D0(Type_AE400_29795* a1);
-void sub_26360(Type_AE400_29795* a1);
-void sub_263C0(Type_AE400_29795* a1);
+void VolcanoFireTick_26140(Type_AE400_29795* a1);
+void LightningEffectTick_262D0(Type_AE400_29795* a1);
+void StealManaEffectTick_26360(Type_AE400_29795* a1);
+void DuelEffectTick_263C0(Type_AE400_29795* a1);
 _BOOL1 sub_264D0(unsigned __int16 a1);
 void RaiseTerrainStripYUp_26560(int a2);
 void RaiseTerrainStripYDown_26670(_WORD *a2);
 void RaiseTerrainStripX_26760(_WORD *a2);
-void sub_26890(Type_AE400_29795* event);
-void sub_26920(Type_AE400_29795* a1);
-void sub_269A0(Type_AE400_29795* a1);
-void sub_26A60(int a1);
+void Class10Type30Tick_26890(Type_AE400_29795* event);
+void Class10Type32Tick_26920(Type_AE400_29795* a1);
+void Class10Type51Tick_269A0(Type_AE400_29795* a1);
+void MirrorTick_26A60(int a1);
 void sub_26C00(int a1);
-void sub_26CE0(int a1);
+void Class10Type33Tick_26CE0(int a1);
 void sub_26D20(int a1);
-void sub_26E90(int a1);
+void UndeadArmyEffectTick_26E90(int a1);
 void ManaBallTick_27030(Type_AE400_29795* event);
 void sub_274D0(Type_AE400_29795* event);
 void DeathMarkerTick_275C0(__int16 *a1);
-void sub_27690(_WORD *result, Type_AE400_29795* a2x);
+void DropManaBall_27690(_WORD *result, Type_AE400_29795* a2x);
 void MergeManaBalls_277D0(Type_AE400_29795* ev1, Type_AE400_29795* ev2);
 char sub_279D0(int a1);
-void sub_27D30(Type_AE400_29795* event);
-void sub_28200(int a1);
-char sub_285C0(int a1);
+void PlayerFlagTick_27D30(Type_AE400_29795* event);
+void Class10Type41Tick_28200(int a1);
+char Class10Type42Tick_285C0(int a1);
 // int sub_28D10(int a1, int a2);
 void sub_28DC0(Type_AE400_29795* event);
 void sub_28FE0(int a1);
-void sub_293D0(Type_AE400_29795* a1);
-void sub_29540(Type_AE400_29795* a1);
+void Class10Type43Tick_293D0(Type_AE400_29795* a1);
+void BoulderTick_29540(Type_AE400_29795* a1);
 int sub_29640(Type_AE400_29795* event);
 void CrabSpawnTimerTick_296A0(Type_AE400_29795* a1);
 void sub_29700(int a1);
-void sub_29780(Type_AE400_29795* a1);
+void WallOfFireEffectTick_29780(Type_AE400_29795* a1);
 
-void sub_29920_29960(int a1);
-void sub_299D0_29A10(Type_AE400_29795* a1);
+void ManaMagnetEffectTick_29920_29960(int a1);
+void GlobalDeathEffectTick_299D0_29A10(Type_AE400_29795* a1);
 void sub_29BA0_29BE0(int a1);
 void PrepRot_29C30_29C70(__int16 roll);
 // char sub_2A700_2A740(int a1, __int16 a2, __int16 a3, __int16 a4, int a5, int a6, __int16 a7, int a8);
@@ -644,20 +644,20 @@ void sub_33B90_33F80(uaxis_2d a1, uaxis_2d a2);
 char sub_33E10_34200(unsigned __int16 a1, __int16 a2);
 unsigned __int16 sub_34070();
 // int TopProcedure_340B0_34470(int a1, __int16 a2, __int16 a3, unsigned __int16 a4, int a5);
-int sub_34460_34820();
-void sub_344F0();
+int ShowTitlePicture_34460_34820();
+void LoadGamePalette_344F0();
 // void DrawAndEventsInGame_34530_348F0(__int16 a1, __int16 a2, __int16 a3);
 void GameLoop_34610_349D0();
 void UpdatePaletteEffects_34690_34A50();
-void sub_34B00_34EC0();
-void sub_34B40_34F00();
+void LoadAllDataFiles_34B00_34EC0();
+void LoadDataAndColourLookup_34B40_34F00();
 void sub_34C60_35020();
 void sub_34C80_35040();
 int ProcessCommandLine_34DD0_35190(int argc, char** argv);
 int FlvInitSet_356E0_35AA0();
 int sub_35710_35AD0();
 void HmiTimerTick_357A0();
-// void sub_357C0_35B80(__int16 a1, int a2, unsigned __int16 a3, unsigned __int16 a4);
+// void InitSound_357C0_35B80(__int16 a1, int a2, unsigned __int16 a3, unsigned __int16 a4);
 void sub_358A0_35C60();
 int sub_358D0_35C90(__int16 a1, __int16 a2, __int16 a3);
 int sub_35900_35CC0(__int16 a1, int a2, char a3, char a4);
@@ -686,20 +686,20 @@ void cleanPressedKeys_36D83();
 int sub_36DC2_37182();
 void RefillLife_36DE0_371A0(Type_AE400_29795* event);
 void sub_36DF0_371B0(Type_AE400_29795* event, unsigned __int16 a2);
-int sub_36F90_37350(int a1);
-void sub_36FA0_37360(Type_AE400_29795* event, __int16 a2);
-void sub_37030_373F0(Type_AE400_29795* a1, __int16 a2);
-void sub_370A0_37460(Type_AE400_29795* a1, __int16 a2);
-void sub_370E0_374A0(Type_AE400_29795* a1, __int16 a2);
-void sub_37130_374F0(Type_AE400_29795* a1, __int16 a2, __int16 a3);
-void sub_37150_37510(Type_AE400_29795* event, __int16 a2);
-void sub_371C0_37580();
-void sub_37220_375E0();
+int SetManaToHalfMaxLife_36F90_37350(int a1);
+void SetSprite_36FA0_37360(Type_AE400_29795* event, __int16 a2);
+void SetSpriteAndBox_37030_373F0(Type_AE400_29795* a1, __int16 a2);
+void SetSpriteDoubleBox_370A0_37460(Type_AE400_29795* a1, __int16 a2);
+void SetSpriteHalfBox_370E0_374A0(Type_AE400_29795* a1, __int16 a2);
+void SetCollisionBox_37130_374F0(Type_AE400_29795* a1, __int16 a2, __int16 a3);
+void SetCollisionBoxFromBuild_37150_37510(Type_AE400_29795* event, __int16 a2);
+void InitFreeList_371C0_37580();
+void RebuildFreeLists_37220_375E0();
 Type_AE400_29795* NewEvent_372C0_37680();
 Type_AE400_29795* CreateEntity_373F0_377B0(axis_3d* a1, int a2, int a3);
 void sub_37440_37800(int a1, char a2);
 void sub_37560_37920(Type_1090* type1090);
-int sub_37710_37AD0();
+int FreeEntityCount_37710_37AD0();
 int SetPlayerStart0_37720_37AE0(int a1);
 int SetPlayerStart1_37740_37B00(int a1);
 int SetPlayerStart2_37760_37B20(int a1);
@@ -708,215 +708,215 @@ int SetPlayerStart4_377A0_37B60(int a1);
 int SetPlayerStart5_377C0_37B80(int a1);
 int SetPlayerStart6_377E0_37BA0(int a1);
 int SetPlayerStart7_37800_37BC0(int a1);
-Type_AE400_29795* sub_37820_37BE0(axis_3d* position);
-int sub_378A0_37C60(int a1);
+Type_AE400_29795* CreatePlayerWizard_37820_37BE0(axis_3d* position);
+int CreateComputerWizard_378A0_37C60(int a1);
 int CreateCastle_37920_37CE0(int a1);
-int sub_37A00_37DC0(int a1);
-int sub_37A80(int a1);
-int sub_37AA0(int a1);
-int sub_37AC0(int a1);
-int sub_37AE0(int a1);
-int sub_37B00(int a1);
-int sub_37B20(int a1);
-int sub_37B40(int a1);
-int sub_37B60(int a1);
-int sub_37B80(int a1);
-int sub_37BA0(int a1);
-int sub_37BC0(int a1);
-int sub_37CF0(int a1);
-int sub_37D70(int a1);
-int sub_37E00(int a1);
-int sub_37E80(int a1);
-int sub_37EF0(int a1);
-int sub_38030(int a1);
-int sub_38270(int a1);
-int sub_38370(int a1);
+int CreateBalloon_37A00_37DC0(int a1);
+int Placeholder1_1_37A80(int a1);
+int Placeholder1_2_37AA0(int a1);
+int Placeholder1_3_37AC0(int a1);
+int Placeholder1_4_37AE0(int a1);
+int Placeholder1_5_37B00(int a1);
+int Placeholder1_6_37B20(int a1);
+int Placeholder1_7_37B40(int a1);
+int Placeholder1_8_37B60(int a1);
+int Placeholder1_9_37B80(int a1);
+int Placeholder1_10_37BA0(int a1);
+int CreateTree_37BC0(int a1);
+int CreateStone_37CF0(int a1);
+int CreateDolmen_37D70(int a1);
+int CreateStandingStone_37E00(int a1);
+int CreateClass2Type4_37E80(int a1);
+int CreateClass2Type5_37EF0(int a1);
+int CreateDragon_38030(int a1);
+int CreateVulture_38270(int a1);
+int CreateBee_38370(int a1);
 void sub_38820_38BA0(Type_AE400_29795* a1);
-int sub_38890(int a1);
-int sub_389E0(int a1);
-int sub_38C00_38F80(int a1);
+int CreateCrab_38890(int a1);
+int CreateKraken_389E0(int a1);
+int ChooseTrollOrApe_38C00_38F80(int a1);
 int sub_38D09(); // weak
-int sub_38D60(int a1);
-int sub_38E70(int a1);
-int sub_38FC0(int a1);
-int sub_390D0(int a1);
-int sub_39200(int a1);
-int sub_39490(int a1);
-int sub_395B0(int a1);
-int sub_396E0(int a1);
-int sub_39800(int a1);
-int sub_39820(int a1);
-int sub_39840(int a1);
-int sub_39860(int a1);
-int sub_39880(int a1);
-int sub_398A0(int a1);
-int sub_398C0(int a1);
-int sub_39940(int a1);
-int sub_39960(int a1);
-int sub_39980(int a1);
-int sub_399A0(int a1);
-int sub_399C0(int a1);
-int sub_399E0(int a1);
-int sub_39A10(int a1);
-int sub_39A90(int a1);
-int sub_39B40(int a1);
-int sub_39BC0(int a1);
-int sub_39C40(int a1);
-int sub_39CC0(int a1);
-int sub_39D40(int a1);
-int sub_39DC0(int a1);
-int sub_39E40(int a1);
-int sub_39EC0(int a1);
-int sub_39F40(int a1);
-int sub_39FC0(int a1);
-int sub_3A040(int a1);
-int sub_3A0C0(int a1);
-int sub_3A1A0(int a1);
-int sub_3A210(int a1);
-int sub_3A270(int a1);
-int sub_3A2F0(int a1);
-int sub_3A390(int a1);
-int sub_3A410(int a1);
+int CreateGriffin_38D60(int a1);
+int CreateSkeleton_38E70(int a1);
+int CreateEmuRider_38FC0(int a1);
+int CreateGenie_390D0(int a1);
+int CreateVillagerType12_39200(int a1);
+int CreateVillagerType14_39490(int a1);
+int CreateClass5Type15_395B0(int a1);
+int CreateWyvern_396E0(int a1);
+int Placeholder6_0_39800(int a1);
+int Placeholder6_1_39820(int a1);
+int Placeholder7_0_39840(int a1);
+int Placeholder7_1_39860(int a1);
+int Placeholder7_2_39880(int a1);
+int Placeholder7_3_398A0(int a1);
+int CreateClass7Type4_398C0(int a1);
+int Placeholder8_0_39940(int a1);
+int Placeholder8_1_39960(int a1);
+int Placeholder8_2_39980(int a1);
+int Placeholder8_3_399A0(int a1);
+int Placeholder8_4_399C0(int a1);
+int Placeholder8_5_399E0(int a1);
+int CreateFireball_39A10(int a1);
+int CreatePossessionMissile_39A90(int a1);
+int CreateEarthquakeMissile_39B40(int a1);
+int CreateMeteorMissile_39BC0(int a1);
+int CreateVolcanoMissile_39C40(int a1);
+int CreateCraterMissile_39CC0(int a1);
+int CreateClass9Type6_39D40(int a1);
+int CreateDuelMissile_39DC0(int a1);
+int CreateStealManaMissile_39E40(int a1);
+int CreateLightningBolt_39EC0(int a1);
+int CreateHomingSpawnMissile_39F40(int a1);
+int CreateUndeadArmyMissile_39FC0(int a1);
+int CreateLightningStormMissile_3A040(int a1);
+int CreateClass9Type13_3A0C0(int a1);
+int CreateBoulderMissile_3A1A0(int a1);
+int CreateClass9Type15_3A210(int a1);
+int CreateWallOfFireMissile_3A270(int a1);
+int CreateManaMagnetMissile_3A2F0(int a1);
+int CreateGlobalDeathMissile_3A390(int a1);
+int CreateClass9Type19_3A410(int a1);
 int CreateExplosion_3A490(uint16_t* a1);
-int sub_3A510(uint16_t* a1);
-int sub_3A570(uint16_t* a1);
-int sub_3A5D0(uint16_t* a1);
-int sub_3A640(uint16_t* a1);
-int sub_3A6B0(uint16_t* a1);
-int sub_3A730(uint16_t* a1);
-int sub_3A7D0(uint16_t* a1);
-int sub_3A870(uint16_t* a1);
-int sub_3A8D0(uint16_t* a1);
-int sub_3A930(uint16_t* a1);
-int sub_3A9A0(uint16_t* a1);
-int sub_3AA10(uint16_t* a1);
-int sub_3AAA0(uint16_t* a1);
-int sub_3AB40(uint16_t* a1);
-int sub_3ABE0(uint16_t* a1);
+int CreateClass10Type1_3A510(uint16_t* a1);
+int CreateSpeedEffect_3A570(uint16_t* a1);
+int CreateClass10Type3_3A5D0(uint16_t* a1);
+int CreateClass10Type4_3A640(uint16_t* a1);
+int CreateWaterSplash_3A6B0(uint16_t* a1);
+int CreateFire_3A730(uint16_t* a1);
+int CreateClass10Type7_3A7D0(uint16_t* a1);
+int CreateClass10Type8_3A870(uint16_t* a1);
+int CreateVolcanoEffect_3A8D0(uint16_t* a1);
+int CreateClass10Type10_3A930(uint16_t* a1);
+int CreateCraterEffect_3A9A0(uint16_t* a1);
+int CreatePossessionEffect_3AA10(uint16_t* a1);
+int CreateSmoke_3AAA0(uint16_t* a1);
+int CreateDarkSmoke_3AB40(uint16_t* a1);
+int CreateEarthquakeEffect_3ABE0(uint16_t* a1);
 int CreateExplosionRing_3AC70(uint16_t* a1);
 int CreateLava_3ACC0(uint16_t* a1);
 int CreateVolcanoEruption_3ADB0(uint16_t* a1);
-int sub_3AE00(uint16_t* a1);
-int sub_3AE80(uint16_t* a1);
-int sub_3AF00(uint16_t* a1);
-int sub_3AF80(uint16_t* a1);
-int sub_3B000(uint16_t* a1);
-int sub_3B060(uint16_t* a1);
-Type_AE400_29795* sub_3B0C0(axis_3d* position);
-int sub_3B120(uint16_t* a1);
-int sub_3B180(uint16_t* a1);
-int sub_3B1D0(uint16_t* a1);
-int sub_3B230(uint16_t* a1);
-int sub_3B2A0(uint16_t* a1);
-int sub_3B300(uint16_t* a1);
+int CreateVolcanoFire_3AE00(uint16_t* a1);
+int CreateLightningEffect_3AE80(uint16_t* a1);
+int CreateStealManaEffect_3AF00(uint16_t* a1);
+int CreateDuelEffect_3AF80(uint16_t* a1);
+int CreateTerrainRaiseStep_3B000(uint16_t* a1);
+int CreateClass10Type28_3B060(uint16_t* a1);
+Type_AE400_29795* CreateClass10Type30_3B0C0(axis_3d* position);
+int CreateClass10Type29_3B120(uint16_t* a1);
+int CreateClass10Type32_3B180(uint16_t* a1);
+int CreateClass10Type31_3B1D0(uint16_t* a1);
+int CreateClass10Type51_3B230(uint16_t* a1);
+int CreateClass10Type50_3B2A0(uint16_t* a1);
+int CreateMirror_3B300(uint16_t* a1);
 int sub_3B3D0(uint16_t* a1);
-int sub_3B3E0(uint16_t* a1);
+int CreateUndeadArmyEffect_3B3E0(uint16_t* a1);
 int sub_3B460(uint16_t* a1);
-int sub_3B4D0(uint16_t* a1);
+int CreateClass10Type33_3B4D0(uint16_t* a1);
 int CreateManaBall_3B5A0(uint16_t* a1);
 int CreateDeathMarker_3B620(uint16_t* a1);
-Type_AE400_29795* sub_3B690(axis_3d* a1);
-int sub_3B6F0(uint16_t* a1);
-int sub_3B760(uint16_t* a1);
-int sub_3B7B0_3BB30(uint16_t* a1);
-int sub_3B800(uint16_t* a1);
+Type_AE400_29795* CreatePlayerFlag_3B690(axis_3d* a1);
+int CreateClass10Type43_3B6F0(uint16_t* a1);
+int CreateClass10Type41_3B760(uint16_t* a1);
+int CreateClass10Type42_3B7B0_3BB30(uint16_t* a1);
+int CreateBoulder_3B800(uint16_t* a1);
 int CreateCrabSpawnTimer_3B860(uint16_t* a1);
-int sub_3B8E0(uint16_t* a1);
-int sub_3B970(uint16_t* a1);
-int sub_3BA00(uint16_t* a1);
-int sub_3BA90(uint16_t* a1);
-Type_AE400_29795* sub_3BB20(axis_3d* position, char a2, char a3);
+int CreateWallOfFireEffect_3B8E0(uint16_t* a1);
+int CreateManaMagnetEffect_3B970(uint16_t* a1);
+int CreateGlobalDeathEffect_3BA00(uint16_t* a1);
+int CreateClass10Type56_3BA90(uint16_t* a1);
+Type_AE400_29795* CreateSwitch_3BB20(axis_3d* position, char a2, char a3);
 
-Type_AE400_29795* sub_3BB70(axis_3d* position);
-Type_AE400_29795* sub_3BB90(axis_3d* position);
-Type_AE400_29795* sub_3BBB0(axis_3d* position);
-Type_AE400_29795* sub_3BBD0(axis_3d* position);
-Type_AE400_29795* sub_3BBF0(axis_3d* position);
-Type_AE400_29795* sub_3BC10(axis_3d* position);
-Type_AE400_29795* sub_3BC30(axis_3d* position);
-Type_AE400_29795* sub_3BC50(axis_3d* position);
-Type_AE400_29795* sub_3BC70(axis_3d* position);
-Type_AE400_29795* sub_3BC90(axis_3d* position);
-Type_AE400_29795* sub_3BCB0(axis_3d* position);
-Type_AE400_29795* sub_3BCD0(axis_3d* position);
-Type_AE400_29795* sub_3BCF0(axis_3d* position);
-Type_AE400_29795* sub_3BD10(axis_3d* position);
-Type_AE400_29795* sub_3BD30(axis_3d* position);
-Type_AE400_29795* sub_3BD50(axis_3d* position);
-Type_AE400_29795* sub_3BD70(axis_3d* position);
-Type_AE400_29795* sub_3BD90(axis_3d* position);
-Type_AE400_29795* sub_3BDB0(axis_3d* position);
-Type_AE400_29795* sub_3BDD0(axis_3d* position);
-Type_AE400_29795* sub_3BDF0(axis_3d* position);
-Type_AE400_29795* sub_3BE10(axis_3d* position);
-Type_AE400_29795* sub_3BE30(axis_3d* position);
-Type_AE400_29795* sub_3BE50(axis_3d* position);
-Type_AE400_29795* sub_3BE70(axis_3d* position);
-Type_AE400_29795* sub_3BE90(axis_3d* position);
-Type_AE400_29795* sub_3BEB0(axis_3d* position);
-Type_AE400_29795* sub_3BED0(axis_3d* position);
-Type_AE400_29795* sub_3BEF0(axis_3d* position);
-Type_AE400_29795* sub_3BF10(axis_3d* position);
-Type_AE400_29795* sub_3BF30(axis_3d* position);
-Type_AE400_29795* sub_3BF50(axis_3d* position);
+Type_AE400_29795* CreateSwitch00_3BB70(axis_3d* position);
+Type_AE400_29795* CreateSwitch01_3BB90(axis_3d* position);
+Type_AE400_29795* CreateSwitch02_3BBB0(axis_3d* position);
+Type_AE400_29795* CreateSwitch03_3BBD0(axis_3d* position);
+Type_AE400_29795* CreateSwitch04_3BBF0(axis_3d* position);
+Type_AE400_29795* CreateSwitch05_3BC10(axis_3d* position);
+Type_AE400_29795* CreateSwitch06_3BC30(axis_3d* position);
+Type_AE400_29795* CreateSwitch07_3BC50(axis_3d* position);
+Type_AE400_29795* CreateSwitch08_3BC70(axis_3d* position);
+Type_AE400_29795* CreateSwitch09_3BC90(axis_3d* position);
+Type_AE400_29795* CreateSwitch10_3BCB0(axis_3d* position);
+Type_AE400_29795* CreateSwitch11_3BCD0(axis_3d* position);
+Type_AE400_29795* CreateSwitch12_3BCF0(axis_3d* position);
+Type_AE400_29795* CreateSwitch13_3BD10(axis_3d* position);
+Type_AE400_29795* CreateSwitch14_3BD30(axis_3d* position);
+Type_AE400_29795* CreateSwitch15_3BD50(axis_3d* position);
+Type_AE400_29795* CreateSwitch16_3BD70(axis_3d* position);
+Type_AE400_29795* CreateSwitch17_3BD90(axis_3d* position);
+Type_AE400_29795* CreateSwitch18_3BDB0(axis_3d* position);
+Type_AE400_29795* CreateSwitch19_3BDD0(axis_3d* position);
+Type_AE400_29795* CreateSwitch20_3BDF0(axis_3d* position);
+Type_AE400_29795* CreateSwitch21_3BE10(axis_3d* position);
+Type_AE400_29795* CreateSwitch22_3BE30(axis_3d* position);
+Type_AE400_29795* CreateSwitch23_3BE50(axis_3d* position);
+Type_AE400_29795* CreateSwitch24_3BE70(axis_3d* position);
+Type_AE400_29795* CreateSwitch25_3BE90(axis_3d* position);
+Type_AE400_29795* CreateSwitch26_3BEB0(axis_3d* position);
+Type_AE400_29795* CreateSwitch27_3BED0(axis_3d* position);
+Type_AE400_29795* CreateSwitch28_3BEF0(axis_3d* position);
+Type_AE400_29795* CreateSwitch29_3BF10(axis_3d* position);
+Type_AE400_29795* CreateSwitch30_3BF30(axis_3d* position);
+Type_AE400_29795* CreateSwitch31_3BF50(axis_3d* position);
 
-int sub_3BF70(int a1, char a2, char a3, int a4, __int16 a5, char a6, char a7, int a8, __int16 a9);
-int sub_3C040(int a1);
-int sub_3C060(int a1);
-int sub_3C090(int a1);
-int sub_3C0C0(int a1);
-int sub_3C0F0(int a1);
-int sub_3C120(int a1);
-int sub_3C150(int a1);
-int sub_3C180(int a1);
-int sub_3C1B0(int a1);
-int sub_3C1E0(int a1);
-int sub_3C210(int a1);
-int sub_3C240(int a1);
-int sub_3C270(int a1);
-int sub_3C2A0(int a1);
-int sub_3C2D0(int a1);
-int sub_3C300(int a1);
-int sub_3C330(int a1);
-int sub_3C360(int a1);
-int sub_3C390(int a1);
-int sub_3C3C0(int a1);
-int sub_3C3F0(int a1);
-int sub_3C420(int a1);
-int sub_3C450(int a1);
-int sub_3C480(int a1);
-int sub_3C4B0(int a1);
-int sub_3C4E0(int a1);
-int sub_3C510(int a1);
-int sub_3C540(int a1);
+int CreateSpell_3BF70(int a1, char a2, char a3, int a4, __int16 a5, char a6, char a7, int a8, __int16 a9);
+int CreatePossessionSpell_3C040(int a1);
+int CreateCastleSpell_3C060(int a1);
+int CreateFireballSpell_3C090(int a1);
+int CreateSpeedSpell_3C0C0(int a1);
+int CreateHealSpell_3C0F0(int a1);
+int CreateTeleportSpell_3C120(int a1);
+int CreateEarthquakeSpell_3C150(int a1);
+int CreateManaMagnetSpell_3C180(int a1);
+int CreateShieldSpell_3C1B0(int a1);
+int CreateMeteorSpell_3C1E0(int a1);
+int CreateReboundSpell_3C210(int a1);
+int CreateLightningSpell_3C240(int a1);
+int CreateDuelSpell_3C270(int a1);
+int CreateStealManaSpell_3C2A0(int a1);
+int CreateInvisibleSpell_3C2D0(int a1);
+int CreateCraterSpell_3C300(int a1);
+int CreateBeyondSightSpell_3C330(int a1);
+int CreateLightningStormSpell_3C360(int a1);
+int CreateVolcanoSpell_3C390(int a1);
+int CreateUndeadArmySpell_3C3C0(int a1);
+int CreateWallOfFireSpell_3C3F0(int a1);
+int CreateReverseSpeedSpell_3C420(int a1);
+int CreateGlobalDeathSpell_3C450(int a1);
+int CreateRapidFireballSpell_3C480(int a1);
+int CreateClass13Type0_3C4B0(int a1);
+int CreateClass13Type1_3C4E0(int a1);
+int CreateClass13Type2_3C510(int a1);
+int CreateClass13Type3_3C540(int a1);
 void InitMusicFromSetup_3C570();
 void sub_3C800_sub_3CB40();
-void sub_3C9D0_3CD10();
+void ExecutePlayerInputs_3C9D0_3CD10();
 void sub_3DC90_3DFD0(TypeStrAE400_13323* a1, char a2);
 void sub_3DD10_3E050();
 void sub_3DD50_3E090();
 void LoadLevel_3E100_3E440(int level, void* buffer);
-char sub_3E350_3E690(__int16 a1);
-void sub_3E410_3E750(__int16 a1);
-char sub_3E460(__int16 a1);
-char sub_3E4B0_3E7F0(__int16 a1);
-char sub_3E580_3E8C0(__int16 a1);
-char sub_3E640(__int16 a1);
-char sub_3E690_3E9D0(__int16 a1);
-void sub_3E750_3EA90(__int16 a1);
-char sub_3E7A0(__int16 a1);
-char sub_3E7F0_3EB30(__int16 a1);
-char sub_3E8C0_3EC00(__int16 a1);
-char sub_3E980(__int16 a1);
-void sub_3E9D0_3ED10(char a1[10]);
+char LoadMovieGameState_3E350_3E690(__int16 a1);
+void SaveMovieGameState_3E410_3E750(__int16 a1);
+char MovieGameStateExists_3E460(__int16 a1);
+char LoadMovieMapState_3E4B0_3E7F0(__int16 a1);
+char SaveMovieMapState_3E580_3E8C0(__int16 a1);
+char MovieMapStateExists_3E640(__int16 a1);
+char LoadGameState_3E690_3E9D0(__int16 a1);
+void SaveGameState_3E750_3EA90(__int16 a1);
+char GameStateFileExists_3E7A0(__int16 a1);
+char LoadMapState_3E7F0_3EB30(__int16 a1);
+char SaveMapState_3E8C0_3EC00(__int16 a1);
+char MapStateFileExists_3E980(__int16 a1);
+void MovieInputPacket_3E9D0_3ED10(char a1[10]);
 _BYTE *sub_3EC50_3EF90();
 int access_3EC80_3EFC0(char* a1);
 void CreateGameDir_3EC90_3EFD0(uint8_t diskChar, char* dir1, char* dir2);
-int sub_3EEA0_3F1E0(char* path, uint8_t* buffer);
+int LoadFile_3EEA0_3F1E0(char* path, uint8_t* buffer);
 int sub_3EF20_3F260();
 bool access_3EF30_3F270(char* a1);
-char sub_3EF50_3F290(char *a1, char *a2, const char *a3);
-void sub_3F1D0_3F510();
+char CopyDataFilePair_3EF50_3F290(char *a1, char *a2, const char *a3);
+void CopyDataToInstallDir_3F1D0_3F510();
 void sub_3F370_3F6B0();
 void sub_3F398_3F6D8();
 void sub_3F413(unsigned __int8 a1);
@@ -927,9 +927,9 @@ void InitDigijoy_3F7D0_3FB10(char* textBuffer);
 void InitAnojoy_3F820_sub_3FB60(__int16 a2, int a3, int a4, int a5, char a6);
 void sub_3FB30_3FE70(__int16 a1, __int16 a2, char* a3);
 char sub_3FCA0_3FFE0(char a5, __int16 a6, __int16 a7, __int16 a8, __int16 a9, __int16 a10, __int16 a11);
-void sub_40440_40780(Pathstruct* pathstruct);
+void LoadPathFiles_40440_40780(Pathstruct* pathstruct);
 void sub_40550_40890();
-void sub_407A0_40AE0();
+void LoadAndInitLevel_407A0_40AE0();
 void sub_408D0_40C10();
 _BOOL1 sub_409E0_40D20(unsigned __int16 a1);
 char AddTileHeight_40A10_40D50(__int16 a1, __int16 a2, __int16 a3, char a4);
@@ -940,8 +940,8 @@ char sub_40EDC_4121C(_BYTE *a1, _BYTE *a2, char a3, char a4, char a5, __int16 a6
 __int16 sub_40F87_412C7(__int16 a1, __int16 a2);
 unsigned int Distance_410CE_4140E(unsigned int a1);
 void sub_41144(unsigned __int8 a1, unsigned __int8 a2, unsigned __int8 a3, unsigned __int8 a4);
-int sub_411D7_41517(void *a2, unsigned __int16 a3, char a4);
-int sub_411FD_4153D(void *a2, unsigned __int16 a3, char a4);
+int ClearScreen320_411D7_41517(void *a2, unsigned __int16 a3, char a4);
+int ClearScreen640_411FD_4153D(void *a2, unsigned __int16 a3, char a4);
 void sub_41230_41570();
 void sub_41490_417D0();
 void sub_41540_41880();
@@ -949,28 +949,28 @@ unsigned __int16 sub_415C0_41900();
 void sub_416B0();
 void UpdateEntities_41780_41AC0();
 void sub_41B20_41E60(TypeStrAE400_13323* a1, Type_AE400_29795* a2);
-int sub_41C70_41FB0(Type_AE400_29795* event, axis_3d* position);
-// int sub_41CC0_42000(__int16 a1, int a2, int a3);
-void sub_41CF0_42030(Type_AE400_29795* event, axis_3d* position);
-void sub_41DD0_42110(Type_AE400_29795* event);
+int MoveEntity_41C70_41FB0(Type_AE400_29795* event, axis_3d* position);
+// int RelinkEntity_41CC0_42000(__int16 a1, int a2, int a3);
+void AddEntityToMap_41CF0_42030(Type_AE400_29795* event, axis_3d* position);
+void RemoveEntityFromMap_41DD0_42110(Type_AE400_29795* event);
 void MarkEntityForRemoval_41E80_421C0(Type_AE400_29795* event);
 void FreeEntity_41E90_421D0(Type_AE400_29795* event);
-void sub_41EC0_42200(axis_3d* a1, unsigned __int16 a2, __int16 a3, __int16 a4);
+void MoveAlongHeading_41EC0_42200(axis_3d* a1, unsigned __int16 a2, __int16 a3, __int16 a4);
 void sub_41F50_42290(axis_3d* pos1, axis_3d* pos2);
 int KeepHeightAboveGround_42000_42340(axis_3d* a1, int a2, int a3, int a4, int a5);
 int sub_42090_423D0(axis_3d* a1, int a2, int a3, int a4, int a5);
 __int16 HeadingTo_42150_42490(axis_3d* a1, axis_3d* a2);
 __int16 PitchTo_42180_424C0(axis_3d* a1, axis_3d* a2);
-int sub_42210_42550(__int16 a1, __int16 a2);
-int sub_42240_42580(int a1, __int16 a2);
-int sub_422A0_425E0(unsigned __int16 a1, __int16 a2, int a3, unsigned __int16 a4);
+int AngleDifference_42210_42550(__int16 a1, __int16 a2);
+int TurnDirection_42240_42580(int a1, __int16 a2);
+int TurnStep_422A0_425E0(unsigned __int16 a1, __int16 a2, int a3, unsigned __int16 a4);
 int sub_42300_42640(_WORD *a1, _WORD *a2);
 unsigned int Distance3D_42340_42680(axis_3d* a1, axis_3d* a2);
-int sub_42390_426D0(_WORD *a1, _WORD *a2);
-unsigned int sub_423D0_42710(axis_3d* a1, axis_3d* a2);
-int sub_42410_42750(_WORD *a1, _WORD *a2);
-void sub_424F0_42830(Type_AE400_29795* a1, unsigned __int8 a2);
-int sub_42510_42850(Type_AE400_29795* a1);
+int DistanceSquared3D_42390_426D0(_WORD *a1, _WORD *a2);
+unsigned int Distance2D_423D0_42710(axis_3d* a1, axis_3d* a2);
+int DistanceSquared2D_42410_42750(_WORD *a1, _WORD *a2);
+void SetEntityState_424F0_42830(Type_AE400_29795* a1, unsigned __int8 a2);
+int AdvanceAnimFrame_42510_42850(Type_AE400_29795* a1);
 void sub_42530_42870(char a1);
 void* malloc_42540_42880(size_t size);
 void* malloc_425C0_42900(size_t size);
@@ -1005,22 +1005,22 @@ void sub_43930_43C70(uint8* a1[8], unsigned int size);
 void InitMusicDriver_43B20_43E60(unsigned int a2);
 char *LoadFileAlloc_43E50(const char *a1);
 void sub_43EC0_44200();
-void sub_44470_447B0();
-void sub_44700_44A40(char* a1, char** a2, int a3);
+void LoadOrBuildTables_44470_447B0();
+void BuildStringTable_44700_44A40(char* a1, char** a2, int a3);
 void sub_44730_44A70();
 void sub_44840_44B80();
 int sub_448E0_44C20();
 void sub_44BE0_44F20(Type_AE400_29795* a1, char a2);
 signed int sub_44C10_44F50(int a1);
 void sub_44C90_44FD0(Type_AE400_29795* event);
-void sub_44D30_45070(TypeStrAE400_13323* a1, Type_AE400_29795* event);
+void SpawnWizard_44D30_45070(TypeStrAE400_13323* a1, Type_AE400_29795* event);
 int sub_45410_45750(Type_AE400_29795* a1);
 void sub_455D0_45910(Type_AE400_29795* a1);
-void sub_45C10_45F50(Type_AE400_29795* a1);
-void sub_45C90_45FD0(Type_AE400_29795* a1);
-int sub_45FC0_46300(int a1);
-void sub_463B0_466F0(int a1);
-void sub_46480_467C0(int a1);
+void RebuildSpellIndex_45C10_45F50(Type_AE400_29795* a1);
+void PlayerWizardTick_45C90_45FD0(Type_AE400_29795* a1);
+int WizardDyingTick_45FC0_46300(int a1);
+void TurnTowardsKiller_463B0_466F0(int a1);
+void WizardDeadTick_46480_467C0(int a1);
 void sub_46520_46860(Type_AE400_29795* a1);
 int sub_46540_46880(Type_AE400_29795* a1);
 void sub_46840_46B80(Type_AE400_29795* a1);
@@ -1028,7 +1028,7 @@ void sub_46B00_46E40(Type_AE400_29795* a1, Type_AE400_29795* a2, int a3, int a4)
 unsigned int sub_46CA0_46FE0(int a1, int a2, int a3);
 int sub_46D20_47060(Type_AE400_29795* a1, __int16 a2);
 __int16 sub_46DB0_470F0(int a1);
-char sub_46F10_47250(int a1);
+char CastleTick_46F10_47250(int a1);
 int sub_47020_47360(int a1);
 int sub_47080_473C0(int a1);
 int sub_470E0(int a1);
@@ -1050,15 +1050,15 @@ int sub_48520(__int16 a1, __int16 a2, __int16 a3, __int16 a4);
 bool sub_48570(__int16 a1, __int16 a2, __int16 a3, __int16 a4);
 char sub_48710_48A50(int a1, int a2, __int16 a3, __int16 a4, int a5, int a6, __int16 a7, int a8);
 int DrawMinimap_49300_49640(int a1, int a2, int a3, int a4, int a5, int a6, __int16 a7, int a8, int a9, int a10);
-void sub_49890_49BD0(int a1);
+void TreeTick_49890_49BD0(int a1);
 int sub_499C0_49D00(int a1);
 void sub_49A50_49D90(_WORD* a1);
-int sub_49AA0_49DE0(int a1);
-int sub_49AD0_49E10(int a1);
-int sub_49B50_49E90(int a1);
+int StoneTick_49AA0_49DE0(int a1);
+int DolmenTick_49AD0_49E10(int a1);
+int StandingStoneTick_49B50_49E90(int a1);
 void sub_4A980_4ACC0();
 void MainMenuStep_4AB20_4AE60();
-void sub_4AC70_4AFB0();
+void SetupMenuPage_4AC70_4AFB0();
 int sub_4B430_4B770();
 int sub_4B480_4B7C0(int (*a1)(void), int a2);
 int sub_4B520_4B860();
@@ -1066,15 +1066,15 @@ void sub_4B560_4B8A0();
 char **sub_4B6A0_4B9E0();
 void sub_4B6F0_4BA30(char** texts);
 void sub_4B8D0_4BC10(__int16 a1);
-void sub_4BB20_4BE60();
+void InitConfigScreen_4BB20_4BE60();
 void sub_4BC90_4BFD0();
-void sub_4BD60_4C0A0();
+void GameMenuPage_4BD60_4C0A0();
 int sub_4C580_4C8C0();
 bool sub_4C640_4C980();
 bool sub_4C670_4C9B0();
 bool sub_4C6A0_4C9E0();
 void sub_4C6F0_4CA30();
-void sub_4C7E0_4CB20();
+void InitMainMenuScreen_4C7E0_4CB20();
 void sub_4CAC0_4CE00();
 void sub_4CB70_4CEB0();
 void sub_4CC00_4CF40(); // weak
@@ -1082,7 +1082,7 @@ int sub_4CCA0_4CFE0(int a1);
 bool sub_4D0F0_4D430();
 void sub_4D190_4D4D0();
 void sub_4D300_4D640();
-void sub_4D3B0_4D6F0();
+void PlayIntroAnim_4D3B0_4D6F0();
 void PlayOutroAndQuit_4D560_4D8A0();
 void sub_4D680_4D9C0();
 char sub_4DCC0_4E000();
@@ -1093,11 +1093,11 @@ void sub_4E3D0_4E710(unsigned __int8 a1);
 void sub_4E470_4E7B0(unsigned __int8 a1);
 void sub_4E510(unsigned __int8 a1);
 int ShowLevelPerformance_4E5B0_4E8F0();
-void sub_4EE70_4F1B0();
-void sub_4EFC0_4F300();
+void PlayLogoAnim_4EE70_4F1B0();
+void PlayIntelAnim_4EFC0_4F300();
 void sub_4F120_4F460();
-void sub_4F1E0_4F520();
-void sub_4F3F0_4F730();
+void PlayTitleAnim_4F1E0_4F520();
+void SelectLanguage_4F3F0_4F730();
 int sub_4F8D0_4FC10(int a1, void (*a2)());
 void sub_4FD20_50060();
 void sub_4FE00_50140();
@@ -1108,21 +1108,21 @@ void sub_50350_50690();
 void sub_503E0_50720();
 _BYTE *sub_50470_507B0();
 int sub_504A0_507E0();
-bool sub_505A0_508E0();
+bool ReadSoundSetup_505A0_508E0();
 void sub_50770_50AB0();
 bool sub_50D40_51080(int a1, __int16 a2, __int16 a3, char *a4, char *a5, char a6, int a7, void (*a8)(void), char a9, int a10);
-char *sub_512D0_51610(char *a1, const char *a2);
-int sub_51330_51670(int a1, __int16 a2);
-void sub_51360_516A0(int a1, int a2, int a3, int a4);
-_DWORD *sub_513A0_516E0(_DWORD *a1);
-void sub_513E0_51720();
-void sub_51400_51740();
-int sub_51420_51760(_DWORD *a1, char *a2);
+char *StrInsert_512D0_51610(char *a1, const char *a2);
+int StrDelete_51330_51670(int a1, __int16 a2);
+void SetTextWindow_51360_516A0(int a1, int a2, int a3, int a4);
+_DWORD *GetTextWindow_513A0_516E0(_DWORD *a1);
+void SaveTextWindow_513E0_51720();
+void RestoreTextWindow_51400_51740();
+int GetTextWidth_51420_51760(_DWORD *a1, char *a2);
 void sub_51480_517C0(Type_dword_96884* a1, TypeStrFont* a2, TColor* colorBuffer);
 void DrawText_51560_518A0(_BYTE *a1, int a2, __int16 a3, char* text);
 __int16 sub_51650_51990(int a1, int a2, __int16 a3, int a4);
 void RelocateFontGlyphs_519E0_51D20(TypeStrFont* a1);
-void sub_51A10_51D50();
+void ReadSaveGameNames_51A10_51D50();
 int LoadGame_51AF0_51E30(char a1);
 int SaveGame_51C90_51FD0(char a1);
 void sub_51DF0_52130(char a1);
@@ -1139,29 +1139,29 @@ int AimAtEntity_52500_52840(_WORD *a1, int a2);
 int sub_52550_52890(int a1, int a2);
 __int16 sub_52610_52950(int a1, int a2);
 char sub_526C0_52A00(int a1, unsigned int a2, unsigned int a3);
-char sub_52770_52AB0(int a1);
+char UpdateMissile_52770_52AB0(int a1);
 void UpdateFireball_52B30_52E70(int a1);
-char sub_52ED0_53210(int a1);
-char sub_53060(int a1);
-char sub_53070_533B0(int a1);
-char sub_530B0(int a1);
-char sub_530C0_53400(int a1);
+char PossessionMissileTick_52ED0_53210(int a1);
+char MissileTick_53060(int a1);
+char MeteorMissileTick_53070_533B0(int a1);
+char DuelMissileTick_530B0(int a1);
+char StealManaMissileTick_530C0_53400(int a1);
 char sub_534C0_53800(int a1);
 __int16 LightningBoltTick_535E0_53920(unsigned int a1);
 void UpdateHomingSpawnMissile_53980_53CC0(int a1);
 char UpdateSpawningMissile_53B50_53E90(int a1);
-char sub_53DC0_54100(int a1);
-void sub_54180_544D0(int a1);
+char LightningStormMissileTick_53DC0_54100(int a1);
+void Class9Type13Tick_54180_544D0(int a1);
 void sub_54290_545E0(int a1);
-char sub_542B0_54640(int a1);
-void sub_54480_54810(int a1);
+char ManaMagnetMissileTick_542B0_54640(int a1);
+void GlobalDeathMissileTick_54480_54810(int a1);
 int FindMissileTarget_54520_548B0(int a1);
 int ScoreAimTarget_54A90_54FC0(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a4);
 int sub_54BD0_55100(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a4);
 void sub_54F00_55430();
 int sub_54F80(int a1);
 void sub_55100_55630();
-void sub_55370_558A0(__int16 a1, __int16 a2, __int16 a3);
+void PlayEntitySound_55370_558A0(__int16 a1, __int16 a2, __int16 a3);
 bool sub_55870(int a1, int a2);
 void sub_55890_55DC0(int a1, __int16 a2, __int16 a3);
 int sub_558F0();
@@ -1177,40 +1177,40 @@ int CastFireball_56090_565C0(int a1);
 void HealSpellTick_56270_567A0(int a1);
 void SpeedSpellTick_56380_568B0(int a1);
 int PossessionSpellTick_56510_56A40(int a1);
-int sub_566C0(int a1);
-void sub_56730(int a1);
-int sub_567A0_56CD0(int a1);
-int sub_56950_56E80(int a1);
-int sub_56AF0_57020(int a1);
-int sub_56CA0_571D0(int a1);
-void sub_56E50_57380(int a1);
-int sub_57040_57570(int a1);
-void sub_571B0_576E0(int a1);
-int sub_57250_57780(int a1);
-int sub_573F0_57920(int a1);
-int sub_57470_579A0(int a1);
+int CastShield_566C0(int a1);
+void CastBeyondSight_56730(int a1);
+int CastEarthquake_567A0_56CD0(int a1);
+int CastMeteor_56950_56E80(int a1);
+int CastVolcano_56AF0_57020(int a1);
+int CastCrater_56CA0_571D0(int a1);
+void CastTeleport_56E50_57380(int a1);
+int CastDuel_57040_57570(int a1);
+void CastInvisible_571B0_576E0(int a1);
+int CastStealMana_57250_57780(int a1);
+int CastRebound_573F0_57920(int a1);
+int CastLightning_57470_579A0(int a1);
 void CastCastle_57610_57B40(int a1);
-void sub_57800_57D30(int a1);
-int sub_579D0_57F00(int a1);
-int sub_57B80_580B0(int a1);
-int sub_57D40_58270(int a1);
-void sub_57F00_58410(int a1);
-int sub_580A0_585B0(int a1);
-int sub_58240_58750(int a1);
+void CastUndeadArmy_57800_57D30(int a1);
+int CastLightningStorm_579D0_57F00(int a1);
+int CastManaMagnet_57B80_580B0(int a1);
+int CastWallOfFire_57D40_58270(int a1);
+void CastReverseSpeed_57F00_58410(int a1);
+int CastGlobalDeath_580A0_585B0(int a1);
+int CastRapidFireball_58240_58750(int a1);
 void DrawBitmap_58768_58C78(__int16 a1, __int16 a2, TypeTab* a3, unsigned __int8 a4);
-void sub_587E0_58CF0();
-int sub_58860_58D70(unsigned __int16 a1, uint8_t* a2);
+void OpenTmapsFile_587E0_58CF0();
+int LoadTmap_58860_58D70(unsigned __int16 a1, uint8_t* a2);
 char sub_58910_58E20(unsigned __int16 a1);
 char sub_58A00_58F10(unsigned __int16 a1);
 int GetSumaSpriteSizes_58AD0_58FE0(unsigned __int16 a1);
-void sub_58B30_59040(unsigned __int16 a1);
+void LoadTmapGroup_58B30_59040(unsigned __int16 a1);
 int GetAllSumaSpriteSizes_58C30_59140(unsigned int a1);
 void sub_58E70_59380();
 void sub_58F00_59410();
-void sub_58F70_59480();
+void CloseTmapsFile_58F70_59480();
 void sub_58F90_594A0();
-bool sub_59050_59560(unsigned __int16 a1);
-void sub_590D0_595E0();
+bool CacheTmapGroup_59050_59560(unsigned __int16 a1);
+void AdvanceTextureAnims_590D0_595E0();
 void sub_59140_59650();
 void sub_59160_59670(unsigned __int16 a1, unsigned __int16 a2, signed __int16 a3);
 void sub_591E0(unsigned __int16 a1);
@@ -1224,49 +1224,49 @@ void sub_59560_59A70(Type_99974* a1);
 void sub_59720_59C30();
 void sub_59750(int16 a1, int16 a2);
 void Blit_599B0_59EC0(__int16 a1);
-void sub_59A80_59F90(uint16_t* a1);
-void sub_59AB0_59FC0(uint16_t* a1);
-void sub_59AE0_59FF0(uint16_t* a1);
-void sub_59B30_5A040(uint16_t* a1);
-int sub_59B80_5A090(uint16_t* a1);
-void sub_59C40_5A150(uint16_t* a1);
-int sub_59C70_5A180(uint16_t* a1);
-void sub_59CA0_5A1B0(uint16_t* a1);
-void sub_59CF0_5A200(uint16_t* a1);
-void sub_59D40_5A250(uint16_t* a1);
-int sub_59D70_5A280(uint16_t* a1);
-void sub_59DA0_5A2B0(uint16_t* a1);
-void sub_59DF0_5A300(uint16_t* a1);
+void Switch00Tick_59A80_59F90(uint16_t* a1);
+void Switch01Tick_59AB0_59FC0(uint16_t* a1);
+void Switch02Tick_59AE0_59FF0(uint16_t* a1);
+void Switch03Tick_59B30_5A040(uint16_t* a1);
+int Switch04Tick_59B80_5A090(uint16_t* a1);
+void Switch05Tick_59C40_5A150(uint16_t* a1);
+int Switch06Tick_59C70_5A180(uint16_t* a1);
+void Switch07Tick_59CA0_5A1B0(uint16_t* a1);
+void Switch08Tick_59CF0_5A200(uint16_t* a1);
+void Switch09Tick_59D40_5A250(uint16_t* a1);
+int Switch10Tick_59D70_5A280(uint16_t* a1);
+void Switch11Tick_59DA0_5A2B0(uint16_t* a1);
+void Switch12Tick_59DF0_5A300(uint16_t* a1);
 void sub_59E40_5A350(int a1, int a2);
-void sub_59F60_5A470(uint16_t* a1);
-void sub_59F70_5A480(uint16_t* a1);
-void sub_59F80_5A490(uint16_t* a1);
-void sub_59F90_5A4A0(uint16_t* a1);
-void sub_59FA0_5A4B0(uint16_t* a1);
-void sub_59FB0_5A4C0(uint16_t* a1);
-void sub_59FC0_5A4D0(uint16_t* a1);
-void sub_59FD0_5A4E0(uint16_t* a1);
-void sub_59FE0_5A4F0(uint16_t* a1);
-void sub_59FF0_5A500(uint16_t* a1);
-void sub_5A000_5A510(uint16_t* a1);
-void sub_5A010_5A520(uint16_t* a1);
-void sub_5A020_5A530(uint16_t* a1);
-void sub_5A030_5A540(uint16_t* a1);
-void sub_5A040_5A550(uint16_t* a1);
-void sub_5A050_5A560(uint16_t* a1);
-void sub_5A060_5A570(uint16_t* a1);
-void sub_5A070_5A580(uint16_t* a1);
-int sub_5A080(uint16_t* a1);
+void Switch13Tick_59F60_5A470(uint16_t* a1);
+void Switch14Tick_59F70_5A480(uint16_t* a1);
+void Switch15Tick_59F80_5A490(uint16_t* a1);
+void Switch16Tick_59F90_5A4A0(uint16_t* a1);
+void Switch17Tick_59FA0_5A4B0(uint16_t* a1);
+void Switch18Tick_59FB0_5A4C0(uint16_t* a1);
+void Switch19Tick_59FC0_5A4D0(uint16_t* a1);
+void Switch20Tick_59FD0_5A4E0(uint16_t* a1);
+void Switch21Tick_59FE0_5A4F0(uint16_t* a1);
+void Switch22Tick_59FF0_5A500(uint16_t* a1);
+void Switch23Tick_5A000_5A510(uint16_t* a1);
+void Switch24Tick_5A010_5A520(uint16_t* a1);
+void Switch25Tick_5A020_5A530(uint16_t* a1);
+void Switch26Tick_5A030_5A540(uint16_t* a1);
+void Switch27Tick_5A040_5A550(uint16_t* a1);
+void Switch28Tick_5A050_5A560(uint16_t* a1);
+void Switch29Tick_5A060_5A570(uint16_t* a1);
+void Switch30Tick_5A070_5A580(uint16_t* a1);
+int Switch31Tick_5A080(uint16_t* a1);
 int sub_5A090_5A5A0(int a1, int a2);
 int sub_5A120_5A630(int a1, int a2);
 void DrawText_5A180_5A690(char* text, int posX, int posY, uint8 color);
 __int16 GetLetterX_5A3A0_5A8B0();
 __int16 GetLetterY_5A3B0_5A8C0();
-void sub_5A3C0_5A8D0(int fontIndex);
+void SetFont_5A3C0_5A8D0(int fontIndex);
 // void sub_5A3E3(int a1, int a2, int a3, int a4, int a5, int a6, int a7);
 void sub_5A459_5A969();
 void sub_5A4EA_5A9FA();
-void sub_5A560_5AA70();
+void DrawVersionInfo_5A560_5AA70();
 void DrawStartGameTexts_5ACA0_5B1B0();
 void DrawTextLine_5AD10_5B220(char* text);
 int sub_5AD30_5B240();
@@ -1292,7 +1292,7 @@ void sub_5BB60_5C070();
 int sub_5BD40();
 void sub_5BDF8_5C308();
 void sub_5BE50_5C360();
-void sub_5C05C_5C56C(TypeTab* a1);
+void SetMouseCursor_5C05C_5C56C(TypeTab* a1);
 int sub_5C214_5C724();
 void ResizeScr_5C468_5C978();
 __int16 sub_5C76B();
@@ -1308,7 +1308,7 @@ void sub_5CB73(int a1, __int16 a2);
 // _DWORD printf(const char *, ...); weak
 // _DWORD memset(_DWORD, _DWORD, _DWORD); weak
 void WaitForBeam_5CC54_5D164();
-uint8_t sub_5CC70_5D180(TColor* colors, uint8_t colR, uint8_t colG, uint8_t colB);
+uint8_t FindNearestColour_5CC70_5D180(TColor* colors, uint8_t colR, uint8_t colG, uint8_t colB);
 int sub_5CD70_5D280();
 void Blit_5CDA0_5D2B0();
 // _DWORD dos_getdrive(_DWORD); weak
@@ -1316,7 +1316,7 @@ void Blit_5CDA0_5D2B0();
 int LoadMusicSet_5CEF0_5D400(unsigned __int16 a1);
 unsigned int FixMusicTabOffsets_5CFA4();
 void sub_5D010_5D520();
-int sub_5D070_5D580(unsigned __int8 a1);
+int LoadSoundBank_5D070_5D580(unsigned __int8 a1);
 unsigned int sub_5D138();
 int sub_5D1A0(int a1, int a2, unsigned int a3);
 int sub_5D230_5D740(int a1, int a2, int a3);
@@ -1370,12 +1370,12 @@ void DrawBitmap_60D18_61228(__int16 a1, __int16 a2, TypeTab* a3);
 void sub_60D50_61260(TypeTabDimm a1, int a2, int a3, uint8_t* sprite, unsigned __int8 a5, char a6);
 void DrawBitmap_60D65_61275(TypeTabDimm a1, int a2, int a3, uint8_t* sprite, unsigned __int8 a5, char a6);
 int sub_61594_61AA4(unsigned __int16 a1, unsigned __int16 a2, __int16 a3);
-int sub_615D4_61AE4(unsigned __int16 a1, unsigned __int16 a2, __int16 a3);
-void sub_61610_61B20(Pathstruct* pathstruct);
+int PutPixel640_615D4_61AE4(unsigned __int16 a1, unsigned __int16 a2, __int16 a3);
+void FreePathFiles_61610_61B20(Pathstruct* pathstruct);
 void sub_61640(unsigned __int16 a1, unsigned __int16 a2, unsigned __int16 a3, unsigned __int16 a4, unsigned __int16 a5);
 void sub_616C0(unsigned __int16 a1, unsigned __int16 a2, unsigned __int16 a3, __int16 a4, unsigned __int16 a5);
-int sub_61740(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5);
-int sub_61810(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5);
+int DrawRectLowRes_61740(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5);
+int DrawRectHighRes_61810(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5);
 int sub_618E0_61DF0(__int16 a1);
 int sub_619B8_61EC8(__int16 a1);
 void sub_61A1C_61F2C(__int16 a1);
@@ -1408,7 +1408,7 @@ uint32 sub_62CF4_63204(uint8_t** a1);
 __int16 HufRead_62CFD_6320D(uint16* a0, __int16 *a1, uint8_t** a2);
 __int16 BitRead_62D40_63250(uint16* a0, uint8 a1, uint8** a2);
 void ReadHuftable_62DC3_632D3(uint16* a0x, __int16* a0, uint8_t** a1);
-void sub_62E60_63370(char* name, uint8* buffer, int size);
+void WriteFile_62E60_63370(char* name, uint8* buffer, int size);
 size_t FileWrite_62ED0_633E0(FILE* descriptor, uint8_t* buffer, uint32_t count);
 // _DWORD access(_DWORD, _DWORD); weak
 // _DWORD mkdir(_DWORD); weak
@@ -1419,8 +1419,8 @@ int sub_62FF0(int a1);
 void sub_63010_63520();
 void sub_63338_63848();
 int sub_6342C_6393C(unsigned int a1);
-void sub_634A0_639B0(Pathstruct* pathstruct);
-int sub_634E0_639F0(Pathstruct* pathstruct);
+void FreePathFile_634A0_639B0(Pathstruct* pathstruct);
+int LoadPathFile_634E0_639F0(Pathstruct* pathstruct);
 // _DWORD gets(_DWORD); weak
 // _DWORD segread(_DWORD); weak
 // _DWORD int386x(_DWORD, _DWORD, _DWORD, _DWORD); weak
@@ -1450,14 +1450,14 @@ int sub_64F78(unsigned int a1, int a2, int a3);
 int sub_650FF_6560F(__int16 a1, int a2, unsigned int a3, _DWORD *a4);
 void sub_651D6();
 void sub_651E7();
-bool sub_651F8(int a1, int a2);
+bool IsSampleDone_651F8(int a1, int a2);
 void sub_6533A();
 void sub_6534B();
 int sub_6535C(int a1, unsigned int a2);
 int sub_65965(int a1, int a2);
 void sub_65D57();
-void sub_65D70_66280(TypeTab* a1, TypeTab* a2, uint8_t* a3);
-void sub_65DC0_662D0(TypeTab* a1, TypeTab* a2, uint8_t* a3);
+void RelocateSpriteTabDoubled_65D70_66280(TypeTab* a1, TypeTab* a2, uint8_t* a3);
+void RelocateSpriteTab_65DC0_662D0(TypeTab* a1, TypeTab* a2, uint8_t* a3);
 void RestartMusicIfDone_65E00_66310();
 // _DWORD strncmp(_DWORD, _DWORD, _DWORD); weak
 void ViewportResize_65EB0_663C0(__int16 a1, __int16 a2, __int16 a3, __int16 a4);
@@ -1626,8 +1626,8 @@ void sub_6A62D();
 unsigned __int8 sub_6A640(unsigned __int8 a1, unsigned __int8 a2);
 // _DWORD fstrcpy(_DWORD, _DWORD, _DWORD, _DWORD); weak
 __int16 sub_6A737(void (*a1)(_DWORD), unsigned int a2, int a3, int a4, __int16 a5);
-int sub_6B260(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6);
-int sub_6B378(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6);
+int DrawLineLowRes_6B260(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6);
+int DrawLineHighRes_6B378(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6);
 void sub_6B47C_6B98C(TColor* palette);
 // _DWORD tolower(_DWORD); weak
 int sub_6B87A();
@@ -1865,7 +1865,7 @@ __int16 word_4A130[] = {
 0x0000,0x0000,0x0000
 }; //fix it!!!*/
 // PORT: exact bytes of CARPET.EXE 0x4a17c..0x4a1fc (+16 bytes of what followed in DOS memory).
-// The decompiled tables were truncated to 8 bytes; the FMV command reader (sub_111B0, 7-byte entries)
+// The decompiled tables were truncated to 8 bytes; the FMV command reader (RunFmvCommands_111B0, 7-byte entries)
 // walks past them. Regenerate with: python tools/exe_data.py --exe CARPET.EXE carray 0x4a17c 0x90
 uint8_t fmvTables_4A17C[0x90] = {
     0x00, 0x00, 0x41, 0x01, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x72,
@@ -2011,7 +2011,7 @@ uint8_t dword_4A1FC_4A53C[] = {
 
 
 // PORT: exact bytes of CARPET.EXE 0x4a568..0x4a66c (+16 bytes of what followed in DOS memory).
-// The decompiled tables were truncated to 8 bytes; the FMV command reader (sub_111B0, 7-byte entries)
+// The decompiled tables were truncated to 8 bytes; the FMV command reader (RunFmvCommands_111B0, 7-byte entries)
 // walks past them. Regenerate with: python tools/exe_data.py --exe CARPET.EXE carray 0x4a568 0x114
 uint8_t fmvTables_4A568[0x114] = {
     0x00, 0x00, 0x41, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x45, 0x0A, 0x00, 0x00, 0x00, 0x02, 0x00,
@@ -3444,40 +3444,40 @@ Type_96902;
 
 #pragma pack (16)
 
-int sub_39A00(uint16_t* a1);
-int sub_39340(uint16_t* a1);
-int sub_38C60(uint16_t* a1);
+int NullConstructor_39A00(uint16_t* a1);
+int CreateVillagerType13_39340(uint16_t* a1);
+int CreateTrollOrApe_38C60(uint16_t* a1);
 int CreateGuard_386E0(uint16_t* a1);
-int sub_384B0(uint16_t* a1);
+int CreateWorm_384B0(uint16_t* a1);
 
 Type_254A34 str_254A34[] = {
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_37A80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(sub_37AA0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_37AC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(sub_37AE0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(sub_37B00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, PORT_FN(sub_37B20, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, PORT_FN(sub_37B40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0008, PORT_FN(sub_37B60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0009, PORT_FN(sub_37B80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, PORT_FN(sub_37BA0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(Placeholder1_1_37A80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(Placeholder1_2_37AA0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(Placeholder1_3_37AC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(Placeholder1_4_37AE0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(Placeholder1_5_37B00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, PORT_FN(Placeholder1_6_37B20, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, PORT_FN(Placeholder1_7_37B40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0008, PORT_FN(Placeholder1_8_37B60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0009, PORT_FN(Placeholder1_9_37B80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, PORT_FN(Placeholder1_10_37BA0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_254D48[] = {
-{ 0x002548F4, 0x0000, PORT_FN(sub_37BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_37CF0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(sub_37D70, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_37E00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(sub_37E80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(sub_37EF0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(CreateTree_37BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(CreateStone_37CF0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(CreateDolmen_37D70, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(CreateStandingStone_37E00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(CreateClass2Type4_37E80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(CreateClass2Type5_37EF0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_254B84[] = {
-{ 0x002548F4, 0x0000, sub_37820_37BE0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_378A0_37C60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, CreatePlayerWizard_37820_37BE0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(CreateComputerWizard_378A0_37C60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0002, PORT_FN(CreateCastle_37920_37CE0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_37A00_37DC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(CreateBalloon_37A00_37DC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0004, PORT_FN(SetPlayerStart0_37720_37AE0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0005, PORT_FN(SetPlayerStart1_37740_37B00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0006, PORT_FN(SetPlayerStart2_37760_37B20, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
@@ -3528,229 +3528,254 @@ Type_254A34 str_254DBC[] = {//broken data in original
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_255478[] = {
-{ 0x002548F4, 0x0000, PORT_FN(sub_38030, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_38270, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(sub_38370, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_384B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(CreateDragon_38030, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(CreateVulture_38270, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(CreateBee_38370, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(CreateWorm_384B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0004, PORT_FN(CreateGuard_386E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000},
-{ 0x002548F4, 0x0005, PORT_FN(sub_38890, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, PORT_FN(sub_389E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, PORT_FN(sub_38C60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0008, PORT_FN(sub_38D60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0009, PORT_FN(sub_38E70, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, PORT_FN(sub_38FC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000B, PORT_FN(sub_390D0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000C, PORT_FN(sub_39200, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000D, PORT_FN(sub_39340, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000E, PORT_FN(sub_39490, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000F, PORT_FN(sub_395B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0010, PORT_FN(sub_396E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(CreateCrab_38890, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, PORT_FN(CreateKraken_389E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, PORT_FN(CreateTrollOrApe_38C60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0008, PORT_FN(CreateGriffin_38D60, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0009, PORT_FN(CreateSkeleton_38E70, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, PORT_FN(CreateEmuRider_38FC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000B, PORT_FN(CreateGenie_390D0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000C, PORT_FN(CreateVillagerType12_39200, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000D, PORT_FN(CreateVillagerType13_39340, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000E, PORT_FN(CreateVillagerType14_39490, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000F, PORT_FN(CreateClass5Type15_395B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0010, PORT_FN(CreateWyvern_396E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_2555A0[] = {
-{ 0x002548F4, 0x0000, PORT_FN(sub_39800, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_39820, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(Placeholder6_0_39800, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(Placeholder6_1_39820, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_255620[] = {
-{ 0x002548F4, 0x0000, PORT_FN(sub_39840, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_39860, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(sub_39880, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_398A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(sub_398C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(Placeholder7_0_39840, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(Placeholder7_1_39860, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(Placeholder7_2_39880, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(Placeholder7_3_398A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(CreateClass7Type4_398C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_2556D8[] = {
-{ 0x002548F4, 0x0000, PORT_FN(sub_39940, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_39960, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(sub_39980, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_399A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(sub_399C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(sub_399E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(Placeholder8_0_39940, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(Placeholder8_1_39960, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(Placeholder8_2_39980, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(Placeholder8_3_399A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(Placeholder8_4_399C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(Placeholder8_5_399E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_255870[] = {
-{ 0x002548F4, 0x0000, PORT_FN(sub_39A10, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_39A90, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(sub_39B40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_39BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(sub_39C40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(sub_39CC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, PORT_FN(sub_39D40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, PORT_FN(sub_39DC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0008, PORT_FN(sub_39E40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0009, PORT_FN(sub_39EC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, PORT_FN(sub_39F40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000B, PORT_FN(sub_39FC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000C, PORT_FN(sub_3A040, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000D, PORT_FN(sub_3A0C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000E, PORT_FN(sub_3A1A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000F, PORT_FN(sub_3A210, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0010, PORT_FN(sub_3A270, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0011, PORT_FN(sub_3A2F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0012, PORT_FN(sub_3A390, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0013, PORT_FN(sub_3A410, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(CreateFireball_39A10, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(CreatePossessionMissile_39A90, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(CreateEarthquakeMissile_39B40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(CreateMeteorMissile_39BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(CreateVolcanoMissile_39C40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(CreateCraterMissile_39CC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, PORT_FN(CreateClass9Type6_39D40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, PORT_FN(CreateDuelMissile_39DC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0008, PORT_FN(CreateStealManaMissile_39E40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0009, PORT_FN(CreateLightningBolt_39EC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, PORT_FN(CreateHomingSpawnMissile_39F40, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000B, PORT_FN(CreateUndeadArmyMissile_39FC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000C, PORT_FN(CreateLightningStormMissile_3A040, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000D, PORT_FN(CreateClass9Type13_3A0C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000E, PORT_FN(CreateBoulderMissile_3A1A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000F, PORT_FN(CreateClass9Type15_3A210, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0010, PORT_FN(CreateWallOfFireMissile_3A270, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0011, PORT_FN(CreateManaMagnetMissile_3A2F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0012, PORT_FN(CreateGlobalDeathMissile_3A390, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0013, PORT_FN(CreateClass9Type19_3A410, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x0000, PORT_FN(CreateExplosion_3A490, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_3A510, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(sub_3A570, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_3A5D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(sub_3A640, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(sub_3A6B0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, PORT_FN(sub_3A730, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, PORT_FN(sub_3A7D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0008, PORT_FN(sub_3A870, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0009, PORT_FN(sub_3A8D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, PORT_FN(sub_3A930, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000B, PORT_FN(sub_3A9A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000C, PORT_FN(sub_3AA10, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000D, PORT_FN(sub_3AAA0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000E, PORT_FN(sub_3AB40, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000F, PORT_FN(sub_3ABE0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(CreateClass10Type1_3A510, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(CreateSpeedEffect_3A570, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(CreateClass10Type3_3A5D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(CreateClass10Type4_3A640, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(CreateWaterSplash_3A6B0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, PORT_FN(CreateFire_3A730, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, PORT_FN(CreateClass10Type7_3A7D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0008, PORT_FN(CreateClass10Type8_3A870, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0009, PORT_FN(CreateVolcanoEffect_3A8D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, PORT_FN(CreateClass10Type10_3A930, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000B, PORT_FN(CreateCraterEffect_3A9A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000C, PORT_FN(CreatePossessionEffect_3AA10, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000D, PORT_FN(CreateSmoke_3AAA0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000E, PORT_FN(CreateDarkSmoke_3AB40, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000F, PORT_FN(CreateEarthquakeEffect_3ABE0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0010, PORT_FN(CreateLava_3ACC0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0011, PORT_FN(CreateExplosionRing_3AC70, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0012, PORT_FN(CreateVolcanoEruption_3ADB0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0013, PORT_FN(sub_3AE00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0014, PORT_FN(sub_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0015, PORT_FN(sub_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0016, PORT_FN(sub_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0017, PORT_FN(sub_3AE80, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0018, PORT_FN(sub_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0019, PORT_FN(sub_3AF00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x001A, PORT_FN(sub_3AF80, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x001B, PORT_FN(sub_3B000, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x001C, PORT_FN(sub_3B060, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x001D, PORT_FN(sub_3B120, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x001E, (Type_AE400_29795 * (*)(axis_3d*))sub_3B0C0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001F, PORT_FN(sub_3B1D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0020, PORT_FN(sub_3B180, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0021, PORT_FN(sub_3B4D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0022, PORT_FN(sub_3B300, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0013, PORT_FN(CreateVolcanoFire_3AE00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0014, PORT_FN(NullConstructor_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0015, PORT_FN(NullConstructor_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0016, PORT_FN(NullConstructor_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0017, PORT_FN(CreateLightningEffect_3AE80, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0018, PORT_FN(NullConstructor_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0019, PORT_FN(CreateStealManaEffect_3AF00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001A, PORT_FN(CreateDuelEffect_3AF80, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001B, PORT_FN(CreateTerrainRaiseStep_3B000, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001C, PORT_FN(CreateClass10Type28_3B060, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001D, PORT_FN(CreateClass10Type29_3B120, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001E, (Type_AE400_29795 * (*)(axis_3d*))CreateClass10Type30_3B0C0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001F, PORT_FN(CreateClass10Type31_3B1D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0020, PORT_FN(CreateClass10Type32_3B180, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0021, PORT_FN(CreateClass10Type33_3B4D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0022, PORT_FN(CreateMirror_3B300, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0023, PORT_FN(sub_3B3D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0024, PORT_FN(sub_3B3E0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0024, PORT_FN(CreateUndeadArmyEffect_3B3E0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0026, PORT_FN(sub_3B460, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0027, PORT_FN(CreateManaBall_3B5A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0028, PORT_FN(CreateDeathMarker_3B620, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0029, PORT_FN(sub_3B760, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x002A, PORT_FN(sub_3B7B0_3BB30, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x002B, PORT_FN(sub_3B6F0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x002C, PORT_FN(sub_3B800, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x002D, (Type_AE400_29795 * (*)(axis_3d*))sub_3B690, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0029, PORT_FN(CreateClass10Type41_3B760, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x002A, PORT_FN(CreateClass10Type42_3B7B0_3BB30, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x002B, PORT_FN(CreateClass10Type43_3B6F0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x002C, PORT_FN(CreateBoulder_3B800, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x002D, (Type_AE400_29795 * (*)(axis_3d*))CreatePlayerFlag_3B690, 0x0001, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0032, PORT_FN(sub_3B2A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0033, PORT_FN(sub_3B230, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0032, PORT_FN(CreateClass10Type50_3B2A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0033, PORT_FN(CreateClass10Type51_3B230, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0034, PORT_FN(CreateCrabSpawnTimer_3B860, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0035, PORT_FN(sub_3B8E0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0036, PORT_FN(sub_3B970, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0037, PORT_FN(sub_3BA00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0038, PORT_FN(sub_3BA90, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0035, PORT_FN(CreateWallOfFireEffect_3B8E0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0036, PORT_FN(CreateManaMagnetEffect_3B970, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0037, PORT_FN(CreateGlobalDeathEffect_3BA00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0038, PORT_FN(CreateClass10Type56_3BA90, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 
 Type_254A34 str_256208[] = {
-{ 0x002548F4, 0x0000, sub_3BB70, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, sub_3BB90, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, sub_3BBB0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, sub_3BBD0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, sub_3BBF0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, sub_3BC10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, sub_3BC30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, sub_3BC50, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0008, sub_3BC70, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0009, sub_3BC90, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, sub_3BCB0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000B, sub_3BCD0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000C, sub_3BCF0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000D, sub_3BD10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000E, sub_3BD30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000F, sub_3BD50, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0010, sub_3BD70, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0011, sub_3BD90, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0012, sub_3BDB0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0013, sub_3BDD0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0014, sub_3BDF0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0015, sub_3BE10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0016, sub_3BE30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0017, sub_3BE50, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0018, sub_3BE70, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0019, sub_3BE90, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001A, sub_3BEB0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001B, sub_3BED0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001C, sub_3BEF0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001D, sub_3BF10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001E, sub_3BF30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001F, sub_3BF50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, CreateSwitch00_3BB70, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, CreateSwitch01_3BB90, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, CreateSwitch02_3BBB0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, CreateSwitch03_3BBD0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, CreateSwitch04_3BBF0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, CreateSwitch05_3BC10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, CreateSwitch06_3BC30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, CreateSwitch07_3BC50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0008, CreateSwitch08_3BC70, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0009, CreateSwitch09_3BC90, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, CreateSwitch10_3BCB0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000B, CreateSwitch11_3BCD0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000C, CreateSwitch12_3BCF0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000D, CreateSwitch13_3BD10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000E, CreateSwitch14_3BD30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000F, CreateSwitch15_3BD50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0010, CreateSwitch16_3BD70, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0011, CreateSwitch17_3BD90, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0012, CreateSwitch18_3BDB0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0013, CreateSwitch19_3BDD0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0014, CreateSwitch20_3BDF0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0015, CreateSwitch21_3BE10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0016, CreateSwitch22_3BE30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0017, CreateSwitch23_3BE50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0018, CreateSwitch24_3BE70, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0019, CreateSwitch25_3BE90, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001A, CreateSwitch26_3BEB0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001B, CreateSwitch27_3BED0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001C, CreateSwitch28_3BEF0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001D, CreateSwitch29_3BF10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001E, CreateSwitch30_3BF30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001F, CreateSwitch31_3BF50, 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_2567D8[] = {
-{ 0x002548F4, 0x0000, PORT_FN(sub_3C090, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_3C0F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(sub_3C0C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_3C040, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0004, PORT_FN(sub_3C1B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(sub_3C330, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, PORT_FN(sub_3C150, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0007, PORT_FN(sub_3C1E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0008, PORT_FN(sub_3C390, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0009, PORT_FN(sub_3C300, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000A, PORT_FN(sub_3C120, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000B, PORT_FN(sub_3C270, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000C, PORT_FN(sub_3C2D0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000D, PORT_FN(sub_3C2A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000E, PORT_FN(sub_3C210, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000F, PORT_FN(sub_3C240, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0010, PORT_FN(sub_3C060, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0011, PORT_FN(sub_3C3C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0012, PORT_FN(sub_3C360, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0013, PORT_FN(sub_3C180, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0014, PORT_FN(sub_3C3F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0015, PORT_FN(sub_3C420, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0016, PORT_FN(sub_3C450, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0017, PORT_FN(sub_3C480, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(CreateFireballSpell_3C090, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(CreateHealSpell_3C0F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(CreateSpeedSpell_3C0C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(CreatePossessionSpell_3C040, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0004, PORT_FN(CreateShieldSpell_3C1B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(CreateBeyondSightSpell_3C330, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, PORT_FN(CreateEarthquakeSpell_3C150, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0007, PORT_FN(CreateMeteorSpell_3C1E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0008, PORT_FN(CreateVolcanoSpell_3C390, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0009, PORT_FN(CreateCraterSpell_3C300, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000A, PORT_FN(CreateTeleportSpell_3C120, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000B, PORT_FN(CreateDuelSpell_3C270, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000C, PORT_FN(CreateInvisibleSpell_3C2D0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000D, PORT_FN(CreateStealManaSpell_3C2A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000E, PORT_FN(CreateReboundSpell_3C210, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000F, PORT_FN(CreateLightningSpell_3C240, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0010, PORT_FN(CreateCastleSpell_3C060, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0011, PORT_FN(CreateUndeadArmySpell_3C3C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0012, PORT_FN(CreateLightningStormSpell_3C360, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0013, PORT_FN(CreateManaMagnetSpell_3C180, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0014, PORT_FN(CreateWallOfFireSpell_3C3F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0015, PORT_FN(CreateReverseSpeedSpell_3C420, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0016, PORT_FN(CreateGlobalDeathSpell_3C450, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0017, PORT_FN(CreateRapidFireballSpell_3C480, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
 Type_254A34 str_256980[] = {
-{ 0x002548F4, 0x0000, PORT_FN(sub_3C4B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0001, PORT_FN(sub_3C4E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(sub_3C510, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0003, PORT_FN(sub_3C540, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0000, PORT_FN(CreateClass13Type0_3C4B0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0001, PORT_FN(CreateClass13Type1_3C4E0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(CreateClass13Type2_3C510, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0003, PORT_FN(CreateClass13Type3_3C540, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 } };
 
-int sub_25980() { return 0; };
-int sub_49AC0() { return 0; };
-int sub_49B40() { return 0; };
-int sub_49B70() { return 0; };
-int sub_47F80() { return 0; };
-int sub_481C0() { return 0; };
-int sub_31A90() { return 0; };
-int sub_5B5D0() { return 0; };
-int sub_48650() { return 0; };
-void sub_56250(Type_AE400_29795* a1x) {
+/// Empty entity state handler (original 0x25980 is a bare ret).
+int EmptyStateHandler_25980() { return 0; };
+/// Empty entity state handler (original 0x49AC0 is a bare ret).
+int EmptyStateHandler_49AC0() { return 0; };
+/// Empty entity state handler (original 0x49B40 is a bare ret).
+int EmptyStateHandler_49B40() { return 0; };
+/// Empty entity state handler (original 0x49B70 is a bare ret).
+int EmptyStateHandler_49B70() { return 0; };
+/// Empty entity state handler (original 0x47F80 is a bare ret).
+int EmptyStateHandler_47F80() { return 0; };
+/// Empty entity state handler (original 0x481C0 is a bare ret).
+int EmptyStateHandler_481C0() { return 0; };
+/// Empty entity state handler (original 0x31A90 is a bare ret).
+int EmptyStateHandler_31A90() { return 0; };
+/// Empty entity state handler (original 0x5B5D0 is a bare ret).
+int EmptyStateHandler_5B5D0() { return 0; };
+/// Empty entity state handler (original 0x48650 is a bare ret).
+int EmptyStateHandler_48650() { return 0; };
+/// State handler wrapper around SpellJarTick_55DB0_562E0 (a separate function in the original: push edx; call 0x55DB0).
+void SpellJarTickWrapper_56250(Type_AE400_29795* a1x) {
     SpellJarTick_55DB0_562E0(a1x);
 };
-void sub_56260(Type_AE400_29795* a1x) {
+/// State handler wrapper around SpellJarSpawnTick_55D30_56260 (a separate function in the original: push edx; call 0x55D30).
+void SpellJarSpawnTickWrapper_56260(Type_AE400_29795* a1x) {
     SpellJarSpawnTick_55D30_56260(a1x);
 };
-int sub_43AF0() { return 0; };
+/// Empty entity state handler (original 0x43AF0 is a bare ret).
+int EmptyStateHandler_43AF0() { return 0; };
 /// Empty entity state handler (original 0x262C0 is a bare ret); class 10 states 20-22 never change on their own.
 int EmptyStateHandler_262C0() { return 0; };
-int sub_26350() { return 0; };
-int sub_29B70() { return 0; };
+/// Empty entity state handler (original 0x26350 is a bare ret).
+int EmptyStateHandler_26350() { return 0; };
+/// Empty entity state handler (original 0x29B70 is a bare ret).
+int EmptyStateHandler_29B70() { return 0; };
 
-int sub_1F630() { return 0; };
-int sub_1F9F0() { return 0; };
-int sub_1FAB0() { return 0; };
-int sub_1FE80() { return 0; };
-int sub_1FF50() { return 0; };//?
-int sub_20B90() { return 0; };
-int sub_20BA0() { return 0; };
-int sub_20BB0() { return 0; };
+/// Empty entity state handler (original 0x1F630 is a bare ret).
+int EmptyStateHandler_1F630() { return 0; };
+/// Empty entity state handler (original 0x1F9F0 is a bare ret).
+int EmptyStateHandler_1F9F0() { return 0; };
+/// Empty entity state handler (original 0x1FAB0 is a bare ret).
+int EmptyStateHandler_1FAB0() { return 0; };
+/// Empty entity state handler (original 0x1FE80 is a bare ret).
+int EmptyStateHandler_1FE80() { return 0; };
+// PORT: was "int sub_1FF50() { return 0; };//?" - IDA took the code-segment table at 0x1FF40 for code and lost this
+// function; the original (0x1FF50) is "push 5Ah; push a1; call sub_19B10" (CreatureIdleTick_19B10), like the other 6t state handlers.
+/// TODO: rename when the entity is identified (class 5 type 15).
+/// Idle state of class 5 type 15 (state 90): CreatureIdleTick_19B10(a1x, 90).
+void Class5Type15IdleTick_1FF50(Type_AE400_29795* a1x) { CreatureIdleTick_19B10(a1x, 90); }
+/// Empty entity state handler (original 0x20B90 is a bare ret).
+int EmptyStateHandler_20B90() { return 0; };
+/// Empty entity state handler (original 0x20BA0 is a bare ret).
+int EmptyStateHandler_20BA0() { return 0; };
+/// Empty entity state handler (original 0x20BB0 is a bare ret).
+int EmptyStateHandler_20BB0() { return 0; };
 
 
 Type_254A34x str_254A08[] = {
@@ -3758,39 +3783,39 @@ Type_254A34x str_254A08[] = {
 };
 
 Type_254A34x str_254C3C[] = {
-{ 0x002548F4,0x0000,PORT_FN(sub_49890_49BD0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4,0x0000,PORT_FN(TreeTick_49890_49BD0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x002548F4,0x0001,PORT_FN(sub_499C0_49D00, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))sub_49A50_49D90,0x0001,0x0000 },
-{ 0x002548F4,0x0003,PORT_FN(sub_49AA0_49DE0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))sub_49AC0,0x0001,0x0000 },
-{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))sub_49AC0,0x0001,0x0000 },
-{ 0x002548F4,0x0006,PORT_FN(sub_49AD0_49E10, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))sub_49B40,0x0001,0x0000 },
-{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))sub_49B40,0x0001,0x0000 },
-{ 0x002548F4,0x0009,PORT_FN(sub_49B50_49E90, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))sub_49B70,0x0001,0x0000 },
-{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))sub_49B70,0x0001,0x0000 },
-{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))sub_49B70,0x0001,0x0000 },
-{ 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))sub_49B70,0x0001,0x0000 },
-{ 0x002548F4,0x000E,(void (*)(Type_AE400_29795*))sub_49B70,0x0001,0x0000 }, // PORT: see below
-{ 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))sub_49B70,0x0001,0x0000 },
-{ 0x002548F4,0x0010,(void (*)(Type_AE400_29795*))sub_49B70,0x0001,0x0000 },
-{ 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))sub_49B70,0x0001,0x0000 }, // PORT: entries 14-17 were missing
+{ 0x002548F4,0x0003,PORT_FN(StoneTick_49AA0_49DE0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))EmptyStateHandler_49AC0,0x0001,0x0000 },
+{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))EmptyStateHandler_49AC0,0x0001,0x0000 },
+{ 0x002548F4,0x0006,PORT_FN(DolmenTick_49AD0_49E10, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B40,0x0001,0x0000 },
+{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B40,0x0001,0x0000 },
+{ 0x002548F4,0x0009,PORT_FN(StandingStoneTick_49B50_49E90, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B70,0x0001,0x0000 },
+{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B70,0x0001,0x0000 },
+{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B70,0x0001,0x0000 },
+{ 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B70,0x0001,0x0000 },
+{ 0x002548F4,0x000E,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B70,0x0001,0x0000 }, // PORT: see below
+{ 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B70,0x0001,0x0000 },
+{ 0x002548F4,0x0010,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B70,0x0001,0x0000 },
+{ 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B70,0x0001,0x0000 }, // PORT: entries 14-17 were missing
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 }
 };
 
 Type_254A34x str_254ADC[] = {
-{ 0x002548F4,0x0000,sub_45C90_45FD0, 0x0001, 0x0000 },
+{ 0x002548F4,0x0000,PlayerWizardTick_45C90_45FD0, 0x0001, 0x0000 },
 { 0x002548F4,0x0001,PORT_FN(ComputerWizardTick_13170, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0002,PORT_FN(sub_45FC0_46300, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0003,PORT_FN(sub_46480_467C0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0002,PORT_FN(WizardDyingTick_45FC0_46300, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0003,PORT_FN(WizardDeadTick_46480_467C0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0004,PORT_FN(sub_46DB0_470F0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0005,PORT_FN(sub_46F10_47250, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0005,PORT_FN(CastleTick_46F10_47250, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0006,PORT_FN(sub_470E0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))sub_47F80,0x0001,0x0000 },
-{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))sub_47F80,0x0001,0x0000 },
+{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))EmptyStateHandler_47F80,0x0001,0x0000 },
+{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))EmptyStateHandler_47F80,0x0001,0x0000 },
 { 0x002548F4,0x0009,PORT_FN(sub_47F90_482D0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))sub_481C0,0x0001,0x0000 },
+{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))EmptyStateHandler_481C0,0x0001,0x0000 },
 { 0x00000000,0x0000,(void (*)(Type_AE400_29795*))nullptr,0x0000,0x0000 }
 };
 
@@ -3799,363 +3824,363 @@ Type_254A34x str_254DAC[] = {
 };
 
 Type_254A34x str_254DCC[] = {//254DCC
-{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))sub_1B060, 0x0001, 0x0000 },
-{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))sub_1B070,0x0001,0x0000 },
-{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))sub_1B090,0x0001,0x0000 },
-{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))sub_1B0E0,0x0001,0x0000 },
-{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))sub_1B100,0x0001,0x0000 },
-{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))sub_1B110,0x0001,0x0000 },
-{ 0x002548F4,0x0006,(void (*)(Type_AE400_29795*))sub_1B160,0x0001,0x0000 },
-{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))sub_1B200,0x0001,0x0000 },
-{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))sub_1B2D0,0x0001,0x0000 },
-{ 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))sub_1B320,0x0001,0x0000 },
-{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))sub_1B330,0x0001,0x0000 },
-{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))sub_1B340,0x0001,0x0000 },
-{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))sub_1B350,0x0001,0x0000 },
-{ 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))sub_1B370,0x0001,0x0000 },
-{ 0x002548F4, 0x000E, (void (*)(Type_AE400_29795*))sub_1B3C0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000F, (void (*)(Type_AE400_29795*))sub_1B4C0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0010, (void (*)(Type_AE400_29795*))sub_1B4E0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0011, (void (*)(Type_AE400_29795*))sub_1B4F0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0012, (void (*)(Type_AE400_29795*))sub_1B500, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0013, (void (*)(Type_AE400_29795*))sub_1B510, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0014, (void (*)(Type_AE400_29795*))sub_1B520, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0015, (void (*)(Type_AE400_29795*))sub_1B570, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0016, (void (*)(Type_AE400_29795*))sub_1B580, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0017, (void (*)(Type_AE400_29795*))sub_1B590, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0018, (void (*)(Type_AE400_29795*))sub_1B5A0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0019, (void (*)(Type_AE400_29795*))sub_1B5D0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001A, (void (*)(Type_AE400_29795*))sub_1BB20, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001B, (void (*)(Type_AE400_29795*))sub_1BBE0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001C, (void (*)(Type_AE400_29795*))sub_1BC10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001D, (void (*)(Type_AE400_29795*))sub_1BC40, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001E, (void (*)(Type_AE400_29795*))sub_1BD10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001F, (void (*)(Type_AE400_29795*))sub_1BD20, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0020, (void (*)(Type_AE400_29795*))sub_1C110, 0x0001, 0x0000 },
+{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))DragonIdleTick_1B060, 0x0001, 0x0000 },
+{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))DragonTick_1B070,0x0001,0x0000 },
+{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))DragonAttackTick_1B090,0x0001,0x0000 },
+{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))DragonFollowTick_1B0E0,0x0001,0x0000 },
+{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))DragonDyingTick_1B100,0x0001,0x0000 },
+{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))DragonDeadTick_1B110,0x0001,0x0000 },
+{ 0x002548F4,0x0006,(void (*)(Type_AE400_29795*))VultureIdleTick_1B160,0x0001,0x0000 },
+{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))VultureTick_1B200,0x0001,0x0000 },
+{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))VultureAttackTick_1B2D0,0x0001,0x0000 },
+{ 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))VultureFollowTick_1B320,0x0001,0x0000 },
+{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))VultureDyingTick_1B330,0x0001,0x0000 },
+{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))VultureDeadTick_1B340,0x0001,0x0000 },
+{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))BeeIdleTick_1B350,0x0001,0x0000 },
+{ 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))BeeTick_1B370,0x0001,0x0000 },
+{ 0x002548F4, 0x000E, (void (*)(Type_AE400_29795*))BeeAttackTick_1B3C0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000F, (void (*)(Type_AE400_29795*))BeeFollowTick_1B4C0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0010, (void (*)(Type_AE400_29795*))BeeDyingTick_1B4E0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0011, (void (*)(Type_AE400_29795*))BeeDeadTick_1B4F0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0012, (void (*)(Type_AE400_29795*))WormIdleTick_1B500, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0013, (void (*)(Type_AE400_29795*))WormTick_1B510, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0014, (void (*)(Type_AE400_29795*))WormAttackTick_1B520, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0015, (void (*)(Type_AE400_29795*))WormFollowTick_1B570, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0016, (void (*)(Type_AE400_29795*))WormDyingTick_1B580, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0017, (void (*)(Type_AE400_29795*))WormDeadTick_1B590, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0018, (void (*)(Type_AE400_29795*))GuardIdleTick_1B5A0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0019, (void (*)(Type_AE400_29795*))GuardTick_1B5D0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001A, (void (*)(Type_AE400_29795*))GuardAttackTick_1BB20, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001B, (void (*)(Type_AE400_29795*))GuardFollowTick_1BBE0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001C, (void (*)(Type_AE400_29795*))GuardDyingTick_1BC10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001D, (void (*)(Type_AE400_29795*))GuardDeadTick_1BC40, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001E, (void (*)(Type_AE400_29795*))CrabIdleTick_1BD10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001F, (void (*)(Type_AE400_29795*))CrabTick_1BD20, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0020, (void (*)(Type_AE400_29795*))CrabAttackTick_1C110, 0x0001, 0x0000 },
 { 0x002548F4, 0x0021, (void (*)(Type_AE400_29795*))sub_1C170, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0022, (void (*)(Type_AE400_29795*))sub_1C3C0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0023, (void (*)(Type_AE400_29795*))sub_1C3D0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0024, (void (*)(Type_AE400_29795*))sub_1C490, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0025, (void (*)(Type_AE400_29795*))sub_1C4A0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0026, (void (*)(Type_AE400_29795*))sub_1C4F0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0027, (void (*)(Type_AE400_29795*))sub_1C880, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0028, (void (*)(Type_AE400_29795*))sub_1C8D0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0029, (void (*)(Type_AE400_29795*))sub_1C8E0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002A, (void (*)(Type_AE400_29795*))sub_1C8F0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002B, (void (*)(Type_AE400_29795*))sub_1C900, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002C, (void (*)(Type_AE400_29795*))sub_1C960, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002D, (void (*)(Type_AE400_29795*))sub_1CA00, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002E, (void (*)(Type_AE400_29795*))sub_1CA20, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002F, (void (*)(Type_AE400_29795*))sub_1CA30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0030, (void (*)(Type_AE400_29795*))sub_1CA40, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0031, (void (*)(Type_AE400_29795*))sub_1CA50, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0032, (void (*)(Type_AE400_29795*))sub_1CE30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0033, (void (*)(Type_AE400_29795*))sub_1CF50, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0034, (void (*)(Type_AE400_29795*))sub_1CF60, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0035, (void (*)(Type_AE400_29795*))sub_1CFE0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0036, (void (*)(Type_AE400_29795*))sub_1CFF0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0022, (void (*)(Type_AE400_29795*))CrabDyingTick_1C3C0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0023, (void (*)(Type_AE400_29795*))CrabDeadTick_1C3D0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0024, (void (*)(Type_AE400_29795*))KrakenIdleTick_1C490, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0025, (void (*)(Type_AE400_29795*))KrakenTick_1C4A0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0026, (void (*)(Type_AE400_29795*))KrakenAttackTick_1C4F0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0027, (void (*)(Type_AE400_29795*))KrakenFollowTick_1C880, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0028, (void (*)(Type_AE400_29795*))KrakenDyingTick_1C8D0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0029, (void (*)(Type_AE400_29795*))KrakenDeadTick_1C8E0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002A, (void (*)(Type_AE400_29795*))TrollOrApeIdleTick_1C8F0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002B, (void (*)(Type_AE400_29795*))TrollOrApeTick_1C900, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002C, (void (*)(Type_AE400_29795*))TrollOrApeAttackTick_1C960, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002D, (void (*)(Type_AE400_29795*))TrollOrApeFollowTick_1CA00, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002E, (void (*)(Type_AE400_29795*))TrollOrApeDyingTick_1CA20, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002F, (void (*)(Type_AE400_29795*))TrollOrApeDeadTick_1CA30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0030, (void (*)(Type_AE400_29795*))GriffinIdleTick_1CA40, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0031, (void (*)(Type_AE400_29795*))GriffinTick_1CA50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0032, (void (*)(Type_AE400_29795*))GriffinAttackTick_1CE30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0033, (void (*)(Type_AE400_29795*))GriffinFollowTick_1CF50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0034, (void (*)(Type_AE400_29795*))GriffinDyingTick_1CF60, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0035, (void (*)(Type_AE400_29795*))GriffinDeadTick_1CFE0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0036, (void (*)(Type_AE400_29795*))SkeletonTick_1CFF0, 0x0001, 0x0000 },
 { 0x002548F4, 0x0037, (void (*)(Type_AE400_29795*))sub_1D060, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0038, (void (*)(Type_AE400_29795*))sub_1DA60, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0039, (void (*)(Type_AE400_29795*))sub_1DC80, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003A, (void (*)(Type_AE400_29795*))sub_1DCB0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003B, (void (*)(Type_AE400_29795*))sub_1DCC0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003C, (void (*)(Type_AE400_29795*))sub_1DDD0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003D, (void (*)(Type_AE400_29795*))sub_1DDE0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003E, (void (*)(Type_AE400_29795*))sub_1DDF0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003F, (void (*)(Type_AE400_29795*))sub_1DE10, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0040, (void (*)(Type_AE400_29795*))sub_1DE20, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0041, (void (*)(Type_AE400_29795*))sub_1DE30, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0042, (void (*)(Type_AE400_29795*))sub_1DE40, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0038, (void (*)(Type_AE400_29795*))SkeletonAttackTick_1DA60, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0039, (void (*)(Type_AE400_29795*))SkeletonFollowTick_1DC80, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003A, (void (*)(Type_AE400_29795*))SkeletonDyingTick_1DCB0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003B, (void (*)(Type_AE400_29795*))SkeletonDeadTick_1DCC0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003C, (void (*)(Type_AE400_29795*))EmuRiderIdleTick_1DDD0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003D, (void (*)(Type_AE400_29795*))EmuRiderTick_1DDE0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003E, (void (*)(Type_AE400_29795*))EmuRiderAttackTick_1DDF0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003F, (void (*)(Type_AE400_29795*))EmuRiderFollowTick_1DE10, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0040, (void (*)(Type_AE400_29795*))EmuRiderDyingTick_1DE20, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0041, (void (*)(Type_AE400_29795*))EmuRiderDeadTick_1DE30, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0042, (void (*)(Type_AE400_29795*))GenieTick_1DE40, 0x0001, 0x0000 },
 { 0x002548F4, 0x0043, (void (*)(Type_AE400_29795*))sub_1DFE0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0044, (void (*)(Type_AE400_29795*))sub_1E380, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0045, (void (*)(Type_AE400_29795*))sub_1E6F0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0046, (void (*)(Type_AE400_29795*))sub_1E700, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0047, (void (*)(Type_AE400_29795*))sub_1E710, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0044, (void (*)(Type_AE400_29795*))GenieAttackTick_1E380, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0045, (void (*)(Type_AE400_29795*))GenieFollowTick_1E6F0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0046, (void (*)(Type_AE400_29795*))GenieDyingTick_1E700, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0047, (void (*)(Type_AE400_29795*))GenieDeadTick_1E710, 0x0001, 0x0000 },
 { 0x002548F4, 0x0048, (void (*)(Type_AE400_29795*))sub_1EA40, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0049, (void (*)(Type_AE400_29795*))sub_1EED0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0049, (void (*)(Type_AE400_29795*))VillagerType12Tick_1EED0, 0x0001, 0x0000 },
 { 0x002548F4, 0x004A, (void (*)(Type_AE400_29795*))sub_1F120, 0x0001, 0x0000 },
 { 0x002548F4, 0x004B, (void (*)(Type_AE400_29795*))sub_1F390, 0x0001, 0x0000 },
-{ 0x002548F4, 0x004C, (void (*)(Type_AE400_29795*))sub_1F5A0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x004D, (void (*)(Type_AE400_29795*))sub_1F5B0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x004E, (void (*)(Type_AE400_29795*))sub_1F630, 0x0001, 0x0000 },
-{ 0x002548F4, 0x004F, (void (*)(Type_AE400_29795*))sub_1F640, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0050, (void (*)(Type_AE400_29795*))sub_1F9F0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0051, (void (*)(Type_AE400_29795*))sub_1F9F0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0052, (void (*)(Type_AE400_29795*))sub_1FA00, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0053, (void (*)(Type_AE400_29795*))sub_1FAA0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0054, (void (*)(Type_AE400_29795*))sub_1FAB0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0055, (void (*)(Type_AE400_29795*))sub_1FAC0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0056, (void (*)(Type_AE400_29795*))sub_1FE80, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0057, (void (*)(Type_AE400_29795*))sub_1FE80, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0058, (void (*)(Type_AE400_29795*))sub_1FE90, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0059, (void (*)(Type_AE400_29795*))sub_1FEC0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x005A, (void (*)(Type_AE400_29795*))sub_1FF50, 0x0001, 0x0000 },
-{ 0x002548F4, 0x005B, (void (*)(Type_AE400_29795*))sub_1FF60, 0x0001, 0x0000 },
-{ 0x002548F4, 0x005C, (void (*)(Type_AE400_29795*))sub_201D0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x005D, (void (*)(Type_AE400_29795*))sub_203E0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x005E, (void (*)(Type_AE400_29795*))sub_203F0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x005F, (void (*)(Type_AE400_29795*))sub_20400, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0060, (void (*)(Type_AE400_29795*))sub_20700, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0061, (void (*)(Type_AE400_29795*))sub_20710, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0062, (void (*)(Type_AE400_29795*))sub_207E0, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0063, (void (*)(Type_AE400_29795*))sub_20B60, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0064, (void (*)(Type_AE400_29795*))sub_20B70, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0065, (void (*)(Type_AE400_29795*))sub_20B80, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0066, (void (*)(Type_AE400_29795*))sub_20B90, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0067, (void (*)(Type_AE400_29795*))sub_20B90, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0068, (void (*)(Type_AE400_29795*))sub_20B90, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0069, (void (*)(Type_AE400_29795*))sub_20B90, 0x0000, 0x0000 },
-{ 0x002548F4, 0x006A, (void (*)(Type_AE400_29795*))sub_20B90, 0x0000, 0x0000 },
-{ 0x002548F4, 0x006B, (void (*)(Type_AE400_29795*))sub_20B90, 0x0000, 0x0000 },
-{ 0x002548F4, 0x006C, (void (*)(Type_AE400_29795*))sub_20BA0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x006D, (void (*)(Type_AE400_29795*))sub_20BA0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x006E, (void (*)(Type_AE400_29795*))sub_20BA0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x006F, (void (*)(Type_AE400_29795*))sub_20BA0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0070, (void (*)(Type_AE400_29795*))sub_20BA0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0071, (void (*)(Type_AE400_29795*))sub_20BA0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0072, (void (*)(Type_AE400_29795*))sub_20BB0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0073, (void (*)(Type_AE400_29795*))sub_20BB0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0074, (void (*)(Type_AE400_29795*))sub_20BB0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0075, (void (*)(Type_AE400_29795*))sub_20BB0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0076, (void (*)(Type_AE400_29795*))sub_20BB0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0077, (void (*)(Type_AE400_29795*))sub_20BB0, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0078, PORT_FN(sub_19550, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x004C, (void (*)(Type_AE400_29795*))VillagerType12DyingTick_1F5A0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x004D, (void (*)(Type_AE400_29795*))VillagerType12DeadTick_1F5B0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x004E, (void (*)(Type_AE400_29795*))EmptyStateHandler_1F630, 0x0001, 0x0000 },
+{ 0x002548F4, 0x004F, (void (*)(Type_AE400_29795*))VillagerType13Tick_1F640, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0050, (void (*)(Type_AE400_29795*))EmptyStateHandler_1F9F0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0051, (void (*)(Type_AE400_29795*))EmptyStateHandler_1F9F0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0052, (void (*)(Type_AE400_29795*))VillagerType13DyingTick_1FA00, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0053, (void (*)(Type_AE400_29795*))VillagerType13DeadTick_1FAA0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0054, (void (*)(Type_AE400_29795*))EmptyStateHandler_1FAB0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0055, (void (*)(Type_AE400_29795*))VillagerType14Tick_1FAC0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0056, (void (*)(Type_AE400_29795*))EmptyStateHandler_1FE80, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0057, (void (*)(Type_AE400_29795*))EmptyStateHandler_1FE80, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0058, (void (*)(Type_AE400_29795*))VillagerType14DyingTick_1FE90, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0059, (void (*)(Type_AE400_29795*))VillagerType14DeadTick_1FEC0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x005A, (void (*)(Type_AE400_29795*))Class5Type15IdleTick_1FF50, 0x0001, 0x0000 },
+{ 0x002548F4, 0x005B, (void (*)(Type_AE400_29795*))Class5Type15Tick_1FF60, 0x0001, 0x0000 },
+{ 0x002548F4, 0x005C, (void (*)(Type_AE400_29795*))Class5Type15AttackTick_201D0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x005D, (void (*)(Type_AE400_29795*))Class5Type15FollowTick_203E0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x005E, (void (*)(Type_AE400_29795*))Class5Type15DyingTick_203F0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x005F, (void (*)(Type_AE400_29795*))Class5Type15DeadTick_20400, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0060, (void (*)(Type_AE400_29795*))WyvernIdleTick_20700, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0061, (void (*)(Type_AE400_29795*))WyvernTick_20710, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0062, (void (*)(Type_AE400_29795*))WyvernAttackTick_207E0, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0063, (void (*)(Type_AE400_29795*))WyvernFollowTick_20B60, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0064, (void (*)(Type_AE400_29795*))WyvernDyingTick_20B70, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0065, (void (*)(Type_AE400_29795*))WyvernDeadTick_20B80, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0066, (void (*)(Type_AE400_29795*))EmptyStateHandler_20B90, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0067, (void (*)(Type_AE400_29795*))EmptyStateHandler_20B90, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0068, (void (*)(Type_AE400_29795*))EmptyStateHandler_20B90, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0069, (void (*)(Type_AE400_29795*))EmptyStateHandler_20B90, 0x0000, 0x0000 },
+{ 0x002548F4, 0x006A, (void (*)(Type_AE400_29795*))EmptyStateHandler_20B90, 0x0000, 0x0000 },
+{ 0x002548F4, 0x006B, (void (*)(Type_AE400_29795*))EmptyStateHandler_20B90, 0x0000, 0x0000 },
+{ 0x002548F4, 0x006C, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BA0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x006D, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BA0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x006E, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BA0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x006F, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BA0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0070, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BA0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0071, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BA0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0072, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BB0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0073, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BB0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0074, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BB0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0075, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BB0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0076, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BB0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0077, (void (*)(Type_AE400_29795*))EmptyStateHandler_20BB0, 0x0000, 0x0000 },
+{ 0x002548F4, 0x0078, PORT_FN(SegmentFollowTick_19550, void(Type_AE400_29795*)), 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 }
 
 };
 
 Type_254A34x str_255574[] = {
-{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))sub_31A90, 0x0001, 0x0000 },
-{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))sub_31A90,0x0001,0x0000 },
+{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))EmptyStateHandler_31A90, 0x0001, 0x0000 },
+{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))EmptyStateHandler_31A90,0x0001,0x0000 },
 { 0x00000000,0x0000,nullptr,0x0000,0x0000 }
 };
 
 Type_254A34x str_2555CC[] = {
-{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))sub_5B5D0, 0x0001, 0x0000 },
-{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))sub_5B5D0,0x0001,0x0000 },
-{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))sub_5B5D0,0x0001,0x0000 },
-{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))sub_5B5D0,0x0001,0x0000 },
-{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))sub_5B5D0,0x0001,0x0000 },
+{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))EmptyStateHandler_5B5D0, 0x0001, 0x0000 },
+{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))EmptyStateHandler_5B5D0,0x0001,0x0000 },
+{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))EmptyStateHandler_5B5D0,0x0001,0x0000 },
+{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))EmptyStateHandler_5B5D0,0x0001,0x0000 },
+{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))EmptyStateHandler_5B5D0,0x0001,0x0000 },
 { 0x00000000,0x0000,nullptr,0x0000,0x0000 }
 };
 
 Type_254A34x str_255674[] = {
-{ 0x002548F4, 0x0000, (void (*)(Type_AE400_29795*))sub_48650, 0x0001, 0x0000 },
-{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))sub_48650,0x0001,0x0000 },
-{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))sub_48650,0x0001,0x0000 },
-{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))sub_48650,0x0001,0x0000 },
-{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))sub_48650,0x0001,0x0000 },
-{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))sub_48650,0x0001,0x0000 },
+{ 0x002548F4, 0x0000, (void (*)(Type_AE400_29795*))EmptyStateHandler_48650, 0x0001, 0x0000 },
+{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))EmptyStateHandler_48650,0x0001,0x0000 },
+{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))EmptyStateHandler_48650,0x0001,0x0000 },
+{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))EmptyStateHandler_48650,0x0001,0x0000 },
+{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))EmptyStateHandler_48650,0x0001,0x0000 },
+{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))EmptyStateHandler_48650,0x0001,0x0000 },
 { 0x00000000,0x0000,(void (*)(Type_AE400_29795*))nullptr,0x0000,0x0000 }
 };
 
 Type_254A34x str_25573C[] = {
 { 0x002548F4,0x0000,PORT_FN(UpdateFireball_52B30_52E70, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4,0x0001,PORT_FN(sub_52ED0_53210, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0002,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0003,PORT_FN(sub_53070_533B0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0004,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0005,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0006,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0007,PORT_FN(sub_530B0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0008,PORT_FN(sub_530C0_53400, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0001,PORT_FN(PossessionMissileTick_52ED0_53210, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0002,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0003,PORT_FN(MeteorMissileTick_53070_533B0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0004,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0005,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0006,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0007,PORT_FN(DuelMissileTick_530B0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0008,PORT_FN(StealManaMissileTick_530C0_53400, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0009,PORT_FN(LightningBoltTick_535E0_53920, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000A,PORT_FN(UpdateHomingSpawnMissile_53980_53CC0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000B,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000C,PORT_FN(sub_53DC0_54100, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000D,PORT_FN(sub_54180_544D0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000B,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000C,PORT_FN(LightningStormMissileTick_53DC0_54100, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000D,PORT_FN(Class9Type13Tick_54180_544D0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000E,PORT_FN(sub_54290_545E0, void(Type_AE400_29795*)),0x0001,0x0000 }, // PORT: see below
-{ 0x002548F4,0x000F,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0010,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0011,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0012,PORT_FN(sub_542B0_54640, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0013,PORT_FN(sub_54480_54810, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0014,PORT_FN(sub_53060, void(Type_AE400_29795*)),0x0001,0x0000 }, // PORT: entries 14-20 were missing (sub_542B0/sub_54480 were unreachable)
+{ 0x002548F4,0x000F,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0010,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0011,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0012,PORT_FN(ManaMagnetMissileTick_542B0_54640, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0013,PORT_FN(GlobalDeathMissileTick_54480_54810, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0014,PORT_FN(MissileTick_53060, void(Type_AE400_29795*)),0x0001,0x0000 }, // PORT: entries 14-20 were missing (sub_542B0/sub_54480 were unreachable)
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 }
 };
 
 Type_254A34x str_255998[] = {
 { 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))ExplosionTick_24F60,0x0001,0x0000 },
-{ 0x002548F4,0x0001,PORT_FN(sub_25130, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0002,PORT_FN(sub_252B0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0003,PORT_FN(sub_253F0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))sub_25980,0x0001,0x0000 },
-{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))sub_25410,0x0001,0x0000 },
-{ 0x002548F4,0x0006,PORT_FN(sub_252D0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0007,PORT_FN(sub_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0008,PORT_FN(sub_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))sub_25470,0x0001,0x0000 },
-{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))sub_25570,0x0001,0x0000 },
-{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))sub_25670,0x0001,0x0000 },
-{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))sub_25760,0x0001,0x0000 },
-{ 0x002548F4,0x000D,PORT_FN(sub_257B0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000E,PORT_FN(sub_258A0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))sub_25990,0x0001,0x0000 },
+{ 0x002548F4,0x0001,PORT_FN(Class10Type1Tick_25130, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0002,PORT_FN(SpeedEffectTick_252B0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0003,PORT_FN(Class10Type3Tick_253F0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))EmptyStateHandler_25980,0x0001,0x0000 },
+{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))WaterSplashTick_25410,0x0001,0x0000 },
+{ 0x002548F4,0x0006,PORT_FN(FireTick_252D0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0007,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0008,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))VolcanoEffectTick_25470,0x0001,0x0000 },
+{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))Class10Type10Tick_25570,0x0001,0x0000 },
+{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))CraterEffectTick_25670,0x0001,0x0000 },
+{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))PossessionEffectTick_25760,0x0001,0x0000 },
+{ 0x002548F4,0x000D,PORT_FN(SmokeTick_257B0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000E,PORT_FN(DarkSmokeTick_258A0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))EarthquakeEffectTick_25990,0x0001,0x0000 },
 { 0x002548F4,0x0010,PORT_FN(LavaTick_25A60, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))ExplosionRingTick_25CE0,0x0001,0x0000 },
 { 0x002548F4,0x0012,PORT_FN(VolcanoEruptionTick_25EC0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0013,(void (*)(Type_AE400_29795*))sub_26140,0x0001,0x0000 },
+{ 0x002548F4,0x0013,(void (*)(Type_AE400_29795*))VolcanoFireTick_26140,0x0001,0x0000 },
 { 0x002548F4,0x0014,(void (*)(Type_AE400_29795*))EmptyStateHandler_262C0,0x0001,0x0000 },
 { 0x002548F4,0x0015,(void (*)(Type_AE400_29795*))EmptyStateHandler_262C0,0x0001,0x0000 },
 { 0x002548F4,0x0016,(void (*)(Type_AE400_29795*))EmptyStateHandler_262C0,0x0001,0x0000 },
-{ 0x002548F4,0x0017,(void (*)(Type_AE400_29795*))sub_262D0,0x0001,0x0000 },
-{ 0x002548F4,0x0018,(void (*)(Type_AE400_29795*))sub_26350,0x0001,0x0000 },
-{ 0x002548F4,0x0019,(void (*)(Type_AE400_29795*))sub_26360,0x0001,0x0000 },
-{ 0x002548F4,0x001A,(void (*)(Type_AE400_29795*))sub_263C0,0x0001,0x0000 },
+{ 0x002548F4,0x0017,(void (*)(Type_AE400_29795*))LightningEffectTick_262D0,0x0001,0x0000 },
+{ 0x002548F4,0x0018,(void (*)(Type_AE400_29795*))EmptyStateHandler_26350,0x0001,0x0000 },
+{ 0x002548F4,0x0019,(void (*)(Type_AE400_29795*))StealManaEffectTick_26360,0x0001,0x0000 },
+{ 0x002548F4,0x001A,(void (*)(Type_AE400_29795*))DuelEffectTick_263C0,0x0001,0x0000 },
 { 0x002548F4,0x001B,(void (*)(Type_AE400_29795*))RaiseTerrainStripYDown_26670,0x0001,0x0000 },
 { 0x002548F4,0x001C,PORT_FN(RaiseTerrainStripYUp_26560, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x001D,(void (*)(Type_AE400_29795*))RaiseTerrainStripX_26760,0x0001,0x0000 },
-{ 0x002548F4,0x001E,PORT_FN(sub_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x001F,PORT_FN(sub_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0020,(void (*)(Type_AE400_29795*))sub_26890,0x0001,0x0000 },
-{ 0x002548F4,0x0021,PORT_FN(sub_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0022,(void (*)(Type_AE400_29795*))sub_26920,0x0001,0x0000 },
-{ 0x002548F4,0x0023,PORT_FN(sub_26CE0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0024,PORT_FN(sub_26A60, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x001E,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x001F,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0020,(void (*)(Type_AE400_29795*))Class10Type30Tick_26890,0x0001,0x0000 },
+{ 0x002548F4,0x0021,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0022,(void (*)(Type_AE400_29795*))Class10Type32Tick_26920,0x0001,0x0000 },
+{ 0x002548F4,0x0023,PORT_FN(Class10Type33Tick_26CE0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0024,PORT_FN(MirrorTick_26A60, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0025,PORT_FN(sub_26C00, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0026,PORT_FN(sub_26E90, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0026,PORT_FN(UndeadArmyEffectTick_26E90, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 },
 { 0x002548F4,0x0028,PORT_FN(sub_26D20, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0029,ManaBallTick_27030,0x0001,0x0000 },
 { 0x002548F4,0x002A,(void (*)(Type_AE400_29795*))DeathMarkerTick_275C0,0x0001,0x0000 },
-{ 0x002548F4,0x002B,PORT_FN(sub_28200, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x002C,PORT_FN(sub_285C0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x002D,(void (*)(Type_AE400_29795*))sub_293D0,0x0001,0x0000 },
-{ 0x002548F4,0x002E,(void (*)(Type_AE400_29795*))sub_29540,0x0000,0x0000 },
+{ 0x002548F4,0x002B,PORT_FN(Class10Type41Tick_28200, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x002C,PORT_FN(Class10Type42Tick_285C0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x002D,(void (*)(Type_AE400_29795*))Class10Type43Tick_293D0,0x0001,0x0000 },
+{ 0x002548F4,0x002E,(void (*)(Type_AE400_29795*))BoulderTick_29540,0x0000,0x0000 },
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 },
-{ 0x002548F4,0x0030,(void (*)(Type_AE400_29795*))sub_27D30,0x0001,0x0000 },
+{ 0x002548F4,0x0030,(void (*)(Type_AE400_29795*))PlayerFlagTick_27D30,0x0001,0x0000 },
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 },
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 },
-{ 0x002548F4,0x0033,(void (*)(Type_AE400_29795*))sub_27D30,0x0001,0x0000 },
+{ 0x002548F4,0x0033,(void (*)(Type_AE400_29795*))PlayerFlagTick_27D30,0x0001,0x0000 },
 { 0x002548F4,0x0034,sub_28DC0,0x0001,0x0000 },
 { 0x002548F4,0x0035,PORT_FN(sub_28FE0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0036,PORT_FN(sub_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0037,(void (*)(Type_AE400_29795*))sub_269A0,0x0001,0x0000 },
+{ 0x002548F4,0x0036,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0037,(void (*)(Type_AE400_29795*))Class10Type51Tick_269A0,0x0001,0x0000 },
 { 0x002548F4,0x0038,(void (*)(Type_AE400_29795*))CrabSpawnTimerTick_296A0,0x0001,0x0000 },
 { 0x002548F4,0x0039,PORT_FN(sub_29700, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x003A,(void (*)(Type_AE400_29795*))sub_29780,0x0001,0x0000 },
-{ 0x002548F4,0x003B,PORT_FN(sub_29920_29960, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x003C,(void (*)(Type_AE400_29795*))sub_299D0_29A10,0x0001,0x0000 },
-{ 0x002548F4,0x003D,(void (*)(Type_AE400_29795*))sub_29B70,0x0001,0x0000 },
+{ 0x002548F4,0x003A,(void (*)(Type_AE400_29795*))WallOfFireEffectTick_29780,0x0001,0x0000 },
+{ 0x002548F4,0x003B,PORT_FN(ManaMagnetEffectTick_29920_29960, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x003C,(void (*)(Type_AE400_29795*))GlobalDeathEffectTick_299D0_29A10,0x0001,0x0000 },
+{ 0x002548F4,0x003D,(void (*)(Type_AE400_29795*))EmptyStateHandler_29B70,0x0001,0x0000 },
 { 0x00000000,0x0000,nullptr,0x0000,0x0000 }
 };
 Type_254A34x str_256038[] = {
-{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))sub_59A80_59F90,0x0001,0x0000 },
-{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))sub_59AB0_59FC0,0x0001,0x0000 },
-{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))sub_59AE0_59FF0,0x0001,0x0000 },
-{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))sub_59B30_5A040,0x0001,0x0000 },
-{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))sub_59B80_5A090,0x0001,0x0000 },
-{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))sub_59C40_5A150,0x0001,0x0000 },
-{ 0x002548F4,0x0006,(void (*)(Type_AE400_29795*))sub_59C70_5A180,0x0001,0x0000 },
-{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))sub_59CA0_5A1B0,0x0001,0x0000 },
-{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))sub_59CF0_5A200,0x0001,0x0000 },
-{ 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))sub_59D40_5A250,0x0001,0x0000 },
-{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))sub_59D70_5A280,0x0001,0x0000 },
-{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))sub_59DA0_5A2B0,0x0001,0x0000 },
-{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))sub_59DF0_5A300,0x0001,0x0000 },
-{ 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))sub_59F60_5A470,0x0001,0x0000 },
-{ 0x002548F4,0x000E,(void (*)(Type_AE400_29795*))sub_59F70_5A480,0x0001,0x0000 },
-{ 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))sub_59F80_5A490,0x0001,0x0000 },
-{ 0x002548F4,0x0010,(void (*)(Type_AE400_29795*))sub_59F90_5A4A0,0x0001,0x0000 },
-{ 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))sub_59FA0_5A4B0,0x0001,0x0000 },
-{ 0x002548F4,0x0012,(void (*)(Type_AE400_29795*))sub_59FB0_5A4C0,0x0001,0x0000 },
-{ 0x002548F4,0x0013,(void (*)(Type_AE400_29795*))sub_59FC0_5A4D0,0x0001,0x0000 },
-{ 0x002548F4,0x0014,(void (*)(Type_AE400_29795*))sub_59FD0_5A4E0,0x0001,0x0000 },
-{ 0x002548F4,0x0015,(void (*)(Type_AE400_29795*))sub_59FE0_5A4F0,0x0001,0x0000 },
-{ 0x002548F4,0x0016,(void (*)(Type_AE400_29795*))sub_59FF0_5A500,0x0001,0x0000 },
-{ 0x002548F4,0x0017,(void (*)(Type_AE400_29795*))sub_5A000_5A510,0x0001,0x0000 },
-{ 0x002548F4,0x0018,(void (*)(Type_AE400_29795*))sub_5A010_5A520,0x0001,0x0000 },
-{ 0x002548F4,0x0019,(void (*)(Type_AE400_29795*))sub_5A020_5A530,0x0001,0x0000 },
-{ 0x002548F4,0x001A,(void (*)(Type_AE400_29795*))sub_5A030_5A540,0x0001,0x0000 },
-{ 0x002548F4,0x001B,(void (*)(Type_AE400_29795*))sub_5A040_5A550,0x0001,0x0000 },
-{ 0x002548F4,0x001C,(void (*)(Type_AE400_29795*))sub_5A050_5A560,0x0001,0x0000 },
-{ 0x002548F4,0x001D,(void (*)(Type_AE400_29795*))sub_5A060_5A570,0x0001,0x0000 },
-{ 0x002548F4,0x001E,(void (*)(Type_AE400_29795*))sub_5A070_5A580,0x0001,0x0000 },
-{ 0x002548F4,0x001F,(void (*)(Type_AE400_29795*))sub_5A080,0x0001,0x0000 },
+{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))Switch00Tick_59A80_59F90,0x0001,0x0000 },
+{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))Switch01Tick_59AB0_59FC0,0x0001,0x0000 },
+{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))Switch02Tick_59AE0_59FF0,0x0001,0x0000 },
+{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))Switch03Tick_59B30_5A040,0x0001,0x0000 },
+{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))Switch04Tick_59B80_5A090,0x0001,0x0000 },
+{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))Switch05Tick_59C40_5A150,0x0001,0x0000 },
+{ 0x002548F4,0x0006,(void (*)(Type_AE400_29795*))Switch06Tick_59C70_5A180,0x0001,0x0000 },
+{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))Switch07Tick_59CA0_5A1B0,0x0001,0x0000 },
+{ 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))Switch08Tick_59CF0_5A200,0x0001,0x0000 },
+{ 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))Switch09Tick_59D40_5A250,0x0001,0x0000 },
+{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))Switch10Tick_59D70_5A280,0x0001,0x0000 },
+{ 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))Switch11Tick_59DA0_5A2B0,0x0001,0x0000 },
+{ 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))Switch12Tick_59DF0_5A300,0x0001,0x0000 },
+{ 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))Switch13Tick_59F60_5A470,0x0001,0x0000 },
+{ 0x002548F4,0x000E,(void (*)(Type_AE400_29795*))Switch14Tick_59F70_5A480,0x0001,0x0000 },
+{ 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))Switch15Tick_59F80_5A490,0x0001,0x0000 },
+{ 0x002548F4,0x0010,(void (*)(Type_AE400_29795*))Switch16Tick_59F90_5A4A0,0x0001,0x0000 },
+{ 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))Switch17Tick_59FA0_5A4B0,0x0001,0x0000 },
+{ 0x002548F4,0x0012,(void (*)(Type_AE400_29795*))Switch18Tick_59FB0_5A4C0,0x0001,0x0000 },
+{ 0x002548F4,0x0013,(void (*)(Type_AE400_29795*))Switch19Tick_59FC0_5A4D0,0x0001,0x0000 },
+{ 0x002548F4,0x0014,(void (*)(Type_AE400_29795*))Switch20Tick_59FD0_5A4E0,0x0001,0x0000 },
+{ 0x002548F4,0x0015,(void (*)(Type_AE400_29795*))Switch21Tick_59FE0_5A4F0,0x0001,0x0000 },
+{ 0x002548F4,0x0016,(void (*)(Type_AE400_29795*))Switch22Tick_59FF0_5A500,0x0001,0x0000 },
+{ 0x002548F4,0x0017,(void (*)(Type_AE400_29795*))Switch23Tick_5A000_5A510,0x0001,0x0000 },
+{ 0x002548F4,0x0018,(void (*)(Type_AE400_29795*))Switch24Tick_5A010_5A520,0x0001,0x0000 },
+{ 0x002548F4,0x0019,(void (*)(Type_AE400_29795*))Switch25Tick_5A020_5A530,0x0001,0x0000 },
+{ 0x002548F4,0x001A,(void (*)(Type_AE400_29795*))Switch26Tick_5A030_5A540,0x0001,0x0000 },
+{ 0x002548F4,0x001B,(void (*)(Type_AE400_29795*))Switch27Tick_5A040_5A550,0x0001,0x0000 },
+{ 0x002548F4,0x001C,(void (*)(Type_AE400_29795*))Switch28Tick_5A050_5A560,0x0001,0x0000 },
+{ 0x002548F4,0x001D,(void (*)(Type_AE400_29795*))Switch29Tick_5A060_5A570,0x0001,0x0000 },
+{ 0x002548F4,0x001E,(void (*)(Type_AE400_29795*))Switch30Tick_5A070_5A580,0x0001,0x0000 },
+{ 0x002548F4,0x001F,(void (*)(Type_AE400_29795*))Switch31Tick_5A080,0x0001,0x0000 },
 { 0x00000000,0x0000,nullptr,0x0000,0x0000 }
 };
 
 Type_254A34x str_2563D8[] = {//2563D8
 { 0x002548F4,0x0000,PORT_FN(CastFireball_56090_565C0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))sub_56250,0x0001,0x0000 },
-{ 0x002548F4,0x0002,sub_56260,0x0001,0x0000 },
+{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250,0x0001,0x0000 },
+{ 0x002548F4,0x0002,SpellJarSpawnTickWrapper_56260,0x0001,0x0000 },
 { 0x002548F4,0x0003,PORT_FN(HealSpellTick_56270_567A0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))sub_56250,0x0001,0x0000 },
-{ 0x002548F4,0x0005,sub_56260,0x0001,0x0000 },
+{ 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250,0x0001,0x0000 },
+{ 0x002548F4,0x0005,SpellJarSpawnTickWrapper_56260,0x0001,0x0000 },
 { 0x002548F4,0x0006,PORT_FN(SpeedSpellTick_56380_568B0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))sub_56250,0x0001,0x0000 },
-{ 0x002548F4,0x0008,sub_56260,0x0001,0x0000 },
+{ 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250,0x0001,0x0000 },
+{ 0x002548F4,0x0008,SpellJarSpawnTickWrapper_56260,0x0001,0x0000 },
 { 0x002548F4,0x0009,PORT_FN(PossessionSpellTick_56510_56A40, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))sub_56250,0x0001,0x0000 },
-{ 0x002548F4,0x000B,sub_56260,0x0001,0x0000 },
-{ 0x002548F4,0x000C,PORT_FN(sub_566C0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))sub_56250,0x0001,0x0000 },
-{ 0x002548F4, 0x000E, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x000F, PORT_FN(sub_56730, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0010, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0011, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0012, PORT_FN(sub_567A0_56CD0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0013, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0014, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0015, PORT_FN(sub_56950_56E80, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0016, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0017, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0018, PORT_FN(sub_56AF0_57020, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0019, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001A, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001B, PORT_FN(sub_56CA0_571D0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x001C, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001D, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x001E, PORT_FN(sub_56E50_57380, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x001F, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0020, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0021, PORT_FN(sub_57040_57570, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0022, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0023, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0024, PORT_FN(sub_571B0_576E0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0025, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0026, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0027, PORT_FN(sub_57250_57780, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0028, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0029, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002A, PORT_FN(sub_573F0_57920, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x002B, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002C, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002D, PORT_FN(sub_57470_579A0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x002E, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
-{ 0x002548F4, 0x002F, sub_56260, 0x0001, 0x0000 },
+{ 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250,0x0001,0x0000 },
+{ 0x002548F4,0x000B,SpellJarSpawnTickWrapper_56260,0x0001,0x0000 },
+{ 0x002548F4,0x000C,PORT_FN(CastShield_566C0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000D,(void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250,0x0001,0x0000 },
+{ 0x002548F4, 0x000E, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
+{ 0x002548F4, 0x000F, PORT_FN(CastBeyondSight_56730, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0010, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0011, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0012, PORT_FN(CastEarthquake_567A0_56CD0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0013, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0014, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0015, PORT_FN(CastMeteor_56950_56E80, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0016, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0017, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0018, PORT_FN(CastVolcano_56AF0_57020, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0019, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001A, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001B, PORT_FN(CastCrater_56CA0_571D0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001C, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001D, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
+{ 0x002548F4, 0x001E, PORT_FN(CastTeleport_56E50_57380, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x001F, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0020, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0021, PORT_FN(CastDuel_57040_57570, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0022, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0023, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0024, PORT_FN(CastInvisible_571B0_576E0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0025, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0026, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0027, PORT_FN(CastStealMana_57250_57780, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0028, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0029, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002A, PORT_FN(CastRebound_573F0_57920, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x002B, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002C, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002D, PORT_FN(CastLightning_57470_579A0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x002E, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002F, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
 { 0x002548F4, 0x0030, PORT_FN(CastCastle_57610_57B40, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0031, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0032, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0033, PORT_FN(sub_57800_57D30, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0034, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0035, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0036, PORT_FN(sub_579D0_57F00, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0037, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0038, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0039, PORT_FN(sub_57B80_580B0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x003A, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003B, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003C, PORT_FN(sub_57D40_58270, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x003D, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003E, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x003F, PORT_FN(sub_57F00_58410, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0040, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0041, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0042, PORT_FN(sub_580A0_585B0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0043, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0044, sub_56260, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0045, PORT_FN(sub_58240_58750, void(Type_AE400_29795*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0046, (void (*)(Type_AE400_29795*))sub_56250, 0x0001, 0x0000 },
-{ 0x002548F4, 0x0047, sub_56260, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0031, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0032, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0033, PORT_FN(CastUndeadArmy_57800_57D30, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0034, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0035, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0036, PORT_FN(CastLightningStorm_579D0_57F00, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0037, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0038, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0039, PORT_FN(CastManaMagnet_57B80_580B0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x003A, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003B, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003C, PORT_FN(CastWallOfFire_57D40_58270, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x003D, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003E, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
+{ 0x002548F4, 0x003F, PORT_FN(CastReverseSpeed_57F00_58410, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0040, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0041, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0042, PORT_FN(CastGlobalDeath_580A0_585B0, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0043, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0044, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0045, PORT_FN(CastRapidFireball_58240_58750, void(Type_AE400_29795*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0046, (void (*)(Type_AE400_29795*))SpellJarTickWrapper_56250, 0x0001, 0x0000 },
+{ 0x002548F4, 0x0047, SpellJarSpawnTickWrapper_56260, 0x0001, 0x0000 },
 { 0x00000000, 0x0000, nullptr, 0x0000, 0x0000 }
 };
 
 Type_254A34x str_256938[] = {
-{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))sub_43AF0, 0x0001, 0x0000 },
-{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))sub_43AF0,0x0001,0x0000 },
-{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))sub_43AF0,0x0001,0x0000 },
-{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))sub_43AF0,0x0001,0x0000 },
+{ 0x002548F4,0x0000,(void (*)(Type_AE400_29795*))EmptyStateHandler_43AF0, 0x0001, 0x0000 },
+{ 0x002548F4,0x0001,(void (*)(Type_AE400_29795*))EmptyStateHandler_43AF0,0x0001,0x0000 },
+{ 0x002548F4,0x0002,(void (*)(Type_AE400_29795*))EmptyStateHandler_43AF0,0x0001,0x0000 },
+{ 0x002548F4,0x0003,(void (*)(Type_AE400_29795*))EmptyStateHandler_43AF0,0x0001,0x0000 },
 { 0x00000000,0x0000,nullptr,0x0000,0x0000 }
 };
 
@@ -4176,13 +4201,14 @@ Type_96902 dword_96902[] = {//254902
 { str_256938, str_256980, 0x00000000, 0x0000, 0x00000000}//d
 };
 //int (*off_97D12)(int) = PORT_FN(CreateExplosion_3A490, int(int)); // weak
-int sub_39A00(uint16_t* a1) { return 0; };
+/// Constructor that creates nothing (original 0x39A00 is "xor eax,eax; ret"); class 10 types 20-22 and 24.
+int NullConstructor_39A00(uint16_t* a1) { return 0; };
 /*int (*off_97D12[])(int) = {
-CreateExplosion_3A490, sub_3A510, sub_3A570, sub_3A5D0, sub_3A640, sub_3A6B0, sub_3A730, sub_3A7D0,
-sub_3A870, sub_3A8D0, sub_3A930, sub_3A9A0, sub_3AA10, sub_3AAA0, sub_3AB40, sub_3ABE0,
-CreateLava_3ACC0, CreateExplosionRing_3AC70, CreateVolcanoEruption_3ADB0, sub_3AE00, loc_39A00, loc_39A00, loc_39A00, sub_3AE80,
-loc_39A00, sub_3AF00, sub_3AF80, sub_3B000, sub_3B060, sub_3B120, sub_3B0C0, sub_3B1D0,
-sub_3B180, sub_3B4D0, sub_3B300, sub_3B3D0, sub_3B3E0 };*/
+CreateExplosion_3A490, CreateClass10Type1_3A510, CreateSpeedEffect_3A570, CreateClass10Type3_3A5D0, CreateClass10Type4_3A640, CreateWaterSplash_3A6B0, CreateFire_3A730, CreateClass10Type7_3A7D0,
+CreateClass10Type8_3A870, CreateVolcanoEffect_3A8D0, CreateClass10Type10_3A930, CreateCraterEffect_3A9A0, CreatePossessionEffect_3AA10, CreateSmoke_3AAA0, CreateDarkSmoke_3AB40, CreateEarthquakeEffect_3ABE0,
+CreateLava_3ACC0, CreateExplosionRing_3AC70, CreateVolcanoEruption_3ADB0, CreateVolcanoFire_3AE00, loc_39A00, loc_39A00, loc_39A00, CreateLightningEffect_3AE80,
+loc_39A00, CreateStealManaEffect_3AF00, CreateDuelEffect_3AF80, CreateTerrainRaiseStep_3B000, CreateClass10Type28_3B060, CreateClass10Type29_3B120, CreateClass10Type30_3B0C0, CreateClass10Type31_3B1D0,
+CreateClass10Type32_3B180, CreateClass10Type33_3B4D0, CreateMirror_3B300, sub_3B3D0, CreateUndeadArmyEffect_3B3E0 };*/
 #pragma pack (1)
 typedef struct {
     Type_AE400_29795*(*adress)(axis_3d*);
@@ -4195,121 +4221,121 @@ Type_97D12;
 
 Type_97D12 off_97D12[] = {
 { PORT_FN(CreateExplosion_3A490, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 1 },
-{ PORT_FN(sub_3A510, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 2 },
-{ PORT_FN(sub_3A570, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 3 },
-{ PORT_FN(sub_3A5D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 4 },
-{ PORT_FN(sub_3A640, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
-{ PORT_FN(sub_3A6B0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 6 },
-{ PORT_FN(sub_3A730, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
-{ PORT_FN(sub_3A7D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 8 },
-{ PORT_FN(sub_3A870, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 9 },
-{ PORT_FN(sub_3A8D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 10 },
-{ PORT_FN(sub_3A930, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
-{ PORT_FN(sub_3A9A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 12 },
-{ PORT_FN(sub_3AA10, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 13 },
-{ PORT_FN(sub_3AAA0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 14 },
-{ PORT_FN(sub_3AB40, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 15 },
-{ PORT_FN(sub_3ABE0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 16 },
+{ PORT_FN(CreateClass10Type1_3A510, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 2 },
+{ PORT_FN(CreateSpeedEffect_3A570, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 3 },
+{ PORT_FN(CreateClass10Type3_3A5D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 4 },
+{ PORT_FN(CreateClass10Type4_3A640, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
+{ PORT_FN(CreateWaterSplash_3A6B0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 6 },
+{ PORT_FN(CreateFire_3A730, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
+{ PORT_FN(CreateClass10Type7_3A7D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 8 },
+{ PORT_FN(CreateClass10Type8_3A870, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 9 },
+{ PORT_FN(CreateVolcanoEffect_3A8D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 10 },
+{ PORT_FN(CreateClass10Type10_3A930, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
+{ PORT_FN(CreateCraterEffect_3A9A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 12 },
+{ PORT_FN(CreatePossessionEffect_3AA10, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 13 },
+{ PORT_FN(CreateSmoke_3AAA0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 14 },
+{ PORT_FN(CreateDarkSmoke_3AB40, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 15 },
+{ PORT_FN(CreateEarthquakeEffect_3ABE0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 16 },
 { PORT_FN(CreateLava_3ACC0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 17 },
 { PORT_FN(CreateExplosionRing_3AC70, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 18 },
 { PORT_FN(CreateVolcanoEruption_3ADB0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 19 },
-{ PORT_FN(sub_3AE00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 20 },
-{ PORT_FN(sub_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 21 },
-{ PORT_FN(sub_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 22 },
-{ PORT_FN(sub_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 23 },
-{ PORT_FN(sub_3AE80, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 24 },
-{ PORT_FN(sub_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 25 },
-{ PORT_FN(sub_3AF00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 26 },
-{ PORT_FN(sub_3AF80, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 27 },
-{ PORT_FN(sub_3B000, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 28 },
-{ PORT_FN(sub_3B060, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 29 },
-{ PORT_FN(sub_3B120, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 30 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_3B0C0, 1, 0x002548F4, 31 },
-{ PORT_FN(sub_3B1D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 32 },
-{ PORT_FN(sub_3B180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 33 },
-{ PORT_FN(sub_3B4D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 34 },
-{ PORT_FN(sub_3B300, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 35 },
+{ PORT_FN(CreateVolcanoFire_3AE00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 20 },
+{ PORT_FN(NullConstructor_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 21 },
+{ PORT_FN(NullConstructor_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 22 },
+{ PORT_FN(NullConstructor_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 23 },
+{ PORT_FN(CreateLightningEffect_3AE80, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 24 },
+{ PORT_FN(NullConstructor_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 25 },
+{ PORT_FN(CreateStealManaEffect_3AF00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 26 },
+{ PORT_FN(CreateDuelEffect_3AF80, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 27 },
+{ PORT_FN(CreateTerrainRaiseStep_3B000, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 28 },
+{ PORT_FN(CreateClass10Type28_3B060, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 29 },
+{ PORT_FN(CreateClass10Type29_3B120, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 30 },
+{ (Type_AE400_29795* (*)(axis_3d*))&CreateClass10Type30_3B0C0, 1, 0x002548F4, 31 },
+{ PORT_FN(CreateClass10Type31_3B1D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 32 },
+{ PORT_FN(CreateClass10Type32_3B180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 33 },
+{ PORT_FN(CreateClass10Type33_3B4D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 34 },
+{ PORT_FN(CreateMirror_3B300, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 35 },
 { PORT_FN(sub_3B3D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 36 },
-{ PORT_FN(sub_3B3E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 0 },
+{ PORT_FN(CreateUndeadArmyEffect_3B3E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 38 },
 { PORT_FN(sub_3B460, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 39 },
 { PORT_FN(CreateManaBall_3B5A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 40 },
 { PORT_FN(CreateDeathMarker_3B620, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 41 },
-{ PORT_FN(sub_3B760, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 42 },
-{ PORT_FN(sub_3B7B0_3BB30, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 43 },
-{ PORT_FN(sub_3B6F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 44 },
-{ PORT_FN(sub_3B800, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 45 },
-{ &sub_3B690, 1, 0x002548F4, 0 },
+{ PORT_FN(CreateClass10Type41_3B760, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 42 },
+{ PORT_FN(CreateClass10Type42_3B7B0_3BB30, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 43 },
+{ PORT_FN(CreateClass10Type43_3B6F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 44 },
+{ PORT_FN(CreateBoulder_3B800, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 45 },
+{ &CreatePlayerFlag_3B690, 1, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 50 },
-{ PORT_FN(sub_3B2A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 51 },
-{ PORT_FN(sub_3B230, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 52 },
+{ PORT_FN(CreateClass10Type50_3B2A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 51 },
+{ PORT_FN(CreateClass10Type51_3B230, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 52 },
 { PORT_FN(CreateCrabSpawnTimer_3B860, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 53 },
-{ PORT_FN(sub_3B8E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 54 },
-{ PORT_FN(sub_3B970, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 55 },
-{ PORT_FN(sub_3BA00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 56 },
-{ PORT_FN(sub_3BA90, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 },
+{ PORT_FN(CreateWallOfFireEffect_3B8E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 54 },
+{ PORT_FN(CreateManaMagnetEffect_3B970, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 55 },
+{ PORT_FN(CreateGlobalDeathEffect_3BA00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 56 },
+{ PORT_FN(CreateClass10Type56_3BA90, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 },
 { nullptr, 0, 0x002548F4, 0 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59A80_59F90, 1, 0x002548F4, 1 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59AB0_59FC0, 1, 0x002548F4, 2 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59AE0_59FF0, 1, 0x002548F4, 3 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59B30_5A040, 1, 0x002548F4, 4 },
-{ PORT_FN(sub_59B80_5A090, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59C40_5A150, 1, 0x002548F4, 6 },
-{ PORT_FN(sub_59C70_5A180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59CA0_5A1B0, 1, 0x002548F4, 8 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59CF0_5A200, 1, 0x002548F4, 9 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59D40_5A250, 1, 0x002548F4, 10 },
-{ PORT_FN(sub_59D70_5A280, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59DA0_5A2B0, 1, 0x002548F4, 12 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59DF0_5A300, 1, 0x002548F4, 13 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59F60_5A470, 1, 0x002548F4, 14 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59F70_5A480, 1, 0x002548F4, 15 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59F80_5A490, 1, 0x002548F4, 16 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59F90_5A4A0, 1, 0x002548F4, 17 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59FA0_5A4B0, 1, 0x002548F4, 18 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59FB0_5A4C0, 1, 0x002548F4, 19 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59FC0_5A4D0, 1, 0x002548F4, 20 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59FD0_5A4E0, 1, 0x002548F4, 21 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59FE0_5A4F0, 1, 0x002548F4, 22 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_59FF0_5A500, 1, 0x002548F4, 23 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_5A000_5A510, 1, 0x002548F4, 24 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_5A010_5A520, 1, 0x002548F4, 25 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_5A020_5A530, 1, 0x002548F4, 26 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_5A030_5A540, 1, 0x002548F4, 27 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_5A040_5A550, 1, 0x002548F4, 28 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_5A050_5A560, 1, 0x002548F4, 29 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_5A060_5A570, 1, 0x002548F4, 30 },
-{ (Type_AE400_29795* (*)(axis_3d*))&sub_5A070_5A580, 1, 0x002548F4, 31 },
-{ PORT_FN(sub_5A080, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 } };
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch00Tick_59A80_59F90, 1, 0x002548F4, 1 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch01Tick_59AB0_59FC0, 1, 0x002548F4, 2 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch02Tick_59AE0_59FF0, 1, 0x002548F4, 3 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch03Tick_59B30_5A040, 1, 0x002548F4, 4 },
+{ PORT_FN(Switch04Tick_59B80_5A090, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch05Tick_59C40_5A150, 1, 0x002548F4, 6 },
+{ PORT_FN(Switch06Tick_59C70_5A180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch07Tick_59CA0_5A1B0, 1, 0x002548F4, 8 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch08Tick_59CF0_5A200, 1, 0x002548F4, 9 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch09Tick_59D40_5A250, 1, 0x002548F4, 10 },
+{ PORT_FN(Switch10Tick_59D70_5A280, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch11Tick_59DA0_5A2B0, 1, 0x002548F4, 12 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch12Tick_59DF0_5A300, 1, 0x002548F4, 13 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch13Tick_59F60_5A470, 1, 0x002548F4, 14 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch14Tick_59F70_5A480, 1, 0x002548F4, 15 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch15Tick_59F80_5A490, 1, 0x002548F4, 16 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch16Tick_59F90_5A4A0, 1, 0x002548F4, 17 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch17Tick_59FA0_5A4B0, 1, 0x002548F4, 18 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch18Tick_59FB0_5A4C0, 1, 0x002548F4, 19 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch19Tick_59FC0_5A4D0, 1, 0x002548F4, 20 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch20Tick_59FD0_5A4E0, 1, 0x002548F4, 21 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch21Tick_59FE0_5A4F0, 1, 0x002548F4, 22 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch22Tick_59FF0_5A500, 1, 0x002548F4, 23 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch23Tick_5A000_5A510, 1, 0x002548F4, 24 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch24Tick_5A010_5A520, 1, 0x002548F4, 25 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch25Tick_5A020_5A530, 1, 0x002548F4, 26 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch26Tick_5A030_5A540, 1, 0x002548F4, 27 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch27Tick_5A040_5A550, 1, 0x002548F4, 28 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch28Tick_5A050_5A560, 1, 0x002548F4, 29 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch29Tick_5A060_5A570, 1, 0x002548F4, 30 },
+{ (Type_AE400_29795* (*)(axis_3d*))&Switch30Tick_5A070_5A580, 1, 0x002548F4, 31 },
+{ PORT_FN(Switch31Tick_5A080, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 } };
 
 Type_97D12 off_987DE[] = {
-{ PORT_FN(sub_3C090, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 1 },
-{ PORT_FN(sub_3C0F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 2 },
-{ PORT_FN(sub_3C0C0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 3 },
-{ PORT_FN(sub_3C040, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 4 },
-{ PORT_FN(sub_3C1B0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
-{ PORT_FN(sub_3C330, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 6 },
-{ PORT_FN(sub_3C150, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
-{ PORT_FN(sub_3C1E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 8 },
-{ PORT_FN(sub_3C390, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 9 },
-{ PORT_FN(sub_3C300, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 10 },
-{ PORT_FN(sub_3C120, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
-{ PORT_FN(sub_3C270, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 12 },
-{ PORT_FN(sub_3C2D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 13 },
-{ PORT_FN(sub_3C2A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 14 },
-{ PORT_FN(sub_3C210, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 15 },
-{ PORT_FN(sub_3C240, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 16 },
-{ PORT_FN(sub_3C060, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 17 },
-{ PORT_FN(sub_3C3C0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 18 },
-{ PORT_FN(sub_3C360, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 19 },
-{ PORT_FN(sub_3C180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 20 },
-{ PORT_FN(sub_3C3F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 21 },
-{ PORT_FN(sub_3C420, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 22 },
-{ PORT_FN(sub_3C450, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 23 },
-{ PORT_FN(sub_3C480, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 },
+{ PORT_FN(CreateFireballSpell_3C090, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 1 },
+{ PORT_FN(CreateHealSpell_3C0F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 2 },
+{ PORT_FN(CreateSpeedSpell_3C0C0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 3 },
+{ PORT_FN(CreatePossessionSpell_3C040, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 4 },
+{ PORT_FN(CreateShieldSpell_3C1B0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
+{ PORT_FN(CreateBeyondSightSpell_3C330, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 6 },
+{ PORT_FN(CreateEarthquakeSpell_3C150, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
+{ PORT_FN(CreateMeteorSpell_3C1E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 8 },
+{ PORT_FN(CreateVolcanoSpell_3C390, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 9 },
+{ PORT_FN(CreateCraterSpell_3C300, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 10 },
+{ PORT_FN(CreateTeleportSpell_3C120, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
+{ PORT_FN(CreateDuelSpell_3C270, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 12 },
+{ PORT_FN(CreateInvisibleSpell_3C2D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 13 },
+{ PORT_FN(CreateStealManaSpell_3C2A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 14 },
+{ PORT_FN(CreateReboundSpell_3C210, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 15 },
+{ PORT_FN(CreateLightningSpell_3C240, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 16 },
+{ PORT_FN(CreateCastleSpell_3C060, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 17 },
+{ PORT_FN(CreateUndeadArmySpell_3C3C0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 18 },
+{ PORT_FN(CreateLightningStormSpell_3C360, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 19 },
+{ PORT_FN(CreateManaMagnetSpell_3C180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 20 },
+{ PORT_FN(CreateWallOfFireSpell_3C3F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 21 },
+{ PORT_FN(CreateReverseSpeedSpell_3C420, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 22 },
+{ PORT_FN(CreateGlobalDeathSpell_3C450, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 23 },
+{ PORT_FN(CreateRapidFireballSpell_3C480, Type_AE400_29795*(axis_3d*)), 1, 0x00000000, 0 },
 { nullptr, 0, 0x48F40000, 37 }
 };
 
@@ -4611,7 +4637,7 @@ Pathstruct pathStrArray[] =
     { "data/blk0-1.dat", &begBlkDat_AE3F0_26C3F0_26C3E0, 0, 0, 0 },
     { "data/sky.dat", &begSky_AE3D8_AE3C8_26C3D8_26C3C8, 0, 0, 0 },
     { "", 0, 0, 0, 0 },
-    { "*WScreen", &begWscreen_2ECFF4_2ECFE4, 0, 76800, 0 },// PORT: was 71040 (320x222); FMV subtitles (sub_24B80) clear lines 180..240. In DOS the overrun hit the next pool block.
+    { "*WScreen", &begWscreen_2ECFF4_2ECFE4, 0, 76800, 0 },// PORT: was 71040 (320x222); FMV subtitles (ClearFmvCaption_24B80) clear lines 180..240. In DOS the overrun hit the next pool block.
     { "*BScreen", &begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, 0, 70000, 0 },
     { "data/mspr0-0.dat", &begSprDat_26C444_26C434, 0, 0, 0 },
     { "data/mspr0-0.tab", (uint8_t**)&begSprTab_AE42C_AE41C_26C42C_26C41C, (uint8_t**)&endSprTab_AE434_26C424, 0, 0 },
@@ -14133,9 +14159,9 @@ _DWORD outtext(char* text)
 //void qmemcpy(int a, int b, char c) {};
 template <class... A> _DWORD segread(A...) { return 0; }
 _DWORD settextposition(_DWORD a, _DWORD b) { return 0; };// weak
-//void sub_111B0(int a1, int a2) {};
+//void RunFmvCommands_111B0(int a1, int a2) {};
 //void sub_193EE(__int16 a1) {};
-//_WORD * sub_27690(_WORD *result, int a2) { return 0; };
+//_WORD * DropManaBall_27690(_WORD *result, int a2) { return 0; };
 //void sub_10000() {}; // weak
 
 //unsigned __int16 sub_2DCB0_2DCF0(int a1, int a2) { return 0; };
@@ -14149,13 +14175,13 @@ _DWORD settextposition(_DWORD a, _DWORD b) { return 0; };// weak
 //unsigned __int8 sub_3F76D_3FAAD(int a1) { return 0; };
 //char InitAnojoy_3F820_sub_3FB60(__int16 a1, __int16 a2, int a3, int a4, int a5, char a6) { return 0; };
 //char sub_3FCA0_3FFE0(int a1, __int16 a2, __int16 a3, __int16 a4, char a5, __int16 a6, __int16 a7, __int16 a8, __int16 a9, __int16 a10, __int16 a11) { return 0; };
-//__int16 sub_41DD0_42110(__int16 result, int a2) { return 0; };
+//__int16 RemoveEntityFromMap_41DD0_42110(__int16 result, int a2) { return 0; };
 //char InitMusicDriver_43B20_43E60(int a1, unsigned int a2) { return 0; };
 //void MainMenuStep_4AB20_4AE60(__int16 a1, const char *a2, const char *a3, __int16 a4, __int16 a5) {};
-//void sub_4AC70_4AFB0(const char *a1, const char *a2) {};
+//void SetupMenuPage_4AC70_4AFB0(const char *a1, const char *a2) {};
 //int sub_4CC00_4CF40() { return 0; };// weak	
-//void sub_4EFC0_4F300(__int16 a1) {};
-//void sub_4F3F0_4F730(__int16 a1) {};
+//void PlayIntelAnim_4EFC0_4F300(__int16 a1) {};
+//void SelectLanguage_4F3F0_4F730(__int16 a1) {};
 //char sub_50770_50AB0(__int16 a1, __int16 a2, __int16 a3, __int16 a4) { return 0; };
 //void sub_60D50_61260(__int16 a1, int a2, int a3, char *a4, unsigned __int8 a5, char a6) {};
 //void sub_60D65_61275(__int16 a1, int a2, int a3, char *a4, unsigned __int8 a5, char a6) {};
@@ -14442,7 +14468,8 @@ void dword_AE408_AE3F8(int input) {
 //------------------------------------
 
 //----- (00010010) --------------------------------------------------------
-void sub_10010(__int16 a1, __int16 a2)
+/// Sets the line width (a1) and height (a2) the FLC chunk decoders use.
+void SetFlcSize_10010(__int16 a1, __int16 a2)
 {
   word_9000E = a1;
   word_90010 = a2;
@@ -14451,7 +14478,8 @@ void sub_10010(__int16 a1, __int16 a2)
 // 90010: using guessed type __int16 word_90010;
 
 //SYNCHRONIZED WITH REMC1
-uint8_t* sub_1002D(uint8_t* a1, uint8_t* a2)//1E102D_
+/// Applies one FLC frame (0xF1FA, after optional 0xAF12 prefix chunks) from a1 to the pixels a2; returns the next frame, or nullptr if a1 is not a frame.
+uint8_t* ApplyFlcFrame_1002D(uint8_t* a1, uint8_t* a2)//1E102D_
 {
   dword_90008 = a1;
   dword_90004 = a2;//fix dword_90004
@@ -14463,16 +14491,17 @@ uint8_t* sub_1002D(uint8_t* a1, uint8_t* a2)//1E102D_
     dword_90008 += 2;
     if ( word_9000C != -20718 )
       break;
-    sub_10166();
+    ReadFlcPrefixChunk_10166();
   }
   if ( word_9000C != -3590 )
     return 0;
-  sub_100B8();
+  DecodeFlcChunks_100B8();
   return dword_90008;
 }
 
 //SYNCHRONIZED WITH REMC1
-__int16 sub_100B8()
+/// Decodes the chunks of the current FLC frame: 7 = SS2 delta, 15 = BRUN, others skipped.
+__int16 DecodeFlcChunks_100B8()
 {
   __int16 result; // ax
 
@@ -14488,22 +14517,23 @@ __int16 sub_100B8()
     dword_90008 += 2;
     if ( word_9000C == 7 )
     {
-      result = sub_101A1();
+      result = DecodeFlcSs2_101A1();
     }
     else if ( word_9000C == 15 )
     {
-      result = sub_10254();
+      result = DecodeFlcBrun_10254();
     }
     else
     {
-      result = sub_10190();
+      result = SkipFlcChunk_10190();
     }
   }
   return result;
 }
 
 //----- (00010166) --------------------------------------------------------
-__int16 sub_10166()
+/// Reads an FLC prefix chunk (0xAF12): width and height for the decoders.
+__int16 ReadFlcPrefixChunk_10166()
 {
   __int16 result; // ax
 
@@ -14518,7 +14548,8 @@ __int16 sub_10166()
 // 90010: using guessed type __int16 word_90010;
 
 //----- (00010190) --------------------------------------------------------
-int sub_10190()
+/// Skips an FLC chunk of an unhandled type.
+int SkipFlcChunk_10190()
 {
   int result; // eax
 
@@ -14530,7 +14561,8 @@ int sub_10190()
 // 90012: using guessed type __int16 word_90012;
 
 //SYNCHRONIZED WITH REMC1
-__int16 sub_101A1()
+/// Decodes an FLC SS2 (word delta, chunk type 7) chunk into the frame.
+__int16 DecodeFlcSs2_101A1()
 {
   _WORD *v0; // edi
   __int16 *v1; // esi
@@ -14612,7 +14644,8 @@ LABEL_18:
 }
 
 //----- (00010254) --------------------------------------------------------
-int sub_10254()
+/// Decodes an FLC BRUN (byte run, chunk type 15) chunk into the frame.
+int DecodeFlcBrun_10254()
 {
   _BYTE *v0; // edi
   char *v1; // esi
@@ -14744,7 +14777,8 @@ void sub_10300()//1E1300_
 // 12EFDE: using guessed type __int16 mouseLeftButton_12EFDE_12EFCE;
 
 //----- (000103C0) --------------------------------------------------------
-void sub_103C0(void *a1, unsigned int a2)
+/// Copies a2 bytes of the current FLI frame (cursor dword_AC5BC_AC5AC) to a1 (nullptr = skip them) and advances the cursor.
+void ReadFliData_103C0(void *a1, unsigned int a2)
 {
   if ( a1 )
   {
@@ -14755,7 +14789,8 @@ void sub_103C0(void *a1, unsigned int a2)
 // AC5BC: using guessed type int dword_AC5BC_AC5AC;
 
 //SYNCHRONIZED WITH REMC1
-int sub_103F0()
+/// Reads the next FLI frame (16-byte header, type 0xF1FA) of the open animation into the BScreen.
+int ReadFliFrame_103F0()
 {
   int result; // eax
 
@@ -14777,7 +14812,8 @@ typedef struct {
 } Type_v21;
 
 //SYNCHRONIZED WITH REMC1
-void sub_104D0()
+/// Reads the next FLI frame (ReadFliFrame_103F0) and applies its chunks (COLOUR256, SS2, COLOUR, LC, BLACK, BRUN, COPY, PSTAMP).
+void DecodeFliFrame_104D0()
 {
   int v0; // eax
   int v1; // eax
@@ -14815,11 +14851,11 @@ void sub_104D0()
   dword_AC5BC_AC5AC = (int)OFF(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
   if (str_AC1A0_AC190.word_AC1A4_AC194 == 0xF100/*-3840*/)
   {
-    sub_103C0(0, str_AC1A0_AC190.dword_AC1A0_AC190 - 16);
-    v1 = sub_103F0();
-    //v0 = sub_104D0(v1);
+    ReadFliData_103C0(0, str_AC1A0_AC190.dword_AC1A0_AC190 - 16);
+    v1 = ReadFliFrame_103F0();
+    //v0 = DecodeFliFrame_104D0(v1);
     //fix !!!
-    sub_104D0();
+    DecodeFliFrame_104D0();
     //fix !!!
   }
   else if (str_AC1A0_AC190.word_AC1A4_AC194 == 0xF1FA/*-3590*/)
@@ -14830,7 +14866,7 @@ void sub_104D0()
       if ( i >= str_AC1A0_AC190.word_AC1A6_AC196)
         break;
       v3 = dword_AC5BC_AC5AC;
-      sub_103C0(&v21x, 6u);
+      ReadFliData_103C0(&v21x, 6u);
       switch (v21x.v22 )
       {
         case 4:
@@ -14898,7 +14934,7 @@ void sub_104D0()
           strcpy(&byte_AC1B8_AC1A8[strlen(byte_AC1B8_AC1A8)], (char*)"BRUN ");
           break;
         case 16:
-          sub_103C0((void *)tempReadBuffer_9001C, str_AC5C8_AC5B8.word_AC5D0_AC5C0 * str_AC5C8_AC5B8.word_AC5D2_AC5C2);
+          ReadFliData_103C0((void *)tempReadBuffer_9001C, str_AC5C8_AC5B8.word_AC5D0_AC5C0 * str_AC5C8_AC5B8.word_AC5D2_AC5C2);
           strcpy(&byte_AC1B8_AC1A8[strlen(byte_AC1B8_AC1A8)], (char*)"COPY ");
           /*
           v13 = (char*)"COPY ";
@@ -14918,7 +14954,7 @@ void sub_104D0()
           v21x.v21 = str_AC5C8_AC5B8.word_AC5D2_AC5C2 * str_AC5C8_AC5B8.word_AC5D0_AC5C0;
           break;
         case 18:
-          sub_103C0(0, v21x.v21 - 6);
+          ReadFliData_103C0(0, v21x.v21 - 6);
           strcpy(&byte_AC1B8_AC1A8[strlen(byte_AC1B8_AC1A8)], (char*)"PSTAMP ");
           //v8 = (char*)"PSTAMP ";
 //LABEL_23:
@@ -14953,8 +14989,8 @@ void sub_104D0()
     if ( word_90024 )
     {
       SetPalette_319A0_319E0(colorBuffer_AC2B8_AC2A8);
-      v20 = sub_5CC70_5D180(colorBuffer_AC2B8_AC2A8, 0x3Fu, 0x3Fu, 0x3Fu);
-      sub_24BF0(v20);
+      v20 = FindNearestColour_5CC70_5D180(colorBuffer_AC2B8_AC2A8, 0x3Fu, 0x3Fu, 0x3Fu);
+      SetFmvCaptionColour_24BF0(v20);
     }
   }
   if ( byte_90091 )
@@ -14989,9 +15025,9 @@ void PlayInfoFmv_107C0_107C0(__int16 a1, __int16 a2, int a3)//1E17C0_
   {
     if (word_AC5E0_AC5D0x >= str_AC5C8_AC5B8.word_AC5CE_AC5BE - 1 )
       break;
-    sub_111B0((int)0, (int)a3);
-    sub_103F0();
-    sub_104D0();
+    RunFmvCommands_111B0((int)0, (int)a3);
+    ReadFliFrame_103F0();
+    DecodeFliFrame_104D0();
   }
   DataFileIO::Close(file_AC5C0_AC5B0);
 }
@@ -15006,20 +15042,20 @@ void sub_108C0()
   int v5; // [esp+4h] [ebp-18h] BYREF
   char v6[20]; // [esp+8h] [ebp-14h] BYREF
 
-  sub_103C0(&v5, 2u);
+  ReadFliData_103C0(&v5, 2u);
   v1 = (char *)&colorBuffer_AC2B8_AC2A8;
   for ( i = 0; (unsigned __int16)i < (unsigned __int16)v5; ++i )
   {
-    sub_103C0(v6, 1u);
+    ReadFliData_103C0(v6, 1u);
     v1 += 3 * (unsigned __int8)v6[0];
     v4 = 0;
-    sub_103C0(&v4, 1u);
+    ReadFliData_103C0(&v4, 1u);
     if ( !(_WORD)v4 )
       v4 = 256;
     v3 = 0;
     do
     {
-      sub_103C0(v1, 3u);
+      ReadFliData_103C0(v1, 3u);
       ++v3;
       v1 += 3;
     }
@@ -15044,31 +15080,31 @@ void sub_10960()
   char v10[4]; // [esp+10h] [ebp-18h] BYREF
   char v11[20]; // [esp+14h] [ebp-14h] BYREF
 
-  sub_103C0(&v7, 2u);
+  ReadFliData_103C0(&v7, 2u);
   v1 = tempReadBuffer_9001C;
   for ( i = 0; (unsigned __int16)i < (unsigned __int16)v7; v1 += str_AC5C8_AC5B8.word_AC5D0_AC5C0)
   {
-    sub_103C0(&v9, 2u);
+    ReadFliData_103C0(&v9, 2u);
     v2 = (char *)v1;
     if ( (v9 & 0x8000) == 0 )
     {
       v3 = v9;
       for ( j = 0; (unsigned __int16)j < v3; ++j )
       {
-        sub_103C0(v11, 1u);
+        ReadFliData_103C0(v11, 1u);
         v2 += (unsigned __int8)v11[0];
-        sub_103C0(v10, 1u);
+        ReadFliData_103C0(v10, 1u);
         if ( v10[0] >= 0 )
         {
           if ( v10[0] > 0 )
           {
-            sub_103C0(v2, 2 * v10[0]);
+            ReadFliData_103C0(v2, 2 * v10[0]);
             v2 += 2 * v10[0];
           }
         }
         else
         {
-          sub_103C0(&v8, 2u);
+          ReadFliData_103C0(&v8, 2u);
           for ( k = 0; k < (int)abs8(v10[0]); ++k )
           {
             v2 += 2;
@@ -15104,29 +15140,29 @@ void sub_10AB0()
   char v9[4]; // [esp+10h] [ebp-18h] BYREF
   char v10[20]; // [esp+14h] [ebp-14h] BYREF
 
-  sub_103C0(&v6, 2u);
+  ReadFliData_103C0(&v6, 2u);
   v0 = (unsigned __int16)v6 * str_AC5C8_AC5B8.word_AC5D0_AC5C0 + tempReadBuffer_9001C;
-  sub_103C0(&v6, 2u);
+  ReadFliData_103C0(&v6, 2u);
   for ( i = 0; (unsigned __int16)i < (unsigned __int16)v6; v0 += str_AC5C8_AC5B8.word_AC5D0_AC5C0)
   {
     v2 = (char *)v0;
     v3 = 0;
-    sub_103C0(v10, 1u);
+    ReadFliData_103C0(v10, 1u);
     while ( v3 < (int)(unsigned __int8)v10[0] )
     {
-      sub_103C0(v7, 1u);
+      ReadFliData_103C0(v7, 1u);
       v2 += (unsigned __int8)v7[0];
-      sub_103C0(v9, 1u);
+      ReadFliData_103C0(v9, 1u);
       if ( v9[0] >= 0 )
       {
         if ( v9[0] <= 0 )
           goto LABEL_8;
-        sub_103C0(v2, v9[0]);
+        ReadFliData_103C0(v2, v9[0]);
         v4 = v9[0];
       }
       else
       {
-        sub_103C0(v8, 1u);
+        ReadFliData_103C0(v8, 1u);
         memset(v2, (unsigned __int8)v8[0], abs8(v9[0]));
         v4 = abs8(v9[0]);
       }
@@ -15155,25 +15191,25 @@ __int16 sub_10BD0()
   {
     v1 = (char *)v0;
     v2 = 0;
-    sub_103C0(0, 1u);
+    ReadFliData_103C0(0, 1u);
     if (str_AC5C8_AC5B8.word_AC5D0_AC5C0)
     {
       do
       {
-        sub_103C0(v7, 1u);
+        ReadFliData_103C0(v7, 1u);
         v3 = 1u;//fix remove it later
         if ( v7[0] >= 0 )
         {
           if ( v7[0] > 0 )
           {
-            sub_103C0(v6, 1u);
+            ReadFliData_103C0(v6, 1u);
             v3 = (int)OFF(memset(v1, (unsigned __int8)v6[0], v7[0]));
           }
         }
         else
         {
           v7[0] = abs8(v7[0]);
-          sub_103C0(v1, v7[0]);
+          ReadFliData_103C0(v1, v7[0]);
           v3 = v7[0];//fix remove it later
         }
         LOWORD(v3) = v7[0];
@@ -15222,7 +15258,8 @@ Type_AE3E0* sub_10CB0(unsigned __int16 a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_10D40(Type_AE3E0* a1x, Type_sub168_2* a2x, __int16 a3)//1E1D40_
+/// Registers animated texture map a3 (flag bit 0) in the animation table a1x: frame data after the raw first frame, frame count, size.
+void RegisterTmapAnim_10D40(Type_AE3E0* a1x, Type_sub168_2* a2x, __int16 a3)//1E1D40_
 {
   __int16 v3; // si
   __int16 v4; // di
@@ -15274,7 +15311,8 @@ void sub_10D40(Type_AE3E0* a1x, Type_sub168_2* a2x, __int16 a3)//1E1D40_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_10EB0(Type_sub_AE3E0* a1x)//1E1EB0_
+/// Applies the next FLC frame of an animated texture map to its pixels (ApplyFlcFrame_1002D), wrapping after the last frame.
+void AdvanceTmapAnim_10EB0(Type_sub_AE3E0* a1x)//1E1EB0_
 {
   Type_sub168_2_2* v1; // esi
   int v2; // edi
@@ -15292,9 +15330,9 @@ void sub_10EB0(Type_sub_AE3E0* a1x)//1E1EB0_
   //v1 = (uint8_t*)**(_DWORD **)(a1 + 4);
   v1 = a1x->var_4->var_u32_0;
   v2 = a1x->var_8;
-  sub_10010(a1x->var_18, 0);
+  SetFlcSize_10010(a1x->var_18, 0);
   //v1 += 6;
-  v3 = sub_1002D(&v1->datax[v2], v1->datax);
+  v3 = ApplyFlcFrame_1002D(&v1->datax[v2], v1->datax);
   v4 = a1x->var_22;
   result = v3 - v1->datax;
   a1x->var_8 = result;
@@ -15302,7 +15340,8 @@ void sub_10EB0(Type_sub_AE3E0* a1x)//1E1EB0_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_10F10(Type_sub_AE3E0* a1x)
+/// Frees an animation table entry.
+void ClearTmapAnim_10F10(Type_sub_AE3E0* a1x)
 {
   if ( a1x )
   {
@@ -15312,7 +15351,8 @@ void sub_10F10(Type_sub_AE3E0* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-Type_sub_AE3E0* sub_10FD0(Type_AE3E0* a1x, __int16 a2)//1E1FD0_
+/// Returns the animation table entry of texture map a2, or nullptr.
+Type_sub_AE3E0* FindTmapAnim_10FD0(Type_AE3E0* a1x, __int16 a2)//1E1FD0_
 {
   Type_sub_AE3E0* result = a1x->var_2;
   int v3 = a1x->var_0;
@@ -15371,7 +15411,8 @@ bool sub_11050()
 // 11050: using guessed type int var_C[3];
 
 //SYNCHRONIZED WITH REMC1
-void sub_111B0(int a1, int a2)
+/// Runs the commands of FMV command table a2 (7-byte entries: frame, letter, argument) that are due at the current frame (word_AC5E0_AC5D0x): music, sounds, captions, ...
+void RunFmvCommands_111B0(int a1, int a2)
 {
   int v2; // eax
   __int16 v3; // bx
@@ -15405,12 +15446,12 @@ void sub_111B0(int a1, int a2)
       case 4:
       case 36:
         sub_5D010_5D520();
-        sub_5D070_5D580(v3);
+        LoadSoundBank_5D070_5D580(v3);
         LOWORD(a1) = word_90030;
         ++a1;
         continue;
       case 10:
-        sub_24B80();
+        ClearFmvCaption_24B80();
         LOWORD(a1) = word_90030;
         ++a1;
         continue;
@@ -15430,17 +15471,17 @@ LABEL_9:
       case 14:
         if ( !byte_90090 )
           goto LABEL_26;
-        sub_24AB0();
+        OpenFmvCaptions_24AB0();
         LOWORD(a1) = word_90030;
         ++a1;
         continue;
       case 15:
-        sub_24BB0();
+        CloseFmvCaptions_24BB0();
         LOWORD(a1) = word_90030;
         ++a1;
         continue;
       case 16:
-        sub_24B50(dword_AE238_AE228[v3]);
+        ShowFmvCaption_24B50(dword_AE238_AE228[v3]);
         LOWORD(a1) = word_90030;
         ++a1;
         continue;
@@ -15602,13 +15643,14 @@ int NextRingOffset_114B0(int a1, _DWORD *a2, _DWORD *a3)//1E24B0_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_11540()//1E2540_
+/// Loads data/search.dat (a 32x32 order map) and builds the search/ring offset tables from it.
+void LoadSearchData_11540()//1E2540_
 {
   uint8_t* v1; // edx
   char v8; // [esp+4h] [ebp-14h]
   char v9; // [esp+8h] [ebp-10h]
 
-  sub_3EEA0_3F1E0((char*)"data/search.dat", begWscreen_2ECFF4_2ECFE4);
+  LoadFile_3EEA0_3F1E0((char*)"data/search.dat", begWscreen_2ECFF4_2ECFE4);
   for ( int i = 1; i < 100; i++)
     ringIters_AC5F0_AC5E0[i].ring_8 = -1;
   v1 = begSearch_AE3F4_26C3F4_26C3E4;
@@ -15666,20 +15708,20 @@ int IsMoveBlocked_11640(Type_AE400_29795* a1x, axis_3d* a2x, char a3)
     if ( (a3 & 4) != 0 )
     {
       v7 = PitchTo_42180_424C0(&a1x->var_u32_29867_72, a2x);
-      v8 = sub_42240_42580(0, v7);
+      v8 = TurnDirection_42240_42580(0, v7);
       if ( v8 < 0 )
       {
         if ( v8 == -1 )
         {
           v10 = a1x->var_u32_29951_156->maxSlope_16;
-          if ( (unsigned __int16)sub_42210_42550(0, v7) > v10 )
+          if ( (unsigned __int16)AngleDifference_42210_42550(0, v7) > v10 )
             return 1;
         }
       }
       else if ( v8 > 0 && v8 == 1 )
       {
         v9 = a1x->var_u32_29951_156->v_18;
-        if ( (unsigned __int16)sub_42210_42550(0, v7) > v9 )
+        if ( (unsigned __int16)AngleDifference_42210_42550(0, v7) > v9 )
           return 1;
       }
     }
@@ -16428,7 +16470,8 @@ int sub_127E0(Type_AE400_29795* a1x, char a2, unsigned __int16 a3)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_12B50(Type_AE400_29795* a1x, int a2, unsigned __int8 a3, unsigned __int16 a4)
+/// Records damage a4 from attacker a1x on entity a2 in damage slot a3 (+90 + 6*a3 amount, +94 attacker id; a pending slot is overwritten, else added to); the target's state handler applies it.
+int DealDamage_12B50(Type_AE400_29795* a1x, int a2, unsigned __int8 a3, unsigned __int16 a4)
 {
   int v4; // eax
   int result; // eax
@@ -16452,7 +16495,7 @@ void sub_12C50(_WORD *a1)
   int v4; // ebp
   __int16 v6; // [esp+0h] [ebp-14h]
 
-  sub_37150_37510((Type_AE400_29795*)a1, a1[13] + 1);
+  SetCollisionBoxFromBuild_37150_37510((Type_AE400_29795*)a1, a1[13] + 1);
   v1 = *(_DWORD *)PTR(dword_AE408_AE3F8() + 36470);
   v2 = a1[36];
   v3 = (__int16)a1[40] + 256;
@@ -16467,7 +16510,7 @@ void sub_12C50(_WORD *a1)
     }
     v1 = *(_DWORD *)PTR(v1);
   }
-  sub_37150_37510((Type_AE400_29795*)a1, a1[13]);
+  SetCollisionBoxFromBuild_37150_37510((Type_AE400_29795*)a1, a1[13]);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -16499,7 +16542,7 @@ char CanCastleGrow_12D10(_WORD *a1)
 
   v20 = (__int16)a1[40] >> 8;
   v18 = (__int16)a1[41] >> 8;
-  sub_37150_37510((Type_AE400_29795*)a1, a1[13] + 1);
+  SetCollisionBoxFromBuild_37150_37510((Type_AE400_29795*)a1, a1[13] + 1);
   for ( i = *(_DWORD *)PTR(dword_AE408_AE3F8() + 36462); i > dword_AE400_AE3F0() + 29795; i = *(_DWORD *)PTR(i) )
   {
     if ( *(_BYTE *)PTR(i + 65) == 2 && (_WORD *)PTR(i) != a1 && EntitiesCollide_11950((Type_AE400_29795*)PTR(i), (Type_AE400_29795*)a1) )
@@ -16612,11 +16655,11 @@ LABEL_29:
         goto LABEL_29;
     }
 LABEL_5:
-    sub_37150_37510((Type_AE400_29795*)a1, a1[13]);
+    SetCollisionBoxFromBuild_37150_37510((Type_AE400_29795*)a1, a1[13]);
     return 0;
   }
 LABEL_30:
-  sub_37150_37510((Type_AE400_29795*)a1, a1[13]);
+  SetCollisionBoxFromBuild_37150_37510((Type_AE400_29795*)a1, a1[13]);
   return 1;
 }
 
@@ -16695,12 +16738,12 @@ int ComputerWizardTick_13170(int a1)
       result = AiChooseAction_136C0(a1);
       break;
     case 1:
-      sub_13800(a1);
+      AiCastleUpgradeMode_13800(a1);
       result = AiChooseAction_136C0(a1);
       break;
     case 2:
     case 5:
-      sub_138E0();
+      AiNoopMode_138E0();
       result = AiChooseAction_136C0(a1);
       break;
     case 3:
@@ -16712,11 +16755,11 @@ int ComputerWizardTick_13170(int a1)
       result = AiChooseAction_136C0(a1);
       break;
     case 6:
-      sub_13BA0(a1);
+      AiPossessionMode_13BA0(a1);
       result = AiChooseAction_136C0(a1);
       break;
     case 7:
-      sub_13CA0(a1);
+      AiAttackCastleMode_13CA0(a1);
       result = AiChooseAction_136C0(a1);
       break;
     case 8:
@@ -16810,7 +16853,7 @@ int sub_132B0(int a1)
         *(_WORD *)PTR(v13 + 460) = 24607;
     }
   }
-  sub_45C10_45F50((Type_AE400_29795*)PTR(a1));
+  RebuildSpellIndex_45C10_45F50((Type_AE400_29795*)PTR(a1));
   v14 = *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50);
   if ( v14 && EntitiesCollide_11950((Type_AE400_29795*)PTR(a1), (Type_AE400_29795*)PTR(164 * v14 + dword_AE400_AE3F0() + 29795)) )
     v29 = 1;
@@ -16897,7 +16940,7 @@ int AiChooseAction_136C0(int a1)
 
   if ( AiChooseCastleSite_13F00(a1) )
   {
-    sub_14C80(a1);
+    AiStartBuildCastle_14C80(a1);
     return 1;
   }
   else if ( sub_14310(a1) )
@@ -16912,24 +16955,24 @@ int AiChooseAction_136C0(int a1)
     {
       return 1;
     }
-    else if ( sub_14120(a1) )
+    else if ( AiPlanCastleUpgrade_14120(a1) )
     {
-      sub_14C40(a1);
+      AiStartCastleUpgrade_14C40(a1);
       return 1;
     }
-    else if ( sub_143A0(a1) )
+    else if ( AiFindRivalCastle_143A0(a1) )
     {
-      sub_14D00(a1);
+      AiStartAttackCastle_14D00(a1);
       return 1;
     }
     else if ( AiFindRivalWizard_145B0(a1) )
     {
-      sub_14D60(a1);
+      AiStartAttackWizard_14D60(a1);
       return 1;
     }
-    else if ( sub_147E0(a1) )
+    else if ( AiFindRivalBalloon_147E0(a1) )
     {
-      sub_14D40(a1);
+      AiStartAttackBalloon_14D40(a1);
       return 1;
     }
     else if ( AiPlanPossession_14230(a1) )
@@ -16949,7 +16992,8 @@ int AiChooseAction_136C0(int a1)
 }
 
 //----- (00013800) --------------------------------------------------------
-bool sub_13800(int a1)
+/// AI mode 1: flies to the own castle and casts the castle spell (16) on it.
+bool AiCastleUpgradeMode_13800(int a1)
 {
   int v1; // ebx
   bool result; // eax
@@ -16957,7 +17001,7 @@ bool sub_13800(int a1)
   int v4; // eax
 
   v1 = 164 * *(unsigned __int16 *)PTR(a1 + 146) + dword_AE400_AE3F0() + 29795;
-  result = sub_15440(a1, v1);
+  result = AiTargetValid_15440(a1, v1);
   if ( result )
   {
     *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v1 + 72));
@@ -16979,7 +17023,8 @@ bool sub_13800(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (000138E0) --------------------------------------------------------
-int sub_138E0()
+/// AI modes 2 and 5: does nothing (returns 0).
+int AiNoopMode_138E0()
 {
   return 0;
 }
@@ -17021,7 +17066,7 @@ bool sub_13990(_WORD *a1)
   bool result; // eax
 
   v1 = 164 * (unsigned __int16)a1[73] + dword_AE400_AE3F0() + 29795;
-  result = sub_15440((int)OFF(a1), v1);
+  result = AiTargetValid_15440((int)OFF(a1), v1);
   if ( result )
   {
     a1[17] = HeadingTo_42150_42490((axis_3d*)(a1 + 36), (axis_3d*)(_WORD *)PTR(v1 + 72));
@@ -17036,7 +17081,7 @@ int sub_13A10(int a1)
 {
   if ( !sub_15E60(a1, 2u) )
   {
-    if ( sub_15A00(a1, 2u) )
+    if ( AiSpellReady_15A00(a1, 2u) )
     {
       AiCastSpell_155F0(a1, 2u);
       return 0;
@@ -17055,11 +17100,11 @@ bool sub_13A70(int a1)
   v1 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 50);
   if ( v1 <= dword_AE400_AE3F0() + 29795 )
   {
-    if ( sub_15A00(a1, 0xCu) )
+    if ( AiSpellReady_15A00(a1, 0xCu) )
       AiCastSpell_155F0(a1, 0xCu);
     if ( !sub_15E60(a1, 2u) )
     {
-      if ( sub_15A00(a1, 2u) )
+      if ( AiSpellReady_15A00(a1, 2u) )
       {
         AiCastSpell_155F0(a1, 2u);
         return 0;
@@ -17069,10 +17114,10 @@ bool sub_13A70(int a1)
     }
     return 0;
   }
-  if ( sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(v1 + 72)) > 104857600 && AiCastSpell_155F0(a1, 0x13u) )
+  if ( DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(v1 + 72)) > 104857600 && AiCastSpell_155F0(a1, 0x13u) )
     return 1;
   AiCastSpell_155F0(a1, 0xCu);
-  if ( !sub_15440(a1, v1) )
+  if ( !AiTargetValid_15440(a1, v1) )
     return 0;
   *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v1 + 72));
   return !AiApproachTarget_15470(a1, v1, 256, 2048);
@@ -17080,7 +17125,8 @@ bool sub_13A70(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00013BA0) --------------------------------------------------------
-bool sub_13BA0(int a1)
+/// AI mode 6: approaches the target mana and casts possession (spell 3) on it.
+bool AiPossessionMode_13BA0(int a1)
 {
   _WORD *v1; // esi
   bool result; // eax
@@ -17089,7 +17135,7 @@ bool sub_13BA0(int a1)
   int v5; // eax
 
   v1 = (_WORD *)PTR(dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(a1 + 146));
-  result = sub_15440(a1, (int)OFF(v1));
+  result = AiTargetValid_15440(a1, (int)OFF(v1));
   if ( result )
   {
     *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(v1 + 36)); // PORT: was ((uint8_t*)v1) + 36 - v1 is _WORD*, the target's position is at byte 72 (asm lea edi,[esi+48h])
@@ -17098,7 +17144,7 @@ bool sub_13BA0(int a1)
       if ( AiCastSpell_155F0(a1, 3u) )
       {
         v3 = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(v1 + 36));
-        if ( (unsigned __int16)sub_42210_42550(*(_WORD *)PTR(a1 + 30), v3) < 0x1Cu )
+        if ( (unsigned __int16)AngleDifference_42210_42550(*(_WORD *)PTR(a1 + 30), v3) < 0x1Cu )
           v1[72] = *(_WORD *)PTR(a1 + 24);
       }
       v4 = *(__int16 *)PTR(a1 + 76) - ((__int16)v1[38] + 512);
@@ -17115,7 +17161,8 @@ bool sub_13BA0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00013CA0) --------------------------------------------------------
-bool sub_13CA0(int a1)
+/// AI mode 7: approaches the target castle and casts attack spells at it (spell chosen by sub_16310).
+bool AiAttackCastleMode_13CA0(int a1)
 {
   int v1; // esi
   bool result; // eax
@@ -17125,7 +17172,7 @@ bool sub_13CA0(int a1)
   int v6; // eax
 
   v1 = 164 * *(unsigned __int16 *)PTR(a1 + 146) + dword_AE400_AE3F0() + 29795;
-  result = sub_15440(a1, v1);
+  result = AiTargetValid_15440(a1, v1);
   if ( result )
   {
     *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v1 + 72));
@@ -17167,14 +17214,14 @@ bool sub_13DD0(int a1)
   int v5; // eax
 
   v1 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(a1 + 146);
-  result = sub_15440(a1, v1);
+  result = AiTargetValid_15440(a1, v1);
   if ( !result )
     return result;
   *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(v1 + 72));
   if ( !AiApproachTarget_15470(a1, v1, 3072, 4096) || *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 404) < 0 )
     return 1;
   v3 = sub_16030(a1);
-  if ( v3 == -1 || (v4 = v3, !sub_15A00(a1, v3)) || !AiCastSpell_155F0(a1, v4) )
+  if ( v3 == -1 || (v4 = v3, !AiSpellReady_15A00(a1, v3)) || !AiCastSpell_155F0(a1, v4) )
   {
     v5 = *(__int16 *)PTR(a1 + 76) - (*(__int16 *)PTR(v1 + 76) + 512);
     if ( v5 )
@@ -17210,7 +17257,7 @@ int AiChooseCastleSite_13F00(int a1)
   int v10; // [esp+8h] [ebp-20h]
 
   v1 = (_WORD *)PTR(dword_AE400_AE3F0() + 29795);
-  if ( !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && GetWizardSpell_14E60(a1, 0x10u) && sub_15E90(a1, 0x10u) )
+  if ( !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && GetWizardSpell_14E60(a1, 0x10u) && SpellWithinMaxMana_15E90(a1, 0x10u) )
   {
     v1[12] = *(_WORD *)PTR(a1 + 24);
     v8 = (int)(*(__int16 *)PTR(a1 + 72)
@@ -17259,7 +17306,8 @@ int AiChooseCastleSite_13F00(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00014120) --------------------------------------------------------
-int sub_14120(int a1)
+/// AI check: own castle present and finished (state 4), able to grow, castle spell ready and enough mana; targets the castle (+146/+148).
+int AiPlanCastleUpgrade_14120(int a1)
 {
   unsigned int v1; // esi
   unsigned int v2; // eax
@@ -17284,7 +17332,7 @@ int sub_14120(int a1)
     return 0;
   }
   *(_WORD *)PTR(a1 + 146) = (int)(v1 - (dword_AE400_AE3F0() + 29795)) / 164;
-  *(_WORD *)PTR(a1 + 148) = sub_15420(v1);
+  *(_WORD *)PTR(a1 + 148) = EntityTag_15420(v1);
   return 1;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -17322,7 +17370,7 @@ unsigned int AiPlanPossession_14230(int a1)
       {
 LABEL_5:
         *(_WORD *)PTR(a1 + 146) = (int)(v3 - (dword_AE400_AE3F0() + 29795)) / 164;
-        *(_WORD *)PTR(a1 + 148) = sub_15420(v4);
+        *(_WORD *)PTR(a1 + 148) = EntityTag_15420(v4);
         return 1;
       }
     }
@@ -17344,13 +17392,14 @@ int sub_14310(int a1)
   if ( v1 <= dword_AE400_AE3F0() + 29795 )
     return 0;
   *(_WORD *)PTR(a1 + 146) = 164 * *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) / 164;
-  *(_WORD *)PTR(a1 + 148) = sub_15420(v1);
+  *(_WORD *)PTR(a1 + 148) = EntityTag_15420(v1);
   return 1;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (000143A0) --------------------------------------------------------
-int sub_143A0(int a1)
+/// AI check: the nearest rival castle (class 3 type 2 in the class-3 list, str_AE408 +36462) worth attacking; targets it (+146/+148).
+int AiFindRivalCastle_143A0(int a1)
 {
   unsigned int i; // ebx
   int v2; // edi
@@ -17360,7 +17409,7 @@ int sub_143A0(int a1)
   unsigned int v7; // [esp+Ch] [ebp-18h]
 
   v7 = -1;
-  if ( !sub_16920(a1) || !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && GetWizardSpell_14E60(a1, 0x10u) )
+  if ( !AiHasAttackSpell_16920(a1) || !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && GetWizardSpell_14E60(a1, 0x10u) )
     return 0;
   v6 = 0;
   for ( i = *(_DWORD *)PTR(dword_AE408_AE3F8() + 36462); i > dword_AE400_AE3F0() + 29795; i = *(_DWORD *)PTR(i) )
@@ -17368,12 +17417,12 @@ int sub_143A0(int a1)
     if ( *(_WORD *)PTR(i + 24) != *(_WORD *)PTR(a1 + 24) && *(_BYTE *)PTR(i + 65) == 2 )
     {
       if ( (v2 = 164 * *(__int16 *)PTR(i + 24),
-            50000 - *(_DWORD *)PTR(dword_AE400_AE3F0() + v2 + 29931) / 10 * *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522) / 255 < *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 8 * *(__int16 *)PTR(*(_DWORD *)PTR(dword_AE400_AE3F0() + v2 + 29955) + 48) + 460))
-        && sub_42410_42750((_WORD *)PTR(dword_AE400_AE3F0() + 29795 + v2 + 72), (_WORD *)PTR(i + 72)) > 58982400
+            50000 - *(int *)PTR(dword_AE400_AE3F0() + v2 + 29931) / 10 * *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522) / 255 < (int)*(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 8 * *(__int16 *)PTR(*(_DWORD *)PTR(dword_AE400_AE3F0() + v2 + 29955) + 48) + 460)) // PORT: signed (idiv/jge at 0x14458-0x1447C); _DWORD made it unsigned
+        && DistanceSquared2D_42410_42750((_WORD *)PTR(dword_AE400_AE3F0() + 29795 + v2 + 72), (_WORD *)PTR(i + 72)) > 58982400
         && !EntitiesCollide_11950((Type_AE400_29795*)PTR(dword_AE400_AE3F0() + 29795 + 164 * *(__int16 *)PTR(i + 24)), (Type_AE400_29795*)PTR(i))
-        || *(_DWORD *)PTR(i + 140) + 640 * (255 - *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522)) < *(_DWORD *)PTR(164 * *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) + dword_AE400_AE3F0() + 29935) )
+        || *(int *)PTR(i + 140) + 640 * (255 - *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522)) < *(int *)PTR(164 * *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) + dword_AE400_AE3F0() + 29935) ) // PORT: signed (jge at 0x144FF)
       {
-        v3 = sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
+        v3 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
         if ( v3 < v7 )
         {
           v6 = i;
@@ -17385,10 +17434,10 @@ int sub_143A0(int a1)
   if ( !v6 )
     return 0;
   v4 = *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 156) + 28);
-  if ( sub_42410_42750((_WORD *)PTR(v6 + 72), (_WORD *)PTR(a1 + 72)) >= v4 * v4 )
+  if ( DistanceSquared2D_42410_42750((_WORD *)PTR(v6 + 72), (_WORD *)PTR(a1 + 72)) >= v4 * v4 )
     return 0;
   *(_WORD *)PTR(a1 + 146) = (v6 - (dword_AE400_AE3F0() + 29795)) / 164;
-  *(_WORD *)PTR(a1 + 148) = sub_15420(v6);
+  *(_WORD *)PTR(a1 + 148) = EntityTag_15420(v6);
   return 1;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -17409,7 +17458,7 @@ int AiFindRivalWizard_145B0(int a1)
   int v9; // [esp+8h] [ebp-18h]
 
   v1 = -1;
-  if ( !sub_16920(a1) || !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && GetWizardSpell_14E60(a1, 0x10u) )
+  if ( !AiHasAttackSpell_16920(a1) || !*(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) && GetWizardSpell_14E60(a1, 0x10u) )
     return 0;
   v9 = 0;
   for ( i = *(_DWORD *)PTR(dword_AE408_AE3F8() + 36462); i > dword_AE400_AE3F0() + 29795; i = *(_DWORD *)PTR(i) )
@@ -17422,7 +17471,7 @@ int AiFindRivalWizard_145B0(int a1)
       if ( *(_WORD *)PTR(v5 + 462) == 1 )
       {
         *(_WORD *)PTR(a1 + 146) = (int)(i - (dword_AE400_AE3F0() + 29795)) / 164;
-        *(_WORD *)PTR(a1 + 148) = sub_15420(i);
+        *(_WORD *)PTR(a1 + 148) = EntityTag_15420(i);
         return 1;
       }
       if ( 50000 - *(__int16 *)PTR(v4 + 522) * (*(int *)PTR(i + 136) / 10) / 255 <= (int)*(unsigned __int16 *)PTR(v5 + 460) // PORT: signed (idiv/jle at 0x146C8-0x146E8); _DWORD made it unsigned
@@ -17430,7 +17479,7 @@ int AiFindRivalWizard_145B0(int a1)
         && GetWizardSpell_14E60(i, 0x10u)
         && *(_DWORD *)PTR(i + 140) + 32 * (255 - *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522)) < *(_DWORD *)PTR(a1 + 140) )
       {
-        v7 = sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
+        v7 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
         if ( v7 < v1 )
         {
           v9 = i;
@@ -17442,17 +17491,18 @@ int AiFindRivalWizard_145B0(int a1)
   if ( !v9 )
     return 0;
   v8 = *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 156) + 28) + 10;
-  if ( sub_42410_42750((_WORD *)PTR(v9 + 72), (_WORD *)PTR(a1 + 72)) >= v8 * v8 )
+  if ( DistanceSquared2D_42410_42750((_WORD *)PTR(v9 + 72), (_WORD *)PTR(a1 + 72)) >= v8 * v8 )
     return 0;
   *(_WORD *)PTR(a1 + 146) = (v9 - (dword_AE400_AE3F0() + 29795)) / 164;
-  *(_WORD *)PTR(a1 + 148) = sub_15420(v9);
+  *(_WORD *)PTR(a1 + 148) = EntityTag_15420(v9);
   return 1;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
 // AE408: using guessed type int dword_AE408_AE3F8();
 
 //----- (000147E0) --------------------------------------------------------
-int sub_147E0(int a1)
+/// AI check: the nearest rival balloon (class 3 type 3 in the class-3 list) carrying enough mana; targets it (+146/+148).
+int AiFindRivalBalloon_147E0(int a1)
 {
   unsigned int i; // ebx
   int v2; // edx
@@ -17467,7 +17517,7 @@ int sub_147E0(int a1)
   int v12; // [esp+Ch] [ebp-18h]
 
   v10 = -1;
-  if ( !sub_16920(a1) )
+  if ( !AiHasAttackSpell_16920(a1) )
     return 0;
   v12 = 0;
   v9 = (_WORD *)PTR(a1 + 72);
@@ -17480,11 +17530,11 @@ int sub_147E0(int a1)
       v4 = *(_DWORD *)PTR(a1 + 160);
       v11 = *(unsigned __int16 *)PTR(v4 + 8 * *(__int16 *)PTR(v3 + 48) + 460);
       v5 = *(__int16 *)PTR(v4 + 522);
-      if ( 50000 - v5 * (*(_DWORD *)PTR(v2 + 29931) / 10) / 255 < v11
-        && 10 * (275 - v5) < *(_DWORD *)PTR(i + 140)
+      if ( 50000 - v5 * (*(int *)PTR(v2 + 29931) / 10) / 255 < v11 // PORT: signed (idiv/jge at 0x1487A-0x148A6); _DWORD made it unsigned
+        && 10 * (275 - v5) < *(int *)PTR(i + 140) // PORT: signed (jge at 0x148B8)
         && !EntitiesCollide_11950((Type_AE400_29795*)PTR(i), (Type_AE400_29795*)PTR(dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(v3 + 50))) )
       {
-        v6 = sub_42410_42750(v9, (_WORD *)PTR(i + 72));
+        v6 = DistanceSquared2D_42410_42750(v9, (_WORD *)PTR(i + 72));
         if ( v6 < v10 )
         {
           v12 = i;
@@ -17496,10 +17546,10 @@ int sub_147E0(int a1)
   if ( !v12 )
     return 0;
   v7 = *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 156) + 28);
-  if ( sub_42410_42750((_WORD *)PTR(v12 + 72), v9) >= v7 * v7 )
+  if ( DistanceSquared2D_42410_42750((_WORD *)PTR(v12 + 72), v9) >= v7 * v7 )
     return 0;
   *(_WORD *)PTR(a1 + 146) = (v12 - (dword_AE400_AE3F0() + 29795)) / 164;
-  *(_WORD *)PTR(a1 + 148) = sub_15420(v12);
+  *(_WORD *)PTR(a1 + 148) = EntityTag_15420(v12);
   return 1;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -17518,7 +17568,7 @@ int sub_14B10(int a1)
 
   v1 = -1;
   v2 = 0;
-  if ( !sub_16920(a1) )
+  if ( !AiHasAttackSpell_16920(a1) )
     return 0;
   v3 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 50);
   if ( v3 == dword_AE400_AE3F0() + 29795 )
@@ -17530,7 +17580,7 @@ int sub_14B10(int a1)
     {
       if ( *(_WORD *)PTR(j + 24) != *(_WORD *)PTR(a1 + 24) && *(int *)PTR(j + 140) > 0 )
       {
-        v5 = sub_42410_42750(v8, (_WORD *)PTR(j + 72));
+        v5 = DistanceSquared2D_42410_42750(v8, (_WORD *)PTR(j + 72));
         if ( v5 < v1 )
         {
           v2 = j;
@@ -17542,28 +17592,30 @@ int sub_14B10(int a1)
   if ( !v2 )
     return 0;
   *(_WORD *)PTR(a1 + 146) = (v2 - (dword_AE400_AE3F0() + 29795)) / 164;
-  *(_WORD *)PTR(a1 + 148) = sub_15420(v2);
+  *(_WORD *)PTR(a1 + 148) = EntityTag_15420(v2);
   return 1;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
 // AE408: using guessed type int dword_AE408_AE3F8();
 
 //----- (00014C40) --------------------------------------------------------
-int sub_14C40(int a1)
+/// sets the AI mode (wizard data +415) to 1, castle upgrade (after AiPlanCastleUpgrade_14120).
+int AiStartCastleUpgrade_14C40(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 1;
   return 1;
 }
 
 //----- (00014C80) --------------------------------------------------------
-int sub_14C80(int a1)
+/// sets the AI mode (wizard data +415) to 3, build a castle (after AiChooseCastleSite_13F00; mode handler AiBuildCastle_138F0).
+int AiStartBuildCastle_14C80(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 3;
   return 1;
 }
 
 //----- (00014CE0) --------------------------------------------------------
-/// AI: switches the wizard to AI mode 6 (possession; ComputerWizardTick_13170 then runs sub_13BA0).
+/// AI: switches the wizard to AI mode 6 (possession; ComputerWizardTick_13170 then runs AiPossessionMode_13BA0).
 int AiStartPossession_14CE0(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 6;
@@ -17571,7 +17623,8 @@ int AiStartPossession_14CE0(int a1)
 }
 
 //----- (00014D00) --------------------------------------------------------
-int sub_14D00(int a1)
+/// sets the AI mode (wizard data +415) to 7, attack a castle (after AiFindRivalCastle_143A0).
+int AiStartAttackCastle_14D00(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 7;
   return 1;
@@ -17585,14 +17638,16 @@ int sub_14D20(int a1)
 }
 
 //----- (00014D40) --------------------------------------------------------
-int sub_14D40(int a1)
+/// sets the AI mode (wizard data +415) to 9, attack a balloon (after AiFindRivalBalloon_147E0).
+int AiStartAttackBalloon_14D40(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 9;
   return 1;
 }
 
 //----- (00014D60) --------------------------------------------------------
-int sub_14D60(int a1)
+/// sets the AI mode (wizard data +415) to 8, attack a wizard (after AiFindRivalWizard_145B0).
+int AiStartAttackWizard_14D60(int a1)
 {
   *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 8;
   return 1;
@@ -17618,7 +17673,7 @@ int sub_14DC0(int a1)
   else
   {
     *(_WORD *)PTR(a1 + 146) = 164 * *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 50) / 164;
-    *(_WORD *)PTR(a1 + 148) = sub_15420(v1);
+    *(_WORD *)PTR(a1 + 148) = EntityTag_15420(v1);
     *(_BYTE *)PTR(*(_DWORD *)PTR(a1 + 160) + 415) = 11;
   }
   return 1;
@@ -17673,10 +17728,10 @@ int sub_14EB0(int a1)//1E5EB0_
   v21 = v1[6];
   v2 = GetTerrainHeight_11F50(&word_AE454_AE444);
   KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v2, v21, v22, v23);
-  sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), 0, *(_WORD *)PTR(a1 + 126));
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), 0, *(_WORD *)PTR(a1 + 126));
   v3 = *(_WORD *)PTR(a1 + 30);
   HIBYTE(v3) += 2;
-  sub_41EC0_42200(&word_AE454_AE444, v3, 0, *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 16));
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, v3, 0, *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 16));
   v4 = *(_DWORD *)PTR(a1 + 160);
   v5 = *(_WORD *)PTR(v4 + 16);
   v6 = (__int16 *)PTR(v4 + 16);
@@ -17686,14 +17741,14 @@ int sub_14EB0(int a1)//1E5EB0_
     LOWORD(v7) = 0;
   v8 = *v6 - 4 * v7;
   *v6 = v8;
-  sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+  MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
   v9 = *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 12) - *(__int16 *)PTR(a1 + 126);
   if ( v9 )
     v9 /= (int)abs32(v9);
   *(_WORD *)PTR(a1 + 126) += 16 * v9;
   v10 = *(_WORD *)PTR(a1 + 34);
   HIBYTE(v10) &= 7u;
-  v11 = sub_42210_42550(*(_WORD *)PTR(a1 + 30), v10);
+  v11 = AngleDifference_42210_42550(*(_WORD *)PTR(a1 + 30), v10);
   v12 = 255 - *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 526);
   v13 = v11 / (int)(unsigned __int16)(((int)(v12 - (__CFSHL__(HIDWORD(v12), 4) + 16 * HIDWORD(v12))) >> 4) + 8);
   v14 = *(_DWORD *)PTR(a1 + 156);
@@ -17707,7 +17762,7 @@ int sub_14EB0(int a1)//1E5EB0_
   {
     v15 = *(_WORD *)PTR(v14 + 2);
   }
-  v16 = sub_42240_42580(*(unsigned __int16 *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) * v15;
+  v16 = TurnDirection_42240_42580(*(unsigned __int16 *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) * v15;
   v17 = *(unsigned __int16 *)PTR(a1 + 30);
   v18 = (v17 + v16) & 0x7FF;
   v19 = *(_WORD *)PTR(a1 + 34);
@@ -17749,7 +17804,7 @@ unsigned int AiChooseManaToPossess_15080(int a1)
     v4 = 164 * (unsigned __int16)v3 + dword_AE400_AE3F0();
     if ( *(_BYTE *)PTR(v4 + 29859) != 3 )
     {
-      v5 = sub_42410_42750(v10, (_WORD *)PTR(v2 + 72));
+      v5 = DistanceSquared2D_42410_42750(v10, (_WORD *)PTR(v2 + 72));
       if ( v5 >= v1 )
         goto LABEL_19;
       goto LABEL_18;
@@ -17760,7 +17815,7 @@ unsigned int AiChooseManaToPossess_15080(int a1)
     // (a target owned by a wizard with a lot of mana) it took the other branch (computer wizards picked other mana balls; possession_spell_bug.recording)
     if ( 50000 - *(int *)PTR(v4 + 29931) / 10 * *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 522) / 255 < (int)*(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 8 * *(__int16 *)PTR(*(_DWORD *)PTR(v4 + 29955) + 48) + 460) )
     {
-      v5 = sub_42410_42750((_WORD *)PTR(v9 + 72), (_WORD *)PTR(v2 + 72));
+      v5 = DistanceSquared2D_42410_42750((_WORD *)PTR(v9 + 72), (_WORD *)PTR(v2 + 72));
       if ( v5 >= v1 )
         goto LABEL_19;
 LABEL_18:
@@ -17773,10 +17828,10 @@ LABEL_18:
     {
       v6 = dword_AE400_AE3F0() + 29795 >= v9 ? FindNearestRival_15260(v2, 2u) : sub_153B0(v2, v9);
       v7 = v6;
-      if ( (*(_WORD *)PTR(a1 + 24) == *(_WORD *)PTR(v11 + 24) || sub_42410_42750((_WORD *)PTR(v2 + 72), (_WORD *)PTR(v11 + 72)) > 26214400)
+      if ( (*(_WORD *)PTR(a1 + 24) == *(_WORD *)PTR(v11 + 24) || DistanceSquared2D_42410_42750((_WORD *)PTR(v2 + 72), (_WORD *)PTR(v11 + 72)) > 26214400)
         && (!v7 || !EntitiesCollide_11950((Type_AE400_29795*)PTR(v2), (Type_AE400_29795*)PTR(v7))) )
       {
-        v5 = sub_42410_42750(v10, (_WORD *)PTR(v2 + 72));
+        v5 = DistanceSquared2D_42410_42750(v10, (_WORD *)PTR(v2 + 72));
         if ( v5 < v1 )
           goto LABEL_18;
       }
@@ -17817,7 +17872,7 @@ unsigned int FindNearestRival_15260(int a1, unsigned __int8 a2)
       {
         if ( *(_WORD *)PTR(i + 24) != *(_WORD *)PTR(a1 + 24) )
         {
-          v5 = sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
+          v5 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
           if ( v5 < v2 )
           {
             v3 = i;
@@ -17832,7 +17887,7 @@ unsigned int FindNearestRival_15260(int a1, unsigned __int8 a2)
   {
     if ( *(_WORD *)PTR(j + 24) != *(_WORD *)PTR(a1 + 24) && *(char *)PTR(j + 65) == a2 )
     {
-      v7 = sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(j + 72));
+      v7 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(j + 72));
       if ( v7 < v2 )
       {
         v3 = j;
@@ -17861,7 +17916,7 @@ unsigned int sub_15340(int a1, int a2)
     v5 = *(_WORD *)PTR(i + 24);
     if ( v5 != *(_WORD *)PTR(a1 + 24) && v5 != *(_WORD *)PTR(a2 + 24) && *(_BYTE *)PTR(i + 65) <= 1u )
     {
-      v6 = sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
+      v6 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
       if ( v6 < v2 )
       {
         v3 = i;
@@ -17890,7 +17945,7 @@ unsigned int sub_153B0(int a1, int a2)
     v5 = *(_WORD *)PTR(i + 24);
     if ( v5 != *(_WORD *)PTR(a1 + 24) && v5 != *(_WORD *)PTR(a2 + 24) && *(_BYTE *)PTR(i + 65) == 2 )
     {
-      v6 = sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
+      v6 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
       if ( v6 < v2 )
       {
         v3 = i;
@@ -17904,15 +17959,17 @@ unsigned int sub_153B0(int a1, int a2)
 // AE408: using guessed type int dword_AE408_AE3F8();
 
 //----- (00015420) --------------------------------------------------------
-__int16 sub_15420(int a1)
+/// Tag of an entity slot's occupant: id (+24) + type (+65) + 128 * class (+64). The AI keeps its target's tag in +148 to notice when the slot is reused.
+__int16 EntityTag_15420(int a1)
 {
   return *(_WORD *)PTR(a1 + 24) + *(char *)PTR(a1 + 65) + (*(char *)PTR(a1 + 64) << 7);
 }
 
 //----- (00015440) --------------------------------------------------------
-bool sub_15440(int a1, int a2)
+/// Returns whether entity a2 is still the AI's target (EntityTag_15420(a2) == a1 +148).
+bool AiTargetValid_15440(int a1, int a2)
 {
-  return sub_15420(a2) == *(_WORD *)PTR(a1 + 148);
+  return EntityTag_15420(a2) == *(_WORD *)PTR(a1 + 148);
 }
 
 //----- (00015470) --------------------------------------------------------
@@ -17935,7 +17992,7 @@ int AiApproachTarget_15470(int a1, int a2, signed int a3, signed int a4)
     {
       if ( sub_15E60(a1, 2u) )
         return 0;
-      if ( v5 > a4 && sub_15A00(a1, 2u) )
+      if ( v5 > a4 && AiSpellReady_15A00(a1, 2u) )
       {
         AiCastSpell_155F0(a1, 2u);
         return 0;
@@ -17948,12 +18005,12 @@ LABEL_8:
     *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 14) = 1;
     return 1;
   }
-  v6 = sub_423D0_42710((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a1 + 150));
+  v6 = Distance2D_423D0_42710((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a1 + 150));
   if ( v6 <= a3 )
     goto LABEL_8;
   if ( !sub_15E60(a1, 2u) )
   {
-    if ( v6 > a4 && sub_15A00(a1, 2u) )
+    if ( v6 > a4 && AiSpellReady_15A00(a1, 2u) )
     {
       AiCastSpell_155F0(a1, 2u);
       return 0;
@@ -17979,7 +18036,7 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
   unsigned int v9; // eax
   unsigned int v10; // eax
 
-  if ( !sub_15A00(a1, a2) )
+  if ( !AiSpellReady_15A00(a1, a2) )
     return 0;
   *(_BYTE *)PTR(a1 + 17) &= ~1u;
   switch ( a2 )
@@ -17990,7 +18047,7 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
       if ( !v2
         || *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 404) < 0
         || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v2 + 136)
-        || (unsigned __int16)sub_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= 0xAAu )
+        || (unsigned __int16)AngleDifference_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= 0xAAu )
       {
         return 0;
       }
@@ -18038,7 +18095,7 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
       v5 = GetWizardSpell_14E60(a1, a2);
       if ( !v5
         || *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v5 + 136)
-        || (unsigned __int16)sub_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= 0xE3u )
+        || (unsigned __int16)AngleDifference_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= 0xE3u )
       {
         return 0;
       }
@@ -18090,7 +18147,8 @@ int AiCastSpell_155F0(int a1, unsigned __int8 a2)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00015A00) --------------------------------------------------------
-int sub_15A00(int a1, unsigned __int8 a2)
+/// AI: returns whether the wizard can cast spell a2 now: it owns the spell, has the mana, the spell is not active/blocked and, for aimed spells, it faces the target (+30 vs +34) within an angle that depends on its skill (wizard data +524).
+int AiSpellReady_15A00(int a1, unsigned __int8 a2)
 {
   unsigned int v2; // eax
   int result; // eax
@@ -18122,7 +18180,7 @@ int sub_15A00(int a1, unsigned __int8 a2)
       if ( *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v12 + 136) )
         goto LABEL_37;
       v14 = 255 - *(__int16 *)PTR(v13 + 524);
-      if ( (unsigned __int16)sub_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= ((((int)(v14
+      if ( (unsigned __int16)AngleDifference_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= ((((int)(v14
                                                                                            - (__CFSHL__(HIDWORD(v14), 2)
                                                                                             + 4 * HIDWORD(v14))) >> 2)
                                                                                     + 20) << 11)
@@ -18152,7 +18210,7 @@ int sub_15A00(int a1, unsigned __int8 a2)
       if ( *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v5 + 136) )
         goto LABEL_37;
       v7 = 255 - *(__int16 *)PTR(v6 + 524);
-      if ( (unsigned __int16)sub_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= ((((int)(v7
+      if ( (unsigned __int16)AngleDifference_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= ((((int)(v7
                                                                                            - (__CFSHL__(HIDWORD(v7), 2)
                                                                                             + 4 * HIDWORD(v7))) >> 2)
                                                                                     + 20) << 11)
@@ -18190,7 +18248,7 @@ int sub_15A00(int a1, unsigned __int8 a2)
         if ( *(_DWORD *)PTR(a1 + 140) < *(_DWORD *)PTR(v8 + 136) )
           goto LABEL_37;
         v11 = 255 - *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 160) + 524);
-        if ( (unsigned __int16)sub_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= ((((int)(v11
+        if ( (unsigned __int16)AngleDifference_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) >= ((((int)(v11
                                                                                              - (__CFSHL__(
                                                                                                   HIDWORD(v11),
                                                                                                   2)
@@ -18246,9 +18304,9 @@ bool sub_15E60(int a1, unsigned __int8 a2)
 }
 
 //----- (00015E90) --------------------------------------------------------
-/// 1 if spell a2's entity +136 is at most wizard a1's +136 - probably the spell's mana cost against the
-/// wizard's mana (inferred, not verified).
-bool sub_15E90(int a1, unsigned __int8 a2)
+/// 1 if spell a2's +136 (the value CreateSpell_3BF70 sets from its mana argument: 200 for Fireball, 75000 for
+/// Global Death, so probably the cost) is at most the wizard's maximum mana (+136).
+bool SpellWithinMaxMana_15E90(int a1, unsigned __int8 a2)
 {
   return *(_DWORD *)PTR(GetWizardSpell_14E60(a1, a2) + 136) <= *(_DWORD *)PTR(a1 + 136);
 }
@@ -18367,16 +18425,16 @@ LABEL_9:
   {
     if ( !GetWizardSpell_14E60(a1, 0x11u) )
       goto LABEL_50;
-    if ( sub_15A00(a1, 0x11u) )
+    if ( AiSpellReady_15A00(a1, 0x11u) )
       return 17;
-    if ( !sub_15E90(a1, 0x11u) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 758) )
+    if ( !SpellWithinMaxMana_15E90(a1, 0x11u) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 758) )
     {
 LABEL_50:
       if ( !GetWizardSpell_14E60(a1, 8u) )
         goto LABEL_49;
-      if ( sub_15A00(a1, 8u) )
+      if ( AiSpellReady_15A00(a1, 8u) )
         return 8;
-      if ( !sub_15E90(a1, 8u) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 740) )
+      if ( !SpellWithinMaxMana_15E90(a1, 8u) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 740) )
       {
 LABEL_49:
         if ( sub_16000(dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(a1 + 146), 0xEu)
@@ -18384,9 +18442,9 @@ LABEL_49:
         {
           if ( GetWizardSpell_14E60(a1, 0xFu) )
           {
-            if ( sub_15A00(a1, 0xFu) )
+            if ( AiSpellReady_15A00(a1, 0xFu) )
               return 15;
-            if ( sub_15E90(a1, 0xFu) )
+            if ( SpellWithinMaxMana_15E90(a1, 0xFu) )
               return -1;
           }
         }
@@ -18394,30 +18452,30 @@ LABEL_49:
         {
           if ( !GetWizardSpell_14E60(a1, 7u) )
             goto LABEL_52;
-          if ( sub_15A00(a1, 7u) )
+          if ( AiSpellReady_15A00(a1, 7u) )
             return 7;
-          if ( !sub_15E90(a1, 7u) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 738) )
+          if ( !SpellWithinMaxMana_15E90(a1, 7u) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 738) )
           {
 LABEL_52:
             if ( !GetWizardSpell_14E60(a1, 0x14u) )
               goto LABEL_53;
-            if ( sub_15A00(a1, 0x14u) )
+            if ( AiSpellReady_15A00(a1, 0x14u) )
               return 20;
-            if ( !sub_15E90(a1, 0x14u) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 764) )
+            if ( !SpellWithinMaxMana_15E90(a1, 0x14u) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 764) )
             {
 LABEL_53:
               if ( !GetWizardSpell_14E60(a1, 0) )
                 goto LABEL_51;
-              if ( sub_15A00(a1, 0) )
+              if ( AiSpellReady_15A00(a1, 0) )
                 return 0;
-              if ( !sub_15E90(a1, 0) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 724) )
+              if ( !SpellWithinMaxMana_15E90(a1, 0) || *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 724) )
               {
 LABEL_51:
                 if ( GetWizardSpell_14E60(a1, 0xFu) )
                 {
-                  if ( sub_15A00(a1, 0xFu) )
+                  if ( AiSpellReady_15A00(a1, 0xFu) )
                     return 15;
-                  sub_15E90(a1, 0xFu);
+                  SpellWithinMaxMana_15E90(a1, 0xFu);
                 }
               }
             }
@@ -18466,44 +18524,44 @@ LABEL_9:
   {
     if ( !GetWizardSpell_14E60((int)OFF(a1), 0x11u) )
       goto LABEL_46;
-    if ( sub_15A00((int)OFF(a1), 0x11u) )
+    if ( AiSpellReady_15A00((int)OFF(a1), 0x11u) )
       return 17;
-    if ( !sub_15E90((int)OFF(a1), 0x11u) || *(_WORD *)PTR(a1[40] + 758) )
+    if ( !SpellWithinMaxMana_15E90((int)OFF(a1), 0x11u) || *(_WORD *)PTR(a1[40] + 758) )
     {
 LABEL_46:
       if ( !GetWizardSpell_14E60((int)OFF(a1), 8u) )
         goto LABEL_45;
-      if ( sub_15A00((int)OFF(a1), 8u) )
+      if ( AiSpellReady_15A00((int)OFF(a1), 8u) )
         return 8;
-      if ( !sub_15E90((int)OFF(a1), 8u) || *(_WORD *)PTR(a1[40] + 740) )
+      if ( !SpellWithinMaxMana_15E90((int)OFF(a1), 8u) || *(_WORD *)PTR(a1[40] + 740) )
       {
 LABEL_45:
         if ( !GetWizardSpell_14E60((int)OFF(a1), 7u) )
           goto LABEL_44;
-        if ( sub_15A00((int)OFF(a1), 7u) )
+        if ( AiSpellReady_15A00((int)OFF(a1), 7u) )
           return 7;
-        if ( !sub_15E90((int)OFF(a1), 7u) || *(_WORD *)PTR(a1[40] + 738) )
+        if ( !SpellWithinMaxMana_15E90((int)OFF(a1), 7u) || *(_WORD *)PTR(a1[40] + 738) )
         {
 LABEL_44:
           if ( !GetWizardSpell_14E60((int)OFF(a1), 0x14u) )
             goto LABEL_43;
-          if ( sub_15A00((int)OFF(a1), 0x14u) )
+          if ( AiSpellReady_15A00((int)OFF(a1), 0x14u) )
             return 20;
-          if ( !sub_15E90((int)OFF(a1), 0x14u) || *(_WORD *)PTR(a1[40] + 764) )
+          if ( !SpellWithinMaxMana_15E90((int)OFF(a1), 0x14u) || *(_WORD *)PTR(a1[40] + 764) )
           {
 LABEL_43:
             if ( !GetWizardSpell_14E60((int)OFF(a1), 0) )
               goto LABEL_42;
-            if ( sub_15A00((int)OFF(a1), 0) )
+            if ( AiSpellReady_15A00((int)OFF(a1), 0) )
               return 0;
-            if ( !sub_15E90((int)OFF(a1), 0) || *(_WORD *)PTR(a1[40] + 724) )
+            if ( !SpellWithinMaxMana_15E90((int)OFF(a1), 0) || *(_WORD *)PTR(a1[40] + 724) )
             {
 LABEL_42:
               if ( GetWizardSpell_14E60((int)OFF(a1), 0xFu) )
               {
-                if ( sub_15A00((int)OFF(a1), 0xFu) )
+                if ( AiSpellReady_15A00((int)OFF(a1), 0xFu) )
                   return 15;
-                sub_15E90((int)OFF(a1), 0xFu);
+                SpellWithinMaxMana_15E90((int)OFF(a1), 0xFu);
               }
             }
           }
@@ -18661,7 +18719,7 @@ unsigned int sub_16800(unsigned int a1, int a2)
   {
     if ( *(unsigned __int16 *)PTR(i + 146) == *(__int16 *)PTR(a2 + 24) )
     {
-      v4 = sub_42410_42750((_WORD *)PTR(a2 + 72), (_WORD *)PTR(i + 72));
+      v4 = DistanceSquared2D_42410_42750((_WORD *)PTR(a2 + 72), (_WORD *)PTR(i + 72));
       if ( v4 < v2 )
       {
         v2 = v4;
@@ -18692,7 +18750,7 @@ char sub_16890(int a1, int a2)
 {
   int v2; // eax
 
-  v2 = sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(a2 + 72));
+  v2 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(a2 + 72));
   if ( v2 < 0x100000 )
   {
     LOBYTE(v2) = *(_BYTE *)PTR(a2 + 65);
@@ -18701,12 +18759,12 @@ char sub_16890(int a1, int a2)
       if ( !(_BYTE)v2 || (_BYTE)v2 == 3 )
       {
 LABEL_10:
-        if ( sub_15A00(a1, 0xEu) )
+        if ( AiSpellReady_15A00(a1, 0xEu) )
         {
           LOBYTE(v2) = AiCastSpell_155F0(a1, 0xEu);
           return v2;
         }
-        v2 = sub_15A00(a1, 4u);
+        v2 = AiSpellReady_15A00(a1, 4u);
         if ( !v2 )
           return v2;
 LABEL_15:
@@ -18726,7 +18784,7 @@ LABEL_15:
           goto LABEL_10;
         }
 LABEL_14:
-        v2 = sub_15A00(a1, 4u);
+        v2 = AiSpellReady_15A00(a1, 4u);
         if ( !v2 )
           return v2;
         goto LABEL_15;
@@ -18737,7 +18795,8 @@ LABEL_14:
 }
 
 //----- (00016920) --------------------------------------------------------
-_BOOL1 sub_16920(int a1)
+/// Returns whether the wizard owns an attack spell: Fireball, Lightning, Volcano, Undead Army, Wall of Fire or Meteor.
+_BOOL1 AiHasAttackSpell_16920(int a1)
 {
   return GetWizardSpell_14E60(a1, 0)
       || GetWizardSpell_14E60(a1, 0xFu)
@@ -18769,7 +18828,8 @@ char sub_16990()
 // AE408: using guessed type int dword_AE408_AE3F8();
 
 //----- (000169E0) --------------------------------------------------------
-void sub_169E0()//1E79E0_
+/// Turns the mouse position into the local player's steering input (input packet bytes 3/4, -127..127).
+void ReadMouseSteering_169E0()//1E79E0_
 {
   int result; // eax
   int v1; // ebx
@@ -18865,9 +18925,9 @@ void ProcessKeys_16B00()//1E7B00_
 				sub_593B0_598C0();
 				str_AE400_AE3F0->str_232607.var_u16_232707 = str_AE408_AE3F8->var_u16_17;
 				str_AE400_AE3F0->str_232607.var_u32_232709 = timerTicks_AC5D4_AC5C4;
-				sub_3E750_3EA90(199);
-				sub_3E8C0_3EC00(199);
-				sub_37220_375E0();
+				SaveGameState_3E750_3EA90(199);
+				SaveMapState_3E8C0_3EC00(199);
+				RebuildFreeLists_37220_375E0();
 				str_AE400_AE3F0->var_u32_4593 = -1;
 				str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].messages_13351_28[str_AE400_AE3F0->var_u16_8].periods_13415 = 100;
 				str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].messages_13351_28[str_AE400_AE3F0->var_u16_8].drawType_13417 = 0;
@@ -18878,8 +18938,8 @@ void ProcessKeys_16B00()//1E7B00_
 		case 0x26:// 'l' load
 			if ((str_AE408_AE3F8->var_u8_0 & 0x10) == 0)
 			{
-				sub_3E690_3E9D0(199);
-				sub_3E7F0_3EB30(199);
+				LoadGameState_3E690_3E9D0(199);
+				LoadMapState_3E7F0_3EB30(199);
 				str_AE408_AE3F8->var_u16_17 = str_AE400_AE3F0->str_232607.var_u16_232707;
 				timerTicks_AC5D4_AC5C4 = str_AE400_AE3F0->str_232607.var_u32_232709;
 				sub_59420_59930();
@@ -19172,7 +19232,8 @@ void ProcessKeys_16B00()//1E7B00_
 }
 
 //----- (00017C20) --------------------------------------------------------
-void sub_17C20()
+/// Turns the local player's keys and mouse into control commands (ProcessKeys_16B00, MakeControlCommand_188A0).
+void ReadLocalPlayerControls_17C20()
 {
   int v3; // eax
   int v4; // edx
@@ -19256,7 +19317,7 @@ void sub_17C20()
               {
                 MakeControlCommand_188A0(12, 0);
                 lastPressedKey_12EF70_12EF60 = 0;
-                sub_169E0();
+                ReadMouseSteering_169E0();
                 return;
               }
               if ( lastPressedKey_12EF70_12EF60 == 0x1fu )
@@ -19272,7 +19333,7 @@ void sub_17C20()
             {
               MakeControlCommand_188A0(4, 32);
               lastPressedKey_12EF70_12EF60 = 0;
-              sub_169E0();
+              ReadMouseSteering_169E0();
               return;
             }
             if ( lastPressedKey_12EF70_12EF60 < 0x2Fu )
@@ -19289,7 +19350,7 @@ void sub_17C20()
               {
                 MakeControlCommand_188A0(4, 8);
                 lastPressedKey_12EF70_12EF60 = 0;
-                sub_169E0();
+                ReadMouseSteering_169E0();
                 return;
               }
               if ( lastPressedKey_12EF70_12EF60 == 50 )
@@ -19305,7 +19366,7 @@ void sub_17C20()
         {
           MakeControlCommand_188A0(30, 1);
           lastPressedKey_12EF70_12EF60 = 0;
-          sub_169E0();
+          ReadMouseSteering_169E0();
           return;
         }
         if ( lastPressedKey_12EF70_12EF60 >= 0x3Eu )
@@ -19314,21 +19375,21 @@ void sub_17C20()
           {
             MakeControlCommand_188A0(30, 4);
             lastPressedKey_12EF70_12EF60 = 0;
-            sub_169E0();
+            ReadMouseSteering_169E0();
             return;
           }
           if ( lastPressedKey_12EF70_12EF60 < 0x40u )
           {
             MakeControlCommand_188A0(30, 5);
             lastPressedKey_12EF70_12EF60 = 0;
-            sub_169E0();
+            ReadMouseSteering_169E0();
             return;
           }
           if ( lastPressedKey_12EF70_12EF60 <= 0x40u )
           {
             MakeControlCommand_188A0(30, 6);
             lastPressedKey_12EF70_12EF60 = 0;
-            sub_169E0();
+            ReadMouseSteering_169E0();
             return;
           }
           if ( lastPressedKey_12EF70_12EF60 == 65 )
@@ -19344,7 +19405,7 @@ void sub_17C20()
           MakeControlCommand_188A0(30, 3);
 LABEL_64:
         lastPressedKey_12EF70_12EF60 = 0;
-        sub_169E0();
+        ReadMouseSteering_169E0();
         return;
       }
       if (pressedKeys_12EEF0_12EEE0[42] || pressedKeys_12EEF0_12EEE0[54]) //byte_12EF1A shift + 8/*  byte_12EF26 6/^/Right
@@ -19357,7 +19418,7 @@ LABEL_64:
             {
               MakeControlCommand_188A0(2, 0);
               lastPressedKey_12EF70_12EF60 = 0;
-              sub_169E0();
+              ReadMouseSteering_169E0();
               return;
             }
             if ( lastPressedKey_12EF70_12EF60 == 18 )
@@ -19380,7 +19441,7 @@ LABEL_64:
           {
             MakeControlCommand_188A0(6, 48);
             lastPressedKey_12EF70_12EF60 = 0;
-            sub_169E0();
+            ReadMouseSteering_169E0();
             return;
           }
           if ( lastPressedKey_12EF70_12EF60 == 46 )
@@ -19391,7 +19452,7 @@ LABEL_64:
           }
         }
 LABEL_54:
-        sub_169E0();
+        ReadMouseSteering_169E0();
         return;
       }
       if ( lastPressedKey_12EF70_12EF60 == 26 )
@@ -19480,7 +19541,7 @@ LABEL_119:
         if ( v15 == -1 )
         {
           mouseRightButton_12EFDC_12EFCC = 0;
-          sub_169E0();
+          ReadMouseSteering_169E0();
           return;
         }
         v16 = 164 * *(_DWORD *)PTR(v14 + 4 * v15 + 532) + dword_AE400_AE3F0() + 29795;
@@ -19490,7 +19551,7 @@ LABEL_119:
           {
             MakeControlCommand_188A0(6, 32);
             mouseRightButton_12EFDC_12EFCC = 0;
-            sub_169E0();
+            ReadMouseSteering_169E0();
             return;
           }
         }
@@ -19836,15 +19897,17 @@ void MakeControlCommand_188A0(char setting1, char setting2)
   }
 }
 
-void sub_192D8()
+/// CPU detection: runs the cpuid probe (sub_192F3/sub_193EE) with the flags saved and restored.
+void RunCpuid_192D8()
 {
 	unsigned int tempFlag = __readeflags();
-	sub_193EE(sub_192F3());
+	sub_193EE(CpuidProbe_192F3());
 	port_writeeflags(tempFlag);
 }
 
 //----- (000192F3) --------------------------------------------------------
-int sub_192F3()
+/// cpuid probe; the port reports a Pentium (family 5, model 1) instead of executing cpuid.
+int CpuidProbe_192F3()
 {
     FixPerifery((char*)"cpuid");
     cpuVar_90084 = 5;
@@ -19964,9 +20027,10 @@ void sub_193EE(__int16 a1)
 // 90089: using guessed type char byte_90089;
 
 //SYNCHRONIZED WITH REMC1
-void sub_19470()//1EA470_
+/// Runs the CPU detection (cpuid) and sets str_AE408_AE3F8 +8 when the CPU is a Pentium (family 5, model 1).
+void DetectCpu_19470()//1EA470_
 {
-	sub_192D8();
+	RunCpuid_192D8();
 	if (cpuVar_90084 == 5 && cpuVar_90085 == 1)
 		str_AE408_AE3F8->var_u8_8 = 1;
 	else
@@ -19996,7 +20060,8 @@ int sub_194F0_194F0()
 }
 
 //SYNCHRONIZED WITH REMC1
-__int16 sub_19550(int a1)
+/// Per-tick handler of a body segment (class 5 state 120, created by the type 0, 3 and 6 constructors): follows its leader (+52) and is removed when the leader is no longer a class 5 entity.
+__int16 SegmentFollowTick_19550(int a1)
 {
   __int16 result; // ax
   int v2; // esi
@@ -20014,8 +20079,8 @@ __int16 sub_19550(int a1)
     v3 = v2 + 72;
     *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(v3);
     word_AE454_AE444.z = *(_WORD *)PTR(v3 + 4);
-    sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), -*(_WORD *)PTR(a1 + 56));
-    result = sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), -*(_WORD *)PTR(a1 + 56));
+    result = MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
     if ( *(_WORD *)PTR(a1 + 94) )
     {
       *(_DWORD *)PTR(a1 + 12) -= *(_DWORD *)PTR(a1 + 90);
@@ -20030,7 +20095,7 @@ __int16 sub_19550(int a1)
   }
   else if ( (*(_BYTE *)PTR(a1 + 63) & 3) == 0 )
   {
-    sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v2 + 72));
+    MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v2 + 72));
     result = *(_WORD *)PTR(v2 + 30);
     *(_WORD *)PTR(a1 + 30) = result;
   }
@@ -20117,7 +20182,7 @@ void MoveCreature_196E0(Type_AE400_29795* a1x)
   v19 = a1x->var_u32_29951_156->minHeight_12;
   v2 = GetTerrainHeight_11F50(&word_AE454_AE444);
   KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v2, v19, v23, v27);
-  sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if (a1x->var_u32_29867_72.x >> 8 == word_AE454_AE444.x >> 8 )
   {
     v3 = word_AE454_AE444.y >> 8;
@@ -20143,7 +20208,7 @@ void MoveCreature_196E0(Type_AE400_29795* a1x)
   v20 = a1x->var_u32_29951_156->minHeight_12;
   v9 = GetTerrainHeight_11F50(&word_AE454_AE444);
   KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v9, v20, v24, v28);
-  sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if ( !IsMoveBlocked_11640(a1x, &word_AE454_AE444, 1) )
   {
     v10 = a1x->var_u32_29951_156->maxSlope_16;
@@ -20162,7 +20227,7 @@ void MoveCreature_196E0(Type_AE400_29795* a1x)
   v21 = a1x->var_u32_29951_156->minHeight_12;
   v13 = GetTerrainHeight_11F50(&word_AE454_AE444);
   KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v13, v21, v25, v29);
-  sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if ( !IsMoveBlocked_11640(a1x, &word_AE454_AE444, 1) )
   {
     v14 = a1x->var_u32_29951_156->maxSlope_16;
@@ -20181,7 +20246,7 @@ void MoveCreature_196E0(Type_AE400_29795* a1x)
   v22 = a1x->var_u32_29951_156->minHeight_12;
   v17 = GetTerrainHeight_11F50(&word_AE454_AE444);
   KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v17, v22, v26, v30);
-  sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
   if ( IsMoveBlocked_11640(a1x, &word_AE454_AE444, 1)
     || (v18 = a1x->var_u32_29951_156->maxSlope_16, v3 = TerrainSlope_19650(&word_AE454_AE444), v3 >= v18) )
   {
@@ -20191,9 +20256,9 @@ void MoveCreature_196E0(Type_AE400_29795* a1x)
   else
   {
 LABEL_3:
-    sub_41C70_41FB0(a1x, &word_AE454_AE444);
+    MoveEntity_41C70_41FB0(a1x, &word_AE454_AE444);
     v4 = a1x->var_u16_29825_30
-       + sub_422A0_425E0(
+       + TurnStep_422A0_425E0(
            a1x->var_u16_29825_30,
            a1x->var_u16_29829_34,
            a1x->var_u32_29951_156->v_4,
@@ -20204,7 +20269,8 @@ LABEL_3:
 }
 
 //SYNCHONIZED WITH REMC1
-void sub_19B10(Type_AE400_29795* a1x, char a2)
+/// Shared idle state of class 5 creatures (state a2 = 6 * type): when a wizard (class 3) has hit it, targets that wizard (+146) and goes to a2+2; when its life is gone, a2+4; otherwise every +156->v_26 ticks it looks for a same-type creature without a leader inside its view range/angle, follows it (+52) and goes to a2+3.
+void CreatureIdleTick_19B10(Type_AE400_29795* a1x, char a2)
 {
   unsigned int v2; // edx
   __int16 v3; // ax
@@ -20294,7 +20360,7 @@ void sub_19B10(Type_AE400_29795* a1x, char a2)
         {
           v16 = a1x->var_u32_29951_156->v_30;
           v14 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, &v9x->var_u32_29867_72);
-          if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v14) < v16 && v13 < v10 )
+          if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v14) < v16 && v13 < v10 )
           {
             v17x = v9x;
             v10 = v13;
@@ -20308,7 +20374,7 @@ void sub_19B10(Type_AE400_29795* a1x, char a2)
         a1x->var_u16_29847_52 = v17x - str_AE400_AE3F0->str_29795;
       v7 = a2 + 3;
 LABEL_31:
-      sub_424F0_42830(a1x, v7);
+      SetEntityState_424F0_42830(a1x, v7);
     }
   }
 }
@@ -20421,7 +20487,7 @@ void sub_19D70(Type_AE400_29795* a1x, char a2)
         {
           v23 = a1x->var_u32_29951_156->v_30;
           v15 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(j + 72));
-          if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v15) < v23 && v14 < v11 )
+          if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v15) < v23 && v14 < v11 )
           {
             v26 = j;
             v11 = v14;
@@ -20433,7 +20499,7 @@ void sub_19D70(Type_AE400_29795* a1x, char a2)
           a1x->var_u16_29941_146 = (int)(v26 - (dword_AE400_AE3F0() + 29795)) / 164;
         v7 = a2 + 2;
 LABEL_42:
-        sub_424F0_42830(a1x, v7);
+        SetEntityState_424F0_42830(a1x, v7);
         return;
       }
       v16 = a1x->var_u32_29951_156->v_28;
@@ -20453,7 +20519,7 @@ LABEL_42:
           {
             v24 = a1x->var_u32_29951_156->v_30;
             v21 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v18 + 72));
-            if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v21) < v24 && v20 < v17 )
+            if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v21) < v24 && v20 < v17 )
             {
               v27 = v18;
               v17 = v20;
@@ -20473,7 +20539,8 @@ LABEL_42:
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_1A120(Type_AE400_29795* a1x, char a2, unsigned __int16 (*a3)(Type_AE400_29795*, int))
+/// Shared attack state (a2 + 2) of class 5 creatures: takes damage like CreatureIdleTick_19B10 (dies: a2 + 4; hit by a wizard: retargets it), otherwise moves (MoveCreature_196E0) towards the target (+146) and calls the attack routine a3.
+int CreatureAttackTick_1A120(Type_AE400_29795* a1x, char a2, unsigned __int16 (*a3)(Type_AE400_29795*, int))
 {
   int v3; // esi
   unsigned int v4; // edi
@@ -20542,7 +20609,7 @@ int sub_1A120(Type_AE400_29795* a1x, char a2, unsigned __int16 (*a3)(Type_AE400_
     else
     {
       dword_AE400_AE3F0(v3);
-      sub_424F0_42830(a1x, a2 + 4);
+      SetEntityState_424F0_42830(a1x, a2 + 4);
     }
     return v15;
   }
@@ -20554,7 +20621,7 @@ int sub_1A120(Type_AE400_29795* a1x, char a2, unsigned __int16 (*a3)(Type_AE400_
   if ( *(int *)PTR(v12 + 12) < 0 || (*(_BYTE *)PTR(v12 + 17) & 4) != 0 )
   {
 LABEL_26:
-    sub_424F0_42830(a1x, a2 + 1);
+    SetEntityState_424F0_42830(a1x, a2 + 1);
     return 0;
   }
   //v13 = *(_DWORD *)(a1 + 156);
@@ -20648,10 +20715,10 @@ LABEL_34:
     {
       v3x->var_u16_29941_146 = a1x->var_u16_29835_40;
       v3x->var_u16_29847_52 = 0;
-      sub_424F0_42830(v3x, v17);
+      SetEntityState_424F0_42830(v3x, v17);
       v9 = a2 + 4;
 LABEL_35:
-      sub_424F0_42830(a1x, v9);
+      SetEntityState_424F0_42830(a1x, v9);
       return;
     }
     //v10 = 41 * a1x->var_u16_29835_40;
@@ -20660,11 +20727,11 @@ LABEL_35:
       v11 = a1x->var_u16_29835_40;
       v3x->var_u16_29847_52 = 0;
       v3x->var_u16_29941_146 = v11;
-      sub_424F0_42830(v3x, v17);
+      SetEntityState_424F0_42830(v3x, v17);
       v12 = a1x->var_u16_29835_40;
       a1x->var_u16_29847_52 = 0;
       a1x->var_u16_29941_146 = v12;
-      sub_424F0_42830(a1x, v17);
+      SetEntityState_424F0_42830(a1x, v17);
     }
   }
   else
@@ -20681,7 +20748,7 @@ LABEL_35:
         case 2:
           a1x->var_u16_29941_146 = v3x->var_u16_29941_146;
           a1x->var_u16_29847_52 = 0;
-          sub_424F0_42830(a1x, v17);
+          SetEntityState_424F0_42830(a1x, v17);
           return;
         case 3:
             a1x->var_u16_29847_52 = v3x->var_u16_29847_52;
@@ -20722,7 +20789,8 @@ LABEL_24:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1A6C0(Type_AE400_29795* a1x, char a2)
+/// Dying state (a2 + 4) of a class 5 creature: puts its followers (+54 chain) and itself into a2 + 5 (dead) and, when the killer (+38) is the player's wizard (class 3 type 0), counts the kill (wizard data +359; not for types 9 and 12-15).
+void CreatureDying_1A6C0(Type_AE400_29795* a1x, char a2)
 {
   Type_AE400_29795* ix; // ebx
   __int16 v3; // cx
@@ -20737,7 +20805,7 @@ void sub_1A6C0(Type_AE400_29795* a1x, char a2)
     v4 = dword_AE400_AE3F0() + 29795;
     if ( ix == str_AE400_AE3F0->str_29795)
       break;
-    sub_424F0_42830(ix, a2 + 5);
+    SetEntityState_424F0_42830(ix, a2 + 5);
     v3 = ix->var_u16_29833_38;
     if ( v3 )
         a1x->var_u16_29833_38 = v3;
@@ -20753,11 +20821,12 @@ void sub_1A6C0(Type_AE400_29795* a1x, char a2)
     if ( v6 != 12 && v6 != 13 && v6 != 14 && v6 != 15 && v6 != 9 )
       ++*(_DWORD *)PTR(*(_DWORD *)PTR(v5 + 160) + 359);
   }
-  sub_424F0_42830(a1x, a2 + 5);
+  SetEntityState_424F0_42830(a1x, a2 + 5);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1A800(Type_AE400_29795* a1x)
+/// Creature death: drops its mana ball (DropManaBall_27690), creates the 10/1 entity and removes the creature.
+void KillCreature_1A800(Type_AE400_29795* a1x)
 {
   _WORD *v1; // eax
   int v2; // eax
@@ -20767,7 +20836,7 @@ void sub_1A800(Type_AE400_29795* a1x)
     v1 = (_WORD *)PTR(dword_AE408_AE3F8());
     if ( (str_AE408_AE3F8->var_u8_1 & 2) != 0 )
         a1x->mana_29935_140 = 5000;
-    sub_27690(v1, a1x);
+    DropManaBall_27690(v1, a1x);
     v2 = (int)OFF(CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 10, 1));
     if ( v2 )
       *(_WORD *)PTR(v2 + 24) = a1x->id_29819_24;
@@ -20830,7 +20899,7 @@ int sub_1A990(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
     v4 = a1x->sClass_29861_66;
     *(_WORD *)PTR(v3 + 44) = 250;
     *(_BYTE *)PTR(v3 + 66) = v4;
-    sub_370A0_37460((Type_AE400_29795*)(_WORD *)PTR(v3), 195);
+    SetSpriteDoubleBox_370A0_37460((Type_AE400_29795*)(_WORD *)PTR(v3), 195);
     return 1;
   }
   return v6;
@@ -20863,12 +20932,13 @@ void CreatureShootAt_1AA40(Type_AE400_29795* a1x, int a2)
       *(_WORD *)PTR(v3 + 44) = 600;
     else
       *(_WORD *)PTR(v3 + 44) = 400;
-    sub_370A0_37460((Type_AE400_29795*)(_WORD *)PTR(v3), 203);
+    SetSpriteDoubleBox_370A0_37460((Type_AE400_29795*)(_WORD *)PTR(v3), 203);
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_1AB10(Type_AE400_29795* a1x, int a2)
+/// Attack routine for CreatureAttackTick_1A120: when target a2 is closer than 1024, deals the creature's damage (+44) to it (DealDamage_12B50) and returns 1.
+int CreatureMeleeHit_1AB10(Type_AE400_29795* a1x, int a2)
 {
   int v2; // ebx
 
@@ -20876,7 +20946,7 @@ int sub_1AB10(Type_AE400_29795* a1x, int a2)
   if ( (int)Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(a2 + 72)) < 1024 )
   {
     v2 = 1;
-    sub_12B50(a1x, a2, 0, a1x->var_u16_29839_44);
+    DealDamage_12B50(a1x, a2, 0, a1x->var_u16_29839_44);
   }
   return v2;
 }
@@ -21072,47 +21142,54 @@ int sub_1AEE0(Type_AE400_29795* a1x, Type_AE400_29795* a2x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B060(Type_AE400_29795* a1x)
+/// Idle state of the dragon (head; the body segments reuse the worm sprites) (class 5 type 0) (state 0): CreatureIdleTick_19B10(a1x, 0). Identified from its decoded sprite (confirmed by the user).
+void DragonIdleTick_1B060(Type_AE400_29795* a1x)
 {
-  sub_19B10(a1x, 0);
+  CreatureIdleTick_19B10(a1x, 0);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B070(Type_AE400_29795* a1x)
+/// Per-tick handler of class 5 state 1, the initial state of the dragon (type 0). Identified from its decoded sprite (confirmed by the user).
+void DragonTick_1B070(Type_AE400_29795* a1x)
 {
   sub_19D70(a1x, 0);
-  sub_1B120(a1x);
+  BobAboveGround_1B120(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B090(Type_AE400_29795* a1x)
+/// Dragon (class 5 type 0) attack state: CreatureAttackTick_1A120(a1x, 0, ...) (state 2). Identified from its decoded sprite (confirmed by the user).
+void DragonAttackTick_1B090(Type_AE400_29795* a1x)
 {
-  if ( (unsigned __int16)sub_1A120(a1x, 0, PORT_FN(sub_1A8E0, unsigned __int16(Type_AE400_29795*, int))) )
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 8);
-  sub_1B120(a1x);
+  if ( (unsigned __int16)CreatureAttackTick_1A120(a1x, 0, PORT_FN(sub_1A8E0, unsigned __int16(Type_AE400_29795*, int))) )
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 8);
+  BobAboveGround_1B120(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B0E0(Type_AE400_29795* a1x)
+/// Dragon (class 5 type 0) follow state: UpdateFollower_1A390(a1x, 0) (state 3). Identified from its decoded sprite (confirmed by the user).
+void DragonFollowTick_1B0E0(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0);
-  sub_1B120(a1x);
+  BobAboveGround_1B120(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B100(Type_AE400_29795* a1x)
+/// Dragon (class 5 type 0) dying state: CreatureDying_1A6C0(a1x, 0) (state 4). Identified from its decoded sprite (confirmed by the user).
+void DragonDyingTick_1B100(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 0);
+  CreatureDying_1A6C0(a1x, 0);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B110(Type_AE400_29795* a1x)
+/// Dragon (class 5 type 0) dead state: KillCreature_1A800 (state 5). Identified from its decoded sprite (confirmed by the user).
+void DragonDeadTick_1B110(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B120(Type_AE400_29795* a1x)
+/// Vertical bobbing: z += vertical speed (+26), speed -= 5 per tick, kicked back to 150 when within 256 of the ground (dragon states).
+void BobAboveGround_1B120(Type_AE400_29795* a1x)
 {
   __int16 v1; // ax
   int v2; // edx
@@ -21128,12 +21205,13 @@ void sub_1B120(Type_AE400_29795* a1x)
 }
 
 //SYNCHONIZED WITH REMC1
-void sub_1B160(Type_AE400_29795* a1x)
+/// Idle state of the vulture (class 5 type 1) (state 6): CreatureIdleTick_19B10(a1x, 6). Identified from its decoded sprite (confirmed by the user).
+void VultureIdleTick_1B160(Type_AE400_29795* a1x)
 {
   //__int16 result; // ax
   int v2; // eax
 
-  sub_19B10(a1x, 6);
+  CreatureIdleTick_19B10(a1x, 6);
   MoveCreature_196E0(a1x);
   //HIBYTE(result) = a1x->var_u8_29865_70;
   if ( a1x->var_u8_29865_70 == 6 )
@@ -21148,14 +21226,15 @@ void sub_1B160(Type_AE400_29795* a1x)
       else
       {
         a1x->var_u16_29941_146 = 0;
-        sub_424F0_42830(a1x, 7u);
+        SetEntityState_424F0_42830(a1x, 7u);
       }
     }
   }
 }
 
 //SYNCHONIZED WITH REMC1
-void sub_1B200(Type_AE400_29795* a1x)
+/// Per-tick handler of class 5 state 7, the initial state of the vulture (type 1). Identified from its decoded sprite (confirmed by the user).
+void VultureTick_1B200(Type_AE400_29795* a1x)
 {
   //int v1; // esi
   unsigned int result; // eax
@@ -21191,57 +21270,64 @@ void sub_1B200(Type_AE400_29795* a1x)
     if ( v4 )
     {
       a1x->var_u16_29941_146 = (int)(v4 - (dword_AE400_AE3F0() + 29795)) / 164;
-      sub_424F0_42830(a1x, 6u);
+      SetEntityState_424F0_42830(a1x, 6u);
     }
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B2D0(Type_AE400_29795* a1x)
+/// Vulture (class 5 type 1) attack state: CreatureAttackTick_1A120(a1x, 6, ...) (state 8). Identified from its decoded sprite (confirmed by the user).
+void VultureAttackTick_1B2D0(Type_AE400_29795* a1x)
 {
-  if ( (unsigned __int16)sub_1A120(a1x, 6, (unsigned __int16 (*)(Type_AE400_29795*, int))sub_1AB10) )
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 7);
+  if ( (unsigned __int16)CreatureAttackTick_1A120(a1x, 6, (unsigned __int16 (*)(Type_AE400_29795*, int))CreatureMeleeHit_1AB10) )
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 7);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B320(Type_AE400_29795* a1x)
+/// Vulture (class 5 type 1) follow state: UpdateFollower_1A390(a1x, 6) (state 9). Identified from its decoded sprite (confirmed by the user).
+void VultureFollowTick_1B320(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 6u);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B330(Type_AE400_29795* a1x)
+/// Vulture (class 5 type 1) dying state: CreatureDying_1A6C0(a1x, 6) (state 10). Identified from its decoded sprite (confirmed by the user).
+void VultureDyingTick_1B330(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 6);
+  CreatureDying_1A6C0(a1x, 6);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B340(Type_AE400_29795* a1x)
+/// Vulture (class 5 type 1) dead state: KillCreature_1A800 (state 11). Identified from its decoded sprite (confirmed by the user).
+void VultureDeadTick_1B340(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B350(Type_AE400_29795* a1x)
+/// Idle state of the bee (class 5 type 2) (state 12): CreatureIdleTick_19B10(a1x, 12). Identified from its decoded sprite (confirmed by the user).
+void BeeIdleTick_1B350(Type_AE400_29795* a1x)
 {
-  sub_19B10(a1x, 12);
+  CreatureIdleTick_19B10(a1x, 12);
   if (a1x->var_u8_29865_70 == 14 )
       a1x->var_u16_29821_26 = 1;
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B370(Type_AE400_29795* a1x)
+/// Per-tick handler of class 5 state 13, the initial state of the bee (type 2). Identified from its decoded sprite (confirmed by the user).
+void BeeTick_1B370(Type_AE400_29795* a1x)
 {
   sub_19D70(a1x, 12);
   if (a1x->var_u8_29865_70 == 14 )
   {
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 13);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 13);
     a1x->var_u16_29821_26 = 1;
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B3C0(Type_AE400_29795* a1x)
+/// Bee (class 5 type 2) attack state: CreatureAttackTick_1A120(a1x, 12, ...) (state 14). Identified from its decoded sprite (confirmed by the user).
+void BeeAttackTick_1B3C0(Type_AE400_29795* a1x)
 {
   __int16 v1; // dx
   int v2; // ecx
@@ -21261,10 +21347,10 @@ void sub_1B3C0(Type_AE400_29795* a1x)
   else
     LOWORD(v3) = 0;
   a1x->var_u32_29867_72.z += v3 * a1x->var_u32_29951_156->vertSpeed_14;
-  result = sub_1A120(a1x, 12, (unsigned __int16 (*)(Type_AE400_29795*, int))sub_1AB10);
+  result = CreatureAttackTick_1A120(a1x, 12, (unsigned __int16 (*)(Type_AE400_29795*, int))CreatureMeleeHit_1AB10);
   if ( result )
   {
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 13);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 13);
     a1x->actSpeed_29921_126 = -a1x->acceleration_29925_130;
     result = 3 * a1x->var_u32_29951_156->v_26;
     a1x->var_u16_29821_26 = result;
@@ -21277,7 +21363,8 @@ void sub_1B3C0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B4C0(Type_AE400_29795* a1x)
+/// Bee (class 5 type 2) follow state: UpdateFollower_1A390(a1x, 12) (state 15). Identified from its decoded sprite (confirmed by the user).
+void BeeFollowTick_1B4C0(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0xCu);
   if (a1x->var_u8_29865_70 == 14 )
@@ -21285,64 +21372,74 @@ void sub_1B4C0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B4E0(Type_AE400_29795* a1x)
+/// Bee (class 5 type 2) dying state: CreatureDying_1A6C0(a1x, 12) (state 16). Identified from its decoded sprite (confirmed by the user).
+void BeeDyingTick_1B4E0(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 12);
+  CreatureDying_1A6C0(a1x, 12);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B4F0(Type_AE400_29795* a1x)
+/// Bee (class 5 type 2) dead state: KillCreature_1A800 (state 17). Identified from its decoded sprite (confirmed by the user).
+void BeeDeadTick_1B4F0(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B500(Type_AE400_29795* a1x)
+/// Idle state of class 5 type 3 (state 18): CreatureIdleTick_19B10(a1x, 18).
+void WormIdleTick_1B500(Type_AE400_29795* a1x)
 {
-  sub_19B10(a1x, 18);
+  CreatureIdleTick_19B10(a1x, 18);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B510(Type_AE400_29795* a1x)
+/// Per-tick handler of a worm head (class 5 state 19, set by CreateWorm_384B0).
+void WormTick_1B510(Type_AE400_29795* a1x)
 {
   sub_19D70(a1x, 18);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B520(Type_AE400_29795* a1x)
+/// Class 5 type 3 attack state: CreatureAttackTick_1A120(a1x, 18, ...) (state 20).
+void WormAttackTick_1B520(Type_AE400_29795* a1x)
 {
-  if ( (unsigned __int16)sub_1A120(a1x, 18, PORT_FN(sub_1A8E0, unsigned __int16(Type_AE400_29795*, int))) )
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 8);
+  if ( (unsigned __int16)CreatureAttackTick_1A120(a1x, 18, PORT_FN(sub_1A8E0, unsigned __int16(Type_AE400_29795*, int))) )
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 8);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B570(Type_AE400_29795* a1x)
+/// Class 5 type 3 follow state: UpdateFollower_1A390(a1x, 18) (state 21).
+void WormFollowTick_1B570(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0x12u);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B580(Type_AE400_29795* a1x)
+/// Class 5 type 3 dying state: CreatureDying_1A6C0(a1x, 18) (state 22).
+void WormDyingTick_1B580(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 18);
+  CreatureDying_1A6C0(a1x, 18);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B590(Type_AE400_29795* a1x)
+/// Class 5 type 3 dead state: KillCreature_1A800 (state 23).
+void WormDeadTick_1B590(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B5A0(Type_AE400_29795* a1x)
+/// Idle state of class 5 type 4 (state 24): CreatureIdleTick_19B10(a1x, 24).
+void GuardIdleTick_1B5A0(Type_AE400_29795* a1x)
 {
-  sub_19B10(a1x, 24);
+  CreatureIdleTick_19B10(a1x, 24);
   if (a1x->var_u8_29865_70 == 26 )
     sub_1BC50(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1B5D0(Type_AE400_29795* a1x)
+/// Per-tick handler of a guard (class 5 state 25, set by CreateGuard_386E0).
+void GuardTick_1B5D0(Type_AE400_29795* a1x)
 {
   unsigned int v1; // edx
   __int16 v2; // ax
@@ -21437,12 +21534,12 @@ void sub_1B5D0(Type_AE400_29795* a1x)
       if ( *(_BYTE *)PTR(dword_AE400_AE3F0() + 164 * a1x->var_u16_29835_40 + 29859) == 3 )
       {
           a1x->var_u16_29941_146 = a1x->var_u16_29835_40;
-        sub_424F0_42830(a1x, 0x1Au);
+        SetEntityState_424F0_42830(a1x, 0x1Au);
       }
     }
     else
     {
-      sub_424F0_42830(a1x, 0x1Cu);
+      SetEntityState_424F0_42830(a1x, 0x1Cu);
     }
   }
   else
@@ -21466,7 +21563,7 @@ void sub_1B5D0(Type_AE400_29795* a1x)
           }
           else
           {
-            sub_424F0_42830(a1x, 0x1Cu);
+            SetEntityState_424F0_42830(a1x, 0x1Cu);
             a1x->var_u16_29821_26 = 1;
             ++*(_WORD *)PTR(v36 + 26);
           }
@@ -21508,7 +21605,7 @@ void sub_1B5D0(Type_AE400_29795* a1x)
             {
               v39 = a1x->var_u32_29951_156->v_30;
               v19 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v16 + 72));
-              if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v19) < v39 && v18 < v15 )
+              if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v19) < v39 && v18 < v15 )
               {
                 v38 = v16;
                 v15 = v18;
@@ -21552,7 +21649,7 @@ void sub_1B5D0(Type_AE400_29795* a1x)
             if ( *(_BYTE *)PTR(v20 + 64) != 10 || *(_BYTE *)PTR(v20 + 65) != 45 )
             {
               a1x->var_u16_29941_146 = (v20 - (dword_AE400_AE3F0() + 29795)) / 164;
-              sub_424F0_42830(a1x, 0x1Au);
+              SetEntityState_424F0_42830(a1x, 0x1Au);
             }
           }
           else
@@ -21576,7 +21673,7 @@ void sub_1B5D0(Type_AE400_29795* a1x)
                 {
                   v40 = a1x->var_u32_29951_156->v_30;
                   v35 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, &v30x->var_u32_29867_72);
-                  if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v35) < v40 && v34 < v31 )
+                  if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v35) < v40 && v34 < v31 )
                   {
                     v41x = v30x;
                     v31 = v34;
@@ -21588,7 +21685,7 @@ void sub_1B5D0(Type_AE400_29795* a1x)
             if ( v41x )
             {
               a1x->var_u16_29847_52 = v41x - v7x;
-              sub_424F0_42830(a1x, 0x1Bu);
+              SetEntityState_424F0_42830(a1x, 0x1Bu);
             }
           }
         }
@@ -21600,11 +21697,12 @@ void sub_1B5D0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1BB20(Type_AE400_29795* a1x)
+/// Class 5 type 4 attack state: CreatureAttackTick_1A120(a1x, 24, ...) (state 26).
+void GuardAttackTick_1BB20(Type_AE400_29795* a1x)
 {
   int result; // eax
 
-  sub_1A120(a1x, 24, PORT_FN(sub_1A990, unsigned __int16(Type_AE400_29795*, int)));
+  CreatureAttackTick_1A120(a1x, 24, PORT_FN(sub_1A990, unsigned __int16(Type_AE400_29795*, int)));
   if (a1x->var_u8_29865_70 != 26)
   {
       sub_1BCE0(a1x);
@@ -21627,7 +21725,8 @@ void sub_1BB20(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1BBE0(Type_AE400_29795* a1x)
+/// Class 5 type 4 follow state: UpdateFollower_1A390(a1x, 24) (state 27).
+void GuardFollowTick_1BBE0(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0x18u);
   if (a1x->var_u8_29865_70 == 26 )
@@ -21635,18 +21734,20 @@ void sub_1BBE0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1BC10(Type_AE400_29795* a1x)
+/// Class 5 type 4 dying state: CreatureDying_1A6C0(a1x, 24) (state 28).
+void GuardDyingTick_1BC10(Type_AE400_29795* a1x)
 {
   if (a1x->var_u16_29821_26)
     MarkEntityForRemoval_41E80_421C0(a1x);
   else
-    sub_1A6C0(a1x, 24);
+    CreatureDying_1A6C0(a1x, 24);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1BC40(Type_AE400_29795* a1x)
+/// Class 5 type 4 dead state: KillCreature_1A800 (state 29).
+void GuardDeadTick_1BC40(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -21661,9 +21762,9 @@ void sub_1BC50(Type_AE400_29795* a1x)
   a1x->rand_29799_4 = v1;
   a1x->actSpeed_29921_126 = 0;
   if ( (int)(v1 % 0x14) <= 10 )
-    sub_36FA0_37360(a1x, 206);
+    SetSprite_36FA0_37360(a1x, 206);
   else
-    sub_36FA0_37360(a1x, 1);
+    SetSprite_36FA0_37360(a1x, 1);
   v2 = dword_AE400_AE3F0();
   v3 = a1x->var_u16_29941_146;
   a1x->sClass_29861_66 = *(_BYTE *)PTR(dword_AE400_AE3F0() + 164 * v3 + 29859);
@@ -21675,19 +21776,21 @@ void sub_1BC50(Type_AE400_29795* a1x)
 void sub_1BCE0(Type_AE400_29795* a1x)
 {
   a1x->actSpeed_29921_126 = a1x->actSpeed_29923_128;
-  sub_36FA0_37360(a1x, 0);
+  SetSprite_36FA0_37360(a1x, 0);
   a1x->sClass_29861_66 = 3;
   a1x->sModel_29862_67 = -1;
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1BD10(Type_AE400_29795* a1x)
+/// Crab idle state (class 5 state 30): switches straight to the main state 31 (CrabTick_1BD20).
+void CrabIdleTick_1BD10(Type_AE400_29795* a1x)
 {
-  sub_424F0_42830(a1x, 0x1Fu);
+  SetEntityState_424F0_42830(a1x, 0x1Fu);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1BD20(Type_AE400_29795* a1x)
+/// Per-tick handler of a crab (class 5 state 31, set by CreateCrab_38890).
+void CrabTick_1BD20(Type_AE400_29795* a1x)
 {
   unsigned int v1; // edi
   __int16 v2; // ax
@@ -21765,12 +21868,12 @@ void sub_1BD20(Type_AE400_29795* a1x)
       if ( *(_BYTE *)PTR(dword_AE400_AE3F0() + 164 * a1x->var_u16_29835_40 + 29859) == 3 )
       {
         a1x->var_u16_29941_146 = a1x->var_u16_29835_40;
-        sub_424F0_42830(a1x, 0x20u);
+        SetEntityState_424F0_42830(a1x, 0x20u);
       }
     }
     else
     {
-      sub_424F0_42830(a1x, 0x22u);
+      SetEntityState_424F0_42830(a1x, 0x22u);
     }
   }
   else
@@ -21796,7 +21899,7 @@ void sub_1BD20(Type_AE400_29795* a1x)
         {
           v27 = a1x->var_u32_29951_156->v_30;
           v12 = HeadingTo_42150_42490(v28x, (axis_3d*)(_WORD *)PTR(v8 + 72));
-          if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v12) < v27 && v11 < v7 )
+          if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v12) < v27 && v11 < v7 )
           {
             v29 = v8;
             v7 = v11;
@@ -21808,7 +21911,7 @@ void sub_1BD20(Type_AE400_29795* a1x)
       if ( v29 )
       {
         a1x->var_u16_29941_146 = (int)(v29 - v13) / 164;
-        sub_424F0_42830(a1x, 0x20u);
+        SetEntityState_424F0_42830(a1x, 0x20u);
       }
       else if (a1x->var_u16_29941_146)
       {
@@ -21817,14 +21920,14 @@ void sub_1BD20(Type_AE400_29795* a1x)
         {
           v16 = (_WORD *)PTR(v15 + 72);
           v17 = a1x->actSpeed_29923_128 << 7;
-          if ( sub_423D0_42710(v28x, (axis_3d*)(_WORD *)PTR(v15 + 72)) > v17 )
+          if ( Distance2D_423D0_42710(v28x, (axis_3d*)(_WORD *)PTR(v15 + 72)) > v17 )
           {
              a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v16);
           }
           else
           {
             a1x->var_u16_29821_26 = 15;
-            sub_424F0_42830(a1x, 0x21u);
+            SetEntityState_424F0_42830(a1x, 0x21u);
           }
         }
         else
@@ -21875,13 +21978,14 @@ void sub_1BD20(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1C110(Type_AE400_29795* a1x)
+/// Class 5 type 5 attack state: CreatureAttackTick_1A120(a1x, 30, ...) (state 32).
+void CrabAttackTick_1C110(Type_AE400_29795* a1x)
 {
   int result; // eax
   int v2; // edx
 
-  if ( (unsigned __int16)sub_1A120(a1x, 30, PORT_FN(sub_1AB70, unsigned __int16(Type_AE400_29795*, int))) )
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 32);
+  if ( (unsigned __int16)CreatureAttackTick_1A120(a1x, 30, PORT_FN(sub_1AB70, unsigned __int16(Type_AE400_29795*, int))) )
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 32);
   result = a1x->actLife_29807_12;
   v2 = a1x->maxLife_29803_8;
   if ( result < v2 )
@@ -21953,12 +22057,12 @@ void sub_1C170(Type_AE400_29795* a1x)
       if ( *(_BYTE *)PTR(v1 + 164 * a1x->var_u16_29835_40 + 29859) == 3 )
       {
         a1x->var_u16_29941_146 = a1x->var_u16_29835_40;
-        sub_424F0_42830(a1x, 0x20u);
+        SetEntityState_424F0_42830(a1x, 0x20u);
       }
     }
     else
     {
-      sub_424F0_42830(a1x, 0x22u);
+      SetEntityState_424F0_42830(a1x, 0x22u);
     }
   }
   else
@@ -21970,7 +22074,7 @@ void sub_1C170(Type_AE400_29795* a1x)
       v9 = 164 * a1x->var_u16_29941_146 + dword_AE400_AE3F0() + 29795;
       if ( *(_BYTE *)PTR(v9 + 64) == 10 && *(_BYTE *)PTR(v9 + 65) == 39 )
       {
-        v10 = sub_423D0_42710(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v9 + 72));
+        v10 = Distance2D_423D0_42710(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v9 + 72));
         v11 = a1x->actSpeed_29923_128;
         if ( v10 > 5 * v11 )
         {
@@ -21985,48 +22089,53 @@ void sub_1C170(Type_AE400_29795* a1x)
           a1x->mana_29935_140 += *(_DWORD *)PTR(v9 + 140);
           *(_WORD *)PTR(v9 + 144) = 0;
           MarkEntityForRemoval_41E80_421C0((Type_AE400_29795*)PTR(v9));
-          sub_424F0_42830(a1x, 0x1Fu);
+          SetEntityState_424F0_42830(a1x, 0x1Fu);
           sub_38820_38BA0(a1x);
         }
       }
       else
       {
         a1x->var_u16_29941_146 = 0;
-        sub_424F0_42830(a1x, 0x1Fu);
+        SetEntityState_424F0_42830(a1x, 0x1Fu);
       }
     }
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1C3C0(Type_AE400_29795* a1x)
+/// Class 5 type 5 dying state: CreatureDying_1A6C0(a1x, 30) (state 34).
+void CrabDyingTick_1C3C0(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 30);
+  CreatureDying_1A6C0(a1x, 30);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1C3D0(Type_AE400_29795* a1x)
+/// Class 5 type 5 dead state: KillCreature_1A800 (state 35).
+void CrabDeadTick_1C3D0(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1C490(Type_AE400_29795* a1x)
+/// Idle state of the kraken (class 5 type 6) (state 36): CreatureIdleTick_19B10(a1x, 36). Identified from its decoded sprite (confirmed by the user).
+void KrakenIdleTick_1C490(Type_AE400_29795* a1x)
 {
-  sub_19B10(a1x, 36);
+  CreatureIdleTick_19B10(a1x, 36);
 }
 
 //SYNCHRONIZED EITH REMC1
-void sub_1C4A0(Type_AE400_29795* a1x)
+/// Per-tick handler of class 5 state 37, the initial state of the kraken (type 6). Identified from its decoded sprite (confirmed by the user).
+void KrakenTick_1C4A0(Type_AE400_29795* a1x)
 {
   sub_19D70(a1x, 36);
   if (a1x->var_u8_29865_70 == 38 )
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 37);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 37);
   a1x->actSpeed_29921_126 = 30;
 }
 
 //SYNCHRONIZED EITH REMC1
-void sub_1C4F0(Type_AE400_29795* a1x)
+/// Kraken (class 5 type 6) attack state (state 38): shoots lightning bolt pieces (9/9) at its target (+146).
+void KrakenAttackTick_1C4F0(Type_AE400_29795* a1x)
 {
   int v1; // ebp
   unsigned int v2; // esi
@@ -22106,7 +22215,7 @@ void sub_1C4F0(Type_AE400_29795* a1x)
     else
     {
       dword_AE400_AE3F0(v1);
-      sub_424F0_42830(a1x, 0x28u);
+      SetEntityState_424F0_42830(a1x, 0x28u);
     }
     return;
   }
@@ -22118,7 +22227,7 @@ void sub_1C4F0(Type_AE400_29795* a1x)
   if ( *(int *)PTR(v10 + 12) < 0 || (*(_BYTE *)PTR(v10 + 17) & 4) != 0 )
   {
 LABEL_30:
-    sub_424F0_42830(a1x, 0x25u);
+    SetEntityState_424F0_42830(a1x, 0x25u);
     return;
   }
   v11 = a1x->var_u16_29821_26;
@@ -22135,7 +22244,7 @@ LABEL_30:
     *(_WORD *)PTR(*(_DWORD *)PTR(v10 + 160) + 26) = 256;
     v14x = str_AE400_AE3F0->str_29795;
     *(_WORD *)PTR(*(_DWORD *)PTR(v10 + 160) + 22) = 80;
-    sub_55370_558A0(a1x - v14x, -1, 42);
+    PlayEntitySound_55370_558A0(a1x - v14x, -1, 42);
     v12 = dword_AE400_AE3F0();
   }
   //v15 = *(_DWORD *)(a1 + 156);
@@ -22146,7 +22255,7 @@ LABEL_30:
     v17 = a1x->var_u32_29951_156->v_28;
     if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v10 + 72)) >= v17 )
       goto LABEL_30;
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 37);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 37);
     a1x->var_u8_29866_71 = 5;
   }
   v18 = a1x->var_u8_29866_71;
@@ -22176,7 +22285,8 @@ LABEL_30:
 }
 
 //SYNCHRONIZED EITH REMC1
-void sub_1C880(Type_AE400_29795* a1x)
+/// Kraken (class 5 type 6) follow state: UpdateFollower_1A390(a1x, 36) (state 39). Identified from its decoded sprite (confirmed by the user).
+void KrakenFollowTick_1C880(Type_AE400_29795* a1x)
 {
   char v1; // ah
 
@@ -22184,29 +22294,33 @@ void sub_1C880(Type_AE400_29795* a1x)
   v1 = a1x->var_u8_29865_70;
   a1x->actSpeed_29921_126 = 30;
   if ( v1 == 38 )
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 37);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 37);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1C8D0(Type_AE400_29795* a1x)
+/// Kraken (class 5 type 6) dying state: CreatureDying_1A6C0(a1x, 36) (state 40). Identified from its decoded sprite (confirmed by the user).
+void KrakenDyingTick_1C8D0(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 36);
+  CreatureDying_1A6C0(a1x, 36);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1C8E0(Type_AE400_29795* a1x)
+/// Kraken (class 5 type 6) dead state: KillCreature_1A800 (state 41). Identified from its decoded sprite (confirmed by the user).
+void KrakenDeadTick_1C8E0(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1C8F0(Type_AE400_29795* a1x)
+/// Idle state of the troll or ape (ChooseTrollOrApe_38C00_38F80) (class 5 type 7) (state 42): CreatureIdleTick_19B10(a1x, 42). Identified from its decoded sprite (confirmed by the user).
+void TrollOrApeIdleTick_1C8F0(Type_AE400_29795* a1x)
 {
-  sub_19B10(a1x, 42);
+  CreatureIdleTick_19B10(a1x, 42);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1C900(Type_AE400_29795* a1x)
+/// Per-tick handler of class 5 state 43, the initial state of the troll or ape (type 7). Identified from its decoded sprite (confirmed by the user).
+void TrollOrApeTick_1C900(Type_AE400_29795* a1x)
 {
   bool v1; // eax
   int v2; // esi
@@ -22225,7 +22339,8 @@ void sub_1C900(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1C960(Type_AE400_29795* a1x)
+/// Troll or ape (class 5 type 7) attack state: CreatureAttackTick_1A120(a1x, 42, ...) (state 44). Identified from its decoded sprite (confirmed by the user).
+void TrollOrApeAttackTick_1C960(Type_AE400_29795* a1x)
 {
   __int16 v1; // dx
   __int16 result; // ax
@@ -22236,17 +22351,17 @@ void sub_1C960(Type_AE400_29795* a1x)
     a1x->var_u16_29821_26 = v1 - 1;
     if ( v1 == 1 && a1x->var_u16_29881_86 == 198 )
     {
-      sub_36FA0_37360(a1x, 85);
+      SetSprite_36FA0_37360(a1x, 85);
       a1x->actSpeed_29921_126 = a1x->actSpeed_29923_128;
     }
   }
-  result = sub_1A120(a1x, 42, PORT_FN(sub_1AE30, unsigned __int16(Type_AE400_29795*, int)));
+  result = CreatureAttackTick_1A120(a1x, 42, PORT_FN(sub_1AE30, unsigned __int16(Type_AE400_29795*, int)));
   if ( (_BYTE)result )
   {
     result = a1x->var_u16_29881_86;
     if ( result == 85 )
     {
-      sub_36FA0_37360(a1x, 198);
+      SetSprite_36FA0_37360(a1x, 198);
       a1x->var_u16_29821_26 = 30;
       result = a1x->acceleration_29925_130;
       a1x->actSpeed_29921_126 = result;
@@ -22257,7 +22372,7 @@ void sub_1C960(Type_AE400_29795* a1x)
     result = a1x->var_u16_29881_86;
     if ( result == 198 )
     {
-      sub_36FA0_37360(a1x, 85);
+      SetSprite_36FA0_37360(a1x, 85);
       result = a1x->actSpeed_29923_128;
       a1x->actSpeed_29921_126 = result;
     }
@@ -22265,7 +22380,8 @@ void sub_1C960(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1CA00(Type_AE400_29795* a1x)
+/// Troll or ape (class 5 type 7) follow state: UpdateFollower_1A390(a1x, 42) (state 45). Identified from its decoded sprite (confirmed by the user).
+void TrollOrApeFollowTick_1CA00(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0x2Au);
   if (a1x->var_u8_29865_70 == 44 )
@@ -22273,25 +22389,29 @@ void sub_1CA00(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1CA20(Type_AE400_29795* a1x)
+/// Troll or ape (class 5 type 7) dying state: CreatureDying_1A6C0(a1x, 42) (state 46). Identified from its decoded sprite (confirmed by the user).
+void TrollOrApeDyingTick_1CA20(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 42);
+  CreatureDying_1A6C0(a1x, 42);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1CA30(Type_AE400_29795* a1x)
+/// Troll or ape (class 5 type 7) dead state: KillCreature_1A800 (state 47). Identified from its decoded sprite (confirmed by the user).
+void TrollOrApeDeadTick_1CA30(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1CA40(Type_AE400_29795* a1x)
+/// Idle state of the griffin (class 5 type 8) (state 48): CreatureIdleTick_19B10(a1x, 48). Identified from its decoded sprite (confirmed by the user).
+void GriffinIdleTick_1CA40(Type_AE400_29795* a1x)
 {
-  sub_19B10(a1x, 48);
+  CreatureIdleTick_19B10(a1x, 48);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1CA50(Type_AE400_29795* a1x)
+/// Per-tick handler of class 5 state 49, the initial state of the griffin (type 8). Identified from its decoded sprite (confirmed by the user).
+void GriffinTick_1CA50(Type_AE400_29795* a1x)
 {
   unsigned int v1; // ebp
   __int16 v2; // ax
@@ -22364,12 +22484,12 @@ void sub_1CA50(Type_AE400_29795* a1x)
       if ( *(_BYTE *)PTR(dword_AE400_AE3F0() + 164 * a1x->var_u16_29835_40 + 29859) == 3 )
       {
         a1x->var_u16_29941_146 = a1x->var_u16_29835_40;
-        sub_424F0_42830(a1x, 0x32u);
+        SetEntityState_424F0_42830(a1x, 0x32u);
       }
     }
     else
     {
-      sub_424F0_42830(a1x, 0x34u);
+      SetEntityState_424F0_42830(a1x, 0x34u);
     }
   }
   else
@@ -22399,7 +22519,7 @@ void sub_1CA50(Type_AE400_29795* a1x)
           {
             v20 = a1x->var_u32_29951_156->v_30;
             v13 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(j + 72));
-            if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v13) < v20 && v12 < v9 )
+            if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v13) < v20 && v12 < v9 )
             {
               v25 = j;
               v9 = v12;
@@ -22410,7 +22530,7 @@ void sub_1CA50(Type_AE400_29795* a1x)
         {
           a1x->var_u16_29941_146 = (int)(v25 - (dword_AE400_AE3F0() + 29795)) / 164;
           *(_WORD *)PTR(*(_DWORD *)PTR(v25 + 160) + 528) = 200;
-          sub_424F0_42830(a1x, 0x32u);
+          SetEntityState_424F0_42830(a1x, 0x32u);
         }
         else
         {
@@ -22431,7 +22551,7 @@ void sub_1CA50(Type_AE400_29795* a1x)
               {
                 v21 = a1x->var_u32_29951_156->v_30;
                 v19 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, &v16x->var_u32_29867_72);
-                if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v19) < v21 && v18 < v15 )
+                if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v19) < v21 && v18 < v15 )
                 {
                   v24x = v16x;
                   v15 = v18;
@@ -22443,7 +22563,7 @@ void sub_1CA50(Type_AE400_29795* a1x)
           if ( v24x )
           {
             a1x->var_u16_29847_52 = v24x - str_AE400_AE3F0->str_29795;
-            sub_424F0_42830(a1x, 0x33u);
+            SetEntityState_424F0_42830(a1x, 0x33u);
           }
         }
       }
@@ -22452,16 +22572,17 @@ void sub_1CA50(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1CE30(Type_AE400_29795* a1x)
+/// Griffin (class 5 type 8) attack state: CreatureAttackTick_1A120(a1x, 48, ...) (state 50). Identified from its decoded sprite (confirmed by the user).
+void GriffinAttackTick_1CE30(Type_AE400_29795* a1x)
 {
   int v1; // eax
 
   if (a1x->var_u16_29821_26)
     a1x->actSpeed_29921_126 = a1x->actSpeed_29923_128;
   a1x->var_29811_16.byte[1] |= 0x80u;
-  if ( (unsigned __int16)sub_1A120(a1x, 48, PORT_FN(sub_1AEE0, unsigned __int16(Type_AE400_29795*, int))) )
+  if ( (unsigned __int16)CreatureAttackTick_1A120(a1x, 48, PORT_FN(sub_1AEE0, unsigned __int16(Type_AE400_29795*, int))) )
   {
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 38);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 38);
     v1 = 164 * a1x->var_u16_29941_146;
     if ( v1 + dword_AE400_AE3F0() + 29795 )
     {
@@ -22470,34 +22591,38 @@ void sub_1CE30(Type_AE400_29795* a1x)
     }
   }
   if ( !(a1x->var_u8_29858_63 % a1x->var_u32_29951_156->v_26) )
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 38);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 38);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1CF50(Type_AE400_29795* a1x)
+/// Griffin (class 5 type 8) follow state: UpdateFollower_1A390(a1x, 48) (state 51). Identified from its decoded sprite (confirmed by the user).
+void GriffinFollowTick_1CF50(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0x30u);
 }
 
 //SYNCHRONIZED REMC1
-void sub_1CF60(Type_AE400_29795* a1x)
+/// Griffin (class 5 type 8) dying state: CreatureDying_1A6C0(a1x, 48) (state 52). Identified from its decoded sprite (confirmed by the user).
+void GriffinDyingTick_1CF60(Type_AE400_29795* a1x)
 {
   int v1; // eax
 
   v1 = 164 * a1x->var_u16_29833_38;
   if ( v1 + dword_AE400_AE3F0() + 29795 && *(_BYTE *)PTR(dword_AE400_AE3F0() + v1 + 29860) <= 1u )
     *(_WORD *)PTR(*(_DWORD *)PTR(dword_AE400_AE3F0() + 164 * a1x->var_u16_29833_38 + 29955) + 528) = 200;
-  sub_1A6C0(a1x, 48);
+  CreatureDying_1A6C0(a1x, 48);
 }
 
 //SYNCHRONIZED REMC1
-void sub_1CFE0(Type_AE400_29795* a1x)
+/// Griffin (class 5 type 8) dead state: KillCreature_1A800 (state 53). Identified from its decoded sprite (confirmed by the user).
+void GriffinDeadTick_1CFE0(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED REMC1
-void sub_1CFF0(Type_AE400_29795* a1x)
+/// Per-tick handler of class 5 state 54, the initial state of the skeleton (type 9). Identified from its decoded sprite (confirmed by the user).
+void SkeletonTick_1CFF0(Type_AE400_29795* a1x)
 {
   __int16 v1; // dx
   __int16 v2; // cx
@@ -22510,7 +22635,7 @@ void sub_1CFF0(Type_AE400_29795* a1x)
   {
     if ( v1 == 17 )
     {
-      sub_36FA0_37360(a1x, 237);
+      SetSprite_36FA0_37360(a1x, 237);
       return;
     }
     else if (v2 < 16)
@@ -22518,7 +22643,7 @@ void sub_1CFF0(Type_AE400_29795* a1x)
       result = v2 / 2;
       if (!(v2 % 2))
       {
-        sub_42510_42850(a1x);
+        AdvanceAnimFrame_42510_42850(a1x);
         return;
       }
     }
@@ -22526,7 +22651,7 @@ void sub_1CFF0(Type_AE400_29795* a1x)
   else
   {
     sub_1DD50(a1x);
-    sub_424F0_42830(a1x, 0x37u);
+    SetEntityState_424F0_42830(a1x, 0x37u);
     a1x->var_u16_29821_26 = 400;
     a1x->var_u8_29866_71 = 0;
   }
@@ -22644,11 +22769,11 @@ void sub_1D060(Type_AE400_29795* a1x)
     if ( v4 <= 1 )
     {
       a1x->var_u16_29941_146 = a1x->var_u16_29835_40;
-      sub_424F0_42830(a1x, 0x38u);
+      SetEntityState_424F0_42830(a1x, 0x38u);
     }
     else
     {
-      sub_424F0_42830(a1x, 0x3Au);
+      SetEntityState_424F0_42830(a1x, 0x3Au);
     }
     goto LABEL_84;
   }
@@ -22686,7 +22811,7 @@ void sub_1D060(Type_AE400_29795* a1x)
       else
       {
         a1x->var_u16_29941_146 = (v52 - (dword_AE400_AE3F0() + 29795)) / 164;
-        sub_424F0_42830(a1x, 0x38u);
+        SetEntityState_424F0_42830(a1x, 0x38u);
         v10 = dword_AE400_AE3F0();
       }
     }
@@ -22723,7 +22848,7 @@ void sub_1D060(Type_AE400_29795* a1x)
             {
               v43 = a1x->var_u32_29951_156->v_30;
               v21 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(k + 72));
-              if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v21) < v43 && v20 < v44 )
+              if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v21) < v43 && v20 < v44 )
               {
                 v41 = k;
                 v44 = v20;
@@ -22737,7 +22862,7 @@ void sub_1D060(Type_AE400_29795* a1x)
         if ( v41 )
         {
           a1x->var_u16_29941_146 = (v41 - (v10 + 29795)) / 164;
-          sub_424F0_42830(a1x, 0x38u);
+          SetEntityState_424F0_42830(a1x, 0x38u);
         }
       }
       if ( !v46 )
@@ -22913,11 +23038,11 @@ void sub_1D6D0(Type_AE400_29795* a1x)
     if ( v2 <= 1 )
     {
       a1x->var_u16_29941_146 = a1x->var_u16_29835_40;
-      sub_424F0_42830(a1x, 0x38u);
+      SetEntityState_424F0_42830(a1x, 0x38u);
     }
     else
     {
-      sub_424F0_42830(a1x, 0x3Au);
+      SetEntityState_424F0_42830(a1x, 0x3Au);
     }
     return;
   }
@@ -23026,7 +23151,8 @@ LABEL_50:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DA60(Type_AE400_29795* a1x)
+/// Skeleton (class 5 type 9) attack state (state 56): attacks its target (+146).
+void SkeletonAttackTick_1DA60(Type_AE400_29795* a1x)
 {
   int v1; // esi
   unsigned int v2; // edi
@@ -23089,7 +23215,7 @@ void sub_1DA60(Type_AE400_29795* a1x)
     else
     {
       dword_AE400_AE3F0(v1);
-      sub_424F0_42830(a1x, 0x3Au);
+      SetEntityState_424F0_42830(a1x, 0x3Au);
     }
     goto LABEL_31;
   }
@@ -23099,7 +23225,7 @@ void sub_1DA60(Type_AE400_29795* a1x)
   if ( *(int *)PTR(v9 + 12) < 0 || (*(_BYTE *)PTR(v9 + 17) & 4) != 0 )
   {
 LABEL_29:
-    sub_424F0_42830(a1x, 0x37u);
+    SetEntityState_424F0_42830(a1x, 0x37u);
     goto LABEL_31;
   }
   if ( !(a1x->var_u8_29858_63 % 10) )
@@ -23122,7 +23248,8 @@ LABEL_31:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DC80(Type_AE400_29795* a1x)
+/// Skeleton (class 5 type 9) follow state: UpdateFollower_1A390(a1x, 54) (state 57).
+void SkeletonFollowTick_1DC80(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0x36u);
   if ( a1x->var_u8_29865_70 == 56 )
@@ -23130,15 +23257,17 @@ void sub_1DC80(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DCB0(Type_AE400_29795* a1x)
+/// Skeleton (class 5 type 9) dying state: CreatureDying_1A6C0(a1x, 54) (state 58).
+void SkeletonDyingTick_1DCB0(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 54);
+  CreatureDying_1A6C0(a1x, 54);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DCC0(Type_AE400_29795* a1x)
+/// Skeleton (class 5 type 9) dead state: KillCreature_1A800 (state 59).
+void SkeletonDeadTick_1DCC0(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -23150,11 +23279,11 @@ void sub_1DCD0(Type_AE400_29795* a1x)
   v1 = 164 * a1x->var_u16_29941_146 + dword_AE400_AE3F0() + 29795;
   if (a1x->id_29819_24 == *(_WORD*)PTR(v1 + 24))
   {
-    sub_424F0_42830(a1x, 0x37u);
+    SetEntityState_424F0_42830(a1x, 0x37u);
     return;
   }
   a1x->actSpeed_29921_126 = 0;
-  sub_36FA0_37360(a1x, 202);
+  SetSprite_36FA0_37360(a1x, 202);
   a1x->sClass_29861_66 = *(_BYTE *)PTR(v1 + 64);
   result = *(_BYTE *)PTR(v1 + 65);
   a1x->sModel_29862_67 = result;
@@ -23164,7 +23293,7 @@ void sub_1DCD0(Type_AE400_29795* a1x)
 void sub_1DD50(Type_AE400_29795* a1x)
 {
   a1x->actSpeed_29921_126 = a1x->actSpeed_29923_128;
-  sub_36FA0_37360(a1x, 201);
+  SetSprite_36FA0_37360(a1x, 201);
   a1x->sClass_29861_66 = 3;
   a1x->sModel_29862_67 = -1;
   a1x->var_u16_29821_26 = 50;
@@ -23174,7 +23303,7 @@ void sub_1DD50(Type_AE400_29795* a1x)
 //SYNCHRONIZED WITH REMC1
 void sub_1DD90(Type_AE400_29795* a1x)
 {
-  sub_36FA0_37360(a1x, 245);
+  SetSprite_36FA0_37360(a1x, 245);
   a1x->var_u8_29866_71 = 1;
 }
 
@@ -23183,47 +23312,54 @@ void sub_1DDB0(Type_AE400_29795* a1x)
 {
   a1x->var_u8_29866_71 = 0;
   a1x->var_u16_29821_26 = 400;
-  sub_36FA0_37360(a1x, 201);
+  SetSprite_36FA0_37360(a1x, 201);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DDD0(Type_AE400_29795* a1x)
+/// Idle state of the emu rider (class 5 type 10) (state 60): CreatureIdleTick_19B10(a1x, 60). Identified from its decoded sprite (confirmed by the user).
+void EmuRiderIdleTick_1DDD0(Type_AE400_29795* a1x)
 {
-  sub_19B10(a1x, 60);
+  CreatureIdleTick_19B10(a1x, 60);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DDE0(Type_AE400_29795* a1x)
+/// Per-tick handler of class 5 state 61, the initial state of the emu rider (type 10). Identified from its decoded sprite (confirmed by the user).
+void EmuRiderTick_1DDE0(Type_AE400_29795* a1x)
 {
   sub_19D70(a1x, 60);
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_1DDF0(Type_AE400_29795* a1x)
+/// Emu rider (class 5 type 10) attack state: CreatureAttackTick_1A120(a1x, 60, ...) (state 62). Identified from its decoded sprite (confirmed by the user).
+int EmuRiderAttackTick_1DDF0(Type_AE400_29795* a1x)
 {
-  return sub_1A120(a1x, 60, PORT_FN(sub_1A990, unsigned __int16(Type_AE400_29795*, int)));
+  return CreatureAttackTick_1A120(a1x, 60, PORT_FN(sub_1A990, unsigned __int16(Type_AE400_29795*, int)));
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DE10(Type_AE400_29795* a1x)
+/// Emu rider (class 5 type 10) follow state: UpdateFollower_1A390(a1x, 60) (state 63). Identified from its decoded sprite (confirmed by the user).
+void EmuRiderFollowTick_1DE10(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0x3Cu);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DE20(Type_AE400_29795* a1x)
+/// Emu rider (class 5 type 10) dying state: CreatureDying_1A6C0(a1x, 60) (state 64). Identified from its decoded sprite (confirmed by the user).
+void EmuRiderDyingTick_1DE20(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 60);
+  CreatureDying_1A6C0(a1x, 60);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DE30(Type_AE400_29795* a1x)
+/// Emu rider (class 5 type 10) dead state: KillCreature_1A800 (state 65). Identified from its decoded sprite (confirmed by the user).
+void EmuRiderDeadTick_1DE30(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1DE40(Type_AE400_29795* a1x)
+/// Per-tick handler of class 5 state 66, the initial state of the genie (type 11). Identified from its decoded sprite (confirmed by the user).
+void GenieTick_1DE40(Type_AE400_29795* a1x)
 {
   __int16 v1; // dx
   __int16 result; // ax
@@ -23241,7 +23377,7 @@ void sub_1DE40(Type_AE400_29795* a1x)
     a1x->var_u16_29821_26 = v1 - 1;
     if ( v1 == 1 )
     {
-      sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 21);
+      PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 21);
       if ( (a1x->var_29811_16.byte[0] & 1) != 0 )
       {
         a1x->var_u16_29941_146 = 0;
@@ -23255,13 +23391,13 @@ void sub_1DE40(Type_AE400_29795* a1x)
         v8 = 9377 * v7 + 9439;
         a1x->rand_29799_4 = v8;
         word_AE454_AE444.y += ((v8 % 0x3C) << 8) + 12800;
-        sub_41C70_41FB0(a1x, &word_AE454_AE444);
-        sub_424F0_42830(a1x, 0x43u);
+        MoveEntity_41C70_41FB0(a1x, &word_AE454_AE444);
+        SetEntityState_424F0_42830(a1x, 0x43u);
         return;
       }
       else
       {
-        sub_424F0_42830(a1x, 0x44u);
+        SetEntityState_424F0_42830(a1x, 0x44u);
         return;
       }
     }
@@ -23362,7 +23498,7 @@ void sub_1DFE0(Type_AE400_29795* a1x)
   {
     if ( v1 > 1 )
     {
-      sub_424F0_42830(a1x, 0x46u);
+      SetEntityState_424F0_42830(a1x, 0x46u);
       return;
     }
     if ( *(_BYTE *)PTR(dword_AE400_AE3F0() + 164 * a1x->var_u16_29835_40 + 29859) == 3 )
@@ -23403,7 +23539,7 @@ LABEL_53:
             {
               v22 = a1x->var_u32_29951_156->v_30;
               v14 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(j + 72));
-              if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v14) < v22 && v13 < v10 )
+              if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v14) < v22 && v13 < v10 )
               {
                 v21 = j;
                 v10 = v13;
@@ -23460,7 +23596,8 @@ LABEL_53:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1E380(Type_AE400_29795* a1x)
+/// Genie (class 5 type 11) attack state (state 68): shoots Steal Mana missiles (9/8) at its target (+146).
+void GenieAttackTick_1E380(Type_AE400_29795* a1x)
 {
   int v1; // ebp
   unsigned int v2; // esi
@@ -23533,7 +23670,7 @@ void sub_1E380(Type_AE400_29795* a1x)
     else
     {
       dword_AE400_AE3F0(v1);
-      sub_424F0_42830(a1x, 0x46u);
+      SetEntityState_424F0_42830(a1x, 0x46u);
     }
     return;
   }
@@ -23569,7 +23706,7 @@ void sub_1E380(Type_AE400_29795* a1x)
     v12 = dword_AE400_AE3F0();
     if ( !(a1x->var_u8_29858_63 % (8 * a1x->var_u32_29951_156->v_26)) )
     {
-      sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 11);
+      PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 11);
       v12 = dword_AE400_AE3F0();
     }
     a1x->var_u16_29821_26++;
@@ -23606,27 +23743,30 @@ LABEL_38:
       v19 = PitchTo_42180_424C0(&a1x->var_u32_29867_72, (axis_3d*)v18);
       //v20 = a1 - (dword_AE400_AE3F0() + 29795);
       *(_WORD *)PTR(v15 + 32) = v19;
-      sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 9);
+      PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 9);
     }
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1E6F0(Type_AE400_29795* a1x)
+/// Genie (class 5 type 11) follow state: UpdateFollower_1A390(a1x, 66) (state 69).
+void GenieFollowTick_1E6F0(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0x42u);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1E700(Type_AE400_29795* a1x)
+/// Genie (class 5 type 11) dying state: CreatureDying_1A6C0(a1x, 66) (state 70).
+void GenieDyingTick_1E700(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 66);
+  CreatureDying_1A6C0(a1x, 66);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1E710(Type_AE400_29795* a1x)
+/// Genie (class 5 type 11) dead state: KillCreature_1A800 (state 71).
+void GenieDeadTick_1E710(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -23634,8 +23774,8 @@ void sub_1E720(Type_AE400_29795* a1x)
 {
   a1x->var_u16_29941_146 = 0;
   a1x->var_u16_29821_26 = 0;
-  sub_424F0_42830(a1x, 0x42u);
-  sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 11);
+  SetEntityState_424F0_42830(a1x, 0x42u);
+  PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 11);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -23647,12 +23787,12 @@ void sub_1E770(Type_AE400_29795* a1x)
   if ( a1x->var_u16_29941_146 )
   {
     a1x->var_u16_29821_26 = 0;
-    sub_424F0_42830(a1x, 0x42u);
+    SetEntityState_424F0_42830(a1x, 0x42u);
     v1 = 164 * a1x->var_u16_29941_146 + dword_AE400_AE3F0() + 29795;
     *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(v1 + 72);
     word_AE454_AE444.z = *(_WORD *)PTR(v1 + 76);
-    sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(v1 + 30), 0, a1x->actSpeed_29921_126 << 6);
-    sub_41C70_41FB0(a1x, &word_AE454_AE444);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(v1 + 30), 0, a1x->actSpeed_29921_126 << 6);
+    MoveEntity_41C70_41FB0(a1x, &word_AE454_AE444);
   }
 }
 
@@ -23702,7 +23842,7 @@ void sub_1E810(Type_AE400_29795* a1x)
         *(_WORD *)PTR(v8 + 24) = a1x->id_29819_24;
         *(_BYTE *)PTR(v8 + 18) |= 1u;
       }
-      sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 11);
+      PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 11);
     }
   }
 }
@@ -23778,7 +23918,7 @@ void sub_1EA40(Type_AE400_29795* a1x)
 LABEL_33:
     v22 = v26;
     a1x->var_u16_29941_146 = 0;
-    sub_424F0_42830(a1x, v22 + 1);
+    SetEntityState_424F0_42830(a1x, v22 + 1);
     return;
   }
   *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(v1 + 72);
@@ -23889,18 +24029,19 @@ LABEL_10:
       v21 = (int)OFF(CreateEntity_373F0_377B0(&word_AE454_AE444, 10, 45));
       if ( v21 )
       {
-        sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 10);
+        PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 10);
         sub_36DF0_371B0((Type_AE400_29795*)PTR(v21), v27);
         *(_BYTE *)PTR(v21 + 70) = 51;
       }
       a1x->var_u16_29941_146 = 0;
-      sub_424F0_42830(a1x, 0x4Fu);
+      SetEntityState_424F0_42830(a1x, 0x4Fu);
     }
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1EED0(Type_AE400_29795* a1x)
+/// Per-tick handler of class 5 state 73, the initial state of the villager (type 12). Identified from its decoded sprite (confirmed by the user).
+void VillagerType12Tick_1EED0(Type_AE400_29795* a1x)
 {
   int v1; // esi
   unsigned int v2; // edi
@@ -23960,7 +24101,7 @@ void sub_1EED0(Type_AE400_29795* a1x)
       dword_AE400_AE3F0(v1);
       v8 = 76;
 LABEL_23:
-      sub_424F0_42830(a1x, v8);
+      SetEntityState_424F0_42830(a1x, v8);
       return;
     }
     v9 = 164 * a1x->var_u16_29835_40;
@@ -24064,7 +24205,7 @@ void sub_1F120(Type_AE400_29795* a1x)
     else
     {
       dword_AE400_AE3F0(v1);
-      sub_424F0_42830(a1x, 0x4Cu);
+      SetEntityState_424F0_42830(a1x, 0x4Cu);
     }
   }
   else
@@ -24079,14 +24220,14 @@ void sub_1F120(Type_AE400_29795* a1x)
       if ( !v10 || !*(_BYTE *)PTR(v9 + 64) )
       {
         a1x->var_u16_29821_26 = 5;
-        sub_424F0_42830(a1x, 0x49u);
+        SetEntityState_424F0_42830(a1x, 0x49u);
       }
       v11 = (_WORD *)PTR(v9 + 72);
       a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)v11);
       if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)v11) < 0xA00 )
       {
         a1x->var_u16_29821_26 = 0;
-        sub_424F0_42830(a1x, 0x48u);
+        SetEntityState_424F0_42830(a1x, 0x48u);
       }
     }
   }
@@ -24173,7 +24314,7 @@ void sub_1F390(Type_AE400_29795* a1x)
   {
     v7 = 76;
 LABEL_28:
-    sub_424F0_42830(a1x, v7);
+    SetEntityState_424F0_42830(a1x, v7);
     return;
   }
   v8 = 164 * a1x->var_u16_29835_40;
@@ -24185,24 +24326,27 @@ LABEL_28:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1F5A0(Type_AE400_29795* a1x)
+/// Villager (class 5 type 12) dying state: CreatureDying_1A6C0(a1x, 72) (state 76). Identified from its decoded sprite (confirmed by the user).
+void VillagerType12DyingTick_1F5A0(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 72);
+  CreatureDying_1A6C0(a1x, 72);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1F5B0(Type_AE400_29795* a1x)
+/// Villager (class 5 type 12) dead state: KillCreature_1A800 (state 77). Identified from its decoded sprite (confirmed by the user).
+void VillagerType12DeadTick_1F5B0(Type_AE400_29795* a1x)
 {
   int v1; // eax
 
   v1 = 164 * a1x->var_u16_29833_38;
   if ( v1 + dword_AE400_AE3F0() + 29795 && *(_BYTE *)PTR(dword_AE400_AE3F0() + v1 + 29860) <= 1u )
     *(_WORD *)PTR(*(_DWORD *)PTR(dword_AE400_AE3F0() + 164 * a1x->var_u16_29833_38 + 29955) + 528) = 200;
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1F640(Type_AE400_29795* a1x)
+/// Per-tick handler of class 5 state 79, the initial state of the villager (type 13). Identified from its decoded sprite (confirmed by the user).
+void VillagerType13Tick_1F640(Type_AE400_29795* a1x)
 {
   int v1; // edi
   unsigned int v2; // esi
@@ -24280,7 +24424,7 @@ void sub_1F640(Type_AE400_29795* a1x)
     else
     {
       dword_AE400_AE3F0(v1);
-      sub_424F0_42830(a1x, 0x52u);
+      SetEntityState_424F0_42830(a1x, 0x52u);
     }
   }
   else
@@ -24310,7 +24454,7 @@ LABEL_36:
           a1x->actSpeed_29921_126 = j;
           return;
         }
-        sub_424F0_42830(a1x, 0x52u);
+        SetEntityState_424F0_42830(a1x, 0x52u);
         a1x->var_u16_29821_26 = 1;
         LOWORD(j) = *(_WORD *)PTR(v16 + 26) + 1;
         *(_WORD *)PTR(v16 + 26) = j;
@@ -24353,7 +24497,8 @@ LABEL_36:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1FA00(Type_AE400_29795* a1x)
+/// Villager (class 5 type 13) dying state: CreatureDying_1A6C0(a1x, 78) (state 82). Identified from its decoded sprite (confirmed by the user).
+void VillagerType13DyingTick_1FA00(Type_AE400_29795* a1x)
 {
   int v2; // eax
 
@@ -24367,18 +24512,20 @@ void sub_1FA00(Type_AE400_29795* a1x)
           if (*(_BYTE*)PTR(dword_AE400_AE3F0() + v2 + 29860) <= 1u)
               *(_WORD*)PTR(*(_DWORD*)PTR(164 * a1x->var_u16_29833_38 + dword_AE400_AE3F0() + 29955) + 528) = 200;
       }
-      sub_1A6C0(a1x, 78);
+      CreatureDying_1A6C0(a1x, 78);
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1FAA0(Type_AE400_29795* a1x)
+/// Villager (class 5 type 13) dead state: KillCreature_1A800 (state 83). Identified from its decoded sprite (confirmed by the user).
+void VillagerType13DeadTick_1FAA0(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1FAC0(Type_AE400_29795* a1x)
+/// Per-tick handler of class 5 state 85, the initial state of the villager (type 14). Identified from its decoded sprite (confirmed by the user).
+void VillagerType14Tick_1FAC0(Type_AE400_29795* a1x)
 {
   int v1; // edi
   unsigned int v2; // esi
@@ -24456,7 +24603,7 @@ void sub_1FAC0(Type_AE400_29795* a1x)
     else
     {
       dword_AE400_AE3F0(v1);
-      sub_424F0_42830(a1x, 0x58u);
+      SetEntityState_424F0_42830(a1x, 0x58u);
     }
   }
   else
@@ -24486,7 +24633,7 @@ LABEL_37:
           a1x->actSpeed_29921_126 = j;
           return;
         }
-        sub_424F0_42830(a1x, 0x58u);
+        SetEntityState_424F0_42830(a1x, 0x58u);
         a1x->var_u16_29821_26 = 1;
         LOWORD(j) = *(_WORD *)PTR(v16 + 26) + 1;
         *(_WORD *)PTR(v16 + 26) = j;
@@ -24529,27 +24676,30 @@ LABEL_37:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1FE90(Type_AE400_29795* a1x)
+/// Villager (class 5 type 14) dying state: CreatureDying_1A6C0(a1x, 84) (state 88). Identified from its decoded sprite (confirmed by the user).
+void VillagerType14DyingTick_1FE90(Type_AE400_29795* a1x)
 {
   if (a1x->var_u16_29821_26)
     MarkEntityForRemoval_41E80_421C0(a1x);
   else
-    sub_1A6C0(a1x, 84);
+    CreatureDying_1A6C0(a1x, 84);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_1FEC0(Type_AE400_29795* a1x)
+/// Villager (class 5 type 14) dead state: KillCreature_1A800 (state 89). Identified from its decoded sprite (confirmed by the user).
+void VillagerType14DeadTick_1FEC0(Type_AE400_29795* a1x)
 {
   int v1; // eax
 
   v1 = 164 * a1x->var_u16_29833_38;
   if ( v1 + dword_AE400_AE3F0() + 29795 && *(_BYTE *)PTR(dword_AE400_AE3F0() + v1 + 29860) <= 1u )
     *(_WORD *)PTR(*(_DWORD *)PTR(dword_AE400_AE3F0() + 164 * a1x->var_u16_29833_38 + 29955) + 528) = 200;
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
 // positive sp value has been detected, the output may be wrong!
+/// Unreachable: 0x1FF40 is a data table (turnWeights_1FF40) that IDA decoded as code; nothing calls this and it is in no dispatch table.
 void sub_1FF40(char a1, Type_AE400_29795* a2x, char a3, int a4, int a5)
 {
   int v5; // ebx
@@ -24562,13 +24712,15 @@ void sub_1FF40(char a1, Type_AE400_29795* a2x, char a3, int a4, int a5)
 
   v5 = a4 - (a1 + *(_DWORD *)PTR(v6 + 27));
   *(_BYTE *)PTR(v5 - 1957008686) += a3 - *(_BYTE *)PTR(a5 + 128);
-  sub_19B10(a2x, (char)(uintptr_t)&retaddr);
+  CreatureIdleTick_19B10(a2x, (char)(uintptr_t)&retaddr);
 }
 // 1FF47: positive sp value 8 has been found
 // 1FF41: variable 'v6' is possibly undefined
 
 //SYNCHRONIZED WITH REMC1
-void sub_1FF60(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 15).
+/// Per-tick handler of class 5 state 91, the initial state of type 15.
+void Class5Type15Tick_1FF60(Type_AE400_29795* a1x)
 {
   unsigned int v1; // ebp
   __int16 v2; // ax
@@ -24629,7 +24781,7 @@ void sub_1FF60(Type_AE400_29795* a1x)
   {
     if ( v1 > 1 )
     {
-      sub_424F0_42830(a1x, 0x5Eu);
+      SetEntityState_424F0_42830(a1x, 0x5Eu);
       goto LABEL_34;
     }
     v6 = dword_AE400_AE3F0() + 164 * a1x->var_u16_29835_40;
@@ -24655,7 +24807,7 @@ void sub_1FF60(Type_AE400_29795* a1x)
         {
           v15 = a1x->var_u32_29951_156->v_30;
           v13 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(j + 72));
-          if ( (unsigned __int16)sub_42210_42550(a1x->var_u16_29825_30, v13) < v15 && v12 < v9 )
+          if ( (unsigned __int16)AngleDifference_42210_42550(a1x->var_u16_29825_30, v13) < v15 && v12 < v9 )
           {
             v16 = j;
             v9 = v12;
@@ -24668,7 +24820,7 @@ void sub_1FF60(Type_AE400_29795* a1x)
       v7 = (int)(v16 - (dword_AE400_AE3F0() + 29795)) / 164;
 LABEL_33:
       a1x->var_u16_29941_146 = v7;
-      sub_424F0_42830(a1x, 0x5Cu);
+      SetEntityState_424F0_42830(a1x, 0x5Cu);
     }
   }
 LABEL_34:
@@ -24677,7 +24829,9 @@ LABEL_34:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_201D0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 15).
+/// Class 5 type 15 attack state (state 92): shoots class 9 type 13 missiles at its target (+146).
+void Class5Type15AttackTick_201D0(Type_AE400_29795* a1x)
 {
   int v1; // esi
   unsigned int v2; // edi
@@ -24750,7 +24904,7 @@ void sub_201D0(Type_AE400_29795* a1x)
   if ( Distance3D_42340_42680(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v8 + 72)) >= v12 )
   {
 LABEL_22:
-    sub_424F0_42830(a1x, 0x5Bu);
+    SetEntityState_424F0_42830(a1x, 0x5Bu);
   }
   else
   {
@@ -24773,21 +24927,27 @@ LABEL_25:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_203E0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 15).
+/// Class 5 type 15 follow state: UpdateFollower_1A390(a1x, 90) (state 93).
+void Class5Type15FollowTick_203E0(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0x5Au);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_203F0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 15).
+/// Class 5 type 15 dying state: CreatureDying_1A6C0(a1x, 90) (state 94).
+void Class5Type15DyingTick_203F0(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 90);
+  CreatureDying_1A6C0(a1x, 90);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_20400(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 5 type 15).
+/// Class 5 type 15 dead state: KillCreature_1A800 (state 95).
+void Class5Type15DeadTick_20400(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -24799,16 +24959,16 @@ void sub_20410(Type_AE400_29795* a1x)
   v1 = a1x->rand_29799_4 % 0x14u;
   a1x->actSpeed_29921_126 = 0;
   if ( v1 <= 10 )
-    sub_36FA0_37360(a1x, 206);
+    SetSprite_36FA0_37360(a1x, 206);
   else
-    sub_36FA0_37360(a1x, 1);
+    SetSprite_36FA0_37360(a1x, 1);
 }
 
 //SYNCHRONIZED WITH REMC1
 void sub_20450(Type_AE400_29795* a1x)
 {
   a1x->actSpeed_29921_126 = a1x->actSpeed_29923_128;
-  sub_36FA0_37360(a1x, 0);
+  SetSprite_36FA0_37360(a1x, 0);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -24858,7 +25018,7 @@ void sub_20480(Type_AE400_29795* a1x)
       v14 = v21;
       word_AE454_AE444 = a1x->var_u32_29867_72;
       //word_AE454_AE444.z = *(_WORD *)(a1 + 76);
-      sub_41EC0_42200(&word_AE454_AE444, v14, 0, 256);
+      MoveAlongHeading_41EC0_42200(&word_AE454_AE444, v14, 0, 256);
       a1x->rand_29799_4 = 9377 * a1x->rand_29799_4 + 9439;
       v3 = a1x->rand_29799_4 % (unsigned int)*((unsigned __int16 *)v18 + (unsigned __int16)v20);
       v4 = (v3 + 2) * (IsMoveBlocked_11640(a1x, &word_AE454_AE444, 1) == 0);
@@ -24912,25 +25072,27 @@ void sub_20480(Type_AE400_29795* a1x)
   if (a1x->var_u16_29829_34 == a1x->var_u16_29825_30
     || (v9 = 9377 * a1x->rand_29799_4 + 9439, a1x->rand_29799_4 = v9, v10 = v9 % 0x14, result = v9 / 0x14, v10 <= 10) )
   {
-    sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
     //v11 = *(__int16 **)(a1 + 156);
     v17 = a1x->var_u32_29951_156->vertSpeed_14;
     v16 = a1x->var_u32_29951_156->maxHeight_10;
     v15 = a1x->var_u32_29951_156->minHeight_12;
     v12 = GetTerrainHeight_11F50(&word_AE454_AE444);
     v13 = KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v12, v15, v16, v17);
-    sub_41C70_41FB0(a1x, &word_AE454_AE444);
+    MoveEntity_41C70_41FB0(a1x, &word_AE454_AE444);
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_20700(Type_AE400_29795* a1x)
+/// Idle state of class 5 type 16 (state 96): CreatureIdleTick_19B10(a1x, 96).
+void WyvernIdleTick_20700(Type_AE400_29795* a1x)
 {
-  sub_19B10(a1x, 96);
+  CreatureIdleTick_19B10(a1x, 96);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_20710(Type_AE400_29795* a1x)
+/// Per-tick handler of a wyvern (class 5 state 97, set by CreateWyvern_396E0).
+void WyvernTick_20710(Type_AE400_29795* a1x)
 {
   //int v1; // esi
   unsigned int v2; // ecx
@@ -24964,14 +25126,15 @@ void sub_20710(Type_AE400_29795* a1x)
       if ( v3 )
       {
         a1x->var_u16_29941_146 = (int)(v3 - (dword_AE400_AE3F0() + 29795)) / 164;
-        sub_424F0_42830(a1x, 0x62u);
+        SetEntityState_424F0_42830(a1x, 0x62u);
       }
     }
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_207E0(Type_AE400_29795* a1x)
+/// Wyvern (class 5 type 16) attack state (state 98): shoots fireballs (9/0) at its target (+146).
+void WyvernAttackTick_207E0(Type_AE400_29795* a1x)
 {
   int v1; // edi
   int v2; // eax
@@ -25049,7 +25212,7 @@ void sub_207E0(Type_AE400_29795* a1x)
     else
     {
       dword_AE400_AE3F0(v1);
-      sub_424F0_42830(a1x, 0x64u);
+      SetEntityState_424F0_42830(a1x, 0x64u);
     }
     return;
   }
@@ -25062,7 +25225,7 @@ void sub_207E0(Type_AE400_29795* a1x)
     a1x->var_u16_29829_34 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v11 + 72));
   }
   if ( *(int *)PTR(v11 + 12) < 0 || (*(_BYTE *)PTR(v11 + 17) & 4) != 0 )
-    return sub_424F0_42830(a1x, 0x61u);
+    return SetEntityState_424F0_42830(a1x, 0x61u);
   v12 = a1x->var_u16_29821_26;
   if ( v12 )
   {
@@ -25093,32 +25256,35 @@ void sub_207E0(Type_AE400_29795* a1x)
     v16 = (__int16)(*(_WORD *)PTR(v11 + 72) - a1x->var_u32_29867_72.x);
     if ( v16 * v16
        + (__int16)(*(_WORD *)PTR(v11 + 74) - a1x->var_u32_29867_72.y) * (__int16)(*(_WORD *)PTR(v11 + 74) - a1x->var_u32_29867_72.y) >= v18 )
-      return sub_424F0_42830(a1x, 0x61u);
+      return SetEntityState_424F0_42830(a1x, 0x61u);
     if ( !(a1x->var_u8_29858_63 % (2 * a1x->var_u32_29951_156->v_26)) )
-      sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 39);
+      PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 39);
     v17 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v11 + 72));
-    result = sub_42210_42550(a1x->var_u16_29825_30, v17);
+    result = AngleDifference_42210_42550(a1x->var_u16_29825_30, v17);
     if ( result < 0xE3u )
       a1x->var_u16_29821_26 = 15;
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_20B60(Type_AE400_29795* a1x)
+/// Class 5 type 16 follow state: UpdateFollower_1A390(a1x, 96) (state 99).
+void WyvernFollowTick_20B60(Type_AE400_29795* a1x)
 {
   UpdateFollower_1A390(a1x, 0x60u);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_20B70(Type_AE400_29795* a1x)
+/// Class 5 type 16 dying state: CreatureDying_1A6C0(a1x, 96) (state 100).
+void WyvernDyingTick_20B70(Type_AE400_29795* a1x)
 {
-  sub_1A6C0(a1x, 96);
+  CreatureDying_1A6C0(a1x, 96);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_20B80(Type_AE400_29795* a1x)
+/// Class 5 type 16 dead state: KillCreature_1A800 (state 101).
+void WyvernDeadTick_20B80(Type_AE400_29795* a1x)
 {
-  sub_1A800(a1x);
+  KillCreature_1A800(a1x);
 }
 
 //----- (00020BD0) --------------------------------------------------------
@@ -25322,17 +25488,17 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 			if (byte_90096 < 40)
 			{
 				if ((typeResolution_12F02E_12F01E & 1) != 0)
-					sub_411D7_41517((void*)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
+					ClearScreen320_411D7_41517((void*)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
 				else
-					sub_411FD_4153D((void*)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+					ClearScreen640_411FD_4153D((void*)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
 			}
 		}
 		if (str_AE400_AE3F0->set.var_u8_8600 < 40)
 		{
 			if ((typeResolution_12F02E_12F01E & 1) != 0)
-				sub_411D7_41517((void*)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
+				ClearScreen320_411D7_41517((void*)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
 			else
-				sub_411FD_4153D((void*)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+				ClearScreen640_411FD_4153D((void*)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
 		}
 		setViewPort_30A70_30AB0(str_AE400_AE3F0->set.var_u8_8600);//set viewport
         if (DrawGameFrame_20FB0_index == 1)
@@ -25386,7 +25552,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 		//add_compare(0x1F2257, true, true);
 #endif debug1
 		//debug
-			sub_5A3C0_5A8D0(1);
+			SetFont_5A3C0_5A8D0(1);
 			//adress 1F225E_
 			//debug
 #ifdef debug1
@@ -25415,10 +25581,10 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 		//add_compare(0x1F2341, true, true);
 #endif debug1
 		//debug
-			sub_5A3C0_5A8D0(1);
+			SetFont_5A3C0_5A8D0(1);
 			if ((str_AE408_AE3F8->var_u8_1 & 2) == 0)
 			{
-				sub_5A3C0_5A8D0(1);
+				SetFont_5A3C0_5A8D0(1);
 				textDrawAxisY = 50;
 				if ((str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u16_13325 & 2) != 0)
 				{
@@ -25513,7 +25679,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 				}
 			}
 			if ((str_AE408_AE3F8->var_u8_1 & 2) != 0)
-				sub_5A3C0_5A8D0(1);
+				SetFont_5A3C0_5A8D0(1);
 
 		}
 		goto LABEL_139;
@@ -25533,7 +25699,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 			str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].str_13895_572[v4x + 1].pitch_8,
 			str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].str_13895_572[v4x + 1].roll_10,
 			str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].str_13895_572[v4x + 1].fov_12);
-		sub_5A3C0_5A8D0(1);
+		SetFont_5A3C0_5A8D0(1);
 		textDrawAxisX = GetLetterX_5A3A0_5A8B0();
 		intLetterY = -GetLetterY_5A3B0_5A8C0() / 2;
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
@@ -25706,9 +25872,9 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 		goto LABEL_139;
 	case 2:
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
-			sub_411D7_41517((void*)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
+			ClearScreen320_411D7_41517((void*)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
 		else
-			sub_411FD_4153D((void*)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+			ClearScreen640_411FD_4153D((void*)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
 		locMouseX = 384;
 		if (typeResolution_12F02E_12F01E == 1)
 			locMouseY = 162;
@@ -25789,7 +25955,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 		//add_compare(0x1F356A, true, true);
 #endif debug1
 		//debug
-		sub_5A3C0_5A8D0(1);
+		SetFont_5A3C0_5A8D0(1);
 		if ((str_AE408_AE3F8->var_u8_0 & 0x20) == 0
 			&& (str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u32_13341_18 & 2) != 0
 			&& (str_AE408_AE3F8->var_u8_0 & 2) != 0)
@@ -25886,7 +26052,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 			if ((typeResolution_12F02E_12F01E & 1) == 0)
 			{
 			LABEL_125:
-				sub_24DA0(locMouseX, locMouseY, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.x, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.y, byte_AE167_AE157);
+				DrawRectCheckedHighRes_24DA0(locMouseX, locMouseY, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.x, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.y, byte_AE167_AE157);
 				goto LABEL_126;
 			}
 			goto LABEL_118;
@@ -25926,7 +26092,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 	if ((typeResolution_12F02E_12F01E & 1) == 0)
 		goto LABEL_125;
 LABEL_118:
-	sub_24D20(locMouseX, locMouseY, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.x, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.y, byte_AE167_AE157);
+	DrawRectCheckedLowRes_24D20(locMouseX, locMouseY, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.x, begSprTab_AE42C_AE41C_26C42C_26C41C[3].dim.y, byte_AE167_AE157);
 	goto LABEL_126;
 }
 
@@ -25978,7 +26144,7 @@ int sub_22880()
   unsigned __int8 v24; // [esp+128h] [ebp-18h]
   unsigned __int8 v25; // [esp+12Ch] [ebp-14h]
 
-  sub_5A3C0_5A8D0(1);
+  SetFont_5A3C0_5A8D0(1);
   v0 = 0;
   v1 = 0;
   v2 = dword_AE400_AE3F0() + 13323;
@@ -26605,7 +26771,7 @@ void DrawSpellIconWithCharges_23D40(int a1, int a2, Type_AE400_29795* a3x, char 
   LOBYTE(v4) = dword_AE400_AE3F0() + 99;
   if ( a3x > str_AE400_AE3F0->str_29795 )
   {
-    sub_5A3C0_5A8D0(1);
+    SetFont_5A3C0_5A8D0(1);
     LOBYTE(v4) = dword_AE400_AE3F0() + 99;
     v5 = dword_AE400_AE3F0() + 29795 + 164 * a3x->var_u16_29837_42;
     v21 = v5;
@@ -26669,7 +26835,7 @@ void DrawSpellIconWithCharges_23D40(int a1, int a2, Type_AE400_29795* a3x, char 
             if ( (typeResolution_12F02E_12F01E & 1) != 0 )
               sub_61594_61AA4(v24, v12, v25);
             else
-              sub_615D4_61AE4(v24, v12, v25);
+              PutPixel640_615D4_61AE4(v24, v12, v25);
             v12 += 2;
             ++v13;
             --v10;
@@ -26747,7 +26913,7 @@ void DrawSpellMenuIcon_24230(__int16 a1, __int16 a2, unsigned int a3, char a4)
   LOBYTE(v4) = dword_AE400_AE3F0() + 99;
   if ( a3 > dword_AE400_AE3F0() + 29795 )
   {
-    sub_5A3C0_5A8D0(1);
+    SetFont_5A3C0_5A8D0(1);
     LOBYTE(v4) = dword_AE400_AE3F0() + 99;
     v5 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(a3 + 42);
     if ( v5 > dword_AE400_AE3F0() + 29795 )
@@ -26857,34 +27023,37 @@ void sub_247C0(int result, int a2, __int16 a3, __int16 a4, int a5, unsigned __in
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_24AB0()//1F5AB0_
+/// FMV command: enables the caption overlay (loads data/screens/sfont1, text window 10,180 300x50, white text).
+void OpenFmvCaptions_24AB0()//1F5AB0_
 {
   if ( !byte_9009E )
   {
     byte_9009E = 1;
     byte_90091 = 1;
-    sub_40440_40780(&pathStrArray_F1EF0[PSF1datascreenssfont1dat]);
-    sub_51360_516A0(10, 180, 300, 50);
+    LoadPathFiles_40440_40780(&pathStrArray_F1EF0[PSF1datascreenssfont1dat]);
+    SetTextWindow_51360_516A0(10, 180, 300, 50);
     sub_51480_517C0(&byte_AE460_AE450, &sFont1Tab_271288_B3278, begPalDat_AE428_AE418_26C428_26C418);
-    byte_AE460_AE450.var8_6 = sub_5CC70_5D180(begPalDat_AE428_AE418_26C428_26C418, 0x3Fu, 0x3Fu, 0x3Fu);
+    byte_AE460_AE450.var8_6 = FindNearestColour_5CC70_5D180(begPalDat_AE428_AE418_26C428_26C418, 0x3Fu, 0x3Fu, 0x3Fu);
     word_B329C_B328C = 19200;
     dword_B3294_B3284 = (int)OFF(begWscreen_2ECFF4_2ECFE4) + 57600;
-    sub_24B80();
+    ClearFmvCaption_24B80();
   }
 }
 
-void sub_24B50(char* a1)
+/// FMV command: shows caption text a1 (game text string) while captions are enabled.
+void ShowFmvCaption_24B50(char* a1)
 {
   if ( byte_9009E )
   {
-    sub_24B80();
+    ClearFmvCaption_24B80();
     DrawText_51560_518A0((uint8*)&byte_AE460_AE450, 0, 0, a1);
     dword_900A0 = a1;
   }
 }
 
 //----- (00024B80) --------------------------------------------------------
-int sub_24B80()
+/// Clears the caption area of the screen buffer while captions are enabled.
+int ClearFmvCaption_24B80()
 {
   int result; // eax
 
@@ -26902,12 +27071,13 @@ int sub_24B80()
 // B329C: using guessed type __int16 word_B329C_B328C;
 
 //----- (00024BB0) --------------------------------------------------------
-void sub_24BB0()
+/// FMV command: clears the caption, frees its font and disables captions.
+void CloseFmvCaptions_24BB0()
 {
   if ( byte_9009E )
   {
-    sub_24B80();
-    sub_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreenssfont1dat]);
+    ClearFmvCaption_24B80();
+    FreePathFiles_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreenssfont1dat]);
     byte_90091 = 0;
     byte_9009E = 0;
     dword_900A0 = 0;
@@ -26918,13 +27088,14 @@ void sub_24BB0()
 // 900A0: using guessed type int dword_900A0;
 
 //SYNCHRONIZED WITH REMC1
-void sub_24BF0(unsigned __int8 a1)
+/// Sets the caption colour to a1 and redraws the current caption.
+void SetFmvCaptionColour_24BF0(unsigned __int8 a1)
 {
   if ( byte_9009E )
   {
     byte_AE460_AE450.var8_6 = a1;
     if ( dword_900A0 )
-      sub_24B50(dword_900A0);
+      ShowFmvCaption_24B50(dword_900A0);
   }
 }
 
@@ -26961,7 +27132,8 @@ void sub_24CA0(int a1, int a2, int a3, int a4, unsigned __int16 a5)
 }
 
 //----- (00024D20) --------------------------------------------------------
-void sub_24D20(int a1, int a2, int a3, int a4, unsigned __int16 a5)
+/// DrawRectLowRes_61740 if the rectangle is at least 2x2 and inside 640x400.
+void DrawRectCheckedLowRes_24D20(int a1, int a2, int a3, int a4, unsigned __int16 a5)
 {
   if ( a3 >= 2
     && a4 >= 2
@@ -26972,12 +27144,13 @@ void sub_24D20(int a1, int a2, int a3, int a4, unsigned __int16 a5)
     && a2 + a4 < 400
     && (a2 + a4 >= 0 || a2 < 400) )
   {
-    sub_61740(a1, a2, a3, a4, a5);
+    DrawRectLowRes_61740(a1, a2, a3, a4, a5);
   }
 }
 
 //----- (00024DA0) --------------------------------------------------------
-void sub_24DA0(int a1, int a2, int a3, int a4, unsigned __int16 a5)
+/// DrawRectHighRes_61810 if the rectangle is at least 2x2 and inside 640x480.
+void DrawRectCheckedHighRes_24DA0(int a1, int a2, int a3, int a4, unsigned __int16 a5)
 {
   if ( a3 >= 2
     && a4 >= 2
@@ -26988,7 +27161,7 @@ void sub_24DA0(int a1, int a2, int a3, int a4, unsigned __int16 a5)
     && a2 + a4 < 480
     && (a2 + a4 >= 0 || a2 < 480) )
   {
-    sub_61810(a1, a2, a3, a4, a5);
+    DrawRectHighRes_61810(a1, a2, a3, a4, a5);
   }
 }
 
@@ -27061,10 +27234,10 @@ void ExplosionTick_24F60(Type_AE400_29795* a1x)
         v8 = v7 % 0x41;
         v9x = str_AE400_AE3F0->str_29795;
         a1x->var_u16_29841_46 = v8 - 32;
-        sub_55370_558A0(a1x - v9x, -1, 3);
+        PlayEntitySound_55370_558A0(a1x - v9x, -1, 3);
       }
       KeepHeightAboveGround_42000_42340(&a1x->var_u32_29867_72, v3, 0, 0, a1x->var_u16_29841_46);
-      sub_42510_42850(a1x);
+      AdvanceAnimFrame_42510_42850(a1x);
     }
     else
     {
@@ -27074,7 +27247,9 @@ void ExplosionTick_24F60(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_25130(int a1)
+/// TODO: rename when the entity is identified (class 10 type 1).
+/// Per-tick handler of class 10 state 1 (set by CreateClass10Type1_3A510).
+void Class10Type1Tick_25130(int a1)
 {
   int v1; // eax
   int result; // eax
@@ -27100,7 +27275,7 @@ void sub_25130(int a1)
   if ( (v3 & 2) == 0 )
   {
     *(_BYTE *)PTR(a1 + 16) = v3 | 2;
-    sub_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 3);
+    PlayEntitySound_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 3);
   }
   result = BeginRingIter_11410(*(__int16 *)PTR(a1 + 26), *(__int16 *)PTR(a1 + 26));
   v4 = result;
@@ -27135,7 +27310,8 @@ void sub_25130(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_252B0(int a1)
+/// Per-tick handler of the speed effect (class 10 state 2), created by the Speed and Reverse Speed spells.
+void SpeedEffectTick_252B0(int a1)
 {
   int result; // eax
 
@@ -27146,7 +27322,8 @@ void sub_252B0(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_252D0(int a1)
+/// Fire: Per-tick handler of class 10 state 6 (set by CreateClass10Type6_3A730). Identified from its decoded sprite (named by the user).
+int FireTick_252D0(int a1)
 {
   int v1; // eax
   __int16 v2; // cx
@@ -27208,13 +27385,16 @@ LABEL_11:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_253E0(int a1)
+/// State handler that removes its entity on the next tick (class 10 states 7, 8, 30, 31, 33, 54).
+void RemoveSelfTick_253E0(int a1)
 {
   MarkEntityForRemoval_41E80_421C0((Type_AE400_29795*)PTR(a1));
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_253F0(int a1)
+/// TODO: rename when the entity is identified (class 10 type 3).
+/// Per-tick handler of class 10 state 3, the initial state of type 3.
+void Class10Type3Tick_253F0(int a1)
 {
   int result; // eax
 
@@ -27225,7 +27405,8 @@ void sub_253F0(int a1)
 }
 
 //SYNCHRONIZE WITH REMC1
-void sub_25410(Type_AE400_29795* a1x)
+/// Water splash: Per-tick handler of class 10 state 5, the initial state of type 5. Identified from its decoded sprite (named by the user).
+void WaterSplashTick_25410(Type_AE400_29795* a1x)
 {
   int v1; // edx
   int v2; // eax
@@ -27234,12 +27415,12 @@ void sub_25410(Type_AE400_29795* a1x)
   a1x->actLife_29807_12 = v1 - 1;
   if ( v1 >= 0 )
   {
-    sub_42510_42850(a1x);
+    AdvanceAnimFrame_42510_42850(a1x);
     if ( (a1x->var_29811_16.byte[0] & 2) == 0 )
     {
       v2 = dword_AE400_AE3F0() + 29795;
       a1x->var_29811_16.byte[0] |= 2u;
-      sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 27);
+      PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 27);
     }
   }
   else
@@ -27249,7 +27430,8 @@ void sub_25410(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZE WITH REMC1
-void sub_25470(Type_AE400_29795* a1x)
+/// Per-tick handler of the Volcano spell's effect (class 10 state 9).
+void VolcanoEffectTick_25470(Type_AE400_29795* a1x)
 {
   int v1; // eax
   unsigned int v2; // eax
@@ -27275,12 +27457,14 @@ void sub_25470(Type_AE400_29795* a1x)
   else
   {
     sub_127E0(a1x, 0, a1x->var_u16_29839_44);
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 10);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 10);
   }
 }
 
 //SYNCHRONIZE WITH REMC1
-void sub_25570(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 10 type 10).
+/// Per-tick handler of class 10 state 10, the initial state of type 10.
+void Class10Type10Tick_25570(Type_AE400_29795* a1x)
 {
   unsigned int v1; // eax
 
@@ -27327,7 +27511,8 @@ void sub_255D0(Type_AE400_29795* a1x, __int16 a2, __int16 a3)
 }
 
 //SYNCHRONIZE WITH REMC1
-void sub_25670(Type_AE400_29795* a1x)
+/// Per-tick handler of the Crater spell's effect (class 10 state 11). Starts a volcano eruption (10/18).
+void CraterEffectTick_25670(Type_AE400_29795* a1x)
 {
   int v1; // eax
   int v2; // eax
@@ -27369,12 +27554,13 @@ void sub_25670(Type_AE400_29795* a1x)
     }
     a1x->var_29811_16.byte[0] |= 2u;
     sub_255D0(a1x, 0, v3);
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 10);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 10);
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_25760(Type_AE400_29795* a1x)
+/// Per-tick handler of the Possession spell's effect (class 10 state 12).
+void PossessionEffectTick_25760(Type_AE400_29795* a1x)
 {
   int v1; // eax
 
@@ -27385,13 +27571,14 @@ void sub_25760(Type_AE400_29795* a1x)
       MarkEntityForRemoval_41E80_421C0(a1x);
   else
   {
-    sub_42510_42850(a1x);
+    AdvanceAnimFrame_42510_42850(a1x);
     sub_120B0(a1x, 1u, a1x->var_u16_29839_44);
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_257B0(int a1)
+/// Smoke cloud: Per-tick handler of class 10 state 13, the initial state of type 13. Identified from its decoded sprite (named by the user).
+void SmokeTick_257B0(int a1)
 {
   int v1; // eax
   __int16 v3; // dx
@@ -27422,7 +27609,7 @@ void sub_257B0(int a1)
       *(_WORD*)PTR(a1 + 26) = v5;
       if (v5 < 16 )
       {
-        sub_41EC0_42200(&word_AE454_AE444, *(_WORD*)PTR(a1 + 30), 0, 30);
+        MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD*)PTR(a1 + 30), 0, 30);
         if ((*(_BYTE*)PTR(a1 + 26) & 1) == 0)
           ++*(_WORD*)PTR(a1 + 86);
       }
@@ -27433,12 +27620,13 @@ void sub_257B0(int a1)
             *(_WORD*)PTR(a1 + 86) = v6 - 1;
       }
       v7 = nullsub_11((uint32)OFF(&word_AE454_AE444));
-      sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+      MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_258A0(int a1)
+/// Dark smoke cloud: Per-tick handler of class 10 state 14, the initial state of type 14. Identified from its decoded sprite (named by the user).
+void DarkSmokeTick_258A0(int a1)
 {
 	int v1; // eax
 	__int16 v3; // dx
@@ -27469,20 +27657,21 @@ void sub_258A0(int a1)
 		*(_WORD*)PTR(a1 + 26) = v5;
 		if (v5 < 16)
 		{
-			sub_41EC0_42200(&word_AE454_AE444, *(_WORD*)PTR(a1 + 30), 0, 30);
+			MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD*)PTR(a1 + 30), 0, 30);
 			if ((*(_BYTE*)PTR(a1 + 26) & 1) == 0)
 				++* (_WORD*)PTR(a1 + 86);
 		}
 		if (*(int*)PTR(a1 + 12) < 6)
 			--* (_WORD*)PTR(a1 + 86);
 		v6 = nullsub_11((uint32)OFF(&word_AE454_AE444));
-		v7 = sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+		v7 = MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
 		nullsub_19(v7);
 	}
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_25990(Type_AE400_29795* a1x)
+/// Per-tick handler of the Earthquake spell's effect (class 10 state 15). Creates 10/11 entities (as the Crater spell does).
+void EarthquakeEffectTick_25990(Type_AE400_29795* a1x)
 {
   __int16 v1; // dx
   int v2; // eax
@@ -27509,7 +27698,7 @@ void sub_25990(Type_AE400_29795* a1x)
   v4 = 9377 * a1x->rand_29799_4 + 9439;
   a1x->rand_29799_4 = v4;
   a1x->var_u16_29825_30 = (v4 % 0x5B + a1x->var_u16_29825_30 - 45) & 0x7FF;
-  sub_41EC0_42200(&a1x->var_u32_29867_72, a1x->var_u16_29825_30, 0, 256);
+  MoveAlongHeading_41EC0_42200(&a1x->var_u32_29867_72, a1x->var_u16_29825_30, 0, 256);
   result = (int)OFF(CreateEntity_373F0_377B0(&a1x->var_u32_29867_72, 10, 11));
   if ( result )
   {
@@ -27604,7 +27793,7 @@ void LavaTick_25A60(int a1)
       }
       v12 = *(_WORD*)PTR(a1 + 26) + 1;
       *(_WORD*)PTR(a1 + 26) = v12;
-      result = sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+      result = MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
       if (v7 == word_AE454_AE444.z)
       {
           sub_41F50_42290((axis_3d*)PTR(a1 + 72), &word_AE454_AE444);
@@ -27645,10 +27834,10 @@ void ExplosionRingTick_25CE0(Type_AE400_29795* a1x)
       if ((a1x->var_29811_16.byte[0] & 2) == 0)
       {
           a1x->var_29811_16.dword |= 0x10002u; // PORT: dword as in the original (byte[0] dropped the 0x10000 flag)
-          sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 30);
+          PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 30);
       }
       v3 = 768 * a1x->var_u16_29821_26;
-      sub_37130_374F0(a1x, (int)(v3 - (__CFSHL__(HIDWORD(v3), 2) + 4 * HIDWORD(v3))) >> 2, 512);
+      SetCollisionBox_37130_374F0(a1x, (int)(v3 - (__CFSHL__(HIDWORD(v3), 2) + 4 * HIDWORD(v3))) >> 2, 512);
       sub_120B0(a1x, 0, a1x->var_u16_29839_44 / a1x->maxLife_29803_8);
       v4 = BeginRingIter_11410(a1x->var_u16_29821_26, a1x->var_u16_29821_26);
       if (v4)
@@ -27670,7 +27859,7 @@ void ExplosionRingTick_25CE0(Type_AE400_29795* a1x)
                   v7x->id_29819_24 = a1x->id_29819_24;
                   v7x->var_u16_29825_30 = a1x->var_u16_29825_30;
                   v7x->var_29811_16.dword |= 0x10080;
-                  sub_37130_374F0(v7x, 512, 512);
+                  SetCollisionBox_37130_374F0(v7x, 512, 512);
                   v7x->var_u16_29821_26 = 0;
               }
           }
@@ -27792,7 +27981,7 @@ LABEL_5:
         *(_WORD *)PTR(v15 + 30) = v16;
         *(_DWORD *)PTR(v15 + 150) = *(_DWORD *)PTR(a1 + 72);
         *(_WORD *)PTR(v15 + 154) = *(_WORD *)PTR(a1 + 76);
-        sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v15 + 150), *(_WORD *)PTR(v15 + 30), 0, 1536);
+        MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v15 + 150), *(_WORD *)PTR(v15 + 30), 0, 1536);
         *(_WORD *)PTR(v15 + 154) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v15 + 150));
       }
     }
@@ -27806,7 +27995,8 @@ LABEL_5:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_26140(Type_AE400_29795* a1x)
+/// Volcano fire: Per-tick handler of class 10 state 19 (set by CreateClass10Type19_3AE00). Identified from its decoded sprite (named by the user).
+void VolcanoFireTick_26140(Type_AE400_29795* a1x)
 {
   int v1; // eax
   int v2; // edi
@@ -27869,7 +28059,8 @@ void sub_26140(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_262D0(Type_AE400_29795* a1x)
+/// Per-tick handler of the Lightning spell's effect (class 10 state 23).
+void LightningEffectTick_262D0(Type_AE400_29795* a1x)
 {
   int v1; // eax
   char v2; // dl
@@ -27882,7 +28073,7 @@ void sub_262D0(Type_AE400_29795* a1x)
     if ( (a1x->var_29811_16.byte[0] & 2) == 0 )
     {
       sub_120B0(a1x, 0, a1x->var_u16_29839_44);
-      sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 24);
+      PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 24);
       v2 = a1x->var_29811_16.byte[0];
       a1x->actLife_29807_12 = 1;
       a1x->var_29811_16.byte[0] = v2 | 2;
@@ -27895,7 +28086,8 @@ void sub_262D0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_26360(Type_AE400_29795* a1x)
+/// Per-tick handler of the Steal Mana spell's effect (class 10 state 25).
+void StealManaEffectTick_26360(Type_AE400_29795* a1x)
 {
   int v1; // eax
   int result; // eax
@@ -27908,7 +28100,7 @@ void sub_26360(Type_AE400_29795* a1x)
       MarkEntityForRemoval_41E80_421C0(a1x);
   else
   {
-      result = sub_42510_42850(a1x);
+      result = AdvanceAnimFrame_42510_42850(a1x);
       BYTE1(result) = a1x->var_29811_16.byte[0];
       if ((result & 0x200) == 0)
       {
@@ -27920,7 +28112,8 @@ void sub_26360(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_263C0(Type_AE400_29795* a1x)
+/// Per-tick handler of the Duel spell's effect (class 10 state 26).
+void DuelEffectTick_263C0(Type_AE400_29795* a1x)
 {
   int v1; // eax
 
@@ -27931,7 +28124,7 @@ void sub_263C0(Type_AE400_29795* a1x)
     MarkEntityForRemoval_41E80_421C0(a1x);
   else
   {
-    sub_42510_42850(a1x);
+    AdvanceAnimFrame_42510_42850(a1x);
     sub_120B0(a1x, 4u, a1x->var_u16_29839_44);
   }
 }
@@ -28098,7 +28291,9 @@ void RaiseTerrainStripX_26760(_WORD *a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_26890(Type_AE400_29795* event)
+/// TODO: rename when the entity is identified (class 10 type 30).
+/// Per-tick handler of class 10 state 32, the initial state of type 30.
+void Class10Type30Tick_26890(Type_AE400_29795* event)
 {
   uaxis_2d axis2d;
   // PORT: (__int16) - the original sign-extends x/y here (movsx); axis_3d has them unsigned (tools/audit_signedness.py)
@@ -28115,7 +28310,9 @@ void sub_26890(Type_AE400_29795* event)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_26920(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 10 type 32).
+/// Per-tick handler of class 10 state 34, the initial state of type 32.
+void Class10Type32Tick_26920(Type_AE400_29795* a1x)
 {
   int v1; // eax
   int v3; // eax
@@ -28136,11 +28333,13 @@ void sub_26920(Type_AE400_29795* a1x)
     *(_WORD *)PTR(v3 + 84) = v4;
     *(_WORD *)PTR(v3 + 24) = a1x->id_29819_24;
   }
-  sub_41EC0_42200(&a1x->var_u32_29867_72, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
+  MoveAlongHeading_41EC0_42200(&a1x->var_u32_29867_72, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_269A0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 10 type 51).
+/// Per-tick handler of class 10 state 55, the initial state of type 51.
+void Class10Type51Tick_269A0(Type_AE400_29795* a1x)
 {
   int v1; // eax
   unsigned int v3; // eax
@@ -28157,13 +28356,14 @@ void sub_269A0(Type_AE400_29795* a1x)
   if ( !(unsigned __int8)sub_40D30_41070(a1x, 0, 1024, v3 % 0xF + 10, 0) )
   {
     sub_120B0(a1x, 0, a1x->var_u16_29839_44);
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 10);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 10);
   }
-  sub_41EC0_42200(&a1x->var_u32_29867_72, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
+  MoveAlongHeading_41EC0_42200(&a1x->var_u32_29867_72, a1x->var_u16_29825_30, 0, a1x->actSpeed_29921_126);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_26A60(int a1)
+/// Mirror: Per-tick handler of class 10 state 36, the initial state of type 34. Identified from its decoded sprite (named by the user).
+void MirrorTick_26A60(int a1)
 {
   int v1; // eax
   int v2; // edx
@@ -28183,13 +28383,13 @@ void sub_26A60(int a1)
   {
     v1 = dword_AE400_AE3F0() + 29795;
     *(_BYTE *)PTR(a1 + 16) |= 2u;
-    sub_55370_558A0((a1 - v1) / 164, -1, 21);
+    PlayEntitySound_55370_558A0((a1 - v1) / 164, -1, 21);
   }
   v2 = *(_DWORD *)PTR(a1 + 12);
   if ( v2 > 0 && (*(_DWORD *)PTR(a1 + 12) = v2 - 1, v2 == 1) )
   {
     MarkEntityForRemoval_41E80_421C0((Type_AE400_29795*)PTR(a1));
-    sub_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 20);
+    PlayEntitySound_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 20);
   }
   else
   {
@@ -28202,12 +28402,12 @@ void sub_26A60(int a1)
       if ( EntitiesCollide_11950((Type_AE400_29795*)PTR(a1), (Type_AE400_29795*)PTR(v4)) )
       {
         v5 = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(v4 + 72), (axis_3d*)(uint16*)v8);
-        if ( (unsigned __int16)sub_42210_42550(*(_WORD *)PTR(v4 + 30), v5) < 0xAAu )
+        if ( (unsigned __int16)AngleDifference_42210_42550(*(_WORD *)PTR(v4 + 30), v5) < 0xAAu )
         {
           v7 = *(_DWORD *)PTR(a1 + 156);
           *(_WORD *)PTR(a1 + 154) = *(_WORD *)PTR(v7 + 12) + GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(a1 + 150));
-          sub_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 22);
-          sub_41C70_41FB0((Type_AE400_29795*)PTR(v4), (axis_3d*)PTR(a1 + 150));
+          PlayEntitySound_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 22);
+          MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v4), (axis_3d*)PTR(a1 + 150));
           sub_44BE0_44F20((Type_AE400_29795*)PTR(v4), 6);
         }
       }
@@ -28238,20 +28438,22 @@ void sub_26C00(int a1)
       v3 = v2 + 72;
       *(_DWORD *)&word_AE454_AE444.x = *(_DWORD *)PTR(v3);
       word_AE454_AE444.z = *(_WORD *)PTR(v3 + 4);
-      sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+      MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
       v4 = *(_WORD *)PTR(a1 + 30) + 45;
       HIBYTE(v4) &= 7u;
       *(_WORD *)PTR(a1 + 30) = v4;
       v5 = GetTerrainHeight_11F50(&word_AE454_AE444);
       ++HIBYTE(v5);
       word_AE454_AE444.z = v5;
-      sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+      MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
     }
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_26CE0(int a1)
+/// TODO: rename when the entity is identified (class 10 type 33).
+/// Per-tick handler of class 10 state 35, the initial state of type 33.
+void Class10Type33Tick_26CE0(int a1)
 {
     int result; // eax
     int v2; // edx
@@ -28336,7 +28538,7 @@ void sub_26D20(int a1)
           *(_WORD *)PTR(v7 + 44) = v9;
         }
       }
-      sub_55370_558A0((v8 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 23);
+      PlayEntitySound_55370_558A0((v8 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 23);
     }
     else
     {
@@ -28346,7 +28548,8 @@ void sub_26D20(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_26E90(int a1)
+/// Per-tick handler of the Undead Army spell's effect (class 10 state 38). Raises class 5 type 9 creatures.
+void UndeadArmyEffectTick_26E90(int a1)
 {
   int v1; // eax
   unsigned int i; // edx
@@ -28362,7 +28565,7 @@ void sub_26E90(int a1)
   *(_WORD *)PTR(a1 + 44) = 10000;
   if ( *(_WORD *)PTR(a1 + 44) )
   {
-    v9 = sub_37710_37AD0();
+    v9 = FreeEntityCount_37710_37AD0();
     if ( (v9 & 0x8000u) != 0 )
       v9 = 0;
     if ( (__int16)v9 > 8 )
@@ -28386,7 +28589,7 @@ void sub_26E90(int a1)
       {
         *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(a1 + 72);
         word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-        sub_41EC0_42200(&word_AE454_AE444, v10, 0, 512);
+        MoveAlongHeading_41EC0_42200(&word_AE454_AE444, v10, 0, 512);
         v3 = (int)OFF(CreateEntity_373F0_377B0(&word_AE454_AE444, 5, 9));
         v4 = v3;
         if ( v3 )
@@ -28438,7 +28641,7 @@ void ManaBallTick_27030(Type_AE400_29795* event)//1F8030_
     if (event->str_29885_90.var_u16_29895_100 != event->manaOwner_29939_144)
     {
         event->manaOwner_29939_144 = event->str_29885_90.var_u16_29895_100;
-      sub_55370_558A0(event->str_29885_90.var_u16_29895_100, -1, 4);
+      PlayEntitySound_55370_558A0(event->str_29885_90.var_u16_29895_100, -1, 4);
       event->var_29811_16.byte[0] &= ~0x40u;
     }
     event->str_29885_90.var_u16_29895_100 = 0;
@@ -28452,7 +28655,7 @@ void ManaBallTick_27030(Type_AE400_29795* event)//1F8030_
     word_AE454_AE444.x = 0;
     word_AE454_AE444.y = 0;
     word_AE454_AE444.z = 0;
-    sub_41EC0_42200(&word_AE454_AE444, event->var_u16_29825_30, 0, 4);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, event->var_u16_29825_30, 0, 4);
     event->var_u32_150.x += word_AE454_AE444.x;
     //v3 = word_AE454_AE444.y + event->var_u32_150.y;
     event->str_29885_90.var_u16_29913_118 = 0;
@@ -28470,13 +28673,13 @@ void ManaBallTick_27030(Type_AE400_29795* event)//1F8030_
       //v5 = HeadingTo_42150_42490(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72);
       event->var_u16_29825_30 = HeadingTo_42150_42490(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72);
       //v6 = event->var_u16_29941_146;
-      int tempV7 = sub_423D0_42710(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72);
+      int tempV7 = Distance2D_423D0_42710(&event->var_u32_29867_72, &str_AE400_AE3F0->str_29795[event->var_u16_29941_146].var_u32_29867_72);
       if (tempV7 <= 1024 )
       {
         if (tempV7 >= 16 )
         {
           word_AE454_AE444 = event->var_u32_29867_72;
-          sub_41EC0_42200(&word_AE454_AE444, event->var_u16_29825_30, 0, 16);
+          MoveAlongHeading_41EC0_42200(&word_AE454_AE444, event->var_u16_29825_30, 0, 16);
         }
         else
         {
@@ -28500,7 +28703,7 @@ void ManaBallTick_27030(Type_AE400_29795* event)//1F8030_
         int16_t tempV10 = GetTerrainHeight_11F50(&word_AE454_AE444);
         if (tempV10 > word_AE454_AE444.z )
           word_AE454_AE444.z = tempV10;
-        sub_41C70_41FB0(event, &word_AE454_AE444);
+        MoveEntity_41C70_41FB0(event, &word_AE454_AE444);
       }
       else
       {
@@ -28546,7 +28749,7 @@ void ManaBallTick_27030(Type_AE400_29795* event)//1F8030_
           event->var_u16_29841_46 = 0;
       word_AE454_AE444.z = tempV13;
     }
-    sub_41C70_41FB0(event, &word_AE454_AE444);
+    MoveEntity_41C70_41FB0(event, &word_AE454_AE444);
     if (tempV13 == word_AE454_AE444.z )
     {
         Type_AE400_29795* tempV15 = sub_11D10(event);
@@ -28624,9 +28827,9 @@ LABEL_15:
   v4 = event->var_u16_29881_86;
   if ( v4 != v1 + i )
   {
-    sub_36FA0_37360(event, v1 + i);
+    SetSprite_36FA0_37360(event, v1 + i);
     if ( i )
-      sub_370E0_374A0(event, v1 + i);
+      SetSpriteHalfBox_370E0_374A0(event, v1 + i);
   }
 }
 
@@ -28662,7 +28865,8 @@ void DeathMarkerTick_275C0(__int16 *a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_27690(_WORD *result, Type_AE400_29795* a2x)
+/// Creates a mana ball (10/39) holding the entity's mana (+140) and mana owner (+144), thrown in a random direction; clears the owner.
+void DropManaBall_27690(_WORD *result, Type_AE400_29795* a2x)
 {
   _WORD *v2; // ebx
   int v3; // ecx
@@ -28692,7 +28896,7 @@ void sub_27690(_WORD *result, Type_AE400_29795* a2x)
       v6 = a2x->var_u32_29867_72.z;
       v7 = GetTerrainHeight_11F50(&a2x->var_u32_29867_72);
       v2[23] = (1024 - (v6 - v7) - (__CFSHL__((1024 - (v6 - v7)) >> 31, 3) + 8 * ((1024 - (v6 - v7)) >> 31))) >> 3;
-      sub_41EC0_42200((axis_3d*)(v2 + 75), v2[15], 0, v2[63]);
+      MoveAlongHeading_41EC0_42200((axis_3d*)(v2 + 75), v2[15], 0, v2[63]);
     }
     a2x->manaOwner_29939_144 = 0;
   }
@@ -28993,7 +29197,8 @@ LABEL_42:
 
 int compare_27D30= 0;
 //SYNCHRONIZED WITH REMC1
-void sub_27D30(Type_AE400_29795* event)//1F8D30_
+/// Per-tick handler of the player's flag (class 10 type 45, state 51, set by CreatePlayerFlag_3B690). Identified from its decoded sprite (named by the user).
+void PlayerFlagTick_27D30(Type_AE400_29795* event)//1F8D30_
 {
 	//int v1; // eax
 	int v2; // esi
@@ -29285,7 +29490,9 @@ void sub_27D30(Type_AE400_29795* event)//1F8D30_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_28200(int a1)
+/// TODO: rename when the entity is identified (class 10 type 41).
+/// Per-tick handler of class 10 state 43, the initial state of type 41.
+void Class10Type41Tick_28200(int a1)
 {
   char v1; // cl
   char v2; // ch
@@ -29446,7 +29653,9 @@ void sub_28200(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-char sub_285C0(int a1)
+/// TODO: rename when the entity is identified (class 10 type 42).
+/// Per-tick handler of class 10 state 44, the initial state of type 42.
+char Class10Type42Tick_285C0(int a1)
 {
   __int16 v1; // ax
   __int16 v2; // dx
@@ -29808,9 +30017,9 @@ void sub_28DC0(Type_AE400_29795* event)
     if ( v5 != event->manaOwner_29939_144)
     {
       event->manaOwner_29939_144 = v5;
-      sub_55370_558A0(v5, -1, 4);
+      PlayEntitySound_55370_558A0(v5, -1, 4);
       event->var_29811_16.byte[0] &= ~1u;
-      sub_36FA0_37360(event, 177);
+      SetSprite_36FA0_37360(event, 177);
       event->var_u16_29881_86 += *(_WORD *)PTR(*(_DWORD *)PTR(164 * event->str_29885_90.var_u16_29895_100 + dword_AE400_AE3F0() + 29955) + 48);
     }
     event->str_29885_90.var_u16_29895_100 = 0;
@@ -30010,7 +30219,9 @@ LABEL_45:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_293D0(Type_AE400_29795* a1x)
+/// TODO: rename when the entity is identified (class 10 type 43).
+/// Per-tick handler of class 10 state 45, the initial state of type 43.
+void Class10Type43Tick_293D0(Type_AE400_29795* a1x)
 {
   int v1; // eax
   int v2; // edx
@@ -30021,7 +30232,7 @@ void sub_293D0(Type_AE400_29795* a1x)
   a1x->actLife_29807_12 = v1 - 1;
   if ( v1 >= 0 )
   {
-    sub_42510_42850(a1x);
+    AdvanceAnimFrame_42510_42850(a1x);
     if ( (a1x->var_29811_16.byte[0] & 2) == 0 )
     {
       a1x->var_29811_16.byte[0] |= 2u;
@@ -30045,7 +30256,8 @@ void sub_293D0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_29540(Type_AE400_29795* a1x)
+/// Boulder: Per-tick handler of class 10 state 46, the initial state of type 44. Identified from its decoded sprite (named by the user).
+void BoulderTick_29540(Type_AE400_29795* a1x)
 {
   //int v1; // eax
   __int16 v2; // ax
@@ -30066,7 +30278,7 @@ void sub_29540(Type_AE400_29795* a1x)
   word_AE454_AE444.x += a1x->var_u32_150.x;
   word_AE454_AE444.y += v2;
   word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
-  sub_41C70_41FB0(a1x, &word_AE454_AE444);
+  MoveEntity_41C70_41FB0(a1x, &word_AE454_AE444);
   sub_120B0(a1x, 0, a1x->var_u16_29839_44);
 }
 
@@ -30116,7 +30328,7 @@ void CrabSpawnTimerTick_296A0(Type_AE400_29795* a1x)
   a1x->var_u16_29821_26 = result - 1;
   if ( !result )
   {
-    sub_424F0_42830(a1x, 0x39u);
+    SetEntityState_424F0_42830(a1x, 0x39u);
     a1x->maxLife_29803_8 = 5000;
   }
 }
@@ -30142,7 +30354,8 @@ void sub_29700(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_29780(Type_AE400_29795* a1x)
+/// Per-tick handler of the Wall of Fire spell's effect (class 10 state 58).
+void WallOfFireEffectTick_29780(Type_AE400_29795* a1x)
 {
   int v3_v4;
   Type_AE400_29795* v6_v7; // eax
@@ -30157,7 +30370,7 @@ void sub_29780(Type_AE400_29795* a1x)
           MarkEntityForRemoval_41E80_421C0(a1x);
       else
       {
-          sub_37130_374F0(a1x, 512, 2048);
+          SetCollisionBox_37130_374F0(a1x, 512, 2048);
           sub_120B0(a1x, 0, a1x->var_u16_29839_44 / a1x->maxLife_29803_8);
           v3_v4 = BeginRingIter_11410(0, 1);
           if (v3_v4)
@@ -30202,10 +30415,10 @@ void sub_29780(Type_AE400_29795* a1x)
           if ((a1x->var_29811_16.byte[0] & 2) == 0)
           {
               a1x->var_29811_16.dword |= 0x10002u; // PORT: dword as in the original (byte[0] dropped the 0x10000 flag)
-              sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 30);
+              PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 30);
           }
           __int64 v3 = 768 * a1x->var_u16_29821_26;
-          sub_37130_374F0(a1x, (int)(v3 - (__CFSHL__(HIDWORD(v3), 2) + 4 * HIDWORD(v3))) >> 2, 512);
+          SetCollisionBox_37130_374F0(a1x, (int)(v3 - (__CFSHL__(HIDWORD(v3), 2) + 4 * HIDWORD(v3))) >> 2, 512);
           sub_120B0(a1x, 0, a1x->var_u16_29839_44 / a1x->maxLife_29803_8);
           v3_v4 = BeginRingIter_11410(a1x->var_u16_29821_26, a1x->var_u16_29821_26);
           if (v3_v4)
@@ -30224,7 +30437,7 @@ void sub_29780(Type_AE400_29795* a1x)
                       v6_v7->id_29819_24 = a1x->id_29819_24;
                       v6_v7->var_u16_29825_30 = a1x->var_u16_29825_30;
                       v6_v7->var_29811_16.dword |= 0x10080;
-                      sub_37130_374F0(v6_v7, 512, 512);
+                      SetCollisionBox_37130_374F0(v6_v7, 512, 512);
                       v6_v7->var_u16_29821_26 = 0;
                   }
               }
@@ -30236,7 +30449,8 @@ void sub_29780(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_29920_29960(int a1)
+/// Per-tick handler of the Mana Magnet spell's effect (class 10 state 59).
+void ManaMagnetEffectTick_29920_29960(int a1)
 {
 	int v1; // eax
 	int result; // eax
@@ -30254,7 +30468,7 @@ void sub_29920_29960(int a1)
 			result = dword_AE400_AE3F0() + 29795;
 			if (i <= dword_AE400_AE3F0() + 29795)
 				break;
-			if (*(_BYTE*)PTR(i + 65) == 39 && sub_42410_42750((_WORD*)PTR(a1 + 72), (_WORD*)PTR(i + 72)) < 12845056)
+			if (*(_BYTE*)PTR(i + 65) == 39 && DistanceSquared2D_42410_42750((_WORD*)PTR(a1 + 72), (_WORD*)PTR(i + 72)) < 12845056)
 			{
 				v4 = (a1 - (dword_AE400_AE3F0() + 29795)) / 164;
 				*(_DWORD*)PTR(i + 114) = 100;
@@ -30265,7 +30479,8 @@ void sub_29920_29960(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_299D0_29A10(Type_AE400_29795* a1x)
+/// Per-tick handler of the Global Death spell's effect (class 10 state 60).
+void GlobalDeathEffectTick_299D0_29A10(Type_AE400_29795* a1x)
 {
   int v1; // eax
   _WORD *v2; // esi
@@ -30276,7 +30491,7 @@ void sub_299D0_29A10(Type_AE400_29795* a1x)
   {
     //v4 = dword_AE400_AE3F0() + 29795;
     a1x->var_u16_29821_26--;
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 43);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 43);
   }
   else
   {
@@ -30293,16 +30508,16 @@ void sub_299D0_29A10(Type_AE400_29795* a1x)
           {
             case 2:
             case 5:
-              if ( sub_423D0_42710(&a1x->var_u32_29867_72, (axis_3d*)v2) < 0xA00 )
+              if ( Distance2D_423D0_42710(&a1x->var_u32_29867_72, (axis_3d*)v2) < 0xA00 )
                 *(_DWORD *)PTR(i + 12) = -1;
               break;
             case 3:
-              if ( sub_423D0_42710(&a1x->var_u32_29867_72, (axis_3d*)v2) < 0xA00 )
-                sub_12B50(a1x, i, 0, a1x->var_u16_29839_44);
+              if ( Distance2D_423D0_42710(&a1x->var_u32_29867_72, (axis_3d*)v2) < 0xA00 )
+                DealDamage_12B50(a1x, i, 0, a1x->var_u16_29839_44);
               break;
             case 9:
             case 0xA:
-              if ( sub_423D0_42710(&a1x->var_u32_29867_72, (axis_3d*)v2) < 0xA00 )
+              if ( Distance2D_423D0_42710(&a1x->var_u32_29867_72, (axis_3d*)v2) < 0xA00 )
                 a1x->actLife_29807_12 = 0;
               break;
             default:
@@ -30311,8 +30526,8 @@ void sub_299D0_29A10(Type_AE400_29795* a1x)
         }
         v2 += 82;
       }
-      sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 44);
-      sub_55370_558A0(a1x->id_29819_24, -1, 44);
+      PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 44);
+      PlayEntitySound_55370_558A0(a1x->id_29819_24, -1, 44);
       sub_44BE0_44F20((Type_AE400_29795*)PTR(164 * a1x->id_29819_24 + dword_AE400_AE3F0() + 29795), 3);
       MarkEntityForRemoval_41E80_421C0(a1x);
     }
@@ -35903,7 +36118,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 							switch (tempEntType->var_12)
 							{
 							case 0:
-								if (!dword_12DF8C_12DF7C[tempEntType->var_0] && !sub_59050_59560(tempEntType->var_0))
+								if (!dword_12DF8C_12DF7C[tempEntType->var_0] && !CacheTmapGroup_59050_59560(tempEntType->var_0))
 								{
 									runPart2 = false;
 									break;
@@ -35930,7 +36145,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 								}
 								break;
 							case 1:
-								if (!dword_12DF8C_12DF7C[tempEntType->var_0] && !sub_59050_59560(tempEntType->var_0))
+								if (!dword_12DF8C_12DF7C[tempEntType->var_0] && !CacheTmapGroup_59050_59560(tempEntType->var_0))
 								{
 									runPart2 = false;
 									break;
@@ -35972,7 +36187,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 							case 0xF:
 							case 0x10:
 								if (!dword_12DF8C_12DF7C[str_AE400_AE3F0->str_29795[result].var_u8_29883_88 + tempEntType->var_0]
-									&& !sub_59050_59560(tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88))
+									&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88))
 								{
 									runPart2 = false;
 									break;
@@ -36001,7 +36216,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 								tmpSprFrameRot2 = (((str_AE400_AE3F0->str_29795[result].var_u16_29825_30 - (unsigned __int16)yaw_B5D38_B5D28) >> 3) & 0xF0) >> 4;
 								if (tmpSprFrameRot2 < 8)
 								{
-									if (!dword_12DF8C_12DF7C[tmpSprFrameRot2 + tempEntType->var_0] && !sub_59050_59560(tmpSprFrameRot2 + tempEntType->var_0))
+									if (!dword_12DF8C_12DF7C[tmpSprFrameRot2 + tempEntType->var_0] && !CacheTmapGroup_59050_59560(tmpSprFrameRot2 + tempEntType->var_0))
 									{
 										runPart2 = false;
 										break;
@@ -36029,7 +36244,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 									break;
 								}
 								if (!dword_12DF8C_12DF7C[tempEntType->var_0 + 15 - tmpSprFrameRot2]
-									&& !sub_59050_59560(tempEntType->var_0 + 15 - tmpSprFrameRot2))
+									&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + 15 - tmpSprFrameRot2))
 								{
 									runPart2 = false;
 									break;
@@ -36058,7 +36273,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 							case 0x12:
 								tmpSprFrameRot2 = (((str_AE400_AE3F0->str_29795[result].var_u16_29825_30 - (unsigned __int16)yaw_B5D38_B5D28) >> 3) & 0xF0) >> 4;
 								if (!dword_12DF8C_12DF7C[tmpSprFrameRot2 + tempEntType->var_0]
-									&& !sub_59050_59560(tmpSprFrameRot2 + tempEntType->var_0))
+									&& !CacheTmapGroup_59050_59560(tmpSprFrameRot2 + tempEntType->var_0))
 								{
 									runPart2 = false;
 									break;
@@ -36089,7 +36304,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 								if (tmpSprFrameRot < 8)
 								{
 									if (!dword_12DF8C_12DF7C[byte_906E8[tmpSprFrameRot] + tempEntType->var_0]
-										&& !sub_59050_59560(tempEntType->var_0 + byte_906E8[tmpSprFrameRot]))
+										&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + byte_906E8[tmpSprFrameRot]))
 									{
 										runPart2 = false;
 										break;
@@ -36117,7 +36332,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 									break;
 								}
 								if (!dword_12DF8C_12DF7C[byte_906E8[tmpSprFrameRot] + tempEntType->var_0]
-									&& !sub_59050_59560(tempEntType->var_0 + byte_906E8[tmpSprFrameRot]))
+									&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + byte_906E8[tmpSprFrameRot]))
 								{
 									runPart2 = false;
 									break;
@@ -36148,7 +36363,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 								if (tmpSprFrameRot >= 8)
 								{
 									if (!dword_12DF8C_12DF7C[tempEntType->var_0 + byte_906F8[tmpSprFrameRot]]
-										&& !sub_59050_59560(tempEntType->var_0 + byte_906F8[tmpSprFrameRot]))
+										&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + byte_906F8[tmpSprFrameRot]))
 									{
 										runPart2 = false;
 										break;
@@ -36164,7 +36379,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 								else
 								{
 									if (!dword_12DF8C_12DF7C[byte_906F8[tmpSprFrameRot] + tempEntType->var_0]
-										&& !sub_59050_59560(tempEntType->var_0 + byte_906F8[tmpSprFrameRot]))
+										&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + byte_906F8[tmpSprFrameRot]))
 									{
 										runPart2 = false;
 										break;
@@ -36192,7 +36407,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 								}
 								break;
 							case 0x15:
-								if (!dword_12DF8C_12DF7C[tempEntType->var_0] && !sub_59050_59560(tempEntType->var_0))
+								if (!dword_12DF8C_12DF7C[tempEntType->var_0] && !CacheTmapGroup_59050_59560(tempEntType->var_0))
 								{
 									runPart2 = false;
 									break;
@@ -36235,7 +36450,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 							case 0x24:
 								byte_B5D3E_B5D2E = 1;
 								if (!dword_12DF8C_12DF7C[str_AE400_AE3F0->str_29795[result].var_u8_29883_88 + tempEntType->var_0]
-									&& !sub_59050_59560(tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88))
+									&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88))
 								{
 									runPart2 = false;
 									break;
@@ -36313,7 +36528,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 					{
 					case 0:
 					case 1:
-						if (!dword_12DF8C_12DF7C[temp_99BA0->var_0] && !sub_59050_59560(temp_99BA0->var_0))
+						if (!dword_12DF8C_12DF7C[temp_99BA0->var_0] && !CacheTmapGroup_59050_59560(temp_99BA0->var_0))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[temp_99BA0->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						a1x = dword_12DF8C_12DF7C[temp_99BA0->var_0]->var_u32_0;
@@ -36348,7 +36563,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 					case 15:
 					case 16:
 						if (!dword_12DF8C_12DF7C[str_AE400_AE3F0->str_29795[result].var_u8_29883_88 + temp_99BA0->var_0]
-							&& !sub_59050_59560(temp_99BA0->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88))
+							&& !CacheTmapGroup_59050_59560(temp_99BA0->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[str_AE400_AE3F0->str_29795[result].var_u8_29883_88 + temp_99BA0->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						a1x = dword_12DF8C_12DF7C[temp_99BA0->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88]->var_u32_0;
@@ -36372,7 +36587,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 						if (tmpSprFrameRot2 < 8)
 						{
 							if (!dword_12DF8C_12DF7C[tmpSprFrameRot2 + temp_99BA0->var_0]
-								&& !sub_59050_59560(tmpSprFrameRot2 + temp_99BA0->var_0))
+								&& !CacheTmapGroup_59050_59560(tmpSprFrameRot2 + temp_99BA0->var_0))
 								break;
 							a1x = dword_12DF8C_12DF7C[tmpSprFrameRot2 + temp_99BA0->var_0]->var_u32_0;
 							sprX_B5CD0_B5CC0 = a1x->xx;
@@ -36392,7 +36607,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 							break;
 						}
 						if (!dword_12DF8C_12DF7C[temp_99BA0->var_0 + 15 - tmpSprFrameRot2]
-							&& !sub_59050_59560(temp_99BA0->var_0 + 15 - tmpSprFrameRot2))
+							&& !CacheTmapGroup_59050_59560(temp_99BA0->var_0 + 15 - tmpSprFrameRot2))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[temp_99BA0->var_0 + 15 - tmpSprFrameRot2].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						a1x = dword_12DF8C_12DF7C[temp_99BA0->var_0 + 15 - tmpSprFrameRot2]->var_u32_0;
@@ -36414,7 +36629,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 					case 18:
 						tmpSprFrameRot2 = (((str_AE400_AE3F0->str_29795[result].var_u16_29825_30 - (unsigned __int16)yaw_B5D38_B5D28) >> 3) & 0xF0) >> 4;
 						if (!dword_12DF8C_12DF7C[tmpSprFrameRot2 + temp_99BA0->var_0]
-							&& !sub_59050_59560(tmpSprFrameRot2 + temp_99BA0->var_0))
+							&& !CacheTmapGroup_59050_59560(tmpSprFrameRot2 + temp_99BA0->var_0))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[tmpSprFrameRot2 + temp_99BA0->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						a1x = dword_12DF8C_12DF7C[tmpSprFrameRot2 + temp_99BA0->var_0]->var_u32_0;
@@ -36438,7 +36653,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 						if (tmpSprFrameRot2 < 8)
 						{
 							if (!dword_12DF8C_12DF7C[byte_906E8[tmpSprFrameRot2] + temp_99BA0->var_0]
-								&& !sub_59050_59560(temp_99BA0->var_0 + byte_906E8[tmpSprFrameRot2]))
+								&& !CacheTmapGroup_59050_59560(temp_99BA0->var_0 + byte_906E8[tmpSprFrameRot2]))
 								break;
 							dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[byte_906E8[tmpSprFrameRot2] + temp_99BA0->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 							a1x = dword_12DF8C_12DF7C[temp_99BA0->var_0 + byte_906E8[tmpSprFrameRot2]]->var_u32_0;
@@ -36459,7 +36674,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 							break;
 						}
 						if (!dword_12DF8C_12DF7C[byte_906E8[tmpSprFrameRot2] + temp_99BA0->var_0]
-							&& !sub_59050_59560(temp_99BA0->var_0 + byte_906E8[tmpSprFrameRot2]))
+							&& !CacheTmapGroup_59050_59560(temp_99BA0->var_0 + byte_906E8[tmpSprFrameRot2]))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[byte_906E8[tmpSprFrameRot2] + temp_99BA0->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						a1x = dword_12DF8C_12DF7C[temp_99BA0->var_0 + byte_906E8[tmpSprFrameRot2]]->var_u32_0;
@@ -36483,7 +36698,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 						if (tmpSprFrameRot2 >= 8)
 						{
 							if (!dword_12DF8C_12DF7C[temp_99BA0->var_0 + byte_906F8[tmpSprFrameRot2]]
-								&& !sub_59050_59560(temp_99BA0->var_0 + byte_906F8[tmpSprFrameRot2]))
+								&& !CacheTmapGroup_59050_59560(temp_99BA0->var_0 + byte_906F8[tmpSprFrameRot2]))
 								break;
 							dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[temp_99BA0->var_0 + byte_906F8[tmpSprFrameRot2]].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 							a1x = dword_12DF8C_12DF7C[byte_906F8[tmpSprFrameRot2] + temp_99BA0->var_0]->var_u32_0;
@@ -36496,7 +36711,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 						else
 						{
 							if (!dword_12DF8C_12DF7C[temp_99BA0->var_0 + byte_906F8[tmpSprFrameRot2]]
-								&& !sub_59050_59560(temp_99BA0->var_0 + byte_906F8[tmpSprFrameRot2]))
+								&& !CacheTmapGroup_59050_59560(temp_99BA0->var_0 + byte_906F8[tmpSprFrameRot2]))
 								break;
 							dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[temp_99BA0->var_0 + byte_906F8[tmpSprFrameRot2]].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 							a1x = dword_12DF8C_12DF7C[temp_99BA0->var_0 + byte_906F8[tmpSprFrameRot2]]->var_u32_0;
@@ -36517,7 +36732,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 						BlitSprite_2C410_2C450(1u);
 						break;
 					case 21:
-						if (!dword_12DF8C_12DF7C[temp_99BA0->var_0] && !sub_59050_59560(temp_99BA0->var_0))
+						if (!dword_12DF8C_12DF7C[temp_99BA0->var_0] && !CacheTmapGroup_59050_59560(temp_99BA0->var_0))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[temp_99BA0->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						byte_B5D3E_B5D2E = 1;
@@ -36554,7 +36769,7 @@ void DrawSprite_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 					case 36:
 						byte_B5D3E_B5D2E = 1;
 						if (!dword_12DF8C_12DF7C[str_AE400_AE3F0->str_29795[result].var_u8_29883_88 + temp_99BA0->var_0]
-							&& !sub_59050_59560(temp_99BA0->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88))
+							&& !CacheTmapGroup_59050_59560(temp_99BA0->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[str_AE400_AE3F0->str_29795[result].var_u8_29883_88 + temp_99BA0->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						a1x = dword_12DF8C_12DF7C[temp_99BA0->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88]->var_u32_0;
@@ -36623,7 +36838,7 @@ void DrawSprite3D_2F170_2F1B0(/*int a1,*/ Type_BegBscreen* a2x)//200170_
 					{
 					case 0:
 					case 1:
-						if (!dword_12DF8C_12DF7C[tempEntType->var_0] && !sub_59050_59560(tempEntType->var_0))
+						if (!dword_12DF8C_12DF7C[tempEntType->var_0] && !CacheTmapGroup_59050_59560(tempEntType->var_0))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[tempEntType->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						a1x = dword_12DF8C_12DF7C[tempEntType->var_0]->var_u32_0;
@@ -36655,7 +36870,7 @@ void DrawSprite3D_2F170_2F1B0(/*int a1,*/ Type_BegBscreen* a2x)//200170_
 					case 15:
 					case 16:
 						if (!dword_12DF8C_12DF7C[str_AE400_AE3F0->str_29795[result].var_u8_29883_88 + tempEntType->var_0]
-							&& !sub_59050_59560(tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88))
+							&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						a1x = dword_12DF8C_12DF7C[tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88]->var_u32_0;
@@ -36676,7 +36891,7 @@ void DrawSprite3D_2F170_2F1B0(/*int a1,*/ Type_BegBscreen* a2x)//200170_
 						if (tmpSprFrameRot2 < 8)
 						{
 							if (!dword_12DF8C_12DF7C[tmpSprFrameRot2 + tempEntType->var_0]
-								&& !sub_59050_59560(tmpSprFrameRot2 + tempEntType->var_0))
+								&& !CacheTmapGroup_59050_59560(tmpSprFrameRot2 + tempEntType->var_0))
 								break;
 							dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[tmpSprFrameRot2 + tempEntType->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 							a1x = dword_12DF8C_12DF7C[tmpSprFrameRot2 + tempEntType->var_0]->var_u32_0;
@@ -36693,7 +36908,7 @@ void DrawSprite3D_2F170_2F1B0(/*int a1,*/ Type_BegBscreen* a2x)//200170_
 							BlitSprite_2C410_2C450(1u);
 							break;
 						}
-						if (dword_12DF8C_12DF7C[tempEntType->var_0 + 15 - tmpSprFrameRot2] || sub_59050_59560(tempEntType->var_0 + 15 - tmpSprFrameRot2))
+						if (dword_12DF8C_12DF7C[tempEntType->var_0 + 15 - tmpSprFrameRot2] || CacheTmapGroup_59050_59560(tempEntType->var_0 + 15 - tmpSprFrameRot2))
 						{
 							dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[tempEntType->var_0 + 15 - tmpSprFrameRot2].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 							a1x = dword_12DF8C_12DF7C[tempEntType->var_0 + 15 - tmpSprFrameRot2]->var_u32_0;
@@ -36714,7 +36929,7 @@ void DrawSprite3D_2F170_2F1B0(/*int a1,*/ Type_BegBscreen* a2x)//200170_
 					case 18:
 						tmpSprFrameRot2 = (((str_AE400_AE3F0->str_29795[result].var_u16_29825_30 - (unsigned __int16)yaw_B5D38_B5D28) >> 3) & 0xF0) >> 4;
 						if (!dword_12DF8C_12DF7C[tmpSprFrameRot2 + tempEntType->var_0]
-							&& !sub_59050_59560(tmpSprFrameRot2 + tempEntType->var_0))
+							&& !CacheTmapGroup_59050_59560(tmpSprFrameRot2 + tempEntType->var_0))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[tmpSprFrameRot2 + tempEntType->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						a1x = dword_12DF8C_12DF7C[tmpSprFrameRot2 + tempEntType->var_0]->var_u32_0;
@@ -36735,7 +36950,7 @@ void DrawSprite3D_2F170_2F1B0(/*int a1,*/ Type_BegBscreen* a2x)//200170_
 						if (tmpSprFrameRot2 < 8)
 						{
 							if (!dword_12DF8C_12DF7C[tempEntType->var_0 + byte_906E8[tmpSprFrameRot2]]
-								&& !sub_59050_59560(tempEntType->var_0 + byte_906E8[tmpSprFrameRot2]))
+								&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + byte_906E8[tmpSprFrameRot2]))
 								break;
 							dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[tempEntType->var_0 + byte_906E8[tmpSprFrameRot2]].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 							a1x = dword_12DF8C_12DF7C[tempEntType->var_0 + byte_906E8[tmpSprFrameRot2]]->var_u32_0;
@@ -36753,7 +36968,7 @@ void DrawSprite3D_2F170_2F1B0(/*int a1,*/ Type_BegBscreen* a2x)//200170_
 							break;
 						}
 						if (!dword_12DF8C_12DF7C[byte_906E8[tmpSprFrameRot2] + tempEntType->var_0]
-							&& !sub_59050_59560(tempEntType->var_0 + byte_906E8[tmpSprFrameRot2]))
+							&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + byte_906E8[tmpSprFrameRot2]))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[byte_906E8[tmpSprFrameRot2] + tempEntType->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						a1x = dword_12DF8C_12DF7C[tempEntType->var_0 + byte_906E8[tmpSprFrameRot2]]->var_u32_0;
@@ -36774,7 +36989,7 @@ void DrawSprite3D_2F170_2F1B0(/*int a1,*/ Type_BegBscreen* a2x)//200170_
 						if (tmpSprFrameRot2 >= 8)
 						{
 							if (!dword_12DF8C_12DF7C[byte_906F8[tmpSprFrameRot2] + tempEntType->var_0]
-								&& !sub_59050_59560(tempEntType->var_0 + byte_906F8[tmpSprFrameRot2]))
+								&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + byte_906F8[tmpSprFrameRot2]))
 								break;
 							dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[byte_906F8[tmpSprFrameRot2] + tempEntType->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 							a1x = dword_12DF8C_12DF7C[tempEntType->var_0 + byte_906F8[tmpSprFrameRot2]]->var_u32_0;
@@ -36787,7 +37002,7 @@ void DrawSprite3D_2F170_2F1B0(/*int a1,*/ Type_BegBscreen* a2x)//200170_
 						else
 						{
 							if (!dword_12DF8C_12DF7C[byte_906F8[tmpSprFrameRot2] + tempEntType->var_0]
-								&& !sub_59050_59560(tempEntType->var_0 + byte_906F8[tmpSprFrameRot2]))
+								&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + byte_906F8[tmpSprFrameRot2]))
 								break;
 							dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[byte_906F8[tmpSprFrameRot2] + tempEntType->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 							a1x = dword_12DF8C_12DF7C[tempEntType->var_0 + byte_906F8[tmpSprFrameRot2]]->var_u32_0;
@@ -36805,7 +37020,7 @@ void DrawSprite3D_2F170_2F1B0(/*int a1,*/ Type_BegBscreen* a2x)//200170_
 						BlitSprite_2C410_2C450(1u);
 						break;
 					case 21:
-						if (!dword_12DF8C_12DF7C[tempEntType->var_0] && !sub_59050_59560(tempEntType->var_0))
+						if (!dword_12DF8C_12DF7C[tempEntType->var_0] && !CacheTmapGroup_59050_59560(tempEntType->var_0))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[tempEntType->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						byte_B5D3E_B5D2E = 1;
@@ -36839,7 +37054,7 @@ void DrawSprite3D_2F170_2F1B0(/*int a1,*/ Type_BegBscreen* a2x)//200170_
 					case 36:
 						byte_B5D3E_B5D2E = 1;
 						if (!dword_12DF8C_12DF7C[str_AE400_AE3F0->str_29795[result].var_u8_29883_88 + tempEntType->var_0]
-							&& !sub_59050_59560(tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88))
+							&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						a1x = dword_12DF8C_12DF7C[tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88]->var_u32_0;
@@ -36922,7 +37137,7 @@ void DrawSprite_2FC50_2FC90(Type_BegBscreen* a2x)//200C50_
 					switch (tempEntType->var_12)
 					{
 					case 0:
-						if (!dword_12DF8C_12DF7C[tempEntType->var_0] && !sub_59050_59560(tempEntType->var_0))
+						if (!dword_12DF8C_12DF7C[tempEntType->var_0] && !CacheTmapGroup_59050_59560(tempEntType->var_0))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[tempEntType->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						a1x = dword_12DF8C_12DF7C[tempEntType->var_0]->var_u32_0;
@@ -36943,7 +37158,7 @@ void DrawSprite_2FC50_2FC90(Type_BegBscreen* a2x)//200C50_
 						BlitSprite_2C410_2C450(2u);
 						break;
 					case 1:
-						if (!dword_12DF8C_12DF7C[tempEntType->var_0] && !sub_59050_59560(tempEntType->var_0))
+						if (!dword_12DF8C_12DF7C[tempEntType->var_0] && !CacheTmapGroup_59050_59560(tempEntType->var_0))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[tempEntType->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						a1x = dword_12DF8C_12DF7C[tempEntType->var_0]->var_u32_0;
@@ -36978,7 +37193,7 @@ void DrawSprite_2FC50_2FC90(Type_BegBscreen* a2x)//200C50_
 					case 15:
 					case 16:
 						if (!dword_12DF8C_12DF7C[tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88]
-							&& !sub_59050_59560(tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88))
+							&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[str_AE400_AE3F0->str_29795[result].var_u8_29883_88 + tempEntType->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						a1x = dword_12DF8C_12DF7C[tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88]->var_u32_0;
@@ -37002,7 +37217,7 @@ void DrawSprite_2FC50_2FC90(Type_BegBscreen* a2x)//200C50_
 						if (tmpSprFrameRot2 < 8)
 						{
 							if (!dword_12DF8C_12DF7C[tmpSprFrameRot2 + tempEntType->var_0]
-								&& !sub_59050_59560(tmpSprFrameRot2 + tempEntType->var_0))
+								&& !CacheTmapGroup_59050_59560(tmpSprFrameRot2 + tempEntType->var_0))
 								break;
 							dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[tmpSprFrameRot2 + tempEntType->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 							a1x = dword_12DF8C_12DF7C[tmpSprFrameRot2 + tempEntType->var_0]->var_u32_0;
@@ -37023,7 +37238,7 @@ void DrawSprite_2FC50_2FC90(Type_BegBscreen* a2x)//200C50_
 							break;
 						}
 						if (!dword_12DF8C_12DF7C[tempEntType->var_0 + 15 - tmpSprFrameRot2]
-							&& !sub_59050_59560(tempEntType->var_0 + 15 - tmpSprFrameRot2))
+							&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + 15 - tmpSprFrameRot2))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[tempEntType->var_0 + 15 - tmpSprFrameRot2].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						a1x = dword_12DF8C_12DF7C[tempEntType->var_0 + 15 - tmpSprFrameRot2]->var_u32_0;
@@ -37045,7 +37260,7 @@ void DrawSprite_2FC50_2FC90(Type_BegBscreen* a2x)//200C50_
 					case 18:
 						tmpSprFrameRot2 = (((str_AE400_AE3F0->str_29795[result].var_u16_29825_30 - (unsigned __int16)yaw_B5D38_B5D28) >> 3) & 0xF0) >> 4;
 						if (!dword_12DF8C_12DF7C[tmpSprFrameRot2 + tempEntType->var_0]
-							&& !sub_59050_59560(tmpSprFrameRot2 + tempEntType->var_0))
+							&& !CacheTmapGroup_59050_59560(tmpSprFrameRot2 + tempEntType->var_0))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[tmpSprFrameRot2 + tempEntType->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						a1x = dword_12DF8C_12DF7C[tmpSprFrameRot2 + tempEntType->var_0]->var_u32_0;
@@ -37069,7 +37284,7 @@ void DrawSprite_2FC50_2FC90(Type_BegBscreen* a2x)//200C50_
 						if (tmpSprFrameRot2 < 8)
 						{
 							if (!dword_12DF8C_12DF7C[tempEntType->var_0 + byte_906E8[tmpSprFrameRot2]]
-								&& !sub_59050_59560(tempEntType->var_0 + byte_906E8[tmpSprFrameRot2]))
+								&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + byte_906E8[tmpSprFrameRot2]))
 								break;
 							dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[tempEntType->var_0 + byte_906E8[tmpSprFrameRot2]].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 							a1x = dword_12DF8C_12DF7C[tempEntType->var_0 + byte_906E8[tmpSprFrameRot2]]->var_u32_0;
@@ -37090,7 +37305,7 @@ void DrawSprite_2FC50_2FC90(Type_BegBscreen* a2x)//200C50_
 							break;
 						}
 						if (!dword_12DF8C_12DF7C[byte_906E8[tmpSprFrameRot2] + tempEntType->var_0]
-							&& !sub_59050_59560(tempEntType->var_0 + byte_906E8[tmpSprFrameRot2]))
+							&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + byte_906E8[tmpSprFrameRot2]))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[byte_906E8[tmpSprFrameRot2] + tempEntType->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						a1x = dword_12DF8C_12DF7C[tempEntType->var_0 + byte_906E8[tmpSprFrameRot2]]->var_u32_0;
@@ -37114,7 +37329,7 @@ void DrawSprite_2FC50_2FC90(Type_BegBscreen* a2x)//200C50_
 						if (tmpSprFrameRot2 >= 8)
 						{
 							if (!dword_12DF8C_12DF7C[tempEntType->var_0 + byte_906F8[tmpSprFrameRot2]]
-								&& !sub_59050_59560(tempEntType->var_0 + byte_906F8[tmpSprFrameRot2]))
+								&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + byte_906F8[tmpSprFrameRot2]))
 								break;
 							dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[tempEntType->var_0 + byte_906F8[tmpSprFrameRot2]].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 							a1x = dword_12DF8C_12DF7C[tempEntType->var_0 + byte_906F8[tmpSprFrameRot2]]->var_u32_0;
@@ -37127,7 +37342,7 @@ void DrawSprite_2FC50_2FC90(Type_BegBscreen* a2x)//200C50_
 						else
 						{
 							if (!dword_12DF8C_12DF7C[tempEntType->var_0 + byte_906F8[tmpSprFrameRot2]]
-								&& !sub_59050_59560(tempEntType->var_0 + byte_906F8[tmpSprFrameRot2]))
+								&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + byte_906F8[tmpSprFrameRot2]))
 								break;
 							dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[tempEntType->var_0 + byte_906F8[tmpSprFrameRot2]].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 							a1x = dword_12DF8C_12DF7C[tempEntType->var_0 + byte_906F8[tmpSprFrameRot2]]->var_u32_0;
@@ -37148,7 +37363,7 @@ void DrawSprite_2FC50_2FC90(Type_BegBscreen* a2x)//200C50_
 						BlitSprite_2C410_2C450(2u);
 						break;
 					case 21:
-						if (!dword_12DF8C_12DF7C[tempEntType->var_0] && !sub_59050_59560(tempEntType->var_0))
+						if (!dword_12DF8C_12DF7C[tempEntType->var_0] && !CacheTmapGroup_59050_59560(tempEntType->var_0))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[tempEntType->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						byte_B5D3E_B5D2E = 1;
@@ -37185,7 +37400,7 @@ void DrawSprite_2FC50_2FC90(Type_BegBscreen* a2x)//200C50_
 					case 36:
 						byte_B5D3E_B5D2E = 1;
 						if (!dword_12DF8C_12DF7C[tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88]
-							&& !sub_59050_59560(tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88))
+							&& !CacheTmapGroup_59050_59560(tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88))
 							break;
 						dword_12CF00_12CEF0[begTmapsTab_12D744_12D734_2EB744_2EB734x[str_AE400_AE3F0->str_29795[result].var_u8_29883_88 + tempEntType->var_0].var_8] = str_AE408_AE3F8->var_u32_4.dword;
 						a1x = dword_12DF8C_12DF7C[tempEntType->var_0 + str_AE400_AE3F0->str_29795[result].var_u8_29883_88]->var_u32_0;
@@ -38337,7 +38552,7 @@ void sub_31AA0_31AE0(int a1)//202AA0_
 {
   pseudoRand_12C1E0_12C1D0 = *(_WORD *)PTR(a1 + 4);
   str_AE400_AE3F0->rand_4 = *(_DWORD *)PTR(a1 + 4);
-  if ( sub_3EEA0_3F1E0((char*)"c:/carpet.cd/save/scanned.rmd", (uint8_t*)mapHeightmap_DC1E0_DC1D0) != 0x10000 )
+  if ( LoadFile_3EEA0_3F1E0((char*)"c:/carpet.cd/save/scanned.rmd", (uint8_t*)mapHeightmap_DC1E0_DC1D0) != 0x10000 )
   {
       //202AF1
         //debug
@@ -40542,7 +40757,7 @@ void TopProcedure_340B0_34470(int argc, const char** argv)//2050B0_205470
 
   if ( ProcessCommandLine_34DD0_35190(argc, (char**)argv) == -1 )
     return;
-  sub_34B40_34F00();
+  LoadDataAndColourLookup_34B40_34F00();
   if ( (str_AE408_AE3F8->var_u8_0 & 8) != 0 )
   {
     nullsub_2();
@@ -40550,7 +40765,7 @@ void TopProcedure_340B0_34470(int argc, const char** argv)//2050B0_205470
   else
   {
     str_AE408_AE3F8->var_u8_23 = 0;
-    sub_3F1D0_3F510();
+    CopyDataToInstallDir_3F1D0_3F510();
     sub_58F90_594A0();
     sub_41230_41570();
     sub_44730_44A70();
@@ -40560,8 +40775,8 @@ void TopProcedure_340B0_34470(int argc, const char** argv)//2050B0_205470
       byte_939E5 = 0;
       musicAvailable_939CC = 0;
       byte_939E4 = 0;
-      sub_40440_40780(&pathStrArray[PSdataftextdat]);
-      sub_44700_44A40((char*)begTextDat_AE41C_AE40C_26C41C_26C40C, dword_AE238_AE228, 80);
+      LoadPathFiles_40440_40780(&pathStrArray[PSdataftextdat]);
+      BuildStringTable_44700_44A40((char*)begTextDat_AE41C_AE40C_26C41C_26C40C, dword_AE238_AE228, 80);
     }
     else
     {
@@ -40594,16 +40809,16 @@ void TopProcedure_340B0_34470(int argc, const char** argv)//2050B0_205470
         if (!IsHiddenWord)
             sub_34070();
         FadeInOut_61CC0_621D0(0, 0x10u, 0);
-        sub_5C05C_5C56C(&begPointersTab_AE450_AE440_26C450_26C440[0]);
+        SetMouseCursor_5C05C_5C56C(&begPointersTab_AE450_AE440_26C450_26C440[0]);
         if ( !str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u8_13327 )
-          sub_34460_34820();
-        sub_34B00_34EC0();//find here 205241
-        sub_61610_61B20(&pathStrArray_258E00[PS25datasnds00dat]);
-        sub_61610_61B20(&pathStrArray_258E00[PS25datamusic00dat]);
+          ShowTitlePicture_34460_34820();
+        LoadAllDataFiles_34B00_34EC0();//find here 205241
+        FreePathFiles_61610_61B20(&pathStrArray_258E00[PS25datasnds00dat]);
+        FreePathFiles_61610_61B20(&pathStrArray_258E00[PS25datamusic00dat]);
         sub_41540_41880();
         if ( !str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u8_13327 )
         {
-          sub_5D070_5D580(0);
+          LoadSoundBank_5D070_5D580(0);
           LoadMusicSet_5CEF0_5D400(0);
         }
         if ( (str_AE408_AE3F8->var_u8_0 & 4) == 0 )
@@ -40618,7 +40833,7 @@ void TopProcedure_340B0_34470(int argc, const char** argv)//2050B0_205470
       if ( !str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u8_13327 )
       {
         pseudoRand = str_AE408_AE3F8->var_u16_17;
-        sub_407A0_40AE0();
+        LoadAndInitLevel_407A0_40AE0();
         if ( typeResolution_12F02E_12F01E == 1 && !blurBuffer_AE404_AE3F4 )
           blurBuffer_AE404_AE3F4 = (uint8*)malloc_42540_42880(64000);
       }
@@ -40670,16 +40885,17 @@ void TopProcedure_340B0_34470(int argc, const char** argv)//2050B0_205470
 }
 
 //----- (00034460) --------------------------------------------------------
-int sub_34460_34820()//205460_
+/// Shows data/smatitle.dat with its palette (smatitle.pal), fading it in.
+int ShowTitlePicture_34460_34820()//205460_
 {
   int result; // eax
 
-  sub_3EEA0_3F1E0((char*)"data/smatitle.dat", (uint8_t*)begWscreen_2ECFF4_2ECFE4);
+  LoadFile_3EEA0_3F1E0((char*)"data/smatitle.dat", (uint8_t*)begWscreen_2ECFF4_2ECFE4);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
     Blit_599B0_59EC0(480);
-  sub_3EEA0_3F1E0((char*)"data/smatitle.pal", (uint8_t*)begPalDat_AE428_AE418_26C428_26C418);
+  LoadFile_3EEA0_3F1E0((char*)"data/smatitle.pal", (uint8_t*)begPalDat_AE428_AE418_26C428_26C418);
   FadeInOut_61CC0_621D0(begPalDat_AE428_AE418_26C428_26C418, 0x20u, 0);
   result = dword_AE400_AE3F0();
   *(_DWORD *)PTR(dword_AE400_AE3F0() + 581) = 1;
@@ -40693,11 +40909,12 @@ int sub_34460_34820()//205460_
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //----- (000344F0) --------------------------------------------------------
-void sub_344F0()
+/// Fades to black and loads the game palette data/pal0-0.dat.
+void LoadGamePalette_344F0()
 {
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
   str_AE400_AE3F0->var_u32_581 = 0;
-  sub_3EEA0_3F1E0((char*)"data/pal0-0.dat", (uint8*)begPalDat_AE428_AE418_26C428_26C418);
+  LoadFile_3EEA0_3F1E0((char*)"data/pal0-0.dat", (uint8*)begPalDat_AE428_AE418_26C428_26C418);
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
 // AE428: using guessed type int begPalDat_AE428_AE418_26C428_26C418;
@@ -40716,10 +40933,10 @@ void DrawAndEventsInGame_34530_348F0()//205530_
 	if (!str_AE400_AE3F0->set.mod3D_8603)
 		UpdatePaletteEffects_34690_34A50();
 	if ((str_AE408_AE3F8->var_u8_2 & 1) == 0)
-		SNAP_CALL(0x590D0, sub_590D0_595E0())
+		SNAP_CALL(0x590D0, AdvanceTextureAnims_590D0_595E0())
 	if ((str_AE408_AE3F8->var_u8_0 & 4) == 0)
-		SNAP_CALL(0x17C20, sub_17C20())
-	SNAP_CALL(0x3C9D0, sub_3C9D0_3CD10())
+		SNAP_CALL(0x17C20, ReadLocalPlayerControls_17C20())
+	SNAP_CALL(0x3C9D0, ExecutePlayerInputs_3C9D0_3CD10())
 	if ((str_AE408_AE3F8->var_u8_2 & 1) == 0)
 		SNAP_CALL(0x415C0, sub_415C0_41900())
 	switch (str_AE408_AE3F8->gameSpeed_150)
@@ -40768,7 +40985,7 @@ void DrawAndEventsInGame_34530_348F0()//205530_
 #endif debug1
 	//debug
 	str_AE408_AE3F8->var_u32_153 = timerTicks_AC5D4_AC5C4 - str_AE408_AE3F8->var_u32_153;
-	SNAP_CALL(0x5A560, sub_5A560_5AA70())
+	SNAP_CALL(0x5A560, DrawVersionInfo_5A560_5AA70())
 	//2055F4
 	    //debug
 #ifdef debug1
@@ -40853,7 +41070,7 @@ void UpdatePaletteEffects_34690_34A50()
   //LOBYTE(v1) = str_AE408_AE3F8->var_u8_23;
   if (str_AE408_AE3F8->var_u8_23 < 2u )
   {
-    sub_344F0();
+    LoadGamePalette_344F0();
     //LOBYTE(v1) = dword_AE408_AE3F8();
     str_AE408_AE3F8->var_u8_23++;
   }
@@ -40994,22 +41211,24 @@ LABEL_61:
 // B7310: using guessed type int dword_B7310;
 
 //SYNCHRONIZED WITH REMC1
-void sub_34B00_34EC0()//205b00_205EC0
+/// Loads the main data files (search buffer, screen, ...) and the search table (LoadSearchData_11540).
+void LoadAllDataFiles_34B00_34EC0()//205b00_205EC0
 {
-  sub_40440_40780(&pathStrArray[PSSearchD]);
+  LoadPathFiles_40440_40780(&pathStrArray[PSSearchD]);
   if ( typeResolution_12F02E_12F01E == 1 )
-    sub_40440_40780(&pathStrArray[PSWScreen]);
+    LoadPathFiles_40440_40780(&pathStrArray[PSWScreen]);
   else
-    sub_40440_40780(&pathStrArray[PSWScreen2]);
+    LoadPathFiles_40440_40780(&pathStrArray[PSWScreen2]);
   sub_59500_59A10(off_99974);
-  sub_11540();
+  LoadSearchData_11540();
 }
 
-void sub_34B40_34F00()//205B40_205F00
+/// Start-up step: "Load all data files" (LoadAllDataFiles_34B00_34EC0), then "Initialise Colour Lookup".
+void LoadDataAndColourLookup_34B40_34F00()//205B40_205F00
 {
 	DrawStartGameTexts_5ACA0_5B1B0();
 	DrawTextLine_5AD10_5B220((char*)"Load all data files");
-	sub_34B00_34EC0();
+	LoadAllDataFiles_34B00_34EC0();
 	DrawTextLine_5AD10_5B220((char*)"Initialise Colour Lookup");
     int index1 = 0;
     uint8_t indexB1 = 3;
@@ -41024,7 +41243,7 @@ void sub_34B40_34F00()//205B40_205F00
 			for (int k = 0; k < 16; k++)
 			{
 				index3++;
-				byte_AD167_AD157[index3] = sub_5CC70_5D180(begPalDat_AE428_AE418_26C428_26C418, indexB1, indexB2, indexB3);
+				byte_AD167_AD157[index3] = FindNearestColour_5CC70_5D180(begPalDat_AE428_AE418_26C428_26C418, indexB1, indexB2, indexB3);
 				indexB3 += 4;
 			}
 			index2 += 16;
@@ -41034,7 +41253,7 @@ void sub_34B40_34F00()//205B40_205F00
 		indexB1 += 4;
 	}
 	str_AE408_AE3F8->var_u8_23 = 1;
-	sub_5A3C0_5A8D0(0);
+	SetFont_5A3C0_5A8D0(0);
 }
 
 //----- (00034C60) --------------------------------------------------------
@@ -41042,7 +41261,7 @@ void sub_34C60_35020()//205C60
 {
     sub_58F00_59410();
     sub_44840_44B80();
-    sub_61610_61B20(&pathStrArray[PSSearchD]);
+    FreePathFiles_61610_61B20(&pathStrArray[PSSearchD]);
     DrawStartGameTexts_5ACA0_5B1B0();
 }
 
@@ -41057,16 +41276,16 @@ void sub_34C80_35040()//205C80_
   sub_59560_59A70(off_99974);
   if ( typeResolution_12F02E_12F01E == 1 )
   {
-    sub_61610_61B20(&pathStrArray[PSWScreen]);
+    FreePathFiles_61610_61B20(&pathStrArray[PSWScreen]);
     typeResolution_12F02E_12F01E = 8;
-    sub_40440_40780(&pathStrArray[PSWScreen2]);
+    LoadPathFiles_40440_40780(&pathStrArray[PSWScreen2]);
     blurBuffer_AE404_AE3F4 = (uint8*)malloc_42540_42880(307200);
   }
   else
   {
-    sub_61610_61B20(&pathStrArray[PSWScreen2]);//735a98 clean begWscreen_2ECFF4_2ECFE4
+    FreePathFiles_61610_61B20(&pathStrArray[PSWScreen2]);//735a98 clean begWscreen_2ECFF4_2ECFE4
     typeResolution_12F02E_12F01E = 1;
-    sub_40440_40780(&pathStrArray[PSWScreen]);//735a98 set begWscreen_2ECFF4_2ECFE4
+    LoadPathFiles_40440_40780(&pathStrArray[PSWScreen]);//735a98 set begWscreen_2ECFF4_2ECFE4
     blurBuffer_AE404_AE3F4 = (uint8*)malloc_42540_42880(64000);
   }
   sub_59500_59A10(off_99974);
@@ -41075,11 +41294,11 @@ void sub_34C80_35040()//205C80_
   else
     sub_61C30_62140((TColor*)begWscreen_2ECFF4_2ECFE4);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-    sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
+    ClearScreen320_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    sub_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   sub_5C214_5C724();
-  sub_5C05C_5C56C(&begPointersTab_AE450_AE440_26C450_26C440[0]);
+  SetMouseCursor_5C05C_5C56C(&begPointersTab_AE450_AE440_26C450_26C440[0]);
   str_AE408_AE3F8->var_u8_23 = 0;
 }
 // 99974: using guessed type int *off_99974;
@@ -41305,7 +41524,7 @@ int ProcessCommandLine_34DD0_35190(int argc, char** argv)//205DD0_
 		str_AE400_AE3F0->set.var_u8_8629 = 1;
 		str_AE400_AE3F0->set.var_u8_8630 = 1;
 		str_AE400_AE3F0->set.var_u8_8631 = 1;
-		sub_19470();
+		DetectCpu_19470();
 		if (str_AE408_AE3F8->var_u8_8)
 		{
 			str_AE400_AE3F0->set.reflections_8597 = 1;
@@ -41455,7 +41674,8 @@ int sub_35710_35AD0()
 // 12EFE4: using guessed type __int16 mouseLeftButton2_12EFE4_12EFD4;
 
 //----- (000357C0) --------------------------------------------------------
-void sub_357C0_35B80()
+/// Start-up step "Initialise Sound" / "Initialise Music" (or "Sound Disabled").
+void InitSound_357C0_35B80()
 {
   if ( !byte_90AD4 )
   {
@@ -41517,7 +41737,7 @@ void sub_357C0_35B80()
 
 //----- (000357A0) --------------------------------------------------------
 /// Game clock tick used when a sound driver is active: registered with the HMI timer service at
-/// 120 Hz (sub_357C0_35B80) in place of the PIT ISR sub_5A3E3. Original: `inc dword_AC5D4; retf`.
+/// 120 Hz (InitSound_357C0_35B80) in place of the PIT ISR sub_5A3E3. Original: `inc dword_AC5D4; retf`.
 void HmiTimerTick_357A0()
 {
   timerTicks_AC5D4_AC5C4++;
@@ -41530,7 +41750,7 @@ void sub_358A0_35C60()
         sub_5A4EA_5A9FA();
     else
     {
-        PortTimer_Stop(); // PORT: counterpart of the HMI timer registration in sub_357C0_35B80
+        PortTimer_Stop(); // PORT: counterpart of the HMI timer registration in InitSound_357C0_35B80
         RemoveTimerEvent_5DC91(dword_80010);
         sub_61F90();
         sub_62020();
@@ -41781,7 +42001,7 @@ int sub_35D30_360F0(unsigned __int16 a1, unsigned __int16 a2, __int16 a3, __int1
   v8[0] = a3 << 8;
   v8[1] = a4 << 8;
   v4 = HeadingTo_42150_42490((axis_3d*)(uint16*)v7, (axis_3d*)(uint16*)v8);
-  v5 = sub_423D0_42710((axis_3d*)(uint16*)v7, (axis_3d*)(uint16*)v8);
+  v5 = Distance2D_423D0_42710((axis_3d*)(uint16*)v7, (axis_3d*)(uint16*)v8);
   result = (int)OFF(CreateEntity_373F0_377B0((axis_3d*)v7, 10, 32));
   if ( result )
   {
@@ -41808,7 +42028,7 @@ int sub_35DE0_361A0(unsigned __int16 a1, unsigned __int16 a2, __int16 a3, __int1
   v10[0] = a3 << 8;
   v10[1] = a4 << 8;
   v4 = HeadingTo_42150_42490((axis_3d*)(uint16*)v9, (axis_3d*)(uint16*)v10);
-  v5 = sub_423D0_42710((axis_3d*)(uint16*)v9, (axis_3d*)(uint16*)v10);
+  v5 = Distance2D_423D0_42710((axis_3d*)(uint16*)v9, (axis_3d*)(uint16*)v10);
   result = (int)OFF(CreateEntity_373F0_377B0((axis_3d*)v9, 10, 51));
   v7 = result;
   if ( result )
@@ -42221,6 +42441,7 @@ void sub_36480_36840(Type_AE400_193795* a1, Type_1090* a2)//207480_
 }
 
 //----- (000365C0) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 _WORD *sub_365C0_36980(int a1)
 {
   _WORD *result; // eax
@@ -42801,17 +43022,17 @@ void sub_36DF0_371B0(Type_AE400_29795* event, unsigned __int16 a2)//207DF0_
   word_AE454_AE444 = event->var_u32_29867_72;
   word_AE454_AE444.x = event->var_u32_29867_72.x >> 8 << 8;
   word_AE454_AE444.y = event->var_u32_29867_72.y >> 8 << 8;
-  sub_41C70_41FB0(event, &word_AE454_AE444);
+  MoveEntity_41C70_41FB0(event, &word_AE454_AE444);
   uint8 pomX2 = (event->var_u32_29867_72.x >> 8) - (pomX >> 1);
   uint8 pomY2 = (event->var_u32_29867_72.y >> 8) - (pomY >> 1);
   if ( (pomX2 + pomY2) % 2 )
   {
     word_AE454_AE444 = event->var_u32_29867_72;
     word_AE454_AE444.x += 0x100;
-    sub_41C70_41FB0(event, &word_AE454_AE444);
+    MoveEntity_41C70_41FB0(event, &word_AE454_AE444);
     pomX2++;
   }
-  sub_37150_37510(event, a2);
+  SetCollisionBoxFromBuild_37150_37510(event, a2);
   event->actLife_29807_12 = 30;
   event->var_u16_29839_44 = 2000;
   event->var_u32_29867_72.z = 32 * sub_361C0_36580(pomX2, pomY2, pomY, pomX);
@@ -42821,7 +43042,8 @@ void sub_36DF0_371B0(Type_AE400_29795* event, unsigned __int16 a2)//207DF0_
 
 
 //----- (00036F90) --------------------------------------------------------
-int sub_36F90_37350(int a1)
+/// Sets the entity's mana (+140) to half its max life (+8).
+int SetManaToHalfMaxLife_36F90_37350(int a1)
 {
   int result; // eax
 
@@ -42831,7 +43053,8 @@ int sub_36F90_37350(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_36FA0_37360(Type_AE400_29795* event, __int16 a2)//207FA0_
+/// Gives the entity sprite descriptor a2 (+86, index into unk_99BA0x), resets its animation frame (+88), sets the frame count (+89) and the collision box from the descriptor size.
+void SetSprite_36FA0_37360(Type_AE400_29795* event, __int16 a2)//207FA0_
 {
   event->var_u8_29883_88 = 0;
   event->var_u16_29881_86 = a2;
@@ -42843,34 +43066,38 @@ void sub_36FA0_37360(Type_AE400_29795* event, __int16 a2)//207FA0_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_37030_373F0(Type_AE400_29795* a1x, __int16 a2)
+/// SetSprite_36FA0_37360, then sets the collision radii from the descriptor again (same values).
+void SetSpriteAndBox_37030_373F0(Type_AE400_29795* a1x, __int16 a2)
 {
-  sub_36FA0_37360(a1x, a2);
+  SetSprite_36FA0_37360(a1x, a2);
   a1x->collisionBox_29873_78.radiusX_29875_80 = word_99BA6[7 * a2] / 2;
   a1x->collisionBox_29873_78.radiusY_29877_82 = word_99BA6[7 * a2] / 2;
   a1x->collisionBox_29873_78.radiusZ_29879_84 = word_99BA6[1 + 7 * a2] / 2;
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_370A0_37460(Type_AE400_29795* a1x, __int16 a2)
+/// SetSprite_36FA0_37360 with the collision radii doubled.
+void SetSpriteDoubleBox_370A0_37460(Type_AE400_29795* a1x, __int16 a2)
 {
-  sub_36FA0_37360(a1x, a2);
+  SetSprite_36FA0_37360(a1x, a2);
   a1x->collisionBox_29873_78.radiusX_29875_80 *= 2;
   a1x->collisionBox_29873_78.radiusY_29877_82 *= 2;
   a1x->collisionBox_29873_78.radiusZ_29879_84 *= 2;
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_370E0_374A0(Type_AE400_29795* a1x, __int16 a2)
+/// SetSprite_36FA0_37360 with the collision radii halved.
+void SetSpriteHalfBox_370E0_374A0(Type_AE400_29795* a1x, __int16 a2)
 {
-  sub_36FA0_37360(a1x, a2);
+  SetSprite_36FA0_37360(a1x, a2);
   a1x->collisionBox_29873_78.radiusX_29875_80 /= 2;
   a1x->collisionBox_29873_78.radiusY_29877_82 /= 2;
   a1x->collisionBox_29873_78.radiusZ_29879_84 /= 2;
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_37130_374F0(Type_AE400_29795* a1x, __int16 a2, __int16 a3)
+/// Sets the entity's collision box radii: x and y = a2, z = a3.
+void SetCollisionBox_37130_374F0(Type_AE400_29795* a1x, __int16 a2, __int16 a3)
 {
     a1x->collisionBox_29873_78.radiusX_29875_80 = a2;
     a1x->collisionBox_29873_78.radiusY_29877_82 = a2;
@@ -42878,7 +43105,8 @@ void sub_37130_374F0(Type_AE400_29795* a1x, __int16 a2, __int16 a3)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_37150_37510(Type_AE400_29795* event, __int16 a2)//208150_
+/// Sets the collision box from building sprite a2 (begBuildTab_AE440 width/height; z offset -8192, z radius 0x4000).
+void SetCollisionBoxFromBuild_37150_37510(Type_AE400_29795* event, __int16 a2)//208150_
 {
   uint8_t pomX = begBuildTab_AE440_AE430_26C440_26C430[a2].dim.x;
   uint8_t pomY = begBuildTab_AE440_AE430_26C440_26C430[a2].dim.y;
@@ -42893,7 +43121,8 @@ void sub_37150_37510(Type_AE400_29795* event, __int16 a2)//208150_
   event->collisionBox_29873_78.radiusZ_29879_84 = 0x4000;
 }
 
-void sub_371C0_37580()//2081C0_
+/// Puts entities 999..1 on the free list and empties the recycle list (new level).
+void InitFreeList_371C0_37580()//2081C0_
 {
   str_AE400_AE3F0->str_29795[0].var_u32_29955_160 = unk_B7330_B7320;
   str_AE400_AE3F0->freeListTop_40 = -1;
@@ -42905,7 +43134,8 @@ void sub_371C0_37580()//2081C0_
 }
 
 //----- (00037220) --------------------------------------------------------
-void sub_37220_375E0()//208220_
+/// Rebuilds the entity free list (game state +40/+593: unused slots) and the recycle list (+4593/+4597: entities with flags 0x20400) from entity 999 down to 1.
+void RebuildFreeLists_37220_375E0()//208220_
 {
   //Type_str_AE400_AE3F0* v0; // edi
   //int v1; // edx
@@ -42966,7 +43196,7 @@ Type_AE400_29795* NewEvent_372C0_37680()//2082C0_
 		return str_AE400_AE3F0->freeList_593[str_AE400_AE3F0->freeListTop_40--];
 	}
 	// PORT: deliberate deviation (docs/original-bugs.md #8). The recycle list is only rebuilt now and then
-	// (sub_37220_375E0); in between its slots can be freed and reused by entities that must not be recycled
+	// (RebuildFreeLists_37220_375E0); in between its slots can be freed and reused by entities that must not be recycled
 	// (castle balloons, mana balls). The original recycled them anyway; the HUD then divided by the new
 	// entity's zero max mana (crash, level 19 with the entity table full). Skip such stale entries.
 	while (str_AE400_AE3F0->var_u32_4593 >= 0 && str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593]->var_u8_29859_64
@@ -42979,7 +43209,7 @@ Type_AE400_29795* NewEvent_372C0_37680()//2082C0_
 		str_AE408_AE3F8->var_u32_36462[2] = nullptr;
 		str_AE408_AE3F8->var_u32_36462[0] = nullptr;
 		str_AE408_AE3F8->var_u32_36462[3] = nullptr;
-		sub_41DD0_42110(str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593]);
+		RemoveEntityFromMap_41DD0_42110(str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593]);
 		str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593]->var_u8_29859_64 = 0;
 		memset((void*)str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593], 0, sizeof(Type_AE400_29795));
 		str_AE400_AE3F0->var_u32_4597[str_AE400_AE3F0->var_u32_4593]->maxLife_29803_8 = 300;
@@ -43049,7 +43279,7 @@ void sub_37440_37800(int a1, char a2)//208440_
     }
     sub_59230_59740();
   }
-  sub_37220_375E0();
+  RebuildFreeLists_37220_375E0();
   for (int i = 1; i < 2000; i++)
   {
       //debug
@@ -43109,7 +43339,7 @@ void sub_37560_37920(Type_1090* type1090)
             if (v2z == 4 )
             {
               *(_WORD *)(((uint8_t*)v2) + 24) = type1090->data_12;
-              sub_37130_374F0(v2, type1090->data_10 << 8, type1090->data_10 << 8);
+              SetCollisionBox_37130_374F0(v2, type1090->data_10 << 8, type1090->data_10 << 8);
               RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
             }
           }
@@ -43128,7 +43358,7 @@ void sub_37560_37920(Type_1090* type1090)
       else if (v2z <= 0xBu )
       {
         *(_WORD *)(((uint8_t*)v2) + 24) = type1090->data_12;
-        sub_37130_374F0(v2, type1090->data_10 << 8, 4096);
+        SetCollisionBox_37130_374F0(v2, type1090->data_10 << 8, 4096);
         RefillLife_36DE0_371A0(v2);
         *(_BYTE *)(((uint8_t*)v2) + 16) |= 1u;
       }
@@ -43150,7 +43380,8 @@ void sub_37560_37920(Type_1090* type1090)
 }
 
 //----- (00037710) --------------------------------------------------------
-int sub_37710_37AD0()
+/// Number of entities on the free list (game state +40 + 1).
+int FreeEntityCount_37710_37AD0()
 {
   return *(_DWORD *)PTR(dword_AE400_AE3F0() + 40) + 1;
 }
@@ -43285,7 +43516,8 @@ int SetPlayerStart7_37800_37BC0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //SYNCHRONIZED WITH REMC1
-Type_AE400_29795* sub_37820_37BE0(axis_3d* position)//208820_
+/// Constructor of a player-controlled wizard on a carpet (class 3 type 0, state 0; creature type 7).
+Type_AE400_29795* CreatePlayerWizard_37820_37BE0(axis_3d* position)//208820_
 {
 	Type_AE400_29795* event = NewEvent_372C0_37680();
 	if (event)
@@ -43298,15 +43530,16 @@ Type_AE400_29795* sub_37820_37BE0(axis_3d* position)//208820_
 		event->var_u32_29951_156 = &creatureTypes_98F38[7];
 		event->var_u16_29823_28 = 29;
 		event->id_29819_24 = event - str_AE400_AE3F0->str_29795;
-		sub_41CF0_42030(event, position);
-		sub_36FA0_37360(event, 44);
+		AddEntityToMap_41CF0_42030(event, position);
+		SetSprite_36FA0_37360(event, 44);
 		RefillLife_36DE0_371A0(event);
 	}
 	return event;
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_378A0_37C60(int a1)
+/// Constructor of a computer-controlled wizard (class 3 type 1, state 1 = ComputerWizardTick_13170; creature type 8).
+int CreateComputerWizard_378A0_37C60(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -43325,8 +43558,8 @@ int sub_378A0_37C60(int a1)
     *(_DWORD *)PTR(result + 156) = (uint32)OFF(&creatureTypes_98F38[8]);
     *(_WORD *)PTR(result + 28) = 29;
     *(_WORD *)PTR(result + 24) = (result - (v3 + 29795)) / 164;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 44);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 44);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     return v2;
   }
@@ -43367,9 +43600,9 @@ int CreateCastle_37920_37CE0(int a1)
     HIWORD(v3) <<= 8;
     *(_DWORD *)PTR(v2 + 150) = v3;
     *(_WORD *)PTR(v2 + 154) = v4;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)&v3);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)&v3);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 177);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 177);
     return v2;
   }
   return result;
@@ -43378,7 +43611,8 @@ int CreateCastle_37920_37CE0(int a1)
 #undef v4
 
 //SYNCHRONIZED WITH REMC1
-int sub_37A00_37DC0(int a1)
+/// Constructor of a castle balloon (class 3 type 3, state 7; states 7 and 8 have empty handlers).
+int CreateBalloon_37A00_37DC0(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -43396,15 +43630,16 @@ int sub_37A00_37DC0(int a1)
     *(_DWORD *)PTR(v1 + 140) = 0;
     *(_WORD *)PTR(v1 + 28) = 1;
     *(_DWORD *)PTR(v1 + 156) = (uint32)OFF(&creatureTypes_98F38[9]);
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 169);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 169);
   }
   return v2;
 }
 
 //----- (00037A80) --------------------------------------------------------
-int sub_37A80(int a1)
+/// Placeholder constructor (class 1 type 1): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_1_37A80(int a1)
 {
   int v0; // eax
 
@@ -43415,7 +43650,8 @@ int sub_37A80(int a1)
 }
 
 //----- (00037AA0) --------------------------------------------------------
-int sub_37AA0(int a1)
+/// Placeholder constructor (class 1 type 2): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_2_37AA0(int a1)
 {
   int v0; // eax
 
@@ -43426,7 +43662,8 @@ int sub_37AA0(int a1)
 }
 
 //----- (00037AC0) --------------------------------------------------------
-int sub_37AC0(int a1)
+/// Placeholder constructor (class 1 type 3): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_3_37AC0(int a1)
 {
   int v0; // eax
 
@@ -43437,7 +43674,8 @@ int sub_37AC0(int a1)
 }
 
 //----- (00037AE0) --------------------------------------------------------
-int sub_37AE0(int a1)
+/// Placeholder constructor (class 1 type 4): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_4_37AE0(int a1)
 {
   int v0; // eax
 
@@ -43448,7 +43686,8 @@ int sub_37AE0(int a1)
 }
 
 //----- (00037B00) --------------------------------------------------------
-int sub_37B00(int a1)
+/// Placeholder constructor (class 1 type 5): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_5_37B00(int a1)
 {
   int v0; // eax
 
@@ -43459,7 +43698,8 @@ int sub_37B00(int a1)
 }
 
 //----- (00037B20) --------------------------------------------------------
-int sub_37B20(int a1)
+/// Placeholder constructor (class 1 type 6): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_6_37B20(int a1)
 {
   int v0; // eax
 
@@ -43470,7 +43710,8 @@ int sub_37B20(int a1)
 }
 
 //----- (00037B40) --------------------------------------------------------
-int sub_37B40(int a1)
+/// Placeholder constructor (class 1 type 7): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_7_37B40(int a1)
 {
   int v0; // eax
 
@@ -43481,7 +43722,8 @@ int sub_37B40(int a1)
 }
 
 //----- (00037B60) --------------------------------------------------------
-int sub_37B60(int a1)
+/// Placeholder constructor (class 1 type 8): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_8_37B60(int a1)
 {
   int v0; // eax
 
@@ -43492,7 +43734,8 @@ int sub_37B60(int a1)
 }
 
 //----- (00037B80) --------------------------------------------------------
-int sub_37B80(int a1)
+/// Placeholder constructor (class 1 type 9): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_9_37B80(int a1)
 {
   int v0; // eax
 
@@ -43503,7 +43746,8 @@ int sub_37B80(int a1)
 }
 
 //----- (00037BA0) --------------------------------------------------------
-int sub_37BA0(int a1)
+/// Placeholder constructor (class 1 type 10): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder1_10_37BA0(int a1)
 {
   int v0; // eax
 
@@ -43514,7 +43758,8 @@ int sub_37BA0(int a1)
 }
 
 //----- (00037BC0) --------------------------------------------------------
-int sub_37BC0(int a1)
+/// Constructor of a tree (class 2 type 0, state 0).
+int CreateTree_37BC0(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -43548,21 +43793,22 @@ int sub_37BC0(int a1)
   LOBYTE(v5) = -95 * *(_BYTE *)PTR(v1 + 4) - 33;
   *(_DWORD *)PTR(v1 + 4) = 9377 * *(_DWORD *)PTR(v1 + 4) + 9439;
   v9x.y += (v5 & 0x3F) - 32;
-  sub_41CF0_42030((Type_AE400_29795*)PTR(v1), &v9x);
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), &v9x);
   RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   v7 = 9377 * *(_DWORD *)PTR(v2 + 4) + 9439;
   *(_DWORD *)PTR(v2 + 4) = v7;
   if ( (v7 & 1) != 0 )
-    sub_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 84);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 84);
   else
-    sub_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 83);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 83);
   return v3;
 }
 // 37CBD: conditional instruction was optimized away because edx.4==1
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00037CF0) --------------------------------------------------------
-int sub_37CF0(int a1)
+/// Constructor of a stone (class 2 type 1, state 3).
+int CreateStone_37CF0(int a1)
 {
   int result; // eax
   _WORD *v2; // ebx
@@ -43576,9 +43822,9 @@ int sub_37CF0(int a1)
     *(_BYTE *)PTR(result + 70) = 3;
     *(_BYTE *)PTR(result + 64) = 2;
     *(_BYTE *)PTR(result + 65) = 1;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_37030_373F0((Type_AE400_29795*)(uint16*)v2, 79);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)(uint16*)v2, 79);
     return (int)OFF(v2);
   }
   return result;
@@ -43586,7 +43832,8 @@ int sub_37CF0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00037D70) --------------------------------------------------------
-int sub_37D70(int a1)
+/// Constructor of the dolmen (class 2 type 2) (initial state 6). Identified from its decoded sprite (named by the user).
+int CreateDolmen_37D70(int a1)
 {
   int result; // eax
   _WORD *v2; // ebx
@@ -43600,10 +43847,10 @@ int sub_37D70(int a1)
     *(_BYTE *)PTR(result + 70) = 6;
     *(_BYTE *)PTR(result + 64) = 2;
     *(_BYTE *)PTR(result + 65) = 2;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_37030_373F0((Type_AE400_29795*)v2, 39);
-    sub_37130_374F0((Type_AE400_29795*)v2, 1024, 1024);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)v2, 39);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 1024, 1024);
     return (int)OFF(v2);
   }
   return result;
@@ -43611,7 +43858,8 @@ int sub_37D70(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00037E00) --------------------------------------------------------
-int sub_37E00(int a1)
+/// Constructor of a standing stone (class 2 type 3, state 9): the stone rings that mark triggers.
+int CreateStandingStone_37E00(int a1)
 {
   int result; // eax
   _WORD *v2; // ebx
@@ -43625,9 +43873,9 @@ int sub_37E00(int a1)
     *(_BYTE *)PTR(result + 70) = 9;
     *(_BYTE *)PTR(result + 64) = 2;
     *(_BYTE *)PTR(result + 65) = 3;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_37030_373F0((Type_AE400_29795*)v2, 270);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)v2, 270);
     return (int)OFF(v2);
   }
   return result;
@@ -43635,7 +43883,9 @@ int sub_37E00(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00037E80) --------------------------------------------------------
-int sub_37E80(int a1)
+/// TODO: rename when the entity is identified (class 2 type 4).
+/// Constructor of class 2 type 4 (initial state 12); sprite 48 is cut content (a castle texture), per the user.
+int CreateClass2Type4_37E80(int a1)
 {
   int result; // eax
   _WORD *v2; // ebx
@@ -43648,9 +43898,9 @@ int sub_37E80(int a1)
     *(_BYTE *)PTR(result + 64) = 2;
     *(_BYTE *)PTR(result + 65) = 4;
     *(_WORD *)PTR(result + 26) = (result - (dword_AE400_AE3F0() + 29795)) / 164 % 11;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_37030_373F0((Type_AE400_29795*)v2, 48);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)v2, 48);
     return (int)OFF(v2);
   }
   return result;
@@ -43658,7 +43908,9 @@ int sub_37E80(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00037EF0) --------------------------------------------------------
-int sub_37EF0(int a1)
+/// TODO: rename when the entity is identified (class 2 type 5).
+/// Constructor of class 2 type 5 (initial state 15); sprite 48 is cut content (a castle texture), per the user.
+int CreateClass2Type5_37EF0(int a1)
 {
   int result; // eax
   _WORD *v2; // ebx
@@ -43671,9 +43923,9 @@ int sub_37EF0(int a1)
     *(_BYTE *)PTR(result + 64) = 2;
     *(_BYTE *)PTR(result + 65) = 5;
     *(_WORD *)PTR(result + 26) = (result - (dword_AE400_AE3F0() + 29795)) / 164 % 11;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_37030_373F0((Type_AE400_29795*)v2, 48);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)v2, 48);
     return (int)OFF(v2);
   }
   return result;
@@ -43681,7 +43933,8 @@ int sub_37EF0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00038030) --------------------------------------------------------
-int sub_38030(int a1)
+/// Constructor of the dragon (head; the body segments reuse the worm sprites) (class 5 type 0) (initial state 1). Identified from its decoded sprite (confirmed by the user).
+int CreateDragon_38030(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -43697,7 +43950,7 @@ int sub_38030(int a1)
   int v13; // [esp+8h] [ebp-18h]
   __int16 v14; // [esp+Ch] [ebp-14h]
 
-  if ( sub_37710_37AD0() < 16 )
+  if ( FreeEntityCount_37710_37AD0() < 16 )
     return 0;
   v1 = (int)OFF(NewEvent_372C0_37680());
   v2 = v1;
@@ -43711,7 +43964,7 @@ int sub_38030(int a1)
   *(_WORD *)PTR(v1 + 130) = 16;
   *(_WORD *)PTR(v1 + 126) = 30;
   *(_DWORD *)PTR(v1 + 8) = 9000;
-  sub_36F90_37350(v1);
+  SetManaToHalfMaxLife_36F90_37350(v1);
   v4 = *(int *)PTR(v2 + 140);
   *(_DWORD *)PTR(v2 + 136) = v4;
   LODWORD(v4) = ((int)v4 - HIDWORD(v4)) >> 1;
@@ -43757,9 +44010,9 @@ int sub_38030(int a1)
       *(_BYTE *)PTR(v7 + 70) = 120;
       v3[35] = (v3[34] - (__CFSHL__((int)v3[34] >> 31, 5) + 32 * ((int)v3[34] >> 31))) >> 5;
       *(_BYTE *)PTR(v7 + 63) = v13;
-      sub_36FA0_37360((Type_AE400_29795*)PTR(v7), v14);
+      SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v7), v14);
       *(_WORD *)PTR(v8 + 56) = *(_WORD *)PTR(v8 + 80);
-      sub_41CF0_42030((Type_AE400_29795*)PTR(v8), (axis_3d*)PTR(a1));
+      AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v8), (axis_3d*)PTR(a1));
       RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v8));
     }
     v11 = v12;
@@ -43767,15 +44020,16 @@ int sub_38030(int a1)
     ++v13;
   }
   while ( v13 <= 15 );
-  sub_41CF0_42030((Type_AE400_29795*)v3, (axis_3d*)PTR(a1));
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)v3, (axis_3d*)PTR(a1));
   RefillLife_36DE0_371A0((Type_AE400_29795*)v3);
-  sub_36FA0_37360((Type_AE400_29795*)v3, 40);
+  SetSprite_36FA0_37360((Type_AE400_29795*)v3, 40);
   return (int)OFF(v3);
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00038270) --------------------------------------------------------
-int sub_38270(int a1)
+/// Constructor of the vulture (class 5 type 1) (initial state 7). Identified from its decoded sprite (confirmed by the user).
+int CreateVulture_38270(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -43796,7 +44050,7 @@ int sub_38270(int a1)
   *(_WORD *)PTR(v1 + 130) = 16;
   *(_DWORD *)PTR(v1 + 8) = 2000;
   *(_WORD *)PTR(v1 + 126) = v3 / 2;
-  sub_36F90_37350(v1);
+  SetManaToHalfMaxLife_36F90_37350(v1);
   *(_WORD *)PTR(v2 + 34) = 0;
   *(_WORD *)PTR(v2 + 30) = *(_WORD *)PTR(v2 + 34);
   v4 = dword_AE400_AE3F0();
@@ -43812,15 +44066,16 @@ int sub_38270(int a1)
   *(_BYTE *)PTR(v2 + 63) = v5;
   *(_BYTE *)PTR(v2 + 58) = *(_BYTE *)PTR(*(_DWORD *)PTR(v2 + 156) + 26) + 1;
   *(_BYTE *)PTR(v2 + 66) = 3;
-  sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
   RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-  sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 86);
+  SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 86);
   return v2;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00038370) --------------------------------------------------------
-int sub_38370(int a1)
+/// Constructor of the bee (class 5 type 2) (initial state 13). Identified from its decoded sprite (confirmed by the user).
+int CreateBee_38370(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -43843,7 +44098,7 @@ int sub_38370(int a1)
   *(_WORD *)PTR(v1 + 130) = 30;
   *(_DWORD *)PTR(v1 + 8) = 3000;
   *(_WORD *)PTR(v1 + 126) = v3 / 2;
-  sub_36F90_37350(v1);
+  SetManaToHalfMaxLife_36F90_37350(v1);
   v4 = 9377 * *(_DWORD *)PTR(v2 + 4) + 9439;
   *(_DWORD *)PTR(v2 + 4) = v4;
   LOWORD(v4) = (v4 & 0x7FF) - 1;
@@ -43868,10 +44123,10 @@ int sub_38370(int a1)
                       - *(unsigned __int8 *)PTR(v2 + 63) % *(_WORD *)PTR(*(_DWORD *)PTR(v2 + 156) + 26)
                       + 4;
   *(_BYTE *)PTR(v2 + 66) = 3;
-  sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
   RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-  sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 3);
-  sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+  SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 3);
+  SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
   return v2;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
@@ -43910,7 +44165,8 @@ uint16_t unk_99118[] = {
 0x0014,0x0200,0xFFFF,0xFFFF,0x0900,0x0028,0x0C00,0x0200,
 0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000
 };*/
-int sub_384B0(uint16_t* a1)//2094B0_
+/// Constructor of a worm (class 5 type 3): the head in state 19, the body segments in state 120 (SegmentFollowTick_19550), chained via +52/+54.
+int CreateWorm_384B0(uint16_t* a1)//2094B0_
 {
     int result; // eax
     int v2; // ebx
@@ -43938,7 +44194,7 @@ int sub_384B0(uint16_t* a1)//2094B0_
         *(_WORD*)PTR(result + 130) = 16;
         *(_WORD*)PTR(result + 126) = 30;
         *(_DWORD*)PTR(result + 8) = 9000;
-        sub_36F90_37350(result);
+        SetManaToHalfMaxLife_36F90_37350(result);
         v4 = *(int*)PTR(v2 + 140);
         *(_DWORD*)PTR(v2 + 136) = v4;
         LODWORD(v4) = ((int)v4 - HIDWORD(v4)) >> 1;
@@ -43984,9 +44240,9 @@ int sub_384B0(uint16_t* a1)//2094B0_
                 *(_BYTE*)PTR(v7 + 70) = 120;
                 *(_DWORD*)PTR(v7 + 140) = (v3[34] - (__CFSHL__((int)v3[34] >> 31, 5) + 32 * ((int)v3[34] >> 31))) >> 5;
                 *(_BYTE*)PTR(v7 + 63) = v11;
-                sub_36FA0_37360((Type_AE400_29795*)PTR(v7), v13);
+                SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v7), v13);
                 *(_WORD*)PTR(v8 + 56) = *(_WORD*)PTR(v8 + 80);
-                sub_41CF0_42030((Type_AE400_29795*)PTR(v8), (axis_3d*)a1);
+                AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v8), (axis_3d*)a1);
                 RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v8));
             }
             v6 = v10;
@@ -43994,9 +44250,9 @@ int sub_384B0(uint16_t* a1)//2094B0_
             ++v13;
             ++v11;
         } while (v11 <= 15);
-        sub_41CF0_42030((Type_AE400_29795*)v3, (axis_3d*)a1);
+        AddEntityToMap_41CF0_42030((Type_AE400_29795*)v3, (axis_3d*)a1);
         RefillLife_36DE0_371A0((Type_AE400_29795*)v3);
-        sub_36FA0_37360((Type_AE400_29795*)v3, 88);
+        SetSprite_36FA0_37360((Type_AE400_29795*)v3, 88);
         return (int)OFF(v3);
     }
     return result;
@@ -44024,7 +44280,7 @@ int CreateGuard_386E0(uint16_t* a1)
     *(_WORD*)PTR(v1 + 130) = 0;
     *(_DWORD*)PTR(v1 + 8) = 1000;
     *(_WORD*)PTR(v1 + 126) = *(_WORD*)PTR(v1 + 128);
-    sub_36F90_37350(v1);
+    SetManaToHalfMaxLife_36F90_37350(v1);
     v3 = 9377 * *(_DWORD*)PTR(v2 + 4) + 9439;
     *(_DWORD*)PTR(v2 + 4) = v3;
     LOWORD(v3) = (v3 & 0x7FF) - 1;
@@ -44046,10 +44302,10 @@ int CreateGuard_386E0(uint16_t* a1)
         - *(unsigned __int8*)PTR(v2 + 63) % *(__int16*)PTR(*(_DWORD*)PTR(v2 + 156) + 26);
     *(_BYTE*)PTR(v2 + 66) = 3;
     *(_BYTE*)PTR(v2 + 58) = v7 + 4;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 0);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 0);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
 }
 
@@ -44066,11 +44322,12 @@ void sub_38820_38BA0(Type_AE400_29795* a1x)
     LOWORD(v1) = 7;
   if ( (__int16)v1 > a1x->var_u16_29881_86 - 185 )
     a1x->maxLife_29803_8 += 5000;
-  sub_36FA0_37360(a1x, v1 + 185);
+  SetSprite_36FA0_37360(a1x, v1 + 185);
 }
 
 //----- (00038890) --------------------------------------------------------
-int sub_38890(int a1)
+/// Constructor of a crab (class 5 type 5, state 31).
+int CreateCrab_38890(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -44116,17 +44373,18 @@ int sub_38890(int a1)
      - *(unsigned __int8 *)PTR(v1 + 63) % *(__int16 *)PTR(*(_DWORD *)PTR(v1 + 156) + 26);
   *(_BYTE *)PTR(v1 + 66) = 3;
   *(_BYTE *)PTR(v1 + 58) = v8 + 4;
-  sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1));
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1));
   RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-  sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 185);
-  sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+  SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 185);
+  SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
   *(_DWORD *)PTR(v2 + 12) = 5000;
   return v2;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (000389E0) --------------------------------------------------------
-int sub_389E0(int a1)
+/// Constructor of the kraken (class 5 type 6) (initial state 37). Identified from its decoded sprite (confirmed by the user).
+int CreateKraken_389E0(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -44139,7 +44397,7 @@ int sub_389E0(int a1)
   _DWORD *v10; // [esp+4h] [ebp-18h]
   int i; // [esp+8h] [ebp-14h]
 
-  if ( sub_37710_37AD0() < 16 )
+  if ( FreeEntityCount_37710_37AD0() < 16 )
     return 0;
   v1 = (int)OFF(NewEvent_372C0_37680());
   v2 = v1;
@@ -44153,7 +44411,7 @@ int sub_389E0(int a1)
   *(_WORD *)PTR(v1 + 130) = 16;
   *(_WORD *)PTR(v1 + 126) = 30;
   *(_DWORD *)PTR(v1 + 8) = 9000;
-  sub_36F90_37350(v1);
+  SetManaToHalfMaxLife_36F90_37350(v1);
   v3 = *(int *)PTR(v2 + 140);
   *(_DWORD *)PTR(v2 + 136) = v3;
   LODWORD(v3) = v3 / 3;
@@ -44195,47 +44453,49 @@ int sub_389E0(int a1)
       *(_DWORD *)PTR(v5 + 140) = v10[34] / 3;
       *(_BYTE *)PTR(v5 + 63) = i;
       if ( i )
-        sub_36FA0_37360((Type_AE400_29795*)PTR(v5), 193);
+        SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v5), 193);
       else
-        sub_36FA0_37360((Type_AE400_29795*)PTR(v5), 50);
+        SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v5), 50);
       *(_WORD *)PTR(v6 + 56) = 4 * *(_WORD *)PTR(v6 + 80);
-      sub_41CF0_42030((Type_AE400_29795*)PTR(v6), (axis_3d*)PTR(a1));
+      AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v6), (axis_3d*)PTR(a1));
       RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v6));
     }
     v9 = v6;
   }
-  sub_41CF0_42030((Type_AE400_29795*)v10, (axis_3d*)PTR(a1));
-  sub_41CF0_42030((Type_AE400_29795*)v10, (axis_3d*)PTR(a1));
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)v10, (axis_3d*)PTR(a1));
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)v10, (axis_3d*)PTR(a1));
   RefillLife_36DE0_371A0((Type_AE400_29795*)v10);
-  sub_36FA0_37360((Type_AE400_29795*)v10, 49);
+  SetSprite_36FA0_37360((Type_AE400_29795*)v10, 49);
   return (int)OFF(v10);
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00038C00) --------------------------------------------------------
-int sub_38C00_38F80(int a1)
+/// Makes a new class 5 type 7 creature a troll (sprite 85, +71 = 1, life 4000) or an ape (sprite 199, +71 = 2, life 2000) by the parity of +63.
+int ChooseTrollOrApe_38C00_38F80(int a1)
 {
   int result; // eax
 
   if ( *(unsigned __int8 *)PTR(a1 + 63) % 2 )
   {
-    sub_36FA0_37360((Type_AE400_29795*)PTR(a1), 85);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(a1), 85);
     *(_BYTE *)PTR(a1 + 71) = 1;
     *(_DWORD *)PTR(a1 + 8) = 4000;
   }
   else
   {
-    sub_36FA0_37360((Type_AE400_29795*)PTR(a1), 199);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(a1), 199);
     *(_BYTE *)PTR(a1 + 71) = 2;
     *(_DWORD *)PTR(a1 + 8) = 2000;
   }
-  result = sub_36F90_37350(a1);
+  result = SetManaToHalfMaxLife_36F90_37350(a1);
   *(_DWORD *)PTR(a1 + 12) = *(_DWORD *)PTR(a1 + 8);
   return result;
 }
 
 //int unk_99198;//fix
-int sub_38C60(uint16_t* a1)
+/// Constructor of the troll or ape (ChooseTrollOrApe_38C00_38F80) (class 5 type 7) (initial state 43). Identified from its decoded sprite (confirmed by the user).
+int CreateTrollOrApe_38C60(uint16_t* a1)
 {
     int result; // eax
     int v2; // ebx
@@ -44275,9 +44535,9 @@ int sub_38C60(uint16_t* a1)
         *(_BYTE*)PTR(v2 + 58) = 64;
         *(_BYTE*)PTR(v2 + 66) = 3;
         *(_BYTE*)PTR(v2 + 63) = v6;
-        sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
-        sub_38C00_38F80(v2);
-        sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+        AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+        ChooseTrollOrApe_38C00_38F80(v2);
+        SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
         return v2;
     }
     return result;
@@ -44299,14 +44559,15 @@ int sub_38D09(/*int a1@<eax>, __int16 a2@<dx>, int a3@<ecx>, int a4@<ebx>, int a
     *(_BYTE*)PTR(a4 + 58) = 64;
     *(_BYTE*)PTR(a4 + 66) = 3;
     *(_BYTE*)PTR(a4 + 63) = a2;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(a4), (axis_3d*)PTR(a5));
-    sub_38C00_38F80(a4);
-    sub_37130_374F0((Type_AE400_29795*)PTR(a4), 128, 128);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(a4), (axis_3d*)PTR(a5));
+    ChooseTrollOrApe_38C00_38F80(a4);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(a4), 128, 128);
     return a4;
 }
 
 //----- (00038D60) --------------------------------------------------------
-int sub_38D60(int a1)
+/// Constructor of the griffin (class 5 type 8) (initial state 49). Identified from its decoded sprite (confirmed by the user).
+int CreateGriffin_38D60(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -44328,7 +44589,7 @@ int sub_38D60(int a1)
     v3 = *(_WORD *)PTR(result + 128);
     *(_DWORD *)PTR(v2 + 8) = 10000;
     *(_WORD *)PTR(v2 + 126) = v3;
-    sub_36F90_37350(v2);
+    SetManaToHalfMaxLife_36F90_37350(v2);
     v4 = 9377 * *(_DWORD *)PTR(v2 + 4) + 9439;
     *(_DWORD *)PTR(v2 + 4) = v4;
     LOWORD(v4) = (v4 & 0x7FF) - 1;
@@ -44348,10 +44609,10 @@ int sub_38D60(int a1)
     *(_BYTE *)PTR(v2 + 58) = 64;
     *(_BYTE *)PTR(v2 + 66) = 3;
     *(_BYTE *)PTR(v2 + 63) = v6;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 47);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 47);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
   }
   return result;
@@ -44359,7 +44620,8 @@ int sub_38D60(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00038E70) --------------------------------------------------------
-int sub_38E70(int a1)
+/// Constructor of the skeleton (class 5 type 9) (initial state 54); raised by the Undead Army spell (UndeadArmyEffectTick_26E90). Identified from its decoded sprite (confirmed by the user).
+int CreateSkeleton_38E70(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -44380,7 +44642,7 @@ int sub_38E70(int a1)
   v3 = *(_WORD *)PTR(v1 + 128);
   *(_DWORD *)PTR(v2 + 8) = 1000;
   *(_WORD *)PTR(v2 + 126) = v3;
-  sub_36F90_37350(v2);
+  SetManaToHalfMaxLife_36F90_37350(v2);
   *(_DWORD *)PTR(v2 + 4) = 9377 * *(_DWORD *)PTR(v2 + 4) + 9439;
   v4 = *(_DWORD *)PTR(v2 + 4) % 0x832u;
   *(_WORD *)PTR(v2 + 36) = 0;
@@ -44400,17 +44662,18 @@ int sub_38E70(int a1)
                       + 4;
   *(_BYTE *)PTR(v2 + 66) = 3;
   *(_WORD *)PTR(v2 + 26) = (v2 - (v5 + 29795)) / 164 % 10 + 29;
-  sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
   *(_WORD *)PTR(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)PTR(v2 + 72));
   RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-  sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 220);
-  sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+  SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 220);
+  SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
   return v2;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00038FC0) --------------------------------------------------------
-int sub_38FC0(int a1)
+/// Constructor of the emu rider (class 5 type 10) (initial state 61). Identified from its decoded sprite (confirmed by the user).
+int CreateEmuRider_38FC0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -44432,7 +44695,7 @@ int sub_38FC0(int a1)
     v3 = *(_WORD *)PTR(result + 128);
     *(_DWORD *)PTR(v2 + 8) = 2000;
     *(_WORD *)PTR(v2 + 126) = v3;
-    sub_36F90_37350(v2);
+    SetManaToHalfMaxLife_36F90_37350(v2);
     v4 = 9377 * *(_DWORD *)PTR(v2 + 4) + 9439;
     *(_DWORD *)PTR(v2 + 4) = v4;
     LOWORD(v4) = (v4 & 0x7FF) - 1;
@@ -44452,10 +44715,10 @@ int sub_38FC0(int a1)
     *(_BYTE *)PTR(v2 + 58) = 64;
     *(_BYTE *)PTR(v2 + 66) = 3;
     *(_BYTE *)PTR(v2 + 63) = v6;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 208);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 208);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
   }
   return result;
@@ -44463,7 +44726,8 @@ int sub_38FC0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (000390D0) --------------------------------------------------------
-int sub_390D0(int a1)
+/// Constructor of the genie (class 5 type 11) (initial state 66). Identified from its decoded sprite (confirmed by the user).
+int CreateGenie_390D0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -44486,7 +44750,7 @@ int sub_390D0(int a1)
     v3 = *(_WORD *)PTR(result + 128);
     *(_DWORD *)PTR(v2 + 8) = 20000;
     *(_WORD *)PTR(v2 + 126) = v3;
-    sub_36F90_37350(v2);
+    SetManaToHalfMaxLife_36F90_37350(v2);
     v4 = *(_DWORD *)PTR(v2 + 4);
     *(_DWORD *)PTR(v2 + 136) = 2 * *(_DWORD *)PTR(v2 + 140);
     v5 = 9377 * v4 + 9439;
@@ -44509,10 +44773,10 @@ int sub_390D0(int a1)
     *(_BYTE *)PTR(v2 + 66) = 3;
     *(_WORD *)PTR(v2 + 26) = 0;
     *(_BYTE *)PTR(v2 + 63) = v5;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 200);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 200);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
   }
   return result;
@@ -44520,7 +44784,8 @@ int sub_390D0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00039200) --------------------------------------------------------
-int sub_39200(int a1)
+/// Constructor of the villager (class 5 type 12) (initial state 73). Identified from its decoded sprite (confirmed by the user).
+int CreateVillagerType12_39200(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -44563,17 +44828,18 @@ int sub_39200(int a1)
     *(_BYTE *)PTR(v2 + 66) = 3;
     *(_WORD *)PTR(v2 + 26) = 2;
     *(_BYTE *)PTR(v2 + 63) = v6;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 221);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 221);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
   }
   return result;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
 
-int sub_39340(uint16_t* a1)
+/// Constructor of the villager (class 5 type 13) (initial state 79). Identified from its decoded sprite (confirmed by the user).
+int CreateVillagerType13_39340(uint16_t* a1)
 {
     int result; // eax
     int v2; // ebx
@@ -44621,7 +44887,7 @@ int sub_39340(uint16_t* a1)
         *(_BYTE*)PTR(v2 + 66) = 3;
         *(_WORD*)PTR(v2 + 26) = 2;
         *(_BYTE*)PTR(v2 + 63) = v8;
-        sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+        AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
         RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
         v10 = 9377 * *(_DWORD*)PTR(v2 + 4) + 9439;
         *(_DWORD*)PTR(v2 + 4) = v10;
@@ -44631,24 +44897,25 @@ int sub_39340(uint16_t* a1)
         case 1u:
         case 2u:
         case 3u:
-            sub_36FA0_37360((Type_AE400_29795*)PTR(v3), 217);
+            SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v3), 217);
             break;
         case 4u:
         case 5u:
         case 6u:
-            sub_36FA0_37360((Type_AE400_29795*)PTR(v3), 218);
+            SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v3), 218);
             break;
         default:
             break;
         }
-        sub_37130_374F0((Type_AE400_29795*)PTR(v3), 128, 128);
+        SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v3), 128, 128);
         return v3;
     }
     return result;
 }
 
 //----- (00039490) --------------------------------------------------------
-int sub_39490(int a1)
+/// Constructor of the villager (class 5 type 14) (initial state 85). Identified from its decoded sprite (confirmed by the user).
+int CreateVillagerType14_39490(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -44691,10 +44958,10 @@ int sub_39490(int a1)
     *(_BYTE *)PTR(v2 + 66) = 3;
     *(_WORD *)PTR(v2 + 26) = 2;
     *(_BYTE *)PTR(v2 + 63) = v6;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 219);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 219);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
   }
   return result;
@@ -44702,7 +44969,9 @@ int sub_39490(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (000395B0) --------------------------------------------------------
-int sub_395B0(int a1)
+/// TODO: rename when the entity is identified (class 5 type 15).
+/// Constructor of class 5 type 15 (initial state 91).
+int CreateClass5Type15_395B0(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -44743,16 +45012,17 @@ int sub_395B0(int a1)
   v6 = *(_BYTE *)PTR(v1 + 18) | 2;
   *(_BYTE *)PTR(v2 + 58) = v5 - v4 + 4;
   *(_BYTE *)PTR(v2 + 18) = v6;
-  sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
   RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-  sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 0);
-  sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+  SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 0);
+  SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
   return v2;
 }
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (000396E0) --------------------------------------------------------
-int sub_396E0(int a1)
+/// Constructor of a wyvern (class 5 type 16, state 97).
+int CreateWyvern_396E0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -44774,7 +45044,7 @@ int sub_396E0(int a1)
     v3 = *(_WORD *)PTR(result + 128);
     *(_DWORD *)PTR(v2 + 8) = 100000;
     *(_WORD *)PTR(v2 + 126) = v3;
-    sub_36F90_37350(v2);
+    SetManaToHalfMaxLife_36F90_37350(v2);
     v4 = 9377 * *(_DWORD *)PTR(v2 + 4) + 9439;
     *(_DWORD *)PTR(v2 + 4) = v4;
     LOWORD(v4) = (v4 & 0x7FF) - 1;
@@ -44795,10 +45065,10 @@ int sub_396E0(int a1)
     *(_BYTE *)PTR(v2 + 66) = 3;
     *(_WORD *)PTR(v2 + 26) = 0;
     *(_BYTE *)PTR(v2 + 63) = v6;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 207);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 207);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 128, 128);
     return v2;
   }
   return result;
@@ -44806,7 +45076,8 @@ int sub_396E0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00039800) --------------------------------------------------------
-int sub_39800(int a1)
+/// Placeholder constructor (class 6 type 0): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder6_0_39800(int a1)
 {
   int v0; // eax
 
@@ -44817,7 +45088,8 @@ int sub_39800(int a1)
 }
 
 //----- (00039820) --------------------------------------------------------
-int sub_39820(int a1)
+/// Placeholder constructor (class 6 type 1): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder6_1_39820(int a1)
 {
   int v0; // eax
 
@@ -44828,7 +45100,8 @@ int sub_39820(int a1)
 }
 
 //----- (00039840) --------------------------------------------------------
-int sub_39840(int a1)
+/// Placeholder constructor (class 7 type 0): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder7_0_39840(int a1)
 {
   int v0; // eax
 
@@ -44839,7 +45112,8 @@ int sub_39840(int a1)
 }
 
 //----- (00039860) --------------------------------------------------------
-int sub_39860(int a1)
+/// Placeholder constructor (class 7 type 1): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder7_1_39860(int a1)
 {
   int v0; // eax
 
@@ -44850,7 +45124,8 @@ int sub_39860(int a1)
 }
 
 //----- (00039880) --------------------------------------------------------
-int sub_39880(int a1)
+/// Placeholder constructor (class 7 type 2): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder7_2_39880(int a1)
 {
   int v0; // eax
 
@@ -44861,7 +45136,8 @@ int sub_39880(int a1)
 }
 
 //----- (000398A0) --------------------------------------------------------
-int sub_398A0(int a1)
+/// Placeholder constructor (class 7 type 3): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder7_3_398A0(int a1)
 {
   int v0; // eax
 
@@ -44872,7 +45148,9 @@ int sub_398A0(int a1)
 }
 
 //----- (000398C0) --------------------------------------------------------
-int sub_398C0(int a1)
+/// TODO: rename when the entity is identified (class 7 type 4).
+/// Constructor of class 7 type 4 (state 4, an empty state handler).
+int CreateClass7Type4_398C0(int a1)
 {
   int result; // eax
   int v1; // ebx
@@ -44907,7 +45185,8 @@ int sub_398C0(int a1)
 }
 
 //----- (00039940) --------------------------------------------------------
-int sub_39940(int a1)
+/// Placeholder constructor (class 8 type 0): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder8_0_39940(int a1)
 {
   int v0; // eax
 
@@ -44918,7 +45197,8 @@ int sub_39940(int a1)
 }
 
 //----- (00039960) --------------------------------------------------------
-int sub_39960(int a1)
+/// Placeholder constructor (class 8 type 1): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder8_1_39960(int a1)
 {
   int v0; // eax
 
@@ -44929,7 +45209,8 @@ int sub_39960(int a1)
 }
 
 //----- (00039980) --------------------------------------------------------
-int sub_39980(int a1)
+/// Placeholder constructor (class 8 type 2): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder8_2_39980(int a1)
 {
   int v0; // eax
 
@@ -44940,7 +45221,8 @@ int sub_39980(int a1)
 }
 
 //----- (000399A0) --------------------------------------------------------
-int sub_399A0(int a1)
+/// Placeholder constructor (class 8 type 3): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder8_3_399A0(int a1)
 {
   int v0; // eax
 
@@ -44951,7 +45233,8 @@ int sub_399A0(int a1)
 }
 
 //----- (000399C0) --------------------------------------------------------
-int sub_399C0(int a1)
+/// Placeholder constructor (class 8 type 4): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder8_4_399C0(int a1)
 {
   int v0; // eax
 
@@ -44962,7 +45245,8 @@ int sub_399C0(int a1)
 }
 
 //----- (000399E0) --------------------------------------------------------
-int sub_399E0(int a1)
+/// Placeholder constructor (class 8 type 5): allocates an entity, refills its life and returns nullptr as the original does (xor eax,eax at the end); the slot stays class 0, i.e. free.
+int Placeholder8_5_399E0(int a1)
 {
   int v0; // eax
 
@@ -44973,7 +45257,8 @@ int sub_399E0(int a1)
 }
 
 //----- (00039A10) --------------------------------------------------------
-int sub_39A10(int a1)
+/// Constructor of a fireball missile (class 9 type 0, state 0 = UpdateFireball_52B30_52E70).
+int CreateFireball_39A10(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -44994,9 +45279,9 @@ int sub_39A10(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[5]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 42);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 42);
     return v2;
   }
   return result;
@@ -45004,7 +45289,8 @@ int sub_39A10(int a1)
 // 98FD8: using guessed type void *off_98FD8;
 
 //----- (00039A90) --------------------------------------------------------
-int sub_39A90(int a1)
+/// Constructor of the Possession spell's missile (class 9 type 1, state 1), fired by PossessionSpellTick_56510_56A40.
+int CreatePossessionMissile_39A90(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45026,17 +45312,18 @@ int sub_39A90(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_BYTE *)PTR(v2 + 66) = 10;
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 209);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 2 * *(_WORD *)PTR(v2 + 80), 2 * *(_WORD *)PTR(v2 + 84));
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 209);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 2 * *(_WORD *)PTR(v2 + 80), 2 * *(_WORD *)PTR(v2 + 84));
     return v2;
   }
   return result;
 }
 
 //----- (00039B40) --------------------------------------------------------
-int sub_39B40(int a1)
+/// Constructor of the Earthquake spell's missile (class 9 type 2, state 2), fired by CastEarthquake_567A0_56CD0.
+int CreateEarthquakeMissile_39B40(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45057,16 +45344,17 @@ int sub_39B40(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[1]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 211);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 211);
     return v2;
   }
   return result;
 }
 
 //----- (00039BC0) --------------------------------------------------------
-int sub_39BC0(int a1)
+/// Constructor of the Meteor spell's missile (class 9 type 3, state 3), fired by CastMeteor_56950_56E80.
+int CreateMeteorMissile_39BC0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45087,16 +45375,17 @@ int sub_39BC0(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[1]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 76);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 76);
     return v2;
   }
   return result;
 }
 
 //----- (00039C40) --------------------------------------------------------
-int sub_39C40(int a1)
+/// Constructor of the Volcano spell's missile (class 9 type 4, state 4), fired by CastVolcano_56AF0_57020.
+int CreateVolcanoMissile_39C40(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45117,16 +45406,17 @@ int sub_39C40(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[1]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 210);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 210);
     return v2;
   }
   return result;
 }
 
 //----- (00039CC0) --------------------------------------------------------
-int sub_39CC0(int a1)
+/// Constructor of the Crater spell's missile (class 9 type 5, state 5), fired by CastCrater_56CA0_571D0.
+int CreateCraterMissile_39CC0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45147,16 +45437,18 @@ int sub_39CC0(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[1]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 211);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 211);
     return v2;
   }
   return result;
 }
 
 //----- (00039D40) --------------------------------------------------------
-int sub_39D40(int a1)
+/// TODO: rename when the entity is identified (class 9 type 6).
+/// Constructor of class 9 type 6 (initial state 6); its sprite looks like a cut projectile graphic, per the user.
+int CreateClass9Type6_39D40(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45177,16 +45469,17 @@ int sub_39D40(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[1]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 212);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 212);
     return v2;
   }
   return result;
 }
 
 //----- (00039DC0) --------------------------------------------------------
-int sub_39DC0(int a1)
+/// Constructor of the Duel spell's missile (class 9 type 7, state 7), fired by CastDuel_57040_57570.
+int CreateDuelMissile_39DC0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45207,16 +45500,17 @@ int sub_39DC0(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[1]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 213);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 213);
     return v2;
   }
   return result;
 }
 
 //----- (00039E40) --------------------------------------------------------
-int sub_39E40(int a1)
+/// Constructor of the Steal Mana spell's missile (class 9 type 8, state 8), fired by CastStealMana_57250_57780.
+int CreateStealManaMissile_39E40(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45237,9 +45531,9 @@ int sub_39E40(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[4]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 214);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 214);
     return v2;
   }
   return result;
@@ -45247,7 +45541,8 @@ int sub_39E40(int a1)
 // 98FB8: using guessed type void *off_98FB8;
 
 //----- (00039EC0) --------------------------------------------------------
-int sub_39EC0(int a1)
+/// Constructor of a lightning bolt piece (class 9 type 9, state 9 = LightningBoltTick_535E0_53920).
+int CreateLightningBolt_39EC0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45268,9 +45563,9 @@ int sub_39EC0(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[4]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 216);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 216);
     return v2;
   }
   return result;
@@ -45278,7 +45573,8 @@ int sub_39EC0(int a1)
 // 98FB8: using guessed type void *off_98FB8;
 
 //----- (00039F40) --------------------------------------------------------
-int sub_39F40(int a1)
+/// Constructor of a homing spawn missile (class 9 type 10, state 10 = UpdateHomingSpawnMissile_53980_53CC0).
+int CreateHomingSpawnMissile_39F40(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45299,16 +45595,17 @@ int sub_39F40(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[1]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 18);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 18);
     return v2;
   }
   return result;
 }
 
 //----- (00039FC0) --------------------------------------------------------
-int sub_39FC0(int a1)
+/// Constructor of the Undead Army spell's missile (class 9 type 11, state 11), fired by CastUndeadArmy_57800_57D30.
+int CreateUndeadArmyMissile_39FC0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45329,16 +45626,17 @@ int sub_39FC0(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[1]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 281);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 281);
     return v2;
   }
   return result;
 }
 
 //----- (0003A040) --------------------------------------------------------
-int sub_3A040(int a1)
+/// Constructor of the Lightning Storm spell's missile (class 9 type 12, state 12), fired by CastLightningStorm_579D0_57F00.
+int CreateLightningStormMissile_3A040(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45359,16 +45657,18 @@ int sub_3A040(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[1]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 216);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 216);
     return v2;
   }
   return result;
 }
 
 //----- (0003A0C0) --------------------------------------------------------
-int sub_3A0C0(int a1)
+/// TODO: rename when the entity is identified (class 9 type 13).
+/// Constructor of class 9 type 13 (initial state 13).
+int CreateClass9Type13_3A0C0(int a1)
 {
   int result; // eax
   _WORD *v2; // ebx
@@ -45384,16 +45684,17 @@ int sub_3A0C0(int a1)
     *(_WORD *)PTR(result + 128) = 384;
     *(_DWORD *)PTR(result + 8) = 5120 / *(__int16 *)PTR(result + 126);
     *(_BYTE *)PTR(result + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_370A0_37460((Type_AE400_29795*)v2, 195);
+    SetSpriteDoubleBox_370A0_37460((Type_AE400_29795*)v2, 195);
     return (int)OFF(v2);
   }
   return result;
 }
 
 //----- (0003A1A0) --------------------------------------------------------
-int sub_3A1A0(int a1)
+/// Constructor of the boulder missile (class 9 type 14) (initial state 15). Identified from its decoded sprite (named by the user).
+int CreateBoulderMissile_3A1A0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45409,16 +45710,18 @@ int sub_3A1A0(int a1)
     *(_WORD *)PTR(result + 128) = 128;
     *(_DWORD *)PTR(result + 8) = 4096 / *(__int16 *)PTR(result + 126);
     *(_BYTE *)PTR(result + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 196);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 196);
     return v2;
   }
   return result;
 }
 
 //----- (0003A210) --------------------------------------------------------
-int sub_3A210(int a1)
+/// TODO: rename when the entity is identified (class 9 type 15).
+/// Constructor of class 9 type 15 (initial state 16); its sprite looks like a cut projectile graphic, per the user.
+int CreateClass9Type15_3A210(int a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -45434,15 +45737,16 @@ int sub_3A210(int a1)
     *(_WORD *)PTR(v1 + 126) = 128;
     *(_WORD *)PTR(v1 + 128) = 128;
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 215);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 215);
   }
   return v2;
 }
 
 //----- (0003A270) --------------------------------------------------------
-int sub_3A270(int a1)
+/// Constructor of the Wall of Fire spell's missile (class 9 type 16, state 17), fired by CastWallOfFire_57D40_58270.
+int CreateWallOfFireMissile_3A270(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45463,9 +45767,9 @@ int sub_3A270(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[5]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 42);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 42);
     return v2;
   }
   return result;
@@ -45473,7 +45777,8 @@ int sub_3A270(int a1)
 // 98FD8: using guessed type void *off_98FD8;
 
 //----- (0003A2F0) --------------------------------------------------------
-int sub_3A2F0(int a1)
+/// Constructor of the Mana Magnet spell's missile (class 9 type 17, state 18), fired by CastManaMagnet_57B80_580B0.
+int CreateManaMagnetMissile_3A2F0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45494,17 +45799,18 @@ int sub_3A2F0(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[2]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 209);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 2 * *(_WORD *)PTR(v2 + 80), 2 * *(_WORD *)PTR(v2 + 84));
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 209);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 2 * *(_WORD *)PTR(v2 + 80), 2 * *(_WORD *)PTR(v2 + 84));
     return v2;
   }
   return result;
 }
 
 //----- (0003A390) --------------------------------------------------------
-int sub_3A390(int a1)
+/// Constructor of the Global Death spell's missile (class 9 type 18, state 19), fired by CastGlobalDeath_580A0_585B0.
+int CreateGlobalDeathMissile_3A390(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45525,9 +45831,9 @@ int sub_3A390(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[5]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 42);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 42);
     return v2;
   }
   return result;
@@ -45535,7 +45841,9 @@ int sub_3A390(int a1)
 // 98FD8: using guessed type void *off_98FD8;
 
 //----- (0003A410) --------------------------------------------------------
-int sub_3A410(int a1)
+/// TODO: rename when the entity is identified (class 9 type 19).
+/// Constructor of class 9 type 19 (initial state 20); its sprite is the fireball graphic.
+int CreateClass9Type19_3A410(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45556,9 +45864,9 @@ int sub_3A410(int a1)
     BYTE1(v3) = *(_BYTE *)PTR(v2 + 16);
     *(_DWORD *)PTR(v2 + 156) = (uint32)OFF(&creatureTypes_98F38[5]);
     *(_BYTE *)PTR(v2 + 16) = BYTE1(v3) & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)PTR(a1));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 42);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 42);
     return v2;
   }
   return result;
@@ -45586,16 +45894,18 @@ int CreateExplosion_3A490(uint16_t* a1)
     *(_WORD *)PTR(v1 + 28) = 0;
     *(_DWORD *)PTR(v1 + 16) = v3 & 0xFFFDFFF7;
     *(_BYTE *)PTR(v1 + 18) |= 2u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_36FA0_37360((Type_AE400_29795*)v2, 7);
-    sub_37130_374F0((Type_AE400_29795*)v2, 128, 128);
+    SetSprite_36FA0_37360((Type_AE400_29795*)v2, 7);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 128, 128);
   }
   return (int)OFF(v2);
 }
 
 //----- (0003A510) --------------------------------------------------------
-int sub_3A510(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 1).
+/// Constructor of class 10 type 1 (state 1); created together with the mana ball when a creature dies (KillCreature_1A800).
+int CreateClass10Type1_3A510(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -45613,15 +45923,16 @@ int sub_3A510(uint16_t* a1)
     *(_WORD *)PTR(v1 + 44) = 400;
     *(_DWORD *)PTR(v1 + 16) = v3 & 0xFFFDFFF7;
     *(_BYTE *)PTR(v1 + 18) |= 2u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 41);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 41);
   }
   return v2;
 }
 
 //----- (0003A570) --------------------------------------------------------
-int sub_3A570(uint16_t* a1)
+/// Constructor of the speed effect (class 10 type 2, state 2), created by SpeedSpellTick_56380_568B0 and CastReverseSpeed_57F00_58410.
+int CreateSpeedEffect_3A570(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -45646,7 +45957,9 @@ int sub_3A570(uint16_t* a1)
 }
 
 //----- (0003A5D0) --------------------------------------------------------
-int sub_3A5D0(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 3).
+/// Constructor of class 10 type 3 (initial state 3).
+int CreateClass10Type3_3A5D0(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -45667,15 +45980,17 @@ int sub_3A5D0(uint16_t* a1)
     v4 = *(_BYTE *)PTR(v1 + 18) | 2;
     *(_WORD *)PTR(v2 + 26) = 0;
     *(_BYTE *)PTR(v2 + 18) = v4;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 36);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 36);
   }
   return v2;
 }
 
 //----- (0003A640) --------------------------------------------------------
-int sub_3A640(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 4).
+/// Constructor of class 10 type 4 (initial state 4).
+int CreateClass10Type4_3A640(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -45703,7 +46018,8 @@ int sub_3A640(uint16_t* a1)
 }
 
 //----- (0003A6B0) --------------------------------------------------------
-int sub_3A6B0(uint16_t* a1)
+/// Constructor of the water splash (class 10 type 5) (initial state 5). Identified from its decoded sprite (named by the user).
+int CreateWaterSplash_3A6B0(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -45724,16 +46040,17 @@ int sub_3A6B0(uint16_t* a1)
     v4 = *(_BYTE *)PTR(v1 + 18) | 2;
     *(_WORD *)PTR(v2 + 26) = 0;
     *(_BYTE *)PTR(v2 + 18) = v4;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     *(_WORD *)PTR(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v2 + 72));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 244);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 244);
   }
   return v2;
 }
 
 //----- (0003A730) --------------------------------------------------------
-int sub_3A730(uint16_t* a1)
+/// Constructor of the fire (class 10 type 6) (state 6); spawned when a spell-7 jar in state 3t+2 is picked up. Identified from its decoded sprite (named by the user).
+int CreateFire_3A730(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -45752,18 +46069,20 @@ int sub_3A730(uint16_t* a1)
     *(_WORD *)PTR(v1 + 46) = 0;
     *(_DWORD *)PTR(v1 + 16) = v3 & 0xFFFDFFF7;
     *(_BYTE *)PTR(v1 + 18) |= 2u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     v2[38] = GetTerrainHeight_11F50((axis_3d*)(short*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_36FA0_37360((Type_AE400_29795*)v2, 228);
-    sub_37130_374F0((Type_AE400_29795*)v2, 272, 1536);
+    SetSprite_36FA0_37360((Type_AE400_29795*)v2, 228);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 272, 1536);
     v2[13] = 0;
   }
   return (int)OFF(v2);
 }
 
 //----- (0003A7D0) --------------------------------------------------------
-int sub_3A7D0(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 7).
+/// Constructor of class 10 type 7 (initial state 7).
+int CreateClass10Type7_3A7D0(uint16_t* a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45788,9 +46107,9 @@ int sub_3A7D0(uint16_t* a1)
     *(_BYTE *)PTR(v2 + 66) = 10;
     *(_BYTE *)PTR(v2 + 67) = 7;
     *(_WORD *)PTR(v2 + 126) = v5 % 0x14 + 20;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     *(_WORD *)PTR(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)(short*)a1);
-    sub_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 78);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 78);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     result = v2;
     *(_BYTE *)PTR(v2 + 16) |= 1u;
@@ -45799,7 +46118,9 @@ int sub_3A7D0(uint16_t* a1)
 }
 
 //----- (0003A870) --------------------------------------------------------
-int sub_3A870(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 8).
+/// Constructor of class 10 type 8 (initial state 8).
+int CreateClass10Type8_3A870(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -45819,13 +46140,14 @@ int sub_3A870(uint16_t* a1)
     *(_WORD *)PTR(v2 + 44) = 100;
     *(_BYTE *)PTR(v2 + 16) = v3;
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 512, 512);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 512, 512);
   }
   return v2;
 }
 
 //----- (0003A8D0) --------------------------------------------------------
-int sub_3A8D0(uint16_t* a1)
+/// Constructor of the Volcano spell's effect (class 10 type 9, state 9), created where CastVolcano's missile lands (missile +68/+69).
+int CreateVolcanoEffect_3A8D0(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -45843,13 +46165,15 @@ int sub_3A8D0(uint16_t* a1)
     *(_WORD *)PTR(v1 + 44) = 2000;
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v1));
-    sub_37130_374F0((Type_AE400_29795*)v2, 768, 0x2000);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 768, 0x2000);
   }
   return (int)OFF(v2);
 }
 
 //----- (0003A930) --------------------------------------------------------
-int sub_3A930(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 10).
+/// Constructor of class 10 type 10 (initial state 10).
+int CreateClass10Type10_3A930(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -45870,13 +46194,14 @@ int sub_3A930(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 16) = v3 & 0xFFFDFFF7;
     *(_BYTE *)PTR(v1 + 18) |= 2u;
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v1));
-    sub_37130_374F0((Type_AE400_29795*)v2, 128, 128);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 128, 128);
   }
   return (int)OFF(v2);
 }
 
 //----- (0003A9A0) --------------------------------------------------------
-int sub_3A9A0(uint16_t* a1)
+/// Constructor of the Crater spell's effect (class 10 type 11, state 11), created where CastCrater's missile lands (missile +68/+69). Starts a volcano eruption (10/18).
+int CreateCraterEffect_3A9A0(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -45897,13 +46222,14 @@ int sub_3A9A0(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 16) = v3 & 0xFFFDFFF7;
     *(_BYTE *)PTR(v1 + 18) |= 2u;
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v1));
-    sub_37130_374F0((Type_AE400_29795*)v2, 2304, 0x2000);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 2304, 0x2000);
   }
   return (int)OFF(v2);
 }
 
 //----- (0003AA10) --------------------------------------------------------
-int sub_3AA10(uint16_t* a1)
+/// Constructor of the Possession spell's effect (class 10 type 12, state 12), created where CastPossession's missile lands (missile +68/+69).
+int CreatePossessionEffect_3AA10(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -45920,17 +46246,18 @@ int sub_3AA10(uint16_t* a1)
     *(_WORD *)PTR(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_WORD *)PTR(v1 + 44) = -1536;
     *(_BYTE *)PTR(v1 + 16) = *(_BYTE *)PTR(v1 + 16) & 0xF6 | 1;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 41);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 41);
     *(_BYTE *)PTR(v2 + 16) |= 1u;
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 512, 512);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 512, 512);
   }
   return v2;
 }
 
 //----- (0003AAA0) --------------------------------------------------------
-int sub_3AAA0(uint16_t* a1)
+/// Constructor of the smoke cloud (class 10 type 13) (initial state 13). Identified from its decoded sprite (named by the user).
+int CreateSmoke_3AAA0(uint16_t* a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45964,8 +46291,8 @@ int sub_3AAA0(uint16_t* a1)
     BYTE1(v6) = *(_BYTE *)PTR(v2 + 18) | 2;
     *(_WORD *)PTR(v2 + 126) = v8 + 51;
     *(_BYTE *)PTR(v2 + 18) = BYTE1(v6);
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
-    sub_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 67);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 67);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     return v2;
   }
@@ -45973,7 +46300,8 @@ int sub_3AAA0(uint16_t* a1)
 }
 
 //----- (0003AB40) --------------------------------------------------------
-int sub_3AB40(uint16_t* a1)
+/// Constructor of the dark smoke cloud (class 10 type 14) (initial state 14). Identified from its decoded sprite (named by the user).
+int CreateDarkSmoke_3AB40(uint16_t* a1)
 {
   int result; // eax
   int v2; // ebx
@@ -46007,8 +46335,8 @@ int sub_3AB40(uint16_t* a1)
     BYTE1(v6) = *(_BYTE *)PTR(v2 + 18) | 2;
     *(_WORD *)PTR(v2 + 126) = v8 + 51;
     *(_BYTE *)PTR(v2 + 18) = BYTE1(v6);
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
-    sub_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 9);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(v2), 9);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     return v2;
   }
@@ -46016,7 +46344,8 @@ int sub_3AB40(uint16_t* a1)
 }
 
 //----- (0003ABE0) --------------------------------------------------------
-int sub_3ABE0(uint16_t* a1)
+/// Constructor of the Earthquake spell's effect (class 10 type 15, state 15), created where CastEarthquake's missile lands (missile +68/+69). Creates 10/11 entities (as the Crater spell does).
+int CreateEarthquakeEffect_3ABE0(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46042,7 +46371,7 @@ int sub_3ABE0(uint16_t* a1)
     *(_DWORD *)PTR(v2 + 72) = *(_DWORD *)a1;
     *(_WORD *)PTR(v2 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
   }
   return v2;
 }
@@ -46112,11 +46441,11 @@ int CreateLava_3ACC0(uint16_t* a1)
     BYTE1(v9) = *(_BYTE *)PTR(v2 + 18);
     *(_WORD *)PTR(v2 + 126) = v8 + 52;
     *(_BYTE *)PTR(v2 + 18) = BYTE1(v9) | 2;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     *(_WORD *)PTR(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)a1) + 64;
-    sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v2 + 150), *(_WORD *)PTR(v2 + 30), 0, *(_WORD *)PTR(v2 + 126));
+    MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v2 + 150), *(_WORD *)PTR(v2 + 30), 0, *(_WORD *)PTR(v2 + 126));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 210);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 210);
     return v2;
   }
   return result;
@@ -46150,7 +46479,8 @@ int CreateVolcanoEruption_3ADB0(uint16_t* a1)
 }
 
 //----- (0003AE00) --------------------------------------------------------
-int sub_3AE00(uint16_t* a1)
+/// Constructor of the volcano fire (class 10 type 19) (state 19); created by each volcano eruption start, index kept in game state +38. Identified from its decoded sprite (named by the user).
+int CreateVolcanoFire_3AE00(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46168,17 +46498,18 @@ int sub_3AE00(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 8) = 240;
     *(_DWORD *)PTR(v1 + 16) = v3 & 0xFFFDFFF7;
     *(_BYTE *)PTR(v1 + 18) |= 2u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     *(_BYTE *)PTR(v2 + 16) |= 1u;
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 228);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 512, 512);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 228);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 512, 512);
   }
   return v2;
 }
 
 //----- (0003AE80) --------------------------------------------------------
-int sub_3AE80(uint16_t* a1)
+/// Constructor of the Lightning spell's effect (class 10 type 23, state 23), created where CastLightning's missile lands (missile +68/+69).
+int CreateLightningEffect_3AE80(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46196,17 +46527,18 @@ int sub_3AE80(uint16_t* a1)
     *(_WORD *)PTR(v1 + 44) = 25;
     *(_DWORD *)PTR(v1 + 16) = v3 & 0xFFFDFFF7;
     *(_BYTE *)PTR(v1 + 18) |= 2u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 7);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 200, 200);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 7);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 200, 200);
     *(_BYTE *)PTR(v2 + 16) |= 1u;
   }
   return v2;
 }
 
 //----- (0003AF00) --------------------------------------------------------
-int sub_3AF00(uint16_t* a1)
+/// Constructor of the Steal Mana spell's effect (class 10 type 25, state 25), created where CastStealMana's missile lands (missile +68/+69).
+int CreateStealManaEffect_3AF00(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -46223,16 +46555,17 @@ int sub_3AF00(uint16_t* a1)
     *(_WORD *)PTR(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_WORD *)PTR(v1 + 44) = 2000;
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_36FA0_37360((Type_AE400_29795*)v2, 283);
-    sub_37130_374F0((Type_AE400_29795*)v2, 512, 512);
+    SetSprite_36FA0_37360((Type_AE400_29795*)v2, 283);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 512, 512);
   }
   return (int)OFF(v2);
 }
 
 //----- (0003AF80) --------------------------------------------------------
-int sub_3AF80(uint16_t* a1)
+/// Constructor of the Duel spell's effect (class 10 type 26, state 26), created where CastDuel's missile lands (missile +68/+69).
+int CreateDuelEffect_3AF80(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -46249,16 +46582,17 @@ int sub_3AF80(uint16_t* a1)
     *(_WORD *)PTR(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_WORD *)PTR(v1 + 44) = 200;
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_36FA0_37360((Type_AE400_29795*)v2, 284);
-    sub_37130_374F0((Type_AE400_29795*)v2, 512, 512);
+    SetSprite_36FA0_37360((Type_AE400_29795*)v2, 284);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 512, 512);
   }
   return (int)OFF(v2);
 }
 
 //----- (0003B000) --------------------------------------------------------
-int sub_3B000(uint16_t* a1)
+/// Constructor of a terrain-raising level-build step (class 10 type 27, state 27 = RaiseTerrainStripYDown_26670; states 28/29 continue it).
+int CreateTerrainRaiseStep_3B000(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46276,14 +46610,16 @@ int sub_3B000(uint16_t* a1)
     v3 = *(_BYTE *)PTR(v1 + 16);
     *(_WORD *)PTR(v2 + 26) = 10;
     *(_BYTE *)PTR(v2 + 16) = v3 & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   }
   return v2;
 }
 
 //----- (0003B060) --------------------------------------------------------
-int sub_3B060(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 28).
+/// Constructor of class 10 type 28 (initial state 30).
+int CreateClass10Type28_3B060(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46299,14 +46635,16 @@ int sub_3B060(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 72) = *(_DWORD *)a1;
     *(_WORD *)PTR(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   }
   return v2;
 }
 
 //----- (0003B0C0) --------------------------------------------------------
-Type_AE400_29795* sub_3B0C0(axis_3d* position)
+/// TODO: rename when the entity is identified (class 10 type 30).
+/// Constructor of class 10 type 30 (initial state 32).
+Type_AE400_29795* CreateClass10Type30_3B0C0(axis_3d* position)
 {
 	Type_AE400_29795* event = NewEvent_372C0_37680();
 	if (event)
@@ -46317,14 +46655,16 @@ Type_AE400_29795* sub_3B0C0(axis_3d* position)
 		event->var_u8_29860_65 = 30;
 		event->var_u32_29867_72 = *position;
 		event->var_29811_16.byte[0] &= ~8u;
-		sub_41CF0_42030(event, position);
+		AddEntityToMap_41CF0_42030(event, position);
 		RefillLife_36DE0_371A0(event);
 	}
 	return event;
 }
 
 //----- (0003B120) --------------------------------------------------------
-int sub_3B120(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 29).
+/// Constructor of class 10 type 29 (initial state 31).
+int CreateClass10Type29_3B120(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46340,14 +46680,16 @@ int sub_3B120(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 72) = *(_DWORD *)a1;
     *(_WORD *)PTR(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   }
   return v2;
 }
 
 //----- (0003B180) --------------------------------------------------------
-int sub_3B180(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 32).
+/// Constructor of class 10 type 32 (initial state 34).
+int CreateClass10Type32_3B180(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46372,7 +46714,9 @@ int sub_3B180(uint16_t* a1)
 }
 
 //----- (0003B1D0) --------------------------------------------------------
-int sub_3B1D0(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 31).
+/// Constructor of class 10 type 31 (initial state 33).
+int CreateClass10Type31_3B1D0(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46388,14 +46732,16 @@ int sub_3B1D0(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 72) = *(_DWORD *)a1;
     *(_WORD *)PTR(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   }
   return v2;
 }
 
 //----- (0003B230) --------------------------------------------------------
-int sub_3B230(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 51).
+/// Constructor of class 10 type 51 (initial state 55).
+int CreateClass10Type51_3B230(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46415,14 +46761,16 @@ int sub_3B230(uint16_t* a1)
     *(_WORD *)PTR(v2 + 26) = 256;
     *(_WORD *)PTR(v2 + 126) = 1024;
     *(_BYTE *)PTR(v2 + 16) = v3 & 0xF7;
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 768, 768);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 768, 768);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   }
   return v2;
 }
 
 //----- (0003B2A0) --------------------------------------------------------
-int sub_3B2A0(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 50).
+/// Constructor of class 10 type 50 (initial state 54).
+int CreateClass10Type50_3B2A0(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46438,14 +46786,15 @@ int sub_3B2A0(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 72) = *(_DWORD *)a1;
     *(_WORD *)PTR(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
   }
   return v2;
 }
 
 //----- (0003B300) --------------------------------------------------------
-int sub_3B300(uint16_t* a1)
+/// Constructor of the mirror (class 10 type 34) (initial state 36). Identified from its decoded sprite (named by the user).
+int CreateMirror_3B300(uint16_t* a1)
 {
   int result; // eax
   int v2; // ebx
@@ -46464,16 +46813,16 @@ int sub_3B300(uint16_t* a1)
     *(_BYTE *)PTR(result + 16) &= ~8u;
     *(_DWORD *)PTR(result + 72) = *(_DWORD *)a1;
     *(_WORD *)PTR(result + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
-    sub_36FA0_37360((Type_AE400_29795*)PTR(result), 223);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 256, 256);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(result), 223);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 256, 256);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     *(_WORD *)PTR(v2 + 76) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v2 + 72)) + 640;
     *(_DWORD *)PTR(v2 + 150) = *(_DWORD *)PTR(v2 + 72);
     *(_WORD *)PTR(v2 + 154) = *(_WORD *)PTR(v2 + 76);
     v3 = 9377 * *(_DWORD *)PTR(v2 + 4) + 9439;
     *(_DWORD *)PTR(v2 + 4) = v3;
-    sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v2 + 150), v3 & 0x7FF, 0, -32768);
+    MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v2 + 150), v3 & 0x7FF, 0, -32768);
     return v2;
   }
   return result;
@@ -46486,7 +46835,8 @@ int sub_3B3D0(uint16_t* a1)
 }
 
 //----- (0003B3E0) --------------------------------------------------------
-int sub_3B3E0(uint16_t* a1)
+/// Constructor of the Undead Army spell's effect (class 10 type 36, state 38), created where CastUndeadArmy's missile lands (missile +68/+69). Raises class 5 type 9 creatures.
+int CreateUndeadArmyEffect_3B3E0(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -46503,10 +46853,10 @@ int sub_3B3E0(uint16_t* a1)
     *(_WORD *)PTR(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_WORD *)PTR(v1 + 44) = -1536;
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_36FA0_37360((Type_AE400_29795*)v2, 41);
-    sub_37130_374F0((Type_AE400_29795*)v2, 512, 512);
+    SetSprite_36FA0_37360((Type_AE400_29795*)v2, 41);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 512, 512);
   }
   return (int)OFF(v2);
 }
@@ -46528,16 +46878,18 @@ int sub_3B460(uint16_t* a1)
     v3 = v1[16] & 0xF7;
     *(_DWORD *)PTR(v2 + 8) = 32;
     *(_BYTE *)PTR(v2 + 16) = v3;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v2), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 272);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 512, 512);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 272);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 512, 512);
   }
   return v2;
 }
 
 //----- (0003B4D0) --------------------------------------------------------
-int sub_3B4D0(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 33).
+/// Constructor of class 10 type 33 (initial state 35).
+int CreateClass10Type33_3B4D0(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -46553,7 +46905,7 @@ int sub_3B4D0(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 72) = *(_DWORD *)a1;
     *(_WORD *)PTR(v1 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v1));
-    sub_37130_374F0((Type_AE400_29795*)v2, 512, 512);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 512, 512);
   }
   return (int)OFF(v2);
 }
@@ -46584,7 +46936,7 @@ int CreateManaBall_3B5A0(uint16_t* a1)//20C5A0_
     *(_WORD *)PTR(result + 28) = 3;
     *(_BYTE *)PTR(result + 58) = 0x80;
     *(_BYTE *)PTR(result + 59) = 0;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
     sub_274D0((Type_AE400_29795*)PTR(v2));
     return v2;
@@ -46609,9 +46961,9 @@ int CreateDeathMarker_3B620(uint16_t* a1)
     *(_BYTE *)PTR(result + 65) = 40;
     *(_WORD *)PTR(result + 26) = (result - (dword_AE400_AE3F0() + 29795)) / 164 % 11;
     *(_WORD *)PTR(result + 28) = 2;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(result), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_37030_373F0((Type_AE400_29795*)v2, 65);
+    SetSpriteAndBox_37030_373F0((Type_AE400_29795*)v2, 65);
     return (int)OFF(v2);
   }
   return result;
@@ -46619,7 +46971,8 @@ int CreateDeathMarker_3B620(uint16_t* a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (0003B690) --------------------------------------------------------
-Type_AE400_29795* sub_3B690(axis_3d* position)//20C690_
+/// Constructor of the player's flag (class 10 type 45) (initial state 51). Identified from its decoded sprite (named by the user).
+Type_AE400_29795* CreatePlayerFlag_3B690(axis_3d* position)//20C690_
 {
   Type_AE400_29795* event = NewEvent_372C0_37680();
   if (event)
@@ -46632,14 +46985,16 @@ Type_AE400_29795* sub_3B690(axis_3d* position)//20C690_
       event->var_u16_29821_26 = 4;
       event->var_29811_16.dword = 9;
       event->var_u16_29823_28 = 33;
-    sub_41CF0_42030(event, position);
-    sub_36FA0_37360(event, 177);
+    AddEntityToMap_41CF0_42030(event, position);
+    SetSprite_36FA0_37360(event, 177);
   }
   return event;
 }
 
 //----- (0003B6F0) --------------------------------------------------------
-int sub_3B6F0(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 43).
+/// Constructor of class 10 type 43 (initial state 45).
+int CreateClass10Type43_3B6F0(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -46654,16 +47009,18 @@ int sub_3B6F0(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 8) = 8;
     *(_WORD *)PTR(v1 + 44) = -1536;
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)v2);
-    sub_36FA0_37360((Type_AE400_29795*)v2, 41);
-    sub_37130_374F0((Type_AE400_29795*)v2, 512, 512);
+    SetSprite_36FA0_37360((Type_AE400_29795*)v2, 41);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)v2, 512, 512);
   }
   return (int)OFF(v2);
 }
 
 //----- (0003B760) --------------------------------------------------------
-int sub_3B760(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 41).
+/// Constructor of class 10 type 41 (initial state 43).
+int CreateClass10Type41_3B760(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46685,7 +47042,9 @@ int sub_3B760(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_3B7B0_3BB30(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 42).
+/// Constructor of class 10 type 42 (initial state 44).
+int CreateClass10Type42_3B7B0_3BB30(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46708,7 +47067,8 @@ int sub_3B7B0_3BB30(uint16_t* a1)
 }
 
 //----- (0003B800) --------------------------------------------------------
-int sub_3B800(uint16_t* a1)
+/// Constructor of the boulder (class 10 type 44) (initial state 46). Identified from its decoded sprite (named by the user).
+int CreateBoulder_3B800(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46723,9 +47083,9 @@ int sub_3B800(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 8) = 500;
     *(_WORD *)PTR(v1 + 44) = 500;
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 8);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 8);
   }
   return v2;
 }
@@ -46750,15 +47110,16 @@ int CreateCrabSpawnTimer_3B860(uint16_t* a1)
     *(_DWORD *)PTR(v1 + 140) = 500;
     *(_DWORD *)PTR(v1 + 136) = 2000;
     *(_BYTE *)PTR(v1 + 16) &= ~8u;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v1), (axis_3d*)a1);
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v2), 205);
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v2), 205);
   }
   return v2;
 }
 
 //----- (0003B8E0) --------------------------------------------------------
-int sub_3B8E0(uint16_t* a1)
+/// Constructor of the Wall of Fire spell's effect (class 10 type 53, state 58), created where CastWallOfFire's missile lands (missile +68/+69).
+int CreateWallOfFireEffect_3B8E0(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46785,13 +47146,14 @@ int sub_3B8E0(uint16_t* a1)
     *(_WORD *)PTR(v2 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_BYTE *)PTR(v2 + 16) |= 1u;
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
   }
   return v2;
 }
 
 //----- (0003B970) --------------------------------------------------------
-int sub_3B970(uint16_t* a1)
+/// Constructor of the Mana Magnet spell's effect (class 10 type 54, state 59), created where CastManaMagnet's missile lands (missile +68/+69).
+int CreateManaMagnetEffect_3B970(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46818,13 +47180,14 @@ int sub_3B970(uint16_t* a1)
     *(_WORD *)PTR(v2 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_BYTE *)PTR(v2 + 16) |= 1u;
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
   }
   return v2;
 }
 
 //----- (0003BA00) --------------------------------------------------------
-int sub_3BA00(uint16_t* a1)
+/// Constructor of the Global Death spell's effect (class 10 type 55, state 60), created where CastGlobalDeath's missile lands (missile +68/+69).
+int CreateGlobalDeathEffect_3BA00(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46851,13 +47214,15 @@ int sub_3BA00(uint16_t* a1)
     *(_WORD *)PTR(v2 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_BYTE *)PTR(v2 + 16) |= 1u;
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
   }
   return v2;
 }
 
 //----- (0003BA90) --------------------------------------------------------
-int sub_3BA90(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 56).
+/// Constructor of class 10 type 56 (initial state 61).
+int CreateClass10Type56_3BA90(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46884,13 +47249,14 @@ int sub_3BA90(uint16_t* a1)
     *(_WORD *)PTR(v2 + 76) = *(_WORD *)(((uint8_t*)a1) + 4);
     *(_BYTE *)PTR(v2 + 16) |= 1u;
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v2));
-    sub_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v2), 1024, 0x4000);
   }
   return v2;
 }
 
 //----- (0003BB20) --------------------------------------------------------
-Type_AE400_29795* sub_3BB20(axis_3d* position, char a2, char a3)
+/// Creates a switch/trigger entity (class 11) at position with type a2 and state a3 (same structure as MC2's AddSwitchXX_50A90). The 11/* constructors are one-line wrappers passing (t, t).
+Type_AE400_29795* CreateSwitch_3BB20(axis_3d* position, char a2, char a3)
 {
 	Type_AE400_29795* event = NewEvent_372C0_37680();
 	if (event)
@@ -46908,199 +47274,232 @@ Type_AE400_29795* sub_3BB20(axis_3d* position, char a2, char a3)
 }
 
 //----- (0003BB70) --------------------------------------------------------
-Type_AE400_29795* sub_3BB70(axis_3d* position)
+/// Constructor of switch type 0 (class 11 type 0, state 0) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch00_3BB70(axis_3d* position)
 {
-  return sub_3BB20(position, 0, 0);
+  return CreateSwitch_3BB20(position, 0, 0);
 }
 
 //----- (0003BB90) --------------------------------------------------------
-Type_AE400_29795* sub_3BB90(axis_3d* position)
+/// Constructor of switch type 1 (class 11 type 1, state 1) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch01_3BB90(axis_3d* position)
 {
-  return sub_3BB20(position, 1, 1);
+  return CreateSwitch_3BB20(position, 1, 1);
 }
 
 //----- (0003BBB0) --------------------------------------------------------
-Type_AE400_29795* sub_3BBB0(axis_3d* position)
+/// Constructor of switch type 2 (class 11 type 2, state 2) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch02_3BBB0(axis_3d* position)
 {
-  return sub_3BB20(position, 2, 2);
+  return CreateSwitch_3BB20(position, 2, 2);
 }
 
 //----- (0003BBD0) --------------------------------------------------------
-Type_AE400_29795* sub_3BBD0(axis_3d* position)
+/// Constructor of switch type 3 (class 11 type 3, state 3) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch03_3BBD0(axis_3d* position)
 {
-  return sub_3BB20(position, 3, 3);
+  return CreateSwitch_3BB20(position, 3, 3);
 }
 
 //----- (0003BBF0) --------------------------------------------------------
-Type_AE400_29795* sub_3BBF0(axis_3d* position)
+/// Constructor of switch type 4 (class 11 type 4, state 4) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch04_3BBF0(axis_3d* position)
 {
-  return sub_3BB20(position, 4, 4);
+  return CreateSwitch_3BB20(position, 4, 4);
 }
 
 //----- (0003BC10) --------------------------------------------------------
-Type_AE400_29795* sub_3BC10(axis_3d* position)
+/// Constructor of switch type 5 (class 11 type 5, state 5) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch05_3BC10(axis_3d* position)
 {
-  return sub_3BB20(position, 5, 5);
+  return CreateSwitch_3BB20(position, 5, 5);
 }
 
 //----- (0003BC30) --------------------------------------------------------
-Type_AE400_29795* sub_3BC30(axis_3d* position)
+/// Constructor of switch type 6 (class 11 type 6, state 6) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch06_3BC30(axis_3d* position)
 {
-  return sub_3BB20(position, 6, 6);
+  return CreateSwitch_3BB20(position, 6, 6);
 }
 
 //----- (0003BC50) --------------------------------------------------------
-Type_AE400_29795* sub_3BC50(axis_3d* position)
+/// Constructor of switch type 7 (class 11 type 7, state 7) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch07_3BC50(axis_3d* position)
 {
-  return sub_3BB20(position, 7, 7);
+  return CreateSwitch_3BB20(position, 7, 7);
 }
 
 //----- (0003BC70) --------------------------------------------------------
-Type_AE400_29795* sub_3BC70(axis_3d* position)
+/// Constructor of switch type 8 (class 11 type 8, state 8) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch08_3BC70(axis_3d* position)
 {
-  return sub_3BB20(position, 8, 8);
+  return CreateSwitch_3BB20(position, 8, 8);
 }
 
 //----- (0003BC90) --------------------------------------------------------
-Type_AE400_29795* sub_3BC90(axis_3d* position)
+/// Constructor of switch type 9 (class 11 type 9, state 9) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch09_3BC90(axis_3d* position)
 {
-  return sub_3BB20(position, 9, 9);
+  return CreateSwitch_3BB20(position, 9, 9);
 }
 
 //----- (0003BCB0) --------------------------------------------------------
-Type_AE400_29795* sub_3BCB0(axis_3d* position)
+/// Constructor of switch type 10 (class 11 type 10, state 10) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch10_3BCB0(axis_3d* position)
 {
-  return sub_3BB20(position, 10, 10);
+  return CreateSwitch_3BB20(position, 10, 10);
 }
 
 //----- (0003BCD0) --------------------------------------------------------
-Type_AE400_29795* sub_3BCD0(axis_3d* position)
+/// Constructor of switch type 11 (class 11 type 11, state 11) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch11_3BCD0(axis_3d* position)
 {
-  return sub_3BB20(position, 11, 11);
+  return CreateSwitch_3BB20(position, 11, 11);
 }
 
 //----- (0003BCF0) --------------------------------------------------------
-Type_AE400_29795* sub_3BCF0(axis_3d* position)
+/// Constructor of switch type 12 (class 11 type 12, state 12) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch12_3BCF0(axis_3d* position)
 {
-  return sub_3BB20(position, 12, 12);
+  return CreateSwitch_3BB20(position, 12, 12);
 }
 
 //----- (0003BD10) --------------------------------------------------------
-Type_AE400_29795* sub_3BD10(axis_3d* position)
+/// Constructor of switch type 13 (class 11 type 13, state 13) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch13_3BD10(axis_3d* position)
 {
-  return sub_3BB20(position, 13, 13);
+  return CreateSwitch_3BB20(position, 13, 13);
 }
 
 //----- (0003BD30) --------------------------------------------------------
-Type_AE400_29795* sub_3BD30(axis_3d* position)
+/// Constructor of switch type 14 (class 11 type 14, state 14) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch14_3BD30(axis_3d* position)
 {
-  return sub_3BB20(position, 14, 14);
+  return CreateSwitch_3BB20(position, 14, 14);
 }
 
 //----- (0003BD50) --------------------------------------------------------
-Type_AE400_29795* sub_3BD50(axis_3d* position)
+/// Constructor of switch type 15 (class 11 type 15, state 15) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch15_3BD50(axis_3d* position)
 {
-  return sub_3BB20(position, 15, 15);
+  return CreateSwitch_3BB20(position, 15, 15);
 }
 
 //----- (0003BD70) --------------------------------------------------------
-Type_AE400_29795* sub_3BD70(axis_3d* position)
+/// Constructor of switch type 16 (class 11 type 16, state 16) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch16_3BD70(axis_3d* position)
 {
-  return sub_3BB20(position, 16, 16);
+  return CreateSwitch_3BB20(position, 16, 16);
 }
 
 //----- (0003BD90) --------------------------------------------------------
-Type_AE400_29795* sub_3BD90(axis_3d* position)
+/// Constructor of switch type 17 (class 11 type 17, state 17) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch17_3BD90(axis_3d* position)
 {
-  return sub_3BB20(position, 17, 17);
+  return CreateSwitch_3BB20(position, 17, 17);
 }
 
 //----- (0003BDB0) --------------------------------------------------------
-Type_AE400_29795* sub_3BDB0(axis_3d* position)
+/// Constructor of switch type 18 (class 11 type 18, state 18) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch18_3BDB0(axis_3d* position)
 {
-  return sub_3BB20(position, 18, 18);
+  return CreateSwitch_3BB20(position, 18, 18);
 }
 
 //----- (0003BDD0) --------------------------------------------------------
-Type_AE400_29795* sub_3BDD0(axis_3d* position)
+/// Constructor of switch type 19 (class 11 type 19, state 19) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch19_3BDD0(axis_3d* position)
 {
-  return sub_3BB20(position, 19, 19);
+  return CreateSwitch_3BB20(position, 19, 19);
 }
 
 //----- (0003BDF0) --------------------------------------------------------
-Type_AE400_29795* sub_3BDF0(axis_3d* position)
+/// Constructor of switch type 20 (class 11 type 20, state 20) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch20_3BDF0(axis_3d* position)
 {
-  return sub_3BB20(position, 20, 20);
+  return CreateSwitch_3BB20(position, 20, 20);
 }
 
 //----- (0003BE10) --------------------------------------------------------
-Type_AE400_29795* sub_3BE10(axis_3d* position)
+/// Constructor of switch type 21 (class 11 type 21, state 21) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch21_3BE10(axis_3d* position)
 {
-  return sub_3BB20(position, 21, 21);
+  return CreateSwitch_3BB20(position, 21, 21);
 }
 
 //----- (0003BE30) --------------------------------------------------------
-Type_AE400_29795* sub_3BE30(axis_3d* position)
+/// Constructor of switch type 22 (class 11 type 22, state 22) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch22_3BE30(axis_3d* position)
 {
-  return sub_3BB20(position, 22, 22);
+  return CreateSwitch_3BB20(position, 22, 22);
 }
 
 //----- (0003BE50) --------------------------------------------------------
-Type_AE400_29795* sub_3BE50(axis_3d* position)
+/// Constructor of switch type 23 (class 11 type 23, state 23) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch23_3BE50(axis_3d* position)
 {
-  return sub_3BB20(position, 23, 23);
+  return CreateSwitch_3BB20(position, 23, 23);
 }
 
 //----- (0003BE70) --------------------------------------------------------
-Type_AE400_29795* sub_3BE70(axis_3d* position)
+/// Constructor of switch type 24 (class 11 type 24, state 24) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch24_3BE70(axis_3d* position)
 {
-  return sub_3BB20(position, 24, 24);
+  return CreateSwitch_3BB20(position, 24, 24);
 }
 
 //----- (0003BE90) --------------------------------------------------------
-Type_AE400_29795* sub_3BE90(axis_3d* position)
+/// Constructor of switch type 25 (class 11 type 25, state 25) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch25_3BE90(axis_3d* position)
 {
-  return sub_3BB20(position, 25, 25);
+  return CreateSwitch_3BB20(position, 25, 25);
 }
 
 //----- (0003BEB0) --------------------------------------------------------
-Type_AE400_29795* sub_3BEB0(axis_3d* position)
+/// Constructor of switch type 26 (class 11 type 26, state 26) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch26_3BEB0(axis_3d* position)
 {
-  return sub_3BB20(position, 26, 26);
+  return CreateSwitch_3BB20(position, 26, 26);
 }
 
 //----- (0003BED0) --------------------------------------------------------
-Type_AE400_29795* sub_3BED0(axis_3d* position)
+/// Constructor of switch type 27 (class 11 type 27, state 27) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch27_3BED0(axis_3d* position)
 {
-  return sub_3BB20(position, 27, 27);
+  return CreateSwitch_3BB20(position, 27, 27);
 }
 
 //----- (0003BEF0) --------------------------------------------------------
-Type_AE400_29795* sub_3BEF0(axis_3d* position)
+/// Constructor of switch type 28 (class 11 type 28, state 28) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch28_3BEF0(axis_3d* position)
 {
-  return sub_3BB20(position, 28, 28);
+  return CreateSwitch_3BB20(position, 28, 28);
 }
 
 //----- (0003BF10) --------------------------------------------------------
-Type_AE400_29795* sub_3BF10(axis_3d* position)
+/// Constructor of switch type 29 (class 11 type 29, state 29) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch29_3BF10(axis_3d* position)
 {
-  return sub_3BB20(position, 29, 29);
+  return CreateSwitch_3BB20(position, 29, 29);
 }
 
 //----- (0003BF30) --------------------------------------------------------
-Type_AE400_29795* sub_3BF30(axis_3d* position)
+/// Constructor of switch type 30 (class 11 type 30, state 30) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch30_3BF30(axis_3d* position)
 {
-  return sub_3BB20(position, 30, 30);
+  return CreateSwitch_3BB20(position, 30, 30);
 }
 
 //----- (0003BF50) --------------------------------------------------------
-Type_AE400_29795* sub_3BF50(axis_3d* position)
+/// Constructor of switch type 31 (class 11 type 31, state 31) via CreateSwitch_3BB20.
+Type_AE400_29795* CreateSwitch31_3BF50(axis_3d* position)
 {
-  return sub_3BB20(position, 31, 31);
+  return CreateSwitch_3BB20(position, 31, 31);
 }
 
 //----- (0003BF70) --------------------------------------------------------
-int sub_3BF70(int a1, char a2, char a3, int a4, __int16 a5, char a6, char a7, int a8, __int16 a9)
+/// Creates a spell entity (class 12) at a1: a2 = spell type, a3 = state (3*type = owned), a4 = mana max (+136; +140 = a4/a5), a5 = +50, a6/a7 = +60/+62 flags, a8 = mana delta (+132), a9 = +44. The 12/* constructors are one-line wrappers around it.
+int CreateSpell_3BF70(int a1, char a2, char a3, int a4, __int16 a5, char a6, char a7, int a8, __int16 a9)
 {
   int result; // eax
   int v10; // ebx
@@ -47129,9 +47528,9 @@ int sub_3BF70(int a1, char a2, char a3, int a4, __int16 a5, char a6, char a7, in
     v12 = *(_BYTE *)PTR(result + 16);
     *(_DWORD *)PTR(v10 + 136) = a4;
     *(_BYTE *)PTR(v10 + 16) = v12 & 0xF7;
-    sub_41CF0_42030((Type_AE400_29795*)PTR(v10), (axis_3d*)PTR(a1));
-    sub_36FA0_37360((Type_AE400_29795*)PTR(v10), 77);
-    sub_37130_374F0((Type_AE400_29795*)PTR(v10), 4 * *(_WORD *)PTR(v10 + 80), 4 * *(_WORD *)PTR(v10 + 84));
+    AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v10), (axis_3d*)PTR(a1));
+    SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v10), 77);
+    SetCollisionBox_37130_374F0((Type_AE400_29795*)PTR(v10), 4 * *(_WORD *)PTR(v10 + 80), 4 * *(_WORD *)PTR(v10 + 84));
     RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v10));
     return v10;
   }
@@ -47139,151 +47538,177 @@ int sub_3BF70(int a1, char a2, char a3, int a4, __int16 a5, char a6, char a7, in
 }
 
 //----- (0003C040) --------------------------------------------------------
-int sub_3C040(int a1)
+/// Constructor of the possession spell (class 12 type 3, state 9) via CreateSpell_3BF70.
+int CreatePossessionSpell_3C040(int a1)
 {
-  return sub_3BF70(a1, 3, 9, 50, 3, 1, 0, 0, 100);
+  return CreateSpell_3BF70(a1, 3, 9, 50, 3, 1, 0, 0, 100);
 }
 
 //----- (0003C060) --------------------------------------------------------
-int sub_3C060(int a1)
+/// Constructor of the castle spell (class 12 type 16, state 48) via CreateSpell_3BF70.
+int CreateCastleSpell_3C060(int a1)
 {
-  return sub_3BF70(a1, 16, 48, 1000, 101, 1, 0, 0, 10000);
+  return CreateSpell_3BF70(a1, 16, 48, 1000, 101, 1, 0, 0, 10000);
 }
 
 //----- (0003C090) --------------------------------------------------------
-int sub_3C090(int a1)
+/// Constructor of the fireball spell (class 12 type 0, state 0) via CreateSpell_3BF70.
+int CreateFireballSpell_3C090(int a1)
 {
-  return sub_3BF70(a1, 0, 0, 200, 5, 1, 0, 0, 125);
+  return CreateSpell_3BF70(a1, 0, 0, 200, 5, 1, 0, 0, 125);
 }
 
 //----- (0003C0C0) --------------------------------------------------------
-int sub_3C0C0(int a1)
+/// Constructor of the speed spell (class 12 type 2, state 6) via CreateSpell_3BF70.
+int CreateSpeedSpell_3C0C0(int a1)
 {
-  return sub_3BF70(a1, 2, 6, 1000, 251, 0, 0, 0, 100);
+  return CreateSpell_3BF70(a1, 2, 6, 1000, 251, 0, 0, 0, 100);
 }
 
 //----- (0003C0F0) --------------------------------------------------------
-int sub_3C0F0(int a1)
+/// Constructor of the heal spell (class 12 type 1, state 3) via CreateSpell_3BF70.
+int CreateHealSpell_3C0F0(int a1)
 {
-  return sub_3BF70(a1, 1, 3, 1000, 21, 1, 0, 0, 100);
+  return CreateSpell_3BF70(a1, 1, 3, 1000, 21, 1, 0, 0, 100);
 }
 
 //----- (0003C120) --------------------------------------------------------
-int sub_3C120(int a1)
+/// Constructor of the Teleport spell (class 12 type 10, state 30) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateTeleportSpell_3C120(int a1)
 {
-  return sub_3BF70(a1, 10, 30, 5000, 51, 1, 0, 10000, 100);
+  return CreateSpell_3BF70(a1, 10, 30, 5000, 51, 1, 0, 10000, 100);
 }
 
 //----- (0003C150) --------------------------------------------------------
-int sub_3C150(int a1)
+/// Constructor of the Earthquake spell (class 12 type 6, state 18) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateEarthquakeSpell_3C150(int a1)
 {
-  return sub_3BF70(a1, 6, 18, 6000, 51, 1, 0, 120000, 6000);
+  return CreateSpell_3BF70(a1, 6, 18, 6000, 51, 1, 0, 120000, 6000);
 }
 
 //----- (0003C180) --------------------------------------------------------
-int sub_3C180(int a1)
+/// Constructor of the Mana Magnet spell (class 12 type 19, state 57) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateManaMagnetSpell_3C180(int a1)
 {
-  return sub_3BF70(a1, 19, 57, 4000, 17, 1, 0, 10000, 100);
+  return CreateSpell_3BF70(a1, 19, 57, 4000, 17, 1, 0, 10000, 100);
 }
 
 //----- (0003C1B0) --------------------------------------------------------
-int sub_3C1B0(int a1)
+/// Constructor of the Shield spell (class 12 type 4, state 12) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateShieldSpell_3C1B0(int a1)
 {
-  return sub_3BF70(a1, 4, 12, 2000, 251, 1, 0, 0, 100);
+  return CreateSpell_3BF70(a1, 4, 12, 2000, 251, 1, 0, 0, 100);
 }
 
 //----- (0003C1E0) --------------------------------------------------------
-int sub_3C1E0(int a1)
+/// Constructor of the Meteor spell (class 12 type 7, state 21) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateMeteorSpell_3C1E0(int a1)
 {
-  return sub_3BF70(a1, 7, 21, 10000, 11, 1, 0, 100000, 10000);
+  return CreateSpell_3BF70(a1, 7, 21, 10000, 11, 1, 0, 100000, 10000);
 }
 
 //----- (0003C210) --------------------------------------------------------
-int sub_3C210(int a1)
+/// Constructor of the Rebound spell (class 12 type 14, state 42) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateReboundSpell_3C210(int a1)
 {
-  return sub_3BF70(a1, 14, 42, 1000, 101, 1, 0, 8000, 100);
+  return CreateSpell_3BF70(a1, 14, 42, 1000, 101, 1, 0, 8000, 100);
 }
 
 //----- (0003C240) --------------------------------------------------------
-int sub_3C240(int a1)
+/// Constructor of the Lightning spell (class 12 type 15, state 45) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateLightningSpell_3C240(int a1)
 {
-  return sub_3BF70(a1, 15, 45, 1000, 2, 0, 0, 25000, 500);
+  return CreateSpell_3BF70(a1, 15, 45, 1000, 2, 0, 0, 25000, 500);
 }
 
 //----- (0003C270) --------------------------------------------------------
-int sub_3C270(int a1)
+/// Constructor of the Duel spell (class 12 type 11, state 33) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateDuelSpell_3C270(int a1)
 {
-  return sub_3BF70(a1, 11, 33, 2500, 17, 1, 0, 16000, 100);
+  return CreateSpell_3BF70(a1, 11, 33, 2500, 17, 1, 0, 16000, 100);
 }
 
 //----- (0003C2A0) --------------------------------------------------------
-int sub_3C2A0(int a1)
+/// Constructor of the Steal Mana spell (class 12 type 13, state 39) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateStealManaSpell_3C2A0(int a1)
 {
-  return sub_3BF70(a1, 13, 39, 500, 11, 1, 0, 20000, 100);
+  return CreateSpell_3BF70(a1, 13, 39, 500, 11, 1, 0, 20000, 100);
 }
 
 //----- (0003C2D0) --------------------------------------------------------
-int sub_3C2D0(int a1)
+/// Constructor of the Invisible spell (class 12 type 12, state 36) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateInvisibleSpell_3C2D0(int a1)
 {
-  return sub_3BF70(a1, 12, 36, 5000, 251, 1, 0, 50000, 100);
+  return CreateSpell_3BF70(a1, 12, 36, 5000, 251, 1, 0, 50000, 100);
 }
 
 //----- (0003C300) --------------------------------------------------------
-int sub_3C300(int a1)
+/// Constructor of the Crater spell (class 12 type 9, state 27) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateCraterSpell_3C300(int a1)
 {
-  return sub_3BF70(a1, 9, 27, 12000, 31, 1, 0, 100000, 6000);
+  return CreateSpell_3BF70(a1, 9, 27, 12000, 31, 1, 0, 100000, 6000);
 }
 
 //----- (0003C330) --------------------------------------------------------
-int sub_3C330(int a1)
+/// Constructor of the Beyond Sight spell (class 12 type 5, state 15) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateBeyondSightSpell_3C330(int a1)
 {
-  return sub_3BF70(a1, 5, 15, 3000, 101, 1, 0, 0, 100);
+  return CreateSpell_3BF70(a1, 5, 15, 3000, 101, 1, 0, 0, 100);
 }
 
 //----- (0003C360) --------------------------------------------------------
-int sub_3C360(int a1)
+/// Constructor of the Lightning Storm spell (class 12 type 18, state 54) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateLightningStormSpell_3C360(int a1)
 {
-  return sub_3BF70(a1, 18, 54, 20000, 33, 1, 0, 90000, 2000);
+  return CreateSpell_3BF70(a1, 18, 54, 20000, 33, 1, 0, 90000, 2000);
 }
 
 //----- (0003C390) --------------------------------------------------------
-int sub_3C390(int a1)
+/// Constructor of the Volcano spell (class 12 type 8, state 24) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateVolcanoSpell_3C390(int a1)
 {
-  return sub_3BF70(a1, 8, 24, 30000, 65, 1, 0, 180000, 1000);
+  return CreateSpell_3BF70(a1, 8, 24, 30000, 65, 1, 0, 180000, 1000);
 }
 
 //----- (0003C3C0) --------------------------------------------------------
-int sub_3C3C0(int a1)
+/// Constructor of the Undead Army spell (class 12 type 17, state 51) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateUndeadArmySpell_3C3C0(int a1)
 {
-  return sub_3BF70(a1, 17, 51, 13000, 13, 1, 0, 150000, 100);
+  return CreateSpell_3BF70(a1, 17, 51, 13000, 13, 1, 0, 150000, 100);
 }
 
 //----- (0003C3F0) --------------------------------------------------------
-int sub_3C3F0(int a1)
+/// Constructor of the Wall of Fire spell (class 12 type 20, state 60) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateWallOfFireSpell_3C3F0(int a1)
 {
-  return sub_3BF70(a1, 20, 60, 5000, 51, 1, 0, 12000, 24464);
+  return CreateSpell_3BF70(a1, 20, 60, 5000, 51, 1, 0, 12000, 24464);
 }
 
 //----- (0003C420) --------------------------------------------------------
-int sub_3C420(int a1)
+/// Constructor of the Reverse Speed spell (class 12 type 21, state 63) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateReverseSpeedSpell_3C420(int a1)
 {
-  return sub_3BF70(a1, 21, 63, 1000, 251, 0, 0, 0, 100);
+  return CreateSpell_3BF70(a1, 21, 63, 1000, 251, 0, 0, 0, 100);
 }
 
 //----- (0003C450) --------------------------------------------------------
-int sub_3C450(int a1)
+/// Constructor of the Global Death spell (class 12 type 22, state 66) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateGlobalDeathSpell_3C450(int a1)
 {
-  return sub_3BF70(a1, 22, 66, 75000, 101, 1, 0, 200000, 7000);
+  return CreateSpell_3BF70(a1, 22, 66, 75000, 101, 1, 0, 200000, 7000);
 }
 
 //----- (0003C480) --------------------------------------------------------
-int sub_3C480(int a1)
+/// Constructor of the Rapid Fireball spell (class 12 type 23, state 69) via CreateSpell_3BF70 (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CreateRapidFireballSpell_3C480(int a1)
 {
-  return sub_3BF70(a1, 23, 69, 600, 3, 0, 0, 50000, 50);
+  return CreateSpell_3BF70(a1, 23, 69, 600, 3, 0, 0, 50000, 50);
 }
 
 //----- (0003C4B0) --------------------------------------------------------
-int sub_3C4B0(int a1)
+/// TODO: rename when the entity is identified (class 13 type 0).
+/// Constructor of class 13 type 0 (initial state 0).
+int CreateClass13Type0_3C4B0(int a1)
 {
   int v0; // eax
   int v1; // ebx
@@ -47304,7 +47729,9 @@ int sub_3C4B0(int a1)
 }
 
 //----- (0003C4E0) --------------------------------------------------------
-int sub_3C4E0(int a1)
+/// TODO: rename when the entity is identified (class 13 type 1).
+/// Constructor of class 13 type 1 (initial state 1).
+int CreateClass13Type1_3C4E0(int a1)
 {
   int v0; // eax
   int v1; // ebx
@@ -47325,7 +47752,9 @@ int sub_3C4E0(int a1)
 }
 
 //----- (0003C510) --------------------------------------------------------
-int sub_3C510(int a1)
+/// TODO: rename when the entity is identified (class 13 type 2).
+/// Constructor of class 13 type 2 (initial state 2).
+int CreateClass13Type2_3C510(int a1)
 {
   int v0; // eax
   int v1; // ebx
@@ -47346,7 +47775,9 @@ int sub_3C510(int a1)
 }
 
 //----- (0003C540) --------------------------------------------------------
-int sub_3C540(int a1)
+/// TODO: rename when the entity is identified (class 13 type 3).
+/// Constructor of class 13 type 3 (initial state 3).
+int CreateClass13Type3_3C540(int a1)
 {
   int v0; // eax
   int v1; // ebx
@@ -47526,7 +47957,8 @@ void sub_3C800_sub_3CB40()
 // CC1BC: using guessed type int dword_CC1BC;
 
 //SYNCHRONIZED WITH REMC1
-void sub_3C9D0_3CD10()//20D9D0_
+/// Per frame, for every player: records/plays back its 10-byte input packet (MovieInputPacket_3E9D0_3ED10) and executes the packet's commands (bytes 0 and 1: player state, spell selection, cheats, ...).
+void ExecutePlayerInputs_3C9D0_3CD10()//20D9D0_
 {
 	//int v0; // ebx
 	//_BYTE *v1; // ebp
@@ -47719,7 +48151,7 @@ void sub_3C9D0_3CD10()//20D9D0_
 	for (; v108 < str_AE400_AE3F0->var_u16_10;)
 	{
 		actEvent = &str_AE400_AE3F0->str_29795[str_AE400_AE3F0->str_13323[v106x].playIndex_13333];
-		sub_3E9D0_3ED10(str_AE400_AE3F0->var_29715[v102x]);
+		MovieInputPacket_3E9D0_3ED10(str_AE400_AE3F0->var_29715[v102x]);
 		str_AE400_AE3F0->str_13323[v106x].var_14422_1099 = 0;
 		switch (str_AE400_AE3F0->var_29715[v102x][0])
 		{
@@ -47761,11 +48193,11 @@ void sub_3C9D0_3CD10()//20D9D0_
 			goto LABEL_150;
 		case 0xA:
 			if ((str_AE408_AE3F8->var_u8_0 & 0x10) == 0)
-				sub_3E410_3E750(10000);
+				SaveMovieGameState_3E410_3E750(10000);
 			goto LABEL_150;
 		case 0xB:
 			if ((str_AE408_AE3F8->var_u8_0 & 0x10) == 0)
-				sub_3E350_3E690(10000);
+				LoadMovieGameState_3E350_3E690(10000);
 			goto LABEL_150;
 		case 0xC:
 			if ((str_AE408_AE3F8->var_u8_0 & 0x20) == 0 && v108 == str_AE400_AE3F0->var_u16_8)
@@ -47790,7 +48222,7 @@ void sub_3C9D0_3CD10()//20D9D0_
 		//add_compare(0x20DC7D, true);
 #endif debug1
 		//debug
-			sub_44D30_45070(&str_AE400_AE3F0->str_13323[v106x], actEvent);
+			SpawnWizard_44D30_45070(&str_AE400_AE3F0->str_13323[v106x], actEvent);
 			//adress 0x20DC8F
 			//debug
 #ifdef debug1
@@ -47878,7 +48310,7 @@ void sub_3C9D0_3CD10()//20D9D0_
 			if (str_AE400_AE3F0->var_29715[v102x][1] != -1)
 			{
 				actEvent->var_u32_29955_160->var_u16_2043_940 = str_AE400_AE3F0->var_29715[v102x][1];
-				sub_55370_558A0(0, str_AE400_AE3F0->str_13323[v106x].var_u16_13330_7, 14);
+				PlayEntitySound_55370_558A0(0, str_AE400_AE3F0->str_13323[v106x].var_u16_13330_7, 14);
 				sub_3DC90_3DFD0(&str_AE400_AE3F0->str_13323[v106x], 0);
 			}
 			goto LABEL_150;
@@ -47886,7 +48318,7 @@ void sub_3C9D0_3CD10()//20D9D0_
 			if (str_AE400_AE3F0->var_29715[v102x][1] != -1)
 			{
 				actEvent->var_u32_29955_160->var_u16_2047_944 = str_AE400_AE3F0->var_29715[v102x][1];
-				sub_55370_558A0(0, str_AE400_AE3F0->str_13323[v106x].var_u16_13330_7, 14);
+				PlayEntitySound_55370_558A0(0, str_AE400_AE3F0->str_13323[v106x].var_u16_13330_7, 14);
 				sub_3DC90_3DFD0(&str_AE400_AE3F0->str_13323[v106x], 0);
 			}
 			goto LABEL_150;
@@ -47901,7 +48333,7 @@ void sub_3C9D0_3CD10()//20D9D0_
 						actEvent->var_u32_29955_160->var_15198_1875_772[j] = -1;
 				}
 				actEvent->var_u32_29955_160->var_15198_1875_772[str_AE400_AE3F0->var_29715[v102x][1]] = str_AE400_AE3F0->var_29715[v102x][2];
-				sub_55370_558A0(0, str_AE400_AE3F0->str_13323[v106x].var_u16_13330_7, 14);
+				PlayEntitySound_55370_558A0(0, str_AE400_AE3F0->str_13323[v106x].var_u16_13330_7, 14);
 			}
 			goto LABEL_150;
 		case 0x18:
@@ -47945,7 +48377,7 @@ void sub_3C9D0_3CD10()//20D9D0_
 						 + 844) = 32;*/
 			}
 		LABEL_87:
-			sub_55370_558A0(0, str_AE400_AE3F0->str_13323[v106x].var_u16_13330_7, 14);
+			PlayEntitySound_55370_558A0(0, str_AE400_AE3F0->str_13323[v106x].var_u16_13330_7, 14);
 			goto LABEL_150;
 		case 0x1A:
 			for (v48 = 0; v48 < str_AE400_AE3F0->var_u16_10; v48++)
@@ -48226,16 +48658,16 @@ void sub_3DC90_3DFD0(TypeStrAE400_13323* a1x, char a2)
   {
     if (a1x->var_14421_1098 == 2 )
     {
-      sub_5C05C_5C56C(&begPointersTab_AE450_AE440_26C450_26C440[1]);
+      SetMouseCursor_5C05C_5C56C(&begPointersTab_AE450_AE440_26C450_26C440[1]);
       sub_31A00_31A40();
     }
     else
     {
-      sub_5C05C_5C56C(&begPointersTab_AE450_AE440_26C450_26C440[0]);
+      SetMouseCursor_5C05C_5C56C(&begPointersTab_AE450_AE440_26C450_26C440[0]);
       sub_59720_59C30();
       sub_31A60_31AA0();
     }
-    sub_55370_558A0(0, a1x->var_u16_13330_7, 14);
+    PlayEntitySound_55370_558A0(0, a1x->var_u16_13330_7, 14);
   }
   sub_3DD10_3E050();
 }
@@ -48491,7 +48923,8 @@ void LoadLevel_3E100_3E440(int level, void* buffer)
 }
 
 //----- (0003E350) --------------------------------------------------------
-char sub_3E350_3E690(__int16 saveSlot)//20F350_
+/// Loads a movie's start state from movie/gam<slot>.dat (the game's own demo recorder).
+char LoadMovieGameState_3E350_3E690(__int16 saveSlot)//20F350_
 {
   char result; // al
   //int v2; // ebx
@@ -48508,7 +48941,7 @@ char sub_3E350_3E690(__int16 saveSlot)//20F350_
   //int v13; // [esp+5Ch] [ebp-14h]
   //int v14; // [esp+60h] [ebp-10h]
 
-  result = sub_3E460(saveSlot);
+  result = MovieGameStateExists_3E460(saveSlot);
   if ( result )
   {
     sprintf(pathBuffer, "%s/gam%05d.dat", "movie", saveSlot);
@@ -48527,7 +48960,7 @@ char sub_3E350_3E690(__int16 saveSlot)//20F350_
     v6 = *(_DWORD *)(dword_AE400_AE3F0() + 8621);
     v7 = *(_DWORD *)(dword_AE400_AE3F0() + 8625);
     v8 = *(_DWORD *)(dword_AE400_AE3F0() + 8629);*/
-    sub_3EEA0_3F1E0(pathBuffer, (uint8_t*)str_AE400_AE3F0);
+    LoadFile_3EEA0_3F1E0(pathBuffer, (uint8_t*)str_AE400_AE3F0);
     str_AE400_AE3F0->var_0 = temp0;
     str_AE400_AE3F0->set = tempSet;
     /*
@@ -48544,7 +48977,7 @@ char sub_3E350_3E690(__int16 saveSlot)//20F350_
     *(_DWORD *)((char *)v3 + 8629) = v8;*/
     //*v3 = v2;
     sub_416B0();
-    sub_37220_375E0();
+    RebuildFreeLists_37220_375E0();
     str_AE400_AE3F0->var_u32_4593 = -1;
     return 1;
   }
@@ -48552,15 +48985,17 @@ char sub_3E350_3E690(__int16 saveSlot)//20F350_
 }
 
 //----- (0003E410) --------------------------------------------------------
-void sub_3E410_3E750(__int16 saveSlot)
+/// Saves a movie's start state to movie/gam<slot>.dat.
+void SaveMovieGameState_3E410_3E750(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "%s/gam%05d.dat", "movie", saveSlot);
-  sub_62E60_63370(pathBuffer, (uint8*)str_AE400_AE3F0, sizeof(str_AE400_AE3F0));
+  WriteFile_62E60_63370(pathBuffer, (uint8*)str_AE400_AE3F0, sizeof(Type_str_AE400_AE3F0)); // PORT: was sizeof(str_AE400_AE3F0), the pointer (8 bytes); the original writes 0x38D09 (0x3E430)
 }
 
 //----- (0003E460) --------------------------------------------------------
-char sub_3E460(__int16 saveSlot)
+/// Returns 1 if movie/gam<slot>.dat exists.
+char MovieGameStateExists_3E460(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "%s/gam%05d.dat", "movie", saveSlot);
@@ -48572,11 +49007,12 @@ char sub_3E460(__int16 saveSlot)
 }
 
 //----- (0003E4B0) --------------------------------------------------------
-char sub_3E4B0_3E7F0(__int16 saveSlot)
+/// Loads a movie's map arrays from movie/map<slot>.dat.
+char LoadMovieMapState_3E4B0_3E7F0(__int16 saveSlot)
 {
   char result;
   char pathBuffer[512];
-  result = sub_3E640(saveSlot);
+  result = MovieMapStateExists_3E640(saveSlot);
   if ( result )
   {
     sprintf(pathBuffer, "%s/map%05d.dat", "movie", saveSlot);
@@ -48594,7 +49030,8 @@ char sub_3E4B0_3E7F0(__int16 saveSlot)
 }
 
 //----- (0003E580) --------------------------------------------------------
-char sub_3E580_3E8C0(__int16 saveSlot)
+/// Saves a movie's map arrays to movie/map<slot>.dat.
+char SaveMovieMapState_3E580_3E8C0(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "%s/map%05d.dat", "movie", saveSlot);
@@ -48610,7 +49047,8 @@ char sub_3E580_3E8C0(__int16 saveSlot)
 }
 
 //----- (0003E640) --------------------------------------------------------
-char sub_3E640(__int16 saveSlot)
+/// Returns 1 if movie/map<slot>.dat exists.
+char MovieMapStateExists_3E640(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "%s/map%05d.dat", "movie", saveSlot);
@@ -48622,7 +49060,8 @@ char sub_3E640(__int16 saveSlot)
 }
 
 //----- (0003E690) --------------------------------------------------------
-char sub_3E690_3E9D0(__int16 saveSlot)//20F690_
+/// Loads the game state from save/gam<slot>.dat (Alt+L quick load uses slot 199).
+char LoadGameState_3E690_3E9D0(__int16 saveSlot)//20F690_
 {
   char result; // al
   //int v2; // ebx
@@ -48639,7 +49078,7 @@ char sub_3E690_3E9D0(__int16 saveSlot)//20F690_
   //int v13; // [esp+5Ch] [ebp-14h]
   //int v14; // [esp+60h] [ebp-10h]
 
-  result = sub_3E7A0(saveSlot);
+  result = GameStateFileExists_3E7A0(saveSlot);
   if ( result )
   {
     sprintf(pathBuffer, "c:/CARPET.CD/%s/gam%05d.dat", "save", saveSlot);
@@ -48655,7 +49094,7 @@ char sub_3E690_3E9D0(__int16 saveSlot)//20F690_
     v6 = *(_DWORD *)(dword_AE400_AE3F0() + 8621);
     v7 = *(_DWORD *)(dword_AE400_AE3F0() + 8625);
     v8 = *(_DWORD *)(dword_AE400_AE3F0() + 8629);*/
-    sub_3EEA0_3F1E0(pathBuffer, (uint8_t*)str_AE400_AE3F0);
+    LoadFile_3EEA0_3F1E0(pathBuffer, (uint8_t*)str_AE400_AE3F0);
     //v3 = (_DWORD *)dword_AE400_AE3F0();
     //v4 = (_DWORD *)(dword_AE400_AE3F0() + 8597);
     str_AE400_AE3F0->var_0 = temp0;
@@ -48678,7 +49117,7 @@ char sub_3E690_3E9D0(__int16 saveSlot)//20F690_
         //add_compare(0x20F733, true);
 #endif debug1
         //debug
-    sub_37220_375E0();
+    RebuildFreeLists_37220_375E0();
     str_AE400_AE3F0->var_u32_4593 = -1;
     return 1;
   }
@@ -48688,15 +49127,17 @@ char sub_3E690_3E9D0(__int16 saveSlot)//20F690_
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (0003E750) --------------------------------------------------------
-void sub_3E750_3EA90(__int16 saveSlot)
+/// Saves the game state to save/gam<slot>.dat (Alt+S quick save uses slot 199).
+void SaveGameState_3E750_3EA90(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "c:/CARPET.CD/%s/gam%05d.dat", "save", saveSlot);
-  sub_62E60_63370(pathBuffer, (uint8*)str_AE400_AE3F0, sizeof(Type_str_AE400_AE3F0));
+  WriteFile_62E60_63370(pathBuffer, (uint8*)str_AE400_AE3F0, sizeof(Type_str_AE400_AE3F0));
 }
 
 //----- (0003E7A0) --------------------------------------------------------
-char sub_3E7A0(__int16 saveSlot)
+/// Returns 1 if save/gam<slot>.dat exists.
+char GameStateFileExists_3E7A0(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "c:/CARPET.CD/%s/gam%05d.dat", "save", saveSlot);
@@ -48708,10 +49149,11 @@ char sub_3E7A0(__int16 saveSlot)
 }
 
 //----- (0003E7F0) --------------------------------------------------------
-char sub_3E7F0_3EB30(__int16 saveSlot)
+/// Loads the map arrays from save/map<slot>.dat (quick load).
+char LoadMapState_3E7F0_3EB30(__int16 saveSlot)
 {
   char pathBuffer[512];
-  char result = sub_3E980(saveSlot);
+  char result = MapStateFileExists_3E980(saveSlot);
   if ( result )
   {
     sprintf(pathBuffer, "c:/CARPET.CD/%s/map%05d.dat", "save", saveSlot);
@@ -48729,7 +49171,8 @@ char sub_3E7F0_3EB30(__int16 saveSlot)
 }
 
 //----- (0003E8C0) --------------------------------------------------------
-char sub_3E8C0_3EC00(__int16 saveSlot)
+/// Saves the map arrays to save/map<slot>.dat (quick save).
+char SaveMapState_3E8C0_3EC00(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "c:/CARPET.CD/%s/map%05d.dat", "save", saveSlot);
@@ -48745,7 +49188,8 @@ char sub_3E8C0_3EC00(__int16 saveSlot)
 }
 
 //----- (0003E980) --------------------------------------------------------
-char sub_3E980(__int16 saveSlot)
+/// Returns 1 if save/map<slot>.dat exists.
+char MapStateFileExists_3E980(__int16 saveSlot)
 {
   char pathBuffer[512];
   sprintf(pathBuffer, "c:/CARPET.CD/%s/map%05d.dat", "save", saveSlot);
@@ -48757,7 +49201,8 @@ char sub_3E980(__int16 saveSlot)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_3E9D0_3ED10(char a1[10])
+/// The game's own movie recorder: plays back (flag 4) or records (flag 2) the 10-byte input packet a1 from/to movie/mvi<slot>.dat, saving/loading the start state on the first packet.
+void MovieInputPacket_3E9D0_3ED10(char a1[10])
 {
   char pathBuffer[512];
   if ( (str_AE408_AE3F8->var_u8_0 & 4) != 0 )
@@ -48772,8 +49217,8 @@ void sub_3E9D0_3ED10(char a1[10])
         str_AE408_AE3F8->var_u8_0 &= 0xFB;
         return;
       }
-      sub_3E350_3E690(str_AE408_AE3F8->var_u16_13);
-      sub_3E4B0_3E7F0(str_AE408_AE3F8->var_u16_13);
+      LoadMovieGameState_3E350_3E690(str_AE408_AE3F8->var_u16_13);
+      LoadMovieMapState_3E4B0_3E7F0(str_AE408_AE3F8->var_u16_13);
       sub_59420_59930();
       FlvInitSet_356E0_35AA0();
     }
@@ -48815,9 +49260,9 @@ void sub_3E9D0_3ED10(char a1[10])
         return;
       }
       sub_593B0_598C0();
-      sub_3E410_3E750(str_AE408_AE3F8->var_u16_13);
-      sub_3E580_3E8C0(str_AE408_AE3F8->var_u16_13);
-      sub_37220_375E0();
+      SaveMovieGameState_3E410_3E750(str_AE408_AE3F8->var_u16_13);
+      SaveMovieMapState_3E580_3E8C0(str_AE408_AE3F8->var_u16_13);
+      RebuildFreeLists_37220_375E0();
       str_AE400_AE3F0->var_u32_4593 = -1;
       str_AE408_AE3F8->var_u8_161 = 3;
       str_AE408_AE3F8->var_u32_162 = 200;
@@ -48888,7 +49333,8 @@ void CreateGameDir_3EC90_3EFD0(uint8_t diskChar, char* dir1, char* dir2)
 
 int counter_3EEA0_3F1E0 = 0;
 //----- (0003EEA0) --------------------------------------------------------
-int sub_3EEA0_3F1E0(char* path, uint8_t* buffer)//20FEA0_
+/// Reads the whole file `path` into `buffer` and RNC-unpacks it in place if packed; returns the (unpacked) size, -1 if the file is missing, -2 if unpacking fails ("ERROR decompressing").
+int LoadFile_3EEA0_3F1E0(char* path, uint8_t* buffer)//20FEA0_
 {
     if (dword_12DF8C_12DF7C[0xfb] != 0)
     {
@@ -48937,7 +49383,8 @@ bool access_3EF30_3F270(char* a1)
   return (unsigned __int16)access(a1, 0) == 0;
 }
 
-char sub_3EF50_3F290(char *a1, char *a2, const char *a3)
+/// Copies <a3>.tab and <a3>.dat from directory a1 to a2, printing the progress in percent; returns 2/1 if a directory is missing, 3 if a file cannot be opened.
+char CopyDataFilePair_3EF50_3F290(char *a1, char *a2, const char *a3)
 {
   int writed;
   int blockSize;
@@ -49000,7 +49447,8 @@ char sub_3EF50_3F290(char *a1, char *a2, const char *a3)
   return 0;
 }
 
-void sub_3F1D0_3F510()
+/// Setup: copies the texture maps (data/tmaps) and the levels into the install directory ("Creating Setup Directories..", "Setup levels..").
+void CopyDataToInstallDir_3F1D0_3F510()
 {
 	//fixed
 	char helpStr1[20];
@@ -49026,7 +49474,7 @@ void sub_3F1D0_3F510()
 	{
 		sprintf(textBuffer2, "%s%s/%s", "C:", "\\carpet.cd", "data");
 		dword_B76F0_B76E0 = gettextposition(outtext((char*)"Creating Setup Directories.."));
-		if (!sub_3EF50_3F290((char*)"data", textBuffer2, helpStr1))
+		if (!CopyDataFilePair_3EF50_3F290((char*)"data", textBuffer2, helpStr1))
 			sprintf(textBuffer2, "%s%s/%s/%s.dat", "C:", "\\carpet.cd", "data", helpStr1);
 	}
 	outtext((char*)"\n");
@@ -49035,7 +49483,7 @@ void sub_3F1D0_3F510()
 	{
 		sprintf(textBuffer2, "%s%s/%s", "C:", "\\carpet.cd", "levels");
 		dword_B76F0_B76E0 = gettextposition(outtext((char*)"Setup levels.."));
-		if (!sub_3EF50_3F290((char*)"levels", textBuffer2, helpStr2))
+		if (!CopyDataFilePair_3EF50_3F290((char*)"levels", textBuffer2, helpStr2))
 			sprintf(textBuffer2, "%s%s/%s/%s.dat", "C:", "\\carpet.cd", "levels", helpStr2);
 	}
 }
@@ -49973,20 +50421,21 @@ char sub_3FCA0_3FFE0(
 // 12EFE4: using guessed type __int16 mouseLeftButton2_12EFE4_12EFD4;
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
-void sub_40440_40780(Pathstruct* pathstruct)//211440_211780
+/// Loads every entry of a Pathstruct list (LoadPathFile_634E0_639F0); prints "ERROR: File/Allocation" and waits for return on failure.
+void LoadPathFiles_40440_40780(Pathstruct* pathstruct)//211440_211780
 {
 	char input[20];
 	sub_63010_63520();
 	if (pathstruct->colorPalette_var28)
 	{
 		for (int i = 0; pathstruct[i].colorPalette_var28; i++)
-			sub_634A0_639B0(&pathstruct[i]);
+			FreePathFile_634A0_639B0(&pathstruct[i]);
 	}
 	if (pathstruct->colorPalette_var28)
 	{
 		for (int i = 0; pathstruct[i].colorPalette_var28; i++)
 		{
-			int compVar = sub_634E0_639F0(&pathstruct[i]);
+			int compVar = LoadPathFile_634E0_639F0(&pathstruct[i]);
 			if (compVar < 0)
 			{
 				SetPalette_319A0_319E0(begPalDat_AE428_AE418_26C428_26C418);
@@ -50686,7 +51135,8 @@ void sub_40550_40890()//211550_
 // 10C1E0: using guessed type __int16 mapEntityIndex_10C1E0_10C1D0[7953];
 
 //SYNCHRONIZED WITH REMC1
-void sub_407A0_40AE0()//2117A0_
+/// Loads and sets up a level: "Load Level", "Generate map", "Generate features", "Initialise Models".
+void LoadAndInitLevel_407A0_40AE0()//2117A0_
 {
     //debug
 #ifdef debug1
@@ -50711,7 +51161,7 @@ void sub_407A0_40AE0()//2117A0_
 #ifdef debug1
   //add_compare(0x211817, true);
 #endif debug1
-  sub_371C0_37580();
+  InitFreeList_371C0_37580();
   //debug
 #ifdef debug1
   //add_compare(0x21181F, true);
@@ -50726,7 +51176,7 @@ void sub_407A0_40AE0()//2117A0_
   //debug
   DrawTextLine_5AD10_5B220((char*)"Initialise Models");
   memset(&word_AE454_AE444, 0, 6);
-  sub_37220_375E0();
+  RebuildFreeLists_37220_375E0();
   //debug
 #ifdef debug1
   //add_compare(0x21186B, true);
@@ -50763,10 +51213,10 @@ void sub_408D0_40C10()
   LoadLevel_3E100_3E440(str_AE408_AE3F8->var_u16_17, (void *)&str_AE400_AE3F0->str_193795);
   str_AE400_AE3F0->var_u16_10 = str_AE400_AE3F0->str_193795.var_u16_232597_38802;
   sub_31AA0_31AE0((int)OFF(&str_AE400_AE3F0->str_193795));
-  sub_371C0_37580();
+  InitFreeList_371C0_37580();
   GenerateFeatures_36430_367F0(&str_AE400_AE3F0->str_193795);
   memset(&word_AE454_AE444, 0, 6);
-  sub_37220_375E0();
+  RebuildFreeLists_37220_375E0();
   str_AE400_AE3F0->var_u32_4593 = -1;
   sub_37440_37800(0, 1);
   byte_939E5 = temp939E5;
@@ -51064,7 +51514,8 @@ void sub_41144(unsigned __int8 a1, unsigned __int8 a2, unsigned __int8 a3, unsig
 }
 
 //----- (000411D7) --------------------------------------------------------
-int sub_411D7_41517(void *a2, unsigned __int16 a3, char a4)
+/// Fills a2 whole rows of a 320-wide screen buffer with colour a4.
+int ClearScreen320_411D7_41517(void *a2, unsigned __int16 a3, char a4)
 {
   int v4; // eax
   int v6; // [esp-8h] [ebp-Ch]
@@ -51084,7 +51535,8 @@ int sub_411D7_41517(void *a2, unsigned __int16 a3, char a4)
 }
 
 //----- (000411FD) --------------------------------------------------------
-int sub_411FD_4153D(void *a2, unsigned __int16 a3, char a4)
+/// Fills a2 whole rows of a 640-wide screen buffer with colour a4.
+int ClearScreen640_411FD_4153D(void *a2, unsigned __int16 a3, char a4)
 {
   int v4; // eax
   int v6; // [esp-8h] [ebp-Ch]
@@ -51198,14 +51650,14 @@ void sub_41230_41570()//212230_
 		{
 			if (str_AE400_AE3F0->set.var_u8_8608 <= 0x10u)
 			{
-				sub_40440_40780(&pathStrArray[PSdatablk0dat]);
+				LoadPathFiles_40440_40780(&pathStrArray[PSdatablk0dat]);
 			}
 			else if (str_AE400_AE3F0->set.var_u8_8608 == 32)
 			{
-				sub_40440_40780(&pathStrArray[PSdatablk1dat]);
+				LoadPathFiles_40440_40780(&pathStrArray[PSdatablk1dat]);
 			}
 		}
-		sub_44470_447B0();
+		LoadOrBuildTables_44470_447B0();
 		free_426E0_42A20(testAlloc);
 	}
 }
@@ -51729,7 +52181,8 @@ void sub_41B20_41E60(TypeStrAE400_13323* a1x, Type_AE400_29795* a2x)//212B20_
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_41C70_41FB0(Type_AE400_29795* event, axis_3d* position)
+/// Moves the entity to `position`, relinking it on the map when the tile changes; returns 1 if it changed tile.
+int MoveEntity_41C70_41FB0(Type_AE400_29795* event, axis_3d* position)
 {
   int result; // eax
   if ((event->var_u32_29867_72.x >> 8) == (position->x >> 8) && (event->var_u32_29867_72.y >> 8) == (position->y >> 8))
@@ -51739,23 +52192,25 @@ int sub_41C70_41FB0(Type_AE400_29795* event, axis_3d* position)
   }
   else
   {
-    sub_41DD0_42110(event);
-    sub_41CF0_42030(event, position);
+    RemoveEntityFromMap_41DD0_42110(event);
+    AddEntityToMap_41CF0_42030(event, position);
     return 1;
   }
   return result;
 }
 
 //----- (00041CC0) --------------------------------------------------------
-int sub_41CC0_42000(__int16 a1, int a2, int a3)
+/// Moves entity a2 to position a3, always relinking it on the map (RemoveEntityFromMap + AddEntityToMap); returns 1.
+int RelinkEntity_41CC0_42000(__int16 a1, int a2, int a3)
 {
-  sub_41DD0_42110((Type_AE400_29795*)PTR(a2));
-  sub_41CF0_42030((Type_AE400_29795*)PTR(a2), (axis_3d*)PTR(a3));
+  RemoveEntityFromMap_41DD0_42110((Type_AE400_29795*)PTR(a2));
+  AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(a2), (axis_3d*)PTR(a3));
   return 1;
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_41CF0_42030(Type_AE400_29795* a1, axis_3d* a2)//212CF0_
+/// Puts the entity at position a2 and links it into its map tile's entity list (mapEntityIndex_10C1E0, +20 next / +22 previous); flag 4 of +16 = on the map.
+void AddEntityToMap_41CF0_42030(Type_AE400_29795* a1, axis_3d* a2)//212CF0_
 {
   if ( (a1->var_29811_16.byte[0] & 4) == 0 )
   {
@@ -51773,7 +52228,8 @@ void sub_41CF0_42030(Type_AE400_29795* a1, axis_3d* a2)//212CF0_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_41DD0_42110(Type_AE400_29795* a2)
+/// Unlinks the entity from its map tile's entity list (inverse of AddEntityToMap_41CF0_42030).
+void RemoveEntityFromMap_41DD0_42110(Type_AE400_29795* a2)
 {
   if ( (a2->var_29811_16.byte[0] & 4) != 0 )
   {
@@ -51806,14 +52262,15 @@ void MarkEntityForRemoval_41E80_421C0(Type_AE400_29795* event)
 /// (freeList_593 / freeListTop_40).
 void FreeEntity_41E90_421D0(Type_AE400_29795* a2)
 {
-  sub_41DD0_42110(a2);
+  RemoveEntityFromMap_41DD0_42110(a2);
   a2->var_u8_29859_64 = 0;
   str_AE400_AE3F0->freeListTop_40++;
   str_AE400_AE3F0->freeList_593[str_AE400_AE3F0->freeListTop_40] = a2;
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_41EC0_42200(axis_3d* a1x, unsigned __int16 a2, __int16 a3, __int16 a4)//212EC0_
+/// Moves position a1x by distance a4 along heading a2 and pitch a3 (11-bit angles, trig_9074C).
+void MoveAlongHeading_41EC0_42200(axis_3d* a1x, unsigned __int16 a2, __int16 a3, __int16 a4)//212EC0_
 {
   //_WORD *result; // eax
   unsigned __int16 v5; // bx
@@ -51939,12 +52396,13 @@ __int16 HeadingTo_42150_42490(axis_3d* a1x, axis_3d* a2x)
 __int16 PitchTo_42180_424C0(axis_3d* a1x, axis_3d* a2x)
 {
   __int16 v3; // [esp-4h] [ebp-8h]
-  v3 = -(__int16)sub_423D0_42710(a1x, a2x);
+  v3 = -(__int16)Distance2D_423D0_42710(a1x, a2x);
   return sub_40F87_412C7(a1x->z - a2x->z, v3);
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_42210_42550(__int16 a1, __int16 a2)
+/// Absolute difference of two 11-bit angles, 0..1024.
+int AngleDifference_42210_42550(__int16 a1, __int16 a2)
 {
   __int64 v2; // rax
   int result; // eax
@@ -51957,7 +52415,8 @@ int sub_42210_42550(__int16 a1, __int16 a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_42240_42580(int a1, __int16 a2)
+/// Direction of the shorter turn from angle a1 to angle a2: -1, 0 or +1.
+int TurnDirection_42240_42580(int a1, __int16 a2)
 {
   int v2; // ecx
   int v3; // ebx
@@ -51981,7 +52440,8 @@ int sub_42240_42580(int a1, __int16 a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_422A0_425E0(unsigned __int16 a1, __int16 a2, int a3, unsigned __int16 a4)
+/// Signed turn from angle a1 towards a2, at most a4 (TurnDirection * min(AngleDifference, a4)).
+int TurnStep_422A0_425E0(unsigned __int16 a1, __int16 a2, int a3, unsigned __int16 a4)
 {
   int v4; // ebx
   int v5; // esi
@@ -51989,8 +52449,8 @@ int sub_422A0_425E0(unsigned __int16 a1, __int16 a2, int a3, unsigned __int16 a4
 
   if ( a1 == a2 )
     return 0;
-  v4 = sub_42210_42550(a1, a2);
-  v5 = sub_42240_42580(a1, a2);
+  v4 = AngleDifference_42210_42550(a1, a2);
+  v5 = TurnDirection_42240_42580(a1, a2);
   v6 = v4;
   if ( (__int16)v4 > (int)a4 )
     v6 = a4;
@@ -52023,7 +52483,8 @@ unsigned int Distance3D_42340_42680(axis_3d* a1x, axis_3d* a2x)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_42390_426D0(_WORD *a1, _WORD *a2)
+/// Squared x/y/z distance between two positions.
+int DistanceSquared3D_42390_426D0(_WORD *a1, _WORD *a2)
 {
   int v2; // edx
 
@@ -52032,7 +52493,8 @@ int sub_42390_426D0(_WORD *a1, _WORD *a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-unsigned int sub_423D0_42710(axis_3d* a1x, axis_3d* a2x)
+/// x/y distance between two positions (Distance_410CE_4140E of the squared distance).
+unsigned int Distance2D_423D0_42710(axis_3d* a1x, axis_3d* a2x)
 {
   int v2; // edx
 
@@ -52041,7 +52503,8 @@ unsigned int sub_423D0_42710(axis_3d* a1x, axis_3d* a2x)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_42410_42750(_WORD *a1, _WORD *a2)
+/// Squared x/y distance between two positions.
+int DistanceSquared2D_42410_42750(_WORD *a1, _WORD *a2)
 {
   int v2; // edx
 
@@ -52050,13 +52513,15 @@ int sub_42410_42750(_WORD *a1, _WORD *a2)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_424F0_42830(Type_AE400_29795* a1x, unsigned __int8 a2)
+/// Sets the entity state (+70), the index of its handler in the class state table.
+void SetEntityState_424F0_42830(Type_AE400_29795* a1x, unsigned __int8 a2)
 {
   a1x->var_u8_29865_70 = a2;
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_42510_42850(Type_AE400_29795* a1x)
+/// Advances the animation frame (+88); returns 1 once the last frame (+89) has been reached.
+int AdvanceAnimFrame_42510_42850(Type_AE400_29795* a1x)
 {
   int result; // eax
 
@@ -52797,6 +53262,7 @@ LABEL_4:
 }
 
 //----- (00043010) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_43010(unsigned int a1, int a2, unsigned __int16 a3)
 {
   unsigned int v3; // edx
@@ -53485,7 +53951,7 @@ char *LoadFileAlloc_43E50(const char *a1)
     v1 = v5;
     if ( v5 )
     {
-      if ( sub_3EEA0_3F1E0((char*)a1, (uint8_t*)v5) != v4 )
+      if ( LoadFile_3EEA0_3F1E0((char*)a1, (uint8_t*)v5) != v4 )
       {
         free_426E0_42A20((void*)PTR(v6));
         v1 = (char *)PTR(v6 ^ (unsigned int)OFF(v1));
@@ -53498,6 +53964,7 @@ char *LoadFileAlloc_43E50(const char *a1)
 }
 
 //----- (00043EC0) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 void sub_43EC0_44200()
 {
   unsigned __int16 v5; // ax
@@ -53653,7 +54120,7 @@ LABEL_41:
 LABEL_63:
       byte_939E4 = 0;
       byte_939E5 = 0;
-      sub_61610_61B20(&pathStrArray_258E00[PS25datasnds00dat]);
+      FreePathFiles_61610_61B20(&pathStrArray_258E00[PS25datasnds00dat]);
       return;
     }
     v7 = 1;
@@ -53672,7 +54139,7 @@ LABEL_63:
       sub_63C06();
       byte_939E4 = 0;
       byte_939E5 = 0;
-      sub_61610_61B20(&pathStrArray_258E00[PS25datasnds00dat]);
+      FreePathFiles_61610_61B20(&pathStrArray_258E00[PS25datasnds00dat]);
       return;
     }
     sub_63C06();
@@ -53718,7 +54185,7 @@ LABEL_63:
   sub_6481C();
   byte_939E4 = 0;
   byte_939E5 = 0;
-  sub_61610_61B20(&pathStrArray_258E00[PS25datasnds00dat]);
+  FreePathFiles_61610_61B20(&pathStrArray_258E00[PS25datasnds00dat]);
 }
 // 5CC03: using guessed type _DWORD printf(const char *, ...);
 // 61EF5: using guessed type _DWORD stricmp(_DWORD, _DWORD);
@@ -53743,7 +54210,8 @@ LABEL_63:
 // CC1BC: using guessed type int dword_CC1BC;
 // CC1C4: using guessed type __int16 word_CC1C4;
 
-void sub_44470_447B0()//215470_
+/// Sets up the block pointers, then loads data/tables.dat into strPal; if it is missing, computes the tables and writes the file.
+void LoadOrBuildTables_44470_447B0()//215470_
 {
   int v4; // edx
   int v6; // esi
@@ -53794,7 +54262,7 @@ void sub_44470_447B0()//215470_
   }
   if ( !byte_90B48 )
   {
-    if (sub_3EEA0_3F1E0((char*)"data/tables.dat", (uint8_t*)&strPal) <= 0 )
+    if (LoadFile_3EEA0_3F1E0((char*)"data/tables.dat", (uint8_t*)&strPal) <= 0 )
       byte_90B48 = 1;
   }
   if ( byte_90B48 )
@@ -53841,12 +54309,13 @@ void sub_44470_447B0()//215470_
       strPal.byte_CBC34_CBC24[i] = Distance_410CE_4140E(0x10000 - i * i);
     }
     strPal.byte_CBC34_CBC24[0] = -1;
-    sub_62E60_63370((char*)"data/tables.dat", (uint8*)&strPal, sizeof(strPal));
+    WriteFile_62E60_63370((char*)"data/tables.dat", (uint8*)&strPal, sizeof(strPal));
   }
 }
 
 //----- (00044700) --------------------------------------------------------
-void sub_44700_44A40(char* a1, char** a2, int a3)//215700_
+/// Fills a2[0..a3) with pointers to the a3 consecutive NUL-terminated strings starting at a1.
+void BuildStringTable_44700_44A40(char* a1, char** a2, int a3)//215700_
 {
     for (int i = 0; i < a3; i++)
     {
@@ -53877,9 +54346,9 @@ void sub_44730_44A70()//215730_
   {
     byte_93A84 = 1;
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
+      ClearScreen320_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
     else
-      sub_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+      ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
     if ( (*(_WORD *)PTR(dword_AE408_AE3F8()) & 0x110) != 0 )
     {
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -53903,7 +54372,7 @@ void sub_44730_44A70()//215730_
       exit(1);
     }
     v1 = (int)OFF(begPointersTab_AE450_AE440_26C450_26C440);
-    sub_5C05C_5C56C(&begPointersTab_AE450_AE440_26C450_26C440[0]);
+    SetMouseCursor_5C05C_5C56C(&begPointersTab_AE450_AE440_26C450_26C440[0]);
     if ( (str_AE408_AE3F8->var_u8_0 & 8) != 0 )
       sub_5B5E0();
     else
@@ -54114,7 +54583,8 @@ void sub_44C90_44FD0(Type_AE400_29795* event)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
+/// Puts player a1x's wizard at its start position (playerStart_9177), creating it (class 3, type 1 for a computer player, else 0) when `event` is entity 0 or moving it there on respawn; recreates its spells and, when new, picks its sprite by player number.
+void SpawnWizard_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
 {
   Type_AE400_29795* v2x; // ebx
   int v3; // edx
@@ -54154,7 +54624,7 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
 
   v2x = event;
   v34 = 0;
-  sub_37220_375E0();
+  RebuildFreeLists_37220_375E0();
   //v3 = (a1 - (dword_AE400_AE3F0() + 13323)) / 2049;
   v3 = a1x - str_AE400_AE3F0->str_13323;
   v32x = str_AE400_AE3F0->playerStart_9177[v3]; // PORT: 6-byte entries as in the original (was an 8-byte struct)
@@ -54176,7 +54646,7 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
       //v8 = *(_WORD *)(v7 + 50);
       v32x = str_AE400_AE3F0->str_29795[event->var_u32_29955_160->var_50].var_u32_29867_72;
     }
-    sub_41C70_41FB0(event, &v32x);
+    MoveEntity_41C70_41FB0(event, &v32x);
   }
   v2x->var_u32_29955_160 = &a1x->str_1103;
   v2x->var_u32_29955_160->var_48 = a1x - str_AE400_AE3F0->str_13323;
@@ -54242,28 +54712,28 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
     switch (v2x->var_u32_29955_160->var_48)
     {
       case 0:
-        sub_36FA0_37360(v2x, 44);
+        SetSprite_36FA0_37360(v2x, 44);
         break;
       case 1:
-        sub_36FA0_37360(v2x, 273);
+        SetSprite_36FA0_37360(v2x, 273);
         break;
       case 2:
-        sub_36FA0_37360(v2x, 274);
+        SetSprite_36FA0_37360(v2x, 274);
         break;
       case 3:
-        sub_36FA0_37360(v2x, 275);
+        SetSprite_36FA0_37360(v2x, 275);
         break;
       case 4:
-        sub_36FA0_37360(v2x, 276);
+        SetSprite_36FA0_37360(v2x, 276);
         break;
       case 5:
-        sub_36FA0_37360(v2x, 277);
+        SetSprite_36FA0_37360(v2x, 277);
         break;
       case 6:
-        sub_36FA0_37360(v2x, 278);
+        SetSprite_36FA0_37360(v2x, 278);
         break;
       case 7:
-        sub_36FA0_37360(v2x, 279);
+        SetSprite_36FA0_37360(v2x, 279);
         break;
       default:
         break;
@@ -54274,7 +54744,7 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
     //add_compare(0x216003, true);
 #endif debug1
     //debug
-    sub_45C10_45F50(v2x);
+    RebuildSpellIndex_45C10_45F50(v2x);
     if (a1x->var_u8_13332_9 == 1 )
     {
       v2x->var_u32_29955_160->u16_522 = str_AE400_AE3F0->str_193795.str_230867_37072[v2x->var_u32_29955_160->var_48].var_230871;
@@ -54293,7 +54763,7 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
             //v19 = dword_AE400_AE3F0() + 29795;
             v17x->id_29819_24 = v2x->id_29819_24;
             v2x->var_u32_29955_160->var_50 = v17x - str_AE400_AE3F0->str_29795;
-            sub_55370_558A0(v2x - str_AE400_AE3F0->str_29795, -1, 30);
+            PlayEntitySound_55370_558A0(v2x - str_AE400_AE3F0->str_29795, -1, 30);
             for ( i = 0; ; i++ )
             {
                 //232599
@@ -54307,7 +54777,7 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
               sub_279D0((int)OFF(&str_AE400_AE3F0->str_29795));
             }
             v17x->var_u16_29821_26 = ((uint8_t*)str_AE400_AE3F0)[0x38C97 + v2x->var_u32_29955_160->var_48] /* PORT: game-state field, see above */ - 1;
-            sub_37150_37510(v17x, ((uint8_t*)str_AE400_AE3F0)[0x38C97 + v2x->var_u32_29955_160->var_48] /* PORT: game-state field, see above */ - 1);
+            SetCollisionBoxFromBuild_37150_37510(v17x, ((uint8_t*)str_AE400_AE3F0)[0x38C97 + v2x->var_u32_29955_160->var_48] /* PORT: game-state field, see above */ - 1);
             sub_47C60_47FA0((int)OFF(v17x));
             v24 = v17x->manaMax_29931_136;
             v17x->mana_29935_140 = v24;
@@ -54345,7 +54815,7 @@ void sub_44D30_45070(TypeStrAE400_13323* a1x, Type_AE400_29795* event)//215D30_
   v26 = v2x->manaMax_29931_136;
   v2x->mana_29935_140 = v26;
   v2x->var_u32_29955_160->u32_322 = v26;
-  sub_45C10_45F50(v2x);
+  RebuildSpellIndex_45C10_45F50(v2x);
   v28 = v2x->var_u32_29955_160->var_50;
   if ( v28 )
     sub_47DD0_48110(&str_AE400_AE3F0->str_29795[v28]);
@@ -54397,16 +54867,16 @@ int sub_45410_45750(Type_AE400_29795* a1x)//216410_
     v7 = Distance3D_42340_42680(&a1x->var_u32_29867_72, &word_AE454_AE444);
     word_AE454_AE444 = a1x->var_u32_29867_72;
     v9 = ((((int)v1 >> 9) + 1) << 9) & 0x7FF;
-    v2 = sub_42210_42550(v1, (int)v1 >> 9 << 9);
-    sub_41EC0_42200(&word_AE454_AE444,
+    v2 = AngleDifference_42210_42550(v1, (int)v1 >> 9 << 9);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444,
       (int)v1 >> 9 << 9,
       v8,
       (v7 * (512 - v2) - (__CFSHL__((v7 * (512 - v2)) >> 31, 9) + ((v7 * (512 - v2)) >> 31 << 9))) >> 9);
     if ( sub_11810(&word_AE454_AE444) == 256 )
     {
       word_AE454_AE444 = a1x->var_u32_29867_72;
-      v3 = sub_42210_42550(v1, v9);
-      sub_41EC0_42200(&word_AE454_AE444,
+      v3 = AngleDifference_42210_42550(v1, v9);
+      MoveAlongHeading_41EC0_42200(&word_AE454_AE444,
         v9,
         v8,
         (v7 * (512 - v3) - (__CFSHL__((v7 * (512 - v3)) >> 31, 9) + ((v7 * (512 - v3)) >> 31 << 9))) >> 9);
@@ -54508,20 +54978,20 @@ void sub_455D0_45910(Type_AE400_29795* a1x)//2165D0_
   v8 = a1x->var_u32_29955_160->v_28;
   HIBYTE(v8) &= 7u;
   a1x->var_u32_29955_160->v_28 = v8;
-  sub_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, a1x->var_u32_29955_160->v_28, a1x->actSpeed_29921_126);
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, a1x->var_u16_29825_30, a1x->var_u32_29955_160->v_28, a1x->actSpeed_29921_126);
   v9 = a1x->var_u32_29955_160->v_16;
   if ( v9 )
   {
     v10 = a1x->var_u16_29825_30;
     HIBYTE(v10) += 2;
-    sub_41EC0_42200(&word_AE454_AE444, v10, 0, v9);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, v10, 0, v9);
   }
   v12 = a1x->var_u32_29955_160->v_22;
   if ( v12 )
   {
     if ( v12 > 128 )
         a1x->var_u32_29955_160->v_22 = 128;
-    sub_41EC0_42200(&word_AE454_AE444, a1x->var_u32_29955_160->v_24, 0, a1x->var_u32_29955_160->v_22);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, a1x->var_u32_29955_160->v_24, 0, a1x->var_u32_29955_160->v_22);
     v14 = a1x->var_u32_29955_160->v_22;
     if ( v14 )
       v15 = v14 / (int)abs16(v14);
@@ -54556,23 +55026,23 @@ void sub_455D0_45910(Type_AE400_29795* a1x)//2165D0_
     if ( (__int16)v23 > (__int16)v22 )
       LOWORD(v23) = 3 * a1x->actSpeed_29923_128 / 2;
     v24 = HeadingTo_42150_42490(&a1x->var_u32_29867_72, (axis_3d*)(_WORD *)PTR(v20 + 72));
-    v25 = a1x->var_u16_29825_30 + sub_422A0_425E0(a1x->var_u16_29825_30, v24, 5, 0x82u);
+    v25 = a1x->var_u16_29825_30 + TurnStep_422A0_425E0(a1x->var_u16_29825_30, v24, 5, 0x82u);
     HIBYTE(v25) &= 7u;
     a1x->var_u16_29825_30 = v25;
-    sub_41EC0_42200(&word_AE454_AE444, v24, a1x->var_u16_29827_32, v23);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, v24, a1x->var_u16_29827_32, v23);
     a1x->var_u32_29955_160->u16_316++;
   }
   v26 = sub_45410_45750(a1x);
   if ( v26 )
-    sub_41C70_41FB0(a1x, &word_AE454_AE444);
+    MoveEntity_41C70_41FB0(a1x, &word_AE454_AE444);
   if ( sub_11810(&a1x->var_u32_29867_72) == 1 )
   {
-    sub_55370_558A0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 1);
+    PlayEntitySound_55370_558A0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 1);
     sub_55890_55DC0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 2);
   }
   else
   {
-    sub_55370_558A0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 2);
+    PlayEntitySound_55370_558A0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 2);
     sub_55890_55DC0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 1);
   }
   if ( a1x->var_u32_29955_160->u32_396 >= 1536 )
@@ -54581,7 +55051,7 @@ void sub_455D0_45910(Type_AE400_29795* a1x)//2165D0_
   }
   else
   {
-    sub_55370_558A0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 5);
+    PlayEntitySound_55370_558A0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 5);
     a1x->var_u32_29955_160->u32_396 = 2048;
   }
   if ( a1x->var_u32_29955_160->u32_400 >= 1536 )
@@ -54590,7 +55060,7 @@ void sub_455D0_45910(Type_AE400_29795* a1x)//2165D0_
   }
   else
   {
-    sub_55370_558A0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 31);
+    PlayEntitySound_55370_558A0(0, *(_WORD *)PTR(dword_AE400_AE3F0() + 8), 31);
     a1x->var_u32_29955_160->u32_400 = 2048;
   }
   if ( a1x->var_u32_29955_160->var_48 == *(_WORD *)PTR(dword_AE400_AE3F0() + 8) )
@@ -54611,12 +55081,13 @@ void sub_455D0_45910(Type_AE400_29795* a1x)//2165D0_
     v29 = 9377 * a1x->rand_29799_4 + 9439;
     a1x->rand_29799_4 = v29;
     if ( !(v29 % 0xB) )
-      sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 46);
+      PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 46);
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_45C10_45F50(Type_AE400_29795* a1x)
+/// Rebuilds the wizard's spell-by-type index (wizard data +676) from its 24 spell slots (+532).
+void RebuildSpellIndex_45C10_45F50(Type_AE400_29795* a1x)
 {
   //int result; // eax
   //int v2; // ebx
@@ -54635,7 +55106,8 @@ void sub_45C10_45F50(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_45C90_45FD0(Type_AE400_29795* a1x)
+/// Per-tick handler of a player-controlled wizard (class 3 state 0, set by CreatePlayerWizard_37820_37BE0).
+void PlayerWizardTick_45C90_45FD0(Type_AE400_29795* a1x)
 {
   //int v1; // eax
   //int v2; // eax
@@ -54654,7 +55126,7 @@ void sub_45C90_45FD0(Type_AE400_29795* a1x)
 
   bool bool1 = false;
   if ( (str_AE408_AE3F8->var_u8_2 & 1) == 0 )
-    sub_45C10_45F50(a1x);
+    RebuildSpellIndex_45C10_45F50(a1x);
   a1x->actSpeed_29923_128 = dword_93A90;
   if ( (str_AE408_AE3F8->var_u8_2 & 1) == 0 )
   {
@@ -54741,12 +55213,13 @@ void sub_45C90_45FD0(Type_AE400_29795* a1x)
     //v5 = dword_AE400_AE3F0();
     a1x->var_u8_29865_70 = 2;
     a1x->var_u16_29841_46 = 0;
-    sub_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 16);
+    PlayEntitySound_55370_558A0(a1x - str_AE400_AE3F0->str_29795, -1, 16);
   }
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_45FC0_46300(int a1)
+/// Per-tick handler of a dying wizard (class 3 state 2): falls (gravity on +46), then scatters its spells, creates its death marker (10/40) and goes to state 3 with a respawn delay in +26.
+int WizardDyingTick_45FC0_46300(int a1)
 {
   __int16 v1; // cx
   int v2; // edi
@@ -54799,7 +55272,7 @@ int sub_45FC0_46300(int a1)
   result = v4 + *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 156) + 12);
   if ( *(__int16 *)PTR(a1 + 76) == result )
   {
-    sub_37220_375E0();
+    RebuildFreeLists_37220_375E0();
     v7 = *(_WORD *)PTR(a1 + 38);
     if ( v7 )
     {
@@ -54856,7 +55329,7 @@ int sub_45FC0_46300(int a1)
         word_AE454_AE444.x += (v17 & 0x1FF) - 256;
         *(_DWORD *)PTR(a1 + 4) = 9377 * v18 + 9439;
         word_AE454_AE444.y += ((9377 * v18 + 9439) & 0x1FF) - 256;
-        sub_41C70_41FB0((Type_AE400_29795*)PTR(v16), &word_AE454_AE444);
+        MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v16), &word_AE454_AE444);
         v19 = 9377 * *(_DWORD *)PTR(a1 + 4) + 9439;
         *(_DWORD *)PTR(a1 + 4) = v19;
         *(_DWORD *)PTR(v16 + 12) = v19 % 0x5A + 200;
@@ -54887,7 +55360,8 @@ int sub_45FC0_46300(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_463B0_466F0(int a1)
+/// Turns a dead player's wizard (heading/pitch) towards its killer (+38); used by WizardDeadTick_46480_467C0.
+void TurnTowardsKiller_463B0_466F0(int a1)
 {
   _WORD *v1; // edi
   int result; // eax
@@ -54895,9 +55369,9 @@ void sub_463B0_466F0(int a1)
   v1 = (_WORD *)PTR(dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(a1 + 38) + 72);
   *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)v1);
   *(_WORD *)PTR(a1 + 36) = PitchTo_42180_424C0((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)v1);
-  *(_WORD *)PTR(a1 + 30) += sub_422A0_425E0(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34), 5, 0x16u);
+  *(_WORD *)PTR(a1 + 30) += TurnStep_422A0_425E0(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34), 5, 0x16u);
   *(_BYTE *)PTR(a1 + 31) &= 7u;
-  *(_WORD *)PTR(a1 + 32) += sub_422A0_425E0(*(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 36), 5, 0x16u);
+  *(_WORD *)PTR(a1 + 32) += TurnStep_422A0_425E0(*(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 36), 5, 0x16u);
   *(_BYTE *)PTR(a1 + 33) &= 7u;
   *(_WORD *)PTR(a1 + 32) = 0;
   *(_WORD *)PTR(*(_DWORD *)PTR(a1 + 160) + 329) = *(_WORD *)PTR(a1 + 32);
@@ -54906,7 +55380,8 @@ void sub_463B0_466F0(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_46480_467C0(int a1)
+/// Per-tick handler of a dead wizard (class 3 state 3): a computer wizard that still has a castle respawns (SpawnWizard_44D30_45070) once +26 has counted down; the player goes through TurnTowardsKiller_463B0_466F0.
+void WizardDeadTick_46480_467C0(int a1)
 {
   int v1; // ecx
   int v2; // edx
@@ -54928,7 +55403,7 @@ void sub_46480_467C0(int a1)
           *(_WORD *)PTR(a1 + 26) = v4 - 1;
         else
         {
-          sub_44D30_45070((TypeStrAE400_13323*)PTR(dword_AE400_AE3F0() + 13323 + v2), (Type_AE400_29795*)PTR(a1));
+          SpawnWizard_44D30_45070((TypeStrAE400_13323*)PTR(dword_AE400_AE3F0() + 13323 + v2), (Type_AE400_29795*)PTR(a1));
           return;
         }
       }
@@ -54941,7 +55416,7 @@ void sub_46480_467C0(int a1)
   else
   {
     sub_44BE0_44F20((Type_AE400_29795*)PTR(a1), 7);
-    sub_463B0_466F0(a1);
+    TurnTowardsKiller_463B0_466F0(a1);
   }
 }
 
@@ -55038,7 +55513,7 @@ int sub_46540_46880(Type_AE400_29795* a1x)
     *(_BYTE *)((uint8_t*)a1x->var_u32_29955_160 + 392) = 4;
     v17x = str_AE400_AE3F0->str_29795;
     *(_DWORD *)((uint8_t*)a1x->var_u32_29955_160 + 383) = 16;
-    sub_55370_558A0(a1x - v17x, -1, 17);
+    PlayEntitySound_55370_558A0(a1x - v17x, -1, 17);
     if (a1x->actLife_29807_12 < 0 )
     {
       a1x->var_u16_29833_38 = a1x->str_29885_90.var_u16_29889_94;
@@ -55217,7 +55692,7 @@ LABEL_32:
     {
       if (a2x->var_48)
       {
-        sub_55370_558A0(0, a1x->var_u32_29955_160->var_48, 29);
+        PlayEntitySound_55370_558A0(0, a1x->var_u32_29955_160->var_48, 29);
         return;
       }
       if (a1x->mana_29935_140 < a2x->manaMax_29931_136)
@@ -55247,7 +55722,7 @@ unsigned int sub_46CA0_46FE0(int a1, int a2, int a3)
   {
     if ( *(_BYTE *)PTR(i + 65) == 39 && *(unsigned __int16 *)PTR(i + 144) == *(__int16 *)PTR(a1 + 24) && i != a2 && i != a3 )
     {
-      v6 = sub_42390_426D0((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
+      v6 = DistanceSquared3D_42390_426D0((_WORD *)PTR(a1 + 72), (_WORD *)PTR(i + 72));
       if ( v6 < v3 )
       {
         v4 = i;
@@ -55331,7 +55806,7 @@ __int16 sub_46DB0_470F0(int a1)
     if ( (v2 & 1) == 0 )
     {
       sub_47130_47470(a1);
-      sub_37150_37510((Type_AE400_29795*)PTR(a1), *(_WORD *)PTR(a1 + 26));
+      SetCollisionBoxFromBuild_37150_37510((Type_AE400_29795*)PTR(a1), *(_WORD *)PTR(a1 + 26));
       UpdateCastleBalloons_47400_47740(a1);
       v1 = *(_DWORD *)PTR(a1 + 140);
       if ( v1 < *(_DWORD *)PTR(a1 + 136) )
@@ -55355,7 +55830,8 @@ __int16 sub_46DB0_470F0(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-char sub_46F10_47250(int a1)
+/// Per-tick handler of a castle (class 3 state 5, set by CreateCastle_37920_37CE0).
+char CastleTick_46F10_47250(int a1)
 {
   __int16 v1; // ax
   char v2; // dh
@@ -55454,7 +55930,7 @@ int sub_470E0(int a1)
 {
   int result; // eax
 
-  result = sub_37710_37AD0();
+  result = FreeEntityCount_37710_37AD0();
   if ( result )
   {
     sub_47A70_47DB0(a1);
@@ -55506,9 +55982,9 @@ int sub_47130_47470(int a1)
   if ( v3 > 0 )
   {
     v4 = v3 / 1000;
-    v21 = sub_37710_37AD0();
+    v21 = FreeEntityCount_37710_37AD0();
     if ( v21
-      || (sub_37220_375E0(), result = sub_37710_37AD0(), v4 = 8, v21 = result, str_AE400_AE3F0->var_u32_4593 = -1, (_WORD)result) )
+      || (RebuildFreeLists_37220_375E0(), result = FreeEntityCount_37710_37AD0(), v4 = 8, v21 = result, str_AE400_AE3F0->var_u32_4593 = -1, (_WORD)result) )
     {
       if ( v4 < 1 )
         v4 = 1;
@@ -55546,8 +56022,8 @@ int sub_47130_47470(int a1)
           v18 = v10 % 0x1400 + 3840;
           v11 = 9377 * *(_DWORD *)PTR(a1 + 4) + 9439;
           *(_DWORD *)PTR(a1 + 4) = v11;
-          sub_41EC0_42200(&word_AE454_AE444, v11 & 0x7FF, 0, v18);
-          sub_41C70_41FB0((Type_AE400_29795*)PTR(v6), &word_AE454_AE444);
+          MoveAlongHeading_41EC0_42200(&word_AE454_AE444, v11 & 0x7FF, 0, v18);
+          MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v6), &word_AE454_AE444);
           v13 = *(_DWORD *)PTR(v6 + 140);
           v3 -= v13;
           *(_DWORD *)PTR(a1 + 140) -= v13;
@@ -55566,8 +56042,8 @@ int sub_47130_47470(int a1)
           *(_WORD *)PTR(result + 24) = *(_WORD *)PTR(a1 + 24);
           v16 = 9377 * *(_DWORD *)PTR(a1 + 4) + 9439;
           *(_DWORD *)PTR(a1 + 4) = v16;
-          sub_41EC0_42200(&word_AE454_AE444, v16 & 0x7FF, 0, 6400);
-          result = sub_41C70_41FB0((Type_AE400_29795*)PTR(v15), &word_AE454_AE444);
+          MoveAlongHeading_41EC0_42200(&word_AE454_AE444, v16 & 0x7FF, 0, 6400);
+          result = MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v15), &word_AE454_AE444);
         }
       }
     }
@@ -55671,7 +56147,7 @@ LABEL_10:
       }
       if ( *(int *)PTR(v9 + 12) >= 0 )
         break;
-      sub_27690((_WORD *)PTR(v6), &str_AE400_AE3F0->str_29795[v6/164]);
+      DropManaBall_27690((_WORD *)PTR(v6), &str_AE400_AE3F0->str_29795[v6/164]);
       MarkEntityForRemoval_41E80_421C0((Type_AE400_29795*)PTR(v9));
       *(_WORD *)PTR(v21 + *(_DWORD *)PTR(v1 + 160) + 52) = 0;
 LABEL_27:
@@ -55720,7 +56196,7 @@ LABEL_32:
     v14 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(v13 + *(_DWORD *)PTR(v1 + 160) + 52);
     if ( v14 > dword_AE400_AE3F0() + 29795 )
     {
-      sub_27690(
+      DropManaBall_27690(
         (_WORD *)PTR(dword_AE400_AE3F0() + 29795),
           &str_AE400_AE3F0->str_29795[*(unsigned __int16*)PTR(v13 + *(_DWORD*)PTR(v1 + 160) + 52)]);
       MarkEntityForRemoval_41E80_421C0((Type_AE400_29795*)PTR(v14));
@@ -55758,7 +56234,7 @@ LABEL_32:
             word_AE454_AE444.x += 128;
             word_AE454_AE444.y += 640;
             word_AE454_AE444.z = GetTerrainHeight_11F50(&word_AE454_AE444);
-            sub_41C70_41FB0((Type_AE400_29795*)PTR(v19), &word_AE454_AE444);
+            MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v19), &word_AE454_AE444);
           }
         }
       }
@@ -55784,18 +56260,18 @@ char sub_47960_47CA0(int a1)
   int v4; // ecx
   __int16 v6; // [esp-4h] [ebp-10h]
 
-  v1 = sub_3B7B0_3BB30((uint16_t*)PTR(a1 + 150));
+  v1 = CreateClass10Type42_3B7B0_3BB30((uint16_t*)PTR(a1 + 150));
   v2 = v1;
   if ( v1 )
   {
-    sub_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 10);
+    PlayEntitySound_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 10);
     v3 = *(_WORD *)PTR(a1 + 26);
     *(_BYTE *)PTR(a1 + 16) &= ~0x40u;
     *(_WORD *)PTR(a1 + 26) = v3 + 1;
     v6 = *(_WORD *)PTR(a1 + 26);
     *(_BYTE *)PTR(a1 + 70) = 5;
     *(_WORD *)PTR(a1 + 48) = 4;
-    sub_37150_37510((Type_AE400_29795*)PTR(a1), v6);
+    SetCollisionBoxFromBuild_37150_37510((Type_AE400_29795*)PTR(a1), v6);
     sub_47C60_47FA0(a1);
     v4 = dword_AE400_AE3F0() + 29795 + 164 * *(__int16 *)PTR(a1 + 24);
     v1 = (a1 - (dword_AE400_AE3F0() + 29795)) / 164;
@@ -55829,7 +56305,7 @@ void sub_47A70_47DB0(int a1)
     sub_47130_47470(a1);
     v2 = a1 - (dword_AE400_AE3F0() + 29795);
     *(_DWORD *)PTR(a1 + 136) += v1;
-    sub_55370_558A0(v2 / 164, -1, 30);
+    PlayEntitySound_55370_558A0(v2 / 164, -1, 30);
     v3 = dword_AE400_AE3F0();
     v4 = dword_AE400_AE3F0() + 29867;
     *(_DWORD *)PTR(dword_AE400_AE3F0() + 29867) = *(_DWORD *)PTR(a1 + 150);
@@ -55842,7 +56318,7 @@ void sub_47A70_47DB0(int a1)
     sub_28FE0(v3 + 29795);
     v6 = *(_WORD *)PTR(a1 + 26) - 1;
     *(_WORD *)PTR(a1 + 26) = v6;
-    sub_37150_37510((Type_AE400_29795*)PTR(a1), v6);
+    SetCollisionBoxFromBuild_37150_37510((Type_AE400_29795*)PTR(a1), v6);
     sub_47C60_47FA0(a1);
     result = sub_46D20_47060((Type_AE400_29795*)PTR(a1), 1);
   }
@@ -56071,10 +56547,10 @@ LABEL_17:
         v14 = v10[6];
         v11 = GetTerrainHeight_11F50(&word_AE454_AE444);
         v12 = KeepHeightAboveGround_42000_42340(&word_AE454_AE444, v11, v14, v15, v16);
-        sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+        MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
         return sub_481D0_48510(a1);
       }
-      v3 = sub_423D0_42710((axis_3d*)(uint16*)&word_AE454_AE444, (axis_3d*)(_WORD *)PTR(v1 + 72));
+      v3 = Distance2D_423D0_42710((axis_3d*)(uint16*)&word_AE454_AE444, (axis_3d*)(_WORD *)PTR(v1 + 72));
       if ( v3 > 1024 )
       {
         *(_BYTE *)PTR(v1 + 16) &= ~0x40u;
@@ -56107,7 +56583,7 @@ LABEL_17:
       if ( v2 == 3 )
       {
         v7 = *(__int16 *)PTR(v1 + 26) * *(__int16 *)PTR(a1 + 126);
-        if ( sub_423D0_42710((axis_3d*)(uint16*)&word_AE454_AE444, (axis_3d*)(_WORD *)PTR(v1 + 72)) <= v7 )
+        if ( Distance2D_423D0_42710((axis_3d*)(uint16*)&word_AE454_AE444, (axis_3d*)(_WORD *)PTR(v1 + 72)) <= v7 )
         {
           v8 = *(__int16 *)PTR(*(_DWORD *)PTR(a1 + 156) + 12);
           if ( word_AE454_AE444.z <= v8 + (__int16)GetTerrainHeight_11F50(&word_AE454_AE444) && *(__int16 *)PTR(v1 + 26) > 0 )
@@ -56125,7 +56601,7 @@ LABEL_17:
       }
       LOWORD(v6) = *(_WORD *)PTR(a1 + 126);
     }
-    sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), v6);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), v6);
     goto LABEL_17;
   }
   return sub_481D0_48510(a1);
@@ -56259,7 +56735,7 @@ void sub_483C0(__int16 a1, __int16 a2, __int16 a3, __int16 a4)
   {
     v4 = word_CBFF0;
     v5 = 0;
-    while ( a1 != *v4 || a2 != v4[1] || sub_651F8(dword_CC140, v5) )
+    while ( a1 != *v4 || a2 != v4[1] || IsSampleDone_651F8(dword_CC140, v5) )
     {
       ++v5;
       v4 += 2;
@@ -56289,7 +56765,7 @@ void sub_48470(__int16 a1, __int16 a2, __int16 a3, __int16 a4)
     v4 = word_CBFF0;
     v5 = 0;
     v6 = 0;
-    while ( __PAIR32__(a2, a1) != *(_DWORD *)v4 || sub_651F8(dword_CC140, v5) )
+    while ( __PAIR32__(a2, a1) != *(_DWORD *)v4 || IsSampleDone_651F8(dword_CC140, v5) )
     {
       ++v5;
       v4 += 2;
@@ -56337,7 +56813,7 @@ bool sub_48570(__int16 a1, __int16 a2, __int16 a3, __int16 a4)
   v4 = 0;
   while ( 1 )
   {
-    result = sub_651F8(dword_CC140, v4);
+    result = IsSampleDone_651F8(dword_CC140, v4);
     if ( result )
       break;
     if ( ++v4 >= 32 )
@@ -56464,7 +56940,7 @@ char sub_48710_48A50(int a1, int a2, __int16 a3, __int16 a4, int a5, int a6, __i
   v13 = v12 * sin_90B4C[a7 & 0x7FF];
   v14 = (cos_9134C[a7 & 0x7FF] * v12) >> 16;
   v70 = a6 / 2;
-  sub_5A3C0_5A8D0(1);
+  SetFont_5A3C0_5A8D0(1);
   v62 = v14;
   v69 = 164 * *(unsigned __int16 *)PTR(dword_AE400_AE3F0() + 2049 * str_AE400_AE3F0->var_u16_8 + 13333) + dword_AE400_AE3F0() + 29795;
   v15 = *(_WORD *)PTR(*(_DWORD *)PTR(v69 + 160) + 686);
@@ -56986,7 +57462,8 @@ int DrawMinimap_49300_49640(int a1, int a2, int a3, int a4, int a5, int a6, __in
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //SYNCHRONIZED WITH REMC1
-void sub_49890_49BD0(int a1)
+/// Per-tick handler of a tree (class 2 state 0, set by CreateTree_37BC0).
+void TreeTick_49890_49BD0(int a1)
 {
   __int16 v1; // dx
   int v2; // edx
@@ -57022,7 +57499,7 @@ void sub_49890_49BD0(int a1)
         BYTE4(v5) = *(_BYTE *)PTR(a1 + 18);
         *(_BYTE *)PTR(a1 + 70) = 1;
         *(_BYTE *)PTR(a1 + 18) = BYTE4(v5) | 2;
-        sub_41CC0_42000((unsigned int)v5 / 0x3C, a1, a1 + 72);
+        RelinkEntity_41CC0_42000((unsigned int)v5 / 0x3C, a1, a1 + 72);
       }
     }
     *(_WORD *)PTR(a1 + 94) = 0;
@@ -57056,11 +57533,11 @@ int sub_499C0_49D00(int a1)
     {
       if ( v2 <= 0x53u )
       {
-        sub_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(a1), 226);
+        SetSpriteAndBox_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(a1), 226);
       }
       else if ( v2 == 84 )
       {
-        sub_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(a1), 227);
+        SetSpriteAndBox_37030_373F0((Type_AE400_29795*)(_WORD *)PTR(a1), 227);
       }
     }
   }
@@ -57094,7 +57571,8 @@ void sub_49A50_49D90(_WORD* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_49AA0_49DE0(int a1)
+/// Per-tick handler of a stone (class 2 state 3, set by CreateStone_37CF0).
+int StoneTick_49AA0_49DE0(int a1)
 {
   int result; // eax
 
@@ -57105,7 +57583,8 @@ int sub_49AA0_49DE0(int a1)
 }
 
 //----- (00049AD0) --------------------------------------------------------
-int sub_49AD0_49E10(int a1)
+/// Dolmen: Per-tick handler of class 2 state 6, the initial state of type 2. Identified from its decoded sprite (named by the user).
+int DolmenTick_49AD0_49E10(int a1)
 {
   unsigned __int16 v1; // di
   int v2; // esi
@@ -57129,7 +57608,8 @@ int sub_49AD0_49E10(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //SYNCHRONIZED WITH REMC1
-int sub_49B50_49E90(int a1)
+/// Per-tick handler of a standing stone (class 2 state 9, set by CreateStandingStone_37E00).
+int StandingStoneTick_49B50_49E90(int a1)
 {
   int result; // eax
 
@@ -57144,7 +57624,7 @@ void sub_4A980_4ACC0()
     char tempPath[40];
     FILE* file;
 
-    if (sub_505A0_508E0())
+    if (ReadSoundSetup_505A0_508E0())
         settingPage_12CBC9_12CBB9 = 7;
     else
         settingPage_12CBC9_12CBB9 = 0;
@@ -57194,14 +57674,14 @@ void MainMenuStep_4AB20_4AE60()//21BB20_21BE60
 {
   if (bool_12CA7C_12CA6C)
   {
-    sub_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenssptrsdat]);
+    LoadPathFiles_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenssptrsdat]);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     {
-      sub_65D70_66280(begSptrsTab_12CAEC_2EAAEC_2EAADC, endSptrsTab_12CAF0_2EAAF0_2EAAE0, begSptrsDat_12CB64_2EAB64_2EAAE4);
+      RelocateSpriteTabDoubled_65D70_66280(begSptrsTab_12CAEC_2EAAEC_2EAADC, endSptrsTab_12CAF0_2EAAF0_2EAAE0, begSptrsDat_12CB64_2EAB64_2EAAE4);
     }
     else
     {
-      sub_65DC0_662D0(begSptrsTab_12CAEC_2EAAEC_2EAADC, endSptrsTab_12CAF0_2EAAF0_2EAAE0, begSptrsDat_12CB64_2EAB64_2EAAE4);
+      RelocateSpriteTab_65DC0_662D0(begSptrsTab_12CAEC_2EAAEC_2EAADC, endSptrsTab_12CAF0_2EAAF0_2EAAE0, begSptrsDat_12CB64_2EAB64_2EAAE4);
     }
     bool_12CA7C_12CA6C = false;
   }
@@ -57209,13 +57689,13 @@ void MainMenuStep_4AB20_4AE60()//21BB20_21BE60
   switch ( mainMenuSelector_12CBCE_12CBBE )
   {
     case 0:
-      sub_4D3B0_4D6F0();//intro2
+      PlayIntroAnim_4D3B0_4D6F0();//intro2
       break;
     case 1:
-      sub_4AC70_4AFB0();//sound joystick
+      SetupMenuPage_4AC70_4AFB0();//sound joystick
       break;
     case 2:
-      sub_4BD60_4C0A0();//game
+      GameMenuPage_4BD60_4C0A0();//game
       break;
     case 4:
       sub_4D680_4D9C0();
@@ -57224,16 +57704,16 @@ void MainMenuStep_4AB20_4AE60()//21BB20_21BE60
       ShowLevelPerformance_4E5B0_4E8F0();
       break;
     case 6:
-      sub_4F3F0_4F730();//language
+      SelectLanguage_4F3F0_4F730();//language
       break;
     case 7:
-      sub_4EFC0_4F300();//?
+      PlayIntelAnim_4EFC0_4F300();//?
       break;
     case 8:
-      sub_4F1E0_4F520();//intro3
+      PlayTitleAnim_4F1E0_4F520();//intro3
       break;
     case 9:
-      sub_4EE70_4F1B0();//intro1
+      PlayLogoAnim_4EE70_4F1B0();//intro1
       break;
     case 10:
       PlayOutroAndQuit_4D560_4D8A0();
@@ -57244,24 +57724,25 @@ void MainMenuStep_4AB20_4AE60()//21BB20_21BE60
   RestartMusicIfDone_65E00_66310();
   if (leaveMenu_96880)
   {
-    sub_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreenssptrsdat]);
+    FreePathFiles_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreenssptrsdat]);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      sub_411D7_41517((void *)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, 0xC8u, 0);
+      ClearScreen320_411D7_41517((void *)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, 0xC8u, 0);
     else
-      sub_411FD_4153D((void *)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, 0x1E0u, 0);
+      ClearScreen640_411FD_4153D((void *)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, 0x1E0u, 0);
     bool_12CA7C_12CA6C = true;
     StopMusic_20E60_20E60();
   }
 }
 
 //SYNCHRONIZE WITH REMC1
-void sub_4AC70_4AFB0()//21BC70_
+/// Main menu page 1: the sound/joystick setup screen (InitConfigScreen_4BB20_4BE60); writes sndsetup.inf.
+void SetupMenuPage_4AC70_4AFB0()//21BC70_
 {
 	char textBuffer[40];
 	bool bool1 = false;
 	bool bool2 = false;
 	if ((byte_12CBD5_12CBC5 & 1) == 0)
-		sub_4BB20_4BE60();
+		InitConfigScreen_4BB20_4BE60();
 	if (pressedKeys_12EEF0_12EEE0[1])//byte_12EEF1_12EEE1 ESC
 	{
 		pressedKeys_12EEF0_12EEE0[1] = 0;//byte_12EEF1_12EEE1 ESC
@@ -57466,7 +57947,7 @@ void sub_4AC70_4AFB0()//21BC70_
 		sub_4BC90_4BFD0();
 		if (byte_12CBD5_12CBC5 >= 0)
 		{
-			sub_357C0_35B80();
+			InitSound_357C0_35B80();
 			byte_12CBD5_12CBC5 |= 0x80u;
 		}
 		if ((byte_12CBD5_12CBC5 & 2) != 0 && (byte_12CBD5_12CBC5 & 4) != 0 && (byte_12CAE4_12CAD4 & 0x40) == 0 || bool2)
@@ -57560,8 +58041,8 @@ void sub_4B560_4B8A0()//21C560_
 {
   char** v0; // eax
 
-  sub_513E0_51720();
-  sub_51360_516A0(56, 64, 90, 78);
+  SaveTextWindow_513E0_51720();
+  SetTextWindow_51360_516A0(56, 64, 90, 78);
   v0 = sub_4B6A0_4B9E0();
   if ( v0 )
     sub_4B6F0_4BA30(v0);
@@ -57574,7 +58055,7 @@ void sub_4B560_4B8A0()//21C560_
     else
       DrawBitmap_60D18_61228(554, 224, &begGcSprTab_12CAF8_2EAAF8_2EAAE8[11]);
   }
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
   if ((typeResolution_12F02E_12F01E & 1) != 0)
     DrawBitmap_60CE0_611F0(
           2 * word_4A8BE_4ABFE[4 * (unsigned __int8)byte_12CBD3_12CBC3 + 0],
@@ -57643,12 +58124,12 @@ void sub_4B6F0_4BA30(char** texts)//21C6F0_
   {
     v2 = str_96884.next->dim.y;
     str_96884.var8_4 &= ~2u;
-    v10 = sub_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x26u, 0x22u, 0x19u);
+    v10 = FindNearestColour_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x26u, 0x22u, 0x19u);
     v3 = 0;
-    v4 = sub_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x1Eu, 0x18u, 0x11u);
+    v4 = FindNearestColour_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x1Eu, 0x18u, 0x11u);
     v5 = 0;
     v6 = v2 - 2;
-    v7 = sub_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x20u, 0x1Eu, 0x17u);
+    v7 = FindNearestColour_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x20u, 0x1Eu, 0x17u);
     v11 = v7;
     if ( settingPage_12CBC9_12CBB9 == 6 )
     {
@@ -57686,15 +58167,15 @@ void sub_4B6F0_4BA30(char** texts)//21C6F0_
       sub_4B8D0_4BC10(16);
     if ( (unsigned __int8)settingPage_12CBC9_12CBB9 < 7u )
     {
-      sub_513E0_51720();
-      sub_51360_516A0(66, 43, 84, 14);
+      SaveTextWindow_513E0_51720();
+      SetTextWindow_51360_516A0(66, 43, 84, 14);
       str_96884.var8_6 = v4;
       DrawText_51560_518A0(
           (uint8*)&str_96884,
         1,
         1,
         dword_AE238_AE228[(unsigned __int16)word_968B4[(unsigned __int8)settingPage_12CBC9_12CBB9]]);
-      sub_51400_51740();
+      RestoreTextWindow_51400_51740();
     }
   }
 }
@@ -57722,14 +58203,14 @@ void sub_4B8D0_4BC10(__int16 a1)//21C8D0_
 	//fix
 
 	v1 = str_96884.next->dim.y;
-	sub_513A0_516E0((uint32*)&v13);
-	str_96884.var8_6 = sub_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x1Eu, 0x18u, 0x11u);
+	GetTextWindow_513A0_516E0((uint32*)&v13);
+	str_96884.var8_6 = FindNearestColour_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x1Eu, 0x18u, 0x11u);
 	sprintf(v12, "%s :", dword_AE238_AE228[17]);
 	DrawText_51560_518A0((uint8*)&str_96884, 0, a1, v12);
 	v2 = v1 - 2;
 	sprintf(v12, "%s", string_12C9C0_12C9B0);
 	v3 = v13[1] - v13[0];
-	v4 = sub_51420_51760((uint32*)&str_96884, v12);
+	v4 = GetTextWidth_51420_51760((uint32*)&str_96884, v12);
 	DrawText_51560_518A0((uint8*)&str_96884, (__int16)(v3 - v4), v2 + a1, v12);
 	sprintf(v12, "%s :", dword_AE238_AE228[18]);
 	v5 = v2 + v2 + a1;
@@ -57737,7 +58218,7 @@ void sub_4B8D0_4BC10(__int16 a1)//21C8D0_
 	v6 = v2 + v5;
 	sprintf(v12, "%s", string_12C9E0_12C9D0);
 	v7 = v13[1] - v13[0];
-	v8 = sub_51420_51760((uint32*)&str_96884, v12);
+	v8 = GetTextWidth_51420_51760((uint32*)&str_96884, v12);
 	DrawText_51560_518A0((uint8*)&str_96884, (__int16)(v7 - v8), v6, v12);
 	v9 = v2 + v6;
 	if (strncmp((char*)&string_12C9A0_12C990, "NONE", 4))
@@ -57760,21 +58241,22 @@ void sub_4B8D0_4BC10(__int16 a1)//21C8D0_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4BB20_4BE60()
+/// Loads the setup/config screen: data/screens/gconfig.dat/.pal, its sprites and font.
+void InitConfigScreen_4BB20_4BE60()
 {
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
-  sub_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenssfont0dat]);
-  sub_3EEA0_3F1E0((char*)"data/screens/gconfig.dat", begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
-  sub_3EEA0_3F1E0((char*)"data\\screens\\gconfig.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
+  LoadPathFiles_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenssfont0dat]);
+  LoadFile_3EEA0_3F1E0((char*)"data/screens/gconfig.dat", begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
+  LoadFile_3EEA0_3F1E0((char*)"data\\screens\\gconfig.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-    sub_65D70_66280(begGcSprTab_12CAF8_2EAAF8_2EAAE8, endGcSprTab_12CAFC_2EAAFC_2EAAEC, begGcSprDat_12CB00_2EAB00_2EAAF0);
+    RelocateSpriteTabDoubled_65D70_66280(begGcSprTab_12CAF8_2EAAF8_2EAAE8, endGcSprTab_12CAFC_2EAAFC_2EAAEC, begGcSprDat_12CB00_2EAB00_2EAAF0);
   else
-    sub_65DC0_662D0(begGcSprTab_12CAF8_2EAAF8_2EAAE8, endGcSprTab_12CAFC_2EAAFC_2EAAEC, begGcSprDat_12CB00_2EAB00_2EAAF0);
+    RelocateSpriteTab_65DC0_662D0(begGcSprTab_12CAF8_2EAAF8_2EAAE8, endGcSprTab_12CAFC_2EAAFC_2EAAEC, begGcSprDat_12CB00_2EAB00_2EAAF0);
   sub_51480_517C0(&str_96884, &sFont0Tab_12CB28_2EAB28_2EAB18, begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
   str_96884.var8_4 &= ~2u;
   str_96884.var8_5 = 0;
   if ( !byte_90B23 )
-    sub_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
+    SetMouseCursor_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     CopyScreen_62FA8_634B8(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0xC8u);
   else
@@ -57793,16 +58275,16 @@ void sub_4BC90_4BFD0()
 {
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
   if ( !byte_90B23 )
-    sub_5C05C_5C56C(0);
+    SetMouseCursor_5C05C_5C56C(0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-    sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
+    ClearScreen320_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    sub_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
     Blit_599B0_59EC0(480);
-  sub_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreenssfont0dat]);
+  FreePathFiles_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreenssfont0dat]);
   byte_12CBD5_12CBC5 &= ~1u;
 }
 // 4BCCA: variable 'v0' is possibly undefined
@@ -57812,7 +58294,8 @@ void sub_4BC90_4BFD0()
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //SYNCHRONIZED WITH REMC1
-void sub_4BD60_4C0A0()//21CD60_
+/// Main menu page 2: the main game menu (InitMainMenuScreen_4C7E0_4CB20).
+void GameMenuPage_4BD60_4C0A0()//21CD60_
 {
   int v0; // esi
   int v1; // edi
@@ -57836,7 +58319,7 @@ void sub_4BD60_4C0A0()//21CD60_
   v1 = 0;
   v2 = 0;
   if ( (byte_12CBD5_12CBC5 & 1) == 0 )
-    sub_4C7E0_4CB20();
+    InitMainMenuScreen_4C7E0_4CB20();
   sub_4C6F0_4CA30();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     CopyScreen_62FA8_634B8(begScreenBackup2_12CBA8_2EABA8_2EAB98, begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, 0xC8u);
@@ -58227,9 +58710,9 @@ void sub_4C6F0_4CA30()//21D6F0_
   result = dword_12CBB0_12CBA0 & 1;
   if ( result == 1 && mainMenuSelector_12CBCE_12CBBE == 2 )
   {
-    //result = sub_1002D(dword_12CB7A_12CB6A, begScreenBackup2_12CBA8_2EABA8_2EAB98);
+    //result = ApplyFlcFrame_1002D(dword_12CB7A_12CB6A, begScreenBackup2_12CBA8_2EABA8_2EAB98);
     v1 = word_12CB7E_12CB6E + 1;
-    dword_12CB7A_12CB6A = sub_1002D(dword_12CB7A_12CB6A, begScreenBackup2_12CBA8_2EABA8_2EAB98);
+    dword_12CB7A_12CB6A = ApplyFlcFrame_1002D(dword_12CB7A_12CB6A, begScreenBackup2_12CBA8_2EABA8_2EAB98);
     word_12CB7E_12CB6E = v1;
     if ( v1 == 31 )
     {
@@ -58244,9 +58727,9 @@ void sub_4C6F0_4CA30()//21D6F0_
     }
     if ( !byte_9687C )
     {
-      //result = sub_1002D(dword_12CB88_12CB78, begScreenBackup2_12CBA8_2EABA8_2EAB98);
+      //result = ApplyFlcFrame_1002D(dword_12CB88_12CB78, begScreenBackup2_12CBA8_2EABA8_2EAB98);
       v2 = word_12CB8C_12CB7C + 1;
-      dword_12CB88_12CB78 = sub_1002D(dword_12CB88_12CB78, begScreenBackup2_12CBA8_2EABA8_2EAB98);
+      dword_12CB88_12CB78 = ApplyFlcFrame_1002D(dword_12CB88_12CB78, begScreenBackup2_12CBA8_2EABA8_2EAB98);
       word_12CB8C_12CB7C = v2;
       if ( v2 == 4 )
       {
@@ -58264,32 +58747,33 @@ void sub_4C6F0_4CA30()//21D6F0_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4C7E0_4CB20()
+/// Loads the main menu screen: data/screens/mainmenu.dat/.pal, its sprites, sounds and music.
+void InitMainMenuScreen_4C7E0_4CB20()
 {
   //int v0; // ecx
   //const void *v1; // edi
   //void *v2; // ebp
   void *v3; // edi
 
-  sub_10010(320, 0);
+  SetFlcSize_10010(320, 0);
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
-  sub_5D070_5D580(0xDu);
+  LoadSoundBank_5D070_5D580(0xDu);
   LoadMusicSet_5CEF0_5D400(0);
-  sub_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreensmmsprdat]);
+  LoadPathFiles_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreensmmsprdat]);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-    sub_65D70_66280(begMmSprTab_12CB04_2EAB04_2EAAF4, endMmSprTab_12CB08_2EAB08_2EAAF8, begMmSprDat_12CB0C_2EAB0C_2EAAFC);
+    RelocateSpriteTabDoubled_65D70_66280(begMmSprTab_12CB04_2EAB04_2EAAF4, endMmSprTab_12CB08_2EAB08_2EAAF8, begMmSprDat_12CB0C_2EAB0C_2EAAFC);
   else
-    sub_65DC0_662D0(begMmSprTab_12CB04_2EAB04_2EAAF4, endMmSprTab_12CB08_2EAB08_2EAAF8, begMmSprDat_12CB0C_2EAB0C_2EAAFC);
+    RelocateSpriteTab_65DC0_662D0(begMmSprTab_12CB04_2EAB04_2EAAF4, endMmSprTab_12CB08_2EAB08_2EAAF8, begMmSprDat_12CB0C_2EAB0C_2EAAFC);
   sub_51480_517C0(&str_9688C, &sFont1Tab_12CB34_2EAB34_2EAB24, begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
   str_9688C.var8_4 &= ~2u;
-  sub_3EEA0_3F1E0((char*)"data\\screens\\mainmenu.dat", (uint8_t*)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
+  LoadFile_3EEA0_3F1E0((char*)"data\\screens\\mainmenu.dat", (uint8_t*)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     CopyScreen_62FA8_634B8(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begScreenBackup2_12CBA8_2EABA8_2EAB98, 0xC8u);
   else
     CopyScreen_62FC4_634D4(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begScreenBackup2_12CBA8_2EABA8_2EAB98, 0x1E0u);
-  sub_3EEA0_3F1E0((char*)"data\\screens\\mainmenu.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
+  LoadFile_3EEA0_3F1E0((char*)"data\\screens\\mainmenu.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
   sub_504A0_507E0();
-  sub_51A10_51D50();
+  ReadSaveGameNames_51A10_51D50();
   uint8_t* bufferTemp = begBscreen_AE3FC_AE3EC_26C3FC_26C3EC;
   begBscreen_AE3FC_AE3EC_26C3FC_26C3EC = begWscreen_2ECFF4_2ECFE4;
   begWscreen_2ECFF4_2ECFE4 = bufferTemp;
@@ -58306,7 +58790,7 @@ void sub_4C7E0_4CB20()
   else
     Blit_599B0_59EC0(480);
   if ( !byte_90B23 )
-    sub_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
+    SetMouseCursor_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
   FadeInOut_61CC0_621D0(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x20u, 0);
   dword_12CB76_12CB66 = 0;
   dword_12CB84_12CB74 = 0;
@@ -58338,17 +58822,17 @@ void sub_4CAC0_4CE00()
   {
     FadeInOut_61CC0_621D0(0, 0x10u, 0);
     if ( !byte_90B23 )
-      sub_5C05C_5C56C(0);
+      SetMouseCursor_5C05C_5C56C(0);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
+      ClearScreen320_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
     else
-      sub_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+      ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       Blit_5CDA0_5D2B0();
     else
       Blit_599B0_59EC0(480);
   }
-  sub_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreensmmsprdat]);
+  FreePathFiles_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreensmmsprdat]);
   byte_967E4 = 0;
   byte_12CBD5_12CBC5 &= ~1u;
 }
@@ -58419,7 +58903,7 @@ int sub_4CCA0_4CFE0(int a1)
   else
     CopyScreen_62FC4_634D4(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begScreenBackup_12CBA4_2EABA4_2EAB94, 0x1E0u);
   if ( !byte_90B23 )
-    sub_5C05C_5C56C(0);
+    SetMouseCursor_5C05C_5C56C(0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -58435,9 +58919,9 @@ int sub_4CCA0_4CFE0(int a1)
   HIBYTE(v3) = 0;
   dword_AC5C4_AC5B4 = 0;
   if ( !byte_90B23 )
-    sub_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
-  sub_513E0_51720();
-  sub_51360_516A0(80, 73, 159, 48);
+    SetMouseCursor_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
+  SaveTextWindow_513E0_51720();
+  SetTextWindow_51360_516A0(80, 73, 159, 48);
   v4 = strcmp((char*)off_96864[dword_4A12C_4A46C[byte_12CBC6_12CBB6].var-1], "--");
   if ( !v4 )
     LOWORD(v4) = sub_4D0F0_4D430();
@@ -58519,7 +59003,7 @@ int sub_4CCA0_4CFE0(int a1)
       Blit_599B0_59EC0(480);
     ++v2;
   }
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     CopyScreen_62FA8_634B8(begScreenBackup_12CBA4_2EABA4_2EAB94, begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, 0xC8u);
   else
@@ -58603,20 +59087,21 @@ void sub_4D300_4D640()//21E300_
   //int v0; // ebx
   __int64 v1; // rax
 
-  str_9688C.var8_6 = sub_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x3Fu, 0x3Fu, 0);
-  sub_513E0_51720();
+  str_9688C.var8_6 = FindNearestColour_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x3Fu, 0x3Fu, 0);
+  SaveTextWindow_513E0_51720();
   for ( int i = 0; i < 6; i++ )
   {
     //v0 = 4 * i;
-    sub_51360_516A0(dword_4A7EC_4AB2C[i][0], dword_4A7EC_4AB2C[i][1], dword_4A7EC_4AB2C[i][2], dword_4A7EC_4AB2C[i][3]);
+    SetTextWindow_51360_516A0(dword_4A7EC_4AB2C[i][0], dword_4A7EC_4AB2C[i][1], dword_4A7EC_4AB2C[i][2], dword_4A7EC_4AB2C[i][3]);
     v1 = dword_4A7EC_4AB2C[i][3] - str_9688C.next->dim.y;
     DrawText_51560_518A0((uint8*)&str_9688C, 4, ((int)v1 - HIDWORD(v1)) >> 1, off_96864[i]);
   }
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4D3B0_4D6F0()//21E3B0_
+/// Plays intro/intro.dat.
+void PlayIntroAnim_4D3B0_4D6F0()//21E3B0_
 {
   int v1; // eax
 
@@ -58625,12 +59110,12 @@ void sub_4D3B0_4D6F0()//21E3B0_
   //fix
 
   if ( !byte_90B23 )
-    sub_5C05C_5C56C(0);
+    SetMouseCursor_5C05C_5C56C(0);
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-    sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
+    ClearScreen320_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    sub_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -58652,13 +59137,13 @@ void sub_4D3B0_4D6F0()//21E3B0_
     PlayInfoFmv_107C0_107C0(0, 1, (int)OFF(dword_4A1FC_4A53C));
   }
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
-  sub_24BB0();
+  CloseFmvCaptions_24BB0();
   sub_5D010_5D520();
   StopMusic_20E60_20E60();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-    sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
+    ClearScreen320_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    sub_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -58684,12 +59169,12 @@ void PlayOutroAndQuit_4D560_4D8A0()
   int v1; // ebx
 
   if ( !byte_90B23 )
-    sub_5C05C_5C56C(0);
+    SetMouseCursor_5C05C_5C56C(0);
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-    sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
+    ClearScreen320_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    sub_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -58866,12 +59351,12 @@ void sub_4D680_4D9C0()
         byte_12CBD5_12CBC5 |= 0x10u;
         byte_12CBD2_12CBC2 = 6;
         sub_4DCC0_4E000();
-        sub_513E0_51720();
-        sub_51360_516A0(173, 42, 90, 15);
+        SaveTextWindow_513E0_51720();
+        SetTextWindow_51360_516A0(173, 42, 90, 15);
         v32 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
-        v10 = sub_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
+        v10 = GetTextWidth_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
         DrawText_51560_518A0((uint8*)&str_9688C, (__int16)((90 - v10) / 2), 1, (char*)v32);
-        sub_51400_51740();
+        RestoreTextWindow_51400_51740();
         if ( (typeResolution_12F02E_12F01E & 1) != 0 )
           Blit_5CDA0_5D2B0();
         else
@@ -58879,7 +59364,7 @@ void sub_4D680_4D9C0()
         str_AE400_AE3F0->var_u16_10 = (unsigned __int8)byte_12CBD1_12CBC1;
         byte_12CBD5_12CBC5 &= ~0x10u;
         if ( !byte_90B23 )
-          sub_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
+          SetMouseCursor_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
         v11 = sub_43430_43770((char *)PTR(dword_AE408_AE3F8() + 117), (unsigned __int8)byte_12CBD1_12CBC1);
         v12 = dword_AE400_AE3F0();
         *(_WORD *)PTR(dword_AE400_AE3F0() + 8) = v11;
@@ -58904,12 +59389,12 @@ void sub_4D680_4D9C0()
     byte_12CAE4_12CAD4 &= 0xBEu;
   }
   sub_4DCC0_4E000();
-  sub_513E0_51720();
-  sub_51360_516A0(173, 42, 90, 15);
+  SaveTextWindow_513E0_51720();
+  SetTextWindow_51360_516A0(173, 42, 90, 15);
   v33 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
-  v26 = 90 - sub_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
+  v26 = 90 - GetTextWidth_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
   DrawText_51560_518A0((uint8*)&str_9688C, (__int16)(v26 / 2), 1, (char*)v33);
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
   if ( (byte_90B23 & 0x23) != 0 )
   {
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -58969,22 +59454,22 @@ char sub_4DCC0_4E000()
       //v0 = 6 * (unsigned __int8)byte_12CBD2_12CBC2;
       //v1 = (int)begSptrsTab_12CAEC_2EAAEC_2EAADC;
 //LABEL_9:
-      sub_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[byte_12CBD2_12CBC2]);
+      SetMouseCursor_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[byte_12CBD2_12CBC2]);
     }
   }
   else if ( !byte_90B23 )
   {
     //v0 = (int)begSptrsTab_12CAEC_2EAAEC_2EAADC;
     //v1 = 6 * (unsigned __int8)mainMenuSelector_12CBCE_12CBBE;
-    sub_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
+    SetMouseCursor_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
   }
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     CopyScreen_62FA8_634B8(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0xC8u);
   else
     CopyScreen_62FC4_634D4(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0x1E0u);
-  sub_513E0_51720();
+  SaveTextWindow_513E0_51720();
   v2 = 0;
-  sub_51360_516A0(0, 0, 320, 200);
+  SetTextWindow_51360_516A0(0, 0, 320, 200);
   do
   {
     if ( byte_9689C[3 * v2] || byte_9689D[3 * v2] )
@@ -59059,10 +59544,10 @@ char sub_4DCC0_4E000()
     ++v2;
   }
   while ( v2 < 8u );
-  sub_51360_516A0(173, 72, 90, 61);
+  SetTextWindow_51360_516A0(173, 72, 90, 61);
   v6 = 0;
-  v13 = sub_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x3Fu, 0x3Fu, 0x3Fu);
-  v7 = sub_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x1Au, 0x12u, 0xDu);
+  v13 = FindNearestColour_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x3Fu, 0x3Fu, 0x3Fu);
+  v7 = FindNearestColour_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x1Au, 0x12u, 0xDu);
   v8 = word_12CBBE_12CBAE;
   v14 = v7;
   while ( v8 < (unsigned __int16)word_12CBBE_12CBAE + 5 )
@@ -59073,12 +59558,12 @@ char sub_4DCC0_4E000()
       v9 = v14;
     str_9688C.var8_6 = v9;
     v12 = off_99A84[v8];
-    v10 = sub_51420_51760((uint32*)&str_9688C, v12);
+    v10 = GetTextWidth_51420_51760((uint32*)&str_9688C, v12);
     DrawText_51560_518A0((uint8*)&str_9688C, (__int16)((90 - v10) / 2), v6, v12);
     ++v8;
     v6 += str_9688C.var8_5 - 2;
   }
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
   result = v14;
   str_9688C.var8_6 = v14;
   return result;
@@ -59091,15 +59576,15 @@ char sub_4E0E0_4E420()
 
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
   StopMusic_20E60_20E60();
-  sub_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenspmultsprdat]);
+  LoadPathFiles_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenspmultsprdat]);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-    sub_65D70_66280(begPMultSprTab_12CB10_2EAB10_2EAB00, endPMultSprTab_12CB14_2EAB14_2EAB04, begPMultSprDat_12CB18_2EAB18_2EAB08);
+    RelocateSpriteTabDoubled_65D70_66280(begPMultSprTab_12CB10_2EAB10_2EAB00, endPMultSprTab_12CB14_2EAB14_2EAB04, begPMultSprDat_12CB18_2EAB18_2EAB08);
   else
-    sub_65DC0_662D0(begPMultSprTab_12CB10_2EAB10_2EAB00, endPMultSprTab_12CB14_2EAB14_2EAB04, begPMultSprDat_12CB18_2EAB18_2EAB08);
+    RelocateSpriteTab_65DC0_662D0(begPMultSprTab_12CB10_2EAB10_2EAB00, endPMultSprTab_12CB14_2EAB14_2EAB04, begPMultSprDat_12CB18_2EAB18_2EAB08);
   sub_51480_517C0(&str_9688C, &sFont1Tab_12CB34_2EAB34_2EAB24, begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
   str_9688C.var8_4 &= ~2u;
-  sub_3EEA0_3F1E0((char*)"data\\screens\\pmulti.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
-  sub_3EEA0_3F1E0((char*)"data\\screens\\pmulti.dat", (uint8_t*)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
+  LoadFile_3EEA0_3F1E0((char*)"data\\screens\\pmulti.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
+  LoadFile_3EEA0_3F1E0((char*)"data\\screens\\pmulti.dat", (uint8_t*)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     CopyScreen_62FA8_634B8(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0xC8u);
   else
@@ -59109,10 +59594,10 @@ char sub_4E0E0_4E420()
   else
     Blit_599B0_59EC0(480);
   if ( !byte_90B23 )
-    sub_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
+    SetMouseCursor_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
   FadeInOut_61CC0_621D0(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x20u, 0);
   byte_12CBD5_12CBC5 |= 1u;
-  result = sub_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x1Au, 0x12u, 0xDu);
+  result = FindNearestColour_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x1Au, 0x12u, 0xDu);
   str_9688C.var8_6 = result;
   return result;
 }
@@ -59122,16 +59607,16 @@ void sub_4E270_4E5B0()
 {
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
   if ( !byte_90B23 )
-    sub_5C05C_5C56C(0);
+    SetMouseCursor_5C05C_5C56C(0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-    sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
+    ClearScreen320_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    sub_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
     Blit_599B0_59EC0(480);
-  sub_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreenspmultsprdat]);
+  FreePathFiles_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreenspmultsprdat]);
   byte_12CBD5_12CBC5 &= ~1u;
   if ( mainMenuSelector_12CBCE_12CBBE == 2 )
     PlayMusicTrack_5D290_5D7A0(4);
@@ -59160,12 +59645,12 @@ void sub_4E320_4E660()
   }
   while ( v0 < 8u );
   sub_4DCC0_4E000();
-  sub_513E0_51720();
-  sub_51360_516A0(173, 42, 90, 15);
+  SaveTextWindow_513E0_51720();
+  SetTextWindow_51360_516A0(173, 42, 90, 15);
   v2 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
-  v1 = 90 - sub_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
+  v1 = 90 - GetTextWidth_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
   DrawText_51560_518A0((uint8*)&str_9688C, (__int16)(v1 / 2), 1, (char*)v2);
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -59181,12 +59666,12 @@ void sub_4E3D0_4E710(unsigned __int8 a1)
   byte_9689E[3 * a1] = 1;
   ++dword_12CBB0_12CBA0;
   sub_4DCC0_4E000();
-  sub_513E0_51720();
-  sub_51360_516A0(173, 42, 90, 15);
+  SaveTextWindow_513E0_51720();
+  SetTextWindow_51360_516A0(173, 42, 90, 15);
   v2 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
-  v1 = 90 - sub_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
+  v1 = 90 - GetTextWidth_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
   DrawText_51560_518A0((uint8*)&str_9688C, (__int16)(v1 / 2), 1, (char*)v2);
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -59202,12 +59687,12 @@ void sub_4E470_4E7B0(unsigned __int8 a1)
   byte_9689E[3 * a1] = 2;
   ++dword_12CBB0_12CBA0;
   sub_4DCC0_4E000();
-  sub_513E0_51720();
-  sub_51360_516A0(173, 42, 90, 15);
+  SaveTextWindow_513E0_51720();
+  SetTextWindow_51360_516A0(173, 42, 90, 15);
   v2 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
-  v1 = 90 - sub_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
+  v1 = 90 - GetTextWidth_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
   DrawText_51560_518A0((uint8*)&str_9688C, (__int16)(v1 / 2), 1, (char*)v2);
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -59223,12 +59708,12 @@ void sub_4E510(unsigned __int8 a1)
   byte_9689E[3 * a1] = 0;
   ++dword_12CBB0_12CBA0;
   sub_4DCC0_4E000();
-  sub_513E0_51720();
-  sub_51360_516A0(173, 42, 90, 15);
+  SaveTextWindow_513E0_51720();
+  SetTextWindow_51360_516A0(173, 42, 90, 15);
   v2 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
-  v1 = 90 - sub_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
+  v1 = 90 - GetTextWidth_51420_51760((uint32*)&str_9688C, (char *)PTR(dword_AE408_AE3F8() + 117));
   DrawText_51560_518A0((uint8*)&str_9688C, (__int16)(v1 / 2), 1, (char*)v2);
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -59288,12 +59773,12 @@ int ShowLevelPerformance_4E5B0_4E8F0()
   if ( (v1 & 8) == 0 )
   {
     if ( !byte_90B23 )
-      sub_5C05C_5C56C(0);
+      SetMouseCursor_5C05C_5C56C(0);
     FadeInOut_61CC0_621D0(0, 0x10u, 0);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
+      ClearScreen320_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
     else
-      sub_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+      ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       Blit_5CDA0_5D2B0();
     else
@@ -59329,15 +59814,15 @@ int ShowLevelPerformance_4E5B0_4E8F0()
       sub_5D010_5D520();
       StopMusic_20E60_20E60();
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-        sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
+        ClearScreen320_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
       else
-        sub_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+        ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
         Blit_5CDA0_5D2B0();
       else
         Blit_599B0_59EC0(480);
     }
-    sub_5D070_5D580(0xDu);
+    LoadSoundBank_5D070_5D580(0xDu);
     LoadMusicSet_5CEF0_5D400(0);
     PlayMusicTrack_5D290_5D7A0(1);
     word_12EFDA_12EFCA = 0;
@@ -59345,16 +59830,16 @@ int ShowLevelPerformance_4E5B0_4E8F0()
     mouseLeftButton_12EFDE_12EFCE = 0;
     lastPressedKey_12EF70_12EF60 = 0;
     mainMenuSelector_12CBCE_12CBBE = 2;
-    sub_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenssfont2dat]);
+    LoadPathFiles_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenssfont2dat]);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      sub_65D70_66280(begSFont2Tab_12CB40_2EAB40_2EAB30, endSFont2Tab_12CB44_2EAB44_2EAB34, begSFont2Dat_12CB48_2EAB48_2EAB38);
+      RelocateSpriteTabDoubled_65D70_66280(begSFont2Tab_12CB40_2EAB40_2EAB30, endSFont2Tab_12CB44_2EAB44_2EAB34, begSFont2Dat_12CB48_2EAB48_2EAB38);
     else
-      sub_65DC0_662D0(begSFont2Tab_12CB40_2EAB40_2EAB30, endSFont2Tab_12CB44_2EAB44_2EAB34, begSFont2Dat_12CB48_2EAB48_2EAB38);
+      RelocateSpriteTab_65DC0_662D0(begSFont2Tab_12CB40_2EAB40_2EAB30, endSFont2Tab_12CB44_2EAB44_2EAB34, begSFont2Dat_12CB48_2EAB48_2EAB38);
     perfFont_96894.var8_4 = 16;
     perfFont_96894.var8_5 = 0;
     perfFont_96894.next = &begSFont2Tab_12CB40_2EAB40_2EAB30[1];
-    sub_3EEA0_3F1E0((char*)"data/screens/pperf.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
-    sub_3EEA0_3F1E0((char*)"data\\screens\\pperf.dat", (uint8_t*)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
+    LoadFile_3EEA0_3F1E0((char*)"data/screens/pperf.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
+    LoadFile_3EEA0_3F1E0((char*)"data\\screens\\pperf.dat", (uint8_t*)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       CopyScreen_62FA8_634B8(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0xC8u);
     else
@@ -59366,7 +59851,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
     FadeInOut_61CC0_621D0(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x20u, 0);
     pressedKeys_12EEF0_12EEE0[1] = 0;//byte_12EEF1_12EEE1 ESC
     byte_12CAE4_12CAD4 &= ~1u;
-    sub_51360_516A0(0, 0, 320, 200);
+    SetTextWindow_51360_516A0(0, 0, 320, 200);
     v7 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(dword_AE400_AE3F0() + 2049 * str_AE400_AE3F0->var_u16_8 + 13333);
     v19 = timerTicks_AC5D4_AC5C4 + 360;
     v22 = timerTicks_AC5D4_AC5C4 + 300;
@@ -59402,7 +59887,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
         }
         DrawText_51560_518A0((uint8*)&perfFont_96894, 40, 80, dword_AE238_AE228[66]);
         sprintf((char*)v15, "% 3d %%", *(_DWORD *)PTR(*(_DWORD *)PTR(v7 + 160) + 359));
-        v8 = sub_51420_51760((uint32*)&perfFont_96894, (char *)v15);
+        v8 = GetTextWidth_51420_51760((uint32*)&perfFont_96894, (char *)v15);
         DrawText_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v8), 80, (char*)v15);
       }
       if ( timerTicks_AC5D4_AC5C4 > v23 )
@@ -59414,7 +59899,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
         }
         DrawText_51560_518A0((uint8*)&perfFont_96894, 40, 120, dword_AE238_AE228[67]);
         sprintf((char*)v15, "% 3d %%", *(_DWORD *)PTR(*(_DWORD *)PTR(v7 + 160) + 367));
-        v9 = sub_51420_51760((uint32*)&perfFont_96894, (char *)v15);
+        v9 = GetTextWidth_51420_51760((uint32*)&perfFont_96894, (char *)v15);
         DrawText_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v9), 120, (char*)v15);
       }
       if ( timerTicks_AC5D4_AC5C4 > v21 )
@@ -59426,7 +59911,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
         }
         DrawText_51560_518A0((uint8*)&perfFont_96894, 40, 160, dword_AE238_AE228[68]);
         sprintf((char*)v15, "% 3d %%", *(_DWORD *)PTR(*(_DWORD *)PTR(v7 + 160) + 363));
-        v10 = sub_51420_51760((uint32*)&perfFont_96894, (char *)v15);
+        v10 = GetTextWidth_51420_51760((uint32*)&perfFont_96894, (char *)v15);
         DrawText_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v10), 160, (char*)v15);
       }
       if ( timerTicks_AC5D4_AC5C4 > v17 )
@@ -59438,7 +59923,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
         }
         DrawText_51560_518A0((uint8*)&perfFont_96894, 40, 200, dword_AE238_AE228[59]);
         sprintf((char*)v15, "% 3d %%", *(_DWORD *)PTR(*(_DWORD *)PTR(v7 + 160) + 371));
-        v11 = sub_51420_51760((uint32*)&perfFont_96894, (char *)v15);
+        v11 = GetTextWidth_51420_51760((uint32*)&perfFont_96894, (char *)v15);
         DrawText_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v11), 200, (char*)v15);
       }
       if ( timerTicks_AC5D4_AC5C4 > v22 )
@@ -59450,7 +59935,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
         }
         DrawText_51560_518A0((uint8*)&perfFont_96894, 40, 240, dword_AE238_AE228[69]);
         sprintf((char*)v15, "% 3d %%", *(_DWORD *)PTR(*(_DWORD *)PTR(v7 + 160) + 375));
-        v12 = sub_51420_51760((uint32*)&perfFont_96894, (char *)v15);
+        v12 = GetTextWidth_51420_51760((uint32*)&perfFont_96894, (char *)v15);
         DrawText_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v12), 240, (char*)v15);
       }
       if ( timerTicks_AC5D4_AC5C4 > v19 )
@@ -59467,7 +59952,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
           *(_DWORD *)PTR(*(_DWORD *)PTR(v7 + 160) + 379) / 120 / 3600,
           *(_DWORD *)PTR(*(_DWORD *)PTR(v7 + 160) + 379) / 120 / 60 % 60,
           *(_DWORD *)PTR(*(_DWORD *)PTR(v7 + 160) + 379) / 120 % 60);
-        v13 = sub_51420_51760((uint32*)&perfFont_96894, (char *)v15);
+        v13 = GetTextWidth_51420_51760((uint32*)&perfFont_96894, (char *)v15);
         DrawText_51560_518A0((uint8*)&perfFont_96894, (__int16)(600 - v13), 280, (char*)v15);
       }
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -59476,7 +59961,7 @@ int ShowLevelPerformance_4E5B0_4E8F0()
         Blit_599B0_59EC0(480);
     }
     while ( !v0 );
-    sub_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreenssfont2dat]);
+    FreePathFiles_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreenssfont2dat]);
     FadeInOut_61CC0_621D0(0, 0x10u, 0);
     StopMusic_20E60_20E60();
     sub_5D010_5D520();
@@ -59490,7 +59975,8 @@ int ShowLevelPerformance_4E5B0_4E8F0()
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4EE70_4F1B0()//21FE70_
+/// Plays intro/logo.dat.
+void PlayLogoAnim_4EE70_4F1B0()//21FE70_
 {
   int v1; // eax
 
@@ -59499,12 +59985,12 @@ void sub_4EE70_4F1B0()//21FE70_
   //fix
 
   if ( !byte_90B23 )
-    sub_5C05C_5C56C(0);
+    SetMouseCursor_5C05C_5C56C(0);
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-    sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
+    ClearScreen320_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    sub_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -59521,9 +60007,9 @@ void sub_4EE70_4F1B0()//21FE70_
   sub_5D010_5D520();
   StopMusic_20E60_20E60();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-    sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
+    ClearScreen320_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    sub_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -59532,7 +60018,8 @@ void sub_4EE70_4F1B0()//21FE70_
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4EFC0_4F300()
+/// Plays intro/intel.dat.
+void PlayIntelAnim_4EFC0_4F300()
 {
   //int v1; // eax
   int v2; // eax
@@ -59541,16 +60028,16 @@ void sub_4EFC0_4F300()
   v2 = 0;
   //fix
 
-  sub_19470();
+  DetectCpu_19470();
   if (str_AE408_AE3F8->var_u8_8)
   {
     if ( !byte_90B23 )
-      sub_5C05C_5C56C(0);
+      SetMouseCursor_5C05C_5C56C(0);
     FadeInOut_61CC0_621D0(0, 0x10u, 0);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
+      ClearScreen320_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
     else
-      sub_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+      ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       Blit_5CDA0_5D2B0();
     else
@@ -59567,9 +60054,9 @@ void sub_4EFC0_4F300()
     sub_5D010_5D520();
     StopMusic_20E60_20E60();
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-      sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
+      ClearScreen320_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
     else
-      sub_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+      ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
       Blit_5CDA0_5D2B0();
     else
@@ -59586,7 +60073,7 @@ void sub_4F120_4F460()
 	__int16 v2; // dx
 
 	v0 = timerTicks_AC5D4_AC5C4;
-	v1 = sub_1002D(dword_12CB6C_12CB5C, begWscreen_2ECFF4_2ECFE4);
+	v1 = ApplyFlcFrame_1002D(dword_12CB6C_12CB5C, begWscreen_2ECFF4_2ECFE4);
 	v2 = word_12CB70_12CB60 + 1;
 	dword_12CB6C_12CB5C = v1;
 	word_12CB70_12CB60 = v2;
@@ -59611,7 +60098,8 @@ void sub_4F120_4F460()
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4F1E0_4F520()
+/// Plays the title animations intro/title-01..04.dat.
+void PlayTitleAnim_4F1E0_4F520()
 {
   int v1; // eax
 
@@ -59623,19 +60111,19 @@ void sub_4F1E0_4F520()
   if(IsHiddenWord)
       tempIntroIndex2_4 = PSintrotitle04dat;
   if ( !byte_90B23 )
-    sub_5C05C_5C56C(0);
+    SetMouseCursor_5C05C_5C56C(0);
   FadeInOut_61CC0_621D0(0, 0x10u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-    sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
+    ClearScreen320_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    sub_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
     Blit_599B0_59EC0(480);
   if ( *(_BYTE *)PTR(dword_AE400_AE3F0() + 8608) == 32 )
   {
-    sub_40440_40780(&pathStrArray_21AB80_21AEC0[tempIntroIndex2_4]);
+    LoadPathFiles_40440_40780(&pathStrArray_21AB80_21AEC0[tempIntroIndex2_4]);
     dword_12CB6C_12CB5C = begTitle02Dat_12CB64_2EAB64_2EAB54;
     dword_12CB68_12CB58 = 0;
     word_12CB70_12CB60 = 0;
@@ -59666,20 +60154,21 @@ void sub_4F1E0_4F520()
   sub_5D010_5D520();
   StopMusic_20E60_20E60();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-    sub_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
+    ClearScreen320_411D7_41517((void *)begWscreen_2ECFF4_2ECFE4, 0xC8u, 0);
   else
-    sub_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
+    ClearScreen640_411FD_4153D((void *)begWscreen_2ECFF4_2ECFE4, 0x1E0u, 0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
     Blit_599B0_59EC0(480);
   if ( *(_BYTE *)PTR(dword_AE400_AE3F0() + 8608) == 32 )
-    sub_61610_61B20(&pathStrArray_21AB80_21AEC0[tempIntroIndex2_4]);
+    FreePathFiles_61610_61B20(&pathStrArray_21AB80_21AEC0[tempIntroIndex2_4]);
   mainMenuSelector_12CBCE_12CBBE = 2;
   byte_12CBD6_12CBC6 &= ~2u;
 }
 
-void sub_4F3F0_4F730()//2203F0_
+/// Language selection: uses language.inf if present, otherwise shows the language screen (data/screens/language.dat) and writes it.
+void SelectLanguage_4F3F0_4F730()//2203F0_
 {
 	char filename[56];
 	sprintf(filename, "%s%s\\language.inf", "C:", "\\carpet.cd");
@@ -59698,16 +60187,16 @@ void sub_4F3F0_4F730()//2203F0_
 	else
 	{
 		dword_12CBB0_12CBA0 = 0;
-		sub_3EEA0_3F1E0((char*)"data\\screens\\language.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
-		sub_3EEA0_3F1E0((char*)"data\\screens\\language.dat", begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
-		sub_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenslangsprdat]);
+		LoadFile_3EEA0_3F1E0((char*)"data\\screens\\language.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
+		LoadFile_3EEA0_3F1E0((char*)"data\\screens\\language.dat", begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
+		LoadPathFiles_40440_40780(&pathStrArray_21AB80_21AEC0[PSdatascreenslangsprdat]);
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 		{
-			sub_65D70_66280(begLangSprTab_12CB58_2EAB58_2EAB48, endLangSprTab_12CB5C_2EAB5C_2EAB4C, begLangSprDat_12CB60_2EAB60_2EAB50);
+			RelocateSpriteTabDoubled_65D70_66280(begLangSprTab_12CB58_2EAB58_2EAB48, endLangSprTab_12CB5C_2EAB5C_2EAB4C, begLangSprDat_12CB60_2EAB60_2EAB50);
 		}
 		else
 		{
-			sub_65DC0_662D0(begLangSprTab_12CB58_2EAB58_2EAB48, endLangSprTab_12CB5C_2EAB5C_2EAB4C, begLangSprDat_12CB60_2EAB60_2EAB50);
+			RelocateSpriteTab_65DC0_662D0(begLangSprTab_12CB58_2EAB58_2EAB48, endLangSprTab_12CB5C_2EAB5C_2EAB4C, begLangSprDat_12CB60_2EAB60_2EAB50);
 		}
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 		{
@@ -59722,7 +60211,7 @@ void sub_4F3F0_4F730()//2203F0_
 		else
 			Blit_599B0_59EC0(480);
 		if (!byte_90B23)
-			sub_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
+			SetMouseCursor_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
 		FadeInOut_61CC0_621D0(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x20u, 0);
 		byte_12CAE4_12CAD4 &= ~1u;
         pressedKeys_12EEF0_12EEE0[1] = 0;//byte_12EEF1_12EEE1 ESC
@@ -59793,7 +60282,7 @@ void sub_4F3F0_4F730()//2203F0_
 		} while (!endCycle);
 		FadeInOut_61CC0_621D0(0, 0x10u, 0);
 		if (!byte_90B23)
-			sub_5C05C_5C56C(0);
+			SetMouseCursor_5C05C_5C56C(0);
         pressedKeys_12EEF0_12EEE0[1] = 0;//byte_12EEF1_12EEE1 ESC
 		byte_12CAE4_12CAD4 &= ~1u;
 		file = DataFileIO::CreateOrOpenFile(FixPath(filename), 546);
@@ -59806,22 +60295,22 @@ void sub_4F3F0_4F730()//2203F0_
 	switch (str_AE408_AE3F8->var_u8_151)
 	{
 	case 0:
-		sub_40440_40780(&pathStrArray[PSdataetextdat]);
+		LoadPathFiles_40440_40780(&pathStrArray[PSdataetextdat]);
 		break;
 	case 1:
-		sub_40440_40780(&pathStrArray[PSdataftextdat]);
+		LoadPathFiles_40440_40780(&pathStrArray[PSdataftextdat]);
 		break;
 	case 2:
-		sub_40440_40780(&pathStrArray[PSdatagtextdat]);
+		LoadPathFiles_40440_40780(&pathStrArray[PSdatagtextdat]);
 		break;
 	case 3:
-		sub_40440_40780(&pathStrArray[PSdataitextdat]);
+		LoadPathFiles_40440_40780(&pathStrArray[PSdataitextdat]);
 		break;
 	default:
 		break;
 	}
-	sub_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreenslangsprdat]);
-	sub_44700_44A40((char*)begTextDat_AE41C_AE40C_26C41C_26C40C, dword_AE238_AE228, 80);
+	FreePathFiles_61610_61B20(&pathStrArray_21AB80_21AEC0[PSdatascreenslangsprdat]);
+	BuildStringTable_44700_44A40((char*)begTextDat_AE41C_AE40C_26C41C_26C40C, dword_AE238_AE228, 80);
 	mainMenuSelector_12CBCE_12CBBE = 1;
 	byte_12CBD5_12CBC5 &= ~1u;
 }
@@ -59850,7 +60339,7 @@ int sub_4F8D0_4FC10(int a1, void (*a2)())
   else
     CopyScreen_62FC4_634D4(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begScreenBackup_12CBA4_2EABA4_2EAB94, 0x1E0u);
   if ( !byte_90B23 )
-    sub_5C05C_5C56C(0);
+    SetMouseCursor_5C05C_5C56C(0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -59866,9 +60355,9 @@ int sub_4F8D0_4FC10(int a1, void (*a2)())
   HIBYTE(v4) = 0;
   dword_AC5C4_AC5B4 = 0;
   if ( !byte_90B23 )
-    sub_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
-  sub_513E0_51720();
-  sub_51360_516A0(80, 73, 159, 48);
+    SetMouseCursor_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
+  SaveTextWindow_513E0_51720();
+  SetTextWindow_51360_516A0(80, 73, 159, 48);
   do
   {
     if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -59928,7 +60417,7 @@ int sub_4F8D0_4FC10(int a1, void (*a2)())
     ++v3;
   }
   while ( !v2 );
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     CopyScreen_62FA8_634B8(begScreenBackup_12CBA4_2EABA4_2EAB94, begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, 0xC8u);
   else
@@ -60059,9 +60548,9 @@ void sub_4FFE0_50320()
   char* v1; // [esp-4h] [ebp-1Ch]
   _DWORD v2[6]; // [esp+0h] [ebp-18h] BYREF
 
-  sub_513A0_516E0(v2);
+  GetTextWindow_513A0_516E0(v2);
   v1 = dword_AE238_AE228[36];
-  v0 = sub_51420_51760((uint32*)&str_9688C, dword_AE238_AE228[36]);
+  v0 = GetTextWidth_51420_51760((uint32*)&str_9688C, dword_AE238_AE228[36]);
   DrawText_51560_518A0((uint8*)&str_9688C, (__int16)((v2[4] - v0) / 2), 12, (char*)v1);
 }
 
@@ -60075,7 +60564,7 @@ void sub_50030_50370()//221030_
   sprintf(pathBuffer_9ADC8, "intro\\scroll.dat");
   dword_AC5C4_AC5B4 = (int (*)(_DWORD))sub_50470_507B0;
   if ( !byte_90B23 )
-    sub_5C05C_5C56C(0);
+    SetMouseCursor_5C05C_5C56C(0);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     Blit_5CDA0_5D2B0();
   else
@@ -60087,10 +60576,10 @@ void sub_50030_50370()//221030_
   else
     CopyScreen_62FC4_634D4(begWscreen_2ECFF4_2ECFE4, begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, 0x1E0u);
   if ( !byte_90B23 )
-    sub_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
+    SetMouseCursor_5C05C_5C56C(&begSptrsTab_12CAEC_2EAAEC_2EAADC[mainMenuSelector_12CBCE_12CBBE]);
   dword_AC5C4_AC5B4 = 0;
-  sub_513E0_51720();
-  sub_51360_516A0(70, 73, 179, 48);
+  SaveTextWindow_513E0_51720();
+  SetTextWindow_51360_516A0(70, 73, 179, 48);
   sub_50D40_51080(8, 25, 30, 0, str_AE408_AE3F8->var_u8_29, 255, 0, sub_50350_50690, 1, (int)OFF(&str_9688C));
   byte_12CBD5_12CBC5 |= 0x20u;
   pressedKeys_12EEF0_12EEE0[28] = 0;//byte_12EF0C Enter
@@ -60123,7 +60612,7 @@ void sub_50030_50370()//221030_
     Blit_5CDA0_5D2B0();
   else
     Blit_599B0_59EC0(480);
-  sub_51400_51740();
+  RestoreTextWindow_51400_51740();
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -60133,13 +60622,13 @@ void sub_50350_50690()
   char* v1; // [esp-4h] [ebp-28h]
   _DWORD v2[9]; // [esp+0h] [ebp-24h] BYREF
 
-  sub_513A0_516E0(v2);
+  GetTextWindow_513A0_516E0(v2);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     CopyScreen_62FA8_634B8(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0xC8u);
   else
     CopyScreen_62FC4_634D4(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0x1E0u);
   v1 = dword_AE238_AE228[34];
-  v0 = sub_51420_51760((uint32*)&str_9688C, dword_AE238_AE228[34]);
+  v0 = GetTextWidth_51420_51760((uint32*)&str_9688C, dword_AE238_AE228[34]);
   DrawText_51560_518A0((uint8*)&str_9688C, (__int16)((v2[4] - v0) / 2), 10, (char*)v1);
 }
 
@@ -60150,13 +60639,13 @@ void sub_503E0_50720()
   char* v1; // [esp-4h] [ebp-28h]
   _DWORD v2[9]; // [esp+0h] [ebp-24h] BYREF
 
-  sub_513A0_516E0(v2);
+  GetTextWindow_513A0_516E0(v2);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     CopyScreen_62FA8_634B8(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0xC8u);
   else
     CopyScreen_62FC4_634D4(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0x1E0u);
   v1 = dword_AE238_AE228[35];
-  v0 = sub_51420_51760((uint32*)&str_9688C, dword_AE238_AE228[35]);
+  v0 = GetTextWidth_51420_51760((uint32*)&str_9688C, dword_AE238_AE228[35]);
   DrawText_51560_518A0((uint8*)&str_9688C, (__int16)((v2[4] - v0) / 2), 10, (char*)v1);
 }
 
@@ -60212,7 +60701,7 @@ int sub_504A0_507E0()
     v8 = v4 + 30 * v4 / 100;
     if ( v8 > 0x3Fu )
       LOBYTE(v8) = 63;
-    LOBYTE(result) = sub_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, v7, v3, v8);
+    LOBYTE(result) = FindNearestColour_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, v7, v3, v8);
     v6 = i;
     *(_BYTE *)(begBrightTable_12CBAC_2EABAC_2EAB9C + v6) = result;
   }
@@ -60222,7 +60711,8 @@ int sub_504A0_507E0()
 // 12CBAC: using guessed type int begBrightTable_12CBAC_2EABAC_2EAB9C;
 
 //SYNCHRONIZED WITH REMC1
-bool sub_505A0_508E0()
+/// Reads the sound/music card settings from sndsetup.inf.
+bool ReadSoundSetup_505A0_508E0()
 {
   char pathBuffer[48];
 
@@ -60567,9 +61057,9 @@ bool sub_50D40_51080(//221D40_
   v38 = 0;
   mouseRightButton_12EFDC_12EFCC = 0;
   mouseLeftButton_12EFDE_12EFCE = 0;
-  sub_513A0_516E0((uint32*)v33);
+  GetTextWindow_513A0_516E0((uint32*)v33);
   if ( a4 )
-    v37 = sub_51420_51760((_DWORD *)PTR(a10), a4);
+    v37 = GetTextWidth_51420_51760((_DWORD *)PTR(a10), a4);
   v37 += a1;
   do
   {
@@ -60594,7 +61084,7 @@ LABEL_71:
             --v10;
 LABEL_72:
             --v11;
-            sub_51330_51670((int)OFF(v10), 1);
+            StrDelete_51330_51670((int)OFF(v10), 1);
             goto LABEL_73;
           }
         }
@@ -60680,7 +61170,7 @@ LABEL_72:
         v36[1] = 0;
         if ( v39 )
         {
-          sub_512D0_51610(v10, v36);
+          StrInsert_512D0_51610(v10, v36);
           if ( (unsigned int)OFF(v10) < v35 )
           {
             ++v10;
@@ -60700,7 +61190,7 @@ LABEL_72:
           }
         }
         v15 = a9 == 1 ? v33[4] - 2 * (__int16)a1 : v33[4] - (__int16)a1;
-        if ( sub_51420_51760((_DWORD *)PTR(a10), a5) >= v15 && v39 && v10 > a5 )
+        if ( GetTextWidth_51420_51760((_DWORD *)PTR(a10), a5) >= v15 && v39 && v10 > a5 )
           goto LABEL_71;
       }
     }
@@ -60713,7 +61203,7 @@ LABEL_73:
     {
       if ( a9 == 1 )
       {
-        v16 = sub_51420_51760((_DWORD *)PTR(a10), a5);
+        v16 = GetTextWidth_51420_51760((_DWORD *)PTR(a10), a5);
         DrawText_51560_518A0((_BYTE *)PTR(a10), (__int16)((v33[4] - v16) / 2), a2, a5);
       }
     }
@@ -60745,14 +61235,14 @@ LABEL_73:
     v30 = v33[2] + *(unsigned __int8 *)PTR(v23 + 5) + a2 - 2;
     if ( a9 )
     {
-      v26 = sub_51420_51760((_DWORD *)PTR(a10), a5);
+      v26 = GetTextWidth_51420_51760((_DWORD *)PTR(a10), a5);
       v27 = (v33[4] - v26) / 2;
-      v28 = sub_51420_51760((_DWORD *)PTR(a10), v32);
+      v28 = GetTextWidth_51420_51760((_DWORD *)PTR(a10), v32);
       v25 = v33[0] + v27 + v28;
     }
     else
     {
-      v24 = sub_51420_51760((_DWORD *)PTR(a10), v32);
+      v24 = GetTextWidth_51420_51760((_DWORD *)PTR(a10), v32);
       v25 = v33[0] + (__int16)v37 + v24;
     }
     sub_51ECC_5220C(v25, v30, v31, 2, 255, 0);
@@ -60771,7 +61261,8 @@ LABEL_73:
 }
 
 //----- (000512D0) --------------------------------------------------------
-char *sub_512D0_51610(char *a1, const char *a2)
+/// Inserts string a2 at the start of string a1; returns a1.
+char *StrInsert_512D0_51610(char *a1, const char *a2)
 {
   __int16 v2; // si
 
@@ -60783,14 +61274,16 @@ char *sub_512D0_51610(char *a1, const char *a2)
 // 660B5: using guessed type _DWORD memmove(_DWORD, _DWORD, _DWORD);
 
 //----- (00051330) --------------------------------------------------------
-int sub_51330_51670(int a1, __int16 a2)
+/// Removes the first a2 characters of string a1.
+int StrDelete_51330_51670(int a1, __int16 a2)
 {
   return (int)OFF(memmove((void*)PTR(a1), (void*)PTR(a1 + a2), strlen((const char *)PTR(a1 + a2)) + 1));
 }
 // 660B5: using guessed type _DWORD memmove(_DWORD, _DWORD, _DWORD);
 
 //----- (00051360) --------------------------------------------------------
-void sub_51360_516A0(int a1, int a2, int a3, int a4)
+/// Sets the text window (array_12C970: x0, x1, y0, y1, width, height) to x a1, y a2, width a3, height a4; DrawText_51560_518A0 draws relative to it and clips to it.
+void SetTextWindow_51360_516A0(int a1, int a2, int a3, int a4)
 {
   array_12C970[0] = a1;
   array_12C970[3] = a2 + a4;
@@ -60807,7 +61300,8 @@ void sub_51360_516A0(int a1, int a2, int a3, int a4)
 // 12C984: using guessed type int dword_12C984;
 
 //----- (000513A0) --------------------------------------------------------
-_DWORD *sub_513A0_516E0(_DWORD *a1)
+/// Copies the text window (array_12C970, 6 ints) to a1; returns a1.
+_DWORD *GetTextWindow_513A0_516E0(_DWORD *a1)
 {
   _DWORD *result; // eax
 
@@ -60828,7 +61322,8 @@ _DWORD *sub_513A0_516E0(_DWORD *a1)
 // 12C984: using guessed type int dword_12C984;
 
 //----- (000513E0) --------------------------------------------------------
-void sub_513E0_51720()//2223E0_
+/// Saves the text window (array_12C970) to string_12C988.
+void SaveTextWindow_513E0_51720()//2223E0_
 {
   dword_12CA78 = 0;
   qmemcpy(string_12C988, array_12C970, 0x18u);
@@ -60837,7 +61332,8 @@ void sub_513E0_51720()//2223E0_
 // 12CA78: using guessed type int dword_12CA78;
 
 //----- (00051400) --------------------------------------------------------
-void sub_51400_51740()
+/// Restores the text window saved by SaveTextWindow_513E0_51720.
+void RestoreTextWindow_51400_51740()
 {
   dword_12CA78 = 0;
   qmemcpy(array_12C970, string_12C988, 0x18u);
@@ -60846,7 +61342,8 @@ void sub_51400_51740()
 // 12CA78: using guessed type int dword_12CA78;
 
 //----- (00051420) --------------------------------------------------------
-int sub_51420_51760(_DWORD *a1, char *a2)
+/// Width in pixels of the widest line of text a2 in font a1 (glyph width - 1 per character, lines end at "\n").
+int GetTextWidth_51420_51760(_DWORD *a1, char *a2)
 {
   char *v2; // eax
   __int16 v3; // bx
@@ -60887,10 +61384,10 @@ void sub_51480_517C0(Type_dword_96884* a1x, TypeStrFont* a2x, TColor* colorBuffe
 {
   RelocateFontGlyphs_519E0_51D20(a2x);
   a1x->next = &a2x->bTab[1];
-  a1x->var8_6 = sub_5CC70_5D180(colorBuffer, 0xFFu, 0xFFu, 0xFFu);
+  a1x->var8_6 = FindNearestColour_5CC70_5D180(colorBuffer, 0xFFu, 0xFFu, 0xFFu);
   a1x->var8_4 = 3;
   a1x->var8_5 = 0;//fix
-  a1x->var8_7 = sub_5CC70_5D180(colorBuffer, 0, 0, 0);
+  a1x->var8_7 = FindNearestColour_5CC70_5D180(colorBuffer, 0, 0, 0);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -61330,7 +61827,8 @@ void RelocateFontGlyphs_519E0_51D20(TypeStrFont* a1x)//2229E0_
   }
 }
 
-void sub_51A10_51D50()
+/// Reads the names of the 6 save games (save/carpdd00..05.gam) into off_96864; "--" for empty slots.
+void ReadSaveGameNames_51A10_51D50()
 {
 	char pathBuffer[40];
 	uint32 readVar = 4;
@@ -61618,7 +62116,7 @@ void sub_51FC0()
       v1 = 0;
       if ( byte_12CC20[i] )
       {
-        if ( sub_651F8(dword_CC140, i) )
+        if ( IsSampleDone_651F8(dword_CC140, i) )
         {
           v1 = 1;
         }
@@ -61684,7 +62182,7 @@ void sub_52120(__int16 a1, __int16 a2)
     v2 = 0;
     v3 = word_CBFF0;
     v4 = 0;
-    while ( __PAIR32__(a2, a1) != *(_DWORD *)v3 || sub_651F8(dword_CC140, v4) )
+    while ( __PAIR32__(a2, a1) != *(_DWORD *)v3 || IsSampleDone_651F8(dword_CC140, v4) )
     {
       ++v4;
       v3 += 2;
@@ -61702,7 +62200,7 @@ LABEL_12:
     if ( !v2 )
     {
       v5 = 0;
-      while ( !sub_651F8(dword_CC140, v5) )
+      while ( !IsSampleDone_651F8(dword_CC140, v5) )
       {
         if ( ++v5 >= 0x20u )
           goto LABEL_17;
@@ -61781,7 +62279,7 @@ LABEL_12:
       if ( ++v0 >= 32 )
         return;
     }
-    if ( !sub_651F8(dword_CC140, v0) )
+    if ( !IsSampleDone_651F8(dword_CC140, v0) )
     {
       v1 = v0;
       v2 = word_12CCE0[v1] - 2048;
@@ -61826,7 +62324,7 @@ void sub_52400(__int16 a1, __int16 a2, __int16 a3)
   {
     v3 = word_CBFF0;
     v4 = 0;
-    while ( a1 != *v3 || a2 != v3[1] || sub_651F8(dword_CC140, v4) )
+    while ( a1 != *v3 || a2 != v3[1] || IsSampleDone_651F8(dword_CC140, v4) )
     {
       ++v4;
       v3 += 2;
@@ -61900,12 +62398,12 @@ int sub_52550_52890(int a1, int a2)
   v4 = *(_DWORD *)PTR(a1 + 156);
   *(_WORD *)PTR(a1 + 36) = v3;
   v5 = *(_WORD *)PTR(a1 + 30)
-     + sub_422A0_425E0(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34), *(unsigned __int16 *)PTR(v4 + 4), *(_WORD *)PTR(v4 + 2));
+     + TurnStep_422A0_425E0(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34), *(unsigned __int16 *)PTR(v4 + 4), *(_WORD *)PTR(v4 + 2));
   HIBYTE(v5) &= 7u;
   v6 = *(_DWORD *)PTR(a1 + 156);
   *(_WORD *)PTR(a1 + 30) = v5;
   v7 = *(_WORD *)PTR(a1 + 32)
-     + sub_422A0_425E0(*(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 36), *(unsigned __int16 *)PTR(v6 + 8), *(_WORD *)PTR(v6 + 6));
+     + TurnStep_422A0_425E0(*(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 36), *(unsigned __int16 *)PTR(v6 + 8), *(_WORD *)PTR(v6 + 6));
   HIBYTE(v7) &= 7u;
   *(_WORD *)PTR(a1 + 32) = v7;
   return sub_524E0_52820(a2);
@@ -61925,12 +62423,12 @@ __int16 sub_52610_52950(int a1, int a2)
   v4 = *(_DWORD *)PTR(a1 + 156);
   *(_WORD *)PTR(a1 + 36) = v3;
   v5 = *(_WORD *)PTR(a1 + 30)
-     + sub_422A0_425E0(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34), *(unsigned __int16 *)PTR(v4 + 4), *(_WORD *)PTR(v4 + 2));
+     + TurnStep_422A0_425E0(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34), *(unsigned __int16 *)PTR(v4 + 4), *(_WORD *)PTR(v4 + 2));
   HIBYTE(v5) &= 7u;
   v6 = *(_DWORD *)PTR(a1 + 156);
   *(_WORD *)PTR(a1 + 30) = v5;
   result = *(_WORD *)PTR(a1 + 32)
-         + sub_422A0_425E0(*(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 36), *(unsigned __int16 *)PTR(v6 + 8), *(_WORD *)PTR(v6 + 6));
+         + TurnStep_422A0_425E0(*(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 36), *(unsigned __int16 *)PTR(v6 + 8), *(_WORD *)PTR(v6 + 6));
   HIBYTE(result) &= 7u;
   *(_WORD *)PTR(a1 + 32) = result;
   return result;
@@ -61970,7 +62468,8 @@ char sub_526C0_52A00(int a1, unsigned int a2, unsigned int a3)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //SYNCHRONIZE WITH REMC1
-char sub_52770_52AB0(int a1)
+/// Moves a spell missile along its heading (+30/+32, speed +126); on impact creates the entity whose class/type the caster stored in +68/+69 (the spell's effect).
+char UpdateMissile_52770_52AB0(int a1)
 {
   int v1; // edx
   char v2; // dl
@@ -62026,8 +62525,8 @@ char sub_52770_52AB0(int a1)
   *(_WORD *)PTR(a1 + 126) += 2 * v3;
   *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-  sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
-  sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+  MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
   v5 = sub_11980(a1);
   v6 = v5;
   if ( !v5 )
@@ -62075,7 +62574,7 @@ char sub_52770_52AB0(int a1)
     }
     if (bool1)
     {
-      sub_55370_558A0((v5 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 28);
+      PlayEntitySound_55370_558A0((v5 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 28);
       v8 = dword_AE400_AE3F0() + 29795 + 164 * *(__int16 *)PTR(a1 + 24);
       *(_DWORD *)PTR(v6 + 140) -= (*(_DWORD *)PTR(a1 + 140)
                               - (__CFSHL__(*(int *)PTR(a1 + 140) >> 31, 2)
@@ -62083,8 +62582,8 @@ char sub_52770_52AB0(int a1)
       v9 = *(_WORD *)PTR(a1 + 30);
       HIBYTE(v9) = (HIBYTE(v9) + 4) & 7;
       *(_WORD *)PTR(a1 + 34) = v9;
-      v10 = sub_42240_42580(0, *(_WORD *)PTR(a1 + 32));
-      v11 = -(v10 * sub_42210_42550(0, *(_WORD *)PTR(a1 + 32)));
+      v10 = TurnDirection_42240_42580(0, *(_WORD *)PTR(a1 + 32));
+      v11 = -(v10 * AngleDifference_42210_42550(0, *(_WORD *)PTR(a1 + 32)));
       BYTE1(v11) &= 7u;
       *(_WORD *)PTR(a1 + 36) = v11;
       v12 = *(_DWORD *)PTR(a1 + 4);
@@ -62100,11 +62599,11 @@ char sub_52770_52AB0(int a1)
       word_AE454_AE444.z = *(_WORD *)PTR(v6 + 76);
       LOWORD(v13) = *(_WORD *)PTR(v6 + 84);
       word_AE454_AE444.z += v13;
-      return sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+      return MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
     }
   }
   sub_524C0_52800(v5);
-  sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
+  MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
   sub_524E0_52820(v6);
   //LOBYTE(result) = 1;
   v23_22 = 1;
@@ -62173,12 +62672,12 @@ void UpdateFireball_52B30_52E70(int a1)
       *(_BYTE *)PTR(a1 + 16) = v2 | 2;
       if ( FindMissileTarget_54520_548B0(a1) )
       {
-        v3 = sub_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34));
+        v3 = AngleDifference_42210_42550(*(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34));
         if ( v3 < 0 )
           v3 = 0;
         if ( v3 > 34 )
           v3 = 34;
-        v4 = v3 * sub_42240_42580(*(unsigned __int16 *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) + *(_WORD *)PTR(a1 + 30);
+        v4 = v3 * TurnDirection_42240_42580(*(unsigned __int16 *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 34)) + *(_WORD *)PTR(a1 + 30);
         v5 = *(_WORD *)PTR(a1 + 36);
         *(_WORD *)PTR(a1 + 30) = v4;
         *(_WORD *)PTR(a1 + 32) = v5;
@@ -62198,8 +62697,8 @@ void UpdateFireball_52B30_52E70(int a1)
   v22 = *(_WORD *)PTR(a1 + 76);
   *(_DWORD *)&word_AE454_AE444 = v21;
   word_AE454_AE444.z = v22;
-  sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
-  sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+  MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
   v7 = sub_11980(a1);
   v8 = v7;
   v9 = v7;
@@ -62208,7 +62707,7 @@ void UpdateFireball_52B30_52E70(int a1)
     if ( *(char *)PTR(v7 + 17) >= 0 )
     {
       sub_524C0_52800(v7);
-      sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v8 + 72));
+      MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v8 + 72));
       result = sub_524E0_52820(v8);
       v24 = 1;
     }
@@ -62217,7 +62716,7 @@ void UpdateFireball_52B30_52E70(int a1)
       result = (*(_DWORD *)PTR(a1 + 140) - (__CFSHL__(*(int *)PTR(a1 + 140) >> 31, 2) + 4 * (*(int *)PTR(a1 + 140) >> 31))) >> 2;
       if ( result <= *(_DWORD *)PTR(v8 + 140) )
       {
-        sub_55370_558A0((v8 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 28);
+        PlayEntitySound_55370_558A0((v8 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 28);
         v11 = dword_AE400_AE3F0() + 29795 + 164 * *(__int16 *)PTR(a1 + 24);
         *(_DWORD *)PTR(v8 + 140) -= (*(_DWORD *)PTR(a1 + 140)
                                 - (__CFSHL__(*(int *)PTR(a1 + 140) >> 31, 2)
@@ -62225,8 +62724,8 @@ void UpdateFireball_52B30_52E70(int a1)
         v12 = *(_WORD *)PTR(a1 + 30);
         HIBYTE(v12) = (HIBYTE(v12) + 4) & 7;
         *(_WORD *)PTR(a1 + 34) = v12;
-        v13 = sub_42240_42580(0, *(_WORD *)PTR(a1 + 32));
-        v14 = -(v13 * sub_42210_42550(0, *(_WORD *)PTR(a1 + 32)));
+        v13 = TurnDirection_42240_42580(0, *(_WORD *)PTR(a1 + 32));
+        v14 = -(v13 * AngleDifference_42210_42550(0, *(_WORD *)PTR(a1 + 32)));
         BYTE1(v14) &= 7u;
         *(_WORD *)PTR(a1 + 36) = v14;
         v15 = *(_DWORD *)PTR(a1 + 4);
@@ -62241,7 +62740,7 @@ void UpdateFireball_52B30_52E70(int a1)
         word_AE454_AE444.z = *(_WORD *)PTR(v8 + 76);
         LOWORD(v16) = *(_WORD *)PTR(v8 + 84);
         word_AE454_AE444.z += v16;
-        sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+        MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
         return;
       }
     }
@@ -62260,7 +62759,7 @@ void UpdateFireball_52B30_52E70(int a1)
     }
     else
     {
-      result = sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)&v21);
+      result = MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)&v21);
       if ( *(_BYTE *)PTR(a1 + 65) != 4 )
       {
         result = sub_11810((axis_3d*)(__int16 *)PTR(a1 + 72));
@@ -62295,7 +62794,8 @@ LABEL_24:
 #undef v22
 
 //SYNCHRONIZE WITH REMC1
-char sub_52ED0_53210(int a1)
+/// Per-tick handler of the Possession spell's missile (class 9 state 1).
+char PossessionMissileTick_52ED0_53210(int a1)
 {
   unsigned __int16 v1; // si
   unsigned int v2; // ebp
@@ -62332,18 +62832,18 @@ char sub_52ED0_53210(int a1)
   }
   *(_DWORD *)&word_AE454_AE444.x = *(_DWORD *)PTR(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-  sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
   v4 = GetTerrainHeight_11F50(&word_AE454_AE444);
   if ( v4 > word_AE454_AE444.z )
     word_AE454_AE444.z = v4;
-  sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+  MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
   v5 = sub_11AC0((_WORD *)PTR(a1));
   v6 = v5;
   v7 = v5;
   if ( v5 )
   {
     sub_524C0_52800(v5);
-    sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
+    MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
     sub_524E0_52820(v6);
     LOBYTE(v8) = 1;
     v13 = 1;
@@ -62373,18 +62873,20 @@ char sub_52ED0_53210(int a1)
 }
 
 //----- (00053060) --------------------------------------------------------
-char sub_53060(int a1)
+/// Generic per-tick handler of a spell missile (class 9 states 2, 4-6, 11, 15-17, 20): UpdateMissile_52770_52AB0.
+char MissileTick_53060(int a1)
 {
-  return sub_52770_52AB0(a1);
+  return UpdateMissile_52770_52AB0(a1);
 }
 
 //SYNCHRONIZE WITH REMC1
-char sub_53070_533B0(int a1)
+/// Per-tick handler of the Meteor spell's missile (class 9 state 3).
+char MeteorMissileTick_53070_533B0(int a1)
 {
   int result; // eax
   char v2; // dh
 
-  sub_52770_52AB0(a1);
+  UpdateMissile_52770_52AB0(a1);
   if ( *(_BYTE *)PTR(a1 + 64) )
   {
     result = (int)OFF(CreateEntity_373F0_377B0((axis_3d*)PTR(a1 + 72), 10, 1));
@@ -62400,13 +62902,15 @@ char sub_53070_533B0(int a1)
 }
 
 //----- (000530B0) --------------------------------------------------------
-char sub_530B0(int a1)
+/// Per-tick handler of the Duel spell's missile (class 9 state 7).
+char DuelMissileTick_530B0(int a1)
 {
-  return sub_530C0_53400(a1);
+  return StealManaMissileTick_530C0_53400(a1);
 }
 
 //SYNCHRONIZE WITH REMC1
-char sub_530C0_53400(int a1)
+/// Per-tick handler of the Steal Mana spell's missile (class 9 state 8).
+char StealManaMissileTick_530C0_53400(int a1)
 {
   int v1; // edx
   char v2; // dl
@@ -62461,8 +62965,8 @@ char sub_530C0_53400(int a1)
   *(_WORD *)PTR(a1 + 126) += 2 * v3;
   *(_DWORD *)&word_AE454_AE444.x = *(_DWORD *)PTR(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-  sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
-  sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+  MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
   v5 = sub_11980(a1);
   v6 = v5;
   if ( v5 )
@@ -62485,7 +62989,7 @@ char sub_530C0_53400(int a1)
       }
       if (bool1)
       {
-        sub_55370_558A0((v5 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 28);
+        PlayEntitySound_55370_558A0((v5 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 28);
         v8 = dword_AE400_AE3F0() + 29795 + 164 * *(__int16 *)PTR(a1 + 24);
         *(_DWORD *)PTR(v6 + 140) -= (*(_DWORD *)PTR(a1 + 140)
                                 - (__CFSHL__(*(int *)PTR(a1 + 140) >> 31, 2)
@@ -62493,8 +62997,8 @@ char sub_530C0_53400(int a1)
         v9 = *(_WORD *)PTR(a1 + 30);
         HIBYTE(v9) = (HIBYTE(v9) + 4) & 7;
         *(_WORD *)PTR(a1 + 34) = v9;
-        v10 = sub_42240_42580(0, *(_WORD *)PTR(a1 + 32));
-        v11 = -(v10 * sub_42210_42550(0, *(_WORD *)PTR(a1 + 32)));
+        v10 = TurnDirection_42240_42580(0, *(_WORD *)PTR(a1 + 32));
+        v11 = -(v10 * AngleDifference_42210_42550(0, *(_WORD *)PTR(a1 + 32)));
         BYTE1(v11) &= 7u;
         *(_WORD *)PTR(a1 + 36) = v11;
         v12 = *(_DWORD *)PTR(a1 + 4);
@@ -62509,11 +63013,11 @@ char sub_530C0_53400(int a1)
         word_AE454_AE444.z = *(_WORD *)PTR(v6 + 76);
         LOWORD(v11) = *(_WORD *)PTR(v6 + 84);
         word_AE454_AE444.z += v11;
-        return sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+        return MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
       }
     }
     sub_524C0_52800(v5);
-    sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
+    MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
     sub_524E0_52820(v6);
     v22_21 = 1;
   }
@@ -62604,7 +63108,7 @@ char sub_534C0_53800(int a1)
   }
   *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-  sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
   *(_DWORD *)PTR(a1 + 72) = *(_DWORD *)&word_AE454_AE444;
   *(_WORD *)PTR(a1 + 76) = word_AE454_AE444.z;
   v2 = sub_11980(a1);
@@ -62676,7 +63180,7 @@ __int16 LightningBoltTick_535E0_53920(unsigned int a1)
   *(_WORD *)PTR(a1 + 126) = v1;
   v23 = *(_DWORD *)PTR(a1 + 72);
   v24 = *(_WORD *)PTR(a1 + 76);
-  sub_41DD0_42110((Type_AE400_29795*)PTR(a1));
+  RemoveEntityFromMap_41DD0_42110((Type_AE400_29795*)PTR(a1));
   sub_534C0_53800(a1);
   v2 = *(_WORD *)PTR(a1 + 30);
   v3 = *(_WORD *)PTR(a1 + 32);
@@ -62699,7 +63203,7 @@ __int16 LightningBoltTick_535E0_53920(unsigned int a1)
   v6 = *(__int16 *)PTR(a1 + 126);
   v30 *= 8;
   v33 = (v6 - (__CFSHL__(v6 >> 31, 3) + 8 * (v6 >> 31))) >> 3;
-  sub_41EC0_42200((axis_3d*)(uint16*)&v27, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), v33);
+  MoveAlongHeading_41EC0_42200((axis_3d*)(uint16*)&v27, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), v33);
   v31 = 0;
   v32 = 0;
   *(_DWORD *)&word_AE454_AE444 = v23;
@@ -62719,8 +63223,8 @@ __int16 LightningBoltTick_535E0_53920(unsigned int a1)
         *(_BYTE *)PTR(v7 + 65) = 9;
         *(_WORD *)PTR(v7 + 24) = *(_WORD *)PTR(a1 + 24);
         *(_DWORD *)PTR(v7 + 8) = (v7 >= a1) - 1;
-        sub_36FA0_37360((Type_AE400_29795*)PTR(v7), 216);
-        sub_41CF0_42030((Type_AE400_29795*)PTR(v8), (axis_3d*)&v25);
+        SetSprite_36FA0_37360((Type_AE400_29795*)PTR(v7), 216);
+        AddEntityToMap_41CF0_42030((Type_AE400_29795*)PTR(v8), (axis_3d*)&v25);
         RefillLife_36DE0_371A0((Type_AE400_29795*)PTR(v8));
       }
       v9 = (__int16)v30 / 2;
@@ -62770,7 +63274,7 @@ LABEL_21:
           + word_AE454_AE444.z;
       v16 = *(_WORD *)PTR(a1 + 30);
       HIBYTE(v16) = (HIBYTE(v16) + 2) & 7;
-      sub_41EC0_42200((axis_3d*)
+      MoveAlongHeading_41EC0_42200((axis_3d*)
           (uint16*)&v25,
         v16,
         0,
@@ -62853,12 +63357,12 @@ void UpdateHomingSpawnMissile_53980_53CC0(int a1)
     *(_WORD *)PTR(a1 + 126) += 2 * v5;
     *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(a1 + 72);
     word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-    sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
-    sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+    MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
     v7 = EntitiesCollide_11950((Type_AE400_29795*)PTR(a1), (Type_AE400_29795*)PTR(v2));
     if ( v7 )
     {
-      LOBYTE(v3) = sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v2 + 72));
+      LOBYTE(v3) = MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v2 + 72));
       v12 = 1;
     }
     else
@@ -62927,7 +63431,7 @@ char UpdateSpawningMissile_53B50_53E90(int a1)
     *(_WORD *)PTR(a1 + 34) = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a1 + 150));
     *(_WORD *)PTR(a1 + 36) = PitchTo_42180_424C0((axis_3d*)(_WORD *)PTR(a1 + 72), (axis_3d*)(_WORD *)PTR(a1 + 150));
     v3 = *(_WORD *)PTR(a1 + 30)
-       + sub_422A0_425E0(
+       + TurnStep_422A0_425E0(
            *(_WORD *)PTR(a1 + 30),
            *(_WORD *)PTR(a1 + 34),
            *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 156) + 4),
@@ -62935,7 +63439,7 @@ char UpdateSpawningMissile_53B50_53E90(int a1)
     HIBYTE(v3) &= 7u;
     *(_WORD *)PTR(a1 + 30) = v3;
     v4 = *(_WORD *)PTR(a1 + 32)
-       + sub_422A0_425E0(
+       + TurnStep_422A0_425E0(
            *(_WORD *)PTR(a1 + 32),
            *(_WORD *)PTR(a1 + 36),
            *(unsigned __int16 *)PTR(*(_DWORD *)PTR(a1 + 156) + 8),
@@ -62950,13 +63454,13 @@ char UpdateSpawningMissile_53B50_53E90(int a1)
     *(_WORD *)PTR(a1 + 126) += 2 * v6;
     *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(a1 + 72);
     word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-    sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
-    sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+    MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+    MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
     v8 = dword_AE400_AE3F0() + 29795 + 164 * *(unsigned __int16 *)PTR(a1 + 146);
     if ( EntitiesCollide_11950((Type_AE400_29795*)PTR(a1), (Type_AE400_29795*)PTR(v8)) )
     {
       v9 = sub_524C0_52800(v8);
-      LOBYTE(v2) = sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v8 + 72));
+      LOBYTE(v2) = MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v8 + 72));
       v15 = 1;
     }
     else
@@ -62979,8 +63483,8 @@ char UpdateSpawningMissile_53B50_53E90(int a1)
         word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
         v12 = *(_WORD *)PTR(a1 + 30);
         HIBYTE(v12) = (HIBYTE(v12) + 4) & 7;
-        sub_41EC0_42200(&word_AE454_AE444, v12, *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
-        sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+        MoveAlongHeading_41EC0_42200(&word_AE454_AE444, v12, *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+        MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
       }
       v2 = (int)OFF(CreateEntity_373F0_377B0((axis_3d*)PTR(a1 + 72), *(char *)PTR(a1 + 68), *(char *)PTR(a1 + 69)));
       if ( v2 )
@@ -63004,7 +63508,8 @@ char UpdateSpawningMissile_53B50_53E90(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-char sub_53DC0_54100(int a1)
+/// Per-tick handler of the Lightning Storm spell's missile (class 9 state 12).
+char LightningStormMissileTick_53DC0_54100(int a1)
 {
   int v1; // edx
   char v2; // dl
@@ -63059,8 +63564,8 @@ char sub_53DC0_54100(int a1)
   *(_WORD *)PTR(a1 + 126) += 2 * v3;
   *(_DWORD *)&word_AE454_AE444 = *(_DWORD *)PTR(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-  sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
-  sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+  MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
   v5 = sub_11980(a1);
   v6 = v5;
   if ( !v5 )
@@ -63108,7 +63613,7 @@ char sub_53DC0_54100(int a1)
     }
     if (bool1)
     {
-      sub_55370_558A0((v5 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 28);
+      PlayEntitySound_55370_558A0((v5 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 28);
       v8 = dword_AE400_AE3F0() + 29795 + 164 * *(__int16 *)PTR(a1 + 24);
       *(_DWORD *)PTR(v6 + 140) -= (*(_DWORD *)PTR(a1 + 140)
                               - (__CFSHL__(*(int *)PTR(a1 + 140) >> 31, 2)
@@ -63116,8 +63621,8 @@ char sub_53DC0_54100(int a1)
       v9 = *(_WORD *)PTR(a1 + 30);
       HIBYTE(v9) = (HIBYTE(v9) + 4) & 7;
       *(_WORD *)PTR(a1 + 34) = v9;
-      v10 = sub_42240_42580(0, *(_WORD *)PTR(a1 + 32));
-      v11 = -(v10 * sub_42210_42550(0, *(_WORD *)PTR(a1 + 32)));
+      v10 = TurnDirection_42240_42580(0, *(_WORD *)PTR(a1 + 32));
+      v11 = -(v10 * AngleDifference_42210_42550(0, *(_WORD *)PTR(a1 + 32)));
       BYTE1(v11) &= 7u;
       *(_WORD *)PTR(a1 + 36) = v11;
       v12 = *(_DWORD *)PTR(a1 + 4);
@@ -63132,11 +63637,11 @@ char sub_53DC0_54100(int a1)
       word_AE454_AE444.z = *(_WORD *)PTR(v6 + 76);
       LOWORD(v13) = *(_WORD *)PTR(v6 + 84);
       word_AE454_AE444.z += v13;
-      return sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+      return MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
     }
   }
   sub_524C0_52800(v5);
-  sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
+  MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
   sub_524E0_52820(v6);
   //LOBYTE(result) = 1;
   v22_21 = 1;
@@ -63165,7 +63670,9 @@ LABEL_25_26:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_54180_544D0(int a1)
+/// TODO: rename when the entity is identified (class 9 type 13).
+/// Per-tick handler of class 9 state 13, the initial state of type 13.
+void Class9Type13Tick_54180_544D0(int a1)
 {
   int v1; // eax
   int v2; // edi
@@ -63175,12 +63682,12 @@ void sub_54180_544D0(int a1)
   {
     v1 = 9377 * *(_DWORD *)PTR(a1 + 4) + 9439;
     *(_DWORD *)PTR(a1 + 4) = v1;
-    sub_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, (v1 & 3) + 33);
+    PlayEntitySound_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, (v1 & 3) + 33);
     *(_BYTE *)PTR(a1 + 16) |= 2u;
   }
   *(_DWORD *)&word_AE454_AE444.x = *(_DWORD *)PTR(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-  sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
   v2 = sub_11980(a1);
   if ( (__int16)GetTerrainHeight_11F50(&word_AE454_AE444) <= word_AE454_AE444.z )
   {
@@ -63190,7 +63697,7 @@ void sub_54180_544D0(int a1)
     {
       if (!v2)
       {
-        sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+        MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
         return;
       }
     }
@@ -63198,7 +63705,7 @@ void sub_54180_544D0(int a1)
   if ( v2 )
   {
     sub_524C0_52800(v2);
-    sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v2 + 72));
+    MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v2 + 72));
     sub_524E0_52820(v2);
   }
   sub_120B0((Type_AE400_29795*)PTR(a1), 0, *(_WORD *)PTR(a1 + 44));
@@ -63217,7 +63724,8 @@ void sub_54290_545E0(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-char sub_542B0_54640(int a1)
+/// Per-tick handler of the Mana Magnet spell's missile (class 9 state 18).
+char ManaMagnetMissileTick_542B0_54640(int a1)
 {
   unsigned __int16 v1; // si
   unsigned int v2; // ebp
@@ -63255,18 +63763,18 @@ char sub_542B0_54640(int a1)
   }
   *(_DWORD *)&word_AE454_AE444.x = *(_DWORD *)PTR(a1 + 72);
   word_AE454_AE444.z = *(_WORD *)PTR(a1 + 76);
-  sub_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
+  MoveAlongHeading_41EC0_42200(&word_AE454_AE444, *(_WORD *)PTR(a1 + 30), *(_WORD *)PTR(a1 + 32), *(_WORD *)PTR(a1 + 126));
   v4 = GetTerrainHeight_11F50(&word_AE454_AE444);
   if ( v4 > word_AE454_AE444.z )
     word_AE454_AE444.z = v4;
-  sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
+  MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), &word_AE454_AE444);
   v5 = sub_11C00((__int16 *)PTR(a1));
   v6 = v5;
   v7 = v5;
   if ( v5 )
   {
     sub_524C0_52800(v5);
-    sub_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
+    MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a1), (axis_3d*)PTR(v6 + 72));
     sub_524E0_52820(v6);
     LOBYTE(v8) = 1;
     v14 = 1;
@@ -63304,7 +63812,8 @@ char sub_542B0_54640(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_54480_54810(int a1)
+/// Per-tick handler of the Global Death spell's missile (class 9 state 19).
+void GlobalDeathMissileTick_54480_54810(int a1)
 {
   _WORD *result; // eax
 
@@ -63588,10 +64097,10 @@ int ScoreAimTarget_54A90_54FC0(__int16 *a1, int a2, unsigned __int16 a3, unsigne
 
   sub_524C0_52800(a2);
   v4 = HeadingTo_42150_42490((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72));
-  v12 = sub_42210_42550(a1[15], v4);
-  if ( v12 <= a3 && (v5 = PitchTo_42180_424C0((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72)), v13 = sub_42210_42550(a1[16], v5), v13 <= a4) )
+  v12 = AngleDifference_42210_42550(a1[15], v4);
+  if ( v12 <= a3 && (v5 = PitchTo_42180_424C0((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72)), v13 = AngleDifference_42210_42550(a1[16], v5), v13 <= a4) )
   {
-    v7 = sub_423D0_42710((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72));
+    v7 = Distance2D_423D0_42710((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72));
     sub_524E0_52820(a2);
     if ( v7 <= 5120 )
     {
@@ -63631,14 +64140,14 @@ int sub_54BD0_55100(__int16 *a1, int a2, unsigned __int16 a3, unsigned __int16 a
   v4 = (_WORD *)PTR(a2 + 72);
   v5 = (uint16*)(a1 + 36);
   v6 = HeadingTo_42150_42490((axis_3d*)(uint16*)(a1 + 36), (axis_3d*)(_WORD *)PTR(a2 + 72));
-  v15 = sub_42210_42550(a1[15], v6);
+  v15 = AngleDifference_42210_42550(a1[15], v6);
   if ( v15 > a3 )
     return -1;
   v8 = PitchTo_42180_424C0((axis_3d*)v5, (axis_3d*)v4);
-  v9 = sub_42210_42550(a1[16], v8);
+  v9 = AngleDifference_42210_42550(a1[16], v8);
   if ( v9 > a4 )
     return -1;
-  v10 = sub_423D0_42710((axis_3d*)v5, (axis_3d*)v4);
+  v10 = Distance2D_423D0_42710((axis_3d*)v5, (axis_3d*)v4);
   if ( v10 > 5120 )
     return -1;
   v11 = v10 * cos_9134C[v15];
@@ -63736,7 +64245,7 @@ int sub_54F80(int a1)
     else
     {
       v4 = *(unsigned __int16 *)PTR(dword_AE400_AE3F0() + 2049 * str_AE400_AE3F0->var_u16_8 + 13333);
-      v5 = sub_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(164 * (unsigned __int16)v4 + dword_AE400_AE3F0() + 29795 + 72));
+      v5 = DistanceSquared2D_42410_42750((_WORD *)PTR(a1 + 72), (_WORD *)PTR(164 * (unsigned __int16)v4 + dword_AE400_AE3F0() + 29795 + 72));
       v6 = dword_AE400_AE3F0();
       if ( v5 < 37748736 )
       {
@@ -63832,7 +64341,8 @@ LABEL_13:
 // 12CD28: using guessed type __int16 word_12CD28[236];
 
 //----- (00055370) --------------------------------------------------------
-void sub_55370_558A0(__int16 a1, __int16 a2, __int16 a3)
+/// Plays sound effect a3 for entity a1 when sound is on and the entity is near the local player (a2 = the player it is for, -1 = everyone); volume/pan from its position.
+void PlayEntitySound_55370_558A0(__int16 a1, __int16 a2, __int16 a3)
 {
   unsigned int v3; // esi
   unsigned __int16 v4; // si
@@ -63861,7 +64371,7 @@ void sub_55370_558A0(__int16 a1, __int16 a2, __int16 a3)
     {
       if ( *(char *)PTR(v3 + 16) < 0 )
         return;
-      if ( sub_42410_42750(
+      if ( DistanceSquared2D_42410_42750(
              (_WORD *)PTR(164 * *(unsigned __int16 *)PTR(2049 * str_AE400_AE3F0->var_u16_8 + dword_AE400_AE3F0() + 13333)
                      + dword_AE400_AE3F0()
                      + 29795
@@ -63872,14 +64382,14 @@ void sub_55370_558A0(__int16 a1, __int16 a2, __int16 a3)
           + dword_AE400_AE3F0()
           + 29795;
       v15 = *(_WORD *)PTR(v3 + 24);
-      v14 = sub_423D0_42710((axis_3d*)(_WORD *)PTR(v12 + 72), (axis_3d*)(_WORD *)PTR(v3 + 72));
+      v14 = Distance2D_423D0_42710((axis_3d*)(_WORD *)PTR(v12 + 72), (axis_3d*)(_WORD *)PTR(v3 + 72));
       v13 = HeadingTo_42150_42490((axis_3d*)(_WORD *)PTR(v12 + 72), (axis_3d*)(_WORD *)PTR(v3 + 72));
-      v4 = sub_42210_42550(*(_WORD *)PTR(v12 + 30), v13);
+      v4 = AngleDifference_42210_42550(*(_WORD *)PTR(v12 + 30), v13);
       v5 = (12288 * (512 - v4 / 2 + 512)
           - (__CFSHL__((12288 * (512 - v4 / 2 + 512)) >> 31, 10)
            + ((12288 * (512 - v4 / 2 + 512)) >> 31 << 10))) >> 10;
       v6 = 0x7FFF * (v5 - v14) / v5;
-      v7 = sub_42240_42580(*(unsigned __int16 *)PTR(v12 + 30), v13);
+      v7 = TurnDirection_42240_42580(*(unsigned __int16 *)PTR(v12 + 30), v13);
       if ( v6 < 512 )
         return;
       if ( v6 > 0x7FFF )
@@ -64072,6 +64582,7 @@ LABEL_9:
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (000558F0) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_558F0()
 {
   int v0; // eax
@@ -64235,7 +64746,7 @@ LABEL_31:
   if ( (a1x->var_29811_16.byte[2] & 4) != 0 )
     a1x->manaDelta_29927_132 = 0;
   dword_AE400_AE3F0(v11);
-  sub_55370_558A0(v23x - str_AE400_AE3F0->str_29795, -1, 18);
+  PlayEntitySound_55370_558A0(v23x - str_AE400_AE3F0->str_29795, -1, 18);
   v19 = dword_AE400_AE3F0();
   v20x = str_AE400_AE3F0->str_29795;
   a1x->var_29811_16.byte[0] |= 1u;
@@ -64323,7 +64834,7 @@ int CanCastSpell_55DD0_56300(int a1, int *a2)
   if ( *(_WORD *)PTR(a1 + 48) != *(_WORD *)PTR(a1 + 50) )
     return 1;
 LABEL_11:
-  sub_55370_558A0(0, *(_WORD *)PTR(a2[40] + 48), 29);
+  PlayEntitySound_55370_558A0(0, *(_WORD *)PTR(a2[40] + 48), 29);
   return 0;
 }
 
@@ -64377,7 +64888,7 @@ int sub_55EF0_56420(__int16 a1, int a2, int a3)
   {
     v3 = *(_WORD *)PTR(a2 + 30) - 512;
     HIBYTE(v3) &= 7u;
-    sub_41EC0_42200((axis_3d*)(uint16*)&v12, v3, 0, 256);
+    MoveAlongHeading_41EC0_42200((axis_3d*)(uint16*)&v12, v3, 0, 256);
     a1 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)&v12);
     if ( a1 > v13 )
     {
@@ -64391,7 +64902,7 @@ int sub_55EF0_56420(__int16 a1, int a2, int a3)
       v6 = v5 + v4 + 29795;
       if ( v6 == dword_AE400_AE3F0() + 29795 )
         break;
-      a1 = sub_41C70_41FB0((Type_AE400_29795*)PTR(v6), (axis_3d*)&v12);
+      a1 = MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v6), (axis_3d*)&v12);
       v5 = 164 * *(unsigned __int16 *)PTR(v6 + 54);
       v4 = dword_AE400_AE3F0();
     }
@@ -64400,7 +64911,7 @@ int sub_55EF0_56420(__int16 a1, int a2, int a3)
   {
     v7 = *(_WORD *)PTR(a2 + 30);
     HIBYTE(v7) = (HIBYTE(v7) + 2) & 7;
-    sub_41EC0_42200((axis_3d*)(uint16*)&v12, v7, 0, 256);
+    MoveAlongHeading_41EC0_42200((axis_3d*)(uint16*)&v12, v7, 0, 256);
     a1 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)&v12);
     if ( a1 > v13 )
     {
@@ -64414,12 +64925,12 @@ int sub_55EF0_56420(__int16 a1, int a2, int a3)
       v10 = v9 + v8;
       if ( v10 == dword_AE400_AE3F0() + 29795 )
         break;
-      a1 = sub_41C70_41FB0((Type_AE400_29795*)PTR(v10), (axis_3d*)&v12);
+      a1 = MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v10), (axis_3d*)&v12);
       v9 = 164 * *(unsigned __int16 *)PTR(v10 + 54);
       v8 = dword_AE400_AE3F0() + 29795;
     }
   }
-  return sub_41C70_41FB0((Type_AE400_29795*)PTR(a3), (axis_3d*)&v12);
+  return MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(a3), (axis_3d*)&v12);
 }
 #undef v12
 #undef v13
@@ -64474,8 +64985,8 @@ LABEL_5:
           *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
           *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
           *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-          sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
-          sub_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
+          MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
+          PlayEntitySound_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
         }
       }
       ChargeSpellCost_55E80_563B0(a1, v3);
@@ -64508,7 +65019,7 @@ void HealSpellTick_56270_567A0(int a1)
         && v1[35] >= *(_DWORD *)PTR(a1 + 136) )
       {
         if ( *(_WORD *)PTR(a1 + 48) == *(_WORD *)PTR(a1 + 50) )
-          sub_55370_558A0(((int)OFF(v1) - dword_AE400_AE3F0() - 29795) / 164, -1, 25);
+          PlayEntitySound_55370_558A0(((int)OFF(v1) - dword_AE400_AE3F0() - 29795) / 164, -1, 25);
         v2 = 5 * v1[2] / 100 + v1[3];
         v3 = v1[2];
         v1[3] = v2;
@@ -64561,7 +65072,7 @@ void SpeedSpellTick_56380_568B0(int a1)
         {
           v2 = dword_AE400_AE3F0() + 29795;
           *(_BYTE *)PTR(a1 + 16) |= 0x80u;
-          sub_55370_558A0((int)(v1 - v2) / 164, -1, 19);
+          PlayEntitySound_55370_558A0((int)(v1 - v2) / 164, -1, 19);
         }
         if ( *(__int16 *)PTR(a1 + 48) == *(__int16 *)PTR(a1 + 50) - 2 )
         {
@@ -64656,10 +65167,10 @@ LABEL_5:
           *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
           *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
           *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-          sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 10240);
+          MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 10240);
           *(_WORD *)PTR(v4 + 30) = *(_WORD *)PTR(v3 + 30);
           *(_WORD *)PTR(v4 + 32) = *(_WORD *)PTR(v3 + 32);
-          sub_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 40);
+          PlayEntitySound_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 40);
         }
       }
       ChargeSpellCost_55E80_563B0(a1, v3);
@@ -64673,7 +65184,8 @@ LABEL_5:
 }
 
 //----- (000566C0) --------------------------------------------------------
-int sub_566C0(int a1)
+/// Handler of an owned Shield spell (class 12 state 12 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastShield_566C0(int a1)
 {
   int result; // eax
   unsigned int v2; // esi
@@ -64699,7 +65211,8 @@ int sub_566C0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00056730) --------------------------------------------------------
-void sub_56730(int a1)
+/// Handler of an owned Beyond Sight spell (class 12 state 15 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+void CastBeyondSight_56730(int a1)
 {
   unsigned __int16 v1; // dx
   unsigned int v2; // esi
@@ -64721,7 +65234,8 @@ void sub_56730(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //SYNCHRONIZED WITH REMC1
-int sub_567A0_56CD0(int a1)
+/// Handler of an owned Earthquake spell (class 12 state 18 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastEarthquake_567A0_56CD0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -64768,11 +65282,11 @@ LABEL_9:
     *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
     *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
     *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-    sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), 0, 4096);
+    MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), 0, 4096);
     v6 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v4 + 150));
     v7 = dword_AE400_AE3F0() + 29795;
     *(_WORD *)PTR(v4 + 154) = v6;
-    sub_55370_558A0((v4 - v7) / 164, -1, 9);
+    PlayEntitySound_55370_558A0((v4 - v7) / 164, -1, 9);
   }
   ChargeSpellCost_55E80_563B0(a1, v3);
   result = a1;
@@ -64781,7 +65295,8 @@ LABEL_9:
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_56950_56E80(int a1)
+/// Handler of an owned Meteor spell (class 12 state 21 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastMeteor_56950_56E80(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -64825,11 +65340,11 @@ LABEL_9:
       *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
       *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
       *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-      sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 10240);
+      MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 10240);
       *(_WORD *)PTR(v4 + 30) = *(_WORD *)PTR(v3 + 30);
       v6 = dword_AE400_AE3F0() + 29795;
       *(_WORD *)PTR(v4 + 32) = *(_WORD *)PTR(v3 + 32);
-      sub_55370_558A0((v4 - v6) / 164, -1, 15);
+      PlayEntitySound_55370_558A0((v4 - v6) / 164, -1, 15);
     }
   }
   ChargeSpellCost_55E80_563B0(a1, v3);
@@ -64839,7 +65354,8 @@ LABEL_9:
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_56AF0_57020(int a1)
+/// Handler of an owned Volcano spell (class 12 state 24 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastVolcano_56AF0_57020(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -64883,12 +65399,12 @@ LABEL_9:
       *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
       *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
       *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-      sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), 0, 4096);
+      MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), 0, 4096);
       *(_WORD *)PTR(v4 + 154) = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v4 + 150));
       *(_WORD *)PTR(v4 + 30) = *(_WORD *)PTR(v3 + 30);
       v6 = dword_AE400_AE3F0() + 29795;
       *(_WORD *)PTR(v4 + 32) = *(_WORD *)PTR(v3 + 32);
-      sub_55370_558A0((v4 - v6) / 164, -1, 15);
+      PlayEntitySound_55370_558A0((v4 - v6) / 164, -1, 15);
     }
   }
   ChargeSpellCost_55E80_563B0(a1, v3);
@@ -64898,7 +65414,8 @@ LABEL_9:
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_56CA0_571D0(int a1)
+/// Handler of an owned Crater spell (class 12 state 27 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastCrater_56CA0_571D0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -64947,11 +65464,11 @@ LABEL_9:
       *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
       *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
       *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-      sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), 0, 4096);
+      MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), 0, 4096);
       v7 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v4 + 150));
       v8 = dword_AE400_AE3F0() + 29795;
       *(_WORD *)PTR(v4 + 154) = v7;
-      sub_55370_558A0((v4 - v8) / 164, -1, 15);
+      PlayEntitySound_55370_558A0((v4 - v8) / 164, -1, 15);
     }
   }
   ChargeSpellCost_55E80_563B0(a1, v3);
@@ -64961,7 +65478,8 @@ LABEL_9:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_56E50_57380(int a1)
+/// Handler of an owned Teleport spell (class 12 state 30 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+void CastTeleport_56E50_57380(int a1)
 {
   unsigned int v1; // ebp
   __int16 v2; // ax
@@ -64988,28 +65506,28 @@ void sub_56E50_57380(int a1)
             *(_WORD *)PTR(a1 + 154) = *(_WORD *)PTR(v1 + 76);
             v4 = 9377 * *(_DWORD *)PTR(a1 + 4) + 9439;
             *(_DWORD *)PTR(a1 + 4) = v4;
-            sub_41EC0_42200((axis_3d*)(_WORD *)PTR(a1 + 150), v4 & 0x7FF, 0, 0x4000);
-            sub_41C70_41FB0((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1 + 150));
+            MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(a1 + 150), v4 & 0x7FF, 0, 0x4000);
+            MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1 + 150));
             *(_WORD *)PTR(*(_DWORD *)PTR(v1 + 160) + 12) = 0;
             v7 = (int)(v1 - (dword_AE400_AE3F0() + 29795)) / 164;
             *(_WORD *)PTR(a1 + 154) = 0;
-            sub_55370_558A0(v7, -1, 22);
+            PlayEntitySound_55370_558A0(v7, -1, 22);
           }
           else
           {
             if ( *(_WORD *)PTR(a1 + 154) )
             {
-              sub_41C70_41FB0((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1 + 150));
+              MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(a1 + 150));
               *(_WORD *)PTR(a1 + 154) = 0;
             }
             else
             {
               *(_DWORD *)PTR(a1 + 150) = *(_DWORD *)PTR(v1 + 72);
               *(_WORD *)PTR(a1 + 154) = *(_WORD *)PTR(v1 + 76);
-              sub_41C70_41FB0((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(v3 + 72));
+              MoveEntity_41C70_41FB0((Type_AE400_29795*)PTR(v1), (axis_3d*)PTR(v3 + 72));
             }
             *(_WORD *)PTR(*(_DWORD *)PTR(v1 + 160) + 12) = 0;
-            sub_55370_558A0((int)(v1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 22);
+            PlayEntitySound_55370_558A0((int)(v1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 22);
           }
         }
         ChargeSpellCost_55E80_563B0(a1, v1);
@@ -65027,7 +65545,8 @@ void sub_56E50_57380(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_57040_57570(int a1)
+/// Handler of an owned Duel spell (class 12 state 33 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastDuel_57040_57570(int a1)
 {
   int result; // eax
   unsigned __int16 v2; // dx
@@ -65069,10 +65588,10 @@ LABEL_9:
       *(_DWORD *)PTR(v5 + 140) = *(_DWORD *)PTR(a1 + 140);
       *(_DWORD *)PTR(v5 + 150) = *(_DWORD *)PTR(v3 + 72);
       *(_WORD *)PTR(v5 + 154) = *(_WORD *)PTR(v3 + 76);
-      sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v5 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 10240);
+      MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v5 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 10240);
       *(_WORD *)PTR(v5 + 30) = *(_WORD *)PTR(v3 + 30);
       *(_WORD *)PTR(v5 + 32) = *(_WORD *)PTR(v3 + 32);
-      sub_55370_558A0((v5 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
+      PlayEntitySound_55370_558A0((v5 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
     }
   }
   ChargeSpellCost_55E80_563B0(a1, v3);
@@ -65082,7 +65601,8 @@ LABEL_9:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_571B0_576E0(int a1)
+/// Handler of an owned Invisible spell (class 12 state 36 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+void CastInvisible_571B0_576E0(int a1)
 {
   unsigned int v1; // esi
   __int16 v2; // di
@@ -65118,7 +65638,8 @@ void sub_571B0_576E0(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_57250_57780(int a1)
+/// Handler of an owned Steal Mana spell (class 12 state 39 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastStealMana_57250_57780(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -65167,11 +65688,11 @@ LABEL_9:
       *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
       *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
       *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-      sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
+      MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
       *(_WORD *)PTR(v4 + 30) = *(_WORD *)PTR(v3 + 30);
       v8 = dword_AE400_AE3F0() + 29795;
       *(_WORD *)PTR(v4 + 32) = *(_WORD *)PTR(v3 + 32);
-      sub_55370_558A0((v4 - v8) / 164, -1, 9);
+      PlayEntitySound_55370_558A0((v4 - v8) / 164, -1, 9);
     }
   }
   ChargeSpellCost_55E80_563B0(a1, v3);
@@ -65181,7 +65702,8 @@ LABEL_9:
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_573F0_57920(int a1)
+/// Handler of an owned Rebound spell (class 12 state 42 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastRebound_573F0_57920(int a1)
 {
   int result; // eax
   unsigned int v2; // ebx
@@ -65213,7 +65735,8 @@ int sub_573F0_57920(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_57470_579A0(int a1)
+/// Handler of an owned Lightning spell (class 12 state 45 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastLightning_57470_579A0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -65258,8 +65781,8 @@ LABEL_9:
       *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
       *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
       *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-      sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
-      sub_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 23);
+      MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
+      PlayEntitySound_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 23);
     }
   }
   ChargeSpellCost_55E80_563B0(a1, v3);
@@ -65308,7 +65831,7 @@ void CastCastle_57610_57B40(int a1)
             {
               *(_DWORD *)PTR(v3 + 150) = *(_DWORD *)PTR(v2 + 72);
               *(_WORD *)PTR(v3 + 154) = *(_WORD *)PTR(v2 + 76);
-              sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v3 + 150), *(_WORD *)PTR(v2 + 30), 0, 4096);
+              MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v3 + 150), *(_WORD *)PTR(v2 + 30), 0, 4096);
               v6 = GetTerrainHeight_11F50((axis_3d*)(__int16 *)PTR(v3 + 150));
               *(_BYTE *)PTR(v3 + 68) = 3;
               *(_BYTE *)PTR(v3 + 69) = 2;
@@ -65324,7 +65847,7 @@ void CastCastle_57610_57B40(int a1)
             *(_BYTE *)PTR(*(_DWORD *)PTR(v2 + 160) + 326) = 0;
             *(_WORD *)PTR(v3 + 30) = *(_WORD *)PTR(v2 + 30);
             *(_WORD *)PTR(v3 + 32) = *(_WORD *)PTR(v2 + 32);
-            sub_55370_558A0((v3 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 15);
+            PlayEntitySound_55370_558A0((v3 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 15);
           }
         }
       }
@@ -65337,7 +65860,8 @@ void CastCastle_57610_57B40(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_57800_57D30(int a1)
+/// Handler of an owned Undead Army spell (class 12 state 51 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+void CastUndeadArmy_57800_57D30(int a1)
 {
   unsigned int v1; // ebx
   int v2; // esi
@@ -65387,10 +65911,10 @@ LABEL_12:
       *(_BYTE *)PTR(*(_DWORD *)PTR(v1 + 160) + 326) = 0;
       *(_DWORD *)PTR(v2 + 150) = *(_DWORD *)PTR(v1 + 72);
       *(_WORD *)PTR(v2 + 154) = *(_WORD *)PTR(v1 + 76);
-      sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v2 + 150), *(_WORD *)PTR(v1 + 30), *(_WORD *)PTR(v1 + 32), 0x4000);
+      MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v2 + 150), *(_WORD *)PTR(v1 + 30), *(_WORD *)PTR(v1 + 32), 0x4000);
       *(_WORD *)PTR(v2 + 30) = *(_WORD *)PTR(v1 + 30);
       *(_WORD *)PTR(v2 + 32) = *(_WORD *)PTR(v1 + 32);
-      sub_55370_558A0((v2 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
+      PlayEntitySound_55370_558A0((v2 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
     }
   }
   ChargeSpellCost_55E80_563B0(a1, v1);
@@ -65398,7 +65922,8 @@ LABEL_12:
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_579D0_57F00(int a1)
+/// Handler of an owned Lightning Storm spell (class 12 state 54 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastLightningStorm_579D0_57F00(int a1)
 {
   int result; // eax
   unsigned __int16 v2; // dx
@@ -65445,11 +65970,11 @@ LABEL_9:
       *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
       *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
       *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-      sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
+      MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
       *(_WORD *)PTR(v4 + 30) = *(_WORD *)PTR(v3 + 30);
       v7 = dword_AE400_AE3F0() + 29795;
       *(_WORD *)PTR(v4 + 32) = *(_WORD *)PTR(v3 + 32);
-      sub_55370_558A0((v4 - v7) / 164, -1, 9);
+      PlayEntitySound_55370_558A0((v4 - v7) / 164, -1, 9);
     }
   }
   ChargeSpellCost_55E80_563B0(a1, v3);
@@ -65459,7 +65984,8 @@ LABEL_9:
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_57B80_580B0(int a1)
+/// Handler of an owned Mana Magnet spell (class 12 state 57 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastManaMagnet_57B80_580B0(int a1)
 {
   int result; // eax
   unsigned __int16 v2; // dx
@@ -65506,8 +66032,8 @@ LABEL_5:
           *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
           *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
           *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-          sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
-          sub_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 40);
+          MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
+          PlayEntitySound_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 40);
         }
       }
       ChargeSpellCost_55E80_563B0(a1, v3);
@@ -65520,7 +66046,8 @@ LABEL_5:
   return result;
 }
 
-int sub_57D40_58270(int a1)
+/// Handler of an owned Wall of Fire spell (class 12 state 60 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastWallOfFire_57D40_58270(int a1)
 {
 	int result; // eax
 	unsigned __int16 v2; // dx
@@ -65567,8 +66094,8 @@ int sub_57D40_58270(int a1)
 					*(_BYTE*)PTR(*(_DWORD*)PTR(v3 + 160) + 326) = 0;
 					*(_DWORD*)PTR(v4 + 150) = *(_DWORD*)PTR(v3 + 72);
 					*(_WORD*)PTR(v4 + 154) = *(_WORD*)PTR(v3 + 76);
-					sub_41EC0_42200((axis_3d*)(_WORD*)PTR(v4 + 150), *(_WORD*)PTR(v3 + 30), *(_WORD*)PTR(v3 + 32), 0x4000);
-					sub_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
+					MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD*)PTR(v4 + 150), *(_WORD*)PTR(v3 + 30), *(_WORD*)PTR(v3 + 32), 0x4000);
+					PlayEntitySound_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
 				}
 			}
 			ChargeSpellCost_55E80_563B0(a1, v3);
@@ -65582,7 +66109,8 @@ int sub_57D40_58270(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_57F00_58410(int a1)
+/// Handler of an owned Reverse Speed spell (class 12 state 63 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+void CastReverseSpeed_57F00_58410(int a1)
 {
   unsigned int v1; // esi
   int v2; // eax
@@ -65607,7 +66135,7 @@ void sub_57F00_58410(int a1)
         {
           v2 = dword_AE400_AE3F0() + 29795;
           *(_BYTE *)PTR(a1 + 16) |= 0x80u;
-          sub_55370_558A0((int)(v1 - v2) / 164, -1, 19);
+          PlayEntitySound_55370_558A0((int)(v1 - v2) / 164, -1, 19);
         }
         if ( *(__int16 *)PTR(a1 + 48) == *(__int16 *)PTR(a1 + 50) - 2 )
         {
@@ -65645,7 +66173,8 @@ void sub_57F00_58410(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_580A0_585B0(int a1)
+/// Handler of an owned Global Death spell (class 12 state 66 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastGlobalDeath_580A0_585B0(int a1)
 {
   int result; // eax
   unsigned __int16 v2; // bx
@@ -65692,7 +66221,7 @@ LABEL_5:
           *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
           *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
           *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-          sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
+          MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
         }
       }
       ChargeSpellCost_55E80_563B0(a1, v3);
@@ -65706,7 +66235,8 @@ LABEL_5:
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_58240_58750(int a1)
+/// Handler of an owned Rapid Fireball spell (class 12 state 69 = 3*type): casts it when its owner fires it (CanCastSpell_55DD0_56300 / ChargeSpellCost_55E80_563B0) (names from the spell-menu icons, begSprTab[6 + type], confirmed by the user).
+int CastRapidFireball_58240_58750(int a1)
 {
   int result; // eax
   unsigned __int16 v2; // dx
@@ -65753,8 +66283,8 @@ LABEL_5:
           *(_BYTE *)PTR(*(_DWORD *)PTR(v3 + 160) + 326) = 0;
           *(_DWORD *)PTR(v4 + 150) = *(_DWORD *)PTR(v3 + 72);
           *(_WORD *)PTR(v4 + 154) = *(_WORD *)PTR(v3 + 76);
-          sub_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
-          sub_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
+          MoveAlongHeading_41EC0_42200((axis_3d*)(_WORD *)PTR(v4 + 150), *(_WORD *)PTR(v3 + 30), *(_WORD *)PTR(v3 + 32), 0x4000);
+          PlayEntitySound_55370_558A0((v4 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 9);
         }
       }
       ChargeSpellCost_55E80_563B0(a1, v3);
@@ -65783,7 +66313,8 @@ void DrawBitmap_58768_58C78(__int16 a1, __int16 a2, TypeTab* a3, unsigned __int8
   }
 }
 
-void sub_587E0_58CF0()
+/// Opens data/tmaps0-0.dat (from the install directory, else the current one) for LoadTmap_58860_58D70.
+void OpenTmapsFile_587E0_58CF0()
 {
   char pathTemp[64];
   sprintf(pathTemp, "%s%s/%s/%s.dat", "C:", "\\carpet.cd", "data", "tmaps0-0");
@@ -65795,7 +66326,8 @@ void sub_587E0_58CF0()
   }
 }
 
-int sub_58860_58D70(unsigned __int16 a1, uint8_t* a2)//229860_
+/// Reads texture map a1 from the open tmaps file into a2 and RNC-unpacks it; returns its size, -1/-2 on error.
+int LoadTmap_58860_58D70(unsigned __int16 a1, uint8_t* a2)//229860_
 {
   int result; // eax
 
@@ -65847,8 +66379,8 @@ char sub_58910_58E20(unsigned __int16 a1)
         // PORT: was (**v4 & 1) - the first field is a 4-byte ptr32 slot (64-bit); same test as sub_58A00_58F10
         if ( (dword_12DF8C_12DF7C[v3]->var_u32_0->var_0 & 1) != 0 )
         {
-          v5 = sub_10FD0(dword_AE3E0_AE3D0, v3);
-          sub_10F10(v5);
+          v5 = FindTmapAnim_10FD0(dword_AE3E0_AE3D0, v3);
+          ClearTmapAnim_10F10(v5);
         }
         FreeSpriteCacheBlock_36A90_36E50(dword_AE3EC_AE3DC, dword_12D748_12D738[v3]);
         dword_12DF8C_12DF7C[v3] = 0;
@@ -65878,7 +66410,7 @@ char sub_58A00_58F10(unsigned __int16 a1)
       {
         if ( (dword_12DF8C_12DF7C[i]->var_u32_0->var_0 & 1) != 0 )
         {
-          sub_10F10(sub_10FD0(dword_AE3E0_AE3D0, i));
+          ClearTmapAnim_10F10(FindTmapAnim_10FD0(dword_AE3E0_AE3D0, i));
         }
         FreeSpriteCacheBlock_36A90_36E50(dword_AE3EC_AE3DC, dword_12D748_12D738[i]);
         dword_12DF8C_12DF7C[i] = 0;
@@ -65908,7 +66440,8 @@ int counter_sub_58B30_59040 = 0;
 int counter_sub_58B30_59040_2 = 0;
 
 //SYNCHRONIZED WITH REMC1
-void sub_58B30_59040(unsigned __int16 a1)//229B30_
+/// Loads every texture map of a1's frame group (TAB +8) that is not cached yet into the sprite cache, registering animated ones (RegisterTmapAnim_10D40).
+void LoadTmapGroup_58B30_59040(unsigned __int16 a1)//229B30_
 {
 	Type_sub168_2* v3x; // esi
 
@@ -65944,13 +66477,13 @@ void sub_58B30_59040(unsigned __int16 a1)//229B30_
 			v3x = sub_369E0_36DA0(dword_AE3EC_AE3DC, (unsigned __int16)(4 * ((unsigned int)(begTmapsTab_12D744_12D734_2EB744_2EB734x[i].var_0 + 13) >> 2)), i);
 			if (v3x)
 			{
-				if (sub_58860_58D70(i, (uint8_t*)v3x->var_u32_0) != -1)
+				if (LoadTmap_58860_58D70(i, (uint8_t*)v3x->var_u32_0) != -1)
 				{
 					dword_12D748_12D738[i] = v3x;
 					dword_12DF8C_12DF7C[i] = v3x;
 					dword_12CF00_12CEF0[i] = str_AE408_AE3F8->var_u32_4.dword;
 					if ((v3x->var_u32_0->var_0 & 1) != 0)
-						sub_10D40(dword_AE3E0_AE3D0, v3x, i);
+						RegisterTmapAnim_10D40(dword_AE3E0_AE3D0, v3x, i);
 				}
 			}
 		}
@@ -66049,7 +66582,7 @@ void sub_58E70_59380()
   dword_AE3EC_AE3DC = sub_36700_36AC0(str_AE408_AE3F8->var_u32_172, 529, str_AE408_AE3F8->var_u32_168);
   if ( dword_AE3EC_AE3DC )
     dword_AE3E0_AE3D0 = sub_10CB0(529);
-  sub_587E0_58CF0();
+  OpenTmapsFile_587E0_58CF0();
   memset(dword_12DF8C_12DF7C, 0, sizeof(dword_12DF8C_12DF7C));
   memset(dword_12D748_12D738, 0, sizeof(dword_12D748_12D738));
   memset(dword_12CF00_12CEF0, 0, sizeof(dword_12CF00_12CEF0));
@@ -66067,11 +66600,12 @@ void sub_58F00_59410()//229F00
   memset(dword_12D748_12D738, 0, sizeof(dword_12D748_12D738));
   memset(dword_12CF00_12CEF0, 0, sizeof(dword_12CF00_12CEF0));
   byte_968E8 = 0;
-  sub_58F70_59480();//fix
+  CloseTmapsFile_58F70_59480();//fix
 }
 
 //----- (00058F70) --------------------------------------------------------
-void sub_58F70_59480()
+/// Closes the texture map file opened by OpenTmapsFile_587E0_58CF0.
+void CloseTmapsFile_58F70_59480()
 {
   if ( dword_968EC != nullptr )
   {
@@ -66089,7 +66623,7 @@ void sub_58F90_594A0()//229F90_
   Type_99BA0* v0x; // ebx
   uint8_t* v1; // esi
 
-  sub_587E0_58CF0();
+  OpenTmapsFile_587E0_58CF0();
   v0x = unk_99BA0x;
   v1 = begWscreen_2ECFF4_2ECFE4;
   while ( v0x->var_6 || v0x->var_8)
@@ -66103,7 +66637,7 @@ void sub_58F90_594A0()//229F90_
       }
       counter_58F90_594A0++;
       //debug
-    if ( sub_58860_58D70(v0x->var_0, v1) == -1 )
+    if ( LoadTmap_58860_58D70(v0x->var_0, v1) == -1 )
     {
       *(_WORD *)(v1 + 2) = 255;
       *(_WORD *)(v1 + 4) = 255;
@@ -66122,12 +66656,13 @@ void sub_58F90_594A0()//229F90_
     v0x->var_12 = *(_BYTE *)(v1 + 1);
     v0x++;
   }
-  sub_58F70_59480();
+  CloseTmapsFile_58F70_59480();
 }
 // 12EFF4: using guessed type int dword_12EFF4;
 
 //SYNCHRONIZED WITH REMC1
-bool sub_59050_59560(unsigned __int16 a1)//22A050_
+/// Makes room in the sprite cache for a1's frame group (freeing up to 4 times) and loads it (LoadTmapGroup_58B30_59040); returns whether a1 is cached.
+bool CacheTmapGroup_59050_59560(unsigned __int16 a1)//22A050_
 {
   int32 sumaSpriteSizes = GetSumaSpriteSizes_58AD0_58FE0(a1);
   int32 v2 = 0;
@@ -66140,14 +66675,15 @@ bool sub_59050_59560(unsigned __int16 a1)//22A050_
   }
   if ( i <= 0 )
   {
-    sub_58B30_59040(a1);
+    LoadTmapGroup_58B30_59040(a1);
     str_AE408_AE3F8->var_u8_149 = 5;
   }
   return dword_12DF8C_12DF7C[a1] != 0;
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_590D0_595E0()//22A0D0_
+/// Advances the animation of every animated texture map drawn since the last call (flag 8, which is cleared) by one frame.
+void AdvanceTextureAnims_590D0_595E0()//22A0D0_
 {
   //unsigned __int16 i; // bx
   //char *result; // eax
@@ -66172,15 +66708,15 @@ void sub_590D0_595E0()//22A0D0_
       if ( (dword_12DF8C_12DF7C[i]->var_u32_0->var_0 & 8) != 0 )
       {
         // PORT: restored "flags &= ~8" (asm 0x59101). The sprite drawers set 8 when they draw a sprite;
-        // without the reset every sprite drawn once kept its animation advancing (sub_10EB0) forever.
+        // without the reset every sprite drawn once kept its animation advancing (AdvanceTmapAnim_10EB0) forever.
         dword_12DF8C_12DF7C[i]->var_u32_0->var_0 &= 0xF7;
         if ( (dword_12DF8C_12DF7C[i]->var_u32_0->var_0 & 1) != 0 )
         {
-          //v4 = sub_10FD0(dword_AE3E0_AE3D0, i);
+          //v4 = FindTmapAnim_10FD0(dword_AE3E0_AE3D0, i);
           // PORT: the lookup can return null at the end of a level (the animation set is released
           // while entries still carry flags 8|1); DOS read/wrote low memory harmlessly, here it crashed.
-          if (Type_sub_AE3E0* anim = sub_10FD0(dword_AE3E0_AE3D0, i))
-            sub_10EB0(anim);
+          if (Type_sub_AE3E0* anim = FindTmapAnim_10FD0(dword_AE3E0_AE3D0, i))
+            AdvanceTmapAnim_10EB0(anim);
         }
       }
     }
@@ -66302,7 +66838,7 @@ char sub_59230_59740()//22A230_
         }
         else
         {
-          sub_58B30_59040(i);
+          LoadTmapGroup_58B30_59040(i);
         }
       }
     }
@@ -66344,7 +66880,7 @@ void sub_59370_59880()//22A370_
   for ( int i = 0; i < 529; i++ )
   {
     if ( byte_12E7D0_12E7C0[i] )
-      sub_58B30_59040(i);
+      LoadTmapGroup_58B30_59040(i);
   }
 }
 
@@ -66412,7 +66948,7 @@ void sub_59420_59930()//22A420_
         }
         else
         {
-          sub_58B30_59040(j);
+          LoadTmapGroup_58B30_59040(j);
         }
       }
     }
@@ -66431,9 +66967,9 @@ void sub_59500_59A10(Type_99974* a1)
   for(int i=0;a1[i].beg;i++)
     {
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-        sub_65D70_66280(*a1[i].beg, *a1[i].end, *a1[i].var_3);
+        RelocateSpriteTabDoubled_65D70_66280(*a1[i].beg, *a1[i].end, *a1[i].var_3);
       else
-        sub_65DC0_662D0(*a1[i].beg, *a1[i].end, *a1[i].var_3);
+        RelocateSpriteTab_65DC0_662D0(*a1[i].beg, *a1[i].end, *a1[i].var_3);
     }
 }
 
@@ -66639,7 +67175,8 @@ void Blit_599B0_59EC0(__int16 a1)//22A9B0_
 // 12EFF4: using guessed type int dword_12EFF4;
 
 //SYNCHRONIZED WITH REMC1
-void sub_59A80_59F90(uint16_t* a1)
+/// Per-tick handler of switch type 0 (class 11 state 0, set by CreateSwitch00).
+void Switch00Tick_59A80_59F90(uint16_t* a1)
 {
   int result; // eax
 
@@ -66652,7 +67189,8 @@ void sub_59A80_59F90(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59AB0_59FC0(uint16_t* a1)
+/// Per-tick handler of switch type 1 (class 11 state 1, set by CreateSwitch01).
+void Switch01Tick_59AB0_59FC0(uint16_t* a1)
 {
   int result; // eax
 
@@ -66665,7 +67203,8 @@ void sub_59AB0_59FC0(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59AE0_59FF0(uint16_t* a1)
+/// Per-tick handler of switch type 2 (class 11 state 2, set by CreateSwitch02).
+void Switch02Tick_59AE0_59FF0(uint16_t* a1)
 {
   int result; // eax
 
@@ -66687,7 +67226,8 @@ void sub_59AE0_59FF0(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59B30_5A040(uint16_t* a1)
+/// Per-tick handler of switch type 3 (class 11 state 3, set by CreateSwitch03).
+void Switch03Tick_59B30_5A040(uint16_t* a1)
 {
   int result; // eax
 
@@ -66709,7 +67249,8 @@ void sub_59B30_5A040(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_59B80_5A090(uint16_t* a1)
+/// Per-tick handler of switch type 4 (class 11 state 4, set by CreateSwitch04).
+int Switch04Tick_59B80_5A090(uint16_t* a1)
 {
   int v1; // esi
   int v2; // eax
@@ -66727,14 +67268,15 @@ int sub_59B80_5A090(uint16_t* a1)
       v3 = 2049 * *(__int16 *)PTR(*(_DWORD *)PTR(v1 + 160) + 48);
       v4 = dword_AE400_AE3F0() + 29795;
       *(_BYTE *)PTR(v3 + v4 - 16470) = *(_BYTE *)PTR(v3 + dword_AE400_AE3F0() + 13325) & 0xFD;
-      sub_55370_558A0(((int)OFF(a1) - v4) / 164, -1, 41);
+      PlayEntitySound_55370_558A0(((int)OFF(a1) - v4) / 164, -1, 41);
     }
   }
   return 0;
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59C40_5A150(uint16_t* a1)
+/// Per-tick handler of switch type 5 (class 11 state 5, set by CreateSwitch05).
+void Switch05Tick_59C40_5A150(uint16_t* a1)
 {
   int result; // eax
 
@@ -66747,7 +67289,8 @@ void sub_59C40_5A150(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_59C70_5A180(uint16_t* a1)
+/// Per-tick handler of switch type 6 (class 11 state 6, set by CreateSwitch06).
+int Switch06Tick_59C70_5A180(uint16_t* a1)
 {
   int result; // eax
 
@@ -66761,7 +67304,8 @@ int sub_59C70_5A180(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59CA0_5A1B0(uint16_t* a1)
+/// Per-tick handler of switch type 7 (class 11 state 7, set by CreateSwitch07).
+void Switch07Tick_59CA0_5A1B0(uint16_t* a1)
 {
   int result; // eax
 
@@ -66783,7 +67327,8 @@ void sub_59CA0_5A1B0(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59CF0_5A200(uint16_t* a1)
+/// Per-tick handler of switch type 8 (class 11 state 8, set by CreateSwitch08).
+void Switch08Tick_59CF0_5A200(uint16_t* a1)
 {
   int result; // eax
 
@@ -66805,7 +67350,8 @@ void sub_59CF0_5A200(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59D40_5A250(uint16_t* a1)
+/// Per-tick handler of switch type 9 (class 11 state 9, set by CreateSwitch09).
+void Switch09Tick_59D40_5A250(uint16_t* a1)
 {
   int result; // eax
 
@@ -66818,7 +67364,8 @@ void sub_59D40_5A250(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_59D70_5A280(uint16_t* a1)
+/// Per-tick handler of switch type 10 (class 11 state 10, set by CreateSwitch10).
+int Switch10Tick_59D70_5A280(uint16_t* a1)
 {
   int result; // eax
 
@@ -66832,7 +67379,8 @@ int sub_59D70_5A280(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59DA0_5A2B0(uint16_t* a1)
+/// Per-tick handler of switch type 11 (class 11 state 11, set by CreateSwitch11).
+void Switch11Tick_59DA0_5A2B0(uint16_t* a1)
 {
   int result; // eax
 
@@ -66854,7 +67402,8 @@ void sub_59DA0_5A2B0(uint16_t* a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59DF0_5A300(uint16_t* a1)
+/// Per-tick handler of switch type 12 (class 11 state 12, set by CreateSwitch12).
+void Switch12Tick_59DF0_5A300(uint16_t* a1)
 {
   int result; // eax
 
@@ -66917,7 +67466,7 @@ void sub_59E40_5A350(int a1, int a2)
       if ( v3 == 1 )
       {
 LABEL_6:
-        sub_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 41);
+        PlayEntitySound_55370_558A0((a1 - (dword_AE400_AE3F0() + 29795)) / 164, -1, 41);
         sub_37440_37800(*(__int16 *)PTR(a1 + 24), 1);
         MarkEntityForRemoval_41E80_421C0((Type_AE400_29795*)PTR(a1));
         return;
@@ -66935,114 +67484,133 @@ LABEL_6:
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59F60_5A470(uint16_t* a1)
+/// Per-tick handler of switch type 13 (class 11 state 13, set by CreateSwitch13).
+void Switch13Tick_59F60_5A470(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 0);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59F70_5A480(uint16_t* a1)
+/// Per-tick handler of switch type 14 (class 11 state 14, set by CreateSwitch14).
+void Switch14Tick_59F70_5A480(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 1);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59F80_5A490(uint16_t* a1)
+/// Per-tick handler of switch type 15 (class 11 state 15, set by CreateSwitch15).
+void Switch15Tick_59F80_5A490(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 2);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59F90_5A4A0(uint16_t* a1)
+/// Per-tick handler of switch type 16 (class 11 state 16, set by CreateSwitch16).
+void Switch16Tick_59F90_5A4A0(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 3);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59FA0_5A4B0(uint16_t* a1)
+/// Per-tick handler of switch type 17 (class 11 state 17, set by CreateSwitch17).
+void Switch17Tick_59FA0_5A4B0(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 4);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59FB0_5A4C0(uint16_t* a1)
+/// Per-tick handler of switch type 18 (class 11 state 18, set by CreateSwitch18).
+void Switch18Tick_59FB0_5A4C0(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 5);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59FC0_5A4D0(uint16_t* a1)
+/// Per-tick handler of switch type 19 (class 11 state 19, set by CreateSwitch19).
+void Switch19Tick_59FC0_5A4D0(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 6);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59FD0_5A4E0(uint16_t* a1)
+/// Per-tick handler of switch type 20 (class 11 state 20, set by CreateSwitch20).
+void Switch20Tick_59FD0_5A4E0(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 7);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59FE0_5A4F0(uint16_t* a1)
+/// Per-tick handler of switch type 21 (class 11 state 21, set by CreateSwitch21).
+void Switch21Tick_59FE0_5A4F0(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 8);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_59FF0_5A500(uint16_t* a1)
+/// Per-tick handler of switch type 22 (class 11 state 22, set by CreateSwitch22).
+void Switch22Tick_59FF0_5A500(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 9);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_5A000_5A510(uint16_t* a1)
+/// Per-tick handler of switch type 23 (class 11 state 23, set by CreateSwitch23).
+void Switch23Tick_5A000_5A510(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 10);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_5A010_5A520(uint16_t* a1)
+/// Per-tick handler of switch type 24 (class 11 state 24, set by CreateSwitch24).
+void Switch24Tick_5A010_5A520(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 11);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_5A020_5A530(uint16_t* a1)
+/// Per-tick handler of switch type 25 (class 11 state 25, set by CreateSwitch25).
+void Switch25Tick_5A020_5A530(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 12);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_5A030_5A540(uint16_t* a1)
+/// Per-tick handler of switch type 26 (class 11 state 26, set by CreateSwitch26).
+void Switch26Tick_5A030_5A540(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 13);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_5A040_5A550(uint16_t* a1)
+/// Per-tick handler of switch type 27 (class 11 state 27, set by CreateSwitch27).
+void Switch27Tick_5A040_5A550(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 14);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_5A050_5A560(uint16_t* a1)
+/// Per-tick handler of switch type 28 (class 11 state 28, set by CreateSwitch28).
+void Switch28Tick_5A050_5A560(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 15);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_5A060_5A570(uint16_t* a1)
+/// Per-tick handler of switch type 29 (class 11 state 29, set by CreateSwitch29).
+void Switch29Tick_5A060_5A570(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), 16);
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_5A070_5A580(uint16_t* a1)
+/// Per-tick handler of switch type 30 (class 11 state 30, set by CreateSwitch30).
+void Switch30Tick_5A070_5A580(uint16_t* a1)
 {
   sub_59E40_5A350((int)OFF(a1), -1);
 }
 
-int sub_5A080(uint16_t* a1)
+/// Per-tick handler of switch type 31 (class 11 state 31, set by CreateSwitch31).
+int Switch31Tick_5A080(uint16_t* a1)
 {
     return 0;
 }
@@ -67058,7 +67626,7 @@ int sub_5A090_5A5A0(int a1, int a2)
     {
       if ( !*(_BYTE *)PTR(i + 65) && EntitiesCollide_11950((Type_AE400_29795*)PTR(a1), (Type_AE400_29795*)PTR(i)) == a2 )
       {
-        sub_55370_558A0((int)(i - (dword_AE400_AE3F0() + 29795)) / 164, -1, 41);
+        PlayEntitySound_55370_558A0((int)(i - (dword_AE400_AE3F0() + 29795)) / 164, -1, 41);
         return 1;
       }
     }
@@ -67141,7 +67709,8 @@ __int16 GetLetterY_5A3B0_5A8C0()
 }
 // AE44C: using guessed type int dword_AE44C_AE43C;
 
-void sub_5A3C0_5A8D0(int fontIndex)//22B3C0_
+/// Selects font fontIndex (0 or 1; falls back to 0 when it is not loaded) for the text routines.
+void SetFont_5A3C0_5A8D0(int fontIndex)//22B3C0_
 {
     dword_AE3B8_2[0].bTab = begFont0Tab_AE3B8_AE3A8_26C3B8_26C3A8;
     dword_AE3B8_2[1].bTab = begFont1Tab_AE3BC_26C3BC_26C3AC;
@@ -67294,7 +67863,8 @@ void sub_5A4EA_5A9FA()
 // 12EC04: using guessed type __int16 word_12EC04;
 
 //----- (0005A560) --------------------------------------------------------
-void sub_5A560_5AA70()
+/// Draws the product/version information page ("Magic Carpet", "Beta v8.0", "Jun 05 1995", ...).
+void DrawVersionInfo_5A560_5AA70()
 {
   __int16 v0; // bx
   __int16 v1; // bx
@@ -67332,7 +67902,7 @@ void sub_5A560_5AA70()
 
   if ( (*(_BYTE *)PTR(dword_AE400_AE3F0() + 2049 * str_AE400_AE3F0->var_u16_8 + 13328) & 8) != 0 )
   {
-    sub_5A3C0_5A8D0(1);
+    SetFont_5A3C0_5A8D0(1);
     DrawText_5A180_5A690((char*)"Product name", 320, 0, byte_AD167_AD157[3841]);
     v0 = GetLetterY_5A3B0_5A8C0();
     DrawText_5A180_5A690((char*)"Magic Carpet", 320, v0, byte_AD167_AD157[16]);
@@ -67384,7 +67954,7 @@ void sub_5A560_5AA70()
     v18 = GetLetterY_5A3B0_5A8C0() + v17;
     DrawText_5A180_5A690((char*)"Thing", 320, v18, byte_AD167_AD157[3841]);
     v19 = GetLetterY_5A3B0_5A8C0() + v18;
-    v20 = sub_37710_37AD0();
+    v20 = FreeEntityCount_37710_37AD0();
     sprintf(v32, "Thing %d, Active %d", 164, 1000 - v20);
     DrawText_5A180_5A690(v32, 320, v19, byte_AD167_AD157[16]);
     v21 = GetLetterY_5A3B0_5A8C0() + v19;
@@ -68154,6 +68724,7 @@ void sub_5BB60_5C070()
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //----- (0005BD40) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_5BD40()//22CD40_
 {
   int result; // eax
@@ -68204,7 +68775,8 @@ void sub_5BE50_5C360()
 
 
 //----- (0005C05C) --------------------------------------------------------
-void sub_5C05C_5C56C(TypeTab* a1x)//22D05C_
+/// Sets the mouse pointer: draws sprite a1x into the 64x64 cursor buffer (0xFE = transparent) and records its size; nullptr = no pointer.
+void SetMouseCursor_5C05C_5C56C(TypeTab* a1x)//22D05C_
 {
   //int result; // eax
   //unsigned int i; // [esp+0h] [ebp-10h]
@@ -68329,7 +68901,7 @@ int sub_5C214_5C724()
   for ( int i = 0; i < 4096; i++ )
       dword_12EFC8_12EFB8[i] = 254;
   if ( dword_12EFB4 )
-    sub_5C05C_5C56C(dword_12EFB4);
+    SetMouseCursor_5C05C_5C56C(dword_12EFB4);
   v2[0] = 2;
   FixPerifery((char*)"mouseHide");
   int386(51, v2, v1);//Hide Mouse Cursor
@@ -68464,6 +69036,7 @@ void ResizeScr_5C468_5C978()//22D468_
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //----- (0005C76B) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 __int16 sub_5C76B()
 {
   __int16 result; // ax
@@ -68509,6 +69082,7 @@ __int16 sub_5C76B()
 // AE3FC: using guessed type int begBscreen_AE3FC_AE3EC_26C3FC_26C3EC;
 
 //----- (0005C82E) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 __int16 sub_5C82E()
 {
   __int16 result; // ax
@@ -68558,6 +69132,7 @@ int sub_5C8CD()
 // AE424: using guessed type int begPalData_AE424_AE414_26C424_26C414;
 
 //----- (0005C8F4) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 void sub_5C8F4()
 {
   __int16 v0; // ax
@@ -68828,6 +69403,7 @@ char sub_5CAE7()
 // 12EFF4: using guessed type int dword_12EFF4;
 
 //----- (0005CB73) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 void sub_5CB73(int a1, __int16 a2)
 {
   __int16 v2; // cx
@@ -68878,7 +69454,8 @@ void WaitForBeam_5CC54_5D164()
   while ( (result & 8) == 0 );*/
 }
 
-uint8_t sub_5CC70_5D180(TColor* colors, uint8_t colR, uint8_t colG, uint8_t colB)//22DC70_
+/// Returns the index of the palette colour nearest to (colR, colG, colB) (16 or 256 colours depending on the mode).
+uint8_t FindNearestColour_5CC70_5D180(TColor* colors, uint8_t colR, uint8_t colG, uint8_t colB)//22DC70_
 {
     /*
     //char __cdecl sub_5CC70(unsigned __int8* a1, unsigned __int8 a2, unsigned __int8 a3, unsigned __int8 a4)
@@ -68995,11 +69572,11 @@ int LoadMusicSet_5CEF0_5D400(unsigned __int16 a1)
     return 1;
   sprintf(pathStrArray_258E00[PS25datamusic00dat].path, (char*)"data/music%d-%d.dat", a1, (unsigned __int8)musicVariant_CBFEE);
   sprintf(pathStrArray_258E00[PS25datamusic00tab].path, "data/music%d-%d.tab", a1, (unsigned __int8)musicVariant_CBFEE);
-  if ( sub_634E0_639F0(&pathStrArray_258E00[PS25datamusic00dat]) != 1 )
+  if ( LoadPathFile_634E0_639F0(&pathStrArray_258E00[PS25datamusic00dat]) != 1 )
     return 1;
-  if ( sub_634E0_639F0(&pathStrArray_258E00[PS25datamusic00tab]) != 1 )
+  if ( LoadPathFile_634E0_639F0(&pathStrArray_258E00[PS25datamusic00tab]) != 1 )
   {
-    sub_634A0_639B0(&pathStrArray_258E00[PS25datamusic00dat]);
+    FreePathFile_634A0_639B0(&pathStrArray_258E00[PS25datamusic00dat]);
     return 1;
   }
   FixMusicTabOffsets_5CFA4();
@@ -69045,7 +69622,7 @@ void sub_5D010_5D520()
   {
     for ( i = 0; i < 0x20u; i++ )
     {
-      while ( !sub_651F8(dword_CC140, i) )
+      while ( !IsSampleDone_651F8(dword_CC140, i) )
         sub_65965(dword_CC140, i);
     }
   }
@@ -69054,17 +69631,18 @@ void sub_5D010_5D520()
 // CC140: using guessed type int dword_CC140;
 
 //----- (0005D070) --------------------------------------------------------
-int sub_5D070_5D580(unsigned __int8 a1)
+/// Loads sound bank a1 (data/snds<a1>-<card>.dat/.tab); returns 0 when loaded.
+int LoadSoundBank_5D070_5D580(unsigned __int8 a1)
 {
   if ( !byte_939E4 )
     return 1;
   sprintf(pathStrArray_258E00[PS25datasnds00dat].path, (char*)"data/snds%d-%d.dat", a1, (unsigned __int8)byte_939EC);
   sprintf(pathStrArray_258E00[PS25datasnds00tab].path, (char*)"data/snds%d-%d.tab", a1, (unsigned __int8)byte_939EC);
-  if ( sub_634E0_639F0(&pathStrArray_258E00[PS25datasnds00dat]) != 1 )
+  if ( LoadPathFile_634E0_639F0(&pathStrArray_258E00[PS25datasnds00dat]) != 1 )
     return 1;
-  if ( sub_634E0_639F0(&pathStrArray_258E00[PS25datasnds00tab]) != 1 )
+  if ( LoadPathFile_634E0_639F0(&pathStrArray_258E00[PS25datasnds00tab]) != 1 )
   {
-    sub_634A0_639B0(&pathStrArray_258E00[PS25datasnds00dat]);
+    FreePathFile_634A0_639B0(&pathStrArray_258E00[PS25datasnds00dat]);
     return 1;
   }
   sub_5D138();
@@ -69234,7 +69812,7 @@ void sub_5D460_5D970(__int16 a1, __int16 a2, __int16 a3)
     v4 = word_CBFF0;
     for ( i = 0; i < 0x20u; ++i )
     {
-      if ( *v4 == a1 && v4[1] == a2 && !sub_651F8(dword_CC140, i) )
+      if ( *v4 == a1 && v4[1] == a2 && !IsSampleDone_651F8(dword_CC140, i) )
       {
         v5 = 1;
         break;
@@ -69246,7 +69824,7 @@ void sub_5D460_5D970(__int16 a1, __int16 a2, __int16 a3)
       v6 = 0;
       for ( j = 0; j < 0x20u; ++j )
       {
-        if ( sub_651F8(dword_CC140, j) )
+        if ( IsSampleDone_651F8(dword_CC140, j) )
         {
           v6 = 1;
           break;
@@ -69299,7 +69877,7 @@ void sub_5D610_5DB20(__int16 a1, __int16 a2)
     v4 = 0;
     for ( i = 0; i < 0x20u; ++i )
     {
-      if ( sub_651F8(dword_CC140, i) )
+      if ( IsSampleDone_651F8(dword_CC140, i) )
       {
         v4 = 1;
         break;
@@ -69348,7 +69926,7 @@ void sub_5D750_5DC60(__int16 a1, __int16 a2)
     v2 = word_CBFF0;
     for ( i = 0; i < 32; ++i )
     {
-      if ( *v2 == a1 && v2[1] == a2 && !sub_651F8(dword_CC140, i) )
+      if ( *v2 == a1 && v2[1] == a2 && !IsSampleDone_651F8(dword_CC140, i) )
       {
         sub_65965(dword_CC140, i);
         return;
@@ -69362,6 +69940,7 @@ void sub_5D750_5DC60(__int16 a1, __int16 a2)
 // CC140: using guessed type int dword_CC140;
 
 //----- (0005D7DF) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_5D7DF()
 {
   ;
@@ -69377,12 +69956,14 @@ bool MidiSongDone_5D7F0_5DD00(int a1)
 // 9C136: using guessed type int dword_9C136[8];
 
 //----- (0005D829) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_5D829()
 {
   ;
 }
 
 //----- (0005D872) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_5D872()
 {
   ;
@@ -69499,6 +70080,7 @@ int RegisterTimerEvent_5D97B(unsigned int a1, int a2, __int16 a3, unsigned int a
 // A0481: using guessed type int dword_A0481[];
 
 //----- (0005DB1D) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_5DB1D(unsigned int a1, unsigned int a2)
 {
   unsigned int i; // [esp+4h] [ebp-4h]
@@ -69599,6 +70181,7 @@ int RemoveTimerEvent_5DC91(int a1)
 // A0481: using guessed type int dword_A0481[];
 
 //----- (0005DE40) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_5DE40(int a1)
 {
   return dword_A0401[a1];
@@ -69615,6 +70198,7 @@ int sub_5DE63(int a1)
 // A039D: using guessed type int dword_A039D;
 
 //----- (0005DE91) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_5DE91(int a1, int a2, int a3)
 {
   void *retaddr[2]; // [esp+10h] [ebp+10h]
@@ -69656,12 +70240,14 @@ int sub_5DF4B(int a1, int a2, int a3)
 // 5DF60: positive sp value 4 has been found
 
 //----- (0005DF61) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_5DF61()
 {
   ;
 }
 
 //----- (0005DF72) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_5DF72()
 {
   ;
@@ -70097,12 +70683,14 @@ int sub_5EDD6(int a1)
 // 9EBC9: using guessed type int dword_9EBC9;
 
 //----- (0005EE00) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_5EE00()
 {
   ;
 }
 
 //----- (0005EE11) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_5EE11()
 {
   ;
@@ -70362,12 +70950,14 @@ int sub_5F83E(char a1)
 // 9ECAD: using guessed type char byte_9ECAD;
 
 //----- (0005F913) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_5F913()
 {
   ;
 }
 
 //----- (0005F924) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_5F924()
 {
   ;
@@ -70462,6 +71052,7 @@ void sub_5FD67()
 }
 
 //----- (00060199) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_60199(int a1, unsigned __int16 a2)
 {
   sub_5F935();
@@ -70886,12 +71477,14 @@ int MidiResetChannels_6091D(int a1)
 // 9EF0C: using guessed type int dword_9EF0C;
 
 //----- (000609F4) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_609F4()
 {
   ;
 }
 
 //----- (00060BDC) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 unsigned __int64 sub_60BDC(int a1)
 {
   int v2; // [esp+0h] [ebp-1Ch]
@@ -72011,7 +72604,8 @@ int sub_61594_61AA4(unsigned __int16 a1, unsigned __int16 a2, __int16 a3)
 // 12EFF4: using guessed type int dword_12EFF4;
 
 //----- (000615D4) --------------------------------------------------------
-int sub_615D4_61AE4(unsigned __int16 a1, unsigned __int16 a2, __int16 a3)
+/// Sets pixel (a1, a2) of the 640x480 screen buffer to colour a3 (ignored outside the screen).
+int PutPixel640_615D4_61AE4(unsigned __int16 a1, unsigned __int16 a2, __int16 a3)
 {
   int v4; // [esp+4h] [ebp-4h]
 
@@ -72026,13 +72620,14 @@ int sub_615D4_61AE4(unsigned __int16 a1, unsigned __int16 a2, __int16 a3)
 // 6160B: variable 'v4' is possibly undefined
 // 12EFF4: using guessed type int dword_12EFF4;
 
-void sub_61610_61B20(Pathstruct* pathstruct)//232610
+/// Frees every entry of a Pathstruct list (FreePathFile_634A0_639B0); inverse of LoadPathFiles_40440_40780.
+void FreePathFiles_61610_61B20(Pathstruct* pathstruct)//232610
 {
   while ( 1 )
   {
     if ( !pathstruct->colorPalette_var28)
       break;
-    sub_634A0_639B0(pathstruct);
+    FreePathFile_634A0_639B0(pathstruct);
     pathstruct++;
   }
 }
@@ -72137,31 +72732,33 @@ void sub_616C0(unsigned __int16 a1, unsigned __int16 a2, unsigned __int16 a3, __
 // 12EFF4: using guessed type int dword_12EFF4;
 
 //----- (00061740) --------------------------------------------------------
-int sub_61740(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5)
+/// Draws the outline of rectangle (a1, a2, width a3, height a4) in colour a5 (DrawLineLowRes_6B260).
+int DrawRectLowRes_61740(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5)
 {
   __int16 v6; // [esp+1Ch] [ebp+1Ch]
   __int16 v7; // [esp+20h] [ebp+20h]
 
   v6 = a3 - 1;
   v7 = a4 - 1;
-  sub_6B260(a1, a2, v6 + a1, a2, a5, 0);
-  sub_6B260(v6 + a1, a2, v6 + a1, v7 + a2 + 1, a5, 0);
-  sub_6B260(a1, v7 + a2, v6 + a1 + 1, v7 + a2, a5, 0);
-  return sub_6B260(a1, a2, a1, v7 + a2, a5, 0);
+  DrawLineLowRes_6B260(a1, a2, v6 + a1, a2, a5, 0);
+  DrawLineLowRes_6B260(v6 + a1, a2, v6 + a1, v7 + a2 + 1, a5, 0);
+  DrawLineLowRes_6B260(a1, v7 + a2, v6 + a1 + 1, v7 + a2, a5, 0);
+  return DrawLineLowRes_6B260(a1, a2, a1, v7 + a2, a5, 0);
 }
 
 //----- (00061810) --------------------------------------------------------
-int sub_61810(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5)
+/// Draws the outline of rectangle (a1, a2, width a3, height a4) in colour a5 (DrawLineHighRes_6B378).
+int DrawRectHighRes_61810(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5)
 {
   __int16 v6; // [esp+1Ch] [ebp+1Ch]
   __int16 v7; // [esp+20h] [ebp+20h]
 
   v6 = a3 - 1;
   v7 = a4 - 1;
-  sub_6B378(a1, a2, v6 + a1, a2, a5, 0);
-  sub_6B378(v6 + a1, a2, v6 + a1, v7 + a2 + 1, a5, 0);
-  sub_6B378(a1, v7 + a2, v6 + a1 + 1, v7 + a2, a5, 0);
-  return sub_6B378(a1, a2, a1, v7 + a2, a5, 0);
+  DrawLineHighRes_6B378(a1, a2, v6 + a1, a2, a5, 0);
+  DrawLineHighRes_6B378(v6 + a1, a2, v6 + a1, v7 + a2 + 1, a5, 0);
+  DrawLineHighRes_6B378(a1, v7 + a2, v6 + a1 + 1, v7 + a2, a5, 0);
+  return DrawLineHighRes_6B378(a1, a2, a1, v7 + a2, a5, 0);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -72433,7 +73030,7 @@ void sub_61F90()
       sub_5D948();
     sub_64F78(dword_CC140, 1, 1);
     sub_6481C();
-    sub_61610_61B20(&pathStrArray_258E00[PS25datasnds00dat]);
+    FreePathFiles_61610_61B20(&pathStrArray_258E00[PS25datasnds00dat]);
   }
 }
 // 939CC: using guessed type char musicAvailable_939CC;
@@ -72466,7 +73063,7 @@ void sub_62020()
     }
     if ( byte_9AF9C )
       free_62128_62638((void*)PTR(dword_12F07A));
-    sub_61610_61B20(&pathStrArray_258E00[PS25datamusic00dat]);
+    FreePathFiles_61610_61B20(&pathStrArray_258E00[PS25datamusic00dat]);
   }
 }
 // 939CC: using guessed type char musicAvailable_939CC;
@@ -73707,7 +74304,8 @@ void ReadHuftable_62DC3_632D3(uint16* CX_, __int16* a0, uint8_t** a1x)//233DC3_
 }
 
 //----- (00062E60) --------------------------------------------------------
-void sub_62E60_63370(char* name, uint8* buffer, int size)
+/// Creates/overwrites file `name` with `size` bytes from `buffer`.
+void WriteFile_62E60_63370(char* name, uint8* buffer, int size)
 {
   FILE* file = DataFileIO::CreateOrOpenFile(FixPath(name), 546);
   if (file == nullptr )
@@ -73904,7 +74502,8 @@ int sub_6342C_6393C(unsigned int a1)
 }
 // 62F78: using guessed type _DWORD int386(_DWORD, _DWORD, _DWORD);
 
-void sub_634A0_639B0(Pathstruct* pathstruct)
+/// Frees a Pathstruct entry's buffer.
+void FreePathFile_634A0_639B0(Pathstruct* pathstruct)
 {
 	if (*pathstruct->colorPalette_var28)
 	{
@@ -73915,7 +74514,8 @@ void sub_634A0_639B0(Pathstruct* pathstruct)
 
 int counter_634E0_639F0 = 0;
 
-int sub_634E0_639F0(Pathstruct* pathstruct)//2344e0_
+/// Loads one Pathstruct entry: frees the old buffer, then allocates and reads the file (LoadFile_3EEA0_3F1E0); entries whose path starts with "*" only get a buffer of the given size. Returns 1, 0 (file) or -1 (allocation).
+int LoadPathFile_634E0_639F0(Pathstruct* pathstruct)//2344e0_
 {
     //debug
     if (counter_634E0_639F0 == 0x11)
@@ -73932,7 +74532,7 @@ int sub_634E0_639F0(Pathstruct* pathstruct)//2344e0_
 		mallocVar = malloc_425C0_42900;
 	else
 		mallocVar = malloc_42540_42880;
-	sub_634A0_639B0(pathstruct);
+	FreePathFile_634A0_639B0(pathstruct);
 	if (pathstruct->path[0] == '*')
 	{
 		if (strstr(pathstruct->path, "Screen")) // PORT: *WScreen/*BScreen get a guard band, see MallocGuarded
@@ -73955,7 +74555,7 @@ int sub_634E0_639F0(Pathstruct* pathstruct)//2344e0_
 			return -1;
 		memset(*pathstruct->colorPalette_var28 + pathstruct->var36_size_buffer, 0, 0x10000);
         
-		if (sub_3EEA0_3F1E0(pathstruct->path, *pathstruct->colorPalette_var28) != pathstruct->var36_size_buffer)
+		if (LoadFile_3EEA0_3F1E0(pathstruct->path, *pathstruct->colorPalette_var28) != pathstruct->var36_size_buffer)
 		{
 			*pathstruct->colorPalette_var28 = 0;
 			*pathstruct->var32_end_buffer = 0;
@@ -73969,6 +74569,7 @@ int sub_634E0_639F0(Pathstruct* pathstruct)//2344e0_
 }
 
 //----- (0006377B) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6377B()
 {
   ;
@@ -73982,12 +74583,14 @@ char *sub_6378C(int a1)
 // 9EF10: using guessed type char *off_9EF10[20];
 
 //----- (000637AF) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_637AF()
 {
   ;
 }
 
 //----- (000637C0) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_637C0()
 {
   ;
@@ -74004,6 +74607,7 @@ int MidiSetInstruments_637D1(int a1, int a2, unsigned __int16 a3, int a4)
 // 9C07A: using guessed type _DWORD byte_9C07A[39];
 
 //----- (000638E0) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_638E0(int a1, int a2, int a3)
 {
   void *retaddr[2]; // [esp+10h] [ebp+10h]
@@ -74014,6 +74618,7 @@ int sub_638E0(int a1, int a2, int a3)
 // 9ECFE: using guessed type char byte_9ECFE;
 
 //----- (000638F8) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_638F8()
 {
   ;
@@ -74045,6 +74650,7 @@ int GetRNCFilesize_63910_63E20(Pathstruct* pathstruct)//234910_
 }
 
 //----- (00063A8C) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_63A8C()
 {
   ;
@@ -74124,6 +74730,7 @@ int sub_63C06()
 // 131578: using guessed type int dword_131578;
 
 //----- (00063C5A) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_63C5A_6416A(const void *a1, unsigned int a2, char *a3, __int16 a4, unsigned int a5)
 {
   int v7; // [esp+4h] [ebp-18h]
@@ -74180,6 +74787,7 @@ int sub_63C5A_6416A(const void *a1, unsigned int a2, char *a3, __int16 a4, unsig
 // 1315B8: using guessed type __int16 word_1315B8;
 
 //----- (00064248) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_64248(unsigned int a1, __int16 a2)
 {
   if ( !a1 && !a2 )
@@ -74208,12 +74816,14 @@ int sub_64248(unsigned int a1, __int16 a2)
 // 1315B8: using guessed type __int16 word_1315B8;
 
 //----- (00064414) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_64414()
 {
   ;
 }
 
 //----- (00064425) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_64425()
 {
   ;
@@ -74262,6 +74872,7 @@ void sub_645FB()
 }
 
 //----- (000647C0) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_647C0(int a1, unsigned __int16 a2)
 {
   sub_64436();
@@ -74637,12 +75248,14 @@ int sub_650FF_6560F(__int16 a1, int a2, unsigned int a3, _DWORD *a4)
 }
 
 //----- (000651D6) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_651D6()
 {
   ;
 }
 
 //----- (000651E7) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_651E7()
 {
   ;
@@ -74650,18 +75263,21 @@ void sub_651E7()
 
 //----- (000651F8) --------------------------------------------------------
 // PORT: HMI SOS digital driver entry point, forwarded to portability/port_sound (SDL_mixer).
-bool sub_651F8(int a1, int a2)
+/// Returns whether sound sample a2 has finished playing (PortSound_IsDone in the port).
+bool IsSampleDone_651F8(int a1, int a2)
 {
   return PortSound_IsDone(a2);
 }
 
 //----- (0006533A) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6533A()
 {
   ;
 }
 
 //----- (0006534B) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6534B()
 {
   ;
@@ -74690,13 +75306,15 @@ int sub_65965(int a1, int a2)
 }
 
 //----- (00065D57) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_65D57()
 {
   ;
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_65D70_66280(TypeTab* a1, TypeTab* a2, uint8_t* a3)
+/// RelocateSpriteTab_65DC0_662D0 that also doubles each entry's width and height.
+void RelocateSpriteTabDoubled_65D70_66280(TypeTab* a1, TypeTab* a2, uint8_t* a3)
 {
  for ( int i = 0; &a1[i] < a2; i++ )
   {
@@ -74711,11 +75329,12 @@ void sub_65D70_66280(TypeTab* a1, TypeTab* a2, uint8_t* a3)
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_65DC0_662D0(TypeTab* a1, TypeTab* a2, uint8_t* a3)
+/// Turns the sprite offsets of TypeTab entries [a1, a2) into pointers into the sprite data a3 (entries already relocated are skipped).
+void RelocateSpriteTab_65DC0_662D0(TypeTab* a1, TypeTab* a2, uint8_t* a3)
 {
   for (int i = 0; &a1[i] < a2; i++ )
   {
-    if ( OFF(a1[i].Tab_0) < OFF(a3) ) // PORT: offsets, see sub_65D70_66280
+    if ( OFF(a1[i].Tab_0) < OFF(a3) ) // PORT: offsets, see RelocateSpriteTabDoubled_65D70_66280
         a1[i].Tab_0 = PTR(OFF(a1[i].Tab_0) + OFF(a3));
   }
 }
@@ -74767,7 +75386,7 @@ void sub_65F10_66420(__int16 a1, __int16 a2)
     v3 = word_CBFF0;
     for ( i = 0; i < 32; ++i )
     {
-      if ( *v3 == a1 && v3[1] == a2 && !sub_651F8(dword_CC140, i) )
+      if ( *v3 == a1 && v3[1] == a2 && !IsSampleDone_651F8(dword_CC140, i) )
       {
         sub_65965(dword_CC140, i);
         break;
@@ -74777,7 +75396,7 @@ void sub_65F10_66420(__int16 a1, __int16 a2)
     v6 = 0;
     for ( j = 0; j < 32; ++j )
     {
-      if ( sub_651F8(dword_CC140, j) )
+      if ( IsSampleDone_651F8(dword_CC140, j) )
       {
         v6 = 1;
         break;
@@ -74816,6 +75435,7 @@ void sub_65F10_66420(__int16 a1, __int16 a2)
 // CC1C6: using guessed type __int16 word_CC1C6;
 
 //----- (00066107) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_66107()
 {
   ;
@@ -74840,6 +75460,7 @@ int sub_661A4(int a1, int a2)
 // A0258: using guessed type int dword_A0258[5];
 
 //----- (0006623A) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6623A()
 {
   ;
@@ -74856,7 +75477,7 @@ void sub_66250(__int16 a1, __int16 a2, unsigned __int16 a3)
     v3 = word_CBFF0;
     for ( i = 0; i < 32; ++i )
     {
-      if ( *v3 == a1 && v3[1] == a2 && !sub_651F8(dword_CC140, i) && a3 < 0x81u )
+      if ( *v3 == a1 && v3[1] == a2 && !IsSampleDone_651F8(dword_CC140, i) && a3 < 0x81u )
       {
         sub_66118(dword_CC140, i, (a3 << 8) - 1);
         word_CC070[i] = (a3 << 8) - 1;
@@ -74872,6 +75493,7 @@ void sub_66250(__int16 a1, __int16 a2, unsigned __int16 a3)
 // CC140: using guessed type int dword_CC140;
 
 //----- (00066313) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_66313()
 {
   ;
@@ -74885,6 +75507,7 @@ int sub_66324(int a1)
 }
 
 //----- (0006637C) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6637C()
 {
   ;
@@ -74895,7 +75518,7 @@ void sub_66390(TypeTab* a1, TypeTab* a2, uint8_t* a3)
 {
 	for (int i = 0; &a1[i] < a2; i++)
 	{
-		if (OFF(a1[i].Tab_0) >= OFF(a3)) // PORT: offsets, see sub_65D70_66280
+		if (OFF(a1[i].Tab_0) >= OFF(a3)) // PORT: offsets, see RelocateSpriteTabDoubled_65D70_66280
 		{
 			a1[i].dim.x >>= 1;
 			a1[i].dim.y >>= 1;
@@ -74909,7 +75532,7 @@ void sub_66410(TypeTab* a1, TypeTab* a2, uint8_t* a3)
 {
     for (int i = 0; &a1[i] < a2; i++)
     {
-        if (OFF(a1[i].Tab_0) >= OFF(a3)) // PORT: offsets, see sub_65D70_66280
+        if (OFF(a1[i].Tab_0) >= OFF(a3)) // PORT: offsets, see RelocateSpriteTabDoubled_65D70_66280
         {
             a1[i].Tab_0 = PTR(OFF(a1[i].Tab_0) - OFF(a3));
         }
@@ -75034,6 +75657,7 @@ int sub_66612(unsigned __int8 a1)
 // 6B5A3: using guessed type _DWORD tolower(_DWORD);
 
 //----- (0006666C) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 __int16 sub_6666C(__int16 result)
 {
   _BOOL1 v1; // zf
@@ -75063,6 +75687,7 @@ __int16 sub_6666C(__int16 result)
 // 12EF71: using guessed type char byte_12EF71;
 
 //----- (00066CAD) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 void sub_66CAD()
 {
     FixPerifery();
@@ -75097,6 +75722,7 @@ unsigned __int8 sub_66D24(__int16 a1)
 // A01C4: using guessed type int dword_A01C4;
 
 //----- (00066D6A) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 unsigned __int8 sub_66D6A_6727A(int a1, __int16 a2, int a3, __int16 a4)
 {
   unsigned __int8 v4; // al
@@ -75229,6 +75855,7 @@ int sub_66EA2()
 // A01C4: using guessed type int dword_A01C4;
 
 //----- (00066EE5) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_66EE5()
 {
   ;
@@ -75245,18 +75872,21 @@ unsigned __int64 sub_66EF6(unsigned int a1, __int16 a2)
 // 66F12: variable 'v3' is possibly undefined
 
 //----- (00066F1A) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_66F1A()
 {
   ;
 }
 
 //----- (00066F2B) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_66F2B()
 {
   ;
 }
 
 //----- (00066F3C) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_66F3C()
 {
   int v0; // eax
@@ -75393,12 +76023,14 @@ LABEL_28:
 // A04D1: using guessed type char byte_A04D1;
 
 //----- (00067464) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_67464()
 {
   ;
 }
 
 //----- (00067475) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_67475()
 {
   ;
@@ -75412,6 +76044,7 @@ bool sub_67486(int a1)
 // 9B18E: using guessed type int dword_9B18E[5];
 
 //----- (000674B9) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_674B9()
 {
   ;
@@ -75654,6 +76287,7 @@ __int16 sub_67944()
 }
 
 //----- (0006797C) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6797C()
 {
   ;
@@ -75712,12 +76346,14 @@ int sub_67A29(int (*a1)(_DWORD, _DWORD, _DWORD, _DWORD), __int16 a2)
 // 9C22E: using guessed type int (*byte_9C22E)(_DWORD, _DWORD, _DWORD, _DWORD);
 
 //----- (00067A53) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_67A53()
 {
   ;
 }
 
 //----- (00067A64) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_67A64()
 {
   ;
@@ -75941,12 +76577,14 @@ int sub_6813F(int a1, int a2, int a3)
 }
 
 //----- (0006815E) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6815E()
 {
   ;
 }
 
 //----- (0006816F) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6816F()
 {
   ;
@@ -76130,12 +76768,14 @@ int sub_68491(int a1, int a2)
 // 9C9F0: using guessed type int dword_9C9F0[5];
 
 //----- (00068600) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_68600()
 {
   ;
 }
 
 //----- (00068611) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_68611()
 {
   ;
@@ -76235,36 +76875,42 @@ int sub_68813(unsigned int a1)
 // 9B18E: using guessed type int dword_9B18E[5];
 
 //----- (0006887D) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6887D()
 {
   ;
 }
 
 //----- (0006888E) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6888E()
 {
   ;
 }
 
 //----- (000688F5) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_688F5()
 {
   ;
 }
 
 //----- (00068906) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_68906()
 {
   ;
 }
 
 //----- (000689D1) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_689D1()
 {
   ;
 }
 
 //----- (000689E2) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_689E2()
 {
   ;
@@ -76383,12 +77029,14 @@ int sub_68C82()
 }
 
 //----- (00068C9B) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_68C9B()
 {
   ;
 }
 
 //----- (00068CAC) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_68CAC()
 {
   ;
@@ -76469,12 +77117,14 @@ unsigned int sub_68D7F(unsigned int a1, int a2, int a3)
 // A0C04: using guessed type int dword_A0C04[36];
 
 //----- (00068F15) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_68F15()
 {
   ;
 }
 
 //----- (00068F26) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_68F26()
 {
   ;
@@ -76532,12 +77182,14 @@ char sub_68F37(int a1, int a2, unsigned int a3)
 // A09F0: using guessed type int dword_A09F0;
 
 //----- (0006905C) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6905C()
 {
   ;
 }
 
 //----- (0006906D) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6906D()
 {
   ;
@@ -76628,12 +77280,14 @@ void sub_6907E(unsigned __int8 a1, unsigned __int8 a2, unsigned __int8 a3)
 // A0A38: using guessed type int dword_A0A38[12];
 
 //----- (0006954C) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6954C()
 {
   ;
 }
 
 //----- (0006955D) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6955D()
 {
   ;
@@ -76739,12 +77393,14 @@ int sub_69716(unsigned int a1)
 // A0994: using guessed type int dword_A0994[18];
 
 //----- (0006979E) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6979E()
 {
   ;
 }
 
 //----- (000697AF) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_697AF()
 {
   ;
@@ -76811,12 +77467,14 @@ void sub_697C0(int a1, int a2, unsigned int a3)
 // A09E7: using guessed type char byte_A09E7;
 
 //----- (0006999B) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6999B()
 {
   ;
 }
 
 //----- (000699AC) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_699AC()
 {
   ;
@@ -76859,12 +77517,14 @@ char sub_699BD()
 // A0954: using guessed type int dword_A0954[16];
 
 //----- (00069A83) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69A83()
 {
   ;
 }
 
 //----- (00069A94) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69A94()
 {
   ;
@@ -76972,12 +77632,14 @@ int sub_69BFE(int a1)
 }
 
 //----- (00069DFE) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69DFE()
 {
   ;
 }
 
 //----- (00069E0F) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69E0F()
 {
   ;
@@ -77000,12 +77662,14 @@ char sub_69E20()
 // A0788: using guessed type int dword_A0788;
 
 //----- (00069E63) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69E63()
 {
   ;
 }
 
 //----- (00069E74) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69E74()
 {
   ;
@@ -77026,12 +77690,14 @@ char sub_69E85(int a1, int a2, unsigned int a3)
 // A0788: using guessed type int dword_A0788;
 
 //----- (00069ECB) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69ECB()
 {
   ;
 }
 
 //----- (00069EDC) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69EDC()
 {
   ;
@@ -77085,12 +77751,14 @@ int sub_69F93(int a1, __int16 a2, int a3, int a4)
 }
 
 //----- (00069FC2) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69FC2()
 {
   ;
 }
 
 //----- (00069FD3) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_69FD3()
 {
   ;
@@ -77115,12 +77783,14 @@ char sub_69FE4(unsigned int a1)
 // A0773: using guessed type char byte_A0773;
 
 //----- (0006A063) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A063()
 {
   ;
 }
 
 //----- (0006A074) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A074()
 {
   ;
@@ -77137,12 +77807,14 @@ char sub_6A085(unsigned __int8 a1, __int16 a2)
 }
 
 //----- (0006A0F9) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A0F9()
 {
   ;
 }
 
 //----- (0006A10A) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A10A()
 {
   ;
@@ -77170,12 +77842,14 @@ char sub_6A11B()
 // A0774: using guessed type char byte_A0774;
 
 //----- (0006A1B3) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A1B3()
 {
   ;
 }
 
 //----- (0006A1C4) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A1C4()
 {
   ;
@@ -77194,12 +77868,14 @@ char sub_6A1D5(unsigned __int8 a1, __int16 a2)
 }
 
 //----- (0006A275) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A275()
 {
   ;
 }
 
 //----- (0006A286) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A286()
 {
   ;
@@ -77217,12 +77893,14 @@ char sub_6A297(unsigned __int8 a1)
 }
 
 //----- (0006A2F5) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A2F5()
 {
   ;
 }
 
 //----- (0006A306) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A306()
 {
   ;
@@ -77251,12 +77929,14 @@ char sub_6A317()
 // A0773: using guessed type char byte_A0773;
 
 //----- (0006A3E3) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A3E3()
 {
   ;
 }
 
 //----- (0006A3F4) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A3F4()
 {
   ;
@@ -77312,12 +77992,14 @@ char sub_6A405(int a1, int a2, unsigned __int8 a3)
 // 6A405: using guessed type _DWORD arg_0;
 
 //----- (0006A5EC) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A5EC()
 {
   ;
 }
 
 //----- (0006A5FD) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A5FD()
 {
   ;
@@ -77332,6 +78014,7 @@ char sub_6A60E()
 // A0773: using guessed type char byte_A0773;
 
 //----- (0006A62D) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6A62D()
 {
   ;
@@ -77415,7 +78098,8 @@ __int16 sub_6A737(void (*a1)(_DWORD), unsigned int a2, int a3, int a4, __int16 a
 // 6A737: using guessed type unsigned int arg_4;
 
 //----- (0006B260) --------------------------------------------------------
-int sub_6B260(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6)
+/// Draws a line from (a1, a2) to (a3, a4) in colour a5, clipped to the viewport (320x200 mode: coordinates and viewport doubled).
+int DrawLineLowRes_6B260(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6)
 {
   __int16 v6; // bx
   __int16 v7; // cx
@@ -77511,7 +78195,8 @@ int sub_6B260(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a
 // 12F024: using guessed type int dword_12F024_12F014;
 
 //----- (0006B378) --------------------------------------------------------
-int sub_6B378(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6)
+/// Draws a line from (a1, a2) to (a3, a4) in colour a5, clipped to the viewport (640x480 mode).
+int DrawLineHighRes_6B378(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6)
 {
   _BYTE *v7; // edi
   int v8; // eax
@@ -77619,6 +78304,7 @@ void sub_6B47C_6B98C(TColor* palette)
 // 6B49D: variable 'v3' is possibly undefined
 
 //----- (0006B87A) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_6B87A()
 {
   return dword_A0CA4;
@@ -77626,6 +78312,7 @@ int sub_6B87A()
 // A0CA4: using guessed type int dword_A0CA4;
 
 //----- (0006BCA3) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_6BCA3(int a1, unsigned __int8 *a2, int *a3)
 {
   int *v3; // edi
@@ -78599,18 +79286,21 @@ int sub_6D35C_6D86C(unsigned __int16 a1)
 // 6D35C: using guessed type char var_38[28];
 
 //----- (0006D5EC) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_6D5EC(int a1, int a2)
 {
   return *(_DWORD *)PTR(a2);
 }
 
 //----- (0006DD6C) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6DD6C()
 {
   ;
 }
 
 //----- (0006DD7D) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_6DD7D(int a1, int a2, __int16 a3)
 {
   if ( !*(int *)((char *)&dword_A01CC + 6 * a1) && !word_A01D0[3 * a1] )
@@ -78631,12 +79321,14 @@ int sub_6DD7D(int a1, int a2, __int16 a3)
 // A01EA: using guessed type int dword_A01EA[5];
 
 //----- (0006DE12) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6DE12()
 {
   ;
 }
 
 //----- (0006DE23) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6DE23()
 {
   ;
@@ -78815,42 +79507,49 @@ int sub_6E23C(int a1, __int16 a2)
 }
 
 //----- (0006E295) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6E295()
 {
   ;
 }
 
 //----- (0006E2A6) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6E2A6()
 {
   ;
 }
 
 //----- (0006E33D) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6E33D()
 {
   ;
 }
 
 //----- (0006E34E) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6E34E()
 {
   ;
 }
 
 //----- (0006E3B9) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_6E3B9()
 {
   ;
 }
 
 //----- (0006E5A0) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 void *sub_6E5A0()
 {
   return &unk_131BE0;
 }
 
 //----- (0006E5A6) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 void *sub_6E5A6()
 {
   return &unk_131BDC;
@@ -80105,6 +80804,7 @@ int __stdcall sub_6FDEC(unsigned __int8 a1, unsigned __int8 a2, __int16 a3)
 // A1B42: using guessed type __int16 word_A1B42[];
 
 //----- (0006FEBF) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int __stdcall sub_6FEBF(unsigned __int16 a1)
 {
   int v2; // esi
@@ -80128,6 +80828,7 @@ int __stdcall sub_6FEBF(unsigned __int16 a1)
 // A118A: using guessed type int dword_A118A;
 
 //----- (0006FF53) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int __stdcall sub_6FF53(unsigned __int16 a1)
 {
   __int16 i; // si
@@ -80668,6 +81369,7 @@ int sub_70E1C(int a1, int a2, unsigned int a3)
 // A07C8: using guessed type int dword_A07C8[];
 
 //----- (00071012) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 char *sub_71012()
 {
   void *retaddr; // [esp+0h] [ebp+0h] BYREF
@@ -80678,6 +81380,7 @@ char *sub_71012()
 // A0CA8: using guessed type int dword_A0CA8;
 
 //----- (0007101B) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 void sub_7101B()
 {
   dword_A8874 = 0x8000;
@@ -80685,6 +81388,7 @@ void sub_7101B()
 // A8874: using guessed type int dword_A8874;
 
 //----- (00071524) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_71524()
 {
     //fix word_A636C = __SS__;
@@ -80692,12 +81396,14 @@ void sub_71524()
 // A636C: using guessed type __int16 word_A636C;
 
 //----- (00071B53) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 int sub_71B53()
 {
   return 0;
 }
 
 //----- (00071BC9) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 void sub_71BC9(int a1, const void *a2, void *a3)
 {
     FixPerifery();
@@ -112204,6 +112910,7 @@ void sub_79B2D()
 // 12EFF4: using guessed type int dword_12EFF4;
 
 //----- (0007B444) --------------------------------------------------------
+/// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 int sub_7B444()
 {
   return dword_A0CA8;

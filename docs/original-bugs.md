@@ -20,7 +20,7 @@ Status:
 | 6 | Terrain smoothing reads in front of the map on its first row | `sub_360C0_36480` | fixed |
 | 7 | Castles built among walls: the site check looks at one quarter of the site | `IsCastleSiteFree_12F70` | kept |
 | 8 | Full entity table recycles live entities (balloons vanish, HUD divides by zero) | `NewEvent_372C0_37680` | fixed |
-| 9 | A creature dying while the entity table is full drops no mana | `sub_1A800`, `sub_27690` | kept |
+| 9 | A creature dying while the entity table is full drops no mana | `KillCreature_1A800`, `DropManaBall_27690` | kept |
 | 10 | Big explosions recycle all trees and standing stones; their triggers stay | `NewEvent_372C0_37680` | kept |
 | 11 | A volcano eruption removes whatever now holds its old 10/19 slot (castle balloon: HUD divides by zero) | `VolcanoEruptionTick_25EC0` | fixed |
 | 12 | A possessed death marker strands the dead wizard's mana balls; their mana inflates whatever takes the slot (spell with 0 charges) | `DeathMarkerTick_275C0`, `AddManaToOwner_48340_48680` | kept |
@@ -33,7 +33,7 @@ was killed (seen on level 15).
 **Cause:** worm segments are a chain. Each segment keeps its leader's entity index at entity offset
 +52 (`var_u16_29847_52`) and its follower at +54. When a segment's life drops below zero,
 `UpdateFollower_1A390` (the segment's update) sets its *leader* to the dying state
-(`sub_424F0_42830(leader, a2 + 2)`, state 20 for these segments) and clears the leader's +52. It
+(`SetEntityState_424F0_42830(leader, a2 + 2)`, state 20 for these segments) and clears the leader's +52. It
 never checks that the leader still is a segment. If the leader died in an earlier tick, its slot is
 free, and the game may have reused it, e.g. for an explosion (class 10, model 0) created in the same
 fight. The explosion is then put into state 20, whose handler (`0x262C0`) is an empty `ret`: it
@@ -122,7 +122,7 @@ around; just before, two of the player's castle balloons have disappeared.
 
 **Cause:** the game has 999 entity slots. When the free list is empty, `NewEvent_372C0_37680` takes a
 slot from a second list of "recyclable" entities (flags `0x20400`) and overwrites it. That list is
-only rebuilt now and then (`sub_37220_375E0`: level start, wizard rebirth, castle code). In between,
+only rebuilt now and then (`RebuildFreeLists_37220_375E0`: level start, wizard rebirth, castle code). In between,
 listed entities die and their slots get reused by entities that must not be recycled. The original
 recycles them anyway. On level 19 the list held both slots of the player's balloons (class 3
 model 3), a mana ball (class 10 model 39) and other live entities. A lightning bolt
@@ -143,7 +143,7 @@ recyclable flags (`// PORT:`). This only changes the game when the entity table 
 **Symptom:** at the end of level 22 a big crab that was shooting lightning dies without leaving a mana
 ball; the small crabs killed right after it drop theirs.
 
-**Cause:** a dying creature (`sub_1A800`) turns its mana into a mana ball (`sub_27690`, class 10
+**Cause:** a dying creature (`KillCreature_1A800`) turns its mana into a mana ball (`DropManaBall_27690`, class 10
 type 39) and leaves a class 10 type 1 entity, both through `CreateEntity_373F0_377B0`. When the
 entity table is full, `NewEvent_372C0_37680` returns null and both are silently skipped; the mana is
 lost. Lightning bolts fill the table: each bolt is drawn with many class 9 type 9 pieces
@@ -152,7 +152,7 @@ tick it died the bolts took the last 30 free slots (66 new pieces) before the cr
 recycle list was empty. The small crabs died a few ticks later, after pieces had been freed.
 
 **Confirmed:** `level22.recording` (a user recording): the big crab (entity 995, max life 10000,
-3572 mana) is fatally hit at frame 12270 and freed by `sub_1A800` (0x1A84B) in the tick of frame
+3572 mana) is fatally hit at frame 12270 and freed by `KillCreature_1A800` (0x1A84B) in the tick of frame
 12272. Ticks 12269-12274 match the original byte for byte; run on that state, the original's
 `CreateEntity` calls from 0x276E5 (mana ball) and 0x1A836 return 0 with the free list at -1.
 

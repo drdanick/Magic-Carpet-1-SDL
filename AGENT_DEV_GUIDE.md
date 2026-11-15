@@ -375,7 +375,7 @@ Differential execution (Unicorn and capstone, from the venv in §4):
 CARPET.EXE at its IDA addresses, port `.text/.rdata` relocated to the snapshot's image base, CRT
 imports as Python stubs, address-named globals copied to their original addresses (bigger first,
 then specific ones; a global whose static bytes disagree with the original at that address loses;
-pointers translated only at relocation sites/aligned dwords). Sound (`sub_55370_558A0`) is skipped on
+pointers translated only at relocation sites/aligned dwords). Sound (`PlayEntitySound_55370_558A0`) is skipped on
 both sides. Known layout differences the comparison cannot map: `word_12CD20/22/24/26/28` (the
 original's 10-byte record array split into parallel arrays), `trig_9074C`'s first 1 KB (small
 variables, not a table).
@@ -481,29 +481,74 @@ class, type)`). The state index is global within a class, not per type.
 |---|---|---|---|
 | 2 | 0 | tree (palm) | scenery, on the recycle list (original-bugs #10); state 2 = burnt (inferred) |
 | 2 | 1 | stone (kind not checked) | scenery, recyclable |
+| 2 | 2 | dolmen | named from its sprite by the user |
+| 2 | 4, 5 | unused: the sprite is cut castle-texture content (user) | |
 | 2 | 3 | standing stone (the stone rings that mark triggers) | scenery, recyclable |
 | 3 | 0 | wizard on a carpet (player 0 = local human) | model 0 human, 1 computer in the wizard list; `Type_1103` at +160 |
 | 3 | 2 | castle | inferred (level 26: life 40000, owner = wizard) |
 | 3 | 3 | balloon | original-bugs #8 |
-| 3 | 4..11 | wizard start positions only | `sub_44D30_45070` |
+| 3 | 4..11 | wizard start positions only | `SpawnWizard_44D30_45070` |
+| 5 | 0 | dragon (head; body segments in state 120 reuse the worm sprites) | sprites decoded from tmaps0-0, names confirmed by the user (2026-11-15) |
+| 5 | 1 | vulture | |
+| 5 | 2 | bee | |
 | 5 | 3 | worm segment | chain via +52/+54, original-bugs #1 |
 | 5 | 5 | crab (big ones shoot lightning) | seeks mana balls, raises more through 10/52 |
+| 5 | 6 | kraken (submerged and risen sprites) | |
+| 5 | 7 | troll or ape, by the parity of +63 (`ChooseTrollOrApe_38C00_38F80`) | +71 = 1 troll, 2 ape |
+| 5 | 8 | griffin | |
+| 5 | 9 | skeleton (rises from the ground; raised by Undead Army) | |
+| 5 | 10 | emu rider | |
+| 5 | 11 | genie | |
+| 5 | 12, 13, 14 | villagers (three kinds) | |
+| 5 | 15 | not identified (uses the guard's sprite 0) | |
 | 5 | 16 | wyvern | life 100000, mana 50000 (level 26) |
 | 9 | 3 | missile that starts an explosion ring (10/17) when it lands | `CreateExplosionRing_3AC70` called from 0x52AAA |
 | 9 | 9 | lightning bolt piece | `LightningBoltTick_535E0_53920` |
 | 10 | 0 | explosion | `ExplosionTick_24F60` |
-| 10 | 1 | created with the mana ball when a creature dies | `sub_1A800` |
-| 10 | 6 | spawned when a spell-7 jar in state 3t+2 is picked up | `SpellJarSpawnTick_55D30_56260` |
+| 10 | 1 | created with the mana ball when a creature dies | `KillCreature_1A800` |
+| 10 | 6 | fire (named from its sprite by the user); spawned by Wall of Fire and when a spell-7 jar in state 3t+2 is picked up | `FireTick_252D0` |
 | 10 | 16 | lava from a volcano eruption | created by 10/18 |
 | 10 | 17 | expanding explosion ring: one 10/0 explosion per ring point per tick | `ExplosionRingTick_25CE0` |
 | 10 | 18 | volcano eruption emitter (128 ticks, then removes itself) | `VolcanoEruptionTick_25EC0` |
-| 10 | 19 | created by each eruption start, index in game state +38 | |
+| 10 | 19 | volcano fire, created by each eruption start, index in game state +38 | `VolcanoFireTick_26140` |
+| 10 | 5 | water splash (e.g. a burnt tree falling into water) | named from its sprite by the user |
+| 10 | 13, 14 | smoke clouds (made by fires) | named from their sprites by the user |
+| 10 | 34 | mirror | named from its sprite by the user |
+| 10 | 44 | boulder (9/14 is the boulder missile) | named from its sprite by the user |
+| 10 | 45 | the player's flag | named from its sprite by the user |
 | 10 | 27 | terrain-raising level-build step | `RaiseTerrainStrip*` |
 | 10 | 39 | mana ball | mana at +140; +144 = owner (adds its mana to the owner's +136 every tick) |
 | 10 | 40 | death marker of a wizard: holds its mana balls until it respawns (state 42) | `DeathMarkerTick_275C0`, original-bugs #12 |
 | 10 | 52 | crab spawn timer (state 0x38) | |
+| 11 | 0..31 | switches/triggers: `CreateSwitch_3BB20(pos, type, state)`, wrappers `CreateSwitchNN_*` (state = type); MC2 calls this class switches | |
 | 11 | 2 | trigger (marked by standing stones on level 26; not recyclable) | life 300 |
-| 12 | 0..23 | spell, type = spell number (0 fireball, 2 speed, 16 castle) | states below |
+| 12 | 0..23 | spell, type = spell number (list below) | states below |
+
+Computer wizards (`ComputerWizardTick_13170`): AI mode = wizard data +415, chosen by `AiChooseAction_136C0` from
+check/start pairs. 1 castle upgrade (`AiCastleUpgradeMode_13800`), 3 build castle (`AiBuildCastle_138F0`), 6
+possession (`AiPossessionMode_13BA0`), 7 attack castle (`AiAttackCastleMode_13CA0`), 8 attack wizard, 9 attack
+balloon (8, 9 and 13 share `sub_13DC0`). Not identified yet: 2/5 (no-op), 4, 11 (below half life, targets the own
+castle), 12, 13. Target entity +146, its tag +148 (`EntityTag_15420`: id + type + 128*class, so `AiTargetValid_15440` notices
+when the slot has been reused). Class-3 entities (wizards, castles, balloons) are in the
+list at `str_AE408_AE3F8` +36462.
+
+Sprites: an entity's +86 indexes `unk_99BA0x`; its `var_0` is the first texture map in data/tmaps0-0 (TAB: 10-byte
+entries, offset at +4, frame group at +8; each DAT entry RNC-packed: 6-byte header flag/?/width/height, raw
+width*height pixels; flag bit 0 = FLC deltas follow (frame count u16, then 0xF1FA frames with SS2/BRUN chunks,
+`RegisterTmapAnim_10D40`/`AdvanceTmapAnim_10EB0`/`ApplyFlcFrame_1002D`)). Palette data/pal0-0.dat (6-bit).
+
+Spell numbers (from the spell-menu icons `begSprTab[6 + t]` of `hspr0-0`/`mspr0-0`, names confirmed by the
+user): 0 Fireball, 1 Heal, 2 Speed, 3 Possession, 4 Shield, 5 Beyond Sight, 6 Earthquake, 7 Meteor, 8 Volcano,
+9 Crater, 10 Teleport, 11 Duel, 12 Invisible, 13 Steal Mana, 14 Rebound, 15 Lightning, 16 Castle, 17 Undead Army,
+18 Lightning Storm, 19 Mana Magnet, 20 Wall of Fire, 21 Reverse Speed, 22 Global Death, 23 Rapid Fireball. The
+game text (`data/etext.dat`) has no spell names. Most cast handlers (`Cast<Spell>_*`) create a class 9 missile
+(`Create<Spell>Missile_*`) and store the class/type of its payload in the missile's +68/+69. `UpdateMissile_52770_52AB0`
+creates that entity on impact (`Create<Spell>Effect_*`, class 10). Example: Volcano -> 9/4 -> 10/9 -> 10/18 eruption.
+
+Creatures (class 5), type t: states 6t..6t+5 = idle (`CreatureIdleTick_19B10`), the type's own main state
+(the constructor's), attack (`CreatureAttackTick_1A120` or a type-specific routine), follow a same-type leader
+(`UpdateFollower_1A390`), dying (`CreatureDying_1A6C0`: kill credit for the player) and dead (`KillCreature_1A800`).
+Types 9 and 11 start in their +0 state and differ; state 120 = body segments (`SegmentFollowTick_19550`).
 
 Spells (class 12), spell t: state 3t = owned, handler = the spell's cast routine (`CastFireball_56090`,
 `SpeedSpellTick_56380`, `CastCastle_57610`, ...); 3t+1 = jar on the ground (`SpellJarTick_55DB0_562E0`);
@@ -599,7 +644,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
 28. **Read-modify-write that is really a copy.** `a->speed += b->accel` was `a->speed = b->speed +
     b->accel` (worms accelerating forever and flying). When a value grows without bound, disassemble.
 29. **Texture over-reads.** The rasteriser reads up to 64 KB past a texture; loaded data files are
-    padded with zeros (`sub_634E0_639F0`) so this is defined and identical in Debug and Release - a
+    padded with zeros (`LoadPathFile_634E0_639F0`) so this is defined and identical in Debug and Release - a
     Debug/Release golden mismatch is the symptom of such reads (find them with ASan).
 30. **Operator precedence in hand-edited expressions.** `features & 0xffff >= 0` is `features & 1`
     (comparison binds tighter than `&`): every other terrain cell lost the water mode - checkerboard
@@ -624,7 +669,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     (original: `[esp+1Ch]` = first argument). The entity was never removed and level loading
     (`sub_36620_369E0`) looped forever (level 8 freeze). All 431 table handlers were checked for >1 parameter.
     Split stack structs again: `LightningBoltTick_535E0_53920` passed `&v27` (int) as the `axis_3d` step of
-    `sub_41EC0_42200`; the z step went past `v27`, so bolts never climbed/dived to their target (no lock-on).
+    `MoveAlongHeading_41EC0_42200`; the z step went past `v27`, so bolts never climbed/dived to their target (no lock-on).
     No other `int` local is passed as `axis_3d*` (scanned).
     Signedness (#50 family): `NextRingOffset_114B0` read the ring tables' (dx, dy) as unsigned bytes (asm
     `movsx`), so every area effect built on the ring iterator (meteor crater, ...) only reached one side
@@ -680,7 +725,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     `*WScreen`/`*BScreen` a guard band (`MallocGuarded`, freed through `free_426E0_42A20`); remc2
     keeps the same tables. Symptom: intermittent crash (heap-layout dependent) - use `tools/asan_run.sh`.
     Related: `ShowLevelPerformance_4E5B0_4E8F0` freed its font and then drew one more pass with it.
-46. **Half-converted typed offsets (again).** `sub_13BA0` (AI wizard, mode 6: chase target) computed its
+46. **Half-converted typed offsets (again).** `AiPossessionMode_13BA0` (AI wizard, mode 6: chase target) computed its
     heading towards `((uint8_t*)v1) + 36` with `v1` a `_WORD*` - 36 *bytes* into the target instead of
     its position at byte 72 (`v1 + 36`, asm `lea edi,[esi+48h]`). The AI wizard flew to the map corner
     and circled there. When one call uses `(uint8_t*)v + N` and a sibling uses `v + N`, check the asm.
@@ -740,7 +785,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     `!byte_B5D3E && a1 != 2`; the asm takes it for every a1 when `byte_B5D3E == 0`, with a1 == 2 sharing
     the a1 == 0 offset - billboard sprites (`DrawSprite_2FC50`, a1 = 2) were not rotated with the carpet's
     roll. Found with `tools/diff_step.py` (see §4).
-57. **Statements left commented out.** `sub_590D0_595E0` had the flag reset `//*result = v3 & 0xF7;` as
+57. **Statements left commented out.** `AdvanceTextureAnims_590D0_595E0` had the flag reset `//*result = v3 & 0xF7;` as
     a comment: the sprite drawers set bit 8 on a sprite when they draw it and this per-frame pass clears
     it and advances the animation of the drawn ones - without the reset every sprite drawn once kept
     animating forever. Commented-out assignments inside decompiled bodies deserve a look at the asm.
@@ -788,13 +833,13 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     `lea esi, [ecx + eax*2 + 0x23d9]` with eax = 3 * player (0x44D6F), and the eight record handlers
     `SetPlayerStart0..7` write 9177, 9183, ..., 9219.
     - The port declared an 8-byte struct (`axis_3d` + an invented `uint16 v_9181`), so
-      `sub_44D30_45070` read player n's start 2n bytes too far.
+      `SpawnWizard_44D30_45070` read player n's start 2n bytes too far.
     - Player 0 (the human) was right. Every computer wizard started at a mix of its own y/z and the
       next entry (level 15: red at tile (186,16) instead of (42,186)), with its castle there too.
     - The same `memset(..., 48)` beside it gave it away: 8 x 6 = 48.
     - Check: an array's element size (`sizeof(T)` x count) against the original's index arithmetic
       (`imul`/`lea` scale) and any memset/memcpy of the whole array.
-65. **Flag constant ORed into one byte of a flag dword.** `ExplosionRingTick_25CE0` and `sub_29780` had
+65. **Flag constant ORed into one byte of a flag dword.** `ExplosionRingTick_25CE0` and `WallOfFireEffectTick_29780` had
     `var_29811_16.byte[0] |= 0x10002u` where the original does `or dword ptr [ebx+0x10], 0x10002`:
     the byte store kept the 0x2 and dropped the 0x10000 (+18 bit 0). Found as a lone one-byte
     `diff_tick` difference (`entity N +18: orig 1 port 0`). Grep for `byte[k] |= 0x` / `&= ~0x` with
@@ -826,6 +871,13 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     eax,1E0h; jb` at 0x4D662-0x4D674). Hex-Rays saw no write to the counter inside the loop and emitted
     `while ( 1 ) ;`, so the game hung after the outro. Port tick waits call `PortTimer_Yield()` in the
     loop. No other `while ( 1 ) ;` is left (2026-11-15).
+71. **A `return 0` stub standing in for a real function.** The state tables reference about 20 one-line
+    stubs (`int sub_49B70() { return 0; };`, now `EmptyStateHandler_*`). They are bare `ret`s in the original, except `Class5Type15IdleTick_1FF50`
+    (class 5 state 90). IDA decoded the code-segment table at 0x1FF40 (the turn weights, see
+    `turnWeights_1FF40`) as code (`sub_1FF40`, junk), lost the function at 0x1FF50 behind it
+    (`push 5Ah; push a1; call 0x19B10` = `CreatureIdleTick_19B10`), and the port stubbed it out. Check every stub with
+    `tools/orig_disasm.py 0xADDR --max 3`: it must be `ret` (or `xor eax,eax; ret`). All checked
+    2026-11-15.
 
 The MC2 renderer in remc2 (`GameRenderOriginal.cpp`, e.g. `DrawSprite_41BD3`) is structurally the
 same code as MC1's `BlitSprite_2C410_2C450`/`DrawSprite_*` and uses the same scratch offsets in the BScreen
@@ -855,7 +907,7 @@ space (§4).
 - Banks: `SNDSn-v.DAT/.TAB` (RNC packed; `sub_5D070` loads `snds%d-%d`, 14 sets). TAB entries are 32
   bytes: `name[18]`, `+18` offset into the DAT, `+26` length, `+30` word. Variant `-0` = 11025 Hz,
   `-1` = 22050 Hz (used: `byte_939EC = 1`), `-3` = low memory. Samples are unsigned 8-bit mono.
-- The game talks to the HMI SOS API (`sub_651F8`, `sub_6535C`, `sub_65965`, `sub_66118`, `sub_661A4`,
+- The game talks to the HMI SOS API (`IsSampleDone_651F8`, `sub_6535C`, `sub_65965`, `sub_66118`, `sub_661A4`,
   `sub_66324`); these forward to `port_sound` (32 SDL_mixer channels, volume/pan, looping when flag
   `0x4000` is set with the count at `+12`). The "sample done" state the game polls is driven by timer
   ticks, not by SDL callbacks, so goldens are identical with sound on or off.
@@ -1073,11 +1125,11 @@ How the level's actors work (useful for "X never spawns" reports):
   `data_8 == 0` records are created at load (`sub_37560_37920`), `0xFFFF` class-10 records are features
   (`GenerateFeatures_36430_367F0`), other values are trigger groups spawned by `sub_37440_37800(group)`
   when the human wizard (model 0 in the wizard list) touches the matching trigger entity
-  (`sub_59A80_59F90` & co., `sub_5A090_5A5A0`).
+  (`Switch00Tick_59A80_59F90` & co., `sub_5A090_5A5A0`).
 - Class 3 types 4..11 only store wizard start positions; wizards are created per player
-  (`sub_44D30_45070`): model 0 = human, model 1 = computer (state 1, `ComputerWizardTick_13170` AI, mode byte at
+  (`SpawnWizard_44D30_45070`): model 0 = human, model 1 = computer (state 1, `ComputerWizardTick_13170` AI, mode byte at
   player+415).
-- Class 10 type 39 = mana ball (mana at +140); class 5 type 5 creatures (state 31, `sub_1BD20`) seek mana
+- Class 10 type 39 = mana ball (mana at +140); class 5 type 5 creatures (state 31, `CrabTick_1BD20`) seek mana
   balls and turn mana into class 10 type 52 spawn timers (state 0x38) that raise another type 5.
 - `level_2_bugs.txt` (user recording) desynchronises at frame 1590 in level 1 with every build tried
   (deterministic, independent of audio and of the 6.2.36-38 fixes; the only input around it is fast
@@ -1093,7 +1145,7 @@ How the level's actors work (useful for "X never spawns" reports):
   targets (6.2.25); being hit flashed black instead of red (`byte_B700D/E/F` = `byte_B7010-3/-2/-1`,
   6.2.7). Regression replay: `tests/replays/castle_upgrade.txt` (a user recording).
 - Castle spell built the castle at the wrong place (6.2.22); post-level info FMV hung with sound on
-  (6.2.23); `byte_38C97[...]` castle-level reads in `sub_44D30_45070` now use the game-state field.
+  (6.2.23); `byte_38C97[...]` castle-level reads in `SpawnWizard_44D30_45070` now use the game-state field.
 
 Known open issues:
 - **Tools are platform-agnostic:** paths come from `tools/remc1_paths.py` (`find_port_exe()` = $REMC1_EXE or the
@@ -1105,13 +1157,13 @@ Known open issues:
   +54 = follower index. `UpdateFollower_1A390(a1x, a2)` (segment tick, `a2` = the segment type's base state,
   18 for these) takes `v3x = entity[a1x+52]` as the leader without validating it. When the segment's life
   drops below 0 (or it is hit by a wizard, damager class 3) it sets `v3x+146`, clears `v3x+52` and calls
-  `sub_424F0_42830(v3x, a2 + 2)` (state 20). If the real leader died earlier its slot can already hold
+  `SetEntityState_424F0_42830(v3x, a2 + 2)` (state 20). If the real leader died earlier its slot can already hold
   another entity: in `stuck_explosion_sprite.txt` (level 15) segment 174 dies at frame 36216, an explosion
   (10/0, `ExplosionTick_24F60`) reuses slot 174 at 36217, and at 36218 segment 157 (still +52 = 174) dies and puts
   the explosion into class-10 state 20 = handler 0x262C0, a bare `ret` (port: `sub_262C0`). The sprite
   never changes again. `diff_tick` (ticks 36216-36218, 36480-36650) and `diff_call` (draw at 36600) match
   CARPET.EXE exactly; `diff_tick --watch 58401` (entity 174 +70) shows the original writing 0x14 at
-  eip 0x424F8 via 0x1A52B (UpdateFollower) <- 0x19614 (`sub_19550`) <- 0x1B57C (`sub_1B570`).
+  eip 0x424F8 via 0x1A52B (UpdateFollower) <- 0x19614 (`SegmentFollowTick_19550`) <- 0x1B57C (`WormFollowTick_1B570`).
   Replay needs a build *without* the `CreatureShootAt_1AA40` fix (that fix changes level 15 from frame
   660): check out `sub_main.cpp` from before commit "Fix skeletons shooting into empty space", build,
   copy `build/win-x64/RelWithDebInfo` elsewhere and pass `--exe` / `REMC1_PORT_EXE`.
@@ -1148,8 +1200,8 @@ Known open issues:
 - Investigated 2026-10-25, kept (user decision: no deviation): the big crab at the end of level 22
   (`level22.recording`, entity 995, frame 12270) dropped no mana. Original bug, `docs/original-bugs.md`
   #9: its own lightning filled the entity table (277 class 9 type 9 bolt pieces, 66 new ones that
-  tick), so the death code's `CreateEntity` calls (mana ball from `sub_27690` 0x276E5, class 10 type 1
-  from `sub_1A800` 0x1A836) got null from `NewEvent_372C0_37680` and the mana was lost. Ticks
+  tick), so the death code's `CreateEntity` calls (mana ball from `DropManaBall_27690` 0x276E5, class 10 type 1
+  from `KillCreature_1A800` 0x1A836) got null from `NewEvent_372C0_37680` and the mana was lost. Ticks
   12269-12274 match the original byte for byte. Method worth reusing: when something "should have
   spawned", hook `CreateEntity_373F0_377B0` (0x373F0) in the emulator and print its return value at
   the caller's return address; hook `NewEvent` (0x372C0) to count new entities per caller.
@@ -1159,6 +1211,13 @@ Known open issues:
   entity's max mana 0. The port now skips stale entries (first triggers at tick 9127 of the recording,
   so the recording replays exactly only up to there). Also pattern #65 (flag OR truncated to a byte)
   and the harmless `JUMPOUT(0x36079)` in `sub_36080_36440` (a shared epilogue) removed.
+- Fixed 2026-11-15: the game's own movie recorder (`movie/gam%05d.dat` + `mvi%05d.dat`, game-state flag 2)
+  saved 8 bytes of game state instead of 232713: `sizeof(str_AE400_AE3F0)` is the pointer. The original
+  writes 0x38D09 bytes (0x3E430). Found while naming the file routines; the other `sizeof(global)` uses
+  are arrays or structs.
+- Fixed 2026-11-15: class 5 state 90 (the `6t` state of creature type 15) did nothing; the original calls
+  `CreatureIdleTick_19B10(a1, 90)` like every other `6t` creature state (pattern #71). Found while naming the dispatch
+  tables (not yet seen in a recording).
 - Fixed 2026-11-15: hang after the ending FMV (`level50-end-freeze.recording`, pattern #70). As in the
   original, finishing level 50 plays the outro, waits 4 s, sets the quit flag (+13327 of the player's
   `str_13323` entry) and the game exits.
@@ -1168,6 +1227,9 @@ Known open issues:
   `AiChooseManaToPossess_15080` and `AiFindRivalWizard_145B0` compare `50000 - maxMana/10*k/255` signed (`idiv`, `jge`/`jle`), the
   port unsigned via `_DWORD`, so targets owned by a wizard with a lot of mana took the other branch.
   Found in `possession_spell_bug.recording` (frames 56995, 59853), which now desyncs from frame 18360.
+  Fixed again 2026-11-15 in the two sibling checks of `AiChooseAction_136C0` (`AiFindRivalCastle_143A0`, `AiFindRivalBalloon_147E0`): the
+  same `50000 - ...` comparison plus a mana comparison each (`idiv`/`jge` in the original). `grep "50000 -"`
+  finds every copy.
 - Fixed 2026-11-04: the heal spell cost no mana while the caster's mana delta was not negative (pattern
   #68; `level30.recording`, frame 46500).
 - Fixed 2026-11-04: flaky access violations when a replay or game ended with AdLib music: only realtime
@@ -1202,7 +1264,7 @@ Known open issues:
 - `int386(0x33, …)` mouse calls are stubbed (return 0); mouse range/visibility calls do nothing.
 - Areas the upstream author listed as unfinished (`dev-info.txt`): terrain/sky/particle drawing
   (`DrawSkyTerrainParticles_2A700`, `sub_2C410`, `sub_2FC50`, `DrawWorld_30D90`), entity movement
-  (`sub_455D0`, `sub_41C70`), `sub_1BD20`.
+  (`sub_455D0`, `sub_41C70`), `CrabTick_1BD20`.
 
 ---
 
