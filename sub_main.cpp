@@ -550,23 +550,23 @@ int nullsub_2(void); // weak
 void ExplosionTick_24F60(Type_AE400_29795* a1x);
 void Class10Type1Tick_25130(int a1);
 void SpeedEffectTick_252B0(int a1);
-int Class10Type6Tick_252D0(int a1);
+int FireTick_252D0(int a1);
 void RemoveSelfTick_253E0(int a1);
 void Class10Type3Tick_253F0(int a1);
-void Class10Type5Tick_25410(Type_AE400_29795* a1);
+void WaterSplashTick_25410(Type_AE400_29795* a1);
 void VolcanoEffectTick_25470(Type_AE400_29795* a1);
 void Class10Type10Tick_25570(Type_AE400_29795* a1);
 void sub_255D0(Type_AE400_29795* a1, __int16 a2, __int16 a3);
 void CraterEffectTick_25670(Type_AE400_29795* a1);
 void PossessionEffectTick_25760(Type_AE400_29795* a1);
-void Class10Type13Tick_257B0(int a1);
-void Class10Type14Tick_258A0(int a1);
+void SmokeTick_257B0(int a1);
+void DarkSmokeTick_258A0(int a1);
 int nullsub_19(_DWORD); // weak
 void EarthquakeEffectTick_25990(Type_AE400_29795* a1);
 void LavaTick_25A60(int a1);
 void ExplosionRingTick_25CE0(Type_AE400_29795* a1);
 void VolcanoEruptionTick_25EC0(int a1);
-void Class10Type19Tick_26140(Type_AE400_29795* a1);
+void VolcanoFireTick_26140(Type_AE400_29795* a1);
 void LightningEffectTick_262D0(Type_AE400_29795* a1);
 void StealManaEffectTick_26360(Type_AE400_29795* a1);
 void DuelEffectTick_263C0(Type_AE400_29795* a1);
@@ -577,7 +577,7 @@ void RaiseTerrainStripX_26760(_WORD *a2);
 void Class10Type30Tick_26890(Type_AE400_29795* event);
 void Class10Type32Tick_26920(Type_AE400_29795* a1);
 void Class10Type51Tick_269A0(Type_AE400_29795* a1);
-void Class10Type34Tick_26A60(int a1);
+void MirrorTick_26A60(int a1);
 void sub_26C00(int a1);
 void Class10Type33Tick_26CE0(int a1);
 void sub_26D20(int a1);
@@ -588,14 +588,14 @@ void DeathMarkerTick_275C0(__int16 *a1);
 void DropManaBall_27690(_WORD *result, Type_AE400_29795* a2x);
 void MergeManaBalls_277D0(Type_AE400_29795* ev1, Type_AE400_29795* ev2);
 char sub_279D0(int a1);
-void sub_27D30(Type_AE400_29795* event);
+void PlayerFlagTick_27D30(Type_AE400_29795* event);
 void Class10Type41Tick_28200(int a1);
 char Class10Type42Tick_285C0(int a1);
 // int sub_28D10(int a1, int a2);
 void sub_28DC0(Type_AE400_29795* event);
 void sub_28FE0(int a1);
 void Class10Type43Tick_293D0(Type_AE400_29795* a1);
-void Class10Type44Tick_29540(Type_AE400_29795* a1);
+void BoulderTick_29540(Type_AE400_29795* a1);
 int sub_29640(Type_AE400_29795* event);
 void CrabSpawnTimerTick_296A0(Type_AE400_29795* a1);
 void sub_29700(int a1);
@@ -724,7 +724,7 @@ int sub_37B80(int a1);
 int sub_37BA0(int a1);
 int CreateTree_37BC0(int a1);
 int CreateStone_37CF0(int a1);
-int CreateClass2Type2_37D70(int a1);
+int CreateDolmen_37D70(int a1);
 int CreateStandingStone_37E00(int a1);
 int CreateClass2Type4_37E80(int a1);
 int CreateClass2Type5_37EF0(int a1);
@@ -771,7 +771,7 @@ int CreateHomingSpawnMissile_39F40(int a1);
 int CreateUndeadArmyMissile_39FC0(int a1);
 int CreateLightningStormMissile_3A040(int a1);
 int CreateClass9Type13_3A0C0(int a1);
-int CreateClass9Type14_3A1A0(int a1);
+int CreateBoulderMissile_3A1A0(int a1);
 int CreateClass9Type15_3A210(int a1);
 int CreateWallOfFireMissile_3A270(int a1);
 int CreateManaMagnetMissile_3A2F0(int a1);
@@ -782,21 +782,21 @@ int CreateClass10Type1_3A510(uint16_t* a1);
 int CreateSpeedEffect_3A570(uint16_t* a1);
 int CreateClass10Type3_3A5D0(uint16_t* a1);
 int CreateClass10Type4_3A640(uint16_t* a1);
-int CreateClass10Type5_3A6B0(uint16_t* a1);
-int CreateClass10Type6_3A730(uint16_t* a1);
+int CreateWaterSplash_3A6B0(uint16_t* a1);
+int CreateFire_3A730(uint16_t* a1);
 int CreateClass10Type7_3A7D0(uint16_t* a1);
 int CreateClass10Type8_3A870(uint16_t* a1);
 int CreateVolcanoEffect_3A8D0(uint16_t* a1);
 int CreateClass10Type10_3A930(uint16_t* a1);
 int CreateCraterEffect_3A9A0(uint16_t* a1);
 int CreatePossessionEffect_3AA10(uint16_t* a1);
-int CreateClass10Type13_3AAA0(uint16_t* a1);
-int CreateClass10Type14_3AB40(uint16_t* a1);
+int CreateSmoke_3AAA0(uint16_t* a1);
+int CreateDarkSmoke_3AB40(uint16_t* a1);
 int CreateEarthquakeEffect_3ABE0(uint16_t* a1);
 int CreateExplosionRing_3AC70(uint16_t* a1);
 int CreateLava_3ACC0(uint16_t* a1);
 int CreateVolcanoEruption_3ADB0(uint16_t* a1);
-int CreateClass10Type19_3AE00(uint16_t* a1);
+int CreateVolcanoFire_3AE00(uint16_t* a1);
 int CreateLightningEffect_3AE80(uint16_t* a1);
 int CreateStealManaEffect_3AF00(uint16_t* a1);
 int CreateDuelEffect_3AF80(uint16_t* a1);
@@ -808,18 +808,18 @@ int CreateClass10Type32_3B180(uint16_t* a1);
 int CreateClass10Type31_3B1D0(uint16_t* a1);
 int CreateClass10Type51_3B230(uint16_t* a1);
 int CreateClass10Type50_3B2A0(uint16_t* a1);
-int CreateClass10Type34_3B300(uint16_t* a1);
+int CreateMirror_3B300(uint16_t* a1);
 int sub_3B3D0(uint16_t* a1);
 int CreateUndeadArmyEffect_3B3E0(uint16_t* a1);
 int sub_3B460(uint16_t* a1);
 int CreateClass10Type33_3B4D0(uint16_t* a1);
 int CreateManaBall_3B5A0(uint16_t* a1);
 int CreateDeathMarker_3B620(uint16_t* a1);
-Type_AE400_29795* CreateClass10Type45_3B690(axis_3d* a1);
+Type_AE400_29795* CreatePlayerFlag_3B690(axis_3d* a1);
 int CreateClass10Type43_3B6F0(uint16_t* a1);
 int CreateClass10Type41_3B760(uint16_t* a1);
 int CreateClass10Type42_3B7B0_3BB30(uint16_t* a1);
-int CreateClass10Type44_3B800(uint16_t* a1);
+int CreateBoulder_3B800(uint16_t* a1);
 int CreateCrabSpawnTimer_3B860(uint16_t* a1);
 int CreateWallOfFireEffect_3B8E0(uint16_t* a1);
 int CreateManaMagnetEffect_3B970(uint16_t* a1);
@@ -1054,7 +1054,7 @@ void TreeTick_49890_49BD0(int a1);
 int sub_499C0_49D00(int a1);
 void sub_49A50_49D90(_WORD* a1);
 int StoneTick_49AA0_49DE0(int a1);
-int Class2Type2Tick_49AD0_49E10(int a1);
+int DolmenTick_49AD0_49E10(int a1);
 int StandingStoneTick_49B50_49E90(int a1);
 void sub_4A980_4ACC0();
 void MainMenuStep_4AB20_4AE60();
@@ -3467,7 +3467,7 @@ Type_254A34 str_254A34[] = {
 Type_254A34 str_254D48[] = {
 { 0x002548F4, 0x0000, PORT_FN(CreateTree_37BC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0001, PORT_FN(CreateStone_37CF0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0002, PORT_FN(CreateClass2Type2_37D70, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0002, PORT_FN(CreateDolmen_37D70, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0003, PORT_FN(CreateStandingStone_37E00, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0004, PORT_FN(CreateClass2Type4_37E80, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0005, PORT_FN(CreateClass2Type5_37EF0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
@@ -3584,7 +3584,7 @@ Type_254A34 str_255870[] = {
 { 0x002548F4, 0x000B, PORT_FN(CreateUndeadArmyMissile_39FC0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000C, PORT_FN(CreateLightningStormMissile_3A040, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000D, PORT_FN(CreateClass9Type13_3A0C0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000E, PORT_FN(CreateClass9Type14_3A1A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000E, PORT_FN(CreateBoulderMissile_3A1A0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000F, PORT_FN(CreateClass9Type15_3A210, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0010, PORT_FN(CreateWallOfFireMissile_3A270, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0011, PORT_FN(CreateManaMagnetMissile_3A2F0, Type_AE400_29795*(axis_3d*)), 0x0001, 0x0000 },
@@ -3598,21 +3598,21 @@ Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x0002, PORT_FN(CreateSpeedEffect_3A570, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0003, PORT_FN(CreateClass10Type3_3A5D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0004, PORT_FN(CreateClass10Type4_3A640, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0005, PORT_FN(CreateClass10Type5_3A6B0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0006, PORT_FN(CreateClass10Type6_3A730, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0005, PORT_FN(CreateWaterSplash_3A6B0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0006, PORT_FN(CreateFire_3A730, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0007, PORT_FN(CreateClass10Type7_3A7D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0008, PORT_FN(CreateClass10Type8_3A870, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0009, PORT_FN(CreateVolcanoEffect_3A8D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000A, PORT_FN(CreateClass10Type10_3A930, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000B, PORT_FN(CreateCraterEffect_3A9A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000C, PORT_FN(CreatePossessionEffect_3AA10, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000D, PORT_FN(CreateClass10Type13_3AAA0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x000E, PORT_FN(CreateClass10Type14_3AB40, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000D, PORT_FN(CreateSmoke_3AAA0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x000E, PORT_FN(CreateDarkSmoke_3AB40, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x000F, PORT_FN(CreateEarthquakeEffect_3ABE0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0010, PORT_FN(CreateLava_3ACC0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0011, PORT_FN(CreateExplosionRing_3AC70, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0012, PORT_FN(CreateVolcanoEruption_3ADB0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0013, PORT_FN(CreateClass10Type19_3AE00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0013, PORT_FN(CreateVolcanoFire_3AE00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0014, PORT_FN(NullConstructor_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0015, PORT_FN(NullConstructor_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0016, PORT_FN(NullConstructor_39A00, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
@@ -3627,7 +3627,7 @@ Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x001F, PORT_FN(CreateClass10Type31_3B1D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0020, PORT_FN(CreateClass10Type32_3B180, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0021, PORT_FN(CreateClass10Type33_3B4D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x0022, PORT_FN(CreateClass10Type34_3B300, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0022, PORT_FN(CreateMirror_3B300, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0023, PORT_FN(sub_3B3D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0024, PORT_FN(CreateUndeadArmyEffect_3B3E0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
@@ -3637,8 +3637,8 @@ Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x0029, PORT_FN(CreateClass10Type41_3B760, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x002A, PORT_FN(CreateClass10Type42_3B7B0_3BB30, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x002B, PORT_FN(CreateClass10Type43_3B6F0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x002C, PORT_FN(CreateClass10Type44_3B800, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
-{ 0x002548F4, 0x002D, (Type_AE400_29795 * (*)(axis_3d*))CreateClass10Type45_3B690, 0x0001, 0x0000 },
+{ 0x002548F4, 0x002C, PORT_FN(CreateBoulder_3B800, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x002D, (Type_AE400_29795 * (*)(axis_3d*))CreatePlayerFlag_3B690, 0x0001, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
@@ -3789,7 +3789,7 @@ Type_254A34x str_254C3C[] = {
 { 0x002548F4,0x0003,PORT_FN(StoneTick_49AA0_49DE0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))EmptyStateHandler_49AC0,0x0001,0x0000 },
 { 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))EmptyStateHandler_49AC0,0x0001,0x0000 },
-{ 0x002548F4,0x0006,PORT_FN(Class2Type2Tick_49AD0_49E10, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0006,PORT_FN(DolmenTick_49AD0_49E10, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0007,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B40,0x0001,0x0000 },
 { 0x002548F4,0x0008,(void (*)(Type_AE400_29795*))EmptyStateHandler_49B40,0x0001,0x0000 },
 { 0x002548F4,0x0009,PORT_FN(StandingStoneTick_49B50_49E90, void(Type_AE400_29795*)),0x0001,0x0000 },
@@ -4005,21 +4005,21 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x0002,PORT_FN(SpeedEffectTick_252B0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0003,PORT_FN(Class10Type3Tick_253F0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0004,(void (*)(Type_AE400_29795*))EmptyStateHandler_25980,0x0001,0x0000 },
-{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))Class10Type5Tick_25410,0x0001,0x0000 },
-{ 0x002548F4,0x0006,PORT_FN(Class10Type6Tick_252D0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0005,(void (*)(Type_AE400_29795*))WaterSplashTick_25410,0x0001,0x0000 },
+{ 0x002548F4,0x0006,PORT_FN(FireTick_252D0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0007,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0008,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0009,(void (*)(Type_AE400_29795*))VolcanoEffectTick_25470,0x0001,0x0000 },
 { 0x002548F4,0x000A,(void (*)(Type_AE400_29795*))Class10Type10Tick_25570,0x0001,0x0000 },
 { 0x002548F4,0x000B,(void (*)(Type_AE400_29795*))CraterEffectTick_25670,0x0001,0x0000 },
 { 0x002548F4,0x000C,(void (*)(Type_AE400_29795*))PossessionEffectTick_25760,0x0001,0x0000 },
-{ 0x002548F4,0x000D,PORT_FN(Class10Type13Tick_257B0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x000E,PORT_FN(Class10Type14Tick_258A0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000D,PORT_FN(SmokeTick_257B0, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x000E,PORT_FN(DarkSmokeTick_258A0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x000F,(void (*)(Type_AE400_29795*))EarthquakeEffectTick_25990,0x0001,0x0000 },
 { 0x002548F4,0x0010,PORT_FN(LavaTick_25A60, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0011,(void (*)(Type_AE400_29795*))ExplosionRingTick_25CE0,0x0001,0x0000 },
 { 0x002548F4,0x0012,PORT_FN(VolcanoEruptionTick_25EC0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0013,(void (*)(Type_AE400_29795*))Class10Type19Tick_26140,0x0001,0x0000 },
+{ 0x002548F4,0x0013,(void (*)(Type_AE400_29795*))VolcanoFireTick_26140,0x0001,0x0000 },
 { 0x002548F4,0x0014,(void (*)(Type_AE400_29795*))EmptyStateHandler_262C0,0x0001,0x0000 },
 { 0x002548F4,0x0015,(void (*)(Type_AE400_29795*))EmptyStateHandler_262C0,0x0001,0x0000 },
 { 0x002548F4,0x0016,(void (*)(Type_AE400_29795*))EmptyStateHandler_262C0,0x0001,0x0000 },
@@ -4036,7 +4036,7 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x0021,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0022,(void (*)(Type_AE400_29795*))Class10Type32Tick_26920,0x0001,0x0000 },
 { 0x002548F4,0x0023,PORT_FN(Class10Type33Tick_26CE0, void(Type_AE400_29795*)),0x0001,0x0000 },
-{ 0x002548F4,0x0024,PORT_FN(Class10Type34Tick_26A60, void(Type_AE400_29795*)),0x0001,0x0000 },
+{ 0x002548F4,0x0024,PORT_FN(MirrorTick_26A60, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0025,PORT_FN(sub_26C00, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0026,PORT_FN(UndeadArmyEffectTick_26E90, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 },
@@ -4046,12 +4046,12 @@ Type_254A34x str_255998[] = {
 { 0x002548F4,0x002B,PORT_FN(Class10Type41Tick_28200, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x002C,PORT_FN(Class10Type42Tick_285C0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x002D,(void (*)(Type_AE400_29795*))Class10Type43Tick_293D0,0x0001,0x0000 },
-{ 0x002548F4,0x002E,(void (*)(Type_AE400_29795*))Class10Type44Tick_29540,0x0000,0x0000 },
+{ 0x002548F4,0x002E,(void (*)(Type_AE400_29795*))BoulderTick_29540,0x0000,0x0000 },
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 },
-{ 0x002548F4,0x0030,(void (*)(Type_AE400_29795*))sub_27D30,0x0001,0x0000 },
+{ 0x002548F4,0x0030,(void (*)(Type_AE400_29795*))PlayerFlagTick_27D30,0x0001,0x0000 },
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 },
 { 0x002548F4,0x0000,nullptr,0x0000,0x0000 },
-{ 0x002548F4,0x0033,(void (*)(Type_AE400_29795*))sub_27D30,0x0001,0x0000 },
+{ 0x002548F4,0x0033,(void (*)(Type_AE400_29795*))PlayerFlagTick_27D30,0x0001,0x0000 },
 { 0x002548F4,0x0034,sub_28DC0,0x0001,0x0000 },
 { 0x002548F4,0x0035,PORT_FN(sub_28FE0, void(Type_AE400_29795*)),0x0001,0x0000 },
 { 0x002548F4,0x0036,PORT_FN(RemoveSelfTick_253E0, void(Type_AE400_29795*)),0x0001,0x0000 },
@@ -4204,11 +4204,11 @@ Type_96902 dword_96902[] = {//254902
 /// Constructor that creates nothing (original 0x39A00 is "xor eax,eax; ret"); class 10 types 20-22 and 24.
 int NullConstructor_39A00(uint16_t* a1) { return 0; };
 /*int (*off_97D12[])(int) = {
-CreateExplosion_3A490, CreateClass10Type1_3A510, CreateSpeedEffect_3A570, CreateClass10Type3_3A5D0, CreateClass10Type4_3A640, CreateClass10Type5_3A6B0, CreateClass10Type6_3A730, CreateClass10Type7_3A7D0,
-CreateClass10Type8_3A870, CreateVolcanoEffect_3A8D0, CreateClass10Type10_3A930, CreateCraterEffect_3A9A0, CreatePossessionEffect_3AA10, CreateClass10Type13_3AAA0, CreateClass10Type14_3AB40, CreateEarthquakeEffect_3ABE0,
-CreateLava_3ACC0, CreateExplosionRing_3AC70, CreateVolcanoEruption_3ADB0, CreateClass10Type19_3AE00, loc_39A00, loc_39A00, loc_39A00, CreateLightningEffect_3AE80,
+CreateExplosion_3A490, CreateClass10Type1_3A510, CreateSpeedEffect_3A570, CreateClass10Type3_3A5D0, CreateClass10Type4_3A640, CreateWaterSplash_3A6B0, CreateFire_3A730, CreateClass10Type7_3A7D0,
+CreateClass10Type8_3A870, CreateVolcanoEffect_3A8D0, CreateClass10Type10_3A930, CreateCraterEffect_3A9A0, CreatePossessionEffect_3AA10, CreateSmoke_3AAA0, CreateDarkSmoke_3AB40, CreateEarthquakeEffect_3ABE0,
+CreateLava_3ACC0, CreateExplosionRing_3AC70, CreateVolcanoEruption_3ADB0, CreateVolcanoFire_3AE00, loc_39A00, loc_39A00, loc_39A00, CreateLightningEffect_3AE80,
 loc_39A00, CreateStealManaEffect_3AF00, CreateDuelEffect_3AF80, CreateTerrainRaiseStep_3B000, CreateClass10Type28_3B060, CreateClass10Type29_3B120, CreateClass10Type30_3B0C0, CreateClass10Type31_3B1D0,
-CreateClass10Type32_3B180, CreateClass10Type33_3B4D0, CreateClass10Type34_3B300, sub_3B3D0, CreateUndeadArmyEffect_3B3E0 };*/
+CreateClass10Type32_3B180, CreateClass10Type33_3B4D0, CreateMirror_3B300, sub_3B3D0, CreateUndeadArmyEffect_3B3E0 };*/
 #pragma pack (1)
 typedef struct {
     Type_AE400_29795*(*adress)(axis_3d*);
@@ -4225,21 +4225,21 @@ Type_97D12 off_97D12[] = {
 { PORT_FN(CreateSpeedEffect_3A570, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 3 },
 { PORT_FN(CreateClass10Type3_3A5D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 4 },
 { PORT_FN(CreateClass10Type4_3A640, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 5 },
-{ PORT_FN(CreateClass10Type5_3A6B0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 6 },
-{ PORT_FN(CreateClass10Type6_3A730, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
+{ PORT_FN(CreateWaterSplash_3A6B0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 6 },
+{ PORT_FN(CreateFire_3A730, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 7 },
 { PORT_FN(CreateClass10Type7_3A7D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 8 },
 { PORT_FN(CreateClass10Type8_3A870, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 9 },
 { PORT_FN(CreateVolcanoEffect_3A8D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 10 },
 { PORT_FN(CreateClass10Type10_3A930, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 11 },
 { PORT_FN(CreateCraterEffect_3A9A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 12 },
 { PORT_FN(CreatePossessionEffect_3AA10, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 13 },
-{ PORT_FN(CreateClass10Type13_3AAA0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 14 },
-{ PORT_FN(CreateClass10Type14_3AB40, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 15 },
+{ PORT_FN(CreateSmoke_3AAA0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 14 },
+{ PORT_FN(CreateDarkSmoke_3AB40, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 15 },
 { PORT_FN(CreateEarthquakeEffect_3ABE0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 16 },
 { PORT_FN(CreateLava_3ACC0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 17 },
 { PORT_FN(CreateExplosionRing_3AC70, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 18 },
 { PORT_FN(CreateVolcanoEruption_3ADB0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 19 },
-{ PORT_FN(CreateClass10Type19_3AE00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 20 },
+{ PORT_FN(CreateVolcanoFire_3AE00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 20 },
 { PORT_FN(NullConstructor_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 21 },
 { PORT_FN(NullConstructor_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 22 },
 { PORT_FN(NullConstructor_39A00, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 23 },
@@ -4254,7 +4254,7 @@ Type_97D12 off_97D12[] = {
 { PORT_FN(CreateClass10Type31_3B1D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 32 },
 { PORT_FN(CreateClass10Type32_3B180, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 33 },
 { PORT_FN(CreateClass10Type33_3B4D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 34 },
-{ PORT_FN(CreateClass10Type34_3B300, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 35 },
+{ PORT_FN(CreateMirror_3B300, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 35 },
 { PORT_FN(sub_3B3D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 36 },
 { PORT_FN(CreateUndeadArmyEffect_3B3E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 38 },
@@ -4264,8 +4264,8 @@ Type_97D12 off_97D12[] = {
 { PORT_FN(CreateClass10Type41_3B760, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 42 },
 { PORT_FN(CreateClass10Type42_3B7B0_3BB30, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 43 },
 { PORT_FN(CreateClass10Type43_3B6F0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 44 },
-{ PORT_FN(CreateClass10Type44_3B800, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 45 },
-{ &CreateClass10Type45_3B690, 1, 0x002548F4, 0 },
+{ PORT_FN(CreateBoulder_3B800, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 45 },
+{ &CreatePlayerFlag_3B690, 1, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 0 },
@@ -27282,9 +27282,8 @@ void SpeedEffectTick_252B0(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// TODO: rename when the entity is identified (class 10 type 6).
-/// Per-tick handler of class 10 state 6 (set by CreateClass10Type6_3A730).
-int Class10Type6Tick_252D0(int a1)
+/// Fire: Per-tick handler of class 10 state 6 (set by CreateClass10Type6_3A730). Identified from its decoded sprite (named by the user).
+int FireTick_252D0(int a1)
 {
   int v1; // eax
   __int16 v2; // cx
@@ -27366,9 +27365,8 @@ void Class10Type3Tick_253F0(int a1)
 }
 
 //SYNCHRONIZE WITH REMC1
-/// TODO: rename when the entity is identified (class 10 type 5).
-/// Per-tick handler of class 10 state 5, the initial state of type 5.
-void Class10Type5Tick_25410(Type_AE400_29795* a1x)
+/// Water splash: Per-tick handler of class 10 state 5, the initial state of type 5. Identified from its decoded sprite (named by the user).
+void WaterSplashTick_25410(Type_AE400_29795* a1x)
 {
   int v1; // edx
   int v2; // eax
@@ -27539,9 +27537,8 @@ void PossessionEffectTick_25760(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// TODO: rename when the entity is identified (class 10 type 13).
-/// Per-tick handler of class 10 state 13, the initial state of type 13.
-void Class10Type13Tick_257B0(int a1)
+/// Smoke cloud: Per-tick handler of class 10 state 13, the initial state of type 13. Identified from its decoded sprite (named by the user).
+void SmokeTick_257B0(int a1)
 {
   int v1; // eax
   __int16 v3; // dx
@@ -27588,9 +27585,8 @@ void Class10Type13Tick_257B0(int a1)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// TODO: rename when the entity is identified (class 10 type 14).
-/// Per-tick handler of class 10 state 14, the initial state of type 14.
-void Class10Type14Tick_258A0(int a1)
+/// Dark smoke cloud: Per-tick handler of class 10 state 14, the initial state of type 14. Identified from its decoded sprite (named by the user).
+void DarkSmokeTick_258A0(int a1)
 {
 	int v1; // eax
 	__int16 v3; // dx
@@ -27959,9 +27955,8 @@ LABEL_5:
 }
 
 //SYNCHRONIZED WITH REMC1
-/// TODO: rename when the entity is identified (class 10 type 19).
-/// Per-tick handler of class 10 state 19 (set by CreateClass10Type19_3AE00).
-void Class10Type19Tick_26140(Type_AE400_29795* a1x)
+/// Volcano fire: Per-tick handler of class 10 state 19 (set by CreateClass10Type19_3AE00). Identified from its decoded sprite (named by the user).
+void VolcanoFireTick_26140(Type_AE400_29795* a1x)
 {
   int v1; // eax
   int v2; // edi
@@ -28327,9 +28322,8 @@ void Class10Type51Tick_269A0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// TODO: rename when the entity is identified (class 10 type 34).
-/// Per-tick handler of class 10 state 36, the initial state of type 34.
-void Class10Type34Tick_26A60(int a1)
+/// Mirror: Per-tick handler of class 10 state 36, the initial state of type 34. Identified from its decoded sprite (named by the user).
+void MirrorTick_26A60(int a1)
 {
   int v1; // eax
   int v2; // edx
@@ -29163,7 +29157,8 @@ LABEL_42:
 
 int compare_27D30= 0;
 //SYNCHRONIZED WITH REMC1
-void sub_27D30(Type_AE400_29795* event)//1F8D30_
+/// Per-tick handler of the player's flag (class 10 type 45, state 51, set by CreatePlayerFlag_3B690). Identified from its decoded sprite (named by the user).
+void PlayerFlagTick_27D30(Type_AE400_29795* event)//1F8D30_
 {
 	//int v1; // eax
 	int v2; // esi
@@ -30221,9 +30216,8 @@ void Class10Type43Tick_293D0(Type_AE400_29795* a1x)
 }
 
 //SYNCHRONIZED WITH REMC1
-/// TODO: rename when the entity is identified (class 10 type 44).
-/// Per-tick handler of class 10 state 46, the initial state of type 44.
-void Class10Type44Tick_29540(Type_AE400_29795* a1x)
+/// Boulder: Per-tick handler of class 10 state 46, the initial state of type 44. Identified from its decoded sprite (named by the user).
+void BoulderTick_29540(Type_AE400_29795* a1x)
 {
   //int v1; // eax
   __int16 v2; // ax
@@ -43780,9 +43774,8 @@ int CreateStone_37CF0(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00037D70) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 2 type 2).
-/// Constructor of class 2 type 2 (initial state 6).
-int CreateClass2Type2_37D70(int a1)
+/// Constructor of the dolmen (class 2 type 2) (initial state 6). Identified from its decoded sprite (named by the user).
+int CreateDolmen_37D70(int a1)
 {
   int result; // eax
   _WORD *v2; // ebx
@@ -43833,7 +43826,7 @@ int CreateStandingStone_37E00(int a1)
 
 //----- (00037E80) --------------------------------------------------------
 /// TODO: rename when the entity is identified (class 2 type 4).
-/// Constructor of class 2 type 4 (initial state 12).
+/// Constructor of class 2 type 4 (initial state 12); sprite 48 is cut content (a castle texture), per the user.
 int CreateClass2Type4_37E80(int a1)
 {
   int result; // eax
@@ -43858,7 +43851,7 @@ int CreateClass2Type4_37E80(int a1)
 
 //----- (00037EF0) --------------------------------------------------------
 /// TODO: rename when the entity is identified (class 2 type 5).
-/// Constructor of class 2 type 5 (initial state 15).
+/// Constructor of class 2 type 5 (initial state 15); sprite 48 is cut content (a castle texture), per the user.
 int CreateClass2Type5_37EF0(int a1)
 {
   int result; // eax
@@ -45382,7 +45375,7 @@ int CreateCraterMissile_39CC0(int a1)
 
 //----- (00039D40) --------------------------------------------------------
 /// TODO: rename when the entity is identified (class 9 type 6).
-/// Constructor of class 9 type 6 (initial state 6).
+/// Constructor of class 9 type 6 (initial state 6); its sprite looks like a cut projectile graphic, per the user.
 int CreateClass9Type6_39D40(int a1)
 {
   int result; // eax
@@ -45628,9 +45621,8 @@ int CreateClass9Type13_3A0C0(int a1)
 }
 
 //----- (0003A1A0) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 9 type 14).
-/// Constructor of class 9 type 14 (initial state 15).
-int CreateClass9Type14_3A1A0(int a1)
+/// Constructor of the boulder missile (class 9 type 14) (initial state 15). Identified from its decoded sprite (named by the user).
+int CreateBoulderMissile_3A1A0(int a1)
 {
   int result; // eax
   int v2; // ebx
@@ -45656,7 +45648,7 @@ int CreateClass9Type14_3A1A0(int a1)
 
 //----- (0003A210) --------------------------------------------------------
 /// TODO: rename when the entity is identified (class 9 type 15).
-/// Constructor of class 9 type 15 (initial state 16).
+/// Constructor of class 9 type 15 (initial state 16); its sprite looks like a cut projectile graphic, per the user.
 int CreateClass9Type15_3A210(int a1)
 {
   int v1; // eax
@@ -45778,7 +45770,7 @@ int CreateGlobalDeathMissile_3A390(int a1)
 
 //----- (0003A410) --------------------------------------------------------
 /// TODO: rename when the entity is identified (class 9 type 19).
-/// Constructor of class 9 type 19 (initial state 20).
+/// Constructor of class 9 type 19 (initial state 20); its sprite is the fireball graphic.
 int CreateClass9Type19_3A410(int a1)
 {
   int result; // eax
@@ -45954,9 +45946,8 @@ int CreateClass10Type4_3A640(uint16_t* a1)
 }
 
 //----- (0003A6B0) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 5).
-/// Constructor of class 10 type 5 (initial state 5).
-int CreateClass10Type5_3A6B0(uint16_t* a1)
+/// Constructor of the water splash (class 10 type 5) (initial state 5). Identified from its decoded sprite (named by the user).
+int CreateWaterSplash_3A6B0(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -45986,9 +45977,8 @@ int CreateClass10Type5_3A6B0(uint16_t* a1)
 }
 
 //----- (0003A730) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 6).
-/// Constructor of class 10 type 6 (state 6); spawned when a spell-7 jar in state 3t+2 is picked up.
-int CreateClass10Type6_3A730(uint16_t* a1)
+/// Constructor of the fire (class 10 type 6) (state 6); spawned when a spell-7 jar in state 3t+2 is picked up. Identified from its decoded sprite (named by the user).
+int CreateFire_3A730(uint16_t* a1)
 {
   int v1; // eax
   _WORD *v2; // ebx
@@ -46194,9 +46184,8 @@ int CreatePossessionEffect_3AA10(uint16_t* a1)
 }
 
 //----- (0003AAA0) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 13).
-/// Constructor of class 10 type 13 (initial state 13).
-int CreateClass10Type13_3AAA0(uint16_t* a1)
+/// Constructor of the smoke cloud (class 10 type 13) (initial state 13). Identified from its decoded sprite (named by the user).
+int CreateSmoke_3AAA0(uint16_t* a1)
 {
   int result; // eax
   int v2; // ebx
@@ -46239,9 +46228,8 @@ int CreateClass10Type13_3AAA0(uint16_t* a1)
 }
 
 //----- (0003AB40) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 14).
-/// Constructor of class 10 type 14 (initial state 14).
-int CreateClass10Type14_3AB40(uint16_t* a1)
+/// Constructor of the dark smoke cloud (class 10 type 14) (initial state 14). Identified from its decoded sprite (named by the user).
+int CreateDarkSmoke_3AB40(uint16_t* a1)
 {
   int result; // eax
   int v2; // ebx
@@ -46419,9 +46407,8 @@ int CreateVolcanoEruption_3ADB0(uint16_t* a1)
 }
 
 //----- (0003AE00) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 19).
-/// Constructor of class 10 type 19 (state 19); created by each volcano eruption start, index kept in game state +38.
-int CreateClass10Type19_3AE00(uint16_t* a1)
+/// Constructor of the volcano fire (class 10 type 19) (state 19); created by each volcano eruption start, index kept in game state +38. Identified from its decoded sprite (named by the user).
+int CreateVolcanoFire_3AE00(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -46734,9 +46721,8 @@ int CreateClass10Type50_3B2A0(uint16_t* a1)
 }
 
 //----- (0003B300) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 34).
-/// Constructor of class 10 type 34 (initial state 36).
-int CreateClass10Type34_3B300(uint16_t* a1)
+/// Constructor of the mirror (class 10 type 34) (initial state 36). Identified from its decoded sprite (named by the user).
+int CreateMirror_3B300(uint16_t* a1)
 {
   int result; // eax
   int v2; // ebx
@@ -46913,9 +46899,8 @@ int CreateDeathMarker_3B620(uint16_t* a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (0003B690) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 45).
-/// Constructor of class 10 type 45 (initial state 51).
-Type_AE400_29795* CreateClass10Type45_3B690(axis_3d* position)//20C690_
+/// Constructor of the player's flag (class 10 type 45) (initial state 51). Identified from its decoded sprite (named by the user).
+Type_AE400_29795* CreatePlayerFlag_3B690(axis_3d* position)//20C690_
 {
   Type_AE400_29795* event = NewEvent_372C0_37680();
   if (event)
@@ -47010,9 +46995,8 @@ int CreateClass10Type42_3B7B0_3BB30(uint16_t* a1)
 }
 
 //----- (0003B800) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 10 type 44).
-/// Constructor of class 10 type 44 (initial state 46).
-int CreateClass10Type44_3B800(uint16_t* a1)
+/// Constructor of the boulder (class 10 type 44) (initial state 46). Identified from its decoded sprite (named by the user).
+int CreateBoulder_3B800(uint16_t* a1)
 {
   int v1; // eax
   int v2; // ebx
@@ -57524,9 +57508,8 @@ int StoneTick_49AA0_49DE0(int a1)
 }
 
 //----- (00049AD0) --------------------------------------------------------
-/// TODO: rename when the entity is identified (class 2 type 2).
-/// Per-tick handler of class 2 state 6, the initial state of type 2.
-int Class2Type2Tick_49AD0_49E10(int a1)
+/// Dolmen: Per-tick handler of class 2 state 6, the initial state of type 2. Identified from its decoded sprite (named by the user).
+int DolmenTick_49AD0_49E10(int a1)
 {
   unsigned __int16 v1; // di
   int v2; // esi

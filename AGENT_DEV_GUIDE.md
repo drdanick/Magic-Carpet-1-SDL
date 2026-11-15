@@ -481,6 +481,8 @@ class, type)`). The state index is global within a class, not per type.
 |---|---|---|---|
 | 2 | 0 | tree (palm) | scenery, on the recycle list (original-bugs #10); state 2 = burnt (inferred) |
 | 2 | 1 | stone (kind not checked) | scenery, recyclable |
+| 2 | 2 | dolmen | named from its sprite by the user |
+| 2 | 4, 5 | unused: the sprite is cut castle-texture content (user) | |
 | 2 | 3 | standing stone (the stone rings that mark triggers) | scenery, recyclable |
 | 3 | 0 | wizard on a carpet (player 0 = local human) | model 0 human, 1 computer in the wizard list; `Type_1103` at +160 |
 | 3 | 2 | castle | inferred (level 26: life 40000, owner = wizard) |
@@ -504,11 +506,16 @@ class, type)`). The state index is global within a class, not per type.
 | 9 | 9 | lightning bolt piece | `LightningBoltTick_535E0_53920` |
 | 10 | 0 | explosion | `ExplosionTick_24F60` |
 | 10 | 1 | created with the mana ball when a creature dies | `KillCreature_1A800` |
-| 10 | 6 | spawned when a spell-7 jar in state 3t+2 is picked up | `SpellJarSpawnTick_55D30_56260` |
+| 10 | 6 | fire (named from its sprite by the user); spawned by Wall of Fire and when a spell-7 jar in state 3t+2 is picked up | `FireTick_252D0` |
 | 10 | 16 | lava from a volcano eruption | created by 10/18 |
 | 10 | 17 | expanding explosion ring: one 10/0 explosion per ring point per tick | `ExplosionRingTick_25CE0` |
 | 10 | 18 | volcano eruption emitter (128 ticks, then removes itself) | `VolcanoEruptionTick_25EC0` |
-| 10 | 19 | created by each eruption start, index in game state +38 | |
+| 10 | 19 | volcano fire, created by each eruption start, index in game state +38 | `VolcanoFireTick_26140` |
+| 10 | 5 | water splash (e.g. a burnt tree falling into water) | named from its sprite by the user |
+| 10 | 13, 14 | smoke clouds (made by fires) | named from their sprites by the user |
+| 10 | 34 | mirror | named from its sprite by the user |
+| 10 | 44 | boulder (9/14 is the boulder missile) | named from its sprite by the user |
+| 10 | 45 | the player's flag | named from its sprite by the user |
 | 10 | 27 | terrain-raising level-build step | `RaiseTerrainStrip*` |
 | 10 | 39 | mana ball | mana at +140; +144 = owner (adds its mana to the owner's +136 every tick) |
 | 10 | 40 | death marker of a wizard: holds its mana balls until it respawns (state 42) | `DeathMarkerTick_275C0`, original-bugs #12 |
