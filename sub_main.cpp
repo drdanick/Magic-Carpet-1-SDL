@@ -69757,24 +69757,19 @@ int SetupMouse_5C214_5C724()
   int v7; // [esp+48h] [ebp-Ch]
   //int i; // [esp+4Ch] [ebp-8h]
 
-  FixPerifery((char*)"mouseRes");
-
+  // PORT: there is no DOS mouse driver (int386 0x33 calls do nothing): the reset reports a mouse (v1[0] = -1),
+  // and SDL mouse input reaches the original handler through MouseEvents -> MouseHandler256_5BE72_5C382
   mouseInstalled_9AD98 = 0;
   segread(v5);
   v2[0] = 0;
   int386(51, v2, v1);//Mouse Reset/Get Mouse Installed Flag
-  //fix
   v1[0] = -1;
-  //fix
   if ( v1[0] != -1 )
     return 0;
   v2[0] = 12;
   v3 = 127;
-  //fix LOWORD(v7) = __CS__;
   v6 = (int (*)())sub_5BE6C;
   v4 = (int (*)())sub_5BE6C;
-  //fix v5[0] = __CS__;
-  FixPerifery((char*)"mouseSubr");
   int386x(51, v2, v1, v5);//Set Mouse User Defined Subroutine and Input Mask
   SetMouseLimits_5C468_5C978();
   if ( !dword_12EFC8_12EFB8 )
@@ -69793,14 +69788,12 @@ int SetupMouse_5C214_5C724()
   if ( dword_12EFB4 )
     SetPointer_5C05C_5C56C(dword_12EFB4);
   v2[0] = 2;
-  FixPerifery((char*)"mouseHide");
   int386(51, v2, v1);//Hide Mouse Cursor
   if ( (typeResolution_12F02E_12F01E & 8) != 0 )
   {
     v2[0] = 15;
     v3 = 1;
     LOWORD(v4) = 1;
-    FixPerifery((char*)"mouseSetPix");
     int386(51, v2, v1);//Set Mouse Mickey Pixel Ratio
   }
   mouseInstalled_9AD98 = 1;
