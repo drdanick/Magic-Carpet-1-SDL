@@ -70047,15 +70047,13 @@ void DelayTimer_5CB73(int a1, __int16 a2)
 {
   __int16 v2; // cx
 
-  FixPerifery();
-
   if ( dword_9ADC4 )
   {
     do
     {
       do
       {
-        //fix __asm { int     21h; DOS - GET CURRENT TIME }
+        // PORT: int 21h (DOS - GET CURRENT TIME) - not needed in the port
         v2 = 100 * HIBYTE(a2) + (unsigned __int8)a2;
         a2 = v2 - word_9ADB4;
       }
@@ -75171,22 +75169,10 @@ void sub_63338_63848()
 /// Name is a guess (not in the Hidden Worlds linker map).
 int AllocDosMemory_6342C_6393C(unsigned int a1)
 {
-  int v2[7]; // [esp+0h] [ebp-40h] BYREF
-  int v3[7]; // [esp+1Ch] [ebp-24h] BYREF
-  int v4; // [esp+38h] [ebp-8h]
-
-  FixPerifery();
-
-  v4 = 0;
-  if ( a1 < 0xA0000 )
-  {
-    v2[0] = 256;
-    v2[1] = (a1 + 15) >> 4;
-    int386(49, v2, v3);
-    if ( !v3[6] )
-      return (v3[3] << 16) | v3[0];
-  }
-  return v4;
+  // PORT: DPMI function 0x100 (DOS memory below 640 KB) does not exist in the port: report no memory (the old code
+  // read the result registers of the no-op int386 uninitialised). Its only caller, sub_63010_63520, has the code
+  // disabled anyway.
+  return 0;
 }
 // 62F78: using guessed type _DWORD int386(_DWORD, _DWORD, _DWORD);
 
@@ -76396,9 +76382,7 @@ __int16 sub_6666C(__int16 result)
 {
   _BOOL1 v1; // zf
 
-  FixPerifery();
-
-  //fix __asm { int     16h; KEYBOARD - GET ENHANCED SHIFT FLAGS (AT model 339,XT2,XT286,PS) }
+  // PORT: int 16h (KEYBOARD - GET ENHANCED SHIFT FLAGS (AT model 339,XT2,XT286,PS)) - not needed in the port
   byte_12EF71 = (result & 3) != 0;
   if ( (result & 4) != 0 )
     byte_12EF71 |= 2u;
@@ -76409,10 +76393,10 @@ __int16 sub_6666C(__int16 result)
     byte_12EF71 |= 4u;
   }
   lastPressedKey_12EF70_12EF60 = 0;
-  //fix __asm { int     16h; KEYBOARD - CHECK ENHANCED KEYSTROKE (AT model 339,XT2,XT286,PS) }
+  // PORT: int 16h (KEYBOARD - CHECK ENHANCED KEYSTROKE (AT model 339,XT2,XT286,PS)) - not needed in the port
   if ( !v1 )
   {
-      //fix __asm { int     16h; KEYBOARD - GET ENHANCED KEYSTROKE (AT model 339,XT2,XT286,PS) }
+      // PORT: int 16h (KEYBOARD - GET ENHANCED KEYSTROKE (AT model 339,XT2,XT286,PS)) - not needed in the port
     lastPressedKey_12EF70_12EF60 = 16;
   }
   return result;
@@ -76426,8 +76410,6 @@ __int16 sub_6666C(__int16 result)
 /// Original name: _sosTIMERDRVHandler (sostimer.asm), Hidden Worlds linker map.
 void SosTIMERDRVHandler_66CAD()
 {
-    FixPerifery();
-  //fix ((void (*)(_DWORD))_GETDS)((unsigned __int16)__DS__);
 }
 // 66CAD: using guessed type void SosTIMERDRVHandler_66CAD();
 
@@ -76469,20 +76451,16 @@ unsigned __int8 SosTIMERDRVInit_66D6A_6727A(int a1, __int16 a2, int a3, __int16 
   unsigned __int8 v6; // al
   unsigned __int8 result; // al
 
-  FixPerifery();
-
   *(_DWORD *)byte_9F1A8 = a3;
   *(_WORD *)&byte_9F1A8[4] = a4;
-  //fix word_9F1B0 = __DS__;
-  //fix word_9F1B6 = __DS__;
   if ( dword_A01C4 )
   {
     v4 = __inbyte(0x21u);
     __outbyte(0x21u, v4 | 1);
-    //fix __asm { int     21h; DOS - 2+ - GET INTERRUPT VECTOR }
+    // PORT: int 21h (DOS - 2+ - GET INTERRUPT VECTOR) - not needed in the port
     dword_9F19C = a1;
     LOWORD(dword_9F1A0) = a4;
-    //fix __asm { int     21h; DOS - SET INTERRUPT VECTOR }
+    // PORT: int 21h (DOS - SET INTERRUPT VECTOR) - not needed in the port
     __outbyte(0x43u, 0x36u);
     v5 = HIBYTE(a2);
     __outbyte(0x40u, a2);
@@ -76810,10 +76788,8 @@ void SosDRVLockMemory_674CD()
 {
   __int16 result; // ax
 
-  FixPerifery();
-
   result = 1536;
-  //fix __asm { int     31h; DPMI Services   ax=func xxxxh }
+  // PORT: int 31h (DPMI services) - not needed in the port
 }
 
 //----- (000674FA) --------------------------------------------------------
@@ -76822,10 +76798,8 @@ void SosDRVUnLockMemory_674FA()
 {
   __int16 result; // ax
 
-  FixPerifery();
-
   result = 1536;
-  //fix __asm { int     31h; DPMI Services   ax=func xxxxh }
+  // PORT: int 31h (DPMI services) - not needed in the port
 }
 
 //----- (00067527) --------------------------------------------------------
@@ -76852,9 +76826,7 @@ int SosGetPhysicalAddr_67557_67A67(__int16 a1, int a2, int a3)
 {
   int v3; // ecx
 
-  FixPerifery();
-
-  //fix __asm { int     31h; DPMI Services   ax=func xxxxh }
+  // PORT: int 31h (DPMI services) - not needed in the port
   v3 = a2 << 16;
   LOWORD(v3) = a1;
   return v3 + a3;
@@ -76864,8 +76836,6 @@ int SosGetPhysicalAddr_67557_67A67(__int16 a1, int a2, int a3)
 /// Original name: _sosMAKEProtectedPtr (sosdrv.asm), Hidden Worlds linker map.
 int SosMAKEProtectedPtr_67582()
 {
-
-    FixPerifery();
   // PORT: three DPMI int 31h calls (empty __asm block; x64 has no inline asm)
   return 0;
 }
@@ -76876,13 +76846,11 @@ __int16 SosRealAlloc_675C8(int a1, _DWORD *a2)
 {
   __int16 result; // ax
 
-  FixPerifery();
-
-  //fix __asm { int     31h; DPMI Services   ax=func xxxxh }
+  // PORT: int 31h (DPMI services) - not needed in the port
   *a2 = 4096;
-  //fix __asm { int     31h; DPMI Services   ax=func xxxxh }
+  // PORT: int 31h (DPMI services) - not needed in the port
   result = 1536;
-  //fix __asm { int     31h; DPMI Services   ax=func xxxxh }
+  // PORT: int 31h (DPMI services) - not needed in the port
   return result;
 }
 
@@ -77036,14 +77004,13 @@ int SosDRVSetAction_678DE(int (*a1)(_DWORD))
 
 //----- (0006790D) --------------------------------------------------------
 /// Original name: _sosDIGIInitForWindows (sosdrv.asm), Hidden Worlds linker map.
+/// Not reached in the port (DOS sound-driver code; the port plays sound through port_sound/port_music).
 __int16 SosDIGIInitForWindows_6790D()
 {
   __int16 result; // ax
 
-  FixPerifery();
-
   result = 5632;
-  //fix __asm { int     2Fh; - Multiplex - MS WINDOWS - ENHANCED WINDOWS INSTALLATION CHECK }
+  // PORT: int 2Fh (Multiplex - MS WINDOWS - ENHANCED WINDOWS INSTALLATION CHECK) - not needed in the port
   return result;
 }
 
@@ -77053,10 +77020,8 @@ __int16 SosDIGIUnInitForWindows_67944()
 {
   __int16 result; // ax
 
-  FixPerifery();
-
   result = 5632;
-  //fix __asm { int     2Fh; - Multiplex - MS WINDOWS - ENHANCED WINDOWS INSTALLATION CHECK }
+  // PORT: int 2Fh (Multiplex - MS WINDOWS - ENHANCED WINDOWS INSTALLATION CHECK) - not needed in the port
   return result;
 }
 
@@ -78892,11 +78857,10 @@ void SosYMUninitEnd_6A62D()
 //----- (0006A640) --------------------------------------------------------
 /// Writes value a2 to OPL (AdLib) register a1: address port, read delays, data port. DOS hardware access, stubbed in the port.
 /// Name is a guess (not in the Hidden Worlds linker map).
+/// Not reached in the port (DOS sound-driver code; the port plays sound through port_sound/port_music).
 unsigned __int8 YmWriteRegister_6A640(unsigned __int8 a1, unsigned __int8 a2)
 {
   unsigned __int16 v2; // dx
-
-  FixPerifery();
 
   v2 = dword_A06F0;
   __outbyte(dword_A06F0, a1);
@@ -78940,6 +78904,7 @@ unsigned __int8 YmWriteRegister_6A640(unsigned __int8 a1, unsigned __int8 a2)
 
 //----- (0006A737) --------------------------------------------------------
 /// Calls driver function a1 with parameters a2..a5 (sound driver glue; DOS-only).
+/// Not reached in the port (DOS sound-driver code; the port plays sound through port_sound/port_music).
 __int16 sub_6A737(void (*a1)(_DWORD), unsigned int a2, int a3, int a4, __int16 a5)
 {
   int v7; // ecx
@@ -78950,16 +78915,12 @@ __int16 sub_6A737(void (*a1)(_DWORD), unsigned int a2, int a3, int a4, __int16 a
   result = 0;
   //fix
 
-  FixPerifery();
-
   a1((uint32)OFF(a1));
   v7 = 5;
   do
   {
     //fix *MK_FP(a5, a4) = (char *)a1 + __readfsdword(a2);
     v8 = a4 + 4;
-    //fix result = __CS__;
-    //fix *MK_FP(a5, v8) = __CS__;
     a4 = v8 + 2;
     a2 += 8;
     --v7;
@@ -80146,23 +80107,8 @@ int ScanfGetChar_6C8C5(int a1)
 /// Name is a guess (not in the Hidden Worlds linker map).
 int FreeDosMemory_6D35C_6D86C(unsigned __int16 a1)
 {
-  int result; // eax
-  char v2[28]; // [esp+0h] [ebp-38h] BYREF
-  int v3[7]; // [esp+1Ch] [ebp-1Ch] BYREF
-
-  //fix
-  result = 0;
-  //fix
-
-  FixPerifery();
-
-  if ( a1 )
-  {
-    v3[0] = 257;
-    v3[3] = a1;
-    return int386(49, v3, v2);
-  }
-  return result;
+  // PORT: DPMI function 0x101 (free DOS memory); nothing to free in the port (see AllocDosMemory_6342C_6393C)
+  return 0;
 }
 // 62F78: using guessed type _DWORD int386(_DWORD, _DWORD, _DWORD);
 // 6D35C: using guessed type char var_38[28];
@@ -80486,13 +80432,12 @@ int AWE32INITMIDI_6E5B2()
 
 //----- (0006E65B) --------------------------------------------------------
 /// Original name: AWE32REGW (midieng.c), Hidden Worlds linker map.
+/// Not reached in the port (DOS sound-driver code; the port plays sound through port_sound/port_music).
 unsigned int __stdcall AWE32REGW_6E65B(unsigned __int16 a1, unsigned __int16 a2)
 {
   unsigned int v2; // kr00_4
   int v3; // ebx
   unsigned int result; // eax
-
-  FixPerifery();
 
   v2 = __readeflags();
   if ( (v2 & 0x200) != 0 )
@@ -80509,13 +80454,12 @@ unsigned int __stdcall AWE32REGW_6E65B(unsigned __int16 a1, unsigned __int16 a2)
 
 //----- (0006E6BF) --------------------------------------------------------
 /// Original name: AWE32REGRW (midieng.c), Hidden Worlds linker map.
+/// Not reached in the port (DOS sound-driver code; the port plays sound through port_sound/port_music).
 int __stdcall AWE32REGRW_6E6BF(unsigned __int16 a1)
 {
   unsigned int v1; // kr00_4
   int v2; // ebx
   int result; // eax
-
-  FixPerifery();
 
   v1 = __readeflags();
   if ( (v1 & 0x200) != 0 )
@@ -80531,12 +80475,11 @@ int __stdcall AWE32REGRW_6E6BF(unsigned __int16 a1)
 
 //----- (0006E727) --------------------------------------------------------
 /// Original name: AWE32REGDW (midieng.c), Hidden Worlds linker map.
+/// Not reached in the port (DOS sound-driver code; the port plays sound through port_sound/port_music).
 void __stdcall AWE32REGDW_6E727(unsigned __int16 a1, unsigned __int16 a2)
 {
   unsigned int v2; // kr00_4
   int v3; // ebx
-
-  FixPerifery();
 
   v2 = __readeflags();
   if ( (v2 & 0x200) != 0 )
@@ -80551,6 +80494,7 @@ void __stdcall AWE32REGDW_6E727(unsigned __int16 a1, unsigned __int16 a2)
 
 //----- (0006E7A0) --------------------------------------------------------
 /// Original name: AWE32REGRDW (midieng.c), Hidden Worlds linker map.
+/// Not reached in the port (DOS sound-driver code; the port plays sound through port_sound/port_music).
 int __stdcall AWE32REGRDW_6E7A0(unsigned __int16 a1)
 {
   unsigned int v1; // kr00_4
@@ -80561,8 +80505,6 @@ int __stdcall AWE32REGRDW_6E7A0(unsigned __int16 a1)
   int v6; // ebx
   unsigned __int16 v7; // ax
   int v8; // ebx
-
-  FixPerifery();
 
   v1 = __readeflags();
   if ( (v1 & 0x200) != 0 )
@@ -82059,14 +82001,13 @@ unsigned int sub_702F6()
 
 //----- (000706CC) --------------------------------------------------------
 /// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): sets up voices 30/31 (the DRAM refresh / effect voices).
+/// Not reached in the port (DOS sound-driver code; the port plays sound through port_sound/port_music).
 void sub_706CC()
 {
   unsigned __int16 v0; // si
   unsigned int v1; // kr00_4
   unsigned __int16 v2; // ax
   unsigned __int16 v3; // ax
-
-  FixPerifery();
 
   AWE32REGW_6E65B(0x80u, 0x541Eu);
   AWE32REGDW_6E727(0xFFE0u, 0x601Eu);
@@ -82339,11 +82280,9 @@ int sub_71B53()
 /// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
 void sub_71BC9(int a1, const void *a2, void *a3)
 {
-    FixPerifery();
-
   if ( byte_A0CC6 == 9 )
   {
-    //fix __asm { int     21h; DOS - GET DISK TRANSFER AREA ADDRESS }
+    // PORT: int 21h (DOS - GET DISK TRANSFER AREA ADDRESS) - not needed in the port
     qmemcpy(a3, a2, 0x2Bu);
   }
 }
