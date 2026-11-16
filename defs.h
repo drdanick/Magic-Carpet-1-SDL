@@ -438,9 +438,9 @@ template<class T> int8 __CFSHL__(T x, int y)
 // For C, we just provide macros, they are not quite correct.
 #define __ROL__(x, y) __rotl__(x, y)      // Rotate left
 #define __ROR__(x, y) __rotr__(x, y)      // Rotate right
-#define __CFSHL__(x, y) printf("invalid_operation:__CFSHL__(x, y)") // Generate carry flag for (x<<y)
+#define __CFSHL__(x, y) invalid_operation // Generate carry flag for (x<<y)
 #define __CFSHR__(x, y) invalid_operation // Generate carry flag for (x>>y)
-#define __CFADD__(x, y) printf("invalid_operation:__CFADD__(x, y)") // Generate carry flag for (x+y)
+#define __CFADD__(x, y) invalid_operation // Generate carry flag for (x+y)
 #define __CFSUB__(x, y) invalid_operation // Generate carry flag for (x-y)
 #define __OFADD__(x, y) invalid_operation // Generate overflow flag for (x+y)
 #define __OFSUB__(x, y) invalid_operation // Generate overflow flag for (x-y)

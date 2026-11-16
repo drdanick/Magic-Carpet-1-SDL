@@ -91,6 +91,9 @@ def stepwise(m, a):
         pc = AFTER_DISPATCH
     mu.hook_del(h)
     print(f'# {steps} handler calls in the tick, {shown} differed')
+    if m.lost_hooks or m.lost_hooks64:
+        print(f'# unicorn dropped the memory hooks in {m.lost_hooks} original and {m.lost_hooks64} port calls '
+              '(their writes were found by comparing memory, tools/emu.py Shadow)')
     return 0
 
 

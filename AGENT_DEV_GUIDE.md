@@ -333,6 +333,17 @@ the user's recordings after a gameplay fix are expected - verify with the harnes
 raw MIDI, driver timer events), which faults under Unicorn; those entry points and the port_music /
 port_timer calls that replaced them are in `SKIP_FUNCS` (both sides return 0). (9) A single
 `--snapshot-frame N` writes straight into the snapshot dir; a list writes `D/f<N>` subdirs.
+(10) Unicorn 2.1 sometimes restarts a store it takes for self-modifying code (seen with unaligned stores near
+translated code, e.g. `AddMapwho_41CF0_42030`'s `mov [r10+48h]` on an odd entity address) and then calls no
+memory hook for the rest of that `emu_start`: the writes were neither logged nor undone, giving differences that
+came and went with the build's code layout. Every call now returns through a probe store (`PROBE` in
+`tools/emu.py`); when the hook misses it, the call's writes are taken from a comparison with a shadow copy of
+memory (`Shadow`), on both machines. `diff_tick.py --stepwise` prints how many calls needed that.
+(12) The 64-bit machine stubs strlen/strcpy/strcat/strncpy/strcmp/_stricmp/memcmp (port code calls them; whole-frame
+draw snapshots and functions like SetupPlayers stopped with "port called import ..." before).
+(11) The 64-bit machine mirrors the original's memory (0x10000-0x150000) at the same offsets: entities the
+original created earlier in the tick (stepwise keeps its results) point to original globals, e.g. the type
+data at +156, and the port code follows them.
 
 Static audits (repo root, after a RelWithDebInfo build; all read `<data>/CD/CARPET.EXE`):
 - `tools/le_image.py` - LE loader with fixups applied (IDA addresses; `fixup_sites` = pointer dwords).
@@ -917,6 +928,17 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     (`push 5Ah; push a1; call 0x19B10` = `FnCreatureStand_19B10`), and the port stubbed it out. Check every stub with
     `tools/orig_disasm.py 0xADDR --max 3`: it must be `ret` (or `xor eax,eax; ret`). All checked
     2026-11-15.
+72. **An "uninitialised" IDA local that is an argument's stack slot.** A local whose declaration comment says
+    `[ebp+Nh]` (positive) lives in the caller's frame: usually an argument the function modified, which IDA
+    split off. `UpdateAreaAnyway_33E10_34200` had `v34` (`[esp+24h] [ebp+4h]`, the slot of `a1` after
+    `--LOBYTE(a1); --HIBYTE(a1)`) set to 0 under `//fix`, so the shading of every changed area was recomputed
+    around tile (0, 0) instead (stale terrain shading after craters, castles, earthquakes). Never give such a
+    variable a made-up value: read what the original keeps in that slot. The other `[ebp+...]` locals were
+    checked 2026-11-16 (all assigned before use).
+73. **A constant that IDA turned into a function address.** `VersionRequested_5A560_5AA70` printed
+    `sprintf(v32, "Carpet %d", sub_38D09)`: the original pushes the constant 0x38D09 (232713, the size of the game
+    state), which happens to be an address inside code, so IDA named it as a function and the port printed a code
+    pointer. A function name used as a value (not called) in a printf/arithmetic context is suspect: check the push.
 
 The MC2 renderer in remc2 (`GameRenderOriginal.cpp`, e.g. `DrawSprite_41BD3`) is structurally the
 same code as MC1's `DrawAThing_2C410_2C450`/`DrawSprite_*` and uses the same scratch offsets in the BScreen
@@ -1296,6 +1318,19 @@ Known open issues:
   fizzle effect). `tools/emu.py` now maps page 0 read-only (zeroed): the original reads DOS low memory
   through null entity pointers (`ComputerPlayersSpeed_15470`, original-bugs #3), which used to stop whole-tick
   diffs whenever an AI wizard was building a castle.
+- Fixed 2026-11-16: terrain shading (`mapShading`) not recomputed where the terrain changed, and recomputed
+  around tile (0, 0) instead (pattern #72, `UpdateAreaAnyway_33E10_34200`). Found with `diff_tick --stepwise`
+  (`FnEffectCrater_25670` steps in possession_spell_bug f40000); visible on the minimap where a castle is
+  built (golden `replay_castle_upgrade` regenerated). The same investigation found three harness artifacts,
+  not port bugs (gotchas 10, 11): the "build-dependent" `FnShotFireball_52B30_52E70` difference (f20000), the
+  `FnCreature11Stand_1DE40` / `FnEffectBigExplosion_25130` differences (f40000) and the
+  `FnShotStealMana_530C0_53400` crash (f56995). All three snapshots now match the original stepwise.
+- Fixed 2026-11-16 while removing the upstream //fix markers (each checked against the original; legacy-marker
+  pass, see the git log of branch cleanup-legacy-markers): VersionRequested's "Carpet" number (pattern #73);
+  ResetMouse did not mark the mouse uninstalled (InitControllers' joystick modes rely on it);
+  SetNewMousePosition lost the original's early return for x == -1; ReadSoundSetup copied "0" without its
+  terminator; ProcessThings printed an extra allert_error for STATE-ID mismatches; SetupScreenVres256 and
+  AllocDosMemory read uninitialised data; RunningFromCdrom compared an uninitialised struct.
 - Longer play (other levels, enemies, death, save/load) not yet exercised under ASan.
 - During forward flight the carpet holds altitude while terrain drops away, so the view becomes mostly
   sky; probably original behaviour, unverified.
