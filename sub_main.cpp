@@ -69817,104 +69817,16 @@ int SetupMouse_5C214_5C724()
 /// Original name: SetMouseLimits (MOUSE.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
 void SetMouseLimits_5C468_5C978()//22D468_
 {
-    FixPerifery((char*)"chRes", typeResolution_12F02E_12F01E);
-    if (typeResolution_12F02E_12F01E == 8)
-    {
-        /*v2[0] = 7;
-        v3 = 0;
-        v4 = 5120;
-        int386(51, (uint32)v2, (uint32)v1);
-        v2[0] = 8;
-        v3 = 0;
-        v4 = 3840;*/
-        //VGA_Resize(5120, 3840);//fix
-    }
+    // PORT: the original sets the INT 33h mouse range for the resolution (x 0..5120/640, y 0..3840/480/400) and
+    // nothing else; the port sizes the presenter here instead (mouse input arrives in presenter pixels).
+    // Resolution 8 (VESA 640x480) is sized when its video mode is set.
     if (typeResolution_12F02E_12F01E == 2)
-    {
-        /*v2[0] = 7;
-        v3 = 0;
-        v4 = 640;
-        int386(51, (uint32)v2, (uint32)v1);
-        v2[0] = 8;
-        v3 = 0;
-        v4 = 480;*/
         VGA_Resize(640, 480);
-    }
     if (typeResolution_12F02E_12F01E == 4)
-    {
-        /*v2[0] = 7;
-        v3 = 0;
-        v4 = 640;
-        int386(51, (uint32)v2, (uint32)v1);
-        v2[0] = 8;
-        v3 = 0;
-        v4 = 400;*/
         VGA_Resize(640, 400);
-    }
     if (typeResolution_12F02E_12F01E == 1)
-    {
-        /*v2[0] = 7;
-        v3 = 0;
-        v4 = 640;
-        int386(51, (uint32)v2, (uint32)v1);
-        v2[0] = 8;
-        v3 = 0;
-        v4 = 400;*/
         VGA_Resize(320, 200);
-    }
     VGA_SetColors(8);
-    /*
-  int result; // eax
-  char v1[28]; // [esp+0h] [ebp-38h] BYREF
-  __int16 v2[4]; // [esp+1Ch] [ebp-1Ch] BYREF
-  __int16 v3; // [esp+24h] [ebp-14h]
-  __int16 v4; // [esp+28h] [ebp-10h]
-
-  if ( typeResolution_12F02E_12F01E == 8 )
-  {
-    v2[0] = 7;
-    v3 = 0;
-    v4 = 5120;
-    int386(51, (uint32)v2, (uint32)v1);
-    v2[0] = 8;
-    v3 = 0;
-    v4 = 3840;
-    result = int386(51, (uint32)v2, (uint32)v1);
-  }
-  if ( typeResolution_12F02E_12F01E == 2 )
-  {
-    v2[0] = 7;
-    v3 = 0;
-    v4 = 640;
-    int386(51, (uint32)v2, (uint32)v1);
-    v2[0] = 8;
-    v3 = 0;
-    v4 = 480;
-    result = int386(51, (uint32)v2, (uint32)v1);
-  }
-  if ( typeResolution_12F02E_12F01E == 4 )
-  {
-    v2[0] = 7;
-    v3 = 0;
-    v4 = 640;
-    int386(51, (uint32)v2, (uint32)v1);
-    v2[0] = 8;
-    v3 = 0;
-    v4 = 400;
-    result = int386(51, (uint32)v2, (uint32)v1);
-  }
-  if ( typeResolution_12F02E_12F01E == 1 )
-  {
-    v2[0] = 7;
-    v3 = 0;
-    v4 = 640;
-    int386(51, (uint32)v2, (uint32)v1);
-    v2[0] = 8;
-    v3 = 0;
-    v4 = 400;
-    return int386(51, (uint32)v2, (uint32)v1);
-  }
-  */
 }
 // 62F78: using guessed type _DWORD int386(_DWORD, _DWORD, _DWORD);
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
