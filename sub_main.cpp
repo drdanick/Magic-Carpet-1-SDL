@@ -14492,7 +14492,7 @@ void StepSetAnimSize_10010(__int16 a1, __int16 a2)
 uint8_t* DoNextFrame_1002D(uint8_t* a1, uint8_t* a2)//1E102D_
 {
   dword_90008 = a1;
-  dword_90004 = a2;//fix dword_90004
+  dword_90004 = a2;
   while ( 1 )
   {
     qmemcpy(&dword_90012, (const void *)dword_90008, sizeof(dword_90012));
@@ -14997,8 +14997,7 @@ void ShowFrame_104D0()
   if ( v23 )
   {
     WaitForBeam_5CC54_5D164();
-    //allert_error();//fix beam
-    if ( word_90024 )
+        if ( word_90024 )
     {
       SetPalette256_319A0_319E0(colorBuffer_AC2B8_AC2A8);
       v20 = FindColor_5CC70_5D180(colorBuffer_AC2B8_AC2A8, 0x3Fu, 0x3Fu, 0x3Fu);
@@ -15214,7 +15213,7 @@ __int16 FNFliBrun_10BD0()
       do
       {
         ReadData_103C0(v7, 1u);
-        v3 = 1u;//fix remove it later
+        v3 = 1u; // PORT: keeps v3 defined; only its low word counts (v2 is compared as 16 bits, as in the original)
         if ( v7[0] >= 0 )
         {
           if ( v7[0] > 0 )
@@ -15227,7 +15226,6 @@ __int16 FNFliBrun_10BD0()
         {
           v7[0] = abs8(v7[0]);
           ReadData_103C0(v1, v7[0]);
-          v3 = v7[0];//fix remove it later
         }
         LOWORD(v3) = v7[0];
         v2 += v3;
@@ -25460,13 +25458,13 @@ int Cbfadedangermusic_20BD0()
       dangerMusicVolume_9008C = 0;
       dangerFadeActive_9008E = 0;
     }
-    return 0;//fix return MK_FP(retaddr[0], retaddr[0])(v1);
+    return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
   }
   else
   {
     PortTimer_RemoveEvent(dangerFadeEvent_80000); // PORT: was SosTIMERRemoveEvent_5DC91(dangerFadeEvent_80000)
     dangerFadeActive_9008E = 0;
-    return 0;//fix return MK_FP(retaddr[0], retaddr[0])();
+    return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
   }
 }
 // 80000: using guessed type int dangerFadeEvent_80000;
@@ -25592,7 +25590,7 @@ static void DrawGameFrame_20FB0_body()//1F1FB0_
 	int locMouseY; // ebx
 	int var_132; // edi
 	unsigned __int16 var_50; // cx
-	int removeItMaybe; // fix it
+	int removeItMaybe; // computed and then discarded, as in the original (0x22654: ebx is overwritten with 8)
 	char textBuffer[256]; // [esp+0h] [ebp-134h] BYREF
 	int tempMouseY; // [esp+114h] [ebp-20h]
 	int tempMouseX; // [esp+120h] [ebp-14h]
@@ -29126,7 +29124,6 @@ void JoinManaBalls_277D0(Type_AE400_29795* ev1, Type_AE400_29795* ev2)//1F87D0_
           //HIDWORD(v12) = (164 * ev1->manaOwner_29939_144) >> 31;
           //v2 = v12 / 164;
           ev1->mana_29935_140 += ev2->mana_29935_140; // PORT: was "*=" (asm 0x2790B/0x2798B: add) - merged mana balls multiplied their mana
-          //ev1->manaOwner_29939_144 = ev1->manaOwner_29939_144; //fix it
           DoDeleteThing_41E90_421D0(ev2);
           return;
         }
@@ -29137,7 +29134,6 @@ void JoinManaBalls_277D0(Type_AE400_29795* ev1, Type_AE400_29795* ev2)//1F87D0_
             //v11 = dword_AE400_AE3F0() + 29795;
             ev1->mana_29935_140 += ev2->mana_29935_140;
             //v2 = (&str_AE400_AE3F0->str_29795[ev1->manaOwner_29939_144] - v11) / 164;
-            //ev1->manaOwner_29939_144 = ev1->manaOwner_29939_144;//fix it?
             DoDeleteThing_41E90_421D0(ev2);
             return;
           }
@@ -31278,10 +31274,7 @@ void PrepRot_29C30_29C70_old(__int16 roll)
     default:
         break;
     }
-    //fix it - size of dword_B3EA0_B3E90
-    if (whViewPortB_B5D34_B5D24 > 0x140)
-        allert_error();
-    //fix it
+    // PORT: dword_B3EA0_B3E90x has 4096 entries in the port, enough for any viewport width
     v101 = whViewPortB_B5D34_B5D24 - 1;
     for (result = (_DWORD*)dword_B3EA0_B3E90x; v101 >= 0; --v101)
     {
@@ -31683,9 +31676,8 @@ void SetupRotateStuff_29C30_29C70(__int16 roll)//1FAC30_
 	default:
 		break;
 	}
-	//fix it - size of dword_B3EA0_B3E90
-	//if (whViewPortB_B5D34_B5D24 > 0x140)allert_error();
-	//fix it
+	// PORT: dword_B3EA0_B3E90x has 4096 entries in the port, enough for any viewport width (upstream had a
+	// commented-out check for widths above 320 here)
 
 	int oldValue = 0;
 	for (int index = 0; index < whViewPortB_B5D34_B5D24; index++)
@@ -33607,7 +33599,7 @@ void DrawLandscape_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw, int posZ
 					}
 					if (tempBegBscreen[indexv76].haveBillboard_36)
 					{
-						DoReflectMapWho_2FC50_2FC90(&tempBegBscreen[indexv76]);//fix it
+						DoReflectMapWho_2FC50_2FC90(&tempBegBscreen[indexv76]);
 					}
 					//indexv76--;
 				}
@@ -33832,7 +33824,7 @@ void DrawLandscape_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw, int posZ
 			indexv89x -= textRows;
 		}
 
-		return;//fix it
+		return;
 	}
 	//adress 1FC930_
   //debug
@@ -34099,7 +34091,7 @@ void DrawLandscape_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw, int posZ
 					if (tempBegBscreen[index184].haveBillboard_36)
 						DoMapWho_2DCB0_2DCF0(&tempBegBscreen[index184]);
                     //index184--;
-				}// while (index183 >= 100/*v183*/);//fix
+				}
 			}
             index168 -= textRows;
 		}
@@ -34181,7 +34173,7 @@ void DrawLandscape_2A700_2A740(__int16 posX, __int16 posY, __int16 yaw, int posZ
 					if (tempBegBscreen[index159].haveBillboard_36)
 						DoAsgMapWho_2F170_2F1B0(/*5120,*/ &tempBegBscreen[index159]);
 					//index158--;
-				} //while (index158 >= 100/*v158*/);//fix it
+				}
 			}
 			index148 -= textRows;
 		}
@@ -35177,7 +35169,7 @@ LABEL_181:
                         case 6:
                             sprData = &tempSprData[begInt32Adress[1]];
                             frameAdress = &beginFrameAdress[tempB3adr[1]];
-                            tempZx2.dword = 0;//fix
+                            tempZx2.dword = 0;
                             tempZx.dword = zx2000_B5CA4_B5C94;
                             tempZx.word[1] = 0;
                           begInt32Adress += 2;
@@ -35202,7 +35194,7 @@ LABEL_181:
                             sprData = &tempSprData[begInt32Adress[1]];
                             frameAdress = &beginFrameAdress[tempB3adr[1]];
                             tempZx.dword = zx2000_B5CA4_B5C94;
-                            tempZx2.dword = 0;//fix
+                            tempZx2.dword = 0;
                           //HIWORD(v83x) = 0;
                           begInt32Adress += 2;
                           tempB3adr += 3;
@@ -38221,7 +38213,7 @@ void Engine_30D90_30DD0(int posX, int posY, __int16 yaw, int posZ, int pitch, in
 							if (str_AE400_AE3F0->set.var_u8_8600 == 40)
 							{
 								actSpeed = str_AE400_AE3F0->str_29795[str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].playIndex_13333].actSpeed_29921_126;
-								if ((int)((HIDWORD(actSpeed) ^ actSpeed) - HIDWORD(actSpeed)) > 80)//fix it
+								if ((int)((HIDWORD(actSpeed) ^ actSpeed) - HIDWORD(actSpeed)) > 80) // abs(speed) > 80
 									str_AE400_AE3F0->set.blur_8604 = 1;
 							}
 						}
@@ -41882,9 +41874,8 @@ void SetupSound_357C0_35B80()
     }
     if ( byte_939E4 || musicAvailable_939CC )
     {
-        //fix SosTIMERRegisterEvent_5D97B(0x78u, (int)sub_357A0, __CS__, (unsigned int)&dword_80010);
       // PORT: with a sound driver present the game registers its 120 Hz tick with the HMI timer
-      // service instead of reprogramming the PIT. That registration was missing, so the game clock
+      // service instead of reprogramming the PIT (SosTIMERRegisterEvent_5D97B(0x78, AniSpeedTimer_357A0)). That registration was missing, so the game clock
       // (timerTicks_AC5D4_AC5C4) never advanced with sound on and tick waits (info FMVs) hung forever.
       PortTimer_Start(1193182 / 120, AniSpeedTimer_357A0);
       byte_90AD5 = 1;
@@ -42371,7 +42362,6 @@ void SmoothArea_36080_36440(unsigned __int8 a1, char a2, int a3, int a4)
     v5 = __PAIR16__(HIBYTE(v5), a1) + 256;
   }
   // PORT: was JUMPOUT(0x36079) - the original ends by jumping to the previous function's epilogue (pop edi/esi/ebx; ret)
-  //fix SmoothOnPerimeter_35F30_362F0(int a1, char a2, char a3, int a4, int a5, unsigned __int8 a6);
 }
 // 36094: control flows out of bounds to 36079
 
@@ -44752,7 +44742,6 @@ int ConfigureATroll_38C00_38F80(int a1)
   return result;
 }
 
-//int unk_99198;//fix
 /// Constructor of the troll or ape (ConfigureATroll_38C00_38F80) (class 5 type 7) (initial state 43). Identified from its decoded sprite (confirmed by the user).
 /// Original name: init_creature_07 (INIT.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
 int InitCreature07_38C60(uint16_t* a1)
@@ -49179,7 +49168,6 @@ void SetupPlayers_3DD50_3E090()//20ED50_
         //v9x++;
       //*(_DWORD *)(v9 + 1631) = -1;
     }
-    //while ((int)&str_AE400_AE3F0->str_13323[v0x+v9x] != str_AE400_AE3F0->str_13323[v23x].var_u32_13419[v22x]);//fix it!!
     str_AE400_AE3F0->str_13323[v0x].str_1103.var_u16_2043_940 = 255;
     //v10 = (_BYTE *)dword_AE408_AE3F8();
     str_AE400_AE3F0->str_13323[v0x].str_1103.var_u16_2047_944 = 255;
@@ -49211,7 +49199,7 @@ void SetupPlayers_3DD50_3E090()//20ED50_
       else
       {
         //v25 = v14 + 216 * v26 + dword_AE400_AE3F0();
-        if (str_AE400_AE3F0->str_193795.str_230867_37072[v26].var_230983[v14] != 1 )//fix it may be v25 + 0x38647 tj. 230983
+        if (str_AE400_AE3F0->str_193795.str_230867_37072[v26].var_230983[v14] != 1 )
           goto LABEL_28;
         if ( (str_AE408_AE3F8->var_u8_0 & 0x10) == 0 )
         {
@@ -49236,7 +49224,7 @@ LABEL_28:
         {
             str_AE400_AE3F0->str_13323[v0x].str_1103.var_u16_2047_944 = v12;
         }
-        str_AE400_AE3F0->str_13323[v0x].str_1103.var_15198_1875_772[v12] = v12;//fix v20
+        str_AE400_AE3F0->str_13323[v0x].str_1103.var_15198_1875_772[v12] = v12;
         //++v20;
         ++v12;
         //v24 += 4;
@@ -52577,8 +52565,6 @@ LABEL_40:
       {
         sprintf(v24, "STATE-ID does not match. CLASS %d, MODEL %d, STATE %d", v17, str_AE400_AE3F0->str_29795[jx].var_u8_29860_65, str_AE400_AE3F0->str_29795[jx].var_u8_29865_70);
         DeleteThing_41E80_421C0(&str_AE400_AE3F0->str_29795[jx]);
-        
-        allert_error();//fix non exist function, delete this line after this
       }
     }
   }
@@ -54610,10 +54596,8 @@ LABEL_63:
       if ( !v7 )
         break;
       ++a3;
-      //fix v7 = SosDIGIDetectFindHardware_63C5A_6416A(v13, a5, byte_CC0C2, __DS__, (unsigned int)v13);
     }
     while ( (__int16)a3 < 5 );
-    //fix if ( v7 || (v7 = sub_64248((unsigned int)&dword_CC134, __DS__)) != 0 )
     {
       v8 = sub_6378C(v7);
       printf("\nError : %s\n", v8);
@@ -54632,7 +54616,6 @@ LABEL_63:
     dword_CC13C = dword_CC1BC;
     dword_CC126 = a5;
   }
-  //fix SosDIGIInitSystem_647C0((int)&asc_A970B[1], __DS__);
   if ( !byte_939D4 )
     SosTIMERInitSystem_5D883_5DD93(0xFF00u, 0);
   dword_93A54 = a4;
@@ -57349,7 +57332,6 @@ bool TriggerSample_48570(__int16 a1, __int16 a2, __int16 a3, __int16 a4)
   word_93A22 = a4;
   word_93A02 = v4;
   word_CC070[v4] = (int)(a3 - (__CFSHL__((unsigned __int64)a3 >> 32, 8) + ((unsigned __int64)a3 >> 32 << 8))) >> 8;
-  //fix word_939F4 = __DS__;
   v6 = 32 * a2 + dword_CC154;
   v7 = *(_DWORD *)PTR(v6 + 26) - 16;
   v8 = *(_DWORD *)PTR(v6 + 18);
@@ -61335,8 +61317,9 @@ bool ReadSoundSetup_505A0_508E0()
       DataFileIO::Close(file);
     }
   }
-  strcpy(string_12CABC_12CAAC,string_A99A0_A99B8);//fix it
+  strcpy(string_12CABC_12CAAC,string_A99A0_A99B8);
   string_12CA20_12CA10[0] = zeroChar_A9990_A99A8;
+  string_12CA20_12CA10[1] = 0; // PORT: the original copies the word "0\0" (0x50756); only the first byte was copied
   return result;
 }
 
@@ -61970,7 +61953,7 @@ void InitializeFont_51480_517C0(Type_dword_96884* a1x, TypeStrFont* a2x, TColor*
   a1x->next = &a2x->bTab[1];
   a1x->var8_6 = FindColor_5CC70_5D180(colorBuffer, 0xFFu, 0xFFu, 0xFFu);
   a1x->var8_4 = 3;
-  a1x->var8_5 = 0;//fix
+  a1x->var8_5 = 0;
   a1x->var8_7 = FindColor_5CC70_5D180(colorBuffer, 0, 0, 0);
 }
 
@@ -62805,7 +62788,6 @@ LABEL_12:
 LABEL_17:
       if ( v2 )
       {
-          //fix word_939F4 = __DS__;
         word_93A0C = 17152;
         word_93A00 = 0;
         word_CBFF0[2 * v5] = a1;
@@ -65220,7 +65202,7 @@ int Cbfadeoutmusic_558F0()
   v0 = SosMIDISetMasterVolume_5F83E(--byte_968E0);
   if ( !byte_968E0 )
     v0 = StopFadeOutMusic_55960();
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(v0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 // 968E0: using guessed type char byte_968E0;
 
@@ -67271,7 +67253,7 @@ void ResetSspriteManager_58F00_59410()//229F00
   memset(dword_12D748_12D738, 0, sizeof(dword_12D748_12D738));
   memset(dword_12CF00_12CEF0, 0, sizeof(dword_12CF00_12CEF0));
   byte_968E8 = 0;
-  CloseTmapDataFile_58F70_59480();//fix
+  CloseTmapDataFile_58F70_59480(); // PORT: the original has no ret here and falls through into this function
 }
 
 //----- (00058F70) --------------------------------------------------------
@@ -67623,7 +67605,7 @@ void RestoreTmapConfiguration_59420_59930()//22A420_
         v2 = TmapGroupSize_58AD0_58FE0(j);
         if ( v2 >= HeapFreeSpace_369D0_36D90(dword_AE3EC_AE3DC) )
         {
-          if (HeapFreeSpace_369D0_36D90(dword_AE3EC_AE3DC) < 0x400u)//fix
+          if (HeapFreeSpace_369D0_36D90(dword_AE3EC_AE3DC) < 0x400u)
             v5 = 1;
         }
         else
@@ -68313,19 +68295,14 @@ __int16 CharacterHeight_5A3B0_5A8C0()
 /// Original name: set_userfont (TEXT.C), Hidden Worlds linker map.
 void SetUserfont_5A3C0_5A8D0(int fontIndex)//22B3C0_
 {
+    // PORT: the original reads its font table pointers at 0xAE3B8; the port keeps them in dword_AE3B8_2 and fills
+    // them here (same result, checked on a snapshot with tools' diff harness)
     dword_AE3B8_2[0].bTab = begFont0Tab_AE3B8_AE3A8_26C3B8_26C3A8;
     dword_AE3B8_2[1].bTab = begFont1Tab_AE3BC_26C3BC_26C3AC;
-    
-    if (!dword_AE3B8_2[fontIndex].bTab)//fix !!!!
-
-        //26C3B8
+    if (!dword_AE3B8_2[fontIndex].bTab)
         dword_AE44C_AE43C = dword_AE3B8_2[0].bTab;
     else
         dword_AE44C_AE43C = dword_AE3B8_2[fontIndex].bTab;
-    /*if (!*off_99974[1 + fontIndex].beg)//fix !!!!
-        dword_AE44C_AE43C = *off_99974[1 + 0].beg;
-    else
-        dword_AE44C_AE43C = *off_99974[1 + fontIndex].beg;*/
 }
 
 //----- (0005A3E3) --------------------------------------------------------
@@ -68992,7 +68969,6 @@ int VFX1MouseInt_5B3E0(int a1)
   v2[1] = 51;
   v2[2] = 0;
   v2[5] = a1;
-  //fix v3[0] = __DS__;
   return int386x(49, v2, v2, v3);
 }
 // 5CC30: using guessed type _DWORD memset(_DWORD, _DWORD, _DWORD);
@@ -70340,7 +70316,6 @@ void PlaySampleAndLoop_5D460_5D970(__int16 a1, __int16 a2, __int16 a3)
         word_93A02 = j;
         dword_939F8 = *(_DWORD *)PTR(32 * a2 + dword_CC154 + 26) - 16;
         v3 = *(_DWORD *)PTR(32 * a2 + dword_CC154 + 18);
-        //fix word_939F4 = __DS__;
         dword_939F0 = v3;
         dword_CC144 = StartSample_6535C(dword_CC140, (unsigned int)OFF(&dword_939F0));
       }
@@ -70393,7 +70368,6 @@ void PlayActualSample_5D610_5DB20(__int16 a1, __int16 a2)
       word_CC070[i] = 0x7FFF;
       dword_939F8 = *(_DWORD *)PTR(32 * a2 + dword_CC154 + 26) - 16;
       v2 = *(_DWORD *)PTR(32 * a2 + dword_CC154 + 18);
-      //fix word_939F4 = __DS__;
       dword_939F0 = v2;
       dword_CC144 = StartSample_6535C(dword_CC140, (unsigned int)OFF(&dword_939F0));
     }
@@ -70486,7 +70460,8 @@ int SosTIMERInitSystem_5D883_5DD93(unsigned int a2, char a3)
   {
     LOBYTE(dword_A01C4) = 1;
     SosTIMERDRVDisable_66DF5();
-    //fix SosTIMERDRVInit_66D6A_6727A(a1, 0xFFFF, (int)SosTIMERHandler_5DE91, __CS__);
+    // PORT: SosTIMERDRVInit_66D6A_6727A (installing SosTIMERHandler_5DE91 on the PIT) is not called; PortTimer runs the
+    // game's timer events
     SosTIMERDRVEnable_66E21();
   }
   if ( a2 && (a3 & 1) == 0 )
@@ -70501,7 +70476,6 @@ int SosTIMERInitSystem_5D883_5DD93(unsigned int a2, char a3)
       SosTIMERSetRate_5DE63(0x1234DC / a2);
       dword_A043D = a2;
     }
-    //fix word_A03FF = __CS__;
     dword_A03FB = (int)OFF(SosTIMEROldHandler_5DF4B);
     dword_A047D = 0x10000;
   }
@@ -70731,11 +70705,10 @@ int SosTIMERHandler_5DE91(int a1, int a2, int a3)
         HIWORD(dword_A0481[dword_12F040]) = 0;
         if ( byte_A04C1[dword_12F040] != -1 )
           byte_A04D1 = byte_A04C1[dword_12F040];
-        //fix a1 = MK_FP(*(_WORD *)&byte_A03A1[6 * dword_12F040 + 4], *(_DWORD *)&byte_A03A1[6 * dword_12F040])();
       }
     }
   }
-  return 0; //fix MK_FP(retaddr[0], retaddr[0])(a1, a2, a3);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 // A0441: using guessed type int dword_A0441[15];
 // A0481: using guessed type int dword_A0481[];
@@ -70751,7 +70724,7 @@ int SosTIMEROldHandler_5DF4B(int a1, int a2, int a3)
   void *retaddr[2]; // [esp+10h] [ebp+10h]
 
   v3 = SosTIMERDRVCallOld_66EA2();
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(v3, a2, a3);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 // 5DF60: positive sp value 4 has been found
 
@@ -71007,7 +70980,6 @@ LABEL_66:
     {
       if ( v9 != -1 )
         port_writegsbyte(a2 + 2, (v9 * (unsigned int)(unsigned __int8)byte_9ECAD) >> 7);
-      //fix MK_FP(*(_WORD *)&byte_9C062[36 * a4 + 4], *(_DWORD *)&byte_9C062[36 * a4])(a2, a3, a5, a4);
       port_writegsbyte(a2, v18);
       if ( v9 != -1 )
         port_writegsbyte(a2 + 2, v9);
@@ -71033,7 +71005,6 @@ LABEL_66:
     }
     else
     {
-        //fix MK_FP(*(_WORD *)&byte_9C062[36 * a4 + 4], *(_DWORD *)&byte_9C062[36 * a4])(a2, a3, a5, a4);
     }
     return 1;
   }
@@ -71860,7 +71831,6 @@ int SosMIDIInitDriver_6035F(unsigned int a1, unsigned int a2, int a3, int a4, in
         dword_9B17A[v31] = (int)OFF(v29);
       }
       SosMIDIGetDeviceCaps_67486(v31);
-      //fix
       /*sub_6A737(v29, v24, (unsigned __int16)v25, (int)&byte_9C062[36 * v31], __DS__);
       MK_FP(*(_WORD *)&byte_9C068[36 * v31 + 4], *(_DWORD *)&byte_9C068[36 * v31])(
         dword_9EF06,
@@ -72009,7 +71979,6 @@ unsigned __int64 sub_60BDC(int a1)
   }
   if ( v5 )
   {
-    //fix v3 = __DS__;
     v2 = v5;
   }
   LOWORD(v4) = v3;
@@ -72309,8 +72278,7 @@ void DrawSpriteVres256_60D65_61275(TypeTabDimm a1x, int a2, int a3, uint8_t* spr
                 v81 -= scrWidth_12EFF0_12EFE0;
                 v78 = v81;
                 //a1 = __PAIR16__(a1x.y, v131) - 256;
-                a1x.y--;//fix
-                //a1x.x= v131;//fix
+                a1x.y--;
               }
               while ( a1x.y );
             }
@@ -73106,9 +73074,7 @@ int PixelVres256_615D4_61AE4(unsigned __int16 a1, unsigned __int16 a2, __int16 a
 {
   int v4; // [esp+4h] [ebp-4h]
 
-  //fix
-  v4 = 0;
-  //fix;
+  v4 = 0; // PORT: the original returns this stack slot uninitialised; no caller uses the value
 
   if ( a1 < 0x280u && a2 < 0x1E0u )
     *(_BYTE *)(begWscreen_2ECFF4_2ECFE4 + 640 * a2 + a1) = a3;
@@ -73358,9 +73324,9 @@ void VesaSetPage_61A1C_61F2C(__int16 a1)
   //VGA_Blit(tempScreenBuffer_A0000);
   //test
 
-  //fix __asm { int     10h; - VIDEO - VESA SuperVGA BIOS -  VESA SuperVGA BIOS - CPU VIDEO MEMORY CONTROL }
+  // PORT: int 10h (VIDEO - VESA SuperVGA BIOS - VESA SuperVGA BIOS - CPU VIDEO MEMORY CONTROL) - not needed in the port
   //result = 0x4F05;//change memory for drawing
-  //fix __asm { int     10h; - VIDEO - VESA SuperVGA BIOS -  VESA SuperVGA BIOS - CPU VIDEO MEMORY CONTROL }
+  // PORT: int 10h (VIDEO - VESA SuperVGA BIOS - VESA SuperVGA BIOS - CPU VIDEO MEMORY CONTROL) - not needed in the port
 }
 // 9AFA4: using guessed type __int16 word_9AFA4;
 // 12F080: using guessed type int dword_12F080_12F070;
@@ -74767,10 +74733,8 @@ void MakeHuftable_62DC3_632D3(uint16* CX_, __int16* a0, uint8_t** a1x)//233DC3_
             v13 = v11_CF << 15;
             v11_CF = v10 & 1;
             v10 = (v10 >> 1) | v13;
-            //allert_error();
-            x_AX <<= 1;//fix
+            x_AX <<= 1; // rcl ax, 1
             x_AX |= v11_CF;
-            //__asm { rcl     ax, 1 }
             v4--;
           }
           while ( v4 );
@@ -75092,7 +75056,8 @@ void sub_637C0()
 /// Name is a guess (not in the Hidden Worlds linker map).
 int MidiSetInstruments_637D1(int a1, int a2, unsigned __int16 a3, int a4)
 {
-  //fix MK_FP(byte_9C07A[9 * a1 + 1], byte_9C07A[9 * a1])(a2, a3, a1, a4);
+  // PORT: the original calls the DOS MIDI driver's set-instruments function; the port's caller passes the banks
+  // to PortMusic_LoadBanks instead
   return 0;
 }
 // 9C07A: using guessed type _DWORD byte_9C07A[39];
@@ -75104,7 +75069,7 @@ int sub_638E0(int a1, int a2, int a3)
   void *retaddr[2]; // [esp+10h] [ebp+10h]
 
   byte_9ECFE = 1;
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(a1, a2, a3);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 // 9ECFE: using guessed type char byte_9ECFE;
 
@@ -75376,7 +75341,6 @@ int SosDIGIInitSystem_647C0(int a1, unsigned __int16 a2)
 {
   SosDIGILockMemory_64436();
   dword_9EF80 = 1;
-  //fix
   /*
   if ( a1 || a2 )
     fstrcpy(&byte_A04D2, (unsigned __int16)__DS__, a1, a2);
@@ -75496,7 +75460,7 @@ int SosDIGIInitDriver_64846_64D56(
     *(int *)((char *)&dword_A01CC + v9 * 2) = v35;
     dword_A01EA[v43] = (int)OFF(v41);
   }
-  //fix v42 = sub_6DD7D(v43, (int)&byte_A0350[6 * v43], __DS__);
+  // PORT: the original unloads the DOS sound driver here (v42 = sub_6DD7D(...)); there is none in the port (v42 stays 0)
   if ( !v42 )
   {
     if ( (unsigned int)dword_A0338[v43] >= 0xE106 )
@@ -75923,7 +75887,6 @@ void PlayOneChannelSample_65F10_66420(__int16 a1, __int16 a2)
       word_CC070[j] = 0x7FFF;
       dword_939F8 = *(_DWORD *)PTR(32 * a2 + dword_CC154 + 26) - 16;
       v2 = *(_DWORD *)PTR(32 * a2 + dword_CC154 + 18);
-      //fix word_939F4 = __DS__;
       dword_939F0 = v2;
       dword_CC144 = StartSample_6535C(dword_CC140, (unsigned int)OFF(&dword_939F0));
     }
@@ -76338,7 +76301,7 @@ unsigned __int8 SosTIMERDRVUnInit_66E4D()
   {
     v0 = __inbyte(0x21u);
     __outbyte(0x21u, v0 | 1);
-    //fix __asm { int     31h; DPMI Services   ax=func xxxxh }
+    // PORT: int 31h (DPMI Services ax=func xxxxh) - not needed in the port
     __outbyte(0x40u, 0);
     __outbyte(0x40u, 0);
     v1 = __inbyte(0x21u);
@@ -76450,11 +76413,11 @@ int SosMIDISongHandler_66F3C()
   void *retaddr[2]; // [esp+44h] [ebp+10h]
 
   if (!dword_9C136[(unsigned __int8)byte_A04D1] || dword_9C116[(unsigned __int8)byte_A04D1])
-      return 0;//fix MK_FP(retaddr[0], retaddr[0])();
+      return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
   for ( i = 0; ; ++i )
   {
     if (i >= (unsigned int)dword_9C042[(unsigned __int8)byte_A04D1])
-        return 0;//fix MK_FP(retaddr[0], retaddr[0])();
+        return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
     v0 = ((unsigned __int8)byte_A04D1 << 7) + 4 * i;
     ++*(int *)((char *)dword_9BBF2 + v0);
     v1 = 192 * (unsigned __int8)byte_A04D1 + 6 * i;
@@ -76545,8 +76508,8 @@ LABEL_28:
   *(_DWORD *)&byte_9C176[v6] = 0;
   SosMIDIResetSong_5F529((unsigned __int8)byte_A04D1, (unsigned int)OFF(&v14));
   if (v18[0] || LOWORD(v18[1]))
-      ;//fix MK_FP(v18[1], v18[0])((unsigned __int8)byte_A04D1);
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])();
+      ;
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 // 9B7F2: using guessed type int dword_9B7F2[256];
 // 9BBF2: using guessed type int dword_9BBF2[256];
@@ -76677,10 +76640,6 @@ int SosDetDRVGetCapsInfo_6765C_67B6C(
 
   result = a2((uint32)OFF(a2));
   qmemcpy(a5, a1, 0x6Au);
-  //fix *MK_FP(a6, a5 + 52) = a4;
-  //fix *MK_FP(a6, a5 + 60) = a4;
-  //fix *MK_FP(a6, a5 + 68) = a4;
-  //fix *MK_FP(a6, a5 + 76) = a4;
   return result;
 }
 
@@ -76691,8 +76650,6 @@ int SosDRVGetCapsPtr_676B0(int a1, int (*a2)(_DWORD), char a3, __int16 a4, int a
   int result; // eax
 
   result = a2((uint32)OFF(a2));
-  //fix *MK_FP(a6, a5) = a1;
-  //fix *MK_FP(a6, a5 + 4) = a4;
   return result;
 }
 
@@ -76764,7 +76721,6 @@ __int16 SosDRVGetFillInfo_677E3_67CF3(
 
   a2((uint32)OFF(a2));
   port_cli();
-  //fix
   /*
   *(_DWORD *)a10 = (char *)a2 + a5;
   *(_DWORD *)(a10 + 8) = (char *)a2 + a7;
@@ -76852,8 +76808,7 @@ int CallbackSendData_679AE(int a1, unsigned __int16 a2, int a3, int a4)
 {
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
-  //fix MK_FP(*((_WORD *)&byte_9C22E + 2), byte_9C22E)(a1, a2, a3, a4);
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 // 9C22E: using guessed type int (*byte_9C22E)(_DWORD, _DWORD, _DWORD, _DWORD);
 
@@ -76863,7 +76818,7 @@ int CallbackInit_679DE()
 {
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 
 //----- (000679F7) --------------------------------------------------------
@@ -76872,7 +76827,7 @@ int CallbackUnInit_679F7()
 {
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 
 //----- (00067A10) --------------------------------------------------------
@@ -76881,7 +76836,7 @@ int CallbackReset_67A10()
 {
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 
 //----- (00067A29) --------------------------------------------------------
@@ -76892,7 +76847,7 @@ int CallbackSetInstrumentData_67A29(int (*a1)(_DWORD, _DWORD, _DWORD, _DWORD), _
 
   *((_WORD *)&byte_9C22E + 2) = a2;
   byte_9C22E = a1;
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 // 9C22E: using guessed type int (*byte_9C22E)(_DWORD, _DWORD, _DWORD, _DWORD);
 
@@ -76977,7 +76932,7 @@ int DigiSendData_67A96(unsigned int a1, int a2, int a3, int a4)
         StopSampleById_65965(dword_9D922[a4], v10 + 1);
     }
   }
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 // 9C9DC: using guessed type int dword_9C9DC[5];
 // 9C9F0: using guessed type int dword_9C9F0[5];
@@ -77017,12 +76972,12 @@ int DigiInit_67D9D(int a1, int a2, unsigned int a3, int a4, int a5)
            port_readgsword(a3 + 24),
            (unsigned int)OFF(&v8));
     if (v7)
-        0;//fix return MK_FP(retaddr[0], retaddr[0])(v7);
+        return v7; // PORT: was "0;" - the original returns the error code (through the far return address)
     dword_9D922[a5] = v8;
     v6 = port_readgsdword(a3 + 20);
     v7 = SosTIMERRegisterEvent_5D97B(port_readgsdword(a3 + 4), port_readgsdword(v6 + 28), port_readgsword(v6 + 32), (unsigned int)OFF(&dword_9D94A[a5]));
     if (v7)
-        return 0;//fix MK_FP(retaddr[0], retaddr[0])(v7);
+        return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
     dword_9D936[a5] = 1;
   }
   else
@@ -77031,7 +76986,7 @@ int DigiInit_67D9D(int a1, int a2, unsigned int a3, int a4, int a5)
   }
   dword_9D972[a5] = port_readgsdword(a3 + 16);
   DigiQueueInit_68180(a5, port_readgsdword(a3 + 12));
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 // 9D922: using guessed type int dword_9D922[5];
 // 9D936: using guessed type int dword_9D936[5];
@@ -77056,7 +77011,7 @@ int DigiUnInit_67F1C(int a1, int a2, int a3)
     }
   }
   DigiQueueUnInit_681F6();
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 // 9D922: using guessed type int dword_9D922[5];
 // 9D936: using guessed type int dword_9D936[5];
@@ -77069,7 +77024,7 @@ int DigiReset_67F9A()
 {
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 
 //----- (00067FB3) --------------------------------------------------------
@@ -77100,7 +77055,7 @@ int DigiSetInstrumentData_67FB3(int a1, __int16 a2, int a3, int a4)
   for ( j = 0; byte_9D986[j]; ++j )
   {
       if (byte_9D986[j] != port_readgsbyte(j + a1))
-          return 0;//fix MK_FP(retaddr[0], retaddr[0])(14);
+          return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
   }
   v14 = 40;
   do
@@ -77117,12 +77072,11 @@ int DigiSetInstrumentData_67FB3(int a1, __int16 a2, int a3, int a4)
     port_writegsword(v9 + 4, WORD2(v9));
     port_writegsdword(v9, v10);
     LODWORD(v9) = *(_DWORD *)&byte_9CA04[768 * a4 + 6 * v12];
-    //fix port_writegsword(v9 + 24, __CS__);
     port_writegsdword(v9 + 20, (unsigned int)OFF(DigiSampleCallback_6813F));
     v14 += port_readgsdword(*(_DWORD *)&byte_9CA04[768 * a4 + 6 * v12] + 8) + 84;
   }
   while ( v14 < port_readgsdword(*(_DWORD *)&byte_9D904[6 * a4] + 36) );
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 
 //----- (0006813F) --------------------------------------------------------
@@ -77133,7 +77087,7 @@ int DigiSampleCallback_6813F(int a1, int a2, int a3)
   void *retaddr[2]; // [esp+Ch] [ebp+Ch]
 
   v3 = DigiQueueDeleteItem_68365(a1, a3 - 1);
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(v3);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 
 //----- (0006815E) --------------------------------------------------------
@@ -77524,15 +77478,15 @@ int AweSendData_68A14(int a1, int a2, int a3, unsigned int a4)
     {
       AWE32PITCHBEND_6FDEC(port_readgsbyte(a4 + 2), port_readgsbyte(a4 + 1), port_readgsbyte(a4) & 0xF);
     }
-    return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+    return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
   }
   if ( v6 < 0x90u )
   {
       if (v6 != 0x80)
-          return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+          return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 LABEL_14:
     AWE32NOTEOFF_6F3B3(port_readgsbyte(a4 + 2), port_readgsbyte(a4 + 1), port_readgsbyte(a4) & 0xF);
-    return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+    return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
   }
   if ( v6 <= 0x90u )
   {
@@ -77540,13 +77494,13 @@ LABEL_14:
     {
       v4 = port_readgsbyte(a4 + 2);
       sub_6F4CB(v4, a1, a3, a2, (unsigned __int8)v4, port_readgsbyte(a4 + 1), port_readgsbyte(a4) & 0xF);
-      return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+      return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
     }
     goto LABEL_14;
   }
   if ( v6 == 0xA0 )
     AWE32CHANNELPRESSURE_6FDAC(port_readgsbyte(a4 + 1), port_readgsbyte(a4) & 0xF);
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 
 //----- (00068BDA) --------------------------------------------------------
@@ -77565,7 +77519,7 @@ int AweInit_68BDA(int a1, int a2, int a3, __int16 a4)
   dword_A1F38 = (int)OFF(&unk_A2F5F);
   dword_A1F3C = (int)OFF(&unk_A59DD);
   AWE32INITMIDI_6E5B2();
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 // A1F24: using guessed type int dword_A1F24;
 // A1F28: using guessed type int dword_A1F28;
@@ -77585,7 +77539,7 @@ int AweUnInit_68C4B()
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
   sub_70B3E();
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 
 //----- (00068C69) --------------------------------------------------------
@@ -77594,7 +77548,7 @@ int AweReset_68C69()
 {
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 
 //----- (00068C82) --------------------------------------------------------
@@ -77603,7 +77557,7 @@ int AweSetInstrumentData_68C82()
 {
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 
 //----- (00068C9B) --------------------------------------------------------
@@ -78175,7 +78129,6 @@ int DrvSetupBNKData_69AA5(int a1, int a2, int a3, __int16 a4)
     {
       byte_A09EE = 0;
       byte_A09EF = i;
-      //fix word_A09EC = __DS__;
       dword_A09E8 = (int)OFF(&byte_A09EE);
       result = sub_70E1C(i, 1000, (unsigned int)OFF(&byte_A09EE));
     }
@@ -78321,7 +78274,7 @@ int FmSendData_69EED(unsigned int a1, __int16 a2, int a3, int a4)
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
   DrvParse_697C0(a4, a3, a1);
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 
 //----- (00069F1C) --------------------------------------------------------
@@ -78332,7 +78285,7 @@ int FmInit_69F1C(int a1, int a2, int a3, int a4)
 
   dword_131AEC = a4;
   DrvInit_69E85(a4, a4, (unsigned int)OFF(&dword_131AEC));
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 // 131AEC: using guessed type int dword_131AEC;
 
@@ -78343,7 +78296,7 @@ int FmUnInit_69F57()
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
   DrvUninit_69E20();
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 
 //----- (00069F75) --------------------------------------------------------
@@ -78353,7 +78306,7 @@ int FmReset_69F75()
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
   DrvReset_699BD();
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 
 //----- (00069F93) --------------------------------------------------------
@@ -78363,7 +78316,7 @@ int FmSetInstrumentData_69F93(int a1, __int16 a2, int a3, int a4)
   void *retaddr[2]; // [esp+10h] [ebp+Ch]
 
   DrvSetupBNKData_69AA5(a4, a4, a1, a2);
-  return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
+  return 0; // PORT: the original returns through a far return address on its stack (IDA: MK_FP(retaddr)); no caller uses the value
 }
 
 //----- (00069FC2) --------------------------------------------------------
@@ -78722,7 +78675,6 @@ __int16 sub_6A737(void (*a1)(_DWORD), unsigned int a2, int a3, int a4, __int16 a
   v7 = 5;
   do
   {
-    //fix *MK_FP(a5, a4) = (char *)a1 + __readfsdword(a2);
     v8 = a4 + 4;
     a4 = v8 + 2;
     a2 += 8;
@@ -79214,20 +79166,17 @@ int sub_6BFCF_6C4DF(_WORD *a1, int a2, int *a3)
       *a3 = v4;
       v5 = v4 - 8;
       a1 = ((_WORD *)PTR(*(uint32*)PTR(v4 - 8)));
-      //fix __ES__ = *(_WORD *)(v5 + 4);
     }
     else if ( (v3 & 8) != 0 )
     {
       v6 = *a3 + 4;
       *a3 = v6;
-      //fix __ES__ = __DS__;
       a1 = ((_WORD *)PTR(*(uint32*)PTR(v6 - 4)));
     }
     else
     {
       v7 = *a3 + 4;
       *a3 = v7;
-      //fix __ES__ = __DS__;
       a1 = ((_WORD *)PTR(*(uint32*)PTR(v7 - 4)));
     }
   }
@@ -79287,20 +79236,17 @@ void ScanfReadString_6C05C_6C56C(_BYTE *a1, int a2, int *a3)
       *a3 = v4;
       v5 = v4 - 8;
       a1 = ((_BYTE *)PTR(*(uint32*)PTR(v4 - 8)));
-      //fix __ES__ = *(_WORD *)(v5 + 4);
     }
     else if ( (v3 & 8) != 0 )
     {
       v6 = *a3 + 4;
       *a3 = v6;
-      //fix __ES__ = __DS__;
       a1 = ((_BYTE *)PTR(*(uint32*)PTR(v6 - 4)));
     }
     else
     {
       v7 = *a3 + 4;
       *a3 = v7;
-      //fix __ES__ = __DS__;
       a1 = ((_BYTE *)PTR(*(uint32*)PTR(v7 - 4)));
     }
   }
@@ -79374,20 +79320,17 @@ int *sub_6C175(int a1, int *a2, int a3)
       v5 = *a2 + 8;
       *a2 = v5;
       result = ((int *)PTR(*(uint32*)PTR(v5 - 8)));
-      //fix __ES__ = *(_WORD *)(v5 - 8 + 4);
     }
     else if ( (v4 & 8) != 0 )
     {
       v6 = *a2 + 4;
       *a2 = v6;
-      //fix __ES__ = __DS__;
       result = ((int *)PTR(*(uint32*)PTR(v6 - 4)));
     }
     else
     {
       v7 = *a2 + 4;
       *a2 = v7;
-      //fix __ES__ = __DS__;
       result = ((int *)PTR(*(uint32*)PTR(v7 - 4)));
     }
     if ( (*(_BYTE *)PTR(a1 + 16) & 0x10) != 0 )
@@ -79459,20 +79402,17 @@ void ScanfReadScanset_6C224_6C734(_BYTE *a1, int a2, int *a3, _BYTE **a4)
       v7 = *a3 + 8;
       *a3 = v7;
       a1 = ((_BYTE *)PTR(*(uint32*)PTR(v7 - 8)));
-      //fix __ES__ = *(_WORD *)(v7 - 8 + 4);
     }
     else if ( (v6 & 8) != 0 )
     {
       v8 = *a3 + 4;
       *a3 = v8;
-      //fix __ES__ = __DS__;
       a1 = ((_BYTE *)PTR(*(uint32*)PTR(v8 - 4)));
     }
     else
     {
       v9 = *a3 + 4;
       *a3 = v9;
-      //fix __ES__ = __DS__;
       a1 = ((_BYTE *)PTR(*(uint32*)PTR(v9 - 4)));
     }
   }
@@ -79591,20 +79531,17 @@ LABEL_42:
             v11 = *a2 + 8;
             *a2 = v11;
             v12 = ((int *)PTR(*(uint32*)PTR(v11 - 8)));
-            //fix __ES__ = *(_WORD *)(v11 - 8 + 4);
           }
           else if ( (v10 & 8) != 0 )
           {
             v13 = *a2 + 4;
             *a2 = v13;
-            //fix __ES__ = __DS__;
             v12 = ((int *)PTR(*(uint32*)PTR(v13 - 4)));
           }
           else
           {
             v14 = *a2 + 4;
             *a2 = v14;
-            //fix __ES__ = __DS__;
             v12 = ((int *)PTR(*(uint32*)PTR(v14 - 4)));
           }
           v15 = *(_BYTE *)PTR(a1 + 16);
@@ -79800,20 +79737,17 @@ LABEL_34:
             v16 = *a2 + 8;
             *a2 = v16;
             v17 = ((_WORD *)PTR(*(uint32*)PTR(v16 - 8)));
-            //fix __ES__ = *(_WORD *)(v16 - 8 + 4);
           }
           else if ( (v15 & 8) != 0 )
           {
             v18 = *a2 + 4;
             *a2 = v18;
-            //fix __ES__ = __DS__;
             v17 = ((_WORD *)PTR(*(uint32*)PTR(v18 - 4)));
           }
           else
           {
             v19 = *a2 + 4;
             *a2 = v19;
-            //fix __ES__ = __DS__;
             v17 = ((_WORD *)PTR(*(uint32*)PTR(v19 - 4)));
           }
           if ( (*(_BYTE *)PTR(a1 + 16) & 0x10) != 0 )
@@ -82058,7 +81992,6 @@ void sub_7101B()
 /// Unreachable: no caller and not in any dispatch table (empty port stub of DOS driver/runtime code; reference scan 2026-11-15).
 void sub_71524()
 {
-    //fix word_A636C = __SS__;
 }
 // A636C: using guessed type __int16 word_A636C;
 

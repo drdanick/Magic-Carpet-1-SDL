@@ -755,6 +755,38 @@ class Machine:
         self.mu64.mem_write(addr, data)
         self.shadow64.set(addr, data)
 
+    def _cstr64(self, uc, addr, limit=1 << 16):
+        out = bytearray()
+        while len(out) < limit:
+            chunk = bytes(uc.mem_read(addr + len(out), 64))
+            k = chunk.find(0)
+            if k >= 0:
+                return bytes(out + chunk[:k])
+            out += chunk
+        return bytes(out)
+
+    def _string_stub64(self, uc, name, a0, a1, a2):
+        """C string/memory functions the port's code imports from the CRT."""
+        if name == 'strlen':
+            return len(self._cstr64(uc, a0))
+        if name == 'strcpy':
+            self._logged_write64(a0, self._cstr64(uc, a1) + b'\0')
+            return a0
+        if name == 'strcat':
+            self._logged_write64(a0 + len(self._cstr64(uc, a0)), self._cstr64(uc, a1) + b'\0')
+            return a0
+        if name == 'strncpy':
+            src = self._cstr64(uc, a1, a2)[:a2]
+            self._logged_write64(a0, src + bytes(a2 - len(src)))
+            return a0
+        if name in ('strcmp', '_stricmp', 'memcmp'):
+            x = bytes(uc.mem_read(a0, a2)) if name == 'memcmp' else self._cstr64(uc, a0)
+            y = bytes(uc.mem_read(a1, a2)) if name == 'memcmp' else self._cstr64(uc, a1)
+            if name == '_stricmp':
+                x, y = x.lower(), y.lower()
+            return 0 if x == y else (1 if x > y else 0xFFFFFFFF)
+        return 0
+
     def _on_stub64(self, uc, address, size, user):
         from unicorn.x86_const import UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_RAX
         name = self.stub_funcs64.get(address, '?')
@@ -768,6 +800,8 @@ class Machine:
             if a2:
                 self._logged_write64(a0, bytes([a1 & 0xFF]) * a2)
             r = a0
+        elif name in ('strlen', 'strcpy', 'strcat', 'strcmp', '_stricmp', 'strncpy', 'memcmp'):
+            r = self._string_stub64(uc, name, a0, a1, a2)
         elif name in ('malloc', 'calloc'):
             n = a0 * (a1 if name == 'calloc' else 1)
             r = self.heap64
