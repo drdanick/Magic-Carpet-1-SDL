@@ -55,5 +55,5 @@ int sub_main(int argc, char* argv[]);
 
 void sub_4FF30();
 void sub_50030();
-void sub_4FEB0();
+void MenuNetworkGame_4FEB0();
 void sub_4FD20();

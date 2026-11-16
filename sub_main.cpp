@@ -60,7 +60,7 @@ LoadPathFile_634E0_639F0
 26C444->08F770 mspr00.dat
 26C42C->094C40 mspr00.tab
 
-__int16 sub_51650_51990(int a1, int a2, __int16 a3, int a4)//222650_
+__int16 DrawFontGlyphs_51650_51990(int a1, int a2, __int16 a3, int a4)//222650_
 -problem
 
 test RelocateFontGlyphs_519E0_51D20
@@ -532,7 +532,7 @@ void DrawBar_22810(int a1, int a2, int a3, int a4, int a5, unsigned __int8 a6);
 int DrawPlayerInformation_22880();
 void DrawInformationBars_22E50(Type_AE400_29795* a1x);
 void DrawTransparentSprite_23940(__int16 a1, __int16 a2, TypeTab* a3);
-void sub_23AE0(__int16 a1, __int16 a2, TypeTab* a3, unsigned __int8 a4);
+void DrawSpriteTinted_23AE0(__int16 a1, __int16 a2, TypeTab* a3, unsigned __int8 a4);
 void DrawSpellNotOwned_23CF0(__int16 a1, __int16 a2, int a3);
 void DrawSpell_23D40(int a1, int a2, Type_AE400_29795* a3x, char a4);
 void DrawSpellShort_24230(__int16 a1, __int16 a2, unsigned int a3, char a4);
@@ -642,7 +642,7 @@ void CustomArea2_33800_33BF0(char a1, char a2, unsigned __int16 a3, unsigned __i
 unsigned __int16 CustomArea_33AE0_33ED0(unsigned __int16 a1, char a2);
 void UpdateArea_33B90_33F80(uaxis_2d a1, uaxis_2d a2);
 char UpdateAreaAnyway_33E10_34200(unsigned __int16 a1, __int16 a2);
-unsigned __int16 sub_34070();
+unsigned __int16 AdvanceLevelNumber_34070();
 // int Game_340B0_34470(int a1, __int16 a2, __int16 a3, unsigned __int16 a4, int a5);
 int StartLoadingPage_34460_34820();
 void StopLoadingPage_344F0();
@@ -675,8 +675,8 @@ void PreprocessFeatures_36430_367F0(Type_AE400_193795* a1);
 void DoEffect_36480_36840(Type_AE400_193795* a1, Type_1090* a2);
 _WORD *ResetLinkThings_365C0_36980(int a1);
 void ProcessEffectThings_36620_369E0();
-Type_sub168* sub_36700_36AC0(int a1, unsigned __int16 a2, Type_168* a3);
-int sub_36850_36C10(Type_sub168* a1);
+Type_sub168* InitSpriteHeap_36700_36AC0(int a1, unsigned __int16 a2, Type_168* a3);
+int FindFreeHeapEntry_36850_36C10(Type_sub168* a1);
 // _DWORD ios::failure::cause(_DWORD); weak
 Type_sub168_2* HeapCreate_369E0_36DA0(Type_sub168* a1, unsigned int a2, __int16 a3);
 void HeapDelete_36A90_36E50(Type_sub168* a1, Type_sub168_2* a2);
@@ -811,7 +811,7 @@ int InitEffectRidgeNode_3B2A0(uint16_t* a1);
 int InitEffectTeleport_3B300(uint16_t* a1);
 int InitEffectCircleBall_3B3D0(uint16_t* a1);
 int InitEffectSkeleton_3B3E0(uint16_t* a1);
-int sub_3B460(uint16_t* a1);
+int CreateClass10Type38_3B460(uint16_t* a1);
 int InitEffectBlindness_3B4D0(uint16_t* a1);
 int InitEffectManaBall_3B5A0(uint16_t* a1);
 int InitEffectRip_3B620(uint16_t* a1);
@@ -925,7 +925,7 @@ void GetAnosticks_3F54D_3F88D(__int16 a1, __int16 a2, __int16 a3, __int16 a4);
 unsigned __int8 DoAnosticks_3F76D_3FAAD(uint8_t* a1);
 void InitDigijoy_3F7D0_3FB10(char* textBuffer);
 void InitAnojoy_3F820_sub_3FB60(__int16 a2, int a3, int a4, int a5, char a6);
-void sub_3FB30_3FE70(__int16 a1, __int16 a2, char* a3);
+void ShowCalibrationPrompt_3FB30_3FE70(__int16 a1, __int16 a2, char* a3);
 char sub_3FCA0_3FFE0(char a5, __int16 a6, __int16 a7, __int16 a8, __int16 a9, __int16 a10, __int16 a11);
 void LoadPathFiles_40440_40780(Pathstruct* pathstruct);
 void SetDefaultLevelSettings_40550_40890();
@@ -974,11 +974,11 @@ int Animate_42510_42850(Type_AE400_29795* a1);
 void SetMemoryNumber_42530_42870(char a1);
 void* MyAlloc_42540_42880(size_t size);
 void* MyLowAlloc_425C0_42900(size_t size);
-char sub_42650(int a1, int a2);
+char FindAllocBlock_42650(int a1, int a2);
 void MyFree_426E0_42A20(void* buffer);
 int MyShrink_42730_42A70(int a1, int a2);
 int MyGrow_427A0(int a1, int a2);
-int sub_42860(int a1);
+int MergeFreeBlocks_42860(int a1);
 void NETAbort_428B0_42BF0();
 int NETAdd_42930(_BYTE *a1, char *a2, unsigned __int8 a3);
 int NETCall_42A00_42D40(__int16 a1);
@@ -1075,19 +1075,19 @@ bool MainMenuSelectNext_4C670_4C9B0();
 bool MainMenuEntryEnabled_4C6A0_4C9E0();
 void ScreenMainMenuAnims_4C6F0_4CA30();
 void InitMainMenuScreen_4C7E0_4CB20();
-void sub_4CAC0_4CE00();
-void sub_4CB70_4CEB0();
-void sub_4CC00_4CF40(); // weak
-int sub_4CCA0_4CFE0(int a1);
+void BlankScreenUnlessPlaying_4CAC0_4CE00();
+void DrawMainMenuPanel_4CB70_4CEB0();
+void DrawSelectedSaveName_4CC00_4CF40(); // weak
+int RunScrollMenu_4CCA0_4CFE0(int a1);
 bool ClearMenuInput_4D0F0_4D430();
-void sub_4D190_4D4D0();
+void DrawDialogBox_4D190_4D4D0();
 void DrawSaveGameNames_4D300_4D640();
 void PlayIntroAnim_4D3B0_4D6F0();
 void PlayOutroAndQuit_4D560_4D8A0();
-void sub_4D680_4D9C0();
-char sub_4DCC0_4E000();
-char sub_4E0E0_4E420();
-void sub_4E270_4E5B0();
+void NetworkMenuPage_4D680_4D9C0();
+char AnimateMenuPointer_4DCC0_4E000();
+char InitNetworkScreen_4E0E0_4E420();
+void FadeOutMenuScreen_4E270_4E5B0();
 void ScreenNetworkSetAllPlayersListening_4E320_4E660();
 void ScreenNetworkCallPlayer_4E3D0_4E710(unsigned __int8 a1);
 void ScreenNetworkPlayerConnected_4E470_4E7B0(unsigned __int8 a1);
@@ -1095,19 +1095,19 @@ void ScreenNetworkResetPlayer_4E510(unsigned __int8 a1);
 int ShowLevelPerformance_4E5B0_4E8F0();
 void PlayLogoAnim_4EE70_4F1B0();
 void PlayIntelAnim_4EFC0_4F300();
-void sub_4F120_4F460();
+void StepMenuAnimation_4F120_4F460();
 void PlayTitleAnim_4F1E0_4F520();
 void SelectLanguage_4F3F0_4F730();
 int RunScrollDialog_4F8D0_4FC10(int a1, void (*a2)());
 void MenuQuitGame_4FD20_50060();
-void sub_4FE00_50140();
+void DrawQuitDialog_4FE00_50140();
 void MenuNewGame_4FF30_50270();
 void DrawNewGamePrompt_4FFE0_50320();
-void sub_50030_50370();
+void EnterNameScreen_50030_50370();
 void DrawEnterNamePrompt_50350_50690();
 void DrawEnterCallNamePrompt_503E0_50720();
 _BYTE *FillTransparentFromBackup_50470_507B0();
-int sub_504A0_507E0();
+int BrightenPalette_504A0_507E0();
 bool ReadSoundSetup_505A0_508E0();
 void HandleMenuInput_50770_50AB0();
 bool sub_50D40_51080(int a1, __int16 a2, __int16 a3, char *a4, char *a5, char a6, int a7, void (*a8)(void), char a9, int a10);
@@ -1120,12 +1120,12 @@ void RestoreTextWindow_51400_51740();
 int GetTextWidth_51420_51760(_DWORD *a1, char *a2);
 void InitializeFont_51480_517C0(Type_dword_96884* a1, TypeStrFont* a2, TColor* colorBuffer);
 void DrawFontBPP_51560_518A0(_BYTE *a1, int a2, __int16 a3, char* text);
-__int16 sub_51650_51990(int a1, int a2, __int16 a3, int a4);
+__int16 DrawFontGlyphs_51650_51990(int a1, int a2, __int16 a3, int a4);
 void RelocateFontGlyphs_519E0_51D20(TypeStrFont* a1);
 void ReadSaveGameNames_51A10_51D50();
 int LoadGame_51AF0_51E30(char a1);
 int SaveGame_51C90_51FD0(char a1);
-void sub_51DF0_52130(char a1);
+void InitControllers_51DF0_52130(char a1);
 void sub_51E84_521C4(_BYTE *a1, _BYTE *a2, _BYTE *a3, int a4, char a5);
 int sub_51ECC_5220C(int a1, int a2, int a3, int a4, char a5, char a6);
 void Cbfadeinsample_51FC0();
@@ -1219,8 +1219,8 @@ void SetupPermanentLoadList_59320_59830();
 void LoadPermanentSsprites_59370_59880();
 void StoreTmapConfiguration_593B0_598C0();
 void RestoreTmapConfiguration_59420_59930();
-void sub_59500_59A10(Type_99974* a1);
-void sub_59560_59A70(Type_99974* a1);
+void SetupSpriteList_59500_59A10(Type_99974* a1);
+void ResetSpriteList_59560_59A70(Type_99974* a1);
 void CentreMouseCoordinates_59720_59C30();
 void SetNewMousePosition_59750(int16 a1, int16 a2);
 void SwapScreensVres256_599B0_59EC0(__int16 a1);
@@ -1418,7 +1418,7 @@ void CopyScreen_62FC4_634D4(uint8_t* src, uint8_t* dst, size_t size);
 int sub_62FF0(int a1);
 void sub_63010_63520();
 void sub_63338_63848();
-int sub_6342C_6393C(unsigned int a1);
+int AllocDosMemory_6342C_6393C(unsigned int a1);
 void FreePathFile_634A0_639B0(Pathstruct* pathstruct);
 int LoadPathFile_634E0_639F0(Pathstruct* pathstruct);
 // _DWORD gets(_DWORD); weak
@@ -1453,8 +1453,8 @@ void sub_651E7();
 bool IsSampleDone_651F8(int a1, int a2);
 void sub_6533A();
 void sub_6534B();
-int sub_6535C(int a1, unsigned int a2);
-int sub_65965(int a1, int a2);
+int StartSample_6535C(int a1, unsigned int a2);
+int StopSampleById_65965(int a1, int a2);
 void sub_65D57();
 void SetupSpritesMCGA_65D70_66280(TypeTab* a1, TypeTab* a2, uint8_t* a3);
 void SetupSpritesVres256_65DC0_662D0(TypeTab* a1, TypeTab* a2, uint8_t* a3);
@@ -1472,10 +1472,10 @@ void SosDIGIPlyngStart_66313();
 int SosDIGISamplesPlaying_66324(int a1);
 void SosMIDIInitEnd_6637C();
 void ResetSpritesMCGA_66390(TypeTab* a1, TypeTab* a2, uint8_t* a3);
-void sub_66410(TypeTab* a1, TypeTab* a2, uint8_t* a3);
-int sub_664AB_669BB(char* vipEnv, char** a2, int a3, int a4);
-int sub_6660D_66B1D(char* vipEnv, char** a2, int a3);
-int sub_66612(unsigned __int8 a1);
+void ResetSpritesVres256_66410(TypeTab* a1, TypeTab* a2, uint8_t* a3);
+int ParseEnvNumber_664AB_669BB(char* vipEnv, char** a2, int a3, int a4);
+int ParseEnvNumberSigned_6660D_66B1D(char* vipEnv, char** a2, int a3);
+int HexDigitValue_66612(unsigned __int8 a1);
 __int16 sub_6666C(__int16 result);
 // _DWORD open(_DWORD, _DWORD);
 // _DWORD sopen(_DWORD, _DWORD, char);
@@ -1547,7 +1547,7 @@ int DigiQueueDeleteItemMIDI_68491(int a1, int a2);
 void SosMIDIDqEnd_68600();
 void sub_68611();
 int sub_68622_68B32(__int16 a1, int a2, unsigned int a3, unsigned int a4, int *a5, unsigned int a6);
-int sub_68813(unsigned int a1);
+int FreeDriverSlot_68813(unsigned int a1);
 void sub_6887D();
 void sub_6888E();
 void sub_688F5();
@@ -1603,13 +1603,13 @@ void SosYMInitStart_69FD3();
 char YmInit_69FE4(unsigned int a1);
 void SosYMInitEnd_6A063();
 void sub_6A074();
-char sub_6A085(unsigned __int8 a1, __int16 a2);
+char YmSetFrequency_6A085(unsigned __int8 a1, __int16 a2);
 void sub_6A0F9();
 void SosYMModeStart_6A10A();
 char YmSetMode_6A11B();
 void SosYMModeEnd_6A1B3();
 void sub_6A1C4();
-char sub_6A1D5(unsigned __int8 a1, __int16 a2);
+char YmRetriggerFrequency_6A1D5(unsigned __int8 a1, __int16 a2);
 void sub_6A275();
 void SosYMNotoffStart_6A286();
 char YmNoteOff_6A297(unsigned __int8 a1);
@@ -1623,33 +1623,33 @@ void SosYMSetinsEnd_6A5EC();
 void SosYMUninitStart_6A5FD();
 char YmUnInit_6A60E();
 void SosYMUninitEnd_6A62D();
-unsigned __int8 sub_6A640(unsigned __int8 a1, unsigned __int8 a2);
+unsigned __int8 YmWriteRegister_6A640(unsigned __int8 a1, unsigned __int8 a2);
 // _DWORD fstrcpy(_DWORD, _DWORD, _DWORD, _DWORD); weak
 __int16 sub_6A737(void (*a1)(_DWORD), unsigned int a2, int a3, int a4, __int16 a5);
 int DrawLineLowRes_6B260(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6);
 int DrawLineHighRes_6B378(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigned __int16 a5, __int16 a6);
-void sub_6B47C_6B98C(TColor* palette);
+void ReadPalette_6B47C_6B98C(TColor* palette);
 // _DWORD tolower(_DWORD); weak
 int sub_6B87A();
 // _DWORD lseek(_DWORD, _DWORD, char); weak
 // _DWORD free(_DWORD); weak
 int sub_6BCA3(int a1, unsigned __int8 *a2, int *a3);
 unsigned __int8 *sub_6BEBB(unsigned __int8 *a1, int a2);
-int sub_6BF98(int a1);
+int ScanfSkipSpaces_6BF98(int a1);
 int sub_6BFCF_6C4DF(_WORD *a1, int a2, int *a3);
-void sub_6C05C_6C56C(_BYTE *a1, int a2, int *a3);
+void ScanfReadString_6C05C_6C56C(_BYTE *a1, int a2, int *a3);
 int *sub_6C175(int a1, int *a2, int a3);
-_BYTE *sub_6C1E0(_BYTE *a1, int a2);
-void sub_6C224_6C734(_BYTE *a1, int a2, int *a3, _BYTE **a4);
+_BYTE *ScanfBuildScanset_6C1E0(_BYTE *a1, int a2);
+void ScanfReadScanset_6C224_6C734(_BYTE *a1, int a2, int *a3, _BYTE **a4);
 void sub_6C32A(int a1, int *a2);
-void sub_6C66D(int a1, int *a2, int a3, int a4);
-int sub_6C896(int a1);
-int sub_6C8C5(int a1);
+void ScanfReadInteger_6C66D(int a1, int *a2, int a3, int a4);
+int ScanfHexDigit_6C896(int a1);
+int ScanfGetChar_6C8C5(int a1);
 // _DWORD write(_DWORD, _DWORD, _DWORD); weak
 // _DWORD malloc(_DWORD); weak
 // _DWORD expand(_DWORD, _DWORD); weak
 // _DWORD qsort(_DWORD, _DWORD, _DWORD, _DWORD); weak
-int sub_6D35C_6D86C(unsigned __int16 a1);
+int FreeDosMemory_6D35C_6D86C(unsigned __int16 a1);
 int sub_6D5EC(int a1, int a2);
 // _DWORD strcpy(_DWORD, _DWORD); weak
 // _DWORD strcat(_DWORD, _DWORD); weak
@@ -1658,7 +1658,7 @@ int sub_6DD7D(int a1, int a2, __int16 a3);
 void sub_6DE12();
 void sub_6DE23();
 int sub_6DE34_6E344(__int16 a1, int a2, unsigned int a3, unsigned int a4, int *a5, unsigned int a6);
-int sub_6E030(unsigned int a1);
+int FreeDigiDriverSlot_6E030(unsigned int a1);
 int sub_6E09A_6E5AA(__int16 a1, int a2, unsigned int a3, int *a4, unsigned int a5);
 int sub_6E23C(int a1, __int16 a2);
 void sub_6E295();
@@ -1704,7 +1704,7 @@ int __stdcall AWE32PITCHBEND_6FDEC(unsigned __int8 a1, unsigned __int8 a2, __int
 int __stdcall sub_6FEBF(unsigned __int16 a1);
 int __stdcall sub_6FF53(unsigned __int16 a1);
 char __stdcall sub_70044(__int16 a1);
-_BOOL1 sub_7008A();
+_BOOL1 AweRegistersMissing_7008A();
 unsigned int __stdcall sub_70113(__int16 a1);
 unsigned int sub_70148();
 void sub_7024E();
@@ -1714,7 +1714,7 @@ void sub_70812();
 int sub_70AA0();
 int sub_70B3E();
 char DrvMainVolume_70B8B(unsigned int a1, unsigned __int8 a2);
-unsigned __int8 sub_70D55(unsigned __int8 a1);
+unsigned __int8 YmAllocVoice_70D55(unsigned __int8 a1);
 int sub_70E1C(int a1, int a2, unsigned int a3);
 char *sub_71012();
 void sub_7101B();
@@ -1722,10 +1722,10 @@ void sub_7101B();
 void sub_71524();
 int sub_71B53();
 void sub_71BC9(int a1, const void *a2, void *a3);
-int sub_724C0_729D0(uint16_t a1, uint16_t a2);
-void sub_725C8(__int16 a1, unsigned __int16 a2, __int16 a3);
-void sub_72652_72B62(__int16 a1, uint16_t* a2, uint8_t* a3, uint16_t* a4);
-void sub_726E7_72BF7(__int16 a1, uint16_t* a2, uint8_t* a3, uint16_t* a4);
+int InterpolateTerrainHeight_724C0_729D0(uint16_t a1, uint16_t a2);
+void GenerateFractalMap_725C8(__int16 a1, unsigned __int16 a2, __int16 a3);
+void FractalStepA_72652_72B62(__int16 a1, uint16_t* a2, uint8_t* a3, uint16_t* a4);
+void FractalStepB_726E7_72BF7(__int16 a1, uint16_t* a2, uint8_t* a3, uint16_t* a4);
 char sub_72807_72D17(unsigned __int8 *a1, _BYTE *a2);
 void DrawTriangle_729A3_72EB3_old(_DWORD* a1, _DWORD* a2, _DWORD* a3);
 void DrawTriangle_729A3_72EB3(Type_RenderPoint* pnt1, Type_RenderPoint* pnt2, Type_RenderPoint* pnt3);
@@ -1844,8 +1844,8 @@ void MenuContinueGame_4FF00();
 TypeVoidF dword_4A12C_4A46C[] = {
 {nullptr,0},
 {MenuNewGame_4FF30_50270,0},
-{sub_50030_50370,0},
-{sub_4FEB0,0},
+{EnterNameScreen_50030_50370,0},
+{MenuNetworkGame_4FEB0,0},
 {MenuQuitGame_4FD20_50060,0},
 {nullptr,1},
 {nullptr,2},
@@ -3294,7 +3294,7 @@ char byte_939E5 = '\x01'; // weak
 char byte_939E6 = '\x01'; // weak
 char byte_939EC = '\0'; // weak
 char byte_939ED = '\0'; // weak
-// PORT: HMI sample descriptor at DS:939F0 (64 bytes) passed by address to sub_6535C; IDA split it
+// PORT: HMI sample descriptor at DS:939F0 (64 bytes) passed by address to StartSample_6535C; IDA split it
 // into separate globals, so the driver read garbage past dword_939F0. Fields alias into one block.
 uint8_t sampleDesc_939F0[64];
 #define dword_939F0 (*(int*)(sampleDesc_939F0 + 0))   // sample data pointer
@@ -3631,7 +3631,7 @@ Type_254A34 str_255D0C[] = {
 { 0x002548F4, 0x0023, PORT_FN(InitEffectCircleBall_3B3D0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0024, PORT_FN(InitEffectSkeleton_3B3E0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0000, nullptr, 0x0000, 0x0000 },
-{ 0x002548F4, 0x0026, PORT_FN(sub_3B460, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
+{ 0x002548F4, 0x0026, PORT_FN(CreateClass10Type38_3B460, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0027, PORT_FN(InitEffectManaBall_3B5A0, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0028, PORT_FN(InitEffectRip_3B620, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
 { 0x002548F4, 0x0029, PORT_FN(InitEffectCastleAdjust_3B760, Type_AE400_29795 *(axis_3d*)), 0x0001, 0x0000 },
@@ -4264,7 +4264,7 @@ Type_97D12 off_97D12[] = {
 { PORT_FN(InitEffectCircleBall_3B3D0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 36 },
 { PORT_FN(InitEffectSkeleton_3B3E0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 0 },
 { nullptr, 0, 0x002548F4, 38 },
-{ PORT_FN(sub_3B460, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 39 },
+{ PORT_FN(CreateClass10Type38_3B460, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 39 },
 { PORT_FN(InitEffectManaBall_3B5A0, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 40 },
 { PORT_FN(InitEffectRip_3B620, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 41 },
 { PORT_FN(InitEffectCastleAdjust_3B760, Type_AE400_29795*(axis_3d*)), 1, 0x002548F4, 42 },
@@ -14185,7 +14185,7 @@ _DWORD settextposition(_DWORD a, _DWORD b) { return 0; };// weak
 //char OpenMusic_43B20_43E60(int a1, unsigned int a2) { return 0; };
 //void ScreensHandle_4AB20_4AE60(__int16 a1, const char *a2, const char *a3, __int16 a4, __int16 a5) {};
 //void SetupMenuPage_4AC70_4AFB0(const char *a1, const char *a2) {};
-//int sub_4CC00_4CF40() { return 0; };// weak	
+//int DrawSelectedSaveName_4CC00_4CF40() { return 0; };// weak	
 //void PlayIntelAnim_4EFC0_4F300(__int16 a1) {};
 //void SelectLanguage_4F3F0_4F730(__int16 a1) {};
 //char HandleMenuInput_50770_50AB0(__int16 a1, __int16 a2, __int16 a3, __int16 a4) { return 0; };
@@ -14196,10 +14196,10 @@ _DWORD settextposition(_DWORD a, _DWORD b) { return 0; };// weak
 //__int16 sub_62D40_63250(unsigned __int8 a1, int a2) { return 0; };
 //char sub_62DC3_632D3(int a1) { return 0; };
 //__int16 SosDRVGetFillInfo_677E3_67CF3(int a1, void (*a2)(_DWORD), char a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10) { return 0; };
-//void sub_6C05C_6C56C(_BYTE *a1, int a2, int *a3) {};
-//void sub_6C224_6C734(_BYTE *a1, int a2, int *a3, _BYTE **a4) {};
-//__int16 sub_72652_72B62(__int16 a1, int a2, int a3, __int16 a4) { return 0; };
-//__int16 sub_726E7_72BF7(__int16 a1, int a2, int a3, __int16 a4) { return 0; };
+//void ScanfReadString_6C05C_6C56C(_BYTE *a1, int a2, int *a3) {};
+//void ScanfReadScanset_6C224_6C734(_BYTE *a1, int a2, int *a3, _BYTE **a4) {};
+//__int16 FractalStepA_72652_72B62(__int16 a1, int a2, int a3, __int16 a4) { return 0; };
+//__int16 FractalStepB_726E7_72BF7(__int16 a1, int a2, int a3, __int16 a4) { return 0; };
 //_DWORD StrToInt(_DWORD a) { return 0; };// weak
 
 void port_cli() {}; // PORT: DOS CLI/STI (_disable/_enable) are no-ops; the MSVC intrinsics would execute privileged instructions
@@ -16144,7 +16144,7 @@ LABEL_13:
 /// Original name: altitude_point (COLIDE.C), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
 int AltitudePoint_11F50(axis_3d* position)
 {
-  return sub_724C0_729D0(position->x, position->y);
+  return InterpolateTerrainHeight_724C0_729D0(position->x, position->y);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -26881,7 +26881,9 @@ LABEL_15:
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //SYNCHRONIZED WITH REMC1
-void sub_23AE0(__int16 a1, __int16 a2, TypeTab* a3x, unsigned __int8 a4)
+/// Draws sprite a3x at (a1, a2) with every opaque pixel in colour a4 (half size in 320x200); used for spells not owned (DrawSpellNotOwned_23CF0).
+/// Name is a guess (not in the Hidden Worlds linker map).
+void DrawSpriteTinted_23AE0(__int16 a1, __int16 a2, TypeTab* a3x, unsigned __int8 a4)
 {
   int v4; // eax
   _BYTE *v5; // edi
@@ -26990,7 +26992,7 @@ LABEL_11:
 void DrawSpellNotOwned_23CF0(__int16 a1, __int16 a2, int a3)
 {
   DrawTransparentSprite_23940(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[3]);
-  sub_23AE0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[a3 + 6], 0xA6u);
+  DrawSpriteTinted_23AE0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[a3 + 6], 0xA6u);
 }
 
 //SYNCHRONIZED WITH REMC1
@@ -27129,7 +27131,7 @@ void DrawSpell_23D40(int a1, int a2, Type_AE400_29795* a3x, char a4)
             if ( v4 >= 10 )
               goto LABEL_48;
           }
-          sub_23AE0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[v4 + 30], (unsigned char)byte_AD167_AD157[1]);
+          DrawSpriteTinted_23AE0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[v4 + 30], (unsigned char)byte_AD167_AD157[1]);
         }
 LABEL_48:
         v18 = a3x->manaDelta_29927_132;
@@ -27225,7 +27227,7 @@ void DrawSpellShort_24230(__int16 a1, __int16 a2, unsigned int a3, char a4)
             if ( v4x >= 10 )
               goto LABEL_29;
           }
-          sub_23AE0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[v4x + 30], (unsigned char)byte_AD167_AD157[1]);
+          DrawSpriteTinted_23AE0(a1, a2, &begSprTab_AE42C_AE41C_26C42C_26C41C[v4x + 30], (unsigned char)byte_AD167_AD157[1]);
         }
 LABEL_29:
         if ( *(_DWORD *)PTR(a3 + 132) )
@@ -36410,7 +36412,7 @@ void DoMapWho_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 			{
 				if (!a2x->textAtyp_43)
 				{
-					int32 tempZ = sub_724C0_729D0(str_AE400_AE3F0->str_29795[result].var_u32_29867_72.x, str_AE400_AE3F0->str_29795[result].var_u32_29867_72.y) - posZ_B5CF8_B5CE8;
+					int32 tempZ = InterpolateTerrainHeight_724C0_729D0(str_AE400_AE3F0->str_29795[result].var_u32_29867_72.x, str_AE400_AE3F0->str_29795[result].var_u32_29867_72.y) - posZ_B5CF8_B5CE8;
 					int32 xRot = (diffX * sin_B5CDC_B5CCC - diffY * cos_B5D10_B5D00) >> 16;
 					int32 yRot = (diffX * cos_B5D10_B5D00 + diffY * sin_B5CDC_B5CCC) >> 16;
 					int32 sqSize = yRot * yRot + xRot * xRot;
@@ -38892,7 +38894,7 @@ void CreateWorld_31AA0_31AE0(int a1)//202AA0_
       //add_compare(0x202AF1, true);
 #endif debug1
   //debug
-    sub_725C8(pseudoRand_12C1E0_12C1D0, *(_WORD *)PTR(a1 + 8), *(_WORD *)PTR(a1 + 12));
+    GenerateFractalMap_725C8(pseudoRand_12C1E0_12C1D0, *(_WORD *)PTR(a1 + 8), *(_WORD *)PTR(a1 + 12));
     //202AF7 
       //debug
 #ifdef debug1
@@ -41070,7 +41072,9 @@ char UpdateAreaAnyway_33E10_34200(unsigned __int16 a1, __int16 a2)
   return v9;
 }
 
-unsigned __int16 sub_34070()//205070_
+/// Increments the level number (str_AE408_AE3F8 +17), with special cases around levels 28, 33 and 39.
+/// Name is a guess (not in the Hidden Worlds linker map).
+unsigned __int16 AdvanceLevelNumber_34070()//205070_
 {
   unsigned __int16 result; // ax
 
@@ -41159,7 +41163,7 @@ void Game_340B0_34470(int argc, const char** argv)//2050B0_205470
           ScreensHandle_4AB20_4AE60();
         while ( !leaveMenu_96880 );
         if (!IsHiddenWord)
-            sub_34070();
+            AdvanceLevelNumber_34070();
         FadePalette256_61CC0_621D0(0, 0x10u, 0);
         SetPointer_5C05C_5C56C(&begPointersTab_AE450_AE440_26C450_26C440[0]);
         if ( !str_AE400_AE3F0->str_13323[str_AE400_AE3F0->var_u16_8].var_u8_13327 )
@@ -41577,7 +41581,7 @@ void LoadAllGameData_34B00_34EC0()//205b00_205EC0
     LoadPathFiles_40440_40780(&pathStrArray[PSWScreen]);
   else
     LoadPathFiles_40440_40780(&pathStrArray[PSWScreen2]);
-  sub_59500_59A10(off_99974);
+  SetupSpriteList_59500_59A10(off_99974);
   SetupSearch_11540();
 }
 
@@ -41634,7 +41638,7 @@ void ChangeResolution_34C80_35040()//205C80_
   MyFree_426E0_42A20((void*)blurBuffer_AE404_AE3F4);
   blurBuffer_AE404_AE3F4 = 0;
   ResetMouse_3F370_3F6B0();
-  sub_59560_59A70(off_99974);
+  ResetSpriteList_59560_59A70(off_99974);
   if ( typeResolution_12F02E_12F01E == 1 )
   {
     FreeAllData_61610_61B20(&pathStrArray[PSWScreen]);
@@ -41649,7 +41653,7 @@ void ChangeResolution_34C80_35040()//205C80_
     LoadPathFiles_40440_40780(&pathStrArray[PSWScreen]);//735a98 set begWscreen_2ECFF4_2ECFE4
     blurBuffer_AE404_AE3F4 = (uint8*)MyAlloc_42540_42880(64000);
   }
-  sub_59500_59A10(off_99974);
+  SetupSpriteList_59500_59A10(off_99974);
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     SetupScreenMCGA_61B90_620A0((TColor*)begWscreen_2ECFF4_2ECFE4);
   else
@@ -43041,7 +43045,9 @@ void sub_36620_369E0_new()//207620_
 }
 
 //SYNCHRONIZED WITH REMC1
-Type_sub168* sub_36700_36AC0(int a1, unsigned __int16 a2, Type_168* a3x)//207700_
+/// Sets up a sprite heap of a1 bytes with a2 entries in buffer a3x (the entry tables first, the data after them); returns nullptr if it does not fit.
+/// Name is a guess (not in the Hidden Worlds linker map).
+Type_sub168* InitSpriteHeap_36700_36AC0(int a1, unsigned __int16 a2, Type_168* a3x)//207700_
 {
 	//unsigned __int16 v3; // bx
 	int v5; // edx
@@ -43116,7 +43122,9 @@ Type_sub168* sub_36700_36AC0(int a1, unsigned __int16 a2, Type_168* a3x)//207700
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_36850_36C10(Type_sub168* a1x)
+/// Returns the index of the first unused entry of sprite heap a1x, or -1.
+/// Name is a guess (not in the Hidden Worlds linker map).
+int FindFreeHeapEntry_36850_36C10(Type_sub168* a1x)
 {
   for ( int result = 0; result < a1x->var_22; result++ )
   {
@@ -43149,7 +43157,7 @@ Type_sub168_2* HeapCreate_369E0_36DA0(Type_sub168* a1x, unsigned int a2, __int16
   v3 = -1;
   if ( a2 < a1x->var_4x)
   {
-    v4 = sub_36850_36C10(a1x);
+    v4 = FindFreeHeapEntry_36850_36C10(a1x);
     v5 = v4;
     v6 = v4;
     v3 = v4;
@@ -44986,6 +44994,7 @@ int InitCreature07_38C60(uint16_t* a1)
 }
 
 // positive sp value has been detected, the output may be wrong!
+/// IDA fragment with register arguments (a1@eax, a2@dx, a3@ecx, a4@ebx): writes byte a2>>8 + 1 at a3 + a1 + 12; not understood (INIT.C area).
 int sub_38D09(/*int a1@<eax>, __int16 a2@<dx>, int a3@<ecx>, int a4@<ebx>, int a5*/)//209D09_
 {
     //fix
@@ -47362,7 +47371,9 @@ int InitEffectSkeleton_3B3E0(uint16_t* a1)
 }
 
 //----- (0003B460) --------------------------------------------------------
-int sub_3B460(uint16_t* a1)
+/// TODO: rename when the entity is identified (class 10 type 38).
+/// Constructor of class 10 type 38 (state 40), created by LightningStormMissileTick_53DC0_54100; the map name at this position, init_effect_alliance, is doubtful.
+int CreateClass10Type38_3B460(uint16_t* a1)
 {
   _BYTE *v1; // eax
   int v2; // ebx
@@ -50469,7 +50480,7 @@ void InitDigijoy_3F7D0_3FB10(char* textBuffer)
 	if (byte_B7700_B76F0)
 	{
 		CalibrateDigistick_3F398_3F6D8();
-		sub_3FB30_3FE70(word_90B34, word_90B36, textBuffer);
+		ShowCalibrationPrompt_3FB30_3FE70(word_90B34, word_90B36, textBuffer);
 		byte_90B23 = 2;
 	}
 }
@@ -50497,7 +50508,7 @@ void InitAnojoy_3F820_sub_3FB60(__int16 a2, int a3, int a4, int a5, char a6)
 		int index1 = 0;
 		int index2 = 0;
 		int index3 = 0;
-		sub_3FB30_3FE70(word_90B24, word_90B26, (char*)PTR(a3));
+		ShowCalibrationPrompt_3FB30_3FE70(word_90B24, word_90B26, (char*)PTR(a3));
 		do
 		{
 			GetAnosticks_3F54D_3F88D(a2, index1, index2, index3);
@@ -50511,7 +50522,7 @@ void InitAnojoy_3F820_sub_3FB60(__int16 a2, int a3, int a4, int a5, char a6)
 		index2 = 0;
 		index1 = 0;
 		index3 = 0;
-		sub_3FB30_3FE70(word_90B2C, word_90B2E, (char*)PTR(a4));
+		ShowCalibrationPrompt_3FB30_3FE70(word_90B2C, word_90B2E, (char*)PTR(a4));
 		do
 		{
 			GetAnosticks_3F54D_3F88D(a4, index1, index2, index3);
@@ -50524,7 +50535,7 @@ void InitAnojoy_3F820_sub_3FB60(__int16 a2, int a3, int a4, int a5, char a6)
 		index1 = 0;
 		index2 = 0;
 		index3 = 0;
-		sub_3FB30_3FE70(word_90B34, word_90B36, (char*)PTR(a5));
+		ShowCalibrationPrompt_3FB30_3FE70(word_90B34, word_90B36, (char*)PTR(a5));
 		do
 		{
 			GetAnosticks_3F54D_3F88D(a4, index1, index2, index3);
@@ -50584,7 +50595,9 @@ void InitAnojoy_3F820_sub_3FB60(__int16 a2, int a3, int a4, int a5, char a6)
 }
 
 //----- (0003FB30) --------------------------------------------------------
-void sub_3FB30_3FE70(__int16 a1, __int16 a2, char* a3)
+/// Joystick calibration: redraws the setup screen with message a3 until the expected input arrives (used by InitDigijoy/InitAnojoy).
+/// Name is a guess (not in the Hidden Worlds linker map).
+void ShowCalibrationPrompt_3FB30_3FE70(__int16 a1, __int16 a2, char* a3)
 {
   unsigned __int8 v3; // al
   unsigned __int8 v4; // al
@@ -53216,7 +53229,7 @@ void* MyAlloc_42540_42880_orig(size_t size)
         i = v3;
       }
     }
-    if ( i && sub_42650((int)OFF(i), v1) )
+    if ( i && FindAllocBlock_42650((int)OFF(i), v1) )
     {
       sub_63338_63848();
       memset((void*)PTR(*i), 0, v1);
@@ -53261,7 +53274,7 @@ int MyLowAlloc_425C0_42900_orig(int a1)
       v2 = v1[1];
     }
   }
-  if ( !v3 || !sub_42650((int)OFF(v3), v4) )
+  if ( !v3 || !FindAllocBlock_42650((int)OFF(v3), v4) )
     return 0;
   sub_63338_63848();
   memset((void*)PTR(*v3), 0, v4);
@@ -53272,7 +53285,9 @@ int MyLowAlloc_425C0_42900_orig(int a1)
 // 1302A0: using guessed type int dword_1302A0_130290;
 
 //----- (00042650) --------------------------------------------------------
-char sub_42650(int a1, int a2)
+/// MyLowAlloc helper: reuses block a1 if it already has size a2, else looks for a free entry in the allocation table (dword_1302A0); tags it with the memory number.
+/// Name is a guess (not in the Hidden Worlds linker map).
+char FindAllocBlock_42650(int a1, int a2)
 {
   char result; // al
   int *i; // edx
@@ -53372,7 +53387,7 @@ LABEL_5:
     for ( i = &dword_1302A0_130290; i; i = (int *)PTR(i[2]) )
     {
       if ( !*((_BYTE *)i + 16) )
-        sub_42860((int)OFF(i));
+        MergeFreeBlocks_42860((int)OFF(i));
     }
   }
   return sub_63338_63848();
@@ -53401,7 +53416,7 @@ int MyShrink_42730_42A70(int a1, int a2)
     }
     *((_BYTE *)v3 + 16) = 0;
     LOBYTE(v2) = (a2 + 3) & 0xFC;
-    sub_42650((int)OFF(v3), v2);
+    FindAllocBlock_42650((int)OFF(v3), v2);
     v4 = 1;
   }
 LABEL_5:
@@ -53410,7 +53425,7 @@ LABEL_5:
     for ( i = &dword_1302A0_130290; i; i = (int *)PTR(i[2]) )
     {
       if ( !*((_BYTE *)i + 16) )
-        sub_42860((int)OFF(i));
+        MergeFreeBlocks_42860((int)OFF(i));
     }
   }
   sub_63338_63848();
@@ -53452,7 +53467,7 @@ int MyGrow_427A0(int a1, int a2)
     {
       if ( v5 < v3 )
         return 0;
-      sub_42860(v4);
+      MergeFreeBlocks_42860(v4);
     }
     else
     {
@@ -53471,7 +53486,7 @@ LABEL_13:
     for ( i = &dword_1302A0_130290; i; i = (int *)PTR(i[2]) )
     {
       if ( !*((_BYTE *)i + 16) )
-        sub_42860((int)OFF(i));
+        MergeFreeBlocks_42860((int)OFF(i));
     }
   }
   sub_63338_63848();
@@ -53481,7 +53496,9 @@ LABEL_13:
 // 1302A0: using guessed type int dword_1302A0_130290;
 
 //----- (00042860) --------------------------------------------------------
-int sub_42860(int a1)
+/// Allocator helper: marks block a1 free and merges it with its free neighbours.
+/// Name is a guess (not in the Hidden Worlds linker map).
+int MergeFreeBlocks_42860(int a1)
 {
   int result; // eax
   int v2; // edx
@@ -57460,7 +57477,7 @@ void LocalPlayOneChannelSample_483C0(__int16 a1, __int16 a2, __int16 a3, __int16
       if ( v5 >= 32 )
         goto LABEL_10;
     }
-    sub_65965(dword_CC140, v5);
+    StopSampleById_65965(dword_CC140, v5);
 LABEL_10:
     TriggerSample_48570(a1, a2, a3, a4);
   }
@@ -57553,7 +57570,7 @@ bool TriggerSample_48570(__int16 a1, __int16 a2, __int16 a3, __int16 a4)
   v8 = *(_DWORD *)PTR(v6 + 18);
   dword_939F8 = v7;
   dword_939F0 = v8;
-  dword_CC144 = sub_6535C(dword_CC140, (unsigned int)OFF(&dword_939F0));
+  dword_CC144 = StartSample_6535C(dword_CC140, (unsigned int)OFF(&dword_939F0));
   return 1;
 }
 // 939F0: using guessed type int dword_939F0;
@@ -58429,7 +58446,7 @@ void ScreensHandle_4AB20_4AE60()//21BB20_21BE60
       GameMenuPage_4BD60_4C0A0();//game
       break;
     case 4:
-      sub_4D680_4D9C0();
+      NetworkMenuPage_4D680_4D9C0();
       break;
     case 5:
       ShowLevelPerformance_4E5B0_4E8F0();
@@ -58675,7 +58692,7 @@ void SetupMenuPage_4AC70_4AFB0()//21BC70_
 #endif
 	if (bool1)
 	{
-		sub_51DF0_52130(word_4A8BE_4ABFE[4 * (unsigned __int8)byte_12CBD3_12CBC3 + 3]);
+		InitControllers_51DF0_52130(word_4A8BE_4ABFE[4 * (unsigned __int8)byte_12CBD3_12CBC3 + 3]);
 		BlankMenuScreen_4BC90_4BFD0();
 		if (byte_12CBD5_12CBC5 >= 0)
 		{
@@ -59077,7 +59094,7 @@ void GameMenuPage_4BD60_4C0A0()//21CD60_
   v3 = (int)OFF(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
   begBscreen_AE3FC_AE3EC_26C3FC_26C3EC = begWscreen_2ECFF4_2ECFE4;
   begWscreen_2ECFF4_2ECFE4 = (uint8_t*)PTR(v3);
-  sub_4CB70_4CEB0();
+  DrawMainMenuPanel_4CB70_4CEB0();
   //fix
   v4 = (int)OFF(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
   begBscreen_AE3FC_AE3EC_26C3FC_26C3EC = begWscreen_2ECFF4_2ECFE4;
@@ -59159,27 +59176,27 @@ void GameMenuPage_4BD60_4C0A0()//21CD60_
         switch ( v7 )
         {
           case 1:
-            if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
+            if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())DrawSelectedSaveName_4CC00_4CF40) )
               LoadGame_51AF0_51E30(1);
             break;
           case 2:
-            if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
+            if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())DrawSelectedSaveName_4CC00_4CF40) )
               LoadGame_51AF0_51E30(2);
             break;
           case 3:
-            if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
+            if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())DrawSelectedSaveName_4CC00_4CF40) )
               LoadGame_51AF0_51E30(3);
             break;
           case 4:
-            if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
+            if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())DrawSelectedSaveName_4CC00_4CF40) )
               LoadGame_51AF0_51E30(4);
             break;
           case 5:
-            if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
+            if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())DrawSelectedSaveName_4CC00_4CF40) )
               LoadGame_51AF0_51E30(5);
             break;
           case 6:
-            if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())sub_4CC00_4CF40) )
+            if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())DrawSelectedSaveName_4CC00_4CF40) )
               LoadGame_51AF0_51E30(6);
             break;
           default:
@@ -59194,7 +59211,7 @@ LABEL_69:
           v9 = (int)OFF(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
           begBscreen_AE3FC_AE3EC_26C3FC_26C3EC = (uint8_t*)begWscreen_2ECFF4_2ECFE4;
           begWscreen_2ECFF4_2ECFE4 = (uint8_t*)PTR(v9);
-          sub_4CB70_4CEB0();
+          DrawMainMenuPanel_4CB70_4CEB0();
           /*
           v10 = (int)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC ^ begWscreen_2ECFF4_2ECFE4;
           begBscreen_AE3FC_AE3EC_26C3FC_26C3EC = (uint8_t*)begWscreen_2ECFF4_2ECFE4;
@@ -59234,7 +59251,7 @@ LABEL_70:
                 v12 = (int)OFF(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
                 begBscreen_AE3FC_AE3EC_26C3FC_26C3EC = (uint8_t*)begWscreen_2ECFF4_2ECFE4;
                 begWscreen_2ECFF4_2ECFE4 = (uint8_t*)PTR(v12);
-                sub_4CB70_4CEB0();
+                DrawMainMenuPanel_4CB70_4CEB0();
                 v13 = (int)OFF(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
                 begBscreen_AE3FC_AE3EC_26C3FC_26C3EC = (uint8_t*)begWscreen_2ECFF4_2ECFE4;
                 begWscreen_2ECFF4_2ECFE4 = (uint8_t*)PTR(v13);
@@ -59246,27 +59263,27 @@ LABEL_70:
         switch ( v7 )
         {
           case 1:
-            if ( sub_4CCA0_4CFE0(0) )
+            if ( RunScrollMenu_4CCA0_4CFE0(0) )
               SaveGame_51C90_51FD0(1);
             break;
           case 2:
-            if ( sub_4CCA0_4CFE0(0) )
+            if ( RunScrollMenu_4CCA0_4CFE0(0) )
               SaveGame_51C90_51FD0(2);
             break;
           case 3:
-            if ( sub_4CCA0_4CFE0(0) )
+            if ( RunScrollMenu_4CCA0_4CFE0(0) )
               SaveGame_51C90_51FD0(3);
             break;
           case 4:
-            if ( sub_4CCA0_4CFE0(0) )
+            if ( RunScrollMenu_4CCA0_4CFE0(0) )
               SaveGame_51C90_51FD0(4);
             break;
           case 5:
-            if ( sub_4CCA0_4CFE0(0) )
+            if ( RunScrollMenu_4CCA0_4CFE0(0) )
               SaveGame_51C90_51FD0(5);
             break;
           case 6:
-            if ( sub_4CCA0_4CFE0(0) )
+            if ( RunScrollMenu_4CCA0_4CFE0(0) )
               SaveGame_51C90_51FD0(6);
             break;
           default:
@@ -59345,7 +59362,7 @@ LABEL_79:
   begWscreen_2ECFF4_2ECFE4 = (uint8_t*)PTR(v14);
   if ( v0 )
   {
-    sub_4CAC0_4CE00();
+    BlankScreenUnlessPlaying_4CAC0_4CE00();
     if ( v2 )
       mainMenuSelector_12CBCE_12CBBE = 2;
   }
@@ -59531,12 +59548,12 @@ void InitMainMenuScreen_4C7E0_4CB20()
   else
     CopyScreen_62FC4_634D4(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begScreenBackup2_12CBA8_2EABA8_2EAB98, 0x1E0u);
   LoadFileAt_3EEA0_3F1E0((char*)"data\\screens\\mainmenu.pal", (uint8_t*)begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C);
-  sub_504A0_507E0();
+  BrightenPalette_504A0_507E0();
   ReadSaveGameNames_51A10_51D50();
   uint8_t* bufferTemp = begBscreen_AE3FC_AE3EC_26C3FC_26C3EC;
   begBscreen_AE3FC_AE3EC_26C3FC_26C3EC = begWscreen_2ECFF4_2ECFE4;
   begWscreen_2ECFF4_2ECFE4 = bufferTemp;
-  sub_4CB70_4CEB0();
+  DrawMainMenuPanel_4CB70_4CEB0();
   bufferTemp = begBscreen_AE3FC_AE3EC_26C3FC_26C3EC;
   begBscreen_AE3FC_AE3EC_26C3FC_26C3EC = begWscreen_2ECFF4_2ECFE4;
   begWscreen_2ECFF4_2ECFE4 = bufferTemp;
@@ -59575,7 +59592,9 @@ void InitMainMenuScreen_4C7E0_4CB20()
 }
 
 //----- (0004CAC0) --------------------------------------------------------
-void sub_4CAC0_4CE00()
+/// Fades out (unless the menu selector is 5, play game), hides the pointer and clears the screen.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void BlankScreenUnlessPlaying_4CAC0_4CE00()
 {
   if ( mainMenuSelector_12CBCE_12CBBE != 5 )
   {
@@ -59604,7 +59623,9 @@ void sub_4CAC0_4CE00()
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //----- (0004CB70) --------------------------------------------------------
-void sub_4CB70_4CEB0()
+/// Draws the main-menu side panel: the save-game names (byte_12CBCD 1/2) or the menu sprites.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void DrawMainMenuPanel_4CB70_4CEB0()
 {
   if ( byte_12CBCD_12CBBD )
   {
@@ -59629,7 +59650,9 @@ void sub_4CB70_4CEB0()
 
 
 //SYNCHRONIZED WIT?h REMC1
-void sub_4CC00_4CF40()//21DC00_
+/// Draws the dialog box with the name of the selected save game.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void DrawSelectedSaveName_4CC00_4CF40()//21DC00_
 {
     SetGraphicsWindow_65EB0_663C0(65, 75, 189, 44);
     if ((typeResolution_12F02E_12F01E & 1) != 0)
@@ -59641,7 +59664,9 @@ void sub_4CC00_4CF40()//21DC00_
 }
 
 //SYNCHRONIZED WITH REMC1
-int sub_4CCA0_4CFE0(int a1)
+/// Runs a menu over the scroll animation (intro/scroll.dat) until a choice is made; returns it.
+/// Name is a guess (not in the Hidden Worlds linker map).
+int RunScrollMenu_4CCA0_4CFE0(int a1)
 {
   int v1; // ebx
   __int16 v2; // di
@@ -59748,7 +59773,7 @@ int sub_4CCA0_4CFE0(int a1)
       pressedKeys_12EEF0_12EEE0[1] = 0;//byte_12EEF1_12EEE1 ESC
       byte_12CAE4_12CAD4 &= ~1u;
     }
-    sub_4D190_4D4D0();
+    DrawDialogBox_4D190_4D4D0();
     if ( (byte_90B23 & 0x23) != 0 )
     {
       if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -59804,7 +59829,7 @@ bool ClearMenuInput_4D0F0_4D430()
              (char *)off_96864[dword_4A12C_4A46C[byte_12CBC6_12CBB6].var-1],
              255,
              0,
-             (void (*)(void))sub_4D190_4D4D0,
+             (void (*)(void))DrawDialogBox_4D190_4D4D0,
              0,
              (int)OFF(&str_9688C));
   byte_12CBD5_12CBC5 &= ~0x40u;
@@ -59812,7 +59837,9 @@ bool ClearMenuInput_4D0F0_4D430()
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4D190_4D4D0()
+/// Restores the screen and draws the menu dialog box (main-menu sprite 2) in the 189x44 window.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void DrawDialogBox_4D190_4D4D0()
 {
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     CopyScreenMCGA_62FA8_634B8(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begWscreen_2ECFF4_2ECFE4, 0xC8u);
@@ -59963,7 +59990,9 @@ void PlayOutroAndQuit_4D560_4D8A0()
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4D680_4D9C0()
+/// Main menu page 4: the network game screen (pmulti; player list CARPET%d, selection at x 173-263).
+/// Name is a guess (not in the Hidden Worlds linker map).
+void NetworkMenuPage_4D680_4D9C0()
 {
   int v0; // eax
   int v1; // edx
@@ -60010,7 +60039,7 @@ void sub_4D680_4D9C0()
   v35 = 0;
   if ( (byte_12CBD5_12CBC5 & 1) == 0 )
   {
-    sub_4E0E0_4E420();
+    InitNetworkScreen_4E0E0_4E420();
     ScreenNetworkSetAllPlayersListening_4E320_4E660();
   }
   if (pressedKeys_12EEF0_12EEE0[1])//byte_12EEF1_12EEE1 ESC
@@ -60115,7 +60144,7 @@ void sub_4D680_4D9C0()
         str_AE408_AE3F8->var_u16_17 = word_12CBC2_12CBB2 + 50;
         byte_12CBD5_12CBC5 |= 0x10u;
         byte_12CBD2_12CBC2 = 6;
-        sub_4DCC0_4E000();
+        AnimateMenuPointer_4DCC0_4E000();
         SaveTextWindow_513E0_51720();
         SetTextWindow_51360_516A0(173, 42, 90, 15);
         v32 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
@@ -60153,7 +60182,7 @@ void sub_4D680_4D9C0()
     }
     byte_12CAE4_12CAD4 &= 0xBEu;
   }
-  sub_4DCC0_4E000();
+  AnimateMenuPointer_4DCC0_4E000();
   SaveTextWindow_513E0_51720();
   SetTextWindow_51360_516A0(173, 42, 90, 15);
   v33 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
@@ -60173,7 +60202,7 @@ void sub_4D680_4D9C0()
     SwapScreensVres256_599B0_59EC0(480);
   if ( v34 )
   {
-    sub_4E270_4E5B0();
+    FadeOutMenuScreen_4E270_4E5B0();
     if ( !v35 )
     {
       v27 = dword_AE400_AE3F0();
@@ -60192,7 +60221,9 @@ void sub_4D680_4D9C0()
 }
 
 //SYNCHRONIZED WITH REMC1
-char sub_4DCC0_4E000()
+/// Animates the menu mouse pointer (frames 6..20 of the pointer sprites) and handles its hover state.
+/// Name is a guess (not in the Hidden Worlds linker map).
+char AnimateMenuPointer_4DCC0_4E000()
 {
   //int v0; // edx
   //int v1; // eax
@@ -60335,7 +60366,9 @@ char sub_4DCC0_4E000()
 }
 
 //SYNCHRONIZED WITH REMC1
-char sub_4E0E0_4E420()
+/// Loads the network screen: data/screens/pmulti.dat/.pal, its sprites and font; stops the music.
+/// Name is a guess (not in the Hidden Worlds linker map).
+char InitNetworkScreen_4E0E0_4E420()
 {
   char result; // al
 
@@ -60368,7 +60401,9 @@ char sub_4E0E0_4E420()
 }
 
 //----- (0004E270) --------------------------------------------------------
-void sub_4E270_4E5B0()
+/// Fades to black, hides the pointer and clears the screen buffer.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void FadeOutMenuScreen_4E270_4E5B0()
 {
   FadePalette256_61CC0_621D0(0, 0x10u, 0);
   if ( !byte_90B23 )
@@ -60410,7 +60445,7 @@ void ScreenNetworkSetAllPlayersListening_4E320_4E660()
     ++v0;
   }
   while ( v0 < 8u );
-  sub_4DCC0_4E000();
+  AnimateMenuPointer_4DCC0_4E000();
   SaveTextWindow_513E0_51720();
   SetTextWindow_51360_516A0(173, 42, 90, 15);
   v2 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
@@ -60432,7 +60467,7 @@ void ScreenNetworkCallPlayer_4E3D0_4E710(unsigned __int8 a1)
 
   byte_9689E[3 * a1] = 1;
   ++dword_12CBB0_12CBA0;
-  sub_4DCC0_4E000();
+  AnimateMenuPointer_4DCC0_4E000();
   SaveTextWindow_513E0_51720();
   SetTextWindow_51360_516A0(173, 42, 90, 15);
   v2 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
@@ -60454,7 +60489,7 @@ void ScreenNetworkPlayerConnected_4E470_4E7B0(unsigned __int8 a1)
 
   byte_9689E[3 * a1] = 2;
   ++dword_12CBB0_12CBA0;
-  sub_4DCC0_4E000();
+  AnimateMenuPointer_4DCC0_4E000();
   SaveTextWindow_513E0_51720();
   SetTextWindow_51360_516A0(173, 42, 90, 15);
   v2 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
@@ -60476,7 +60511,7 @@ void ScreenNetworkResetPlayer_4E510(unsigned __int8 a1)
 
   byte_9689E[3 * a1] = 0;
   ++dword_12CBB0_12CBA0;
-  sub_4DCC0_4E000();
+  AnimateMenuPointer_4DCC0_4E000();
   SaveTextWindow_513E0_51720();
   SetTextWindow_51360_516A0(173, 42, 90, 15);
   v2 = (unsigned __int8 *)PTR(dword_AE408_AE3F8() + 117);
@@ -60838,7 +60873,9 @@ void PlayIntelAnim_4EFC0_4F300()
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4F120_4F460()
+/// Shows the next frame of the menu FLC animation (frames cycle 1..4) at its frame rate.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void StepMenuAnimation_4F120_4F460()
 {
 	int v0; // ebx
 	uint8_t* v1; // eax
@@ -60916,7 +60953,7 @@ void PlayTitleAnim_4F1E0_4F520()
   if ( *(_BYTE *)PTR(dword_AE400_AE3F0() + 8608) == 32 )
   {
     if ( !word_AC5DC_AC5CC )
-      WaitForInputOrTimeout_4B480_4B7C0((int (*)(void))sub_4F120_4F460, 6);
+      WaitForInputOrTimeout_4B480_4B7C0((int (*)(void))StepMenuAnimation_4F120_4F460, 6);
   }
   else if ( !word_AC5DC_AC5CC )
   {
@@ -61226,9 +61263,9 @@ void MenuQuitGame_4FD20_50060()
   int v2; // esi
   int v3; // esi
 
-  if ( RunScrollDialog_4F8D0_4FC10(a1, (void (*)())sub_4FE00_50140) )
+  if ( RunScrollDialog_4F8D0_4FC10(a1, (void (*)())DrawQuitDialog_4FE00_50140) )
   {
-    sub_4CAC0_4CE00();
+    BlankScreenUnlessPlaying_4CAC0_4CE00();
     str_AE400_AE3F0[str_AE400_AE3F0->var_u16_8].str_13323[0].var_u8_13327 = 1;
     leaveMenu_96880 = true;
   }
@@ -61242,7 +61279,7 @@ void MenuQuitGame_4FD20_50060()
     v2 = (int)OFF(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
     begBscreen_AE3FC_AE3EC_26C3FC_26C3EC = (uint8_t*)begWscreen_2ECFF4_2ECFE4;
     begWscreen_2ECFF4_2ECFE4 = (uint8_t*)PTR(v2);
-    sub_4CB70_4CEB0();
+    DrawMainMenuPanel_4CB70_4CEB0();
     v3 = (int)OFF(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
     begBscreen_AE3FC_AE3EC_26C3FC_26C3EC = (uint8_t*)begWscreen_2ECFF4_2ECFE4;
     begWscreen_2ECFF4_2ECFE4 = (uint8_t*)PTR(v3);
@@ -61250,7 +61287,9 @@ void MenuQuitGame_4FD20_50060()
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_4FE00_50140()
+/// Draws the quit dialog (main-menu sprite 7) centred in the dialog window; callback of MenuQuitGame_4FD20_50060.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void DrawQuitDialog_4FE00_50140()
 {
   int v0; // eax
 
@@ -61263,7 +61302,9 @@ void sub_4FE00_50140()
   SetGraphicsWindow_65EB0_663C0(0, 0, 320, 200);
 }
 
-void sub_4FEB0()
+/// Main-menu action for a network game (only with byte_93958): copies the player record and switches to page 4.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void MenuNetworkGame_4FEB0()
 {
     int v0; // eax
     int v1; // edi
@@ -61337,7 +61378,9 @@ void DrawNewGamePrompt_4FFE0_50320()
 }
 
 //SYNCHRONIZED WITH REMC1
-void sub_50030_50370()//221030_
+/// Name entry over the scroll animation (FillTransparentFromBackup_50470_507B0 as frame callback).
+/// Name is a guess (not in the Hidden Worlds linker map).
+void EnterNameScreen_50030_50370()//221030_
 {
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
     CopyScreenMCGA_62FA8_634B8(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC, begScreenBackup_12CBA4_2EABA4_2EAB94, 0xC8u);
@@ -61378,7 +61421,7 @@ void sub_50030_50370()//221030_
   uint8_t* tempBuffer = begBscreen_AE3FC_AE3EC_26C3FC_26C3EC;
   begBscreen_AE3FC_AE3EC_26C3FC_26C3EC = begWscreen_2ECFF4_2ECFE4;
   begWscreen_2ECFF4_2ECFE4 = tempBuffer;
-  sub_4CB70_4CEB0();
+  DrawMainMenuPanel_4CB70_4CEB0();
   tempBuffer = begBscreen_AE3FC_AE3EC_26C3FC_26C3EC;
   begBscreen_AE3FC_AE3EC_26C3FC_26C3EC = begWscreen_2ECFF4_2ECFE4;
   begWscreen_2ECFF4_2ECFE4 = tempBuffer;
@@ -61460,7 +61503,9 @@ _BYTE *FillTransparentFromBackup_50470_507B0()
 }
 
 //----- (000504A0) --------------------------------------------------------
-int sub_504A0_507E0()
+/// Raises every component of the menu palette by 30% (capped at 63).
+/// Name is a guess (not in the Hidden Worlds linker map).
+int BrightenPalette_504A0_507E0()
 {
   unsigned __int16 i; // bx
   int v1; // ecx
@@ -62223,7 +62268,7 @@ void DrawFontBPP_51560_518A0(_BYTE *a1, int a2, __int16 a3, char* text)//222560_
         }
         else
         {
-          sub_51650_51990((int)OFF(a1), (__int16)v4, a3, v9 + *(_DWORD *)a1);
+          DrawFontGlyphs_51650_51990((int)OFF(a1), (__int16)v4, a3, v9 + *(_DWORD *)a1);
           v4 += *(unsigned __int8 *)PTR(v10 + 4) - 1;
         }
       }
@@ -62265,7 +62310,9 @@ void DrawFontBPP_51560_518A0(_BYTE *a1, int a2, __int16 a3, char* text)//222560_
 }
 
 //----- (00051650) --------------------------------------------------------
-__int16 sub_51650_51990(int a1, int a2, __int16 a3, int a4)//222650_
+/// Draws the characters of a string relative to the text window (array_12C970); worker of DrawFontBPP_51560_518A0.
+/// Name is a guess (not in the Hidden Worlds linker map).
+__int16 DrawFontGlyphs_51650_51990(int a1, int a2, __int16 a3, int a4)//222650_
 {
   int v4; // edi
   __int16 v5; // cx
@@ -62744,7 +62791,9 @@ int SaveGame_51C90_51FD0(char a1)
 // 51C90: using guessed type int var_10[4];
 
 //----- (00051DF0) --------------------------------------------------------
-void sub_51DF0_52130(char a1)
+/// Sets up the input devices chosen by a1 (bit 2: digital joystick, ...) and the mouse.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void InitControllers_51DF0_52130(char a1)
 {
   __int16 v1; // cx
   //char v2; // dl
@@ -62787,6 +62836,7 @@ LABEL_8:
 // 12CAF8: using guessed type int begGcSprTab_12CAF8_2EAAF8_2EAAE8;
 
 //----- (00051E84) --------------------------------------------------------
+/// Copies screen buffer a1 to a2 (a3: optional third buffer/table; a4, a5 options). Not fully understood.
 void sub_51E84_521C4(_BYTE *a1, _BYTE *a2, _BYTE *a3, int a4, char a5)
 {
   _BYTE *v5; // esi
@@ -62822,6 +62872,7 @@ void sub_51E84_521C4(_BYTE *a1, _BYTE *a2, _BYTE *a3, int a4, char a5)
 // 12EFF8: using guessed type int dword_12EFF8_12EFE8;
 
 //----- (00051ECC) --------------------------------------------------------
+/// Clips a span/rectangle (a1..a4) against the viewport (dword_12F010 ...) and draws it with a5/a6. Not fully understood.
 int sub_51ECC_5220C(int a1, int a2, int a3, int a4, char a5, char a6)
 {
   int v6; // edi
@@ -63031,7 +63082,7 @@ LABEL_17:
         v9 = *(_DWORD *)PTR(v7 + 18);
         dword_939F8 = v8;
         dword_939F0 = v9;
-        v10 = sub_6535C(dword_CC140, (unsigned int)OFF(&dword_939F0));
+        v10 = StartSample_6535C(dword_CC140, (unsigned int)OFF(&dword_939F0));
         BYTE1(v9) = byte_12CC20[v5];
         dword_CC144 = v10;
         if ( BYTE1(v9) )
@@ -63098,7 +63149,7 @@ LABEL_12:
         SosDIGISetSampleVolume_66118(dword_CC140, v0, v2);
         goto LABEL_10;
       }
-      sub_65965(dword_CC140, v0);
+      StopSampleById_65965(dword_CC140, v0);
       word_12CCE0[v0] = 0;
       word_CC070[v0] = 0;
     }
@@ -65107,6 +65158,7 @@ int Seen_54F80(int a1)
 // AE400: using guessed type int dword_AE400_AE3F0();
 
 //----- (00055100) --------------------------------------------------------
+/// Sound update while sound is on (byte_939E5/byte_939E4): walks the active samples. Not fully understood.
 void sub_55100_55630()
 {
   int result; // eax
@@ -67459,7 +67511,7 @@ int HeapFree_58C30_59140(unsigned int a1)
 /// Original name: setup_ssprite_manager (SSPRITE.C), Hidden Worlds linker map.
 void SetupSspriteManager_58E70_59380()
 {
-  dword_AE3EC_AE3DC = sub_36700_36AC0(str_AE408_AE3F8->var_u32_172, 529, str_AE408_AE3F8->var_u32_168);
+  dword_AE3EC_AE3DC = InitSpriteHeap_36700_36AC0(str_AE408_AE3F8->var_u32_172, 529, str_AE408_AE3F8->var_u32_168);
   if ( dword_AE3EC_AE3DC )
     dword_AE3E0_AE3D0 = DynAnimBankInit_10CB0(529);
   OpenTmapDataFile_587E0_58CF0();
@@ -67856,7 +67908,9 @@ void RestoreTmapConfiguration_59420_59930()//22A420_
 // 12DF8C: using guessed type int dword_12DF8C_12DF7C[529];
 
 //SYNCHRONIZED WITH REMC1
-void sub_59500_59A10(Type_99974* a1)
+/// Relocates every sprite table of list a1 (SetupSpritesMCGA/Vres256 by resolution).
+/// Name is a guess (not in the Hidden Worlds linker map).
+void SetupSpriteList_59500_59A10(Type_99974* a1)
 {
   for(int i=0;a1[i].beg;i++)
     {
@@ -67868,14 +67922,16 @@ void sub_59500_59A10(Type_99974* a1)
 }
 
 //----- (00059560) --------------------------------------------------------
-void sub_59560_59A70(Type_99974* a1)
+/// Undoes SetupSpriteList_59500_59A10 for every sprite table of list a1 (ResetSpritesMCGA/Vres256).
+/// Name is a guess (not in the Hidden Worlds linker map).
+void ResetSpriteList_59560_59A70(Type_99974* a1)
 {
 	for (int i = 0; a1[i].beg; i++)
 	{
 		if ((typeResolution_12F02E_12F01E & 1) != 0)
 			ResetSpritesMCGA_66390(*a1[i].beg, *a1[i].end, *a1[i].var_3);
 		else
-			sub_66410(*a1[i].beg, *a1[i].end, *a1[i].var_3);
+			ResetSpritesVres256_66410(*a1[i].beg, *a1[i].end, *a1[i].var_3);
 	}
 }
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
@@ -69124,7 +69180,7 @@ int SetupVFX1_5AF50_5B460()
 	char* vipEnv = getenv("VIPPORT");
 	if (vipEnv)
 	{
-		dword_12EE94_12EE84 = sub_6660D_66B1D(vipEnv, &v16, 16);
+		dword_12EE94_12EE84 = ParseEnvNumberSigned_6660D_66B1D(vipEnv, &v16, 16);
 		dword_12EE24_12EE14 = dword_12EE94_12EE84 + 1;
 		dword_12EE10_12EE00 = SenseStatus_5AD30_5B240();
 		if (!dword_12EE10_12EE00 || SenseGetConfiguration_5ADB0_5B2C0(dword_12EE10_12EE00, &dword_12EE18_12EE08, byte_12EC10_12EC00))
@@ -69461,12 +69517,14 @@ void HeadsetStereoOff_5B560()
 // 12F02E: using guessed type __int16 typeResolution_12F02E_12F01E;
 
 //----- (0005B5E0) --------------------------------------------------------
+/// Empty in the port (VFX1/mouse driver code that was removed).
 void sub_5B5E0()
 {
   ;
 }
 
 //----- (0005B5F4) --------------------------------------------------------
+/// Empty in the port (VFX1/mouse driver code that was removed).
 void sub_5B5F4_5BB04()
 {
   ;
@@ -70609,7 +70667,7 @@ void StopAllSamples_5D010_5D520()
     for ( i = 0; i < 0x20u; i++ )
     {
       while ( !IsSampleDone_651F8(dword_CC140, i) )
-        sub_65965(dword_CC140, i);
+        StopSampleById_65965(dword_CC140, i);
     }
   }
 }
@@ -70835,7 +70893,7 @@ void PlaySampleAndLoop_5D460_5D970(__int16 a1, __int16 a2, __int16 a3)
         v3 = *(_DWORD *)PTR(32 * a2 + dword_CC154 + 18);
         //fix word_939F4 = __DS__;
         dword_939F0 = v3;
-        dword_CC144 = sub_6535C(dword_CC140, (unsigned int)OFF(&dword_939F0));
+        dword_CC144 = StartSample_6535C(dword_CC140, (unsigned int)OFF(&dword_939F0));
       }
     }
   }
@@ -70888,7 +70946,7 @@ void PlayActualSample_5D610_5DB20(__int16 a1, __int16 a2)
       v2 = *(_DWORD *)PTR(32 * a2 + dword_CC154 + 18);
       //fix word_939F4 = __DS__;
       dword_939F0 = v2;
-      dword_CC144 = sub_6535C(dword_CC140, (unsigned int)OFF(&dword_939F0));
+      dword_CC144 = StartSample_6535C(dword_CC140, (unsigned int)OFF(&dword_939F0));
     }
   }
 }
@@ -70922,7 +70980,7 @@ void StopSample_5D750_5DC60(__int16 a1, __int16 a2)
     {
       if ( *v2 == a1 && v2[1] == a2 && !IsSampleDone_651F8(dword_CC140, i) )
       {
-        sub_65965(dword_CC140, i);
+        StopSampleById_65965(dword_CC140, i);
         return;
       }
       v2 += 2;
@@ -72433,7 +72491,7 @@ int SosMIDIUnInitDriver_6080C(unsigned int a1, int a2)
       else if ( v4 > 0xA005 && v4 != 40968 )
       {
 LABEL_13:
-        sub_68813(a1);
+        FreeDriverSlot_68813(a1);
         goto LABEL_14;
       }
       //fix
@@ -74018,7 +74076,7 @@ void FadePalette256_61CC0_621D0(TColor* palette, unsigned __int8 a2, char a3)//2
     {
       word_12F690_12F680 = 0;
       byte_9AFA8 = 1;
-      sub_6B47C_6B98C(byte_12F090_12F080);
+      ReadPalette_6B47C_6B98C(byte_12F090_12F080);
       if ( !palette)
         memset(byte_12F390_12F380, 0, 768);
     }
@@ -74036,7 +74094,7 @@ void FadePalette256_61CC0_621D0(TColor* palette, unsigned __int8 a2, char a3)//2
   }
   else
   {
-    sub_6B47C_6B98C(byte_12F090_12F080);
+    ReadPalette_6B47C_6B98C(byte_12F090_12F080);
     if ( !palette)
     {
         palette = byte_12F390_12F380;
@@ -75400,12 +75458,14 @@ void CopyScreen_62FC4_634D4(uint8_t* src, uint8_t* dst, size_t size)
 }
 
 //----- (00062FF0) --------------------------------------------------------
+/// Returns the dword at a1 + 4.
 int sub_62FF0(int a1)
 {
   return *(_DWORD *)PTR(a1 + 4);
 }
 
 //----- (00063010) --------------------------------------------------------
+/// Allocation-table maintenance called before loading files (LoadPathFile/LoadPathFiles); works on dword_1314A0. Not fully understood.
 void sub_63010_63520()//234010_
 {
   int v0; // [esp+0h] [ebp-14h]
@@ -75422,7 +75482,7 @@ void sub_63010_63520()//234010_
 
   if ( !dword_12F6A8_12F698[0] && false)//fixed(false)
   {
-    v0 = sub_6342C_6393C(0xFA00u);
+    v0 = AllocDosMemory_6342C_6393C(0xFA00u);
     for ( i = 0; i < 256; ++i )
       memset(&dword_12F6A0_12F690[3 * i], 0, 12);
     for ( j = 0; j < 256; ++j )
@@ -75430,7 +75490,7 @@ void sub_63010_63520()//234010_
     v9 = 0;
     for ( k = 0xA0000; k >= 1024; k -= 1024 )
     {
-      v10 = sub_6342C_6393C(k);
+      v10 = AllocDosMemory_6342C_6393C(k);
       if ( v10 )
       {
         dword_12F6A8_12F698[3 * v9] = k;
@@ -75485,7 +75545,7 @@ void sub_63010_63520()//234010_
       byte_1302B1_1302A1[18 * kk] = kk;
     }
     *(int *)((char *)&dword_1302A8_130298 + 18 * v9 - 18) = 0;
-    sub_6D35C_6D86C(HIWORD(v0));
+    FreeDosMemory_6D35C_6D86C(HIWORD(v0));
   }
 }
 // 5CC30: using guessed type _DWORD memset(_DWORD, _DWORD, _DWORD);
@@ -75501,6 +75561,7 @@ void sub_63010_63520()//234010_
 // 1302AC: using guessed type int dword_1302AC_13029C;
 
 //----- (00063338) --------------------------------------------------------
+/// Resets the allocation table (dword_1314A0/dword_1314A4 and its entries).
 void sub_63338_63848()
 {
   int *result; // eax
@@ -75547,7 +75608,9 @@ void sub_63338_63848()
 // 1314B0: using guessed type int dword_1314B0;
 
 //----- (0006342C) --------------------------------------------------------
-int sub_6342C_6393C(unsigned int a1)
+/// Allocates a1 bytes of DOS memory below 640 KB (DPMI function 0x100); DOS-only, stubbed in the port.
+/// Name is a guess (not in the Hidden Worlds linker map).
+int AllocDosMemory_6342C_6393C(unsigned int a1)
 {
   int v2[7]; // [esp+0h] [ebp-40h] BYREF
   int v3[7]; // [esp+1Ch] [ebp-24h] BYREF
@@ -75644,6 +75707,7 @@ void sub_6377B()
 }
 
 //----- (0006378C) --------------------------------------------------------
+/// Returns string a1 of the table off_9EF10 (sound driver names/messages).
 char *sub_6378C(int a1)
 {
   return off_9EF10[a1];
@@ -76101,7 +76165,7 @@ int SosDIGIInitDriver_64846_64D56(
         v29 = a1;
         if ( !a1 && v10 == v34 )
         {
-          sub_6E030(v43);
+          FreeDigiDriverSlot_6E030(v43);
           dword_A0338[v43] = 0;
           return 5;
         }
@@ -76284,7 +76348,7 @@ int SosDIGIUnInitDriver_64F78(unsigned int a1, int a2, int a3)
   SosDIGIUnInitForWindows_67944();
   if ( a3 )
   {
-    sub_6E030(a1);
+    FreeDigiDriverSlot_6E030(a1);
     sub_6E23C(*(int *)((char *)&dword_A01FE + 6 * a1), word_A0202[3 * a1]);
   }
   v3 = 3 * a1;
@@ -76370,7 +76434,9 @@ void sub_6534B()
 //----- (0006535C) --------------------------------------------------------
 // PORT: HMI SOS digital driver entry point, forwarded to portability/port_sound (SDL_mixer).
 // a2 = sample descriptor: +0 data, +8 length, +16 volume, +18 id (= game channel), +28 flags, +50 pan
-int sub_6535C(int a1, unsigned int a2)
+/// Starts the sample described by a2 (DOS-layout descriptor: id at +18, loop count at +12 with flag 0x4000) through PortSound_Start; returns its id.
+/// Name is a guess (not in the Hidden Worlds linker map).
+int StartSample_6535C(int a1, unsigned int a2)
 {
   uint8_t* desc = (uint8_t*)PTR(a2);
   int id = *(int16_t*)(desc + 18);
@@ -76383,7 +76449,9 @@ int sub_6535C(int a1, unsigned int a2)
 
 //----- (00065965) --------------------------------------------------------
 // PORT: HMI SOS digital driver entry point, forwarded to portability/port_sound (SDL_mixer).
-int sub_65965(int a1, int a2)
+/// Stops sample a2 (PortSound_Stop).
+/// Name is a guess (not in the Hidden Worlds linker map).
+int StopSampleById_65965(int a1, int a2)
 {
   PortSound_Stop(a2);
   return 0;
@@ -76477,7 +76545,7 @@ void PlayOneChannelSample_65F10_66420(__int16 a1, __int16 a2)
     {
       if ( *v3 == a1 && v3[1] == a2 && !IsSampleDone_651F8(dword_CC140, i) )
       {
-        sub_65965(dword_CC140, i);
+        StopSampleById_65965(dword_CC140, i);
         break;
       }
       v3 += 2;
@@ -76503,7 +76571,7 @@ void PlayOneChannelSample_65F10_66420(__int16 a1, __int16 a2)
       v2 = *(_DWORD *)PTR(32 * a2 + dword_CC154 + 18);
       //fix word_939F4 = __DS__;
       dword_939F0 = v2;
-      dword_CC144 = sub_6535C(dword_CC140, (unsigned int)OFF(&dword_939F0));
+      dword_CC144 = StartSample_6535C(dword_CC140, (unsigned int)OFF(&dword_939F0));
     }
   }
 }
@@ -76627,7 +76695,9 @@ void ResetSpritesMCGA_66390(TypeTab* a1, TypeTab* a2, uint8_t* a3)
 }
 
 //----- (00066410) --------------------------------------------------------
-void sub_66410(TypeTab* a1, TypeTab* a2, uint8_t* a3)
+/// Turns the sprite pointers of TypeTab entries [a1, a2) back into offsets from a3 (inverse of SetupSpritesVres256).
+/// Name is a guess (not in the Hidden Worlds linker map).
+void ResetSpritesVres256_66410(TypeTab* a1, TypeTab* a2, uint8_t* a3)
 {
     for (int i = 0; &a1[i] < a2; i++)
     {
@@ -76639,7 +76709,9 @@ void sub_66410(TypeTab* a1, TypeTab* a2, uint8_t* a3)
 }
 
 //----- (000664AB) --------------------------------------------------------
-int sub_664AB_669BB(char* vipEnv, char** a2, int a3, int a4)
+/// Parses a number from environment string vipEnv (skipping spaces; base a3), storing the end in *a2; used for the VFX1 settings.
+/// Name is a guess (not in the Hidden Worlds linker map).
+int ParseEnvNumber_664AB_669BB(char* vipEnv, char** a2, int a3, int a4)
 {
   int v4; // edi
   char* i; // ebx
@@ -76688,7 +76760,7 @@ int sub_664AB_669BB(char* vipEnv, char** a2, int a3, int a4)
     v13 = 0;
     while ( 1 )
     {
-      v10 = sub_66612(*i);
+      v10 = HexDigitValue_66612(*i);
       if ( v10 >= v4 )
         break;
       v11 = v9;
@@ -76734,13 +76806,17 @@ int sub_664AB_669BB(char* vipEnv, char** a2, int a3, int a4)
 // 66C8B: using guessed type _DWORD _set_errno(_DWORD);
 
 //----- (0006660D) --------------------------------------------------------
-int sub_6660D_66B1D(char* vipEnv, char** a2, int a3)
+/// ParseEnvNumber_664AB_669BB with a4 = 1.
+/// Name is a guess (not in the Hidden Worlds linker map).
+int ParseEnvNumberSigned_6660D_66B1D(char* vipEnv, char** a2, int a3)
 {
-  return sub_664AB_669BB(vipEnv, a2, a3, 1);
+  return ParseEnvNumber_664AB_669BB(vipEnv, a2, a3, 1);
 }
 
 //----- (00066612) --------------------------------------------------------
-int sub_66612(unsigned __int8 a1)
+/// Value of hex digit a1 (0-9, a-f in either case); used by ParseEnvNumber.
+/// Name is a guess (not in the Hidden Worlds linker map).
+int HexDigitValue_66612(unsigned __int8 a1)
 {
   unsigned __int8 v2; // al
 
@@ -77532,7 +77608,7 @@ int DigiSendData_67A96(unsigned int a1, int a2, int a3, int a4)
     while ( dword_9C9F0[a4] )
     {
       v7 = DigiQueueGetItem_682CB(a4);
-      sub_65965(dword_9D922[a4], v7 + 1);
+      StopSampleById_65965(dword_9D922[a4], v7 + 1);
     }
   }
   if ( (port_readgsbyte(a1) & 0xF0) == 0x90 && *(_DWORD *)&byte_9CA04[768 * a4 + 6 * port_readgsbyte(a1 + 1)] )
@@ -77543,12 +77619,12 @@ int DigiSendData_67A96(unsigned int a1, int a2, int a3, int a4)
       {
         v8 = DigiQueueDeleteItemMIDI_68491(a4, port_readgsbyte(a1 + 1));
         if ( v8 != -1 )
-          sub_65965(dword_9D922[a4], v8 + 1);
+          StopSampleById_65965(dword_9D922[a4], v8 + 1);
       }
       if ( dword_9C9F0[a4] >= (unsigned int)dword_9C9DC[a4] )
       {
         v9 = DigiQueueGetItem_682CB(a4);
-        sub_65965(dword_9D922[a4], v9 + 1);
+        StopSampleById_65965(dword_9D922[a4], v9 + 1);
       }
       v4 = 768 * a4 + 6 * port_readgsbyte(a1 + 1);
       port_writegsword(
@@ -77562,14 +77638,14 @@ int DigiSendData_67A96(unsigned int a1, int a2, int a3, int a4)
         v5 = &byte_9CA04[768 * a4 + 6 * port_readgsbyte(a1 + 1)];
         port_writegsword(*(_DWORD *)v5 + 16, port_readgsword(*(_DWORD *)v5 + 16) << 8);
       }
-      sub_6535C(dword_9D922[a4], *(_DWORD *)&byte_9CA04[768 * a4 + 6 * port_readgsbyte(a1 + 1)]);
+      StartSample_6535C(dword_9D922[a4], *(_DWORD *)&byte_9CA04[768 * a4 + 6 * port_readgsbyte(a1 + 1)]);
       port_writegsword(*(_DWORD *)&byte_9CA04[768 * a4 + 6 * port_readgsbyte(a1 + 1)] + 18, port_readgsbyte(a1 + 1));
     }
     else if ( port_readgsword(*(_DWORD *)&byte_9CA04[768 * a4 + 6 * port_readgsbyte(a1 + 1)] + 26) != 0x8000 )
     {
       v10 = DigiQueueDeleteItemMIDI_68491(a4, port_readgsbyte(a1 + 1));
       if ( v10 != -1 )
-        sub_65965(dword_9D922[a4], v10 + 1);
+        StopSampleById_65965(dword_9D922[a4], v10 + 1);
     }
   }
   return 0;//fix MK_FP(retaddr[0], retaddr[0])(0);
@@ -78027,7 +78103,9 @@ int sub_68622_68B32(
 // 9C226: using guessed type int dword_9C226;
 
 //----- (00068813) --------------------------------------------------------
-int sub_68813(unsigned int a1)
+/// Frees driver slot a1 (0..5) of dword_9B18E; returns 10 when the slot is invalid or unused.
+/// Name is a guess (not in the Hidden Worlds linker map).
+int FreeDriverSlot_68813(unsigned int a1)
 {
   if ( a1 > 5 )
     return 10;
@@ -78241,7 +78319,7 @@ char DrvPitchBend_68CBD(int a1, int a2, unsigned int a3)
           if ( (unsigned __int8)v3 == dword_A0808[i] )
           {
             v4 = DrvCalculatePitch_68D7F(port_readgsbyte(a3 + 1), (unsigned __int8)byte_A0764[i], i);
-            LOBYTE(v3) = sub_6A085(i, v4);
+            LOBYTE(v3) = YmSetFrequency_6A085(i, v4);
           }
         }
       }
@@ -78390,17 +78468,17 @@ void DrvNoteOn_6907E(unsigned __int8 a1, unsigned __int8 a2, unsigned __int8 a3)
   {
     if ( a3 == 9 )
     {
-      v8 = sub_70D55(9u);
+      v8 = YmAllocVoice_70D55(9u);
       YmNoteOff_6A297(v8);
       dword_A0808[v8] = 9;
       for ( i = 0; i < 5; ++i )
       {
-        sub_6A640(byte_A0776[2 * v8] + 0x80, byte_A0724[(unsigned __int8)byte_A0776[2 * v8]] | 0xF);
-        sub_6A640(byte_A0775[2 * v8] + 0x80, byte_A0724[(unsigned __int8)byte_A0775[2 * v8]] | 0xF);
+        YmWriteRegister_6A640(byte_A0776[2 * v8] + 0x80, byte_A0724[(unsigned __int8)byte_A0776[2 * v8]] | 0xF);
+        YmWriteRegister_6A640(byte_A0775[2 * v8] + 0x80, byte_A0724[(unsigned __int8)byte_A0775[2 * v8]] | 0xF);
       }
       YmSetInstrument_6A405(dword_A07B6 + 30 * a1, (unsigned __int16)word_A07BA, v8);
       dword_A0930[v8] = a2;
-      sub_6A640(
+      YmWriteRegister_6A640(
         byte_A0776[2 * v8] + 64,
         byte_A0704[(unsigned __int8)byte_A0776[2 * v8]] & 0xC0 | ((0x2000
                                                                  - (64
@@ -78408,18 +78486,18 @@ void DrvNoteOn_6907E(unsigned __int8 a1, unsigned __int8 a2, unsigned __int8 a3)
                                                                  * 2
                                                                  * (64
                                                                   - (unsigned int)(unsigned __int8)byte_A0A24[(int)(unsigned __int8)(((dword_A08F0[9] << 7) / 127 * dword_A0930[v8]) >> 7) >> 1])) >> 7));
-      sub_6A1D5(v8, dword_A0A38[port_readgsbyte(dword_A07B0 + 12 * a1 + 2)]);
+      YmRetriggerFrequency_6A1D5(v8, dword_A0A38[port_readgsbyte(dword_A07B0 + 12 * a1 + 2)]);
       byte_A0764[v8] = a1;
     }
     else
     {
-      v7 = sub_70D55(a3);
+      v7 = YmAllocVoice_70D55(a3);
       YmNoteOff_6A297(v7);
       dword_A0808[v7] = a3;
       for ( j = 0; j < 5; ++j )
       {
-        sub_6A640(byte_A0776[2 * v7] + 0x80, byte_A0724[(unsigned __int8)byte_A0776[2 * v7]] | 0xF);
-        sub_6A640(byte_A0775[2 * v7] + 0x80, byte_A0724[(unsigned __int8)byte_A0775[2 * v7]] | 0xF);
+        YmWriteRegister_6A640(byte_A0776[2 * v7] + 0x80, byte_A0724[(unsigned __int8)byte_A0776[2 * v7]] | 0xF);
+        YmWriteRegister_6A640(byte_A0775[2 * v7] + 0x80, byte_A0724[(unsigned __int8)byte_A0775[2 * v7]] | 0xF);
       }
       YmSetInstrument_6A405(dword_A07A0 + 30 * dword_A07C8[a3], (unsigned __int16)word_A07A4, v7);
       dword_A0930[v7] = a2;
@@ -78431,16 +78509,16 @@ void DrvNoteOn_6907E(unsigned __int8 a1, unsigned __int8 a2, unsigned __int8 a3)
                                                                              / 127
                                                                              * dword_A0930[v7]) >> 7) >> 1])) >> 7;
       if ( !port_readgsbyte(dword_A07A0 + 30 * dword_A07C8[a3] + 14) )
-        sub_6A640(byte_A0775[2 * v7] + 64, byte_A0704[(unsigned __int8)byte_A0775[2 * v7]] & 0xC0 | v6);
-      sub_6A640(byte_A0776[2 * v7] + 64, byte_A0704[(unsigned __int8)byte_A0776[2 * v7]] & 0xC0 | v6);
-      sub_6A1D5(v7, dword_A0A38[a1]);
+        YmWriteRegister_6A640(byte_A0775[2 * v7] + 64, byte_A0704[(unsigned __int8)byte_A0775[2 * v7]] & 0xC0 | v6);
+      YmWriteRegister_6A640(byte_A0776[2 * v7] + 64, byte_A0704[(unsigned __int8)byte_A0776[2 * v7]] & 0xC0 | v6);
+      YmRetriggerFrequency_6A1D5(v7, dword_A0A38[a1]);
       byte_A0764[v7] = a1;
       if ( dword_A07C4 )
       {
         if ( dword_A086C[a3] )
         {
           v3 = DrvCalculatePitch_68D7F(dword_A082C[a3], a1, v7);
-          sub_6A085(v7, v3);
+          YmSetFrequency_6A085(v7, v3);
         }
       }
     }
@@ -78983,7 +79061,7 @@ char YmInit_69FE4(unsigned int a1)
     return 1;
   dword_A076F = port_readgsdword(a1);
   dword_A06F0 = port_readgsdword(a1);
-  sub_6A640(1u, 0x20u);
+  YmWriteRegister_6A640(1u, 0x20u);
   byte_A0758 = 0;
   YmSetMode_6A11B();
   byte_A0773 = 1;
@@ -79010,12 +79088,14 @@ void sub_6A074()
 }
 
 //----- (0006A085) --------------------------------------------------------
-char sub_6A085(unsigned __int8 a1, __int16 a2)
+/// Sets the OPL frequency registers (0xA0/0xB0 + channel) to a2 with the key-on bit.
+/// Name is a guess (not in the Hidden Worlds linker map).
+char YmSetFrequency_6A085(unsigned __int8 a1, __int16 a2)
 {
   byte_A0734[a1] = a2;
   byte_A073D[a1] = HIBYTE(a2) | 0x20;
-  sub_6A640(a1 - 96, byte_A0734[a1]);
-  sub_6A640(a1 - 80, byte_A073D[a1]);
+  YmWriteRegister_6A640(a1 - 96, byte_A0734[a1]);
+  YmWriteRegister_6A640(a1 - 80, byte_A073D[a1]);
   return 0;
 }
 
@@ -79044,13 +79124,13 @@ char YmSetMode_6A11B()
   for ( i = 0; i < 9; ++i )
   {
     byte_A073D[i] = 0;
-    sub_6A640(i - 80, byte_A073D[i]);
+    YmWriteRegister_6A640(i - 80, byte_A073D[i]);
   }
   for ( j = 0; j < 0xB; ++j )
     byte_A0759[j] = 0;
   byte_A0774 = 0;
   byte_A0758 &= 0xC0u;
-  sub_6A640(0xBDu, byte_A0758);
+  YmWriteRegister_6A640(0xBDu, byte_A0758);
   return 0;
 }
 // A0758: using guessed type char byte_A0758;
@@ -79072,13 +79152,15 @@ void sub_6A1C4()
 }
 
 //----- (0006A1D5) --------------------------------------------------------
-char sub_6A1D5(unsigned __int8 a1, __int16 a2)
+/// Sets the OPL frequency registers like YmSetFrequency_6A085, writing key-off before key-on (re-triggers the note).
+/// Name is a guess (not in the Hidden Worlds linker map).
+char YmRetriggerFrequency_6A1D5(unsigned __int8 a1, __int16 a2)
 {
   byte_A0734[a1] = a2;
   byte_A073D[a1] = HIBYTE(a2) | 0x20;
-  sub_6A640(a1 - 96, byte_A0734[a1]);
-  sub_6A640(a1 - 80, byte_A073D[a1] & 0xDF);
-  sub_6A640(a1 - 80, byte_A073D[a1]);
+  YmWriteRegister_6A640(a1 - 96, byte_A0734[a1]);
+  YmWriteRegister_6A640(a1 - 80, byte_A073D[a1] & 0xDF);
+  YmWriteRegister_6A640(a1 - 80, byte_A073D[a1]);
   byte_A0764[a1] = 1;
   return 0;
 }
@@ -79105,7 +79187,7 @@ char YmNoteOff_6A297(unsigned __int8 a1)
   if ( !byte_A0764[a1] )
     return 6;
   byte_A073D[a1] &= ~0x20u;
-  sub_6A640(a1 - 80, byte_A073D[a1]);
+  YmWriteRegister_6A640(a1 - 80, byte_A073D[a1]);
   byte_A0764[a1] = 0;
   return 0;
 }
@@ -79137,11 +79219,11 @@ char YmReset_6A317()
   if ( !byte_A0773 )
     return 2;
   byte_A0758 = 0;
-  sub_6A640(0xBDu, 0);
+  YmWriteRegister_6A640(0xBDu, 0);
   for ( i = 0; i < 9u; ++i )
-    sub_6A640(i - 80, byte_A073D[i] & 0xDF);
+    YmWriteRegister_6A640(i - 80, byte_A073D[i] & 0xDF);
   for ( j = 0; j < 9u; ++j )
-    sub_6A640(byte_A0776[2 * j] + 64, 0xFFu);
+    YmWriteRegister_6A640(byte_A0776[2 * j] + 64, 0xFFu);
   for ( k = 0; k < 0xBu; ++k )
     byte_A0759[k] = 0;
   return 0;
@@ -79197,19 +79279,19 @@ char YmSetInstrument_6A405(int a1, int a2, unsigned __int8 a3)
   v6 = port_readgsbyte(a1 + 29);
   byte_A0724[(unsigned __int8)byte_A0776[2 * a3]] = v7;
   byte_A0724[(unsigned __int8)byte_A0775[2 * a3]] = v14;
-  sub_6A640(v12 + 32, v15);
-  sub_6A640(v12 + 64, v16);
+  YmWriteRegister_6A640(v12 + 32, v15);
+  YmWriteRegister_6A640(v12 + 64, v16);
   byte_A0704[v12] = v16;
-  sub_6A640(v12 + 96, v5);
-  sub_6A640(v12 + 0x80, v14);
-  sub_6A640(a3 - 64, v4);
-  sub_6A640(v12 - 32, v11);
+  YmWriteRegister_6A640(v12 + 96, v5);
+  YmWriteRegister_6A640(v12 + 0x80, v14);
+  YmWriteRegister_6A640(a3 - 64, v4);
+  YmWriteRegister_6A640(v12 - 32, v11);
   v13 = (unsigned __int8)byte_A0776[2 * a3];
-  sub_6A640(v13 + 32, v10);
+  YmWriteRegister_6A640(v13 + 32, v10);
   byte_A0704[v13] = v9;
-  sub_6A640(v13 + 96, v8);
-  sub_6A640(v13 + 0x80, v7);
-  sub_6A640(v13 - 32, v6);
+  YmWriteRegister_6A640(v13 + 96, v8);
+  YmWriteRegister_6A640(v13 + 0x80, v7);
+  YmWriteRegister_6A640(v13 - 32, v6);
   byte_A0759[a3] = 1;
   return 0;
 }
@@ -79249,7 +79331,9 @@ void SosYMUninitEnd_6A62D()
 }
 
 //----- (0006A640) --------------------------------------------------------
-unsigned __int8 sub_6A640(unsigned __int8 a1, unsigned __int8 a2)
+/// Writes value a2 to OPL (AdLib) register a1: address port, read delays, data port. DOS hardware access, stubbed in the port.
+/// Name is a guess (not in the Hidden Worlds linker map).
+unsigned __int8 YmWriteRegister_6A640(unsigned __int8 a1, unsigned __int8 a2)
 {
   unsigned __int16 v2; // dx
 
@@ -79296,6 +79380,7 @@ unsigned __int8 sub_6A640(unsigned __int8 a1, unsigned __int8 a2)
 // A06F0: using guessed type int dword_A06F0;
 
 //----- (0006A737) --------------------------------------------------------
+/// Calls driver function a1 with parameters a2..a5 (sound driver glue; DOS-only).
 __int16 sub_6A737(void (*a1)(_DWORD), unsigned int a2, int a3, int a4, __int16 a5)
 {
   int v7; // ecx
@@ -79513,7 +79598,9 @@ int DrawLineHighRes_6B378(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsign
 // 12F024: using guessed type int dword_12F024_12F014;
 
 //----- (0006B47C) --------------------------------------------------------
-void sub_6B47C_6B98C(TColor* palette)
+/// Reads the 256-colour VGA palette (port 0x3C7; VGA_Get_Palette in the port) into a1.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void ReadPalette_6B47C_6B98C(TColor* palette)
 {
     FixPerifery((char*)"port0x3C7");
     //VGA_Set_Palette(a1);
@@ -79570,7 +79657,7 @@ int sub_6BCA3(int a1, unsigned __int8 *a2, int *a3)
       break;
     if ( (IsTable[(unsigned __int8)(v7 + 1)] & 2) != 0 )
     {
-      v4 += sub_6BF98(a1);
+      v4 += ScanfSkipSpaces_6BF98(a1);
     }
     else if ( v7 == 37 )
     {
@@ -79609,7 +79696,7 @@ LABEL_45:
           if ( v10 <= 0x58 )
           {
 LABEL_44:
-            sub_6C66D(a1, v3, 16, 1);
+            ScanfReadInteger_6C66D(a1, v3, 16, 1);
             goto LABEL_50;
           }
           if ( v10 >= 0x63 )
@@ -79621,12 +79708,12 @@ LABEL_44:
             }
             v13 = 1;
 LABEL_40:
-            sub_6C66D(a1, v3, 10, v13);
+            ScanfReadInteger_6C66D(a1, v3, 10, v13);
             goto LABEL_50;
           }
           if ( v10 == 91 )
           {
-            sub_6C224_6C734((_BYTE *)PTR(a1), a1, v3, &a2);
+            ScanfReadScanset_6C224_6C734((_BYTE *)PTR(a1), a1, v3, &a2);
             goto LABEL_50;
           }
         }
@@ -79641,7 +79728,7 @@ LABEL_40:
           {
             if ( v10 == 105 )
             {
-              sub_6C66D(a1, v3, 0, 1);
+              ScanfReadInteger_6C66D(a1, v3, 0, 1);
               goto LABEL_50;
             }
           }
@@ -79649,7 +79736,7 @@ LABEL_40:
           {
             if ( v10 > 0x6E )
             {
-              sub_6C66D(a1, v3, 8, 1);
+              ScanfReadInteger_6C66D(a1, v3, 8, 1);
 LABEL_50:
               if ( v11 <= 0 )
                 break;
@@ -79669,7 +79756,7 @@ LABEL_50:
           {
             if ( v10 == 115 )
             {
-              sub_6C05C_6C56C((_BYTE *)PTR(a1), a1, v3);
+              ScanfReadString_6C05C_6C56C((_BYTE *)PTR(a1), a1, v3);
               goto LABEL_50;
             }
           }
@@ -79714,6 +79801,7 @@ LABEL_55:
 // 6BE39: variable 'v11' is possibly undefined
 
 //----- (0006BEBB) --------------------------------------------------------
+/// Probably the scanf format-spec parser (flags, width, size) for the conversion at a1 into a2. Watcom C runtime scanf internals (inferred from the scanset/number/character-class code).
 unsigned __int8 *sub_6BEBB(unsigned __int8 *a1, int a2)
 {
   unsigned __int8 *result; // eax
@@ -79780,7 +79868,9 @@ LABEL_12:
 }
 
 //----- (0006BF98) --------------------------------------------------------
-int sub_6BF98(int a1)
+/// Skips white space of the input (character-class table IsTable); returns the number skipped. Watcom C runtime scanf internals (inferred from the scanset/number/character-class code).
+/// Name is a guess (not in the Hidden Worlds linker map).
+int ScanfSkipSpaces_6BF98(int a1)
 {
   int i; // esi
   int v2; // eax
@@ -79797,6 +79887,7 @@ int sub_6BF98(int a1)
 }
 
 //----- (0006BFCF) --------------------------------------------------------
+/// Probably stores a scanf result (%n or the converted value) according to the size flags of a2. Watcom C runtime scanf internals (inferred from the scanset/number/character-class code).
 int sub_6BFCF_6C4DF(_WORD *a1, int a2, int *a3)
 {
   char v3; // dl
@@ -79864,7 +79955,9 @@ int sub_6BFCF_6C4DF(_WORD *a1, int a2, int *a3)
 }
 
 //----- (0006C05C) --------------------------------------------------------
-void sub_6C05C_6C56C(_BYTE *a1, int a2, int *a3)
+/// Reads a %c / %s conversion (wide when flag 0x20). Watcom C runtime scanf internals (inferred from the scanset/number/character-class code).
+/// Name is a guess (not in the Hidden Worlds linker map).
+void ScanfReadString_6C05C_6C56C(_BYTE *a1, int a2, int *a3)
 {
   char v3; // dh
   int v4; // esi
@@ -79933,7 +80026,7 @@ void sub_6C05C_6C56C(_BYTE *a1, int a2, int *a3)
             *(_WORD *)a1 = v10;
           a1 += v11;
         }
-        v10 = sub_6C8C5(a2);
+        v10 = ScanfGetChar_6C8C5(a2);
         if ( v10 == -1 )
           break;
         if ( (IsTable[(unsigned __int8)(v10 + 1)] & 2) != 0 )
@@ -79958,6 +80051,7 @@ LABEL_23:
 // 6C170: control flows out of bounds to 6C056
 
 //----- (0006C175) --------------------------------------------------------
+/// Probably fetches the next scanf argument pointer for spec a1. Watcom C runtime scanf internals (inferred from the scanset/number/character-class code).
 int *sub_6C175(int a1, int *a2, int a3)
 {
   int *result; // eax
@@ -80000,7 +80094,9 @@ int *sub_6C175(int a1, int *a2, int a3)
 }
 
 //----- (0006C1E0) --------------------------------------------------------
-_BYTE *sub_6C1E0(_BYTE *a1, int a2)
+/// Builds the 32-byte character bitmap of a %[...] scanset from format a1 into a2. Watcom C runtime scanf internals (inferred from the scanset/number/character-class code).
+/// Name is a guess (not in the Hidden Worlds linker map).
+_BYTE *ScanfBuildScanset_6C1E0(_BYTE *a1, int a2)
 {
   int v2; // eax
   _BYTE *v3; // ebx
@@ -80025,7 +80121,9 @@ _BYTE *sub_6C1E0(_BYTE *a1, int a2)
 // 5CC30: using guessed type _DWORD memset(_DWORD, _DWORD, _DWORD);
 
 //----- (0006C224) --------------------------------------------------------
-void sub_6C224_6C734(_BYTE *a1, int a2, int *a3, _BYTE **a4)
+/// Reads a %[...] (or %[^...]) conversion. Watcom C runtime scanf internals (inferred from the scanset/number/character-class code).
+/// Name is a guess (not in the Hidden Worlds linker map).
+void ScanfReadScanset_6C224_6C734(_BYTE *a1, int a2, int *a3, _BYTE **a4)
 {
   _BYTE *v4; // eax
   _BOOL1 v5; // zf
@@ -80047,7 +80145,7 @@ void sub_6C224_6C734(_BYTE *a1, int a2, int *a3, _BYTE **a4)
   v16 = **a4 == 94;
   if ( !v5 )
     *a4 = v4 + 1;
-  *a4 = sub_6C1E0(*a4, (int)OFF(v14));
+  *a4 = ScanfBuildScanset_6C1E0(*a4, (int)OFF(v14));
   v6 = *(_BYTE *)PTR(a2 + 16);
   if ( (v6 & 1) != 0 )
   {
@@ -80100,6 +80198,7 @@ LABEL_16:
 // 6C224: using guessed type char var_40[32];
 
 //----- (0006C32A) --------------------------------------------------------
+/// Probably reads a floating-point scanf conversion. Watcom C runtime scanf internals (inferred from the scanset/number/character-class code).
 void sub_6C32A(int a1, int *a2)
 {
   char *v2; // ebx
@@ -80145,7 +80244,7 @@ void sub_6C32A(int a1, int *a2)
     {
       v17 = v22;
       v2 = (char*)v18;
-      v22 = sub_6C8C5(a1);
+      v22 = ScanfGetChar_6C8C5(a1);
       if ( v22 == -1 )
         goto LABEL_42;
     }
@@ -80162,7 +80261,7 @@ void sub_6C32A(int a1, int *a2)
           if ( (*(_BYTE *)PTR(a1 + 16) & 0x10) != 0 )
             HIWORD(v20) = v22 + 10 * HIWORD(v20) - 48;
           ++v3;
-          v22 = sub_6C8C5(a1);
+          v22 = ScanfGetChar_6C8C5(a1);
           if ( v22 == -1 )
             break;
           if ( (IsTable[(unsigned __int8)(v22 + 1)] & 0x20) == 0 )
@@ -80227,7 +80326,7 @@ LABEL_17:
       if ( v22 == 46 )
       {
         *v2++ = 46;
-        v22 = sub_6C8C5(a1);
+        v22 = ScanfGetChar_6C8C5(a1);
         if ( v22 == -1 )
           goto LABEL_42;
         if ( !v23 && (IsTable[(unsigned __int8)(v22 + 1)] & 0x20) == 0 )
@@ -80239,7 +80338,7 @@ LABEL_17:
             break;
           ++v3;
           *v2++ = v22;
-          v22 = sub_6C8C5(a1);
+          v22 = ScanfGetChar_6C8C5(a1);
         }
         while ( v22 != -1 );
         if ( (*(_BYTE *)PTR(a1 + 16) & 0x10) != 0 )
@@ -80262,7 +80361,7 @@ LABEL_17:
       {
         ++v3;
         *v2 = v22;
-        v9 = sub_6C8C5(a1);
+        v9 = ScanfGetChar_6C8C5(a1);
         ++v2;
         v22 = v9;
         if ( v9 == -1 )
@@ -80271,7 +80370,7 @@ LABEL_17:
         {
           ++v3;
           *v2++ = v22;
-          v22 = sub_6C8C5(a1);
+          v22 = ScanfGetChar_6C8C5(a1);
           if ( v22 == -1 )
             goto LABEL_42;
         }
@@ -80281,7 +80380,7 @@ LABEL_17:
           {
             ++v3;
             *v2++ = v22;
-            v22 = sub_6C8C5(a1);
+            v22 = ScanfGetChar_6C8C5(a1);
             if ( v22 == -1 )
               goto LABEL_42;
             if ( (IsTable[(unsigned __int8)(v22 + 1)] & 0x20) == 0 )
@@ -80301,7 +80400,9 @@ LABEL_41:
 // A6368: using guessed type int (*off_A6368)(_DWORD, _DWORD);
 
 //----- (0006C66D) --------------------------------------------------------
-void sub_6C66D(int a1, int *a2, int a3, int a4)
+/// Reads an integer conversion (%d/%i/%o/%x/%u). Watcom C runtime scanf internals (inferred from the scanset/number/character-class code).
+/// Name is a guess (not in the Hidden Worlds linker map).
+void ScanfReadInteger_6C66D(int a1, int *a2, int a3, int a4)
 {
   int v4; // ebp
   int v5; // edi
@@ -80343,7 +80444,7 @@ void sub_6C66D(int a1, int *a2, int a3, int a4)
     if ( a4 && (v7 == 43 || v7 == 45) )
     {
       v20 = v7;
-      v21 = sub_6C8C5(a1);
+      v21 = ScanfGetChar_6C8C5(a1);
       if ( v21 == -1 )
         goto LABEL_34;
     }
@@ -80354,7 +80455,7 @@ void sub_6C66D(int a1, int *a2, int a3, int a4)
         v4 = 10;
         goto LABEL_26;
       }
-      v9 = sub_6C8C5(a1);
+      v9 = ScanfGetChar_6C8C5(a1);
       v6 = 1;
       v21 = v9;
       if ( v9 != -1 )
@@ -80365,7 +80466,7 @@ void sub_6C66D(int a1, int *a2, int a3, int a4)
           goto LABEL_26;
         }
         v6 = 0;
-        v21 = sub_6C8C5(a1);
+        v21 = ScanfGetChar_6C8C5(a1);
         if ( v21 != -1 )
         {
           v4 = 16;
@@ -80376,7 +80477,7 @@ void sub_6C66D(int a1, int *a2, int a3, int a4)
     }
     if ( a3 != 16 || v21 != 48 )
       goto LABEL_26;
-    v10 = sub_6C8C5(a1);
+    v10 = ScanfGetChar_6C8C5(a1);
     v6 = 1;
     v21 = v10;
     if ( v10 == -1 )
@@ -80420,18 +80521,18 @@ LABEL_34:
     }
     if ( v10 == 120 || v10 == 88 )
     {
-      v11 = sub_6C8C5(a1);
+      v11 = ScanfGetChar_6C8C5(a1);
       v6 = 0;
       goto LABEL_25;
     }
 LABEL_26:
     while ( 1 )
     {
-      v12 = sub_6C896(v21);
+      v12 = ScanfHexDigit_6C896(v21);
       if ( v12 >= v4 )
         break;
       v5 = v12 + v4 * v5;
-      v11 = sub_6C8C5(a1);
+      v11 = ScanfGetChar_6C8C5(a1);
       ++v6;
 LABEL_25:
       v21 = v11;
@@ -80442,12 +80543,12 @@ LABEL_25:
     {
       while ( 1 )
       {
-        v13 = sub_6C8C5(a1);
+        v13 = ScanfGetChar_6C8C5(a1);
         ++v6;
         v21 = v13;
         if ( v13 == -1 )
           goto LABEL_34;
-        v14 = sub_6C896(v13);
+        v14 = ScanfHexDigit_6C896(v13);
         if ( v14 >= v4 )
           break;
         v5 = v14 + v4 * v5;
@@ -80461,7 +80562,9 @@ LABEL_25:
 // 6C822: variable 'v20' is possibly undefined
 
 //----- (0006C896) --------------------------------------------------------
-int sub_6C896(int a1)
+/// Value of hex digit a1, 16 if it is not one. Watcom C runtime scanf internals (inferred from the scanset/number/character-class code).
+/// Name is a guess (not in the Hidden Worlds linker map).
+int ScanfHexDigit_6C896(int a1)
 {
   int v2; // eax
 
@@ -80476,7 +80579,9 @@ int sub_6C896(int a1)
 // 6B5A3: using guessed type _DWORD tolower(_DWORD);
 
 //----- (0006C8C5) --------------------------------------------------------
-int sub_6C8C5(int a1)
+/// Gets the next input character, counting down the field width (+12); -1 at the end. Watcom C runtime scanf internals (inferred from the scanset/number/character-class code).
+/// Name is a guess (not in the Hidden Worlds linker map).
+int ScanfGetChar_6C8C5(int a1)
 {
   int v1; // eax
   int result; // eax
@@ -80492,7 +80597,9 @@ int sub_6C8C5(int a1)
 }
 
 //----- (0006D35C) --------------------------------------------------------
-int sub_6D35C_6D86C(unsigned __int16 a1)
+/// Frees DOS memory block a1 (DPMI function 0x101); DOS-only, stubbed in the port.
+/// Name is a guess (not in the Hidden Worlds linker map).
+int FreeDosMemory_6D35C_6D86C(unsigned __int16 a1)
 {
   int result; // eax
   char v2[28]; // [esp+0h] [ebp-38h] BYREF
@@ -80648,7 +80755,9 @@ int sub_6DE34_6E344(
 // 131BD0: using guessed type int dword_131BD0;
 
 //----- (0006E030) --------------------------------------------------------
-int sub_6E030(unsigned int a1)
+/// Frees digital driver slot a1 (0..5) of dword_A0230; returns 10 when invalid or unused.
+/// Name is a guess (not in the Hidden Worlds linker map).
+int FreeDigiDriverSlot_6E030(unsigned int a1)
 {
   if ( a1 > 5 )
     return 10;
@@ -80660,6 +80769,7 @@ int sub_6E030(unsigned int a1)
 // A0230: using guessed type int dword_A0230[5];
 
 //----- (0006E09A) --------------------------------------------------------
+/// Sound driver load/initialisation for driver id a3 (0x1000..0x1023), DOS-only; returns 6 for an unknown id.
 int sub_6E09A_6E5AA(__int16 a1, int a2, unsigned int a3, int *a4, unsigned int a5)
 {
   int v6; // [esp+0h] [ebp-30h]
@@ -80728,6 +80838,7 @@ int sub_6E09A_6E5AA(__int16 a1, int a2, unsigned int a3, int *a4, unsigned int a
 // 131BD0: using guessed type int dword_131BD0;
 
 //----- (0006E23C) --------------------------------------------------------
+/// Returns 2 if both a1 and a2 are 0, else 0 (sound driver helper).
 int sub_6E23C(int a1, __int16 a2)
 {
   if ( a1 || a2 )
@@ -80993,6 +81104,7 @@ LABEL_22:
 // A18B4: using guessed type __int16 word_A18B4[];
 
 //----- (0006E976) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): range check: a2 within the low/high bytes of a1, else error exit.
 int __stdcall sub_6E976(unsigned __int16 a1, unsigned __int16 a2)
 {
   if ( (unsigned __int8)a1 > a2 || (unsigned __int16)((int)a1 >> 8) < a2 )
@@ -81002,6 +81114,7 @@ int __stdcall sub_6E976(unsigned __int16 a1, unsigned __int16 a2)
 // 6E98B: control flows out of bounds to 6F84A
 
 //----- (0006E9A4) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): adds a1 to a per-voice parameter (record unk_A1D34[a3], slot a2).
 int __stdcall sub_6E9A4(int a1, unsigned __int16 a2, unsigned __int16 a3)
 {
   int result; // eax
@@ -81026,6 +81139,7 @@ int __stdcall sub_6E9A4(int a1, unsigned __int16 a2, unsigned __int16 a3)
 // A1D44: using guessed type __int16 word_A1D44;
 
 //----- (0006EA0F) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): finds the instrument/layer for note a1, velocity a2 on bank a4.
 int __stdcall sub_6EA0F(unsigned __int16 a1, unsigned __int16 a2, unsigned __int16 a3, unsigned __int16 a4)
 {
   int v5; // esi
@@ -81158,6 +81272,7 @@ LABEL_29:
 // A1836: using guessed type __int16 word_A1836[63];
 
 //----- (0006ED47) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): maps value a1 to an index 0..127 through table word_A0F00.
 int __stdcall sub_6ED47(unsigned __int16 a1)
 {
   int i; // edx
@@ -81172,6 +81287,7 @@ int __stdcall sub_6ED47(unsigned __int16 a1)
 // A0F00: using guessed type __int16 word_A0F00[128];
 
 //----- (0006ED75) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): converts signed value a1 (shift/log-style loop).
 int __stdcall sub_6ED75(__int16 a1)
 {
   __int16 v1; // si
@@ -81197,6 +81313,7 @@ int __stdcall sub_6ED75(__int16 a1)
 }
 
 //----- (0006EDD0) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): starts a voice for a note (channel a7, note a5).
 int sub_6EDD0(int a1, int a2, int a3, int a4, unsigned __int16 a5, int a6, int a7)
 {
   __int16 *v7; // edi
@@ -81481,6 +81598,7 @@ void sub_6F4CB(
 }
 
 //----- (0006F502) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): controller: sets a channel word (word_A1B46/48) to a1.
 void __stdcall sub_6F502(__int16 a1, unsigned __int16 a2)
 {
   if ( word_A1B48[15 * a2] == -1 )
@@ -81493,6 +81611,7 @@ void __stdcall sub_6F502(__int16 a1, unsigned __int16 a2)
 // A1B48: using guessed type __int16 word_A1B48[];
 
 //----- (0006F536) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): controller: channel byte A1B37 = scaled a1 (45/100).
 void __stdcall sub_6F536(__int16 a1, unsigned __int16 a2)
 {
   byte_A1B37[30 * a2] = 2 * ((unsigned __int16)(45 * a1) / 0x64u);
@@ -81501,6 +81620,7 @@ void __stdcall sub_6F536(__int16 a1, unsigned __int16 a2)
 // 6F55A: control flows out of bounds to 6F84A
 
 //----- (0006F55F) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): controller: channel byte A1B38 = scaled a1 (45/100).
 void __stdcall sub_6F55F(__int16 a1, unsigned __int16 a2)
 {
   byte_A1B38[30 * a2] = 2 * ((unsigned __int16)(45 * a1) / 0x64u);
@@ -81509,6 +81629,7 @@ void __stdcall sub_6F55F(__int16 a1, unsigned __int16 a2)
 // 6F583: control flows out of bounds to 6F84A
 
 //----- (0006F588) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): controller: channel byte A1B39 from a1.
 void __stdcall sub_6F588(char a1, unsigned __int16 a2)
 {
   byte_A1B39[30 * a2] = -1 - 2 * a1 - 1;
@@ -81517,6 +81638,7 @@ void __stdcall sub_6F588(char a1, unsigned __int16 a2)
 // 6F5A3: control flows out of bounds to 6F84A
 
 //----- (0006F5A8) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): controller: channel byte A1B3B = a1 and updates the channel's playing voices.
 int __stdcall sub_6F5A8(unsigned __int8 a1, unsigned __int16 a2)
 {
   unsigned __int16 i; // di
@@ -81552,6 +81674,7 @@ int __stdcall sub_6F5A8(unsigned __int8 a1, unsigned __int16 a2)
 // A18BA: using guessed type __int16 word_A18BA[];
 
 //----- (0006F6AF) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): controller: channel byte A1B3A = a1, then sub_6F5A8.
 int __stdcall sub_6F6AF(char a1, unsigned __int16 a2)
 {
   int v2; // eax
@@ -81562,6 +81685,7 @@ int __stdcall sub_6F6AF(char a1, unsigned __int16 a2)
 }
 
 //----- (0006F6D8) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): controller: channel flag A1B36 from a1 >= 64 (a pedal-style switch).
 int __stdcall sub_6F6D8(unsigned __int16 a1, unsigned __int16 a2)
 {
   unsigned __int16 i; // si
@@ -81594,6 +81718,7 @@ int __stdcall sub_6F6D8(unsigned __int16 a1, unsigned __int16 a2)
 // A18BC: using guessed type __int16 word_A18BC[];
 
 //----- (0006F77A) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): controller: channel word A1B3C = a1/30 and updates the playing voices.
 void __stdcall sub_6F77A(unsigned __int16 a1, unsigned __int16 a2)
 {
   int v2; // edx
@@ -81626,6 +81751,7 @@ void __stdcall sub_6F77A(unsigned __int16 a1, unsigned __int16 a2)
 // A1B3E: using guessed type __int16 word_A1B3E[];
 
 //----- (0006F824) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): RPN/NRPN select: low byte of the channel parameter number.
 int __stdcall sub_6F824(unsigned __int8 a1, unsigned __int16 a2)
 {
   int v2; // eax
@@ -81640,6 +81766,7 @@ int __stdcall sub_6F824(unsigned __int8 a1, unsigned __int16 a2)
 // A1B4C: using guessed type __int16 word_A1B4C[];
 
 //----- (0006F850) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): RPN/NRPN select: high byte of the channel parameter number.
 void __stdcall sub_6F850(int a1, unsigned __int16 a2)
 {
   int v2; // eax
@@ -81654,6 +81781,7 @@ void __stdcall sub_6F850(int a1, unsigned __int16 a2)
 // A1B4C: using guessed type __int16 word_A1B4C[];
 
 //----- (0006F872) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): data entry (high byte) for the selected channel parameter.
 int __stdcall sub_6F872(__int16 a1, unsigned __int16 a2)
 {
   __int16 v2; // bx
@@ -81687,6 +81815,7 @@ int __stdcall sub_6F872(__int16 a1, unsigned __int16 a2)
 // A1B50: using guessed type __int16 word_A1B50[];
 
 //----- (0006F8F1) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): data entry (low byte) for the selected channel parameter.
 int __stdcall sub_6F8F1(__int16 a1, unsigned __int16 a2)
 {
   __int16 v2; // bx
@@ -81719,6 +81848,7 @@ int __stdcall sub_6F8F1(__int16 a1, unsigned __int16 a2)
 // A1B50: using guessed type __int16 word_A1B50[];
 
 //----- (0006F963) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): resets the controllers of channel a2.
 void __stdcall sub_6F963(int a1, __int16 a2)
 {
   int v2; // edx
@@ -81760,6 +81890,7 @@ void __stdcall sub_6F963(int a1, __int16 a2)
 // A1B4E: using guessed type __int16 word_A1B4E[];
 
 //----- (0006F9F9) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): marks the voices of channel a2 free.
 void __stdcall sub_6F9F9(int a1, __int16 a2)
 {
   unsigned __int16 i; // si
@@ -82091,6 +82222,7 @@ int __stdcall sub_6FF53(unsigned __int16 a1)
 // A120C: using guessed type __int16 word_A120C[224];
 
 //----- (00070044) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): sets the AWE32 base port a1 and checks it (AweRegistersMissing_7008A).
 char __stdcall sub_70044(__int16 a1)
 {
   __int16 v1; // si
@@ -82098,10 +82230,10 @@ char __stdcall sub_70044(__int16 a1)
 
   v1 = word_A160A;
   word_A160A = a1;
-  if ( (unsigned __int16)a1 < 0x300u || (v2 = sub_7008A(), v2) ) // PORT: was LOBYTE(v2) = - the high byte was never set
+  if ( (unsigned __int16)a1 < 0x300u || (v2 = AweRegistersMissing_7008A(), v2) ) // PORT: was LOBYTE(v2) = - the high byte was never set
   {
     HIBYTE(word_A160A) += 4;
-    v2 = sub_7008A(); // PORT: was LOBYTE(v2) =
+    v2 = AweRegistersMissing_7008A(); // PORT: was LOBYTE(v2) =
     if ( v2 )
     {
       word_A160A = v1;
@@ -82114,7 +82246,9 @@ char __stdcall sub_70044(__int16 a1)
 // A160A: using guessed type __int16 word_A160A;
 
 //----- (0007008A) --------------------------------------------------------
-_BOOL1 sub_7008A()
+/// AWE32 detection: true when the probed AWE32 registers read back 0xFFFF or the wrong bits (no card at this port).
+/// Name is a guess (not in the Hidden Worlds linker map).
+_BOOL1 AweRegistersMissing_7008A()
 {
   return (unsigned __int16)AWE32REGRW_6E6BF(0x7800u) == 0xFFFF
       || (unsigned __int16)AWE32REGRW_6E6BF(0x141Du) == 0xFFFF
@@ -82126,6 +82260,7 @@ _BOOL1 sub_7008A()
 }
 
 //----- (00070113) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): waits a1 sample clocks (register 0x161B).
 unsigned int __stdcall sub_70113(__int16 a1)
 {
   unsigned int v1; // esi
@@ -82146,6 +82281,7 @@ unsigned int __stdcall sub_70113(__int16 a1)
 }
 
 //----- (00070148) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): initialises the 32 voices' registers.
 unsigned int sub_70148()
 {
   unsigned __int16 i; // si
@@ -82173,6 +82309,7 @@ unsigned int sub_70148()
 }
 
 //----- (0007024E) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): clears the 32 voices' envelope/pitch registers.
 void sub_7024E()
 {
   unsigned __int16 i; // si
@@ -82193,6 +82330,7 @@ void sub_7024E()
 }
 
 //----- (000702F6) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): loads the AWE32 initialisation register tables.
 unsigned int sub_702F6()
 {
   int v0; // esi
@@ -82375,6 +82513,7 @@ unsigned int sub_702F6()
 // A1500: using guessed type __int16 word_A1500[128];
 
 //----- (000706CC) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): sets up voices 30/31 (the DRAM refresh / effect voices).
 void sub_706CC()
 {
   unsigned __int16 v0; // si
@@ -82419,6 +82558,7 @@ void sub_706CC()
 // A160A: using guessed type __int16 word_A160A;
 
 //----- (00070812) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): DRAM size detection / initialisation.
 void sub_70812()
 {
   unsigned int v0; // esi
@@ -82482,6 +82622,7 @@ void sub_70812()
 // A160C: using guessed type int dword_A160C;
 
 //----- (00070AA0) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): enables the AWE32 effects/DRAM registers when present.
 int sub_70AA0()
 {
   unsigned __int16 i; // dx
@@ -82516,6 +82657,7 @@ int sub_70AA0()
 // A18C2: using guessed type __int16 word_A18C2[];
 
 //----- (00070B3E) --------------------------------------------------------
+/// AWE32 MIDI engine (midieng.c, static; DOS sound driver code replaced by the port): silences all voices and re-initialises voices 30/31.
 int sub_70B3E()
 {
   __int16 i; // si
@@ -82554,8 +82696,8 @@ char DrvMainVolume_70B8B(unsigned int a1, unsigned __int8 a2)
                 * (64
                  - (unsigned __int8)byte_A0A24[(int)(unsigned __int8)((dword_A0930[i] * ((a2 << 7) / 0x7Fu)) >> 7) >> 1])) & 0x3FFFFFFu)) >> 7;
           if ( !port_readgsbyte(dword_A07A0 + 30 * dword_A07C8[dword_A0808[i]] + 14) )
-            sub_6A640(byte_A0775[2 * i] + 64, byte_A0704[(unsigned __int8)byte_A0775[2 * i]] & 0xC0 | v4);
-          LOBYTE(v2) = sub_6A640(byte_A0776[2 * i] + 64, byte_A0704[(unsigned __int8)byte_A0776[2 * i]] & 0xC0 | v4);
+            YmWriteRegister_6A640(byte_A0775[2 * i] + 64, byte_A0704[(unsigned __int8)byte_A0775[2 * i]] & 0xC0 | v4);
+          LOBYTE(v2) = YmWriteRegister_6A640(byte_A0776[2 * i] + 64, byte_A0704[(unsigned __int8)byte_A0776[2 * i]] & 0xC0 | v4);
         }
       }
     }
@@ -82571,7 +82713,9 @@ char DrvMainVolume_70B8B(unsigned int a1, unsigned __int8 a2)
 // A0954: using guessed type int dword_A0954[16];
 
 //----- (00070D55) --------------------------------------------------------
-unsigned __int8 sub_70D55(unsigned __int8 a1)
+/// Finds a free OPL voice (9 voices, byte_A0764) for a note, stealing one if all are busy.
+/// Name is a guess (not in the Hidden Worlds linker map).
+unsigned __int8 YmAllocVoice_70D55(unsigned __int8 a1)
 {
   unsigned int k; // [esp+0h] [ebp-Ch]
   unsigned int i; // [esp+4h] [ebp-8h]
@@ -82601,6 +82745,7 @@ unsigned __int8 sub_70D55(unsigned __int8 a1)
 // A086C: using guessed type int dword_A086C[16];
 
 //----- (00070E1C) --------------------------------------------------------
+/// Instrument-bank parser helper: reads a byte pair at a3 into dword_A07C8 (FM driver).
 int sub_70E1C(int a1, int a2, unsigned int a3)
 {
   int result; // eax
@@ -82660,7 +82805,9 @@ void sub_71BC9(int a1, const void *a2, void *a3)
 // A0CC6: using guessed type char byte_A0CC6;
 
 //SYNCHRONIZED WITH REMC1
-int sub_724C0_729D0(uint16_t inX, uint16_t inY)
+/// Terrain height at (inX, inY) in 1/256 tile, interpolated between the heightmap corners of its tile (AltitudePoint_11F50 uses it).
+/// Name is a guess (not in the Hidden Worlds linker map).
+int InterpolateTerrainHeight_724C0_729D0(uint16_t inX, uint16_t inY)
 {
 	uint8_t point1;
 	uint8_t point2;
@@ -82723,7 +82870,9 @@ int sub_724C0_729D0(uint16_t inX, uint16_t inY)
 
 long counter_725C8 = 0;
 //----- (000725C8) --------------------------------------------------------
-void sub_725C8(__int16 a1, unsigned __int16 a2, __int16 a3)//2435C8_
+/// Generates the fractal heightmap from seed a1 with roughness a2/a3 (CreateWorld_31AA0_31AE0), by repeated subdivision steps.
+/// Name is a guess (not in the Hidden Worlds linker map).
+void GenerateFractalMap_725C8(__int16 a1, unsigned __int16 a2, __int16 a3)//2435C8_
 {
   int v3; // ebx
   __int16 v4; // cx
@@ -82764,7 +82913,7 @@ void sub_725C8(__int16 a1, unsigned __int16 a2, __int16 a3)//2435C8_
               counter_725C8++;*/
 #endif debug1
 //debug
-        sub_72652_72B62(v4, (uint16_t*)&v3, (uint8_t*)savedregs, (uint16_t*)&a1);
+        FractalStepA_72652_72B62(v4, (uint16_t*)&v3, (uint8_t*)savedregs, (uint16_t*)&a1);
         --v8;
       }
       while ( v8 );
@@ -82783,7 +82932,7 @@ void sub_725C8(__int16 a1, unsigned __int16 a2, __int16 a3)//2435C8_
               //add_compare(0x243632, true);
 #endif debug1
 //debug
-        sub_726E7_72BF7(v4, (uint16_t*)&v3, (uint8_t*)savedregs, (uint16_t*)&a1);
+        FractalStepB_726E7_72BF7(v4, (uint16_t*)&v3, (uint8_t*)savedregs, (uint16_t*)&a1);
         --v9;
       }
       while ( v9 );
@@ -82797,7 +82946,9 @@ void sub_725C8(__int16 a1, unsigned __int16 a2, __int16 a3)//2435C8_
 // 10C1E0: using guessed type __int16 mapEntityIndex_10C1E0_10C1D0[7953];
 
 //----- (00072652) --------------------------------------------------------
-void sub_72652_72B62(__int16 a1, uint16_t* a2, uint8_t* a3, uint16_t* a4)//243652_ PORT: a3 = the caller's frame (savedregs)
+/// One subdivision step of GenerateFractalMap_725C8: averages neighbouring heights at distance 2*a1 and adds a random offset (probably the square step).
+/// Name is a guess (not in the Hidden Worlds linker map).
+void FractalStepA_72652_72B62(__int16 a1, uint16_t* a2, uint8_t* a3, uint16_t* a4)//243652_ PORT: a3 = the caller's frame (savedregs)
 {
   __int16 v4; // di
   __int16 v5; // di
@@ -82830,7 +82981,9 @@ void sub_72652_72B62(__int16 a1, uint16_t* a2, uint8_t* a3, uint16_t* a4)//24365
 // 10C1E0: using guessed type __int16 mapEntityIndex_10C1E0_10C1D0[7953];
 
 //----- (000726E7) --------------------------------------------------------
-void sub_726E7_72BF7(__int16 a1, uint16_t* a2, uint8_t* a3, uint16_t* a4)//2436E7_ PORT: a3 = the caller's frame (savedregs)
+/// One subdivision step of GenerateFractalMap_725C8 at distance a1 (probably the diamond step).
+/// Name is a guess (not in the Hidden Worlds linker map).
+void FractalStepB_726E7_72BF7(__int16 a1, uint16_t* a2, uint8_t* a3, uint16_t* a4)//2436E7_ PORT: a3 = the caller's frame (savedregs)
 {
   __int16 v4; // di
   __int16 v5; // di
@@ -82885,6 +83038,7 @@ void sub_726E7_72BF7(__int16 a1, uint16_t* a2, uint8_t* a3, uint16_t* a4)//2436E
 // 10C1E0: using guessed type __int16 mapEntityIndex_10C1E0_10C1D0[7953];
 
 //----- (00072807) --------------------------------------------------------
+/// Builds lookup tables from the block data at dword_9334C (called by Orgdata_44470_447B0). Not fully understood.
 char sub_72807_72D17(unsigned __int8 *a1, _BYTE *a2)
 {
   unsigned __int8 *v2; // edi

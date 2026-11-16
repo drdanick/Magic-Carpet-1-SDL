@@ -42,7 +42,7 @@ TEST(Layout, GameStateStructOffsets)
 	EXPECT_EQ(sizeof(T), 232713u);
 }
 
-// The level-start reset (sub_3FB30_3FE70) clears these fields with the original's byte counts: the port's
+// The level-start reset (ShowCalibrationPrompt_3FB30_3FE70) clears these fields with the original's byte counts: the port's
 // field must be exactly that wide (an 8-byte element where the original has 6 moved every computer wizard's
 // start position).
 TEST(Layout, ResetFieldSizes)
