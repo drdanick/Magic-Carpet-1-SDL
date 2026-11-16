@@ -40937,11 +40937,6 @@ char UpdateAreaAnyway_33E10_34200(unsigned __int16 a1, __int16 a2)
   char v31; // [esp+Ch] [ebp-14h]
   char v32; // [esp+Ch] [ebp-14h]
   char i; // [esp+10h] [ebp-10h]
-  unsigned __int16 v34; // [esp+24h] [ebp+4h]
-
-  //fix
-  v34 = 0;
-  //fix
 
   v2 = a1;
   v30 = a2 - a1 + 1;
@@ -41029,7 +41024,9 @@ char UpdateAreaAnyway_33E10_34200(unsigned __int16 a1, __int16 a2)
     }
     while ( v29 );
   }
-  v18 = v34;
+  // PORT: IDA's v34 ([esp+24h]) is the stack slot of a1, decremented by (1, 1) above; the port had set it to 0,
+  // so the shading of a changed area was recomputed around tile (0, 0) instead (tools/diff_tick.py --stepwise)
+  v18 = a1;
   v32 = v31 + 1;
   v19 = v28 + 1;
   if ( v28 != -1 )
