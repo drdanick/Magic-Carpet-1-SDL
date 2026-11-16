@@ -107,10 +107,11 @@ TEST(Keyboard, InjectKeyFillsPressedTable)
 {
 	VGA_mouse_clear_keys();
 	VGA_InjectKey(true, SDL_SCANCODE_UP);
-	EXPECT_EQ(pressedKeys_12EEF0_12EEE0[0x48], 0x48);
-	EXPECT_EQ(lastPressedKey_12EF70_12EF60, 0x48);
+	EXPECT_EQ(pressedKeys_12EEF0_12EEE0[0x48], 1); // KInt_36C65: 1 while the key is down
+	EXPECT_EQ(lastPressedKey_12EF70_12EF60, 0x48); // make code
 	VGA_InjectKey(false, SDL_SCANCODE_UP);
 	EXPECT_EQ(pressedKeys_12EEF0_12EEE0[0x48], 0);
+	EXPECT_EQ(lastPressedKey_12EF70_12EF60, 0xC8); // break code (scancode | 0x80), as the original's interrupt stores it
 }
 
 // --- Timer -----------------------------------------------------------------------------------
@@ -168,11 +169,11 @@ TEST(InputScript, KeyEventsAreAppliedAtTheirFrame)
 	InputScript_OnFrame(9);
 	EXPECT_EQ(pressedKeys_12EEF0_12EEE0[0x48], 0);
 	InputScript_OnFrame(10);
-	EXPECT_EQ(pressedKeys_12EEF0_12EEE0[0x48], 0x48);
+	EXPECT_EQ(pressedKeys_12EEF0_12EEE0[0x48], 1);
 	InputScript_OnFrame(12);
 	EXPECT_EQ(pressedKeys_12EEF0_12EEE0[0x48], 0);
 	InputScript_OnFrame(20);
-	EXPECT_EQ(pressedKeys_12EEF0_12EEE0[0x39], 0x39);
+	EXPECT_EQ(pressedKeys_12EEF0_12EEE0[0x39], 1);
 	InputScript_OnFrame(23);
 	EXPECT_EQ(pressedKeys_12EEF0_12EEE0[0x39], 0);
 	std::filesystem::remove(path);
@@ -190,8 +191,8 @@ TEST(InputScript, MultiWordKeyNames)
 	VGA_mouse_clear_keys();
 	ASSERT_TRUE(InputScript_Load(path.string()));
 	InputScript_OnFrame(6);
-	EXPECT_EQ(pressedKeys_12EEF0_12EEE0[0x2A], 0x2A) << "Left Shift";
+	EXPECT_EQ(pressedKeys_12EEF0_12EEE0[0x2A], 1) << "Left Shift";
 	EXPECT_EQ(pressedKeys_12EEF0_12EEE0[0x4B], 0) << "must not be read as the Left arrow";
-	EXPECT_EQ(pressedKeys_12EEF0_12EEE0[0x26], 0x26) << "L";
+	EXPECT_EQ(pressedKeys_12EEF0_12EEE0[0x26], 1) << "L";
 	std::filesystem::remove(path);
 }
