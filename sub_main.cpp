@@ -14860,10 +14860,6 @@ void ShowFrame_104D0()
   //int v22; // [esp+4h] [ebp-18h]
   char v23; // [esp+8h] [ebp-14h]
 
-  //fix
-  //v22 = 0;
-  //fix
-
   v23 = 0;
   byte_AC1B8_AC1A8[0] = 0;
   v0 = (int)OFF(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
@@ -14872,10 +14868,7 @@ void ShowFrame_104D0()
   {
     ReadData_103C0(0, str_AC1A0_AC190.dword_AC1A0_AC190 - 16);
     v1 = NextFrame_103F0();
-    //v0 = ShowFrame_104D0(v1);
-    //fix !!!
-    ShowFrame_104D0();
-    //fix !!!
+    ShowFrame_104D0(); // PORT: the original passes nothing and ignores the result (IDA showed "v0 = ShowFrame_104D0(v1)")
   }
   else if (str_AC1A0_AC190.word_AC1A4_AC194 == 0xF1FA/*-3590*/)
   {
@@ -34439,11 +34432,6 @@ void DrawAThing_2C410_2C450(unsigned int a1)//1FD410_
   counter_sub_2C410_2C450++;
   //debug
 
-  //fix
-  //v63 = 0;
-  //v68 = 0;
-  //fix
-
 
   int32 cosScaledX;
   int32 sinScaledX;
@@ -38250,9 +38238,6 @@ void Engine_30D90_30DD0(int posX, int posY, __int16 yaw, int posZ, int pitch, in
 				halfViewpX = widthViewPort_93AD8 >> 2;
 				frameViewp = pitchViewPort_93AD4 - widthViewPort_93AD8;
 				//indexY = heightViewPort_93ADC;
-				//fix
-				//int tempFix = dword_AE400_AE3F0();
-				//fix
 				//HIWORD(v50) = HIWORD(tempFix);
 				if (str_AE400_AE3F0->set.blur_8604 == 1)
 				{
@@ -39185,11 +39170,6 @@ unsigned __int16 MakeGrassAndScrub_320A0(unsigned __int16 a1)//2030A0_
   char v8; // dl
   char v9; // dh
 
-  //fix
-  //v4 = 0;
-  //v5 = 0;
-  //fix
-
   result = 0;
   do
   {
@@ -40105,12 +40085,6 @@ unsigned __int16 MakeRocks_33180(unsigned __int8 a1)
   __int16 v7; // bx
   char v8; // dl
   char v9; // dh
-
-  //fix
-  //v4 = 0;
-  //v5 = 0;
-  //v6 = 0;
-  //fix
 
   qmemcpy(mapTerrainType_CC1E0_CC1D0, mapAngle_FC1E0_FC1D0, 0x10000);
   result = 0;
@@ -52014,12 +51988,12 @@ void ExamineMemory_41230_41570()//212230_
 		byte_968F0 = 1;
 		str_AE400_AE3F0->set.var_u8_8608 = 32;
 
-		//fix
+		// PORT: the original measures freeMem_1314AC_13149C in sub_63338_63848 from the DOS memory pool that
+		// sub_63010_63520 sets up (disabled in the port); report 16 MB, the top memory tier of the original (> 8 MB)
 		if (testAlloc)
 			freeMem_1314AC_13149C = 0x1000000;
 		else
 			freeMem_1314AC_13149C = 0;
-		//fix
 
 		if (freeMem_1314AC_13149C <= 0x800000)
 		{
@@ -54494,7 +54468,6 @@ void OpenSound_43EC0_44200()
     int a3 = 0;
     unsigned __int16 a4 = 0;
     unsigned __int16 a5 = 0;
-  //fix
 
   if ( !stricmp(unk_CC158x, aSblast_0) )
   {
@@ -54663,7 +54636,6 @@ LABEL_63:
   if ( !byte_939D4 )
     SosTIMERInitSystem_5D883_5DD93(0xFF00u, 0);
   dword_93A54 = a4;
-  //fix 
   /*v10 = SosDIGIInitDriver_64846_64D56(
           a2,
           a5,
@@ -58773,10 +58745,6 @@ void DrawSoundSourceLine_4B8D0_4BC10(__int16 a1)//21C8D0_
 	int v13[6]; // [esp+28h] [ebp-28h] BYREF
 	//int v14[6]; // [esp+2Ch] [ebp-24h]
 
-	//fix
-	//v14 = 0;
-	//fix
-
 	v1 = str_96884.next->dim.y;
 	GetTextWindow_513A0_516E0((uint32*)&v13);
 	str_96884.var8_6 = FindColor_5CC70_5D180(begPalette_12CB9C_12CB8C_2EAB9C_2EAB8C, 0x1Eu, 0x18u, 0x11u);
@@ -58908,11 +58876,10 @@ void GameMenuPage_4BD60_4C0A0()//21CD60_
   begBscreen_AE3FC_AE3EC_26C3FC_26C3EC = begWscreen_2ECFF4_2ECFE4;
   begWscreen_2ECFF4_2ECFE4 = (uint8_t*)PTR(v3);
   DrawMainMenuPanel_4CB70_4CEB0();
-  //fix
+  // PORT: swap the screen buffers back (an XOR swap of the two pointers in the original)
   v4 = (int)OFF(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
   begBscreen_AE3FC_AE3EC_26C3FC_26C3EC = begWscreen_2ECFF4_2ECFE4;
   begWscreen_2ECFF4_2ECFE4 = (uint8_t*)PTR(v4);
-  //fix
   if (pressedKeys_12EEF0_12EEE0[15])//byte_12EEFF TAB
   {
     pressedKeys_12EEF0_12EEE0[15] = 0;//byte_12EEFF TAB
@@ -59025,16 +58992,10 @@ LABEL_69:
           begBscreen_AE3FC_AE3EC_26C3FC_26C3EC = (uint8_t*)begWscreen_2ECFF4_2ECFE4;
           begWscreen_2ECFF4_2ECFE4 = (uint8_t*)PTR(v9);
           DrawMainMenuPanel_4CB70_4CEB0();
-          /*
-          v10 = (int)begBscreen_AE3FC_AE3EC_26C3FC_26C3EC ^ begWscreen_2ECFF4_2ECFE4;
-          begBscreen_AE3FC_AE3EC_26C3FC_26C3EC = (uint8_t*)begWscreen_2ECFF4_2ECFE4;
-          v8 = begWscreen_2ECFF4_2ECFE4 ^ v10;
-          */
-          //fix
+          // PORT: first half of the buffer swap back (an XOR swap in the original); LABEL_70 stores v8
           v10 = (int)OFF(begBscreen_AE3FC_AE3EC_26C3FC_26C3EC);
           begBscreen_AE3FC_AE3EC_26C3FC_26C3EC = (uint8_t*)begWscreen_2ECFF4_2ECFE4;
           v8 = v10;
-          //fix
           goto LABEL_70;
         }
       }
@@ -61663,10 +61624,6 @@ bool sub_50D40_51080(//221D40_
   int v37; // [esp+84h] [ebp-1Ch]
   int v38; // [esp+88h] [ebp-18h]
   char v39; // [esp+8Ch] [ebp-14h]
-
-  //fix
-  //v34 = 0;
-  //fix
 
   v10 = a5;
   v11 = (unsigned int)OFF(&a5[strlen(a5)]);
@@ -67409,10 +67366,6 @@ void DoSpriteAnimation_590D0_595E0()//22A0D0_
   //char v3; // cl
   //Type_sub_AE3E0* v4; // eax
 
-  //fix
-  //result = 0;
-  //fix
-
   //allert_error();//test it
 
   for ( int i = 0; i < 529; i++ )
@@ -70886,7 +70839,6 @@ LABEL_9:
           byte_9EBBF = j | 0xC0;
           byte_9EBC0 = 121;
           byte_9EBC1 = 0;
-          //fix
           /*MK_FP(*(_WORD*)&byte_9C062[36 * a4 + 4], *(_DWORD*)&byte_9C062[36 * a4])(
             &byte_9EBBF,
             (unsigned __int16)__DS__,
@@ -70896,7 +70848,6 @@ LABEL_9:
           {
             byte_9EBBF = j | 0xC0;
             byte_9EBC0 = byte_9E302[320 * a4 + 20 * v20 + 5 * v10];
-            //fix
             /*
             MK_FP(*(_WORD *)&byte_9C062[36 * a4 + 4], *(_DWORD *)&byte_9C062[36 * a4])(
               &byte_9EBBF,
@@ -70909,7 +70860,6 @@ LABEL_9:
             byte_9EBBF = j | 0xE0;
             byte_9EBC0 = 0;
             byte_9EBC1 = byte_9E300[320 * a4 + 20 * v20 + 5 * v10];
-            //fix
             /*
             MK_FP(*(_WORD *)&byte_9C062[36 * a4 + 4], *(_DWORD *)&byte_9C062[36 * a4])(
               &byte_9EBBF,
@@ -70922,7 +70872,6 @@ LABEL_9:
             byte_9EBBF = j | 0xB0;
             byte_9EBC0 = 7;
             byte_9EBC1 = byte_9E301[320 * a4 + 20 * v20 + 5 * v10];
-            //fix
             /*
             MK_FP(*(_WORD *)&byte_9C062[36 * a4 + 4], *(_DWORD *)&byte_9C062[36 * a4])(
               &byte_9EBBF,
@@ -70935,7 +70884,6 @@ LABEL_9:
             byte_9EBBF = j | 0xB0;
             byte_9EBC0 = 64;
             byte_9EBC1 = byte_9E303[320 * a4 + 20 * v20 + 5 * v10];
-            //fix
             /*
             MK_FP(*(_WORD *)&byte_9C062[36 * a4 + 4], *(_DWORD *)&byte_9C062[36 * a4])(
               &byte_9EBBF,
@@ -70971,7 +70919,6 @@ LABEL_9:
       byte_9EBBF = v16 | 0xB0;
       byte_9EBC0 = 123;
       byte_9EBC1 = 0;
-      //fix
       /*
       MK_FP(*(_WORD *)&byte_9C062[36 * a4 + 4], *(_DWORD *)&byte_9C062[36 * a4])(
         &byte_9EBBF,
@@ -70981,7 +70928,6 @@ LABEL_9:
       byte_9EBBF = v16 | 0xB0;
       byte_9EBC0 = 121;
       byte_9EBC1 = 0;
-      //fix
       /*
       MK_FP(*(_WORD *)&byte_9C062[36 * a4 + 4], *(_DWORD *)&byte_9C062[36 * a4])(
         &byte_9EBBF,
@@ -71078,7 +71024,6 @@ LABEL_66:
         byte_9EBC0 = 7;
         byte_9EBC1 = (port_readgsbyte(a2 + 2) * (unsigned int)(unsigned __int8)byte_9ECAD) >> 7;
       }
-      //fix
       /*
       MK_FP(*(_WORD *)&byte_9C062[36 * a4 + 4], *(_DWORD *)&byte_9C062[36 * a4])(
         &byte_9EBBF,
@@ -71136,7 +71081,6 @@ int SosMIDIResetChannelStealing_5E9C1(int a1)
         byte_9EBBF = v4 | 0xB0;
         byte_9EBC0 = 121;
         byte_9EBC1 = 0;
-        //fix
         /*
         MK_FP(*(_WORD *)&byte_9C062[36 * v3 + 4], *(_DWORD *)&byte_9C062[36 * v3])(
           &byte_9EBBF,
@@ -71146,7 +71090,6 @@ int SosMIDIResetChannelStealing_5E9C1(int a1)
         byte_9EBBF = v4 | 0xE0;
         byte_9EBC0 = 64;
         byte_9EBC1 = 64;
-        //fix
         /*
         MK_FP(*(_WORD *)&byte_9C062[36 * v3 + 4], *(_DWORD *)&byte_9C062[36 * v3])(
           &byte_9EBBF,
@@ -71156,7 +71099,6 @@ int SosMIDIResetChannelStealing_5E9C1(int a1)
         byte_9EBBF = v4 | 0xB0;
         byte_9EBC0 = 7;
         byte_9EBC1 = 0;
-        //fix
         /*
         MK_FP(*(_WORD *)&byte_9C062[36 * v3 + 4], *(_DWORD *)&byte_9C062[36 * v3])(
           &byte_9EBBF,
@@ -71178,7 +71120,6 @@ int SosMIDIResetChannelStealing_5E9C1(int a1)
         byte_9EBBF = v5 | 0xB0;
         byte_9EBC0 = 123;
         byte_9EBC1 = 0;
-        //fix
         /*
         MK_FP(*(_WORD *)&byte_9C062[36 * v3 + 4], *(_DWORD *)&byte_9C062[36 * v3])(
           &byte_9EBBF,
@@ -71188,7 +71129,6 @@ int SosMIDIResetChannelStealing_5E9C1(int a1)
         byte_9EBBF = v5 | 0xB0;
         byte_9EBC0 = 121;
         byte_9EBC1 = 0;
-        //fix
         /*
         MK_FP(*(_WORD *)&byte_9C062[36 * v3 + 4], *(_DWORD *)&byte_9C062[36 * v3])(
           &byte_9EBBF,
@@ -71198,7 +71138,6 @@ int SosMIDIResetChannelStealing_5E9C1(int a1)
         byte_9EBBF = v5 | 0xE0;
         byte_9EBC0 = 64;
         byte_9EBC1 = 64;
-        //fix
         /*
         MK_FP(*(_WORD *)&byte_9C062[36 * v3 + 4], *(_DWORD *)&byte_9C062[36 * v3])(
           &byte_9EBBF,
@@ -71208,7 +71147,7 @@ int SosMIDIResetChannelStealing_5E9C1(int a1)
         byte_9EBBF = v5 | 0xB0;
         byte_9EBC0 = 7;
         byte_9EBC1 = 0;
-        //fix
+        // PORT: call into the DOS MIDI driver (not made: portability/port_music plays the music)
         /*
         MK_FP(*(_WORD *)&byte_9C062[36 * v3 + 4], *(_DWORD *)&byte_9C062[36 * v3])(
           &byte_9EBBF,
@@ -71508,7 +71447,7 @@ int SosMIDISetMasterVolume_5F83E(char a1)
         byte_9EBBF = i | 0xB0;
         byte_9EBC0 = 7;
         byte_9EBC1 = v4;
-        //fix
+        // PORT: call into the DOS MIDI driver (not made: portability/port_music plays the music)
         /*
         MK_FP(*(_WORD *)&byte_9C062[36 * v2 + 4], *(_DWORD *)&byte_9C062[36 * v2])(
           &byte_9EBBF,
@@ -71640,13 +71579,11 @@ void SosMIDIUnLockMemory_5FD67()
 int SosMIDIInitSystem_60199(int a1, unsigned __int16 a2)
 {
   SosMIDILockMemory_5F935();
-  //fix
   /*
   if ( a1 || a2 )
     fstrcpy(unk_9ED08, (unsigned __int16)__DS__, a1, a2);
   else
     byte_A04D2 = 0;*/
-  //fix
   /*
   word_131526 = __CS__;
   dword_131522 = (int)CallbackSendData_679AE;
@@ -71817,7 +71754,7 @@ int SosMIDIInitDriver_6035F(unsigned int a1, unsigned int a2, int a3, int a4, in
         *(_WORD *)&byte_9C062[v11 + 4] = word_1314EA[3 * i];
         *(_DWORD *)&byte_9C062[v11] = v12;
       }
-      //fix
+      // PORT: call into the DOS MIDI driver (not made: portability/port_music plays the music)
       /*
       v13 = MK_FP(*(_WORD *)&byte_9C068[36 * v31 + 4], *(_DWORD *)&byte_9C068[36 * v31])(
               port_readgsdword(a4 + 16),
@@ -71839,7 +71776,7 @@ int SosMIDIInitDriver_6035F(unsigned int a1, unsigned int a2, int a3, int a4, in
         *(_WORD *)&byte_9C062[v14 + 4] = word_131526[3 * i];
         *(_DWORD *)&byte_9C062[v14] = v15;
       }
-      //fix
+      // PORT: call into the DOS MIDI driver (not made: portability/port_music plays the music)
       /*
       v16 = MK_FP(*(_WORD *)&byte_9C068[36 * v31 + 4], *(_DWORD *)&byte_9C068[36 * v31])(
               port_readgsdword(a4 + 16),
@@ -71861,7 +71798,7 @@ int SosMIDIInitDriver_6035F(unsigned int a1, unsigned int a2, int a3, int a4, in
         *(_WORD *)&byte_9C062[v8 + 4] = word_131508[3 * i];
         *(_DWORD *)&byte_9C062[v8] = v9;
       }
-      //fix
+      // PORT: call into the DOS MIDI driver (not made: portability/port_music plays the music)
       /*
       v10 = MK_FP(*(_WORD *)&byte_9C068[36 * v31 + 4], *(_DWORD *)&byte_9C068[36 * v31])(
               port_readgsdword(a4 + 16),
@@ -71883,7 +71820,7 @@ int SosMIDIInitDriver_6035F(unsigned int a1, unsigned int a2, int a3, int a4, in
         *(_WORD *)&byte_9C062[v17 + 4] = word_1314CC[3 * i];
         *(_DWORD *)&byte_9C062[v17] = v18;
       }
-      //fix
+      // PORT: call into the DOS MIDI driver (not made: portability/port_music plays the music)
       /*
       v19 = MK_FP(*(_WORD *)&byte_9C068[36 * v31 + 4], *(_DWORD *)&byte_9C068[36 * v31])(
               port_readgsdword(a4 + 16),
@@ -71967,7 +71904,7 @@ int SosMIDIUnInitDriver_6080C(unsigned int a1, int a2)
 
   if ( dword_9B18E[a1] )
   {
-      //fix
+      // PORT: call into the DOS MIDI driver (not made: portability/port_music plays the music)
       /*
     MK_FP(*(_WORD *)&byte_9C06E[36 * a1 + 4], *(_DWORD *)&byte_9C06E[36 * a1])(
       dword_9EF06,
@@ -71988,7 +71925,7 @@ LABEL_13:
         FreeDriverSlot_68813(a1);
         goto LABEL_14;
       }
-      //fix
+      // PORT: call into the DOS MIDI driver (not made: portability/port_music plays the music)
       /*
       MK_FP(*(_WORD *)&byte_9C06E[36 * a1 + 4], *(_DWORD *)&byte_9C06E[36 * a1])(
         dword_9EF06,
@@ -72020,39 +71957,10 @@ LABEL_14:
 /// Original name: sosMIDIResetDriver (sosminit.c), Hidden Worlds linker map.
 int SosMIDIResetDriver_6091D(int a1)
 {
-  unsigned int i; // [esp+8h] [ebp-4h]
-
-  for ( i = 0; i < 0x10; ++i )
-  {
-    byte_9EBBF = i | 0xB0;
-    byte_9EBC0 = 121;
-    byte_9EBC1 = 0;
-    //
-    /*
-    MK_FP(*(_WORD *)&byte_9C062[36 * a1 + 4], *(_DWORD *)&byte_9C062[36 * a1])(
-      &byte_9EBBF,
-      (unsigned __int16)__DS__,
-      3,
-      a1);*/
-    byte_9EBBF = i | 0xB0;
-    byte_9EBC0 = 123;
-    byte_9EBC1 = 0;
-    //fix
-    /*
-    MK_FP(*(_WORD *)&byte_9C062[36 * a1 + 4], *(_DWORD *)&byte_9C062[36 * a1])(
-      &byte_9EBBF,
-      (unsigned __int16)__DS__,
-      3,
-      a1);*/
-  }
-  PortMusic_ResetChannels(); // PORT: the driver calls above, done by portability/port_music
-  //fix
-  /*
-  MK_FP(*(_WORD *)&byte_9C074[36 * a1 + 4], *(_DWORD *)&byte_9C074[36 * a1])(
-    dword_9EF06,
-    (unsigned __int16)word_9EF0A,
-    a1,
-    dword_9EF0C);*/
+  // PORT: the original sends controller 121 (reset all controllers) and 123 (all notes off) on the 16 channels
+  // through the DOS MIDI driver (message in byte_9EBBF..9EBC1), then calls the driver's reset;
+  // portability/port_music does both
+  PortMusic_ResetChannels();
   return 0;
 }
 // 9EBBF: using guessed type char byte_9EBBF;
@@ -104493,21 +104401,20 @@ void DrawTriangle_729A3_72EB3(Type_RenderPoint* pnt1, Type_RenderPoint* pnt2, Ty
 
   //debug
 
-  //fix
+  // PORT: locals IDA marked as possibly undefined start at 0 (stack garbage in the original); world-draw snapshots
+  // compare equal to the original with these (tools/diff_call.py)
   bool16 = false;
   v27 = 0;
   v1022x = 0;
   scaledU.dword = 0;
   scaledV.dword = 0;
   scaledZ.dword = 0;
-  //v51x = 0;
   addIndexY = 0;
   v390x = 0;
 
   Type_dword_0x0_0 tempU;
   Type_dword_0x0_0 tempV;
   Type_dword_0x0_0 tempZ;
-  //fix
 
   sortPnt1 = pnt1;
   sortPnt2 = pnt2;
