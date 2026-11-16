@@ -31,7 +31,6 @@ bool modset_key_alt2 = false;
 
 bool IsHiddenWord = false;
 
-//fix dword_96902
 //info
 /*
 
@@ -121,7 +120,6 @@ unk_B3EA0 271EA0
 
 */
 //info
-//fix
 
 // Set from port settings in sub_main(): gameDataPath = CD "CARPET" folder, gameDataPath2 = stand-in for DOS drive C:
 std::string gameDataPath;
@@ -280,7 +278,6 @@ char* FixPath(char* inPath)
     return dataPath;
 }
 
-//fix
 //-------------------------------------------------------------------------
 // Function declarations
 
@@ -1863,7 +1860,7 @@ __int16 word_4A130[] = {
 0x0000,0x0EB0,0x0022,
 0x0000,0x0D20,0x0022,
 0x0000,0x0000,0x0000
-}; //fix it!!!*/
+};*/
 // PORT: exact bytes of CARPET.EXE 0x4a17c..0x4a1fc (+16 bytes of what followed in DOS memory).
 // The decompiled tables were truncated to 8 bytes; the FMV command reader (CheckArray_111B0, 7-byte entries)
 // walks past them. Regenerate with: python tools/exe_data.py --exe CARPET.EXE carray 0x4a17c 0x90
@@ -2503,7 +2500,7 @@ uint8 yawQuartal_902B4[4][10] = {
 };
 
 
-uint32_t unk_902DC[32][8] = {//fix size
+uint32_t unk_902DC[32][8] = { // 1024 bytes, the original extent (0x902DC..0x906DB)
     {0x00000000,0x00000000,0x001FFFFF,0x00000000,0x001FFFFF,0x001FFFFF,0x00000000,0x001FFFFF},
     {0x001FFFFF,0x00000000,0x001FFFFF,0x001FFFFF,0x00000000,0x001FFFFF,0x00000000,0x00000000},
     {0x001FFFFF,0x001FFFFF,0x00000000,0x001FFFFF,0x00000000,0x00000000,0x001FFFFF,0x00000000},
@@ -2842,7 +2839,7 @@ uint8 unk_909FCx[13][8][2] = {
 //_UNKNOWN unk_90A2C; // weak
 char byte_90AD4 = '\0'; // weak
 char byte_90AD5 = '\0'; // weak
-char byte_90AD8[]/*[42]*/ =//fix size may by 42
+char byte_90AD8[] = // the first 42 bytes are the original table (0x90AD8..0x90B01, checked); the rest is zero padding
 {
   0x01,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,
   0x01,0x01,0x01,0x01,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,
@@ -13703,7 +13700,7 @@ __int16 word_B7316; // weak
 __int16 word_B7318; // weak
 int keysVect2_B7320; // weak
 __int16 keysVect1_B7324; // weak
-Type_160 unk_B7330_B7320[30]; // fix size of array
+Type_160 unk_B7330_B7320[1]; // the default player record entities point to (+160); 960 bytes reserved in the original
 int dword_B76F0_B76E0; // weak
 char byte_B7700_B76F0; // weak
 char byte_B7701; // weak
@@ -13730,7 +13727,7 @@ __int16 word_B7728; // weak
 char byte_B772A; // weak
 
 typedef struct {
-    char fog_B7934_B7924[0x4000]; // fix this size / find DOSBOX init !!! //0x14600
+    char fog_B7934_B7924[0x4000]; // 0xB7934..0xBB933 (the next member starts at 0xBB934 in the original)
     char byte_BB934_BB924[0x10000]; // weak
     char byte_CB934_CB924[0x300]; // weak
     uint8 byte_CBC34_CBC24[0x300]; // weak

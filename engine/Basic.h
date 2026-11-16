@@ -184,7 +184,7 @@ typedef struct {//size 946
 	uint16 v_46;
 	int16 var_48;// PORT: was uint32, which shifted var_50/var_52 by 2 bytes; code reads *(int16*)(+48) and *(uint16*)(+50)
 	uint16 var_50;
-	uint16 var_52[4];//fix size 4?
+	uint16 var_52[4];
 	uint8 stub_aa[248];
 	uint32 u32_308;
 	uint8 stub_b[2];
@@ -219,7 +219,7 @@ typedef struct {//size 946
 	uint8 stub_c4xx[1];
 	uint8 var_415;
 	uint8 stub_c4x[40];	
-	Type_456 str_456[8];//fix size
+	Type_456 str_456[8];
 	uint8 stub_cc1[2];
 	uint16 u16_522;
 	uint16 u16_524;
@@ -232,15 +232,15 @@ typedef struct {//size 946
 	uint8 stub_ccx[32];
 	uint16 var_756;
 	uint8 stub_c2b[14];
-	int8 var_15198_1875_772[24];//fix size
-	uint8 var_15222_1899_796[48];//fix size
+	int8 var_15198_1875_772[24];
+	uint8 var_15222_1899_796[48];
 	uint8 var_844[48];
 	uint8 var_15318_1995_892[24];
 	uint8 var_916[24];
 	uint16 var_u16_2043_940;
 	uint8 stub2[2];
 	uint16 var_u16_2047_944;
-	/*int32 var_532[8];//fix size
+	/*int32 var_532[8];
 	uint8 stub_c2x[144];
 	uint16 var_708;
 	uint8 stub_c3b[46];
@@ -248,7 +248,7 @@ typedef struct {//size 946
 	uint8 stub_c2b[14];
 	uint8 var_772[24];
 	uint8 stub_c3bx[48];
-	uint8 var_844[8];//fix size
+	uint8 var_844[8];
 	uint8 stub_d[64];//?
 	uint8 var_916[24];
 	uint16 var_940;//?
@@ -265,7 +265,7 @@ typedef struct {//14
 } Type_13895;
 
 typedef struct {//68
-	char messageText_13351_28[64];//fix size
+	char messageText_13351_28[64];
 	uint16 periods_13415;//92
 	uint16 drawType_13417;//94
 }
@@ -289,18 +289,18 @@ typedef struct {//2049
 	Type_str_28 messages_13351_28[8];//28
 
 	Type_13895 str_13895_572[33];
-	//Type_13895 str_13909_586[32];//fix size
+	//Type_13895 str_13909_586[32];
 	char str_14357[12];
-	char str_14369_1046[48];//fix size
+	char str_14369_1046[48];
 	uint8 stub2bx[4];
 	uint8 var_14421_1098;
 	uint8 var_14422_1099;
 	uint8 stub2bxx[3];
-	Type_160 str_1103;//fix it
+	Type_160 str_1103;
 	/*uint8 stub2b[528];
-	int32 var_14958_1635[60];//fix size
-	uint8 var_15198_1875[24];//fix size
-	uint8 var_15222_1899[96];//fix size
+	int32 var_14958_1635[60];
+	uint8 var_15198_1875[24];
+	uint8 var_15222_1899[96];
 	uint8 var_15318_1995[24];
 	uint8 stub3[24];
 	uint16 var_u16_2043;
@@ -481,7 +481,7 @@ typedef struct {//len 38812
 	//Type_1090 var_u16_1090[1999];//size 9 count 1000
 	//37072 end
 	//uint8 stub_37072[12];//230867
-	Type_37072 str_230867_37072[8];//fix size
+	Type_37072 str_230867_37072[8];
 	//uint8 stub_193795[37710];
 	uint16 var_u16_232595_38800;
 	uint16 var_u16_232597_38802;
@@ -560,7 +560,7 @@ typedef struct {//size 232713
 	axis_3d playerStart_9177[8];// len 48
 	uint8 stub12[2049];
 	TypeStrAE400_13323 str_11274;
-	TypeStrAE400_13323 str_13323[8];//fix
+	TypeStrAE400_13323 str_13323[8];
 	char var_29715[8][10];// 5 - arrows
 	Type_AE400_29795 str_29795[1000];// len 164000	
 	Type_AE400_193795 str_193795;
@@ -604,7 +604,7 @@ typedef struct {//size 36478
 	char var_u8_61[32];
 	Type_AE408_93 str_93;// len 16
 	uint8 stubb[8];
-	char textBuffer_117[32];//fix size
+	char textBuffer_117[32];
 	uint8 var_u8_149;
 	uint8 gameSpeed_150;
 	uint8 var_u8_151;
