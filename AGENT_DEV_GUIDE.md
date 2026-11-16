@@ -1069,6 +1069,11 @@ entries relocated in place). The 64-bit port (branch `port/64bit`, merged as PR 
   with a deterministic best-fit allocator, so game objects get the same "addresses" in every build.
   That matters: the code turns addresses into numbers that end up in the game state (e.g.
   `(target - entity array) / 164` with a null target), so traces only match across builds with a fixed layout.
+  The original's own allocator tables therefore stay empty: the DOS memory pool `dword_12F6A0_12F690` (256 × 12
+  bytes, built by `sub_63010_63520`, which is a PORT stub) and the block list `dword_1302A0_130290` (256 × 18
+  bytes) that `MyShrink`/`MyGrow`/`sub_63338_63848`/the version page walk. Both are single arrays of the original
+  size, so these walks stay inside the table. `sub_63338_63848` reports 16 MB free, the same as `ExamineMemory`, so
+  `CreateMemory` never takes its low-memory path (before 2026-11-16 it did after the version page had been shown).
 - **Pointer fields of packed structs are `ptr32<T>`** (4-byte offset, converts to/from `T*`; `extptr32<FILE>`
   for pointers outside the windows); `tools/port_symbols.py` recognises both by their PDB type names.
   Port-side tables accessed only by name (`Pathstruct`, `TypeStrFont`) keep real pointers.
