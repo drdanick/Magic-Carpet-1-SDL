@@ -24,6 +24,9 @@ PAGE = 0x1000
 IDA_LO, IDA_HI = 0x10000, 0x150000
 STACK_BASE, STACK_SIZE = 0x7F000000, 0x100000
 TRAP = 0x7E000000
+# Calls return through PROBE: one byte store to PROBE_DATA, then a jump to TRAP. A call whose write hook missed
+# that store lost its memory hooks part-way (unicorn bug, see Shadow) and its write log is incomplete.
+PROBE, PROBE_DATA = TRAP + 0x100, TRAP + PAGE
 STUBS = 0x7D000000
 HEAP_BASE, HEAP_SIZE = 0x7A000000, 0x2000000
 TEB64 = 0x7C000000  # 64-bit port machine: a minimal thread environment block (GS base)
@@ -95,6 +98,67 @@ class Stop(Exception):
     pass
 
 
+class Shadow:
+    """A copy of a unicorn machine's memory (stack and probe pages excluded), kept equal to it.
+
+    Unicorn 2.1 sometimes restarts a store it takes for self-modifying code (seen with unaligned stores near
+    translated code) and then calls no memory hook for the rest of that emu_start: the call's later writes would
+    be neither logged nor undone - false differences that come and go with the build's code layout. Machine.call
+    notices it (the PROBE store is missing) and finds the writes as the bytes that differ from the shadow."""
+
+    def __init__(self, uc):
+        self.uc = uc
+        self.regions = [(b, bytearray(uc.mem_read(b, e - b + 1))) for b, e, _ in sorted(uc.mem_regions())
+                        if not (STACK_BASE <= b < STACK_BASE + STACK_SIZE or TRAP <= b < TRAP + 2 * PAGE)]
+        self.starts = [b for b, _ in self.regions]
+        self.touched = []  # (address, size) of the writes the hook saw since the last update()
+
+    def set(self, addr, data):
+        """The host wrote data at addr."""
+        i = bisect.bisect_right(self.starts, addr) - 1
+        while data and 0 <= i < len(self.regions):
+            b, buf = self.regions[i]
+            o = addr - b
+            if o >= len(buf):
+                return
+            n = min(len(data), len(buf) - o)
+            buf[o:o + n] = data[:n]
+            addr, data, i = addr + n, data[n:], i + 1
+            if i < len(self.regions) and self.regions[i][0] != addr:
+                return
+
+    def update(self):
+        """After a call: take over the bytes the write hook saw."""
+        for a, n in self.touched:
+            self.set(a, bytes(self.uc.mem_read(a, n)))
+        self.touched = []
+
+    def lost_writes(self):
+        """After a call that lost its memory hooks: [(address, old bytes)] of every changed byte run; updates."""
+        out = []
+        self.touched = []
+        for b, buf in self.regions:
+            new = bytes(self.uc.mem_read(b, len(buf)))
+            if new == buf:
+                continue
+            for o in range(0, len(buf), PAGE):
+                end = min(o + PAGE, len(buf))
+                if new[o:end] == buf[o:end]:
+                    continue
+                i = o
+                while i < end:
+                    if new[i] == buf[i]:
+                        i += 1
+                        continue
+                    j = i
+                    while j < end and new[j] != buf[j]:
+                        j += 1
+                    out.append((b + i, bytes(buf[i:j])))
+                    i = j
+            buf[:] = new
+        return out
+
+
 class Machine:
     def __init__(self, snapdir, exe=None, port=None,
                  load_port_code=True):
@@ -141,13 +205,17 @@ class Machine:
             # through null entity pointers (docs/original-bugs.md #3): map it read-only, zeroed
             mu.mem_map(0, PAGE, UC_PROT_READ)
         mu.mem_map(STACK_BASE, STACK_SIZE, UC_PROT_ALL)
-        mu.mem_map(TRAP, PAGE, UC_PROT_ALL)
+        mu.mem_map(TRAP, 2 * PAGE, UC_PROT_ALL)
         mu.mem_write(TRAP, b'\xf4' * 16)
+        # mov byte ptr [PROBE_DATA], 0 ; jmp TRAP
+        mu.mem_write(PROBE, b'\xc6\x05' + struct.pack('<I', PROBE_DATA) + b'\x00\xe9'
+                     + struct.pack('<i', TRAP - (PROBE + 12)))
         mu.mem_map(STUBS, 0x10000, UC_PROT_ALL)
         mu.mem_write(STUBS, b'\xc3' * 0x10000)
         mu.mem_map(HEAP_BASE, HEAP_SIZE, UC_PROT_ALL)
         self.heap_ptr = HEAP_BASE
         self.stub_funcs = {}
+        self.shadow = None  # Shadow of self.mu, made when the setup is done
         self.mu64 = None  # the port's code runs in a second, 64-bit machine (_init_port64)
         self.dirty = set()
         if load_port_code:
@@ -162,6 +230,8 @@ class Machine:
         mu.hook_add(UC_HOOK_CODE, self._on_stub, begin=STUBS, end=STUBS + 0xFFFF)
         mu.hook_add(UC_HOOK_MEM_WRITE, self._on_write)
         self.stop_reason = None
+        self.probe_seen = False
+        self.lost_hooks = self.lost_hooks64 = 0  # calls whose memory hooks unicorn dropped (32-bit / port machine)
         # functions skipped on BOTH sides (platform code the port replaced): original address + port name
         self.skipped = {}
         for name in SKIP_FUNCS:
@@ -172,6 +242,9 @@ class Machine:
             if name in self.sym_by_name:
                 self.skip_function(self.port_addr(name), 0)
         self.ctx = mu.context_save()  # clean CPU state (segments!) restored before every call
+        self.shadow = Shadow(mu)
+        if self.mu64 is not None:
+            self.dirty.update(range(IDA_LO >> 12, IDA_HI >> 12))  # the original's memory, as _copy_globals left it
 
     def skip_function(self, addr, retval=0):
         """Make every call to addr return immediately with eax = retval."""
@@ -393,8 +466,13 @@ class Machine:
         uc.emu_stop()
 
     def _on_write(self, uc, access, address, size, value, user):
+        if address == PROBE_DATA:
+            self.probe_seen = True
+            return
         if self.logging:
             self.wlog.append((address, bytes(uc.mem_read(address, size))))
+        if not STACK_BASE <= address < STACK_BASE + STACK_SIZE and self.shadow is not None:
+            self.shadow.touched.append((address, size))
         if self.mu64 is not None:
             self.dirty.add(address >> 12)
             self.dirty.add((address + size - 1) >> 12)
@@ -456,12 +534,18 @@ class Machine:
     def _logged_write(self, addr, data):
         if self.logging:
             self.wlog.append((addr, bytes(self.mu.mem_read(addr, len(data)))))
+        self._mw(addr, data)
+
+    def _mw(self, addr, data):
+        """Write the 32-bit machine's memory from the host, keeping its shadow equal."""
         self.mu.mem_write(addr, data)
+        if self.shadow is not None:
+            self.shadow.set(addr, data)
 
     # ---- calls -----------------------------------------------------------------------------------
     def write(self, addr, data):
         """Write memory from the host (tools mirroring results): keeps the 64-bit port machine in sync."""
-        self.mu.mem_write(addr, data)
+        self._mw(addr, data)
         if self.mu64 is not None:
             for pg in range(addr >> 12, ((addr + len(data) - 1) >> 12) + 1):
                 self.dirty.add(pg)
@@ -475,19 +559,30 @@ class Machine:
         mu = self.mu
         mu.context_restore(self.ctx)
         esp = STACK_BASE + (STACK_SIZE // 2 if nested else STACK_SIZE) - 0x1000
-        frame = struct.pack('<I', TRAP) + b''.join(struct.pack('<I', x & 0xFFFFFFFF) for x in args)
+        frame = struct.pack('<I', PROBE) + b''.join(struct.pack('<I', x & 0xFFFFFFFF) for x in args)
         mu.mem_write(esp, frame)
         mu.reg_write(UC_X86_REG_ESP, esp)
         for r in (UC_X86_REG_EAX, UC_X86_REG_EBX, UC_X86_REG_ECX, UC_X86_REG_EDX, UC_X86_REG_ESI, UC_X86_REG_EDI,
                   UC_X86_REG_EBP):
             mu.reg_write(r, 0)
         self.stop_reason = None
+        self.probe_seen = False
+        self.shadow.update()  # writes made outside calls (an outer emulation, e.g. diff_tick's tick) are not this call's
         try:
             mu.emu_start(addr, TRAP, count=max_insns)
         except UcError as e:
             self.stop_reason = self.stop_reason or f'{e} at eip {mu.reg_read(UC_X86_REG_EIP):#x}'
         if self.stop_reason is None and mu.reg_read(UC_X86_REG_EIP) != TRAP:
             self.stop_reason = f'did not return (eip {mu.reg_read(UC_X86_REG_EIP):#x})'
+        if self.stop_reason is None and not self.probe_seen:
+            self.lost_hooks += 1  # see Shadow
+            for a, old in self.shadow.lost_writes():
+                if self.logging:
+                    self.wlog.append((a, old))
+                if self.mu64 is not None:
+                    self.dirty.update(range(a >> 12, ((a + len(old) - 1) >> 12) + 1))
+        else:
+            self.shadow.update()
         return mu.reg_read(UC_X86_REG_EAX)
 
     def begin(self):
@@ -514,11 +609,11 @@ class Machine:
 
     def undo(self):
         for addr, old in reversed(self.wlog):
-            self.mu.mem_write(addr, old)
+            self._mw(addr, old)
         self.wlog = []
         if self.mu64 is not None:
             for addr, old in reversed(self.wlog64):
-                self.mu64.mem_write(addr, old)
+                self._mw64(addr, old)
             self.wlog64 = []
 
     # ---- 64-bit builds: the port's code in a 64-bit machine -------------------------------------------------
@@ -542,6 +637,12 @@ class Machine:
             m64.mem_map(ra, len(data), UC_PROT_ALL)
             m64.mem_write(ra, data)
             mapped.append((ra, ra + len(data)))
+        # the original's memory at its offsets too: entities the original created during a tick (diff_tick.py
+        # keeps its results) point to its globals, e.g. the type data at +156; kept equal by _sync64
+        ida_ra = self.real_addr(IDA_LO)
+        if not any(not (hi <= ida_ra or l >= ida_ra + IDA_HI - IDA_LO) for l, hi in mapped):
+            m64.mem_map(ida_ra, IDA_HI - IDA_LO, UC_PROT_ALL)
+            mapped.append((ida_ra, ida_ra + IDA_HI - IDA_LO))
         # code and constant data at the real image base, relocated (writable sections came with the dump)
         rb = self.real_addr(self.image_base)
         delta = rb - ps.image_base
@@ -565,8 +666,10 @@ class Machine:
         self.stub_funcs64 = {}
         self._bind_imports64(rb)
         m64.mem_map(STACK_BASE, STACK_SIZE, UC_PROT_ALL)
-        m64.mem_map(TRAP, PAGE, UC_PROT_ALL)
+        m64.mem_map(TRAP, 2 * PAGE, UC_PROT_ALL)
         m64.mem_write(TRAP, bytes([0xF4]) * 16)
+        m64.mem_write(PROBE, b'\xc6\x04\x25' + struct.pack('<I', PROBE_DATA) + b'\x00\xe9'
+                      + struct.pack('<i', TRAP - (PROBE + 13)))
         m64.mem_map(STUBS, 0x10000, UC_PROT_ALL)
         m64.mem_write(STUBS, bytes([0xC3]) * 0x10000)
         m64.mem_map(HEAP_BASE, HEAP_SIZE, UC_PROT_ALL)
@@ -585,6 +688,7 @@ class Machine:
         m64.hook_add(UC_HOOK_MEM_WRITE, self._on_write64)
         self.wlog64 = []
         self.ctx64 = m64.context_save()
+        self.shadow64 = Shadow(m64)
         # real pointers held in port statics: offset form in the 32-bit machine (4-byte offset, 4 zero bytes)
         self.ptr_fields = sorted({self.image_base + s_.rva + o for s_ in ps.data_symbols() if s_.type_index and s_.size
                                   for o, w, real in ps.pointer_fields(s_.type_index) if real and w == 8})
@@ -633,13 +737,23 @@ class Machine:
         uc.emu_stop()
 
     def _on_write64(self, uc, access, address, size, value, user):
+        if address == PROBE_DATA:
+            self.probe_seen = True
+            return
         if self.logging:
             self.wlog64.append((address, bytes(uc.mem_read(address, size))))
+        if not STACK_BASE <= address < STACK_BASE + STACK_SIZE:
+            self.shadow64.touched.append((address, size))
 
     def _logged_write64(self, addr, data):
         if self.logging:
             self.wlog64.append((addr, bytes(self.mu64.mem_read(addr, len(data)))))
+        self._mw64(addr, data)
+
+    def _mw64(self, addr, data):
+        """Write the 64-bit machine's memory from the host, keeping shadow64 equal."""
         self.mu64.mem_write(addr, data)
+        self.shadow64.set(addr, data)
 
     def _on_stub64(self, uc, address, size, user):
         from unicorn.x86_const import UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_RAX
@@ -684,11 +798,11 @@ class Machine:
         pages, self.dirty = sorted(self.dirty), set()
         for pg in pages:
             a = pg << 12
-            if IDA_LO <= a < IDA_HI or a >= HEAP_BASE:  # the original's memory, harness stack/stubs/heap
+            if a >= HEAP_BASE:  # harness stack/stubs/heap
                 continue
             try:
                 data = bytes(self.mu.mem_read(a, PAGE))
-                self.mu64.mem_write(self.real_addr(a), data)
+                self._mw64(self.real_addr(a), data)
             except UcError:
                 continue
             i = bisect.bisect_left(self.ptr_fields, a - 7)
@@ -697,7 +811,7 @@ class Machine:
                 i += 1
                 try:
                     t = struct.unpack('<I', bytes(self.mu.mem_read(p, 4)))[0]
-                    self.mu64.mem_write(self.real_addr(p), struct.pack('<Q', self.real_addr(t) if t else 0))
+                    self._mw64(self.real_addr(p), struct.pack('<Q', self.real_addr(t) if t else 0))
                 except UcError:
                     pass
 
@@ -711,8 +825,8 @@ class Machine:
         from unicorn.x86_const import UC_X86_REG_RSP, UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9
         from unicorn.x86_const import UC_X86_REG_RAX, UC_X86_REG_RIP
         self._sync64()
+        self.shadow64.update()
         m64 = self.mu64
-        m64.context_restore(self.ctx64)
         sig = self._signature(addr)
         vals = []
         for i, x in enumerate(args):
@@ -721,17 +835,27 @@ class Machine:
             vals.append(self.real_addr(x) if ptr and x else x)
         # Windows x64: rcx, rdx, r8, r9, then the stack above 32 bytes of shadow space; rsp % 16 == 8 at entry
         rsp = STACK_BASE + (STACK_SIZE // 2 if nested else STACK_SIZE) - 0x1008
-        m64.mem_write(rsp, struct.pack('<Q', TRAP) + bytes(32) + b''.join(struct.pack('<Q', v) for v in vals[4:]))
+        m64.context_restore(self.ctx64)
+        m64.mem_write(rsp, struct.pack('<Q', PROBE) + bytes(32) + b''.join(struct.pack('<Q', v) for v in vals[4:]))
         m64.reg_write(UC_X86_REG_RSP, rsp)
         for reg, v in zip((UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9), vals[:4]):
             m64.reg_write(reg, v)
         self.stop_reason = None
+        self.probe_seen = False
         try:
             m64.emu_start(self.real_addr(addr), TRAP, count=max_insns)
         except UcError as e:
             self.stop_reason = self.stop_reason or f'port: {e} at rip {m64.reg_read(UC_X86_REG_RIP):#x}'
         if self.stop_reason is None and m64.reg_read(UC_X86_REG_RIP) != TRAP:
             self.stop_reason = f'port did not return (rip {m64.reg_read(UC_X86_REG_RIP):#x})'
+        if self.stop_reason is None and not self.probe_seen:
+            # unicorn dropped the memory hooks (see Shadow): find the call's writes in memory
+            self.lost_hooks64 += 1
+            for a, old in self.shadow64.lost_writes():
+                if self.logging:
+                    self.wlog64.append((a, old))
+        else:
+            self.shadow64.update()
         rax = m64.reg_read(UC_X86_REG_RAX)
         if sig is not None and sig[0] == 'ptr':
             return (self.real_to_off(rax) or 0) if rax else 0
