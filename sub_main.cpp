@@ -15416,25 +15416,12 @@ void FreeAnimSequences_11010(Type_AE3E0** a1x)
 /// Original name: running_from_cdrom (CDROM.C), Hidden Worlds linker map (the only function of CDROM.C, placed just before CHECK_AR.C's CheckArray as in the map; checks whether the current drive looks like a CD-ROM).
 bool RunningFromCdrom_11050()
 {
-  bool v0; // bx
-  __int16 v2[2]; // [esp+0h] [ebp-14h] BYREF
-  int v3; // [esp+4h] [ebp-10h]
-  int v4[3]; // [esp+8h] [ebp-Ch] BYREF
-
-  //fix
-  v3 = 0;
-  //fix
-
-  v0 = false;
   if ( byte_9002C )
     return true;
-  dos_getdrive((uint32)OFF(v4));
-  if ( !dos_getdiskfree(v4[0], (uint32)OFF(v2)) && v2[0] == -1 && !v2[1] && v3 == 134217729 )
-  {
-    v0 = true;
-    byte_9002C = 1;
-  }
-  return v0;
+  // PORT: the original recognises a CD-ROM drive by MSCDEX's answer to _dos_getdiskfree on the current drive
+  // (total clusters 0xFFFF, avail 0, sectors per cluster 0x08000001); the port's drives are host folders, never a
+  // CD-ROM (the old code compared an uninitialised struct)
+  return false;
 }
 // 5CE76: using guessed type _DWORD dos_getdrive(_DWORD);
 // 5CEAC: using guessed type _DWORD dos_getdiskfree(_DWORD, _DWORD);
@@ -24841,9 +24828,7 @@ void sub_1FF40(char a1, Type_AE400_29795* a2x, char a3, int a4, int a5)
   int v6; // [esp-8h] [ebp-8h]
   void *retaddr; // [esp+0h] [ebp+0h] BYREF
 
-  //fix
   v6 = 0;
-  //fix
 
   v5 = a4 - (a1 + *(_DWORD *)PTR(v6 + 27));
   *(_BYTE *)PTR(v5 - 1957008686) += a3 - *(_BYTE *)PTR(a5 + 128);
@@ -27219,9 +27204,7 @@ int ClearIntroTextArea_24B80()
 {
   int result; // eax
 
-  //fix
-  result = 0;
-  //fix
+  result = 0; // PORT: the original returns eax unchanged here; no caller uses the value
 
   if ( byte_9009E )
     return (uint32)OFF(memset((void*)PTR(dword_B3294_B3284), 0, (unsigned __int16)word_B329C_B328C));
@@ -28445,9 +28428,7 @@ void FnEffectWallSectionE_26760(_WORD *a2)
   unsigned __int16 k; // [esp+4h] [ebp-14h]
   unsigned __int16 m; // [esp+4h] [ebp-14h]
 
-  //fix
-  v6 = 0;
-  //fix
+  v6 = 0; // PORT: only the high word of the loop counter v2, which is never read (register garbage in the original)
 
   LOBYTE(v5) = (unsigned __int16)(a2[36] + 128) >> 8;
   HIBYTE(v5) = (unsigned __int16)(a2[37] + 128) >> 8;
@@ -28566,10 +28547,6 @@ void FnEffectTeleport_26A60(int a1)
   int v7; // [esp+0h] [ebp-1Ch]
   __int16 *v8; // [esp+4h] [ebp-18h]
   unsigned __int16 v9; // [esp+8h] [ebp-14h]
-
-  //fix
-  v6 = 0;
-  //fix
 
   if ( (*(_BYTE *)PTR(a1 + 16) & 2) == 0 )
   {
@@ -30878,9 +30855,7 @@ void PrepRot_29C30_29C70_old(__int16 roll)
     __int16 v109; // [esp+18h] [ebp-4h]
     __int16 v110; // [esp+18h] [ebp-4h]
 
-    //fix
     v11 = 0;
-    //fix
 
     v1 = roll & 0x7FF;
     roll_B5D28_B5D18 = v1 >> 8;
@@ -36297,9 +36272,9 @@ void DoMapWho_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 #endif debug1
 	//debug
 
-	  //fix
+	// PORT: in the original a1x is a register that keeps the last sprite across entities; the switch default case
+	// draws with it without loading one. Declared here it does the same (nullptr before the first sprite).
 	Type_sub168_2_2* a1x = nullptr;
-	//fix
 
 	for (int result = a2x->haveBillboard_36; result; result = str_AE400_AE3F0->str_29795[result].var_u16_29815_20)
 	{
@@ -37028,9 +37003,9 @@ void DoMapWho_2DCB0_2DCF0(Type_BegBscreen* a2x)//1FECB0_
 /// Original name: do_asg_map_who (ENGINE.C), Hidden Worlds linker map (placed by function order between two matches).
 void DoAsgMapWho_2F170_2F1B0(/*int a1,*/ Type_BegBscreen* a2x)//200170_
 {
-	//fix
+	// PORT: in the original a1x is a register that keeps the last sprite across entities; the switch default case
+	// draws with it without loading one. Declared here it does the same (nullptr before the first sprite).
 	Type_sub168_2_2* a1x = nullptr;
-	//fix
 
 	for (int result = a2x->haveBillboard_36; result; result = str_AE400_AE3F0->str_29795[result].var_u16_29815_20)
 	{
@@ -37310,9 +37285,9 @@ int counter_2FC50_2FC90_2 = 0;
 /// Original name: do_reflect_map_who (ENGINE.C), Hidden Worlds linker map (placed by function order between two matches).
 void DoReflectMapWho_2FC50_2FC90(Type_BegBscreen* a2x)//200C50_
 {
-	//fix
+	// PORT: in the original a1x is a register that keeps the last sprite across entities; the switch default case
+	// draws with it without loading one. Declared here it does the same (nullptr before the first sprite).
 	Type_sub168_2_2* a1x = nullptr;
-	//fix
 
 	//debug
 	counter_2FC50_2FC90++;
@@ -42349,9 +42324,7 @@ char SmoothOnPerimeter_35F30_362F0(int a1, char a2, char a3, int a4, int a5, uns
   unsigned __int16 v15; // [esp+4h] [ebp-20h]
   unsigned __int16 v16; // [esp+4h] [ebp-20h]
 
-  //fix
-  v14 = 0;
-  //fix
+  v14 = 0; // PORT: only the high word of v6, which is never read (register garbage in the original)
 
   v12 = a2 - a5;
   v13 = a3 - a4;
@@ -43594,10 +43567,6 @@ void InitSingleThing_37560_37920(Type_1090* type1090)
   int v2z;
   char v3; // dh
   uint16_t v5[8]; // [esp+0h] [ebp-10h] BYREF
-
-  //fix
-  v2 = 0;
-  //fix
 
   //v1 = *(int *)((char *)&dword_96906 + 18 * *a1);
   if (dword_96902[type1090->data_0].str_4[type1090->data_2].data10)
@@ -44862,15 +44831,14 @@ int InitCreature07_38C60(uint16_t* a1)
 
 // positive sp value has been detected, the output may be wrong!
 /// IDA fragment with register arguments (a1@eax, a2@dx, a3@ecx, a4@ebx): writes byte a2>>8 + 1 at a3 + a1 + 12; not understood (INIT.C area).
+/// Unreachable: its only reference was VersionRequested_5A560_5AA70 using the constant 0x38D09 (fixed 2026-11-16).
 int sub_38D09(/*int a1@<eax>, __int16 a2@<dx>, int a3@<ecx>, int a4@<ebx>, int a5*/)//209D09_
 {
-    //fix
     int a1 = 0;
     __int16 a2 = 0;
     int a3 = 0;
     int a4 = 0;
     int a5 = 0;
-    //fix
 
     *(_BYTE*)PTR(a3 + a1 + 12) = HIBYTE(a2) + 1;
     *(_DWORD*)PTR(a4 + 156) = (uint32)OFF(&creatureTypes_98F38[19]);
@@ -48531,10 +48499,6 @@ void ExecutePlayerInputs_3C9D0_3CD10()//20D9D0_
 #endif debug1
   //debug
 
-  //fix
-	v19 = 0;
-	//fix
-
 	v112 = 0;
 	if ((str_AE408_AE3F8->var_u8_0 & 0x10) != 0)
 	{
@@ -52009,9 +51973,7 @@ int ClearScreenMCGA_411D7_41517(void *a2, unsigned __int16 a3, char a4)
   int v4; // eax
   int v6; // [esp-8h] [ebp-Ch]
 
-  //fix
-  int a1 = 0;
-  //fix
+  int a1 = 0; // PORT: the caller's eax, saved and returned by the original; no caller uses the value
 
   v6 = a1;
   LOBYTE(a1) = a4;
@@ -52031,9 +51993,7 @@ int ClearScreenVres256_411FD_4153D(void *a2, unsigned __int16 a3, char a4)
   int v4; // eax
   int v6; // [esp-8h] [ebp-Ch]
 
-  //fix
-  int a1 = 0;
-  //fix
+  int a1 = 0; // PORT: the caller's eax, saved and returned by the original; no caller uses the value
 
   v6 = a1;
   LOBYTE(a1) = a4;
@@ -52160,10 +52120,6 @@ void CreateMemory_41490_417D0()
   _DWORD v0; // eax
   int v1; // ebx
   int i; // esi
-
-  //fix
-  v1 = 0;
-  //fix
 
   if ( freeMem_1314AC_13149C <= 0x96000 )
   {
@@ -54308,9 +54264,7 @@ void OpenMusic_43B20_43E60(unsigned int a2)
   char *v9; // eax
   char *v10; // eax
 
-  //fix
-  v2 = 0;
-  //fix
+  v2 = 0; // PORT: error code of the replaced sosMIDIInitDriver call (PortMusic_Init below cannot fail)
 
   byte_9EBDD = 0;
   byte_9EBE7 = 0;
@@ -54335,7 +54289,7 @@ void OpenMusic_43B20_43E60(unsigned int a2)
   byte_9EBFC = 0;
   SosTIMERInitSystem_5D883_5DD93(0xFF00u, 0);
   byte_939D4 = 1;
-  //fix SosMIDIInitSystem_60199((int)&unk_A9608, __DS__);
+  // PORT: sosMIDIInitSystem (driver path unk_A9608) is not called; music goes to portability/port_music
   word_CBF48 = 0;
   dword_CBF6C = musicPort_CBF70;
   dword_CBF44 = 0;
@@ -54533,10 +54487,8 @@ void OpenSound_43EC0_44200()
   char *v12; // eax
   _BYTE v13[16]; // [esp+0h] [ebp-10h] BYREF
 
-    //fix
     v5 = 0;
     v10 = 0;
-    //fix
   //        __int16 a1,
   //int a2,
     int a3 = 0;
@@ -59757,10 +59709,6 @@ void PlayIntroAnim_4D3B0_4D6F0()//21E3B0_
 {
   int v1; // eax
 
-  //fix
-  v1 = 0;
-  //fix
-
   if ( !byte_90B23 )
     SetPointer_5C05C_5C56C(0);
   FadePalette256_61CC0_621D0(0, 0x10u, 0);
@@ -60419,10 +60367,6 @@ int ShowLevelPerformance_4E5B0_4E8F0()
   int v26; // [esp+68h] [ebp-18h]
   int v27; // [esp+6Ch] [ebp-14h]
 
-  //fix
-  v6 = 0;
-  //fix
-
   int someVar = 50;
   if(IsHiddenWord)
       int someVar = 25;
@@ -60647,10 +60591,6 @@ void PlayLogoAnim_4EE70_4F1B0()//21FE70_
 {
   int v1; // eax
 
-  //fix
-  v1 = 0;
-  //fix
-
   if ( !byte_90B23 )
     SetPointer_5C05C_5C56C(0);
   FadePalette256_61CC0_621D0(0, 0x10u, 0);
@@ -60691,10 +60631,6 @@ void PlayIntelAnim_4EFC0_4F300()
 {
   //int v1; // eax
   int v2; // eax
-
-  //fix
-  v2 = 0;
-  //fix
 
   DetectCPU_19470();
   if (str_AE408_AE3F8->var_u8_8)
@@ -60773,10 +60709,6 @@ void StepMenuAnimation_4F120_4F460()
 void PlayTitleAnim_4F1E0_4F520()
 {
   int v1; // eax
-
-  //fix
-  v1 = 0;
-  //fix
 
   int tempIntroIndex2_4 = PSintrotitle02dat;
   if(IsHiddenWord)
@@ -61002,10 +60934,6 @@ int RunScrollDialog_4F8D0_4FC10(int a1, void (*a2)())
   int v9; // eax
   int v10; // eax
 
-  //fix
-  v5 = 0;
-  //fix
-
   v2 = 0;
   v3 = 0;
   if ( (typeResolution_12F02E_12F01E & 1) != 0 )
@@ -61117,14 +61045,11 @@ int RunScrollDialog_4F8D0_4FC10(int a1, void (*a2)())
 /// Name is a guess (not in the Hidden Worlds linker map).
 void MenuQuitGame_4FD20_50060()
 {
-    //fix
-    int a1 = 0;
-    //fix
-
   int v2; // esi
   int v3; // esi
 
-  if ( RunScrollDialog_4F8D0_4FC10(a1, (void (*)())DrawQuitDialog_4FE00_50140) )
+  // PORT: RunScrollDialog_4F8D0_4FC10 ignores its first argument (IDA reused its stack slot for the result)
+  if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())DrawQuitDialog_4FE00_50140) )
   {
     BlankScreenUnlessPlaying_4CAC0_4CE00();
     str_AE400_AE3F0[str_AE400_AE3F0->var_u16_8].str_13323[0].var_u8_13327 = 1;
@@ -61203,9 +61128,6 @@ void MenuContinueGame_4FF00()
 /// Name is a guess (not in the Hidden Worlds linker map).
 void MenuNewGame_4FF30_50270()
 {
-    //fix
-    int a1 = 0;
-    //fix
   if ( byte_9687C )
   {
     byte_9687C = 0;
@@ -61213,7 +61135,7 @@ void MenuNewGame_4FF30_50270()
     mainMenuSelector_12CBCE_12CBBE = 5;//play game
     leaveMenu_96880 = true;
   }
-  else if ( RunScrollDialog_4F8D0_4FC10(a1, (void (*)())DrawNewGamePrompt_4FFE0_50320) )
+  else if ( RunScrollDialog_4F8D0_4FC10(0, (void (*)())DrawNewGamePrompt_4FFE0_50320) ) // PORT: first argument unused
   {
     str_AE408_AE3F8->var_u16_17 = 0;
     mainMenuSelector_12CBCE_12CBBE = 5;
@@ -62746,9 +62668,7 @@ int sub_51ECC_5220C(int a1, int a2, int a3, int a4, char a5, char a6)
   int v13; // ecx
   int v14; // [esp+4h] [ebp-4h]
 
-  //fix
   v14 = 0;
-  //fix
 
   v6 = a2;
   if ( a2 >= dword_12F010 )
@@ -68652,7 +68572,8 @@ void VersionRequested_5A560_5AA70()
     sprintf(v32, "Thing %d, Active %d", 164, 1000 - v20);
     DrawText_5A180_5A690(v32, 320, v19, byte_AD167_AD157[16]);
     v21 = CharacterHeight_5A3B0_5A8C0() + v19;
-    sprintf(v32, "Carpet %d", sub_38D09);
+    sprintf(v32, "Carpet %d", 232713); // PORT: the original pushes the constant 0x38D09 (size of the game state); IDA had
+                                       // turned it into the address of sub_38D09, so the port printed a code pointer
     DrawText_5A180_5A690(v32, 320, v21, byte_AD167_AD157[16]);
     v22 = CharacterHeight_5A3B0_5A8C0() + v21;
     sprintf(v32, "Tape %d", 36478);
@@ -70356,9 +70277,7 @@ void PlayMusicTrack_5D290_5D7A0(__int16 a1)
   int v4; // [esp+64h] [ebp-8h]
   int v5; // [esp+64h] [ebp-8h]
 
-  //fix
-  v4 = 0;
-  //fix
+  v4 = 0; // PORT: error code of the replaced sosMIDIInitSong call (PortMusic_Load below cannot fail)
 
   if ( musicAvailable_939CC && musicOn_939CD && a1 <= (int)(unsigned __int16)musicTrackCount_939D6 && (unsigned __int16)musicTrack_939D2 != a1 )
   {
@@ -70373,7 +70292,6 @@ void PlayMusicTrack_5D290_5D7A0(__int16 a1)
       musicTrack_939D2 = 0;
     }
     v1 = *(_DWORD *)PTR(musicTab_CBF60 + 32 * a1 + 18);
-    //fix word_12F034 = __DS__;
     dword_12F030 = v1;
     word_12F03C = 0;
     dword_12F038 = 0;
@@ -71861,14 +71779,12 @@ int SosMIDIInitDriver_6035F(unsigned int a1, unsigned int a2, int a3, int a4, in
   unsigned int v33; // [esp+40h] [ebp-8h]
   unsigned int v34; // [esp+44h] [ebp-4h]
 
-  //fix
   v6 = 0;
   v10 = 0;
   v13 = 0;
   v16 = 0;
   v19 = 0;
   v25 = 0;
-  //fix
 
   v34 = port_readgsdword(a4 + 24);
   v33 = port_readgsdword(a4 + 28);
@@ -72359,9 +72275,7 @@ void DrawSpriteVres256_60D65_61275(TypeTabDimm a1x, int a2, int a3, uint8_t* spr
   _BYTE *v140; // [esp+4h] [ebp-4h]
   uint8* v141; // [esp+4h] [ebp-4h]
 
-  //fix
-  v46 = 0;
-  //fix
+  v46 = 0; // PORT: condition flag; every test of it follows an assignment
 
   if ( !a1x.y )
     return;
@@ -73264,9 +73178,7 @@ int PixelMCGA_61594_61AA4(unsigned __int16 a1, unsigned __int16 a2, __int16 a3)
   int v3; // eax
   int v5; // [esp+4h] [ebp-4h]
 
-  //fix
-  v5 = 0;
-  //fix
+  v5 = 0; // PORT: the original returns this stack slot uninitialised; no caller uses the value
 
   if ( a1 < 0x280u && a2 < 0x190u )
   {
@@ -74234,9 +74146,6 @@ int RncUnpack_62B60_63070_orig(uint8_t* input, uint8_t* output)//233B60_
     __int16 v20; // ax
     unsigned __int16 v22; // [esp-1Ah] [ebp-1Eh]
 
-    //fix
-    i = 0;
-    //fix
     uint8_t* input_esi = input;
     char RNSSING[5] = "RNC\x1";
     if (memcmp((char*)input, RNSSING, 4))
@@ -75124,10 +75033,6 @@ void sub_63338_63848()
   int *result; // eax
   int *i; // [esp+0h] [ebp-4h]
 
-  //fix
-  result = 0;
-  //fix
-
   dword_1314A0 = 0;
   dword_1314A4 = 0;
   dword_1314A8 = 0;
@@ -75342,10 +75247,8 @@ int SosDIGIDetectInit_63A9D_63FAD(int a3, __int16 a4)
 {
   __int64 v4; // eax
 
-    //fix
     __int16 a1 = 0;
     int a2 = 0;
-    //fix
 
   if ( dword_9EF60 )
     return 3;
@@ -75640,9 +75543,7 @@ int SosDIGIInitDriver_64846_64D56(
   void (*v48)(_DWORD); // [esp+64h] [ebp-8h]
   unsigned int v49; // [esp+68h] [ebp-4h]
 
-  //fix
   v36 = 0;
-  //fix
 
   v49 = port_readgsdword(a6);
   v48 = (void (*)(_DWORD))PTR(port_readgsdword(a6 + 16));
@@ -76908,9 +76809,7 @@ __int16 SosDetDRVGetSettings_6773B(int (*a1)(_DWORD))
   __int16 v1; // cx
   __int16 result; // ax
 
-  //fix
   v1 = 0;
-  //fix
 
   LOWORD(dword_A06DC) = a1((uint32)OFF(a1));
   LOWORD(dword_A06E4) = SHIBYTE(v1);
@@ -76953,9 +76852,7 @@ __int16 SosDRVGetFillInfo_677E3_67CF3(
 {
   __int16 result; // ax
 
-  //fix
   result = 0;
-  //fix
 
   a2((uint32)OFF(a2));
   port_cli();
@@ -78911,9 +78808,7 @@ __int16 sub_6A737(void (*a1)(_DWORD), unsigned int a2, int a3, int a4, __int16 a
   int v8; // edi
   __int16 result; // ax
 
-  //fix
   result = 0;
-  //fix
 
   a1((uint32)OFF(a1));
   v7 = 5;
@@ -78946,9 +78841,7 @@ int DrawLineLowRes_6B260(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsigne
   int v15; // esi
   int v16; // [esp+4h] [ebp-4h]
 
-  //fix
-  v16 = 0;
-  //fix
+  v16 = 0; // PORT: the original returns this stack slot uninitialised; no caller uses the value
 
   v6 = 2 * dword_12F024_12F014;
   v7 = 2 * viewportBegY_12F018_12F008;
@@ -79041,9 +78934,7 @@ int DrawLineHighRes_6B378(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsign
   int v12; // esi
   int v13; // [esp+4h] [ebp-4h]
 
-  //fix
-  v13 = 0;
-  //fix
+  v13 = 0; // PORT: the original returns this stack slot uninitialised; no caller uses the value
 
   if ( a1 < (__int16)viewportBegX_12F008_12EFF8 )
     a1 = viewportBegX_12F008_12EFF8;
@@ -80840,10 +80731,8 @@ int sub_6EDD0(int a1, int a2, int a3, int a4, unsigned __int16 a5, int a6, int a
   int v42; // [esp+38h] [ebp-8h]
   int v43; // [esp+3Ch] [ebp-4h]
 
-  //fix
   v10 = 0;
   v11 = 0;
-  //fix
 
   v7 = &word_A1B34[15 * (a7 & 0xF)];
   v36 = sub_6EA0F(a5, a6, *v7, v7[8]);
@@ -81342,9 +81231,7 @@ void __stdcall sub_6F963(int a1, __int16 a2)
   int v3; // eax
   int savedregs; // [esp+0h] [ebp+0h]
 
-  //fix
   savedregs = 0;
-  //fix
 
   v2 = a2 & 0xF;
   v3 = 15 * v2;
@@ -81404,9 +81291,7 @@ int __stdcall AWE32CONTROLLER_6FA53(unsigned __int16 a1, unsigned __int16 a2, un
 {
   int savedregs; // [esp+0h] [ebp+0h]
 
-  //fix
   savedregs = 0;
-  //fix
 
   if ( a2 < 0x40u )
   {
@@ -83914,13 +83799,11 @@ void DrawTriangle_729A3_72EB3_old(_DWORD* a1, _DWORD* a2, _DWORD* a3)
 #endif debug1
   //debug
 
-  //fix
     v16 = 0;
     v27 = 0;
     v1022 = 0;
     scaledU = 0;
     scaledV = 0;
-    //fix
 
     v3 = (int32*)a1;
     v4 = (int32*)a2;
@@ -94222,13 +94105,11 @@ void DrawTriangle_729A3_72EB3_semi(Type_RenderPoint* pnt1, Type_RenderPoint* pnt
 #endif debug1
   //debug
 
-  //fix
     v16 = 0;
     v27 = 0;
     v1022 = 0;
     scaledU = 0;
     scaledV = 0;
-    //fix
 
     sortPnt1 = pnt1;
     sortPnt2 = pnt2;
