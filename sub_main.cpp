@@ -41918,7 +41918,8 @@ void ResetSound_358A0_35C60()
     else
     {
         PortTimer_Stop(); // PORT: counterpart of the HMI timer registration in SetupSound_357C0_35B80
-        SosTIMERRemoveEvent_5DC91(dword_80010);
+        // PORT: was SosTIMERRemoveEvent_5DC91(dword_80010) - the 120 Hz tick is the PortTimer stopped above and has no
+        // HMI slot (dword_80010 stays 0, so the call removed the event in slot 0, the digital sound driver's)
         FreeSound_61F90();
         FreeMusic_62020();
     }
@@ -75469,28 +75470,11 @@ void SosTIMERDRVHandler_66CAD()
 /// Original name: _sosTIMERDRVSetRate (sostimer.asm), Hidden Worlds linker map.
 unsigned __int8 SosTIMERDRVSetRate_66D24(__int16 a1)
 {
-  unsigned __int8 v1; // al
-  unsigned __int8 v2; // ah
-  unsigned __int8 v3; // al
-  unsigned __int8 result; // al
-
-  FixPerifery();
-
-  if ( dword_A01C4 )
-  {
-    v1 = __inbyte(0x21u);
-    __outbyte(0x21u, v1 | 1);
-    __outbyte(0x43u, 0x36u);
-    v2 = HIBYTE(a1);
-    __outbyte(0x40u, a1);
-    __outbyte(0x40u, v2);
-    v3 = __inbyte(0x21u);
-    result = v3 & 0xFE;
-    __outbyte(0x21u, result);
-  }
-  return result;
+  // PORT: the original (when dword_A01C4 is set) masks IRQ0 at the PIC (port 0x21), loads PIT channel 0 with the
+  // divisor a1 (ports 0x43/0x40) and unmasks IRQ0. The port has no PIT: PortTimer (portability/port_timer.cpp) runs
+  // the game's timer events. No caller uses the AL result.
+  return 0;
 }
-// A01C4: using guessed type int dword_A01C4;
 
 //----- (00066D6A) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
@@ -75533,97 +75517,43 @@ unsigned __int8 SosTIMERDRVInit_66D6A_6727A(int a1, __int16 a2, int a3, __int16 
 /// Original name: _sosTIMERDRVDisable (sostimer.asm), Hidden Worlds linker map.
 unsigned __int8 SosTIMERDRVDisable_66DF5()
 {
-  unsigned __int8 v0; // al
-  unsigned __int8 result; // al
-
-  FixPerifery();
-
-  if ( dword_A01C4 )
-  {
-    v0 = __inbyte(0x21u);
-    result = v0 | 1;
-    __outbyte(0x21u, result);
-  }
-  return result;
+  // PORT: the original masks IRQ0 at the PIC (port 0x21) while the HMI event table is changed; PortTimer events run
+  // on the game thread, so there is nothing to mask. No caller uses the AL result.
+  return 0;
 }
-// A01C4: using guessed type int dword_A01C4;
 
 //----- (00066E21) --------------------------------------------------------
 /// Original name: _sosTIMERDRVEnable (sostimer.asm), Hidden Worlds linker map.
 unsigned __int8 SosTIMERDRVEnable_66E21()
 {
-  unsigned __int8 v0; // al
-  unsigned __int8 result; // al
-
-  FixPerifery();
-
-  if ( dword_A01C4 )
-  {
-    v0 = __inbyte(0x21u);
-    result = v0 & 0xFE;
-    __outbyte(0x21u, result);
-  }
-  return result;
+  // PORT: the original unmasks IRQ0 at the PIC (port 0x21); see SosTIMERDRVDisable_66DF5. No caller uses the AL result.
+  return 0;
 }
-// A01C4: using guessed type int dword_A01C4;
 
 //----- (00066E4D) --------------------------------------------------------
 /// Original name: _sosTIMERDRVUnInit (sostimer.asm), Hidden Worlds linker map.
 unsigned __int8 SosTIMERDRVUnInit_66E4D()
 {
-  unsigned __int8 v0; // al
-  unsigned __int8 v1; // al
-  unsigned __int8 result; // al
-
-  FixPerifery();
-
-  if ( dword_A01C4 )
-  {
-    v0 = __inbyte(0x21u);
-    __outbyte(0x21u, v0 | 1);
-    // PORT: int 31h (DPMI Services ax=func xxxxh) - not needed in the port
-    __outbyte(0x40u, 0);
-    __outbyte(0x40u, 0);
-    v1 = __inbyte(0x21u);
-    result = v1 & 0xFE;
-    __outbyte(0x21u, result);
-  }
-  return result;
+  // PORT: the original (when dword_A01C4 is set) restores the saved timer interrupt vector (DPMI int 31h) and resets
+  // PIT channel 0 to the BIOS rate (divisor 0), with IRQ0 masked meanwhile. The port installs no timer interrupt
+  // (SosTIMERDRVInit_66D6A_6727A is not called); PortTimer is stopped by its own callers. No caller uses the AL result.
+  return 0;
 }
-// 9F19C: using guessed type int dword_9F19C;
-// A01C4: using guessed type int dword_A01C4;
 
 //----- (00066EA2) --------------------------------------------------------
 // positive sp value has been detected, the output may be wrong!
 /// Original name: _sosTIMERDRVCallOld (sostimer.asm), Hidden Worlds linker map.
 int SosTIMERDRVCallOld_66EA2()
 {
-  int result; // eax
-  int v1; // [esp-8h] [ebp-8h]
-  int v2; // [esp-4h] [ebp-4h]
-  void *retaddr[2]; // [esp+0h] [ebp+0h] BYREF
-
-  //fix
-  result = 0;
-  //fix
-
   if ( dword_A01C4 )
   {
     word_A01C2 = 0;
-    return 0;//fix
-    /*MK_FP(retaddr[0], retaddr[0])(
-             _InterlockedExchange((volatile __int32 *)&retaddr[1], dword_9F1A0),
-             v2,
-             v1,
-             _InterlockedExchange((volatile __int32 *)retaddr, dword_9F19C));*/
+    // PORT: the original then jumps to the saved DOS timer handler (far pointer dword_9F19C:dword_9F1A0, saved by
+    // SosTIMERDRVInit_66D6A_6727A); the port installs no timer interrupt, so there is no old handler to chain to
   }
-  return result;
+  return 0;
 }
 // 66EE2: positive sp value 28 has been found
-// 66EE2: variable 'v2' is possibly undefined
-// 66EE2: variable 'v1' is possibly undefined
-// 9F19C: using guessed type int dword_9F19C;
-// 9F1A0: using guessed type int dword_9F1A0;
 // A01C2: using guessed type __int16 word_A01C2;
 // A01C4: using guessed type int dword_A01C4;
 
