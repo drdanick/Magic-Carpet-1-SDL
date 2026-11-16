@@ -43259,7 +43259,7 @@ void OpenIKeyboard_36D83()
 /// Original name: CloseIKeyboard (IKEYBOAR.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
 int CloseIKeyboard_36DC2_37182()
 {
-    FixPerifery();
+  // PORT: restores the DOS keyboard interrupt (no-op in the port; SDL delivers the keys)
   return dos_setvect(9, keysVect2_B7320, (unsigned __int16)keysVect1_B7324);
 }
 // 624B5: using guessed type _DWORD dos_setvect(_DWORD, _DWORD, _DWORD);
@@ -49963,16 +49963,10 @@ void CopyTmapsToLocalDrive_3F1D0_3F510()
 /// Original name: ResetMouse (IO.C), Hidden Worlds linker map.
 void ResetMouse_3F370_3F6B0()
 {
-  /*int result; // eax
-  int v1; // [esp+0h] [ebp-38h] BYREF
-  __int16 v2[14]; // [esp+1Ch] [ebp-1Ch] BYREF
-  */
-  FixPerifery((char*)"MOUSE RESET");
-  /*
-  v2[0] = 0;
-  result = int386(0x33, (uint32)v2, (uint32)&v1);
+  // PORT: the original resets the INT 33h driver (removing its handler) and marks the mouse uninstalled; the port
+  // only does the latter, which makes MouseHandler256_5BE72_5C382 ignore SDL mouse input as the removed handler
+  // would (InitControllers relies on it: a joystick mode resets the mouse)
   mouseInstalled_9AD98 = 0;
-  */
 }
 // 62F78: using guessed type _DWORD int386(_DWORD, _DWORD, _DWORD);
 // 9AD98: using guessed type int mouseInstalled_9AD98;
@@ -51999,7 +51993,7 @@ unsigned int Sqrl_410CE_4140E(unsigned int square)//2120CE_
 /// Original name: set_colour (MATHS.ASM), Hidden Worlds linker map (placed by offset projection: both neighbouring matches predict this exact address).
 void SetColour_41144(unsigned __int8 a1, unsigned __int8 a2, unsigned __int8 a3, unsigned __int8 a4)
 {
-    FixPerifery();
+  // PORT: the DAC writes go to the presenter palette (Port_OutByte)
 
   __outbyte(0x3C8u, a1);
   __outbyte(0x3C9u, a2);
@@ -67818,119 +67812,26 @@ void CentreMouseCoordinates_59720_59C30()
 /// Original name: set_new_mouse_position (SUPPORT.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
 void SetNewMousePosition_59750(int16 x, int16 y)
 {
-	//__int16 v2; // si
-	//__int16 v3; // bx
-	//int result; // eax
-	//__int16 v5; // ax
-	//__int16 v6[14]; // [esp+0h] [ebp-40h] BYREF
-	//char v7[36]; // [esp+1Ch] [ebp-24h] BYREF
-
-	FixPerifery((char*)"MOUSE SET POS");
-	if (mouseInstalled_9AD98 > 0)
+	// PORT: the original moves the cursor with INT 33h function 4 in driver units (pixels with resolution flag 1,
+	// else 8 per pixel); VGA_Set_mouse takes pixels (see MouseEvents). Same checks and clamps as 0x59750.
+	if (mouseInstalled_9AD98 <= 0 || x == -1)
+		return;
+	if (x > 0)
 	{
-		if (x != -1 || y != -1)
-		{
-			if (x > 0)
-			{
-				if (x > 638)
-					x = 638;
-				mouse_9AD90.x = x;
-			}
-            if (y <= 0)
-			{
-				if ((typeResolution_12F02E_12F01E & 1) != 0)
-					VGA_Set_mouse(x, mouse_9AD90.y);
-				else
-					VGA_Set_mouse(x, mouse_9AD90.y); // PORT: was x*8, y*8 (DOS driver units); VGA_Set_mouse takes pixels, see MouseEvents
-			}
-            else
-            {
-                if ((typeResolution_12F02E_12F01E & 1) != 0)
-                {
-                    if (y > 398)
-                        y = 398;
-                    mouse_9AD90.y = y;
-                    VGA_Set_mouse(x, y);
-                }
-                else
-                {
-                    if (y > 478)
-                        y = 478;
-                    mouse_9AD90.y = y;
-                    VGA_Set_mouse(x, y); // PORT: was x*8, y*8 (DOS driver units)
-                }
-            }
-		}
+		if (x > 638)
+			x = 638;
+		mouse_9AD90.x = x;
 	}
-	/*
-	v2 = a1;
-	v3 = a2;
-	memset(v6, 0, sizeof(v6));
-	result = (int)memset(v7, 0, 28);
-	if ( mouseInstalled_9AD98 > 0 )
+	if (y > 0)
 	{
-	  if ( a1 != -1 || (result = a2, a2 != -1) )
-	  {
-		result = a1;
-		if ( a1 != -1 )
-		{
-		  v6[0] = 4;
-		  if ( a1 <= 0 )
-		  {
-			if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-			  goto LABEL_12;
-		  }
-		  else
-		  {
-			if ( a1 > 638 )
-			  v2 = 638;
-			mouse_9AD90.x = v2;
-			if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-			{
-  LABEL_12:
-			  v6[4] = v2;
-			  if ( a2 <= 0 )
-			  {
-				if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-				  v5 = mouse_9AD90.y;
-				else
-				  v5 = 8 * mouse_9AD90.y;
-				v6[6] = v5;
-				return int386(51, (uint32)v6, (uint32)v7);
-			  }
-			  if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-			  {
-				if ( a2 > 398 )
-				  v3 = 398;
-				mouse_9AD90.y = v3;
-				if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-				{
-				  v6[6] = v3;
-				  return int386(51, (uint32)v6, (uint32)v7);
-				}
-			  }
-			  else
-			  {
-				if ( a2 > 478 )
-				  v3 = 478;
-				mouse_9AD90.y = v3;
-				if ( (typeResolution_12F02E_12F01E & 1) != 0 )
-				{
-				  v6[6] = v3;
-				  return int386(51, (uint32)v6, (uint32)v7);
-				}
-			  }
-			  v6[6] = 8 * v3;
-			  return int386(51, (uint32)v6, (uint32)v7);
-			}
-		  }
-		  v2 *= 8;
-		  goto LABEL_12;
-		}
-	  }
+		int16 maxY = (typeResolution_12F02E_12F01E & 1) != 0 ? 398 : 478;
+		if (y > maxY)
+			y = maxY;
+		mouse_9AD90.y = y;
 	}
-	return result;
-	*/
+	else
+		y = mouse_9AD90.y;
+	VGA_Set_mouse(x, y);
 }
 // 5CC30: using guessed type _DWORD memset(_DWORD, _DWORD, _DWORD);
 // 62F78: using guessed type _DWORD int386(_DWORD, _DWORD, _DWORD);
@@ -67943,8 +67844,8 @@ void SetNewMousePosition_59750(int16 x, int16 y)
 /// Original name: SwapScreensVres256 (SWAP_SC3.ASM), Hidden Worlds linker map.
 void SwapScreensVres256_599B0_59EC0(__int16 a1)//22A9B0_
 {
-    FixPerifery((char*)"blit640");
-
+    // PORT: the original copies the 640x480 (or 640x400) screen to VGA memory in 64 KB VESA pages; the presenter
+    // shows it instead. Same mouse handling: 640x400 always removes the pointer.
     if (!byte_9AD96)
         PlaceMouse_5BDF8_5C308();
     VGA_Blit(begWscreen_2ECFF4_2ECFE4);
@@ -67958,38 +67859,6 @@ void SwapScreensVres256_599B0_59EC0(__int16 a1)//22A9B0_
             RemoveMouse_5BE50_5C360();
     }
     PortTimer_LimitFrame(); // PORT: was a fixed 100 ms sleep ("fix it") - ~8 fps; now a frame cap (menus 70, game --fps)
-
-    //tempScreenBuffer_A0000 = begWscreen_2ECFF4_2ECFE4;
-    /*
-  char *v1; // esi
-  char *v2; // esi
-
-  if ( !byte_9AD96 )
-    PlaceMouse_5BDF8_5C308();
-  VesaSetPage_61A1C_61F2C(0);
-  qmemcpy(&screenBuffer_A0000, (const void *)begWscreen_2ECFF4_2ECFE4, 0x10000u);
-  v1 = (char *)(begWscreen_2ECFF4_2ECFE4 + 0x10000);
-  VesaSetPage_61A1C_61F2C(1);
-  qmemcpy(&screenBuffer_A0000, v1, 0x10000u);
-  v1 += 0x10000;
-  VesaSetPage_61A1C_61F2C(2);
-  qmemcpy(&screenBuffer_A0000, v1, 0x10000u);
-  v2 = v1 + 0x10000;
-  VesaSetPage_61A1C_61F2C(3);
-  if ( a1 == 400 )
-  {
-    qmemcpy(&screenBuffer_A0000, v2, 0xE800u);
-    RemoveMouse_5BE50_5C360();
-  }
-  else
-  {
-    qmemcpy(&screenBuffer_A0000, v2, 0x10000u);
-    VesaSetPage_61A1C_61F2C(4);
-    qmemcpy(&screenBuffer_A0000, v2 + 0x10000, 0xB000u);
-    if ( !byte_9AD96 )
-      RemoveMouse_5BE50_5C360();
-  }
-  */
 }
 // 9AD96: using guessed type char byte_9AD96;
 // 12EFF4: using guessed type int dword_12EFF4;
@@ -68591,38 +68460,14 @@ void SetUserfont_5A3C0_5A8D0(int fontIndex)//22B3C0_
 /// Original name: System_CBfn (TIMER.C), Hidden Worlds linker map.
 void SystemCBfn_5A3E3()
 {
-    FixPerifery((char*)"COMPUTE_TIMER");
+    // PORT: called by PortTimer at the rate set in OpenTimerInterrupt_5A459_5A969. The original interrupt handler
+    // also chains to the DOS timer interrupt when var_u32_210 wraps and acknowledges the PIC (outp(0x20, 0x20)).
     timerTicks_AC5D4_AC5C4++;
     str_AE408_AE3F8->var_u32_210 += str_AE408_AE3F8->var_u32_206;
     if (str_AE408_AE3F8->var_u32_210 >= 0x10000)
     {
         str_AE408_AE3F8->var_u32_210 -= 0x10000;
     }
-
-  //fix 
-  /*
-  ((void (*)(_DWORD, _DWORD, _DWORD, _DWORD, int, int, int, int, int *, int, int, int))_GETDS)(
-    (unsigned __int16)__GS__,
-    (unsigned __int16)__FS__,
-    (unsigned __int16)__ES__,
-    (unsigned __int16)__DS__,
-    a1,
-    a2,
-    a3,
-    a4,
-    &v7,
-    a5,
-    a6,
-    a7);
-  ++timerTicks_AC5D4_AC5C4;
-  str_AE408_AE3F8->var_u32_210 += str_AE408_AE3F8->var_u32_206;
-  if (str_AE408_AE3F8->var_u32_210 >= 0x10000)
-  {
-      str_AE408_AE3F8->var_u32_210 = str_AE408_AE3F8->var_u32_210 - 0x10000;
-      ((void(__cdecl*)(int))chain_intr)(dword_12EC00);
-  }
-  outp(32, 32);
-  */
 }
 // 5A458: positive sp value 4 has been found
 // 62455: using guessed type _DWORD outp(_DWORD, char);
@@ -68668,30 +68513,16 @@ private:
 /// Original name: open_timer_interrupt (TIMER.C), Hidden Worlds linker map.
 void OpenTimerInterrupt_5A459_5A969()
 {
-    FixPerifery((char*)"START_TIMER");
-
+  // PORT: the original programs the PIT (divisor 9903, ~120.5 Hz) and installs SystemCBfn_5A3E3 as the timer
+  // interrupt (dos_setvect(8, ...)); PortTimer calls it at that rate instead
   str_AE408_AE3F8->var_u32_206 = 9903;
   str_AE408_AE3F8->var_u32_210 = 0;
-  word_12EC04 = 0;//fix a2;
+  word_12EC04 = 0;
   dword_12EC00 = dos_getvect(8);
   outp(67, 54);
   outp(64, str_AE408_AE3F8->var_u32_206);
   outp(64, BYTE1(str_AE408_AE3F8->var_u32_206));
-
   PortTimer_Start(str_AE408_AE3F8->var_u32_206, SystemCBfn_5A3E3);
-  //std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-  //timer->stop();
-  // 
-  //std::thread timer(TimerFunction, 10);
-  //timer.detach();
-  /*
-  Timer tm;
-
-  tm.start(std::chrono::milliseconds(1000), [] {
-      SystemCBfn_5A3E3();
-      });
-      */
-  //fix result = dos_setvect(8, SystemCBfn_5A3E3, (unsigned __int16)__CS__);
   byte_9AD04 = 1;
 }
 // 62455: using guessed type _DWORD outp(_DWORD, char);
@@ -68706,7 +68537,7 @@ void OpenTimerInterrupt_5A459_5A969()
 /// Original name: close_timer_interrupt (TIMER.C), Hidden Worlds linker map (placed by chain projection: every map symbol between it and a neighbouring match lands exactly on one of our function starts).
 void CloseTimerInterrupt_5A4EA_5A9FA()
 {
-    FixPerifery();
+  // PORT: PortTimer_Stop replaces restoring the PIT rate and the DOS timer interrupt
 
   if ( byte_9AD04 == 1 )
   {
@@ -70330,13 +70161,8 @@ uint8_t FindColor_5CC70_5D180(TColor* colors, uint8_t colR, uint8_t colG, uint8_
 /// Original name: ResetScreen (RESET_SC.C), Hidden Worlds linker map.
 int ResetScreen_5CD70_5D280()
 {
-  char v1[28]; // [esp+0h] [ebp-38h] BYREF
-  int v2[7]; // [esp+1Ch] [ebp-1Ch] BYREF
-
-  FixPerifery();
-
-  v2[0] = (unsigned __int16)word_12F02C;
-  return int386(16, v2, v1);
+  // PORT: the original restores the saved BIOS video mode (int 10h with word_12F02C); nothing to do in the port
+  return 0;
 }
 // 62F78: using guessed type _DWORD int386(_DWORD, _DWORD, _DWORD);
 // 12F02C: using guessed type __int16 word_12F02C;
@@ -70347,7 +70173,7 @@ int ResetScreen_5CD70_5D280()
 /// Name is a guess (not in the Hidden Worlds linker map).
 void Blit_5CDA0_5D2B0()
 {
-    FixPerifery((char*)"blit320");
+    // PORT: the original copies the 320x200 screen to VGA memory (0xA0000); the presenter shows it instead
     if (!byte_9AD96)
         PlaceMouse_5BDF8_5C308();
     VGA_Blit(begWscreen_2ECFF4_2ECFE4);
@@ -70355,15 +70181,6 @@ void Blit_5CDA0_5D2B0()
         RemoveMouse_5BE50_5C360();
 
     PortTimer_LimitFrame(); // PORT: was a fixed 100 ms sleep ("fix it") - ~8 fps; now a frame cap (menus 70, game --fps)
-
-    //tempScreenBuffer_A0000 = begWscreen_2ECFF4_2ECFE4;
-    /*
-  if ( !byte_9AD96 )
-    PlaceMouse_5BDF8_5C308();
-  qmemcpy(&screenBuffer_A0000, (const void *)begWscreen_2ECFF4_2ECFE4, 0xFA00u);
-  if ( !byte_9AD96 )
-    RemoveMouse_5BE50_5C360();
-    */
 }
 // 9AD96: using guessed type char byte_9AD96;
 // 12EFF4: using guessed type int dword_12EFF4;
@@ -73768,27 +73585,13 @@ int VesaGetInfo_61AB0_61FC0()//232AB0
 /// Original name: SetupScreenMCGA (SETUP_S0.C), Hidden Worlds linker map.
 void SetupScreenMCGA_61B90_620A0(TColor* a1)//232B90_
 {
-    FixPerifery((char*)"initVga320");
-
+    // PORT: the original saves the BIOS video mode (int 10h AX=0F00h, into word_12F02C, only used to restore DOS
+    // text mode at exit) and sets mode 13h (int 10h AX=13h); the presenter is sized in SetMouseLimits_5C468_5C978
     scrWidth_12EFF0_12EFE0 = 320;
     scrHeight_12EFF8_12EFE8 = 200;
     SetPalette256_319A0_319E0(a1);
     SetMouseLimits_5C468_5C978();
     SetGraphicsWindow_65EB0_663C0(0, 0, 320, 200);
-    /*
-  char v2[28]; // [esp+0h] [ebp-38h] BYREF
-  int v3[7]; // [esp+1Ch] [ebp-1Ch] BYREF
-
-
-  v3[0] = 3840;
-  int386(16, (uint32)v3, (uint32)v2);
-  if ( !word_12F02C )
-    word_12F02C = (unsigned __int8)v2[0];
-  v3[0] = 19;
-  pitch_12EFF0_12EFE0 = 320;
-  dword_12EFF8_12EFE8 = 200;
-  int386(16, (uint32)v3, (uint32)v2);
-  */
 }
 // 62F78: using guessed type _DWORD int386(_DWORD, _DWORD, _DWORD);
 // 12EFF0: using guessed type int pitch_12EFF0_12EFE0;
@@ -73799,15 +73602,8 @@ void SetupScreenMCGA_61B90_620A0(TColor* a1)//232B90_
 /// Original name: SetupScreenVres256 (SETUP_S3.C), Hidden Worlds linker map.
 void SetupScreenVres256_61C30_62140(TColor* a1)//232C30_
 {
-  uint8 v2[28]; // [esp+0h] [ebp-38h] BYREF
-  int v3[7]; // [esp+1Ch] [ebp-1Ch] BYREF
-
-  FixPerifery((char*)"initVga640");
-
-  v3[0] = 0xf00;
-  //int386(0x10, (uint32)v3, (uint32)v2);
-  if ( !word_12F02C )
-    word_12F02C = v2[0];
+  // PORT: the original first saves the BIOS video mode (int 10h AX=0F00h into word_12F02C, only used to restore DOS
+  // text mode at exit); the port has no BIOS (the old code stored an uninitialised byte there)
   scrWidth_12EFF0_12EFE0 = 640;
   scrHeight_12EFF8_12EFE8 = 480;
   VesaSetMode_619B8_61EC8(0x101);
