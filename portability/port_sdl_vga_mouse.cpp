@@ -658,6 +658,11 @@ void ToggleFullscreen() {
 		g_presenter->ToggleFullscreen();
 }
 
+static bool isSpecialKey(const SDL_Event &event) {
+	return ((event.key.keysym.sym == SDLK_RETURN) && (event.key.keysym.mod & KMOD_ALT))
+		|| ((event.key.keysym.sym == SDLK_F10 || event.key.keysym.sym == SDLK_F11) && (event.key.keysym.mod & KMOD_CTRL));
+}
+
 bool handleSpecialKeys(const SDL_Event &event) {
 	bool specialKey = false;
 	if ((event.key.keysym.sym == SDLK_RETURN) && (event.key.keysym.mod & KMOD_ALT)) {
@@ -673,7 +678,7 @@ bool handleSpecialKeys(const SDL_Event &event) {
 	}
 	else if ((event.key.keysym.sym == SDLK_F11) && (event.key.keysym.mod & KMOD_CTRL)) {
 		settingWASD = !settingWASD;
-		std::cout << "Set WASD to " << (settingWindowGrabbed ? "true" : "false") << std::endl;
+		std::cout << "Set WASD to " << (settingWASD ? "true" : "false") << std::endl;
 		specialKey = true;
 	}
 
@@ -708,10 +713,10 @@ int events()
 		switch (event.type)
 		{
 		case SDL_KEYDOWN:
-			if (event.key.repeat)
-				break;
+			// held keys repeat like the PC keyboard's typematic make codes (the original's interrupt saw each one);
+			// the port's own hotkeys only act on the first press
 			event.key.keysym.scancode = Port_RemapKey(event.key.keysym.scancode);
-			if (!handleSpecialKeys(event)) {
+			if (event.key.repeat ? !isSpecialKey(event) : !handleSpecialKeys(event)) {
 				InputScript_RecordKey(presentedFrames, true, event.key.keysym.scancode);
 				VGA_InjectKey(true, event.key.keysym.scancode);
 			}
@@ -1319,18 +1324,14 @@ uint16_t VGA_read_char_from_buffer() {
 	return loclastchar;
 }
 
+// The game's keyboard interrupt (KInt_36C65) in the port: every scancode byte the keyboard sends ends up in
+// lastPressedKey_12EF70_12EF60 - make codes when a key goes down (and again for each typematic repeat), break codes
+// (scancode | 0x80) when it goes up - and pressedKeys_12EEF0_12EEE0 holds 1 for every key that is down.
 void setPress(bool locpressed, uint16_t loclastchar) {
 	loclastchar = fixchar(loclastchar);
-
-	if (locpressed)
-	{
-		lastPressedKey_12EF70_12EF60 = (loclastchar & 0xff00) >> 8;// VGA_read_char_from_buffer();
-		pressedKeys_12EEF0_12EEE0[lastPressedKey_12EF70_12EF60 & 0x7F] = lastPressedKey_12EF70_12EF60;
-	}
-	else
-	{
-		pressedKeys_12EEF0_12EEE0[((loclastchar & 0xff00) >> 8) & 0x7F] = 0;
-	}
+	const uint8_t scancode = (loclastchar & 0xff00) >> 8;
+	lastPressedKey_12EF70_12EF60 = locpressed ? scancode : (uint8_t)(scancode | 0x80);
+	pressedKeys_12EEF0_12EEE0[scancode & 0x7F] = locpressed ? 1 : 0;
 }
 
 // Single entry point for key input (live SDL events and input scripts).

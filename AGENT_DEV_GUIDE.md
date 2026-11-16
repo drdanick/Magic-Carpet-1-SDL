@@ -949,7 +949,7 @@ same code as MC1's `DrawAThing_2C410_2C450`/`DrawSprite_*` and uses the same scr
 | DOS mechanism | Replacement |
 |---|---|
 | VGA mode 13h / 640×480 SVGA, `0x3C8/0x3C9` palette | `VGA_Resize`, `VGA_Set_Palette` (6-bit DAC ×4), `VGA_Blit(begWscreen…)` → SDL INDEX8 surface → RGB texture |
-| INT 9 keyboard ISR filling `pressedKeys_12EEF0_12EEE0[128]` / `lastPressedKey_12EF70_12EF60` | `VGA_InjectKey()` ← SDL key events / input scripts; SDL scancode → DOS set-1 scancode in `fixchar()` |
+| INT 9 keyboard ISR `KInt_36C65` filling `pressedKeys_12EEF0_12EEE0[128]` / `lastPressedKey_12EF70_12EF60` | `VGA_InjectKey()` ← SDL key events / input scripts; SDL scancode → DOS set-1 scancode in `fixchar()`; `setPress()` does what KInt did: `lastPressedKey` = make code, break code (scancode \| 0x80) on release, typematic repeats as make codes; `pressedKeys` = 1/0 (2026-11-16; before, releases and repeats were dropped and the table held the scancode) |
 | INT 33h mouse callback | `MouseEvents(buttons, x, y)` → `MouseHandler256_5BE72_5C382`; buttons: 1 move, 2/4 left down/up, 8/0x10 right, 0x20/0x40 middle |
 | PIT channel 0 (divisor 9903 ≈ 120.5 Hz) + INT 8 ISR `SystemCBfn_5A3E3` | `PortTimer_Start(divisor, SystemCBfn_5A3E3)` in `OpenTimerInterrupt_5A459_5A969` |
 | HMI SOS digital driver (`hmidrv.386`) | `portability/port_sound.cpp` on SDL_mixer (§6.4) |

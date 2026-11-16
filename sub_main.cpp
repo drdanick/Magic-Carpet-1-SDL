@@ -19778,7 +19778,9 @@ LABEL_164:
       }
       return;
     case 3:
-      if ( lastPressedKey_12EF70_12EF60 > 0 )
+      // PORT: was "> 0" - the original tests nonzero and <= 0x7F (0x187AB), i.e. make codes only; the port's
+      // lastPressedKey_12EF70_12EF60 is unsigned and also holds break codes
+      if ( lastPressedKey_12EF70_12EF60 && lastPressedKey_12EF70_12EF60 <= 0x7F )
       {
         LOBYTE(v3) = byte_9AD0C[(unsigned __int8)lastPressedKey_12EF70_12EF60];
         if ( lastPressedKey_12EF70_12EF60 == 28 )
@@ -43100,53 +43102,11 @@ void KInt_36C65(
     int a6,
     int a7)
 {
-
-    FixPerifery();
-    /*
-    char v1; // bl
-
-    lastPressedKey_12EF70_12EF60 = inp(96);
-    if (byte_B7326 == -32 && (lastPressedKey_12EF70_12EF60 == 42 || lastPressedKey_12EF70_12EF60 == -86))
-    {
-        byte_B7326 = lastPressedKey_12EF70_12EF60;
-        lastPressedKey_12EF70_12EF60 = 0x80;
-    }
-    else
-    {
-        byte_B7326 = lastPressedKey_12EF70_12EF60;
-        pressedKeys_12EEF0_12EEE0[lastPressedKey_12EF70_12EF60 & 0x7F] = (unsigned __int8)lastPressedKey_12EF70_12EF60 <= 0x7Fu;
-    }
-    v1 = inp(97);
-    outp(97, v1 | 0x80);
-    outp(97, v1);
-    if ((unsigned __int8)lastPressedKey_12EF70_12EF60 < 0x80u && !byte_B7327)
-        byte_B7327 = lastPressedKey_12EF70_12EF60;
-    if (lastPressedKey_12EF70_12EF60 == 15 && *(char*)dword_AE408 < 0)
-    {
-        SetColour_41144(0, 63, 0, 0);
-        byte_AE45A = 1;
-    }
-    if (byte_AE45A)
-        chain_intr(a1);
-    outp(32, 32);
-    __asm { iret }
-    */
-  //int v7; // [esp-4h] [ebp-4h] BYREF
-  //fix
-  /*
-  ((void (*)(_DWORD, _DWORD, _DWORD, _DWORD, int, int, int, int, int *, int, int, int))_GETDS)(
-    (unsigned __int16)__GS__,
-    (unsigned __int16)__FS__,
-    (unsigned __int16)__ES__,
-    (unsigned __int16)__DS__,
-    a1,
-    a2,
-    a3,
-    a4,
-    &v7,
-    a5,
-    a6,
-    a7);*/
+    // PORT: not installed as the keyboard interrupt. setPress (portability/port_sdl_vga_mouse.cpp) does its work for SDL
+    // key events: lastPressedKey_12EF70_12EF60 = make/break code (break = scancode | 0x80, typematic repeats as make
+    // codes), pressedKeys_12EEF0_12EEE0[scancode & 0x7F] = 1/0. Not reproduced: the E0 2A/E0 AA "fake shift" filter
+    // (SDL reports no fake shifts), the first-key latch byte_B7327 (never read) and the debug hook (Tab with flag
+    // 0x80 of str_AE408_AE3F8 +0: green border via SetColour_41144 and chaining every key to the BIOS).
 }
 // 36D82: positive sp value 4 has been found
 // 6244D: using guessed type _DWORD inp(_DWORD);
