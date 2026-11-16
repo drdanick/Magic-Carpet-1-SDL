@@ -14037,15 +14037,16 @@ TColor byte_12F090_12F080[256]; // weak//2ED090
 TColor byte_12F390_12F380[256]; // weak//2ED390
 //_UNKNOWN unk_12F68E; // weak //2ED68E
 __int16 word_12F690_12F680; // weak
-int dword_12F6A0_12F690[9999]; // weak  //fix IT - dos memory management !!!!
-int dword_12F6A4_12F694[9999]; // weak //fix IT - dos memory management !!!!
-int dword_12F6A8_12F698[9999]; // weak //2ed6a8_ //fix IT - dos memory management !!!!
-int dword_1302A0_130290; // weak
-int dword_1302A4; // weak
-int dword_1302A8_130298; // weak
-int dword_1302AC_13029C; // weak
-char byte_1302B0_1302A0[9999]; // weak
-char byte_1302B1_1302A1[4591]; // weak
+// DOS memory pool that sub_63010_63520 builds in the original: 256 12-byte records {+0 linear address, +4 real-mode
+// segment (nonzero for blocks below 640 KB, which MyLowAlloc wants), +8 size}. The port's memory is the arena
+// (engine/ptr32.h), so the table stays empty.
+int dword_12F6A0_12F690[3 * 256]; // weak
+// The allocation block list made from the pool: 256 18-byte records {+0 address, +4 size, +8 next, +12 previous,
+// +16 memory number of the owner (0 = free), +17 pool record}. Empty in the port as well: record 0 is a free block of
+// size 0 without a next, so the walks in MyShrink_42730_42A70, MyGrow_427A0, sub_63338_63848 and
+// VersionRequested_5A560_5AA70 stop after it. PORT: one array; the port had separate globals for the first record's
+// fields, and the walks only stayed inside the table while the compiler happened to keep them together.
+int dword_1302A0_130290[256 * 18 / 4]; // weak
 int dword_1314A0; // weak
 int dword_1314A4; // weak
 int dword_1314A8; // weak
@@ -14143,7 +14144,6 @@ int nullsub_19(_DWORD a) { return 0; }; // weak
 _DWORD dos_getdrive(_DWORD a) { return 0; };// weak
 _DWORD dos_getvect(_DWORD a) { return 0; };// weak
 _DWORD dos_setvect(_DWORD a, _DWORD b, _DWORD c) { return 0; };// weak
-_DWORD expand(_DWORD a, _DWORD b) { return 0; };// weak
 int gettextposition(_DWORD a) { return 0; };// weak
 // PORT: DOS interrupt stubs; the register blocks are passed as plain pointers (64-bit: no 32-bit addresses of locals)
 template <class... A> _DWORD int386(A...) { return 0; }
@@ -51306,7 +51306,8 @@ void ExamineMemory_41230_41570()//212230_
 		str_AE400_AE3F0->set.var_u8_8608 = 32;
 
 		// PORT: the original measures freeMem_1314AC_13149C in sub_63338_63848 from the DOS memory pool that
-		// sub_63010_63520 sets up (disabled in the port); report 16 MB, the top memory tier of the original (> 8 MB)
+		// sub_63010_63520 sets up (the port uses its arena instead); report 16 MB, the top memory tier of the original
+		// (> 8 MB)
 		if (testAlloc)
 			freeMem_1314AC_13149C = 0x1000000;
 		else
@@ -52324,7 +52325,7 @@ void* MyAlloc_42540_42880_orig(size_t size)
   result = (int)OFF(MyLowAlloc_425C0_42900(v1));
   if ( !result )
   {
-    v3 = &dword_1302A0_130290;
+    v3 = dword_1302A0_130290;
     v4 = -1;
     for ( i = 0; v3; v3 = (int *)PTR(v3[2]) )
     {
@@ -52367,14 +52368,15 @@ int MyLowAlloc_425C0_42900_orig(int a1)
   unsigned int v5; // ecx
 
   sub_63010_63520();
-  v1 = &dword_1302A0_130290;
+  v1 = dword_1302A0_130290;
   v2 = -1;
   v4 = a1 + 15;
   v3 = 0;
   for ( LOWORD(v4) = (a1 + 15) & 0xFFF0; v1; v1 = (int *)PTR(v1[2]) )
   {
     v5 = v1[1];
-    if ( v4 <= v5 && v2 > v5 && !*((_BYTE *)v1 + 16) && dword_12F6A4_12F694[3 * *((unsigned __int8 *)v1 + 17)] )
+    // PORT: was dword_12F6A4_12F694[3 * ...] - the segment field (+4) of the pool record, see dword_12F6A0_12F690
+    if ( v4 <= v5 && v2 > v5 && !*((_BYTE *)v1 + 16) && dword_12F6A0_12F690[3 * *((unsigned __int8 *)v1 + 17) + 1] )
     {
       v3 = v1;
       v2 = v1[1];
@@ -52407,12 +52409,13 @@ char FindAllocBlock_42650(int a1, int a2)
   }
   else
   {
-    for ( i = &dword_1302A0_130290; i < &dword_1314A0; i = (int *)((char *)i + 18) )
+    // PORT: the end of the table was &dword_1314A0 (the global after it in the original)
+    for ( i = dword_1302A0_130290; i < dword_1302A0_130290 + 256 * 18 / 4; i = (int *)((char *)i + 18) )
     {
       if ( !i[1] )
         break;
     }
-    if ( i == &dword_1314A0 )
+    if ( i == dword_1302A0_130290 + 256 * 18 / 4 )
     {
       return 0;
     }
@@ -52474,9 +52477,9 @@ void MyFree_426E0_42A20_orig(int a1)
   char v2; // cl
   int *i; // ebx
 
-  v1 = &dword_1302A0_130290;
+  v1 = dword_1302A0_130290;
   v2 = 0;
-  if ( &dword_1302A0_130290 )
+  if ( dword_1302A0_130290 )
   {
     while ( a1 != *v1 )
     {
@@ -52490,7 +52493,7 @@ void MyFree_426E0_42A20_orig(int a1)
 LABEL_5:
   if ( v2 == 1 )
   {
-    for ( i = &dword_1302A0_130290; i; i = (int *)PTR(i[2]) )
+    for ( i = dword_1302A0_130290; i; i = (int *)PTR(i[2]) )
     {
       if ( !*((_BYTE *)i + 16) )
         MergeFreeBlocks_42860((int)OFF(i));
@@ -52510,9 +52513,9 @@ int MyShrink_42730_42A70(int a1, int a2)
   int *i; // ebx
 
   v2 = a2 + 3;
-  v3 = &dword_1302A0_130290;
+  v3 = dword_1302A0_130290;
   v4 = 0;
-  if ( &dword_1302A0_130290 )
+  if ( dword_1302A0_130290 )
   {
     while ( a1 != *v3 )
     {
@@ -52528,7 +52531,7 @@ int MyShrink_42730_42A70(int a1, int a2)
 LABEL_5:
   if ( v4 == 1 )
   {
-    for ( i = &dword_1302A0_130290; i; i = (int *)PTR(i[2]) )
+    for ( i = dword_1302A0_130290; i; i = (int *)PTR(i[2]) )
     {
       if ( !*((_BYTE *)i + 16) )
         MergeFreeBlocks_42860((int)OFF(i));
@@ -52552,11 +52555,11 @@ int MyGrow_427A0(int a1, int a2)
   int *i; // ebx
   char v10; // [esp+0h] [ebp-Ch]
 
-  v2 = &dword_1302A0_130290;
+  v2 = dword_1302A0_130290;
   v3 = a2 + 3;
   LOBYTE(v3) = (a2 + 3) & 0xFC;
   v10 = 0;
-  if ( &dword_1302A0_130290 )
+  if ( dword_1302A0_130290 )
   {
     while ( a1 != *v2 )
     {
@@ -52589,7 +52592,7 @@ int MyGrow_427A0(int a1, int a2)
 LABEL_13:
   if ( v10 == 1 )
   {
-    for ( i = &dword_1302A0_130290; i; i = (int *)PTR(i[2]) )
+    for ( i = dword_1302A0_130290; i; i = (int *)PTR(i[2]) )
     {
       if ( !*((_BYTE *)i + 16) )
         MergeFreeBlocks_42860((int)OFF(i));
@@ -67847,12 +67850,13 @@ void VersionRequested_5A560_5AA70()
     sprintf(v32, "%d/%d", dword_1314A8, dword_1314A4);
     DrawText_5A180_5A690(v32, 320, v25, byte_AD167_AD157[16]);
     CharacterHeight_5A3B0_5A8C0();
-    v26 = &dword_1302A0_130290;
+    v26 = dword_1302A0_130290; // PORT: was &dword_1302A0_130290 (see the declaration)
     v27 = 0;
     for ( i = 0; v26; v26 = (int *)PTR(v26[2]) )
     {
       sprintf(v32, "s%7.7d,u%01d", v26[1], *((unsigned __int8 *)v26 + 16));
-      if ( dword_12F6A4_12F694[3 * *((unsigned __int8 *)v26 + 17)] )
+      // PORT: was dword_12F6A4_12F694[3 * ...] - the segment field (+4) of the pool record, see dword_12F6A0_12F690
+      if ( dword_12F6A0_12F690[3 * *((unsigned __int8 *)v26 + 17) + 1] )
         v29 = byte_AD167_AD157[1];
       else
         v29 = byte_AD167_AD157[3841];
@@ -74077,6 +74081,7 @@ void CopyScreen_62FC4_634D4(uint8_t* src, uint8_t* dst, size_t size)
 }
 
 //----- (00062FF0) --------------------------------------------------------
+/// Unreachable: the qsort comparator of the pool setup in sub_63010_63520, which the port does not run.
 /// Returns the dword at a1 + 4.
 int sub_62FF0(int a1)
 {
@@ -74084,100 +74089,16 @@ int sub_62FF0(int a1)
 }
 
 //----- (00063010) --------------------------------------------------------
-/// Allocation-table maintenance called before loading files (LoadPathFile/LoadPathFiles); works on dword_1314A0. Not fully understood.
+/// Builds the DOS memory pool on its first call (it is called before every allocation and file load).
 void sub_63010_63520()//234010_
 {
-  int v0; // [esp+0h] [ebp-14h]
-  int n; // [esp+4h] [ebp-10h]
-  signed int k; // [esp+8h] [ebp-Ch]
-  int m; // [esp+8h] [ebp-Ch]
-  int ii; // [esp+8h] [ebp-Ch]
-  int jj; // [esp+8h] [ebp-Ch]
-  int kk; // [esp+8h] [ebp-Ch]
-  int i; // [esp+Ch] [ebp-8h]
-  int j; // [esp+Ch] [ebp-8h]
-  int v9; // [esp+Ch] [ebp-8h]
-  unsigned int v10; // [esp+10h] [ebp-4h]
-
-  if ( !dword_12F6A8_12F698[0] && false)//fixed(false)
-  {
-    v0 = AllocDosMemory_6342C_6393C(0xFA00u);
-    for ( i = 0; i < 256; ++i )
-      memset(&dword_12F6A0_12F690[3 * i], 0, 12);
-    for ( j = 0; j < 256; ++j )
-      memset((char *)&dword_1302A0_130290 + 18 * j, 0, 18);
-    v9 = 0;
-    for ( k = 0xA0000; k >= 1024; k -= 1024 )
-    {
-      v10 = AllocDosMemory_6342C_6393C(k);
-      if ( v10 )
-      {
-        dword_12F6A8_12F698[3 * v9] = k;
-        dword_12F6A0_12F690[3 * v9] = 16 * (unsigned __int16)v10;
-        dword_12F6A4_12F694[3 * v9] = HIWORD(v10);
-        k += 1024;
-        ++v9;
-      }
-    }
-    for ( m = 0x1000000; m >= 4096; m -= 4096 )
-    {
-      dword_12F6A0_12F690[3 * v9] = (int)OFF(Port_ArenaAlloc(m));
-      if ( dword_12F6A0_12F690[3 * v9] )
-      {
-        for ( n = 4096; n > 0; n -= 16 )
-        {
-          if ( expand(dword_12F6A0_12F690[3 * v9], n + m) )
-          {
-            dword_12F6A8_12F698[3 * v9] = n + m;
-            dword_12F6A4_12F694[3 * v9] = 0;
-            break;
-          }
-        }
-        m += 4096;
-        ++v9;
-      }
-    }
-    for ( ii = 4096; ii >= 16; ii -= 16 )
-    {
-      dword_12F6A0_12F690[3 * v9] = (int)OFF(Port_ArenaAlloc(ii));
-      if ( dword_12F6A0_12F690[3 * v9] )
-      {
-        dword_12F6A8_12F698[3 * v9] = ii;
-        dword_12F6A4_12F694[3 * v9] = 0;
-        ii += 4096;
-        ++v9;
-      }
-    }
-    qsort(dword_12F6A0_12F690, v9, 12, (int (*)(const void*, const void*))sub_62FF0);
-    for ( jj = 0; jj < 256; ++jj )
-      *(int *)((char *)&dword_1302A4 + 18 * jj) = 0;
-    for ( kk = 0; kk < v9; ++kk )
-    {
-      *(int *)((char *)&dword_1302A0_130290 + 18 * kk) = dword_12F6A0_12F690[3 * kk];
-      *(int *)((char *)&dword_1302A4 + 18 * kk) = dword_12F6A8_12F698[3 * kk];
-      if ( kk )
-        *(int *)((char *)&dword_1302AC_13029C + 18 * kk) = (int)OFF(&dword_1302A0_130290) + 18 * kk - 18;
-      else
-        dword_1302AC_13029C = 0;
-      *(int *)((char *)&dword_1302A8_130298 + 18 * kk) = (int)OFF(&dword_1302A0_130290) + 18 * kk + 18;
-      byte_1302B0_1302A0[18 * kk] = 0;
-      byte_1302B1_1302A1[18 * kk] = kk;
-    }
-    *(int *)((char *)&dword_1302A8_130298 + 18 * v9 - 18) = 0;
-    FreeDosMemory_6D35C_6D86C(HIWORD(v0));
-  }
+  // PORT: on its first call the original takes all memory it can get: DOS memory below 640 KB in 1 KB steps
+  // (AllocDosMemory_6342C_6393C, holding back 64000 bytes that it frees again at the end), then up to 16 MB of
+  // extended memory in 4 KB steps (malloc + expand), then the small leftovers. It records each block in the pool
+  // table dword_12F6A0_12F690, sorts the table and turns it into the free block list dword_1302A0_130290 that
+  // MyAlloc/MyLowAlloc/MyFree allocate from. The port allocates from its arena (MyAlloc_42540_42880,
+  // engine/ptr32.h), so the pool and the block list stay empty.
 }
-// 5CC30: using guessed type _DWORD memset(_DWORD, _DWORD, _DWORD);
-// 6CB61: using guessed type _DWORD malloc(_DWORD);
-// 6CC5D: using guessed type _DWORD expand(_DWORD, _DWORD);
-// 6CF2D: using guessed type _DWORD qsort(_DWORD, _DWORD, _DWORD, _DWORD);
-// 12F6A0: using guessed type int dword_12F6A0_12F690[];
-// 12F6A4: using guessed type int dword_12F6A4_12F694[];
-// 12F6A8: using guessed type int dword_12F6A8_12F698[];
-// 1302A0: using guessed type int dword_1302A0_130290;
-// 1302A4: using guessed type int dword_1302A4;
-// 1302A8: using guessed type int dword_1302A8_130298;
-// 1302AC: using guessed type int dword_1302AC_13029C;
 
 //----- (00063338) --------------------------------------------------------
 /// Resets the allocation table (dword_1314A0/dword_1314A4 and its entries).
@@ -74191,7 +74112,7 @@ void sub_63338_63848()
   dword_1314A8 = 0;
   freeMem_1314AC_13149C = 0;
   dword_1314B0 = -1;
-  for ( i = &dword_1302A0_130290; i; i = result )
+  for ( i = dword_1302A0_130290; i; i = result )
   {
     if ( *((_BYTE *)i + 16) )
     {
@@ -74214,6 +74135,10 @@ void sub_63338_63848()
   LOBYTE(dword_1314A8) = dword_1314A8 & 0xFC;
   LOBYTE(freeMem_1314AC_13149C) = freeMem_1314AC_13149C & 0xFC;
   LOBYTE(dword_1314B0) = dword_1314B0 & 0xFC;
+  // PORT: the block list is empty in the port (see sub_63010_63520), so the largest free block would be 0, and
+  // CreateMemory_41490_417D0 would take its low-memory path (evicting texture groups, shrinking the game heap) after the
+  // version page called this; report the 16 MB of ExamineMemory_41230_41570 instead
+  freeMem_1314AC_13149C = 0x1000000;
 }
 // 1302A0: using guessed type int dword_1302A0_130290;
 // 1314A0: using guessed type int dword_1314A0;
@@ -74223,13 +74148,13 @@ void sub_63338_63848()
 // 1314B0: using guessed type int dword_1314B0;
 
 //----- (0006342C) --------------------------------------------------------
+/// Unreachable: only the pool setup in sub_63010_63520 calls it, which the port does not run.
 /// Allocates a1 bytes of DOS memory below 640 KB (DPMI function 0x100); DOS-only, stubbed in the port.
 /// Name is a guess (not in the Hidden Worlds linker map).
 int AllocDosMemory_6342C_6393C(unsigned int a1)
 {
   // PORT: DPMI function 0x100 (DOS memory below 640 KB) does not exist in the port: report no memory (the old code
-  // read the result registers of the no-op int386 uninitialised). Its only caller, sub_63010_63520, has the code
-  // disabled anyway.
+  // read the result registers of the no-op int386 uninitialised).
   return 0;
 }
 // 62F78: using guessed type _DWORD int386(_DWORD, _DWORD, _DWORD);
@@ -79046,6 +78971,7 @@ int ScanfGetChar_6C8C5(int a1)
 }
 
 //----- (0006D35C) --------------------------------------------------------
+/// Unreachable: only the pool setup in sub_63010_63520 calls it, which the port does not run.
 /// Frees DOS memory block a1 (DPMI function 0x101); DOS-only, stubbed in the port.
 /// Name is a guess (not in the Hidden Worlds linker map).
 int FreeDosMemory_6D35C_6D86C(unsigned __int16 a1)

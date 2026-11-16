@@ -16,6 +16,12 @@ extern std::string gameDataPath;
 extern std::string gameDataPath2;
 char* FixPath(char* inPath);
 uint16_t fixchar(uint16_t loclastchar);
+void sub_63338_63848();
+int MyShrink_42730_42A70(int a1, int a2);
+int MyGrow_427A0(int a1, int a2);
+extern int freeMem_1314AC_13149C;
+extern int dword_1314A4;
+extern int dword_1314A8;
 
 namespace {
 
@@ -115,6 +121,19 @@ TEST(Keyboard, InjectKeyFillsPressedTable)
 }
 
 // --- Timer -----------------------------------------------------------------------------------
+
+// The DOS memory pool and its block list stay empty in the port (memory comes from the arena): the free-memory
+// figure keeps ExamineMemory's 16 MB, and the heap shrink/grow around the menus find nothing to do.
+TEST(MemoryPool, EmptyBlockListKeepsFreeMemory)
+{
+	sub_63338_63848();
+	EXPECT_EQ(freeMem_1314AC_13149C, 0x1000000);
+	EXPECT_EQ(dword_1314A4, 0); // free
+	EXPECT_EQ(dword_1314A8, 0); // used
+	EXPECT_EQ(MyShrink_42730_42A70(0x1000, 0x800), 1);
+	EXPECT_EQ(MyGrow_427A0(0x1000, 0x1000), 1);
+	EXPECT_EQ(freeMem_1314AC_13149C, 0x1000000);
+}
 
 namespace {
 int g_ticks = 0;
