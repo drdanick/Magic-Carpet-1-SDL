@@ -413,8 +413,6 @@ void VGA_Draw_string(char* wrstring) {
 
 int drawCounter = 0;
 void VGA_Draw_stringXYtoBuffer(char* wrstring, int x, int y, uint8_t* buffer) {
-	//fix it !!! if (unitTests)return;
-
 	if (oldWidth != m_gamePalletisedSurface->w)
 		drawCounter = 0;
 	if (drawCounter<20)
@@ -438,7 +436,6 @@ void VGA_Draw_stringXYtoBuffer(char* wrstring, int x, int y, uint8_t* buffer) {
 }
 
 void VGA_Init(int width, int height, bool maintainAspectRatio) {
-	//fix it !!! if (unitTests)return;
 	m_bMaintainAspectRatio = maintainAspectRatio;
 
 #define SDL_HWPALETTE 0
@@ -807,53 +804,8 @@ void VGA_Set_mouse(int16_t x, int16_t y) {
 	SDL_WarpMouseInWindow(g_presenter->Window(), wx, wy);
 };
 
-/*
-void VGA_Blit_old(Uint8* srcBuffer) {
-	//fix it !!!! if (unitTests)return;
-
-	oldWidth = m_gamePalletisedSurface->w;
-	if (CommandLineParams.DoHideGraphics()) return;
-	events();
-
-	if (m_iOrigh != m_gamePalletisedSurface->h)
-	{
-		SDL_FreeSurface(m_gamePalletisedSurface);
-
-		m_gamePalletisedSurface =
-			SDL_CreateRGBSurface(
-				SDL_SWSURFACE, m_iOrigw, m_iOrigh, 24,
-				redMask, greenMask, blueMask, alphaMask);
-
-		m_gamePalletisedSurface =
-			SDL_ConvertSurfaceFormat(
-				m_gamePalletisedSurface, SDL_PIXELFORMAT_INDEX8, 0);
-
-		SDL_SetPaletteColors(m_gamePalletisedSurface->format->palette, m_currentPalletColours, 0, 256);
-
-		lastResHeight = m_iOrigh;
-	}
-
-	if (SDL_MUSTLOCK(m_gamePalletisedSurface)) {
-		if (SDL_LockSurface(m_gamePalletisedSurface) < 0) {
-			fprintf(stderr, "Can't lock screen: %s\n", SDL_GetError());
-			return;
-		}
-	}
-
-	if(srcBuffer)
-		memcpy(m_gamePalletisedSurface->pixels, srcBuffer, m_gamePalletisedSurface->h * m_gamePalletisedSurface->w);
-	
-	if (SDL_MUSTLOCK(m_gamePalletisedSurface)) {
-		SDL_UnlockSurface(m_gamePalletisedSurface);
-	}
-	SubBlit(m_iOrigw, m_iOrigh);
-	//fix it !!!! SOUND_UPDATE();
-}
-*/
 
 void VGA_Blit(Uint8* srcBuffer) {
-	//fix it !!!! if (unitTests)return;
-
 	oldWidth = m_gamePalletisedSurface->w;
 	if (CommandLineParams.DoHideGraphics()) return;
 	InputScript_OnFrame(presentedFrames);
@@ -897,7 +849,6 @@ void VGA_Blit(Uint8* srcBuffer) {
 		SDL_UnlockSurface(m_gamePalletisedSurface);
 	}
 	SubBlit(m_iOrigw, m_iOrigh);
-	//fix it !!!! SOUND_UPDATE();
 }
 
 // Automation/diagnostics: --dump-frames / --exit-after-frames (see Settings.h)

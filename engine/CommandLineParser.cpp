@@ -1,6 +1,7 @@
 #include "CommandLineParser.h"
 
 #include <algorithm>
+#include <cstdio>
 
 CommandLineParser CommandLineParams;
 
@@ -57,8 +58,6 @@ void CommandLineParser::Init(int argc, char **argv) {
 void CommandLineParser::InterpretParams() {
     const auto &params = this->m_params;
 
-    // FIXME: check if multiple modes are selected and warn/fix
-
     // if none of the modes is set then set --release_game as default
     std::vector<std::string> all_modes { 
         "--mode_release_game",
@@ -74,6 +73,9 @@ void CommandLineParser::InterpretParams() {
     if (!std::any_of(begin(params), end(params), is_in_all_params)) {
         this->m_params.emplace_back("--mode_release_game");
     }
+    // the modes are applied in order below, so a later one overrides the settings of an earlier one
+    if (std::count_if(begin(params), end(params), is_in_all_params) > 1)
+        fprintf(stderr, "warning: several --mode_* options given; later ones override earlier ones\n");
 
     // check for modes (that define a set of params) and single params
     for (auto p = params.cbegin(); p != params.cend(); ++p) {
