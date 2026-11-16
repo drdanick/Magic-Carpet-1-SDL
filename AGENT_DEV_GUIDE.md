@@ -830,7 +830,7 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     animating forever. Commented-out assignments inside decompiled bodies deserve a look at the asm.
 58. **Uninitialised locals standing for registers.** `EngineShowScreen_30B30_30B70` (blur mode, `mod3D_8603 == 1`)
     blended the frame with `v1`, never assigned; the asm loads ebp from `blurBuffer_AE404` (0x30B82).
-    Same in `sub_23AE0` (blended sprite overlay of the spell icon under the cursor): the low-res loop's
+    Same in `DrawSpriteTinted_23AE0` (blended sprite overlay of the spell icon under the cursor): the low-res loop's
     write pointer started uninitialised (asm 0x23BCB: row pointer and write pointer are one register).
     To list candidates build once with `/w14701 /w14703` added to `remc1_options` (CMakeLists.txt):
     ~90 sites, mostly false positives (`result` on unused paths, `_old` copies, DOS runtime code).
@@ -946,7 +946,7 @@ space (§4).
 - Banks: `SNDSn-v.DAT/.TAB` (RNC packed; `sub_5D070` loads `snds%d-%d`, 14 sets). TAB entries are 32
   bytes: `name[18]`, `+18` offset into the DAT, `+26` length, `+30` word. Variant `-0` = 11025 Hz,
   `-1` = 22050 Hz (used: `byte_939EC = 1`), `-3` = low memory. Samples are unsigned 8-bit mono.
-- The game talks to the HMI SOS API (`IsSampleDone_651F8`, `sub_6535C`, `sub_65965`, `SosDIGISetSampleVolume_66118`, `SosDIGISetMasterVolume_661A4`,
+- The game talks to the HMI SOS API (`IsSampleDone_651F8`, `StartSample_6535C`, `StopSampleById_65965`, `SosDIGISetSampleVolume_66118`, `SosDIGISetMasterVolume_661A4`,
   `SosDIGISamplesPlaying_66324`); these forward to `port_sound` (32 SDL_mixer channels, volume/pan, looping when flag
   `0x4000` is set with the count at `+12`). The "sample done" state the game polls is driven by timer
   ticks, not by SDL callbacks, so goldens are identical with sound on or off.
