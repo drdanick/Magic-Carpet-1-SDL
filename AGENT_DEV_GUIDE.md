@@ -339,6 +339,8 @@ memory hook for the rest of that `emu_start`: the writes were neither logged nor
 came and went with the build's code layout. Every call now returns through a probe store (`PROBE` in
 `tools/emu.py`); when the hook misses it, the call's writes are taken from a comparison with a shadow copy of
 memory (`Shadow`), on both machines. `diff_tick.py --stepwise` prints how many calls needed that.
+(12) The 64-bit machine stubs strlen/strcpy/strcat/strncpy/strcmp/_stricmp/memcmp (port code calls them; whole-frame
+draw snapshots and functions like SetupPlayers stopped with "port called import ..." before).
 (11) The 64-bit machine mirrors the original's memory (0x10000-0x150000) at the same offsets: entities the
 original created earlier in the tick (stepwise keeps its results) point to original globals, e.g. the type
 data at +156, and the port code follows them.
@@ -933,6 +935,10 @@ positions, unowned, 45 frames after a death; the code that does that is not iden
     around tile (0, 0) instead (stale terrain shading after craters, castles, earthquakes). Never give such a
     variable a made-up value: read what the original keeps in that slot. The other `[ebp+...]` locals were
     checked 2026-11-16 (all assigned before use).
+73. **A constant that IDA turned into a function address.** `VersionRequested_5A560_5AA70` printed
+    `sprintf(v32, "Carpet %d", sub_38D09)`: the original pushes the constant 0x38D09 (232713, the size of the game
+    state), which happens to be an address inside code, so IDA named it as a function and the port printed a code
+    pointer. A function name used as a value (not called) in a printf/arithmetic context is suspect: check the push.
 
 The MC2 renderer in remc2 (`GameRenderOriginal.cpp`, e.g. `DrawSprite_41BD3`) is structurally the
 same code as MC1's `DrawAThing_2C410_2C450`/`DrawSprite_*` and uses the same scratch offsets in the BScreen
@@ -1319,6 +1325,12 @@ Known open issues:
   not port bugs (gotchas 10, 11): the "build-dependent" `FnShotFireball_52B30_52E70` difference (f20000), the
   `FnCreature11Stand_1DE40` / `FnEffectBigExplosion_25130` differences (f40000) and the
   `FnShotStealMana_530C0_53400` crash (f56995). All three snapshots now match the original stepwise.
+- Fixed 2026-11-16 while removing the upstream //fix markers (each checked against the original; legacy-marker
+  pass, see the git log of branch cleanup-legacy-markers): VersionRequested's "Carpet" number (pattern #73);
+  ResetMouse did not mark the mouse uninstalled (InitControllers' joystick modes rely on it);
+  SetNewMousePosition lost the original's early return for x == -1; ReadSoundSetup copied "0" without its
+  terminator; ProcessThings printed an extra allert_error for STATE-ID mismatches; SetupScreenVres256 and
+  AllocDosMemory read uninitialised data; RunningFromCdrom compared an uninitialised struct.
 - Longer play (other levels, enemies, death, save/load) not yet exercised under ASan.
 - During forward flight the carpet holds altitude while terrain drops away, so the view becomes mostly
   sky; probably original behaviour, unverified.
