@@ -20027,118 +20027,18 @@ void CPUDetect_192D8()
 /// Original name: get_cpuid (CPU.ASM), Hidden Worlds linker map.
 int GetCpuid_192F3()
 {
-    FixPerifery((char*)"cpuid");
+    // PORT: the DOS cpuid/eflags probe is not run. Outside CPU.ASM only DetectCPU_19470 reads its results (family
+    // 0x90084 == 5 and model 0x90085 == 1 -> the Pentium flag), so the port reports that CPU.
     cpuVar_90084 = 5;
     cpuVar_90085 = 1;
     return 1;
-    /*
-  unsigned int v4; // kr00_4
-  unsigned int v5; // kr04_4
-  int result; // eax
-  unsigned int v7; // kr08_4
-  unsigned int v8; // kr0C_4
-  int *v14; // esi
-  _BYTE *v15; // edi
-  int v16; // ecx
-
-  //fix
-  v14 = 0;
-  v15 = 0;
-  v16 = 0;
-  //fix
-
-  //fix __asm { pushfw }
-  v4 = __readeflags();
-  port_writeeflags((unsigned int)&loc_40000 ^ v4);
-  v5 = __readeflags();
-  result = v4 ^ v5;
-  cpuVar_90084 = 3;
-  if ( v4 != v5 )
-  {
-    cpuVar_90084 = 4;
-    v7 = __readeflags();
-    port_writeeflags(v7 ^ 0x200000);
-    v8 = __readeflags();
-    result = v7 ^ v8;
-    if ( v7 != v8 )
-    {
-      //fix
-      cpuVar_90076 = 1;
-      _EAX = 0;
-      __asm { cpuid }
-      cpuVar_9006A = _EBX;
-      cpuVar_9006E = _EDX;
-      cpuVar_90072 = _ECX;
-      v14 = &cpuVar_9006A;
-      v15 = &cpuVar_90078;
-      v16 = 1;
-      
-      //fix
-      do
-      {
-        if ( !v16 )
-          break;
-        _ZF = *(_BYTE *)v14 == *v15;
-        v14 = (int *)((char *)v14 + 1);
-        ++v15;
-        --v16;
-      }
-      while ( _ZF );
-      if ( !v16 )
-        cpuVar_90085 = 1;
-      //fix _EAX = 1;
-      __asm { cpuid }
-      //fix cpuVar_90066 = _EAX;
-      //fix cpuVar_90084 = (unsigned __int16)(_EAX & 0xF00) >> 8;
-      //fix cpuVar_90087 = _EAX & 0xF;
-      result = cpuVar_90066;
-      cpuVar_90086 = (unsigned __int8)(cpuVar_90066 & 0xF0) >> 4;
-    }
-  }
-  return result;
-  */
 }
 
 //----- (000193EE) --------------------------------------------------------
 /// Original name: check_fpu (CPU.ASM), Hidden Worlds linker map.
 void CheckFpu_193EE(__int16 a1)
 {
-  FixPerifery((char*)"fninit");
-
-  /*
-  __int16 v1; // fps
-  double v2; // st6
-  _BOOL1 v3; // c0
-  char v4; // c2
-  _BOOL1 v5; // c3
-
-
-
-  __asm { fninit }
-  cpuVar_90064 = a1;
-  if ( (_BYTE)a1 )
-  {
-    byte_90088 = 0;
-  }
-  else if ( (cpuVar_90064 & 0x103F) == 63 )
-  {
-    byte_90088 = 1;
-    if ( cpuVar_90084 == 3 )
-    {
-      //fix v2 = -(1.0 / 0.0);
-      //fix v3 = v2 < 1.0 / 0.0;
-      v4 = 0;
-      //fix v5 = v2 == 1.0 / 0.0;
-      cpuVar_90064 = v1;
-      byte_90089 = 2;
-      //fix if ( v2 != 1.0 / 0.0 )
-      //fix   byte_90089 = 3;
-    }
-  }
-  else
-  {
-    byte_90088 = 0;
-  }*/
+  // PORT: fninit/FPU detection is not run: its results (0x90064, 0x90088, 0x90089) are read only inside CPU.ASM.
 }
 // 90064: using guessed type __int16 cpuVar_90064;
 // 90084: using guessed type char cpuVar_90084;
@@ -38804,40 +38704,10 @@ void InitStereoMode_31600_31640()//202600_
 /// Original name: SetPalette256 (ENGINE.C), Hidden Worlds linker map.
 void SetPalette256_319A0_319E0(TColor* palette)//2029A0_
 {
-    FixPerifery((char*)"port0x3C8");
+    // PORT: the DAC writes (0x3C6 mask, 0x3C8 index, 3 x 256 components to 0x3C9) go to the presenter
     VGA_Set_Palette((uint8_t*)palette);
     if (byte_9AD08)
-        PutVFX1Palette_5B310_5B820(2, 0);
-    /*
-  unsigned __int8 *v1; // ebx
-  int v2; // ecx
-  unsigned __int8 v3; // al
-  unsigned __int8 *v4; // ebx
-  unsigned __int8 v5; // al
-  unsigned __int8 result; // al
-
-  v1 = a1;
-  __outbyte(0x3C6u, 0xFFu);
-  v2 = 0;
-  do
-  {
-    __outbyte(0x3C8u, v2);
-    v3 = *v1;
-    v4 = v1 + 1;
-    __outbyte(0x3C9u, v3);
-    v5 = *v4++;
-    __outbyte(0x3C9u, v5);
-    ++v2;
-    result = *v4;
-    v1 = v4 + 1;
-    __outbyte(0x3C9u, result);
-  }
-  while ( (unsigned __int16)v2 < 0x100u );
-  if ( byte_9AD08 )
-    return PutVFX1Palette_5B310_5B820(2, a1);
-    if (byte_9AD08)
-        PutVFX1Palette_5B310_5B820(2, 0);
-    */
+        PutVFX1Palette_5B310_5B820(2, (unsigned __int8*)palette);
 }
 // 9AD08: using guessed type char byte_9AD08;
 
@@ -43370,7 +43240,6 @@ void KInt_36C65(
 /// Original name: OpenIKeyboard (IKEYBOAR.C), Hidden Worlds linker map.
 void OpenIKeyboard_36D83()
 {
-    FixPerifery((char*)"CLEAN_KEYS");
   __int16 lastPressedKey;
   for ( int i = 0; i < 128; i++ )
   {
@@ -43378,7 +43247,8 @@ void OpenIKeyboard_36D83()
   }
   keysVect1_B7324 = 127;
   keysVect2_B7320 = dos_getvect(9);
-  //fix return dos_setvect(9, KInt_36C65, (unsigned __int16)__CS__);
+  // PORT: the original installs KInt_36C65 as the keyboard interrupt (dos_setvect(9, ...)); the port's SDL event
+  // handler (port_sdl_vga_mouse.cpp) fills pressedKeys_12EEF0_12EEE0 / lastPressedKey_12EF70_12EF60 instead
 }
 // 62481: using guessed type _DWORD dos_getvect(_DWORD);
 // 624B5: using guessed type _DWORD dos_setvect(_DWORD, _DWORD, _DWORD);
@@ -70466,7 +70336,6 @@ void DelayTimer_5CB73(int a1, __int16 a2)
 
 /// Name is a guess (not in the Hidden Worlds linker map).
 void fixWaitForBeam_5CC54_5D164() {
-    FixPerifery((char*)"VSYNC");
     PortTimer_WaitRetrace(g_settings.menuFps); // PORT: emulated 70 Hz vertical retrace (was a fixed 20 ms sleep)
     VGA_Blit(nullptr);
 }
@@ -70475,18 +70344,10 @@ void fixWaitForBeam_5CC54_5D164() {
 /// Name is a guess (not in the Hidden Worlds linker map).
 void WaitForBeam_5CC54_5D164()
 {
-    FixPerifery((char*)"VSYNC");
-    PortTimer_WaitRetrace(g_settings.menuFps); // PORT: emulated 70 Hz vertical retrace (was a fixed 20 ms sleep)
+    // PORT: the original polls port 0x3DA for the vertical retrace; the port waits for an emulated 70 Hz retrace
+    // and presents the frame
+    PortTimer_WaitRetrace(g_settings.menuFps);
     VGA_Blit(nullptr);
-    //VGA_Blit(begWscreen_2ECFF4_2ECFE4);
-  //fix !!! (VSYNC)
-    //BLIT !!!!!
-    /*
-  unsigned __int8 result; // al
-
-  do
-    result = __inbyte(0x3DAu);
-  while ( (result & 8) == 0 );*/
 }
 
 /// Returns the index of the palette colour nearest to (colR, colG, colB) (16 or 256 colours depending on the mode).
@@ -79599,23 +79460,9 @@ int DrawLineHighRes_6B378(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsign
 /// Name is a guess (not in the Hidden Worlds linker map).
 void ReadPalette_6B47C_6B98C(TColor* palette)
 {
-    FixPerifery((char*)"port0x3C7");
-    //VGA_Set_Palette(a1);
+    // PORT: the DAC read (0x3C7 index 0, 768 bytes from 0x3C9) comes from the presenter's palette
     memcpy((uint8_t*)palette, VGA_Get_Palette(), 768);
-    /*
-  int v3; // [esp+4h] [ebp-4h]
-
-  //fix
-  v3 = 0;
-  //fix
-
-  FixPerifery((char*)"port0x3C7");
-
-  __outbyte(0x3C7u, 0);
-  __inbytestring(0x3C9u, (int)a1, 0x300u);
-  */
 }
-// 6B49D: variable 'v3' is possibly undefined
 
 //----- (0006B87A) --------------------------------------------------------
 /// Unreachable: no caller and not in any dispatch table (reference scan 2026-11-15).
