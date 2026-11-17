@@ -112391,6 +112391,7 @@ void Superstereohirescopy_79906(uint16 a1[2][256])
   v11 = DoA64kWad_79A70_79F80(v10, v2, v1, a1);
   VesaSetPage_61A1C_61F2C(9);
   DoA64kWad_79A70_79F80(v11, v2, v1, a1);
+  PortTimer_LimitFrame(); // PORT: frame cap as in SwapScreensVres256_599B0_59EC0 (the game logic advances once per frame)
 }
 // AE404: using guessed type int blurBuffer_AE404_AE3F4;
 // 12EFF4: using guessed type int dword_12EFF4;
@@ -112407,6 +112408,7 @@ void Superstereolorescopy_79A1B(uint16 a1[2][256])//24AA1B
   DoA64kWad_79A70_79F80(begWscreen_2ECFF4_2ECFE4, blurBuffer_AE404_AE3F4, a1,320*200);
 
   VGA_Blit(tempScreenBuffer_A0000);
+  PortTimer_LimitFrame(); // PORT: frame cap as in Blit_5CDA0_5D2B0 (the game logic advances once per frame)
 }
 // AE404: using guessed type int blurBuffer_AE404_AE3F4;
 // 12EFF4: using guessed type int dword_12EFF4;
