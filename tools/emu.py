@@ -31,7 +31,7 @@ STUBS = 0x7D000000
 HEAP_BASE, HEAP_SIZE = 0x7A000000, 0x2000000
 TEB64 = 0x7C000000  # 64-bit port machine: a minimal thread environment block (GS base)
 
-SKIP_GLOBALS = {'tempScreenBuffer_A0000', 'unk_93AE0', 'off_96864', 'videoModes_12F080', 'pathStrArray_F1EF0',
+SKIP_GLOBALS = {'tempScreenBuffer_A0000', 'unk_93AE0', 'off_96864', 'pathStrArray_F1EF0',
                 'unk_A1D34', 'str_254DBC', 'dword_999B8', 'off_9EF10', 'off_99A84', 'off_99B68',
                 # pointer into sprite data whose header layout differs between the two programs; always set before use
                 'sprData_B5CB0_B5CA0'}
