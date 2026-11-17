@@ -14024,14 +14024,9 @@ int dword_12F040; // weak
 int dword_12F074; // weak
 int dword_12F07A; // weak
 vesa_str* dword_12F080_12F070x; // weak
-uint16 videoModes_12F080[0x38] = {
-0x0100,0x0101,0x0102,0x0103,0x0104,0x0105,0x0106,0x0107,
-0x0108,0x0109,0x010A,0x010B,0x010C,0x010D,0x010E,0x0110,
-0x0111,0x0113,0x0114,0x0116,0x0117,0x010F,0x0112,0x0115,
-0x0210,0x0211,0x0212,0x0120,0x0151,0x0153,0x015C,0x0159,
-0x015D,0x015A,0x0160,0x0161,0x0162,0x0165,0x0136,0x0170,
-0x0172,0x0175,0x0190,0x0201,0x0202,0x0203,0x0204,0x0205,
-0x0206,0x0207,0x0208,0x0209,0x020A,0x0213,0x0239,0xFFFF };
+// PORT: the VESA mode list (0xFFFF-terminated) that the original reads through the mode list pointer of the VBE info
+// block (VesaGetInfo_61AB0_61FC0): the modes VesaSetMode_619B8_61EC8 supports - 640x480x8, 320x200x16, 640x480x16
+uint16 portVesaModes[] = { 0x0101, 0x010E, 0x0111, 0xFFFF };
 __int16 word_12F084_12F074; // weak
 TColor byte_12F090_12F080[256]; // weak//2ED090
 TColor byte_12F390_12F380[256]; // weak//2ED390
@@ -38029,31 +38024,24 @@ LABEL_20:
 /// Original name: can_i_use_vesa_mode (ENGINE.C), Hidden Worlds linker map.
 int CanIUseVesaMode_30D30_30D70(__int16 videoMode)
 {
-  //_WORD *v1; // eax
-  //__int16 v3; // si
+  _WORD *v1; // eax
+  __int16 v3; // si
 
   if ( VesaGetInfo_61AB0_61FC0() )
     return 0;
-  /*v1 = (_WORD*)(16 * dword_12F080_12F070x->y + dword_12F080_12F070x->x);
+  // PORT: the original follows the real-mode mode list pointer of the VBE info block (segment +16, offset +14:
+  // v1 = 16 * dword_12F080_12F070x->y + dword_12F080_12F070x->x); the port's list is portVesaModes
+  v1 = portVesaModes;
   if ( *v1 == 0xFFFF )
-    return 0;*/
-  int i = 0;
-while (videoMode != videoModes_12F080[i])
-{
-    if (videoModes_12F080[i + 1] == 0xffff)
-        return 0;
-    i++;
-}
-  return 1;
-/*
-  while ( a1 != *v1 )
+    return 0;
+  while ( videoMode != *v1 )
   {
     v3 = v1[1];
     ++v1;
     if ( v3 == -1 )
       return 0;
   }
-  return 1;*/
+  return 1;
 }
 
 int counter_30D90_30DD0;
@@ -72519,30 +72507,12 @@ int DrawRectHighRes_61810(__int16 a1, __int16 a2, __int16 a3, __int16 a4, unsign
 int VesaGetGran_618E0_61DF0(__int16 a1)
 {
   int result; // eax
-  int v2[13]; // [esp+0h] [ebp-78h] BYREF
-  char v3[28]; // [esp+34h] [ebp-44h] BYREF
-  int v4[7]; // [esp+50h] [ebp-28h] BYREF
-  char v5[12]; // [esp+6Ch] [ebp-Ch] BYREF
 
-  FixPerifery((char*)"GET MORE GRAPHICS INFO");
-
-  memset(v2, 0, 50);
-  HIWORD(v2[8]) = (unsigned int)OFF(dword_12F080_12F070x) >> 4;
-  LOWORD(v2[9]) = HIWORD(v2[8]);
-  v2[0] = 0;
-  if(!IsHiddenWord)
-    v2[7] = 0x4501;
-  else
-    v2[7] = 0x4F01;
-  v2[6] = a1;
-  memset(v4, 0, sizeof(v4));
-  memset(v3, 0, sizeof(v3));
-  memset(v5, 0, sizeof(v5));
-  segread(v5);
-  v4[0] = 768;
-  v4[1] = 16;
-  v4[5] = (int)OFF(v2);
-  int386x(49, v4, v3, v5);
+  // PORT: the original asks the VESA BIOS for the mode information of mode a1 (int 10h AX=4F01h through DPMI
+  // "simulate real mode interrupt", int 31h AX=0300h), which overwrites the buffer dword_12F080_12F070x with the
+  // ModeInfoBlock; the game only reads its window granularity (+4, in KB). The port's screen is linear: report the
+  // usual 64 KB. (The old request used function 0x4501 in Magic Carpet - the original has 0x4F01 in both games.)
+  *(_WORD *)((char*)dword_12F080_12F070x + 4) = 64;
   HIWORD(result) = HIWORD(dword_12F080_12F070x);
   LOWORD(result) = *(unsigned __int8 *)((char*)dword_12F080_12F070x + 4);
   word_12F084_12F074 = (unsigned __int8)result + (*(unsigned __int8 *)((char*)dword_12F080_12F070x + 5) << 8);
@@ -72553,19 +72523,8 @@ int VesaGetGran_618E0_61DF0(__int16 a1)
 /// Original name: VesaSetMode (VESA.C), Hidden Worlds linker map.
 int VesaSetMode_619B8_61EC8(__int16 videoMode)
 {
-  char v2[28]; // [esp+0h] [ebp-38h] BYREF
-  _WORD v3[14]; // [esp+1Ch] [ebp-1Ch] BYREF
-
-  FixPerifery((char*)"SET VIDEOMOD");
-
-  memset(v3, 0, sizeof(v3));
-  memset(v2, 0, sizeof(v2));
-  v3[0] = 0x4f02;
-  v3[2] = videoMode;
-  //int386(16, (uint32)v3, (uint32)v2);
-  //videoMode = 0x101;//640x480 256 color
-  //videoMode = 0x10e;//320x200 65536 color
-  //videoMode = 0x111;//640x480 65536 color
+  // PORT: the original sets the mode with int 10h AX=4F02h BX=videoMode; the port sizes the presenter for the modes
+  // the game uses (portVesaModes): 0x101 640x480 256 colours, 0x10E 320x200 and 0x111 640x480 with 65536 colours
   if (videoMode == 0x101)
   {
       VGA_Resize(640, 480);
@@ -72590,28 +72549,16 @@ int VesaSetMode_619B8_61EC8(__int16 videoMode)
 /// Original name: VesaSetPage (VESA.C), Hidden Worlds linker map.
 void VesaSetPage_61A1C_61F2C(__int16 a1)
 {
-  //int result; // eax
-
-  FixPerifery((char*)"port0x3C8 2");
-  //allert_error();
-
   word_9AFA4 = a1;
-  //if ( (unsigned __int16)a1 >= 6u )
-  //{
-    //__outbyte(0x3C8u, 0);
-    //__outbyte(0x3C9u, 0x3Fu);
-    //__outbyte(0x3C9u, 0);
-    //__outbyte(0x3C9u, 0);
-  //}
-
-  //test
-//  VGA_Blit(begWscreen_2ECFF4_2ECFE4);
-  //VGA_Blit(tempScreenBuffer_A0000);
-  //test
-
-  // PORT: int 10h (VIDEO - VESA SuperVGA BIOS - VESA SuperVGA BIOS - CPU VIDEO MEMORY CONTROL) - not needed in the port
-  //result = 0x4F05;//change memory for drawing
-  // PORT: int 10h (VIDEO - VESA SuperVGA BIOS - VESA SuperVGA BIOS - CPU VIDEO MEMORY CONTROL) - not needed in the port
+  if ( (unsigned __int16)a1 >= 6u ) // a page outside the 640x480x8 screen: DAC colour 0 turns red
+  {
+    __outbyte(0x3C8u, 0);
+    __outbyte(0x3C9u, 0x3Fu);
+    __outbyte(0x3C9u, 0);
+    __outbyte(0x3C9u, 0);
+  }
+  // PORT: the original then moves VESA windows A and B to 64 KB page a1 (int 10h AX=4F05h BX=0/1,
+  // DX = a1 * 64 / granularity word_12F084_12F074); the port's screen at tempScreenBuffer_A0000 is linear
 }
 // 9AFA4: using guessed type __int16 word_9AFA4;
 // 12F080: using guessed type int dword_12F080_12F070;
@@ -72620,33 +72567,10 @@ void VesaSetPage_61A1C_61F2C(__int16 a1)
 /// Original name: VesaGetInfo (VESA.C), Hidden Worlds linker map.
 int VesaGetInfo_61AB0_61FC0()//232AB0
 {
-  int v1[13]; // [esp+0h] [ebp-7Ch] BYREF
-  int v2[7]; // [esp+34h] [ebp-48h] BYREF
-  char v3[28]; // [esp+50h] [ebp-2Ch] BYREF
-  char v4[12]; // [esp+6Ch] [ebp-10h] BYREF
-
-  FixPerifery((char*)"GET VIDEOMODES");
-  /*
-  memset(v1, 0, 50);
-  //HIWORD(v1[8]) = (unsigned int)dword_12F080_12F070x >> 4;
-  //LOWORD(v1[9]) = HIWORD(v1[8]);
-  v1[0] = 0;
-  v1[7] = 20224;
-  v1[4] = 257;
-  memset(v2, 0, sizeof(v2));
-  memset(v3, 0, sizeof(v3));
-  memset(v4, 0, sizeof(v4));
-  segread((uint32)v4);
-  v2[0] = 768;
-  v2[1] = 16;
-  v2[5] = (int)v1;
-  */
-  //int386x(49, (uint32)v2, (uint32)v3, (uint32)v4);
-  //fix
-  strcpy(dword_12F080_12F070x->text, "VESA");
-  dword_12F080_12F070x->x = 0xC0;
-  dword_12F080_12F070x->y = 0x100;  
-  //fix
+  // PORT: the original asks the VESA BIOS for its controller information (int 10h AX=4F00h through DPMI int 31h
+  // AX=0300h) in the buffer dword_12F080_12F070x: the "VESA" signature, then (+14/+16) a real-mode pointer to the mode
+  // list. The port reports the signature; its mode list is portVesaModes (see CanIUseVesaMode_30D30_30D70).
+  memcpy(dword_12F080_12F070x->text, "VESA", 4);
   return strncmp(dword_12F080_12F070x->text, "VESA", 4);
 }
 
